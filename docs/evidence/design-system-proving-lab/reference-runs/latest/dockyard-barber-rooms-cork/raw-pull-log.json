@@ -1,0 +1,102 @@
+{
+  "schemaVersion": "mobbin.mobbin-pro.raw-pull-log.v1",
+  "sourceProvider": "Mobbin Pro MCP",
+  "platform": "web",
+  "businessId": "dockyard-barber-rooms-cork",
+  "businessName": "Dockyard Barber Rooms",
+  "businessHash": "0d679c3d70b47e267178e3c61c238c30dca32e3fcc672f9ad836eed933f092ae",
+  "searchBriefHash": "dfc80ccbde4b4c53f256643f861816739eda540ca5d07da3ad00f3ada519fe18",
+  "generatedAt": "2026-05-18T18:35:14Z",
+  "collectionPolicy": {
+    "strategy": "wide-pull-then-compress",
+    "minimumReturnedScreensAcrossQueries": 32,
+    "minimumUniqueRawPoolScreens": 20,
+    "chunkSize": "8 with a timed-out page-job chunk retried as 6 plus 2",
+    "dedupeMethod": "Mobbin screen id with exclude_screen_ids across chunks"
+  },
+  "toolNotes": [
+    "The first page-job chunk at limit 8 timed out after 120 seconds.",
+    "The same page-job query was retried in smaller chunks without changing the search intent."
+  ],
+  "totalReturned": 32,
+  "uniqueScreenCount": 32,
+  "queryRuns": [
+    {
+      "angle": "niche",
+      "query": "barber cuts, beard trims, and father-son haircut appointments service marketing website homepage book CTA landing page website inspiration",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "results": [
+        { "screenId": "dee32578-d821-4f80-886e-7f379aac30b3", "mobbinUrl": "https://mobbin.com/screens/dee32578-d821-4f80-886e-7f379aac30b3", "imageUrl": "https://mobbin.com/api/mcp/short/GE2NRtTq", "appName": "Fresha", "platform": "web", "observedRole": "beauty/wellness marketplace homepage with booking search as first decision" },
+        { "screenId": "b14f3f5b-2785-4fbb-a487-266b2bef1d08", "mobbinUrl": "https://mobbin.com/screens/b14f3f5b-2785-4fbb-a487-266b2bef1d08", "imageUrl": "https://mobbin.com/api/mcp/short/y4gmugy3", "appName": "Fresha", "platform": "web", "observedRole": "local venue detail page with service tabs, photo grid, proof header, and book-now card" },
+        { "screenId": "0b68f8e9-3c79-4302-83c6-990eefc611d7", "mobbinUrl": "https://mobbin.com/screens/0b68f8e9-3c79-4302-83c6-990eefc611d7", "imageUrl": "https://mobbin.com/api/mcp/short/bL6RiuZy", "appName": "Fresha", "platform": "web", "observedRole": "booking homepage category menu for treatment/service choice" },
+        { "screenId": "de7ad5b2-44d4-430d-9543-194a44da61bd", "mobbinUrl": "https://mobbin.com/screens/de7ad5b2-44d4-430d-9543-194a44da61bd", "imageUrl": "https://mobbin.com/api/mcp/short/y9Fay93N", "appName": "Fresha", "platform": "web", "observedRole": "service list with tabs, duration/price rows, and per-row book buttons" },
+        { "screenId": "bf8f9c28-b22f-4e0e-b4a3-b91e2b7274d4", "mobbinUrl": "https://mobbin.com/screens/bf8f9c28-b22f-4e0e-b4a3-b91e2b7274d4", "imageUrl": "https://mobbin.com/api/mcp/short/uERhxjCr", "appName": "Dollar Shave Club", "platform": "web", "observedRole": "grooming product onboarding hero with product lineup and simple start cue" },
+        { "screenId": "bbed93f8-7e33-4c5f-9878-54978f24d4cf", "mobbinUrl": "https://mobbin.com/screens/bbed93f8-7e33-4c5f-9878-54978f24d4cf", "imageUrl": "https://mobbin.com/api/mcp/short/UnIKCyKY", "appName": "Fresha", "platform": "web", "observedRole": "booking homepage date-picker state" },
+        { "screenId": "34a0e21c-18a6-4ce8-8221-17386da2f1d2", "mobbinUrl": "https://mobbin.com/screens/34a0e21c-18a6-4ce8-8221-17386da2f1d2", "imageUrl": "https://mobbin.com/api/mcp/short/apoWyR37", "appName": "Fresha", "platform": "web", "observedRole": "venue reviews/about area with sticky booking card" },
+        { "screenId": "4431e5d4-03ce-47ea-bde3-2cafd4eb53d0", "mobbinUrl": "https://mobbin.com/screens/4431e5d4-03ce-47ea-bde3-2cafd4eb53d0", "imageUrl": "https://mobbin.com/api/mcp/short/sMhV2HeH", "appName": "Square", "platform": "web", "observedRole": "admin-side online booking setup screen with app preview and enable CTA" }
+      ]
+    },
+    {
+      "angle": "page-job",
+      "query": "book CTA homepage with trust proof, service or product menu, and local customer decision path website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 6,
+      "results": [
+        { "screenId": "d1ef7c5f-0de3-485c-bed1-d5a9253f5a24", "mobbinUrl": "https://mobbin.com/screens/d1ef7c5f-0de3-485c-bed1-d5a9253f5a24", "imageUrl": "https://mobbin.com/api/mcp/short/l16WhDqi", "appName": "Fresha", "platform": "web", "observedRole": "booking homepage with time filter overlay" },
+        { "screenId": "212942d1-4c49-4ce4-bdaa-32178d36181a", "mobbinUrl": "https://mobbin.com/screens/212942d1-4c49-4ce4-bdaa-32178d36181a", "imageUrl": "https://mobbin.com/api/mcp/short/GT4QV6PX", "appName": "Fresha", "platform": "web", "observedRole": "booking homepage account/menu state" },
+        { "screenId": "07f1acb1-7f36-499f-8411-8c9a2f31bb3d", "mobbinUrl": "https://mobbin.com/screens/07f1acb1-7f36-499f-8411-8c9a2f31bb3d", "imageUrl": "https://mobbin.com/api/mcp/short/bLwc25sH", "appName": "Fresha", "platform": "web", "observedRole": "location autocomplete state for local service discovery" },
+        { "screenId": "498008f7-fde7-4581-b70c-c8b5ab1d6904", "mobbinUrl": "https://mobbin.com/screens/498008f7-fde7-4581-b70c-c8b5ab1d6904", "imageUrl": "https://mobbin.com/api/mcp/short/tZglPGIl", "appName": "Fresha", "platform": "web", "observedRole": "booking homepage minimal idle state" },
+        { "screenId": "74253218-0063-4799-afef-c0410b371804", "mobbinUrl": "https://mobbin.com/screens/74253218-0063-4799-afef-c0410b371804", "imageUrl": "https://mobbin.com/api/mcp/short/ldCz1fXb", "appName": "Fresha", "platform": "web", "observedRole": "mobile/compact menu treatment for booking surface" },
+        { "screenId": "7832695b-2761-4f79-aa14-5cefe5a5e7ff", "mobbinUrl": "https://mobbin.com/screens/7832695b-2761-4f79-aa14-5cefe5a5e7ff", "imageUrl": "https://mobbin.com/api/mcp/short/VnK1KkAD", "appName": "Fresha", "platform": "web", "observedRole": "booking homepage with stronger mobile/menu simplification" }
+      ]
+    },
+    {
+      "angle": "page-job",
+      "query": "book CTA homepage with trust proof, service or product menu, and local customer decision path website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 2,
+      "results": [
+        { "screenId": "923e5154-c265-436e-8d2f-2a1c56699a06", "mobbinUrl": "https://mobbin.com/screens/923e5154-c265-436e-8d2f-2a1c56699a06", "imageUrl": "https://mobbin.com/api/mcp/short/LNP6A2HA", "appName": "Fresha", "platform": "web", "observedRole": "booking homepage menu overlay with support and business links" },
+        { "screenId": "60b09119-52d3-418c-bd64-f73e16b56c4a", "mobbinUrl": "https://mobbin.com/screens/60b09119-52d3-418c-bd64-f73e16b56c4a", "imageUrl": "https://mobbin.com/api/mcp/short/CMJXpcUW", "appName": "Fresha", "platform": "web", "observedRole": "booking homepage time filter with Any time selected" }
+      ]
+    },
+    {
+      "angle": "tone",
+      "query": "premium credible owner-led service business landing page website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "results": [
+        { "screenId": "8b2bdf72-3b33-4cbe-be7f-d41f8be65b55", "mobbinUrl": "https://mobbin.com/screens/8b2bdf72-3b33-4cbe-be7f-d41f8be65b55", "imageUrl": "https://mobbin.com/api/mcp/short/BU7F3BXa", "appName": "Lovable", "platform": "web", "observedRole": "AI-generated service website preview with cards and contact CTA" },
+        { "screenId": "ed6d5e76-1e29-4db3-9688-5c7c55082f42", "mobbinUrl": "https://mobbin.com/screens/ed6d5e76-1e29-4db3-9688-5c7c55082f42", "imageUrl": "https://mobbin.com/api/mcp/short/sAnnl53o", "appName": "Clearbit", "platform": "web", "observedRole": "B2B homepage with blue hero, product screenshot, and logo proof strip" },
+        { "screenId": "cc518cad-ad48-4da1-9399-6a52f3d2ba62", "mobbinUrl": "https://mobbin.com/screens/cc518cad-ad48-4da1-9399-6a52f3d2ba62", "imageUrl": "https://mobbin.com/api/mcp/short/jwCcLi9L", "appName": "Lovable", "platform": "web", "observedRole": "AI-generated service website hero with card grid" },
+        { "screenId": "efb21b8e-721e-47bc-ab33-3d1844d05ed4", "mobbinUrl": "https://mobbin.com/screens/efb21b8e-721e-47bc-ab33-3d1844d05ed4", "imageUrl": "https://mobbin.com/api/mcp/short/FuIVCcm1", "appName": "Fresha", "platform": "web", "observedRole": "admin-side online booking marketing screen with app preview and checklist" },
+        { "screenId": "22cfa1a2-3a90-4957-9d6d-405c1b940dd2", "mobbinUrl": "https://mobbin.com/screens/22cfa1a2-3a90-4957-9d6d-405c1b940dd2", "imageUrl": "https://mobbin.com/api/mcp/short/9V13X9uL", "appName": "Webflow", "platform": "web", "observedRole": "portfolio/agency site with dark photo hero and project grid" },
+        { "screenId": "29bb5829-7385-4c93-9762-952c4c97b820", "mobbinUrl": "https://mobbin.com/screens/29bb5829-7385-4c93-9762-952c4c97b820", "imageUrl": "https://mobbin.com/api/mcp/short/XfOdKhTw", "appName": "ClassPass", "platform": "web", "observedRole": "business-provider page with image clusters and benefit copy" },
+        { "screenId": "bc9d6f5e-3fb6-43a7-8dc2-47459f551a95", "mobbinUrl": "https://mobbin.com/screens/bc9d6f5e-3fb6-43a7-8dc2-47459f551a95", "imageUrl": "https://mobbin.com/api/mcp/short/Bj5vGPWP", "appName": "Lovable", "platform": "web", "observedRole": "AI-generated service website variant with generic services cards" },
+        { "screenId": "084d5db1-92f7-45dd-8fde-76e63893d492", "mobbinUrl": "https://mobbin.com/screens/084d5db1-92f7-45dd-8fde-76e63893d492", "imageUrl": "https://mobbin.com/api/mcp/short/6m6g554J", "appName": "Open", "platform": "web", "observedRole": "premium editorial subscription page with large photography and sparse nav" }
+      ]
+    },
+    {
+      "angle": "constraint",
+      "query": "family booking path service duration comparison masculine visual language without cliche responsive mobile-first homepage website not dashboard not app",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "results": [
+        { "screenId": "21e0a06b-28b7-4868-b56c-393eb6c90c05", "mobbinUrl": "https://mobbin.com/screens/21e0a06b-28b7-4868-b56c-393eb6c90c05", "imageUrl": "https://mobbin.com/api/mcp/short/IktJsfRT", "appName": "Cal.com", "platform": "web", "observedRole": "appointment selector with meeting duration, recurrence, locations, and calendar times" },
+        { "screenId": "b54dd443-6187-4a45-8abe-fea609add960", "mobbinUrl": "https://mobbin.com/screens/b54dd443-6187-4a45-8abe-fea609add960", "imageUrl": "https://mobbin.com/api/mcp/short/Y7PX3793", "appName": "Cal.com", "platform": "web", "observedRole": "calendar booking state with validation message and duration pills" },
+        { "screenId": "5cc79401-5300-4436-86d2-a909f6d45ac7", "mobbinUrl": "https://mobbin.com/screens/5cc79401-5300-4436-86d2-a909f6d45ac7", "imageUrl": "https://mobbin.com/api/mcp/short/GhzyaIZE", "appName": "Cal.com", "platform": "web", "observedRole": "calendar booking state with selected date and available times" },
+        { "screenId": "93e3e461-2a44-437c-80d5-df0f1de12a2d", "mobbinUrl": "https://mobbin.com/screens/93e3e461-2a44-437c-80d5-df0f1de12a2d", "imageUrl": "https://mobbin.com/api/mcp/short/5sFoF20t", "appName": "Upwork", "platform": "web", "observedRole": "modal for meeting length selection with duration cards" },
+        { "screenId": "239426a9-172a-483f-a9c8-f7268fa9fca3", "mobbinUrl": "https://mobbin.com/screens/239426a9-172a-483f-a9c8-f7268fa9fca3", "imageUrl": "https://mobbin.com/api/mcp/short/eFwpgqQz", "appName": "Braintrust", "platform": "web", "observedRole": "consultation scheduling flow with dark calendar panel and time list" },
+        { "screenId": "43d909f7-c988-4ed8-a530-0bc1b17f0067", "mobbinUrl": "https://mobbin.com/screens/43d909f7-c988-4ed8-a530-0bc1b17f0067", "imageUrl": "https://mobbin.com/api/mcp/short/IkGV32sC", "appName": "Cal.com", "platform": "web", "observedRole": "calendar booking state with full-day time list" },
+        { "screenId": "25ca82a4-a1c6-464c-8c98-ea1cfe9ed835", "mobbinUrl": "https://mobbin.com/screens/25ca82a4-a1c6-464c-8c98-ea1cfe9ed835", "imageUrl": "https://mobbin.com/api/mcp/short/XzfR17Om", "appName": "Airbnb", "platform": "web", "observedRole": "experience booking with guest counts, date ranges, and choose buttons" },
+        { "screenId": "8480cf8e-6812-4588-a2e1-e37d7d62d12e", "mobbinUrl": "https://mobbin.com/screens/8480cf8e-6812-4588-a2e1-e37d7d62d12e", "imageUrl": "https://mobbin.com/api/mcp/short/tNkIUBaw", "appName": "Airbnb", "platform": "web", "observedRole": "request date/time modal with party mix, price estimate, and next CTA" }
+      ]
+    }
+  ]
+}

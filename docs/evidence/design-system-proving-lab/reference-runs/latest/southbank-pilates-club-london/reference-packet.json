@@ -1,0 +1,203 @@
+{
+  "schemaVersion": "mobbin.mobbin-pro.per-redesign-reference-packet.v1",
+  "sourceProvider": "Mobbin Pro MCP",
+  "platform": "web",
+  "businessId": "southbank-pilates-club-london",
+  "businessName": "Southbank Pilates Club",
+  "businessHash": "df714dfbc212604ec46c8fb233a5d14feb19ec40fb7c090f3f6cb675e33aea90",
+  "searchBriefHash": "6b1dc44de0f21750df9de2b9b7dfd6c8e715611796022de4c4242c27e0485365",
+  "generatedAt": "2026-05-19T01:37:56.000Z",
+  "rawPullLogPath": "docs/evidence/design-system-proving-lab/reference-runs/latest/southbank-pilates-club-london/raw-pull-log.json",
+  "rawPullLogHash": "4dfd37c2c0d8407c1fc3389bf4de39cf92a7e5c6bb7bb381a0820689b5300351",
+  "queryLog": [
+    { "angle": "niche", "query": "pilates reformer intro classes, private sessions, and small-group membership service marketing website homepage book CTA landing page website inspiration", "mode": "deep", "platform": "web", "returnedCount": 6, "runAt": "2026-05-19T01:37:56.000Z" },
+    { "angle": "page-job", "query": "book CTA homepage with trust proof, service or product menu, and local customer decision path website", "mode": "deep", "platform": "web", "returnedCount": 10, "runAt": "2026-05-19T01:37:56.000Z" },
+    { "angle": "tone", "query": "premium credible owner-led service business landing page website", "mode": "deep", "platform": "web", "returnedCount": 10, "runAt": "2026-05-19T01:37:56.000Z" },
+    { "angle": "constraint", "query": "same broad category as fitness but different taste membership vs class path body-image claim risk responsive mobile-first homepage website not dashboard not app", "mode": "deep", "platform": "web", "returnedCount": 10, "runAt": "2026-05-19T01:37:56.000Z" }
+  ],
+  "rawCandidates": [
+    { "screenId": "db948a58-427b-44f2-8281-1741d107cc34", "mobbinUrl": "https://mobbin.com/screens/db948a58-427b-44f2-8281-1741d107cc34", "sourceUrl": "https://mobbin.com/screens/db948a58-427b-44f2-8281-1741d107cc34", "imageUrl": "https://mobbin.com/api/mcp/short/JaBhfwCh", "appName": "Time2book", "selectionReason": "Studio booking page with class calendar, tabs, availability states, and a direct book action." },
+    { "screenId": "218acec2-04d6-4791-b6c1-38cab613a1c2", "mobbinUrl": "https://mobbin.com/screens/218acec2-04d6-4791-b6c1-38cab613a1c2", "sourceUrl": "https://mobbin.com/screens/218acec2-04d6-4791-b6c1-38cab613a1c2", "imageUrl": "https://mobbin.com/api/mcp/short/oqhuA90d", "appName": "Time2book", "selectionReason": "Empty availability state is useful for class schedule expectations and no-slot messaging." },
+    { "screenId": "68a2a15a-d008-492d-a016-580d9c257d57", "mobbinUrl": "https://mobbin.com/screens/68a2a15a-d008-492d-a016-580d9c257d57", "sourceUrl": "https://mobbin.com/screens/68a2a15a-d008-492d-a016-580d9c257d57", "imageUrl": "https://mobbin.com/api/mcp/short/EFvI4ar5", "appName": "ClassPass", "selectionReason": "Pilates-adjacent membership hero with app preview and category-specific imagery." },
+    { "screenId": "ea0217e0-5361-459e-8e6a-4eea4de2fc7b", "mobbinUrl": "https://mobbin.com/screens/ea0217e0-5361-459e-8e6a-4eea4de2fc7b", "sourceUrl": "https://mobbin.com/screens/ea0217e0-5361-459e-8e6a-4eea4de2fc7b", "imageUrl": "https://mobbin.com/api/mcp/short/I6TOTmT7", "appName": "ClassPass", "selectionReason": "Featured studio grid shows how to present venue proof and class categories without a heavy hero." },
+    { "screenId": "e327103c-404c-4431-8bc6-0916b52d1572", "mobbinUrl": "https://mobbin.com/screens/e327103c-404c-4431-8bc6-0916b52d1572", "sourceUrl": "https://mobbin.com/screens/e327103c-404c-4431-8bc6-0916b52d1572", "imageUrl": "https://mobbin.com/api/mcp/short/E0nYHwU5", "appName": "ClassPass", "selectionReason": "Venue-detail page with map, appointment tab, safety area, and direct contact facts." },
+    { "screenId": "60f2d386-d2f7-4e6b-90df-f21f284f0136", "mobbinUrl": "https://mobbin.com/screens/60f2d386-d2f7-4e6b-90df-f21f284f0136", "sourceUrl": "https://mobbin.com/screens/60f2d386-d2f7-4e6b-90df-f21f284f0136", "imageUrl": "https://mobbin.com/api/mcp/short/nuSKjLJW", "appName": "Time2book", "selectionReason": "Fitness studio software landing page gives a strong anti-reference for admin-side claims." },
+    { "screenId": "60b09119-52d3-418c-bd64-f73e16b56c4a", "mobbinUrl": "https://mobbin.com/screens/60b09119-52d3-418c-bd64-f73e16b56c4a", "sourceUrl": "https://mobbin.com/screens/60b09119-52d3-418c-bd64-f73e16b56c4a", "imageUrl": "https://mobbin.com/api/mcp/short/BEFmYk8M", "appName": "Fresha", "selectionReason": "Booking-first wellness search hero with service, place, date, and time controls." },
+    { "screenId": "212942d1-4c49-4ce4-bdaa-32178d36181a", "mobbinUrl": "https://mobbin.com/screens/212942d1-4c49-4ce4-bdaa-32178d36181a", "sourceUrl": "https://mobbin.com/screens/212942d1-4c49-4ce4-bdaa-32178d36181a", "imageUrl": "https://mobbin.com/api/mcp/short/U4WkCzWY", "appName": "Fresha", "selectionReason": "Compact customer menu and appointment utilities are useful for mobile booking behavior." },
+    { "screenId": "51ede66f-1d56-4c4a-89bd-d9dcf71d9818", "mobbinUrl": "https://mobbin.com/screens/51ede66f-1d56-4c4a-89bd-d9dcf71d9818", "sourceUrl": "https://mobbin.com/screens/51ede66f-1d56-4c4a-89bd-d9dcf71d9818", "imageUrl": "https://mobbin.com/api/mcp/short/RYVUlb2T", "appName": "ClassPass", "selectionReason": "Location and membership benefit page helps separate intro class, studio nearby, and membership paths." },
+    { "screenId": "07618baa-ea77-4afc-a17d-1bc305099273", "mobbinUrl": "https://mobbin.com/screens/07618baa-ea77-4afc-a17d-1bc305099273", "sourceUrl": "https://mobbin.com/screens/07618baa-ea77-4afc-a17d-1bc305099273", "imageUrl": "https://mobbin.com/api/mcp/short/HVXI6UzF", "appName": "ClassPass", "selectionReason": "Membership savings section maps to recurring small-group membership explanation." },
+    { "screenId": "b24c9254-b443-4175-b0f1-ba159299eb07", "mobbinUrl": "https://mobbin.com/screens/b24c9254-b443-4175-b0f1-ba159299eb07", "sourceUrl": "https://mobbin.com/screens/b24c9254-b443-4175-b0f1-ba159299eb07", "imageUrl": "https://mobbin.com/api/mcp/short/RoQ9aGwu", "appName": "ClassPass", "selectionReason": "Reactivation page mixes flexibility, class times, studio safety, and wellness categories." },
+    { "screenId": "c2af7fb0-0789-45dc-ab2a-5a7c227a0417", "mobbinUrl": "https://mobbin.com/screens/c2af7fb0-0789-45dc-ab2a-5a7c227a0417", "sourceUrl": "https://mobbin.com/screens/c2af7fb0-0789-45dc-ab2a-5a7c227a0417", "imageUrl": "https://mobbin.com/api/mcp/short/YFcFEFP8", "appName": "ClassPass", "selectionReason": "Studio-space section shows how to discuss ambience and group dynamics without body-transformation claims." },
+    { "screenId": "fe4f3bc1-172d-42e3-a9a1-3bcb0f7d9ba7", "mobbinUrl": "https://mobbin.com/screens/fe4f3bc1-172d-42e3-a9a1-3bcb0f7d9ba7", "sourceUrl": "https://mobbin.com/screens/fe4f3bc1-172d-42e3-a9a1-3bcb0f7d9ba7", "imageUrl": "https://mobbin.com/api/mcp/short/z5h6OXBR", "appName": "ClassPass", "selectionReason": "Plan cards and credit model are useful as a warning and a membership comparison reference." },
+    { "screenId": "8ef4767e-dc04-421d-a6d0-4fe3761c6d9c", "mobbinUrl": "https://mobbin.com/screens/8ef4767e-dc04-421d-a6d0-4fe3761c6d9c", "sourceUrl": "https://mobbin.com/screens/8ef4767e-dc04-421d-a6d0-4fe3761c6d9c", "imageUrl": "https://mobbin.com/api/mcp/short/tBWiqFkK", "appName": "ClassPass", "selectionReason": "Dense collage hero is useful as an anti-reference for generic fitness marketplace energy." },
+    { "screenId": "efbb3d8b-a965-4461-9f49-a736c956c1cf", "mobbinUrl": "https://mobbin.com/screens/efbb3d8b-a965-4461-9f49-a736c956c1cf", "sourceUrl": "https://mobbin.com/screens/efbb3d8b-a965-4461-9f49-a736c956c1cf", "imageUrl": "https://mobbin.com/api/mcp/short/gHjc9xpB", "appName": "Rocket Money", "selectionReason": "Two-column upgrade form is useful as a membership signup anti-reference for over-financialized onboarding." },
+    { "screenId": "465357e1-7656-4bca-ba2b-778cd9e0707d", "mobbinUrl": "https://mobbin.com/screens/465357e1-7656-4bca-ba2b-778cd9e0707d", "sourceUrl": "https://mobbin.com/screens/465357e1-7656-4bca-ba2b-778cd9e0707d", "imageUrl": "https://mobbin.com/api/mcp/short/pz0isKut", "appName": "Deezer", "selectionReason": "Dark premium plan page is a useful warning against loud entertainment-style membership design." }
+  ],
+  "shortlist": [
+    {
+      "screenId": "db948a58-427b-44f2-8281-1741d107cc34",
+      "mobbinUrl": "https://mobbin.com/screens/db948a58-427b-44f2-8281-1741d107cc34",
+      "sourceUrl": "https://mobbin.com/screens/db948a58-427b-44f2-8281-1741d107cc34",
+      "appName": "Time2book",
+      "structureFamily": "studio calendar booking",
+      "fitScores": { "job": 10, "niche": 9, "firstViewport": 8, "cta": 9, "proof": 7, "mobile": 8, "distinctiveness": 7, "buildability": 9, "truth": 9 },
+      "ingredientLedger": [
+        { "layer": "business-job", "ingredient": "Make the first decision a class-path choice: reformer intro, private session, or small-group membership." },
+        { "layer": "information-architecture", "ingredient": "Use tabs for classes, private sessions, and pricing so the visitor can compare paths without reading a long story." },
+        { "layer": "component-anatomy", "ingredient": "Class rows need class name, time, room or format, capacity if verified, and a clear book action." },
+        { "layer": "component-states", "ingredient": "Show available, unavailable, selected date, empty day, and booking confirmation states." },
+        { "layer": "interaction-model", "ingredient": "Let the visitor choose date and class before requesting full account or payment details." },
+        { "layer": "accessibility", "ingredient": "Calendar cells, class rows, and book buttons need labels that work for keyboard and screen-reader users." }
+      ],
+      "bannedUses": [ "Do not copy Time2book branding, beach image, fake studio name, powered-by footer, exact schedule data, or SaaS admin shell." ]
+    },
+    {
+      "screenId": "60b09119-52d3-418c-bd64-f73e16b56c4a",
+      "mobbinUrl": "https://mobbin.com/screens/60b09119-52d3-418c-bd64-f73e16b56c4a",
+      "sourceUrl": "https://mobbin.com/screens/60b09119-52d3-418c-bd64-f73e16b56c4a",
+      "appName": "Fresha",
+      "structureFamily": "booking-search hero",
+      "fitScores": { "job": 9, "niche": 8, "firstViewport": 9, "cta": 9, "proof": 7, "mobile": 8, "distinctiveness": 7, "buildability": 8, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "layout-structure", "ingredient": "A generous booking hero can foreground service, location, date, and time without a hard-sell fitness promise." },
+        { "layer": "responsive-behavior", "ingredient": "The hero search should collapse into a stacked mobile booking module with one dominant CTA." },
+        { "layer": "cta-system", "ingredient": "Primary CTA should stay book-focused, with private-session enquiry as a secondary path." },
+        { "layer": "forms-and-lead-capture", "ingredient": "Keep lead capture short: preferred path, date/time interest, contact, and optional experience level." },
+        { "layer": "localization-and-formatting", "ingredient": "Use London area, UK date/time conventions, and studio-specific class terms only when source-backed." }
+      ],
+      "bannedUses": [ "Do not copy Fresha's gradient, marketplace counts, beauty language, app-download CTA, customer menu, or exact search component." ]
+    },
+    {
+      "screenId": "68a2a15a-d008-492d-a016-580d9c257d57",
+      "mobbinUrl": "https://mobbin.com/screens/68a2a15a-d008-492d-a016-580d9c257d57",
+      "sourceUrl": "https://mobbin.com/screens/68a2a15a-d008-492d-a016-580d9c257d57",
+      "appName": "ClassPass",
+      "structureFamily": "wellness membership hero",
+      "fitScores": { "job": 8, "niche": 9, "firstViewport": 8, "cta": 8, "proof": 7, "mobile": 8, "distinctiveness": 7, "buildability": 8, "truth": 7 },
+      "ingredientLedger": [
+        { "layer": "content-strategy", "ingredient": "Separate intro, private, and membership copy so beginners do not feel pushed into the wrong commitment." },
+        { "layer": "voice-and-tone", "ingredient": "Use calm, precise movement language; avoid body-shape, weight-loss, and transformation claims." },
+        { "layer": "media-direction", "ingredient": "If real studio photos are unavailable, use equipment, floor-plan, class-path, and reformer-line artifacts instead of stock bodies." },
+        { "layer": "proof-architecture", "ingredient": "Use class structure, instructor process, and booking clarity as proof until real reviews or credentials are approved." },
+        { "layer": "governance", "ingredient": "Body, medical, pregnancy, injury, and instructor qualification claims must remain absent unless directly verified." }
+      ],
+      "bannedUses": [ "Do not copy ClassPass marketplace positioning, phone mockups, reviews, rating stars, global access claims, or body imagery." ]
+    },
+    {
+      "screenId": "e327103c-404c-4431-8bc6-0916b52d1572",
+      "mobbinUrl": "https://mobbin.com/screens/e327103c-404c-4431-8bc6-0916b52d1572",
+      "sourceUrl": "https://mobbin.com/screens/e327103c-404c-4431-8bc6-0916b52d1572",
+      "appName": "ClassPass",
+      "structureFamily": "venue detail page",
+      "fitScores": { "job": 8, "niche": 8, "firstViewport": 7, "cta": 8, "proof": 8, "mobile": 8, "distinctiveness": 7, "buildability": 8, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "proof-architecture", "ingredient": "Location, class categories, safety/cleanliness, and clear contact routes can act as grounded trust cues." },
+        { "layer": "seo-aeo-metadata", "ingredient": "Expose reformer intro, private session, membership, location, and booking path in visible and agent-readable metadata." },
+        { "layer": "performance", "ingredient": "Venue detail should not depend on heavy map scripts or large galleries before real media is approved." },
+        { "layer": "implementation-tokens", "ingredient": "Tokenize venue fact rows, schedule rows, tabs, chips, and secondary CTA widths for repeatable preview builds." }
+      ],
+      "bannedUses": [ "Do not copy Crunch Gym details, map, rating, social handles, safety claims, or gym-chain voice." ]
+    },
+    {
+      "screenId": "07618baa-ea77-4afc-a17d-1bc305099273",
+      "mobbinUrl": "https://mobbin.com/screens/07618baa-ea77-4afc-a17d-1bc305099273",
+      "sourceUrl": "https://mobbin.com/screens/07618baa-ea77-4afc-a17d-1bc305099273",
+      "appName": "ClassPass",
+      "structureFamily": "membership savings section",
+      "fitScores": { "job": 8, "niche": 8, "firstViewport": 7, "cta": 8, "proof": 7, "mobile": 8, "distinctiveness": 7, "buildability": 8, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "color-system", "ingredient": "Keep action color disciplined and avoid making the studio feel like a generic blue fitness app." },
+        { "layer": "spacing-system", "ingredient": "Membership sections need generous breathing room so plans feel calm rather than salesy." },
+        { "layer": "surfaces-and-materials", "ingredient": "Use clean plan surfaces and subtle dividers instead of stacked promotional cards." },
+        { "layer": "depth", "ingredient": "Reserve depth for selected plan or booking module; keep the rest flat and quiet." }
+      ],
+      "bannedUses": [ "Do not copy ClassPass credit economics, discount claims, global membership language, blue CTA identity, or fake savings." ]
+    },
+    {
+      "screenId": "c2af7fb0-0789-45dc-ab2a-5a7c227a0417",
+      "mobbinUrl": "https://mobbin.com/screens/c2af7fb0-0789-45dc-ab2a-5a7c227a0417",
+      "sourceUrl": "https://mobbin.com/screens/c2af7fb0-0789-45dc-ab2a-5a7c227a0417",
+      "appName": "ClassPass",
+      "structureFamily": "studio ambience proof",
+      "fitScores": { "job": 8, "niche": 8, "firstViewport": 7, "cta": 7, "proof": 8, "mobile": 8, "distinctiveness": 7, "buildability": 8, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "typography", "ingredient": "Use compact, confident headings for sections like intro class, private work, and membership without oversized gym hype." },
+        { "layer": "shape", "ingredient": "Use simple image and equipment frames; avoid rounded card overload." },
+        { "layer": "media-direction", "ingredient": "Studio ambience can be represented through reformer silhouettes, room rhythm, and equipment details when real photos are missing." },
+        { "layer": "iconography", "ingredient": "Icons should clarify beginner, private, group, time, equipment, and location rather than decorate." }
+      ],
+      "bannedUses": [ "Do not copy yoga-studio photography, ambience promises, tribe language, or unverified studio-space claims." ]
+    },
+    {
+      "screenId": "b24c9254-b443-4175-b0f1-ba159299eb07",
+      "mobbinUrl": "https://mobbin.com/screens/b24c9254-b443-4175-b0f1-ba159299eb07",
+      "sourceUrl": "https://mobbin.com/screens/b24c9254-b443-4175-b0f1-ba159299eb07",
+      "appName": "ClassPass",
+      "structureFamily": "flexibility and safety story",
+      "fitScores": { "job": 8, "niche": 8, "firstViewport": 8, "cta": 8, "proof": 7, "mobile": 8, "distinctiveness": 7, "buildability": 7, "truth": 7 },
+      "ingredientLedger": [
+        { "layer": "illustration-graphics", "ingredient": "A controlled collage can show class path variety, but should be replaced by safe generated reformer/equipment artifacts if photos are unapproved." },
+        { "layer": "motion", "ingredient": "Motion should be limited to tab changes, class-path selection, or booking step reveal." },
+        { "layer": "content-strategy", "ingredient": "Use flexibility copy for schedule and commitment, not body outcome claims." },
+        { "layer": "responsive-behavior", "ingredient": "Photo or artifact grids must collapse below the booking path on mobile." }
+      ],
+      "bannedUses": [ "Do not copy reactivation offers, COVID/safety claims, marketplace photography, phone app mockups, or 'feel great' body-result language." ]
+    },
+    {
+      "screenId": "fe4f3bc1-172d-42e3-a9a1-3bcb0f7d9ba7",
+      "mobbinUrl": "https://mobbin.com/screens/fe4f3bc1-172d-42e3-a9a1-3bcb0f7d9ba7",
+      "sourceUrl": "https://mobbin.com/screens/fe4f3bc1-172d-42e3-a9a1-3bcb0f7d9ba7",
+      "appName": "ClassPass",
+      "structureFamily": "plan comparison carousel",
+      "fitScores": { "job": 8, "niche": 8, "firstViewport": 7, "cta": 8, "proof": 7, "mobile": 8, "distinctiveness": 7, "buildability": 8, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "forms-and-lead-capture", "ingredient": "Membership enquiry can use plan intent plus contact details, without requiring payment in the first preview." },
+        { "layer": "component-states", "ingredient": "Plan cards need selected, default, unavailable, loading, and compare states." },
+        { "layer": "localization-and-formatting", "ingredient": "Use GBP and London language only when pricing or location is source-backed; otherwise leave pricing out." },
+        { "layer": "governance", "ingredient": "Membership, cancellation, credit, and recurring-payment claims must be omitted until the business supplies real terms." }
+      ],
+      "bannedUses": [ "Do not copy ClassPass credits, prices, default-plan labels, cancellation terms, or global booking benefits." ]
+    }
+  ],
+  "antiReferences": [
+    {
+      "screenId": "60f2d386-d2f7-4e6b-90df-f21f284f0136",
+      "mobbinUrl": "https://mobbin.com/screens/60f2d386-d2f7-4e6b-90df-f21f284f0136",
+      "appName": "Time2book",
+      "rejectionReason": "Fitness studio software marketing is operator-facing SaaS, not a customer-facing Pilates studio booking page."
+    },
+    {
+      "screenId": "8ef4767e-dc04-421d-a6d0-4fe3761c6d9c",
+      "mobbinUrl": "https://mobbin.com/screens/8ef4767e-dc04-421d-a6d0-4fe3761c6d9c",
+      "appName": "ClassPass",
+      "rejectionReason": "Dense marketplace collage and broad fitness/beauty positioning would drown the local Pilates decision."
+    },
+    {
+      "screenId": "efbb3d8b-a965-4461-9f49-a736c956c1cf",
+      "mobbinUrl": "https://mobbin.com/screens/efbb3d8b-a965-4461-9f49-a736c956c1cf",
+      "appName": "Rocket Money",
+      "rejectionReason": "Financial upgrade checkout patterns make membership feel transactional and off-category for a calm studio page."
+    },
+    {
+      "screenId": "465357e1-7656-4bca-ba2b-778cd9e0707d",
+      "mobbinUrl": "https://mobbin.com/screens/465357e1-7656-4bca-ba2b-778cd9e0707d",
+      "appName": "Deezer",
+      "rejectionReason": "Loud dark entertainment subscription styling conflicts with calm movement, beginner trust, and local studio clarity."
+    }
+  ],
+  "remixDirection": {
+    "summary": "A calm booking-first Pilates page that splits reformer intro, private session, and small-group membership paths, uses a light schedule module as proof, and replaces body-transformation imagery with equipment, studio-rhythm, and class-path artifacts.",
+    "selectedMoves": [
+      "Time2book class calendar discipline, rebuilt as customer-facing reformer intro and private-session booking.",
+      "Fresha booking hero clarity for service, date, and time choice without beauty-marketplace claims.",
+      "ClassPass venue/detail logic for studio facts, location, and class categories, stripped of marketplace proof.",
+      "ClassPass membership comparison patterns, rewritten as source-safe enquiry paths without fake pricing.",
+      "Quiet equipment-led visuals instead of stock bodies, transformation claims, or generic gym energy."
+    ],
+    "explicitRejects": [
+      "No invented reviews, ratings, instructor credentials, injury/medical claims, body-shape outcomes, prices, or membership terms.",
+      "No copied ClassPass/Fresha/Time2book brand systems, marketplace metrics, global claims, or app-download CTAs.",
+      "No exact layout copy, dashboard UI, or photo-heavy fitness collage unless the business supplies approved photos."
+    ]
+  }
+}

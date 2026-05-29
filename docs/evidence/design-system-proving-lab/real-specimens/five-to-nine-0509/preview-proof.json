@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "mobbin.mobbin-pro.preview-proof.v1",
+  "businessId": "five-to-nine-0509",
+  "businessName": "Five to Nine",
+  "generatedAt": "2026-05-19T10:08:57Z",
+  "sourceProvider": "Mobbin Pro MCP",
+  "platform": "web",
+  "proofLevel": "concept-finalist",
+  "externalUseAllowed": false,
+  "businessHash": "source-files-read-2026-05-19",
+  "searchBriefHash": "5343993096d1c594a51fb923c06412df571938fd0cdcb18214250856e35bf2af",
+  "referencePacketPath": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/reference-packet.json",
+  "referencePacketHash": "7673c6eacbcec94647e76a9dd387fa3c19c3af55884489e5a8b3ea1b4557ccd0",
+  "directionPacketPath": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/direction-packet.json",
+  "directionPacketHash": "3d6499299c72fec860e00b48e8d0a5be3c49382071d2431c6738cbc4da1206a5",
+  "chosenDirectionId": "morning-proof-desk",
+  "desktopScreenshotPath": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/morning-proof-desk.desktop.png",
+  "mobileScreenshotPath": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/morning-proof-desk.mobile.png",
+  "allConceptScreenshots": [
+    "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/morning-proof-desk.desktop.png",
+    "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/morning-proof-desk.mobile.png",
+    "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/night-signal-theatre.desktop.png",
+    "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/night-signal-theatre.mobile.png",
+    "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/growth-bulletin.desktop.png",
+    "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/growth-bulletin.mobile.png",
+    "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/pilot-console.desktop.png",
+    "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/pilot-console.mobile.png"
+  ],
+  "scores": {
+    "variability": 9.1,
+    "truth": 9.4,
+    "mobile": 8.8,
+    "commercialStrength": 9.0
+  },
+  "similarityCheck": {
+    "status": "pass",
+    "method": "manual visual review against Mobbin shortlist",
+    "summary": "The concept remixes Mobbin-derived ingredients into a Five to Nine proof desk. It does not copy source brands, product claims, logos, or exact layouts."
+  },
+  "truthCheck": {
+    "status": "pass",
+    "summary": "The concept keeps Five to Nine in pilot-readiness, uses Enter pilot and Search public index CTAs, and keeps checkout and WhatsApp delivery marked as gated until verified."
+  },
+  "humanApproval": {
+    "status": "missing",
+    "requiredFrom": "Nish",
+    "question": "Approve Morning Proof Desk as the direction to implement in the live Five to Nine marketing route?"
+  },
+  "qaStatus": "review",
+  "blockingReason": "Concept proof is complete, but external use and deployment stay blocked until the direction is human-approved and implemented in the actual 0509 app."
+}

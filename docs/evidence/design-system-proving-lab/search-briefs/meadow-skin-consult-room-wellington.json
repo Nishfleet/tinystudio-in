@@ -1,0 +1,111 @@
+{
+  "schemaVersion": "mobbin.mobbin-search-brief.v1",
+  "businessId": "meadow-skin-consult-room-wellington",
+  "businessName": "Meadow Skin Consult Room",
+  "businessModel": "service",
+  "category": "aesthetics",
+  "subcategory": "skin consultations, facials, peels, and treatment planning",
+  "targetCustomerDecision": "Should a first-time client book a skin consultation before choosing a facial, peel, or treatment plan?",
+  "primaryAction": "enquire",
+  "sourceProvider": "Mobbin Pro MCP",
+  "platform": "web",
+  "requiredQueryAngles": [
+    "niche",
+    "page-job",
+    "tone",
+    "constraint"
+  ],
+  "requiredRawCandidates": {
+    "min": 12,
+    "max": 20
+  },
+  "requiredShortlist": {
+    "min": 6,
+    "max": 8
+  },
+  "requiredAntiReferences": 2,
+  "requiredIngredientLayers": [
+    "business-job",
+    "information-architecture",
+    "content-strategy",
+    "voice-and-tone",
+    "typography",
+    "layout-structure",
+    "spacing-system",
+    "responsive-behavior",
+    "color-system",
+    "surfaces-and-materials",
+    "depth",
+    "shape",
+    "component-anatomy",
+    "component-states",
+    "interaction-model",
+    "motion",
+    "media-direction",
+    "iconography",
+    "illustration-graphics",
+    "proof-architecture",
+    "cta-system",
+    "forms-and-lead-capture",
+    "accessibility",
+    "localization-and-formatting",
+    "seo-aeo-metadata",
+    "performance",
+    "implementation-tokens",
+    "governance"
+  ],
+  "collectionPolicy": {
+    "sourceCategory": "Mobbin Pro web platform / websites category",
+    "strategy": "wide-pull-then-compress",
+    "minimumReturnedScreensAcrossQueries": 32,
+    "minimumUniqueRawPoolScreens": 20,
+    "packetRawCandidates": {
+      "min": 12,
+      "max": 20
+    },
+    "recommendedChunkSize": 8,
+    "chunkRule": "Use repeated Mobbin MCP calls with exclude_screen_ids when one large pull times out; chunking is allowed, narrowing the search to save transcript space is not.",
+    "transcriptPolicy": "Save the full raw Mobbin metadata and links in raw-pull-log.json. The chat/report should show only counts, hashes, shortlist, and blockers."
+  },
+  "queries": [
+    {
+      "angle": "niche",
+      "query": "aesthetics skin consultations, facials, peels, and treatment planning service marketing website homepage enquire CTA landing page website inspiration",
+      "mode": "deep",
+      "platform": "web",
+      "minimumRawCandidates": 12,
+      "targetRawCandidates": 20
+    },
+    {
+      "angle": "page-job",
+      "query": "enquire CTA homepage with trust proof, service or product menu, and local customer decision path website",
+      "mode": "deep",
+      "platform": "web",
+      "minimumRawCandidates": 12,
+      "targetRawCandidates": 20
+    },
+    {
+      "angle": "tone",
+      "query": "premium credible owner-led service business landing page website",
+      "mode": "deep",
+      "platform": "web",
+      "minimumRawCandidates": 12,
+      "targetRawCandidates": 20
+    },
+    {
+      "angle": "constraint",
+      "query": "regulated-adjacent claims result-photo temptation consult-first decision responsive mobile-first homepage website not dashboard not app",
+      "mode": "deep",
+      "platform": "web",
+      "minimumRawCandidates": 12,
+      "targetRawCandidates": 20
+    }
+  ],
+  "noCopyRules": [
+    "Do not copy source brands, logos, product claims, trust claims, screenshots, or exact layouts.",
+    "Do not use Mobbin reference proof as business proof.",
+    "Every selected ingredient must map to this business job or a quality requirement."
+  ],
+  "briefHash": "128b829214553c4ef50039c16545e79d9d99dd7113999012d986f7dc316b79c9",
+  "businessHash": "657ffac756336e1961872fb2665469830f3a7510c5951c62bc87207abceeb0be"
+}

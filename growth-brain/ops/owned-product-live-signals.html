@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Owned Product Live Signals</title>
+  <style>
+    :root { color-scheme: light; --ink:#14161a; --muted:#667085; --line:#d8dee8; --paper:#f7f9fc; --good:#0f7b45; --bad:#b42318; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:#fff; color:var(--ink); font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { max-width:1120px; margin:0 auto; padding:28px 18px 44px; }
+    h1 { margin:0; font-size:clamp(30px,4vw,46px); letter-spacing:0; }
+    p { color:var(--muted); max-width:820px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; margin:24px 0; }
+    .card { border:1px solid var(--line); background:var(--paper); border-radius:8px; padding:16px; }
+    .card b { display:block; font-size:34px; }
+    .pass { color:var(--good); font-weight:800; }
+    .fail { color:var(--bad); font-weight:800; }
+    table { width:100%; border-collapse:collapse; margin-top:18px; font-size:14px; }
+    th, td { border-bottom:1px solid var(--line); padding:10px; text-align:left; vertical-align:top; }
+    th { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.04em; }
+    code { white-space:normal; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Owned Product Live Signals</h1>
+    <p>Delivery proof only. These checks show public owned-product proof surfaces are live right now. They do not prove revenue, market demand, or paid-client retention.</p>
+    <section class="grid">
+
+      <article class="card">
+        <span>AI Converter</span>
+        <b>3/3</b>
+        <p>clients/ai-converter/research/owned-live-signals.md</p>
+      </article>
+      <article class="card">
+        <span>SiteRep</span>
+        <b>2/2</b>
+        <p>clients/siterep/research/owned-live-signals.md</p>
+      </article>
+      <article class="card">
+        <span>Five to Nine 0509</span>
+        <b>2/2</b>
+        <p>clients/five-to-nine-0509/research/owned-live-signals.md</p>
+      </article>
+    </section>
+    <table>
+      <thead><tr><th>Product</th><th>Surface</th><th>Status</th><th>HTTP</th><th>Time</th><th>URL</th><th>Missing Terms</th></tr></thead>
+      <tbody>
+
+        <tr>
+          <td>AI Converter</td>
+          <td>Homepage</td>
+          <td class="pass">pass</td>
+          <td>200</td>
+          <td>128ms</td>
+          <td><code>https://aiconverter.app/</code></td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td>AI Converter</td>
+          <td>Accounting wedge page</td>
+          <td class="pass">pass</td>
+          <td>200</td>
+          <td>49ms</td>
+          <td><code>https://aiconverter.app/bank-statement-converter-for-bookkeepers/</code></td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td>AI Converter</td>
+          <td>AI-readable context</td>
+          <td class="pass">pass</td>
+          <td>200</td>
+          <td>24ms</td>
+          <td><code>https://aiconverter.app/llms.txt</code></td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td>SiteRep</td>
+          <td>Homepage</td>
+          <td class="pass">pass</td>
+          <td>200</td>
+          <td>353ms</td>
+          <td><code>https://siterep.net/</code></td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td>SiteRep</td>
+          <td>AI-readable context</td>
+          <td class="pass">pass</td>
+          <td>200</td>
+          <td>128ms</td>
+          <td><code>https://siterep.net/llms.txt</code></td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td>Five to Nine 0509</td>
+          <td>Homepage</td>
+          <td class="pass">pass</td>
+          <td>200</td>
+          <td>1876ms</td>
+          <td><code>https://0509.in/</code></td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td>Five to Nine 0509</td>
+          <td>Public health</td>
+          <td class="pass">pass</td>
+          <td>200</td>
+          <td>114ms</td>
+          <td><code>https://0509.in/api/health</code></td>
+          <td>-</td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+</body>
+</html>

@@ -1,0 +1,228 @@
+{
+  "schemaVersion": "mobbin.mobbin-pro.per-redesign-reference-packet.v1",
+  "sourceProvider": "Mobbin Pro MCP",
+  "platform": "web",
+  "businessId": "ledger-lane-bookkeepers-edinburgh",
+  "businessName": "Ledger Lane Bookkeepers",
+  "businessHash": "ae208070b637868aca48a9476c96c5814b678af69d10de868f63b9efe57b4221",
+  "searchBriefHash": "10592d40c17fe5fcdac5534fe1e2928d8b0d578e96687c41cc598de1b4d6903f",
+  "generatedAt": "2026-05-19T01:39:10Z",
+  "rawPullLogPath": "docs/evidence/design-system-proving-lab/reference-runs/latest/ledger-lane-bookkeepers-edinburgh/raw-pull-log.json",
+  "rawPullLogHash": "bde3bd9581e1c78e37f55d6d76287f34a7c67388ab2b5d543e76547af758c011",
+  "queryLog": [
+    {
+      "angle": "niche",
+      "query": "professional-service bookkeeping, payroll setup, and monthly accounts support for small shops service marketing website homepage enquire CTA landing page website inspiration",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:39:10Z"
+    },
+    {
+      "angle": "page-job",
+      "query": "enquire CTA homepage with trust proof, service or product menu, and local customer decision path website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:39:10Z"
+    },
+    {
+      "angle": "tone",
+      "query": "premium credible owner-led service business landing page website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:39:10Z"
+    },
+    {
+      "angle": "constraint",
+      "query": "licensed-specialist boundary low-photo category recurring service package clarity responsive mobile-first homepage website not dashboard not app",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:39:10Z"
+    }
+  ],
+  "rawCandidates": [
+    { "screenId": "9f10df1a-9e14-4ce6-a020-c80f83bf0fa9", "mobbinUrl": "https://mobbin.com/screens/9f10df1a-9e14-4ce6-a020-c80f83bf0fa9", "sourceUrl": "https://mobbin.com/screens/9f10df1a-9e14-4ce6-a020-c80f83bf0fa9", "imageUrl": "https://mobbin.com/api/mcp/short/7hZfJyk2", "appName": "Wave", "selectionReason": "Closest advisory-service pattern for bookkeeping help, consult CTA, and simple getting-started flow." },
+    { "screenId": "7fe31123-4016-474b-b818-f0807021ce64", "mobbinUrl": "https://mobbin.com/screens/7fe31123-4016-474b-b818-f0807021ce64", "sourceUrl": "https://mobbin.com/screens/7fe31123-4016-474b-b818-f0807021ce64", "imageUrl": "https://mobbin.com/api/mcp/short/jADaUejg", "appName": "Origin", "selectionReason": "Low-photo tax filing page shows how to handle specialist boundaries with calm artifacts." },
+    { "screenId": "380c20de-7066-4ab8-ac57-908e77f6cf7a", "mobbinUrl": "https://mobbin.com/screens/380c20de-7066-4ab8-ac57-908e77f6cf7a", "sourceUrl": "https://mobbin.com/screens/380c20de-7066-4ab8-ac57-908e77f6cf7a", "imageUrl": "https://mobbin.com/api/mcp/short/UHRYm5rg", "appName": "Wave", "selectionReason": "Small-business finance homepage gives a friendly non-corporate form and illustration system." },
+    { "screenId": "d1f88c4a-a5dc-4a1c-a5f1-f0aaa33cbae0", "mobbinUrl": "https://mobbin.com/screens/d1f88c4a-a5dc-4a1c-a5f1-f0aaa33cbae0", "sourceUrl": "https://mobbin.com/screens/d1f88c4a-a5dc-4a1c-a5f1-f0aaa33cbae0", "imageUrl": "https://mobbin.com/api/mcp/short/67t0GzeY", "appName": "Causal", "selectionReason": "Financial-service page with plain business questions and tabs maps well to cleanup, payroll, and monthly support." },
+    { "screenId": "7f33704d-62da-4b87-97aa-7da05887da71", "mobbinUrl": "https://mobbin.com/screens/7f33704d-62da-4b87-97aa-7da05887da71", "sourceUrl": "https://mobbin.com/screens/7f33704d-62da-4b87-97aa-7da05887da71", "imageUrl": "https://mobbin.com/api/mcp/short/ku3V0ynZ", "appName": "Expensify", "selectionReason": "Accountant-program page provides a direct professional-service editorial model." },
+    { "screenId": "6a69b9c9-b224-4b41-9c19-18509e6d5592", "mobbinUrl": "https://mobbin.com/screens/6a69b9c9-b224-4b41-9c19-18509e6d5592", "sourceUrl": "https://mobbin.com/screens/6a69b9c9-b224-4b41-9c19-18509e6d5592", "imageUrl": "https://mobbin.com/api/mcp/short/E8XxSrBD", "appName": "Wave", "selectionReason": "Expense/receipt page shows how to make bookkeeping tasks tangible without using fake office photos." },
+    { "screenId": "b43a5493-ba3c-4f16-bfd3-e1993276b29c", "mobbinUrl": "https://mobbin.com/screens/b43a5493-ba3c-4f16-bfd3-e1993276b29c", "sourceUrl": "https://mobbin.com/screens/b43a5493-ba3c-4f16-bfd3-e1993276b29c", "imageUrl": "https://mobbin.com/api/mcp/short/mVuBqczj", "appName": "7shifts", "selectionReason": "Payroll-specific page is useful for payroll setup benefit structure and icon rows." },
+    { "screenId": "16b57997-c4f9-4c93-9e97-fb02bd1277e3", "mobbinUrl": "https://mobbin.com/screens/16b57997-c4f9-4c93-9e97-fb02bd1277e3", "sourceUrl": "https://mobbin.com/screens/16b57997-c4f9-4c93-9e97-fb02bd1277e3", "imageUrl": "https://mobbin.com/api/mcp/short/G7ev1Bm6", "appName": "Superhuman Mail", "selectionReason": "Talk-to-sales form gives a compact enquiry pattern for service triage." },
+    { "screenId": "370972da-101d-4bfc-930f-aecb80c9e87f", "mobbinUrl": "https://mobbin.com/screens/370972da-101d-4bfc-930f-aecb80c9e87f", "sourceUrl": "https://mobbin.com/screens/370972da-101d-4bfc-930f-aecb80c9e87f", "imageUrl": "https://mobbin.com/api/mcp/short/NkcTiVv5", "appName": "Mixpanel", "selectionReason": "Dashboard-artifact proof treatment can inspire a monthly books snapshot without copying SaaS proof." },
+    { "screenId": "e888ea97-01f1-4dcc-a82e-f20d21ea71a0", "mobbinUrl": "https://mobbin.com/screens/e888ea97-01f1-4dcc-a82e-f20d21ea71a0", "sourceUrl": "https://mobbin.com/screens/e888ea97-01f1-4dcc-a82e-f20d21ea71a0", "imageUrl": "https://mobbin.com/api/mcp/short/oeIu2MjO", "appName": "Assembly", "selectionReason": "Testimonial carousel is useful only when proof is owner-supplied; otherwise an anti-pattern." },
+    { "screenId": "eda378d0-2f7a-409e-ab22-197ead0caca9", "mobbinUrl": "https://mobbin.com/screens/eda378d0-2f7a-409e-ab22-197ead0caca9", "sourceUrl": "https://mobbin.com/screens/eda378d0-2f7a-409e-ab22-197ead0caca9", "imageUrl": "https://mobbin.com/api/mcp/short/GRizJYmk", "appName": "Relume", "selectionReason": "Wireframe-style banking page shows service package and FAQ structure without relying on photos." },
+    { "screenId": "04b4c661-32b6-4faf-8e0c-17b061fe8978", "mobbinUrl": "https://mobbin.com/screens/04b4c661-32b6-4faf-8e0c-17b061fe8978", "sourceUrl": "https://mobbin.com/screens/04b4c661-32b6-4faf-8e0c-17b061fe8978", "imageUrl": "https://mobbin.com/api/mcp/short/byMRNOMA", "appName": "HoneyBook", "selectionReason": "Three-step file handoff and FAQ pattern maps well to cleanup review intake." },
+    { "screenId": "e03c0e93-82d2-4c20-882f-6395ea8c4303", "mobbinUrl": "https://mobbin.com/screens/e03c0e93-82d2-4c20-882f-6395ea8c4303", "sourceUrl": "https://mobbin.com/screens/e03c0e93-82d2-4c20-882f-6395ea8c4303", "imageUrl": "https://mobbin.com/api/mcp/short/BcG0PWcL", "appName": "Contra", "selectionReason": "Independent service-provider page helps frame a small owner-led service without enterprise polish." },
+    { "screenId": "0d25d5b6-8140-46ae-880a-03483a11c799", "mobbinUrl": "https://mobbin.com/screens/0d25d5b6-8140-46ae-880a-03483a11c799", "sourceUrl": "https://mobbin.com/screens/0d25d5b6-8140-46ae-880a-03483a11c799", "imageUrl": "https://mobbin.com/api/mcp/short/VltrKbTy", "appName": "Medium", "selectionReason": "Simple recurring plan comparison gives a calm monthly-support pricing reference." },
+    { "screenId": "6d43f9dc-91b2-4231-9a04-7cd2459c8b5a", "mobbinUrl": "https://mobbin.com/screens/6d43f9dc-91b2-4231-9a04-7cd2459c8b5a", "sourceUrl": "https://mobbin.com/screens/6d43f9dc-91b2-4231-9a04-7cd2459c8b5a", "imageUrl": "https://mobbin.com/api/mcp/short/8uU4PAfN", "appName": "Circle", "selectionReason": "Feature comparison table can inform recurring package clarity, but should stay public-page friendly." },
+    { "screenId": "8b2bdf72-3b33-4cbe-be7f-d41f8be65b55", "mobbinUrl": "https://mobbin.com/screens/8b2bdf72-3b33-4cbe-be7f-d41f8be65b55", "sourceUrl": "https://mobbin.com/screens/8b2bdf72-3b33-4cbe-be7f-d41f8be65b55", "imageUrl": "https://mobbin.com/api/mcp/short/1XQhgVsY", "appName": "Lovable", "selectionReason": "Anti-reference for generic AI service cards and unsupported polish." },
+    { "screenId": "4877a61c-e61d-4312-9f17-3bf086d7cab1", "mobbinUrl": "https://mobbin.com/screens/4877a61c-e61d-4312-9f17-3bf086d7cab1", "sourceUrl": "https://mobbin.com/screens/4877a61c-e61d-4312-9f17-3bf086d7cab1", "imageUrl": "https://mobbin.com/api/mcp/short/JjuXaMZD", "appName": "Spotify", "selectionReason": "Anti-reference for consumer subscription price cards that would cheapen professional service trust." }
+  ],
+  "shortlist": [
+    {
+      "screenId": "9f10df1a-9e14-4ce6-a020-c80f83bf0fa9",
+      "mobbinUrl": "https://mobbin.com/screens/9f10df1a-9e14-4ce6-a020-c80f83bf0fa9",
+      "sourceUrl": "https://mobbin.com/screens/9f10df1a-9e14-4ce6-a020-c80f83bf0fa9",
+      "appName": "Wave",
+      "structureFamily": "advisor-consultation page",
+      "fitScores": { "job": 9, "niche": 10, "firstViewport": 8, "cta": 9, "proof": 8, "mobile": 8, "distinctiveness": 7, "buildability": 9, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "business-job", "ingredient": "Lead with the shop owner's real decision: monthly help, payroll setup, or cleanup review." },
+        { "layer": "information-architecture", "ingredient": "Use advisor-style navigation from problem to service path to simple next step." },
+        { "layer": "cta-system", "ingredient": "The primary action should be request help or start enquiry, not instant purchase." },
+        { "layer": "forms-and-lead-capture", "ingredient": "Ask for the bookkeeping pain, business type, and callback details before offering a specialist handoff." }
+      ],
+      "bannedUses": [ "Do not copy Wave branding, app sidebar, support-agent illustration, 100% accurate claim, or expert guarantee." ]
+    },
+    {
+      "screenId": "7fe31123-4016-474b-b818-f0807021ce64",
+      "mobbinUrl": "https://mobbin.com/screens/7fe31123-4016-474b-b818-f0807021ce64",
+      "sourceUrl": "https://mobbin.com/screens/7fe31123-4016-474b-b818-f0807021ce64",
+      "appName": "Origin",
+      "structureFamily": "specialist task hero",
+      "fitScores": { "job": 8, "niche": 9, "firstViewport": 8, "cta": 8, "proof": 7, "mobile": 8, "distinctiveness": 8, "buildability": 8, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "governance", "ingredient": "Keep licensed-specialist work review-needed; do not promise tax, legal, or accounting outcomes without supplied proof." },
+        { "layer": "proof-architecture", "ingredient": "Use task clarity, file readiness, and process transparency as proof instead of certifications." },
+        { "layer": "media-direction", "ingredient": "Low-photo financial artifacts can replace fake office portraits or invented staff images." },
+        { "layer": "illustration-graphics", "ingredient": "Simple calculator, ledger, receipt, or payroll artifacts can carry the page visually." }
+      ],
+      "bannedUses": [ "Do not copy tax-filing guarantees, powered-by partner marks, deadline urgency, refund claims, or federal/state language." ]
+    },
+    {
+      "screenId": "380c20de-7066-4ab8-ac57-908e77f6cf7a",
+      "mobbinUrl": "https://mobbin.com/screens/380c20de-7066-4ab8-ac57-908e77f6cf7a",
+      "sourceUrl": "https://mobbin.com/screens/380c20de-7066-4ab8-ac57-908e77f6cf7a",
+      "appName": "Wave",
+      "structureFamily": "small-business finance hero",
+      "fitScores": { "job": 8, "niche": 9, "firstViewport": 9, "cta": 8, "proof": 7, "mobile": 7, "distinctiveness": 8, "buildability": 8, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "typography", "ingredient": "Use friendly, readable finance typography that feels small-business practical rather than bank-corporate." },
+        { "layer": "color-system", "ingredient": "Keep a calm neutral base with one confident bookkeeping accent for action and status." },
+        { "layer": "implementation-tokens", "ingredient": "Tokenize form fields, ledger cards, service chips, and status badges so package variants stay consistent." },
+        { "layer": "accessibility", "ingredient": "Forms need explicit labels, clear error states, and large touch targets for shop owners on mobile." }
+      ],
+      "bannedUses": [ "Do not copy free-account signup, Google auth, Wave product screenshots, or money-like-a-boss language." ]
+    },
+    {
+      "screenId": "d1f88c4a-a5dc-4a1c-a5f1-f0aaa33cbae0",
+      "mobbinUrl": "https://mobbin.com/screens/d1f88c4a-a5dc-4a1c-a5f1-f0aaa33cbae0",
+      "sourceUrl": "https://mobbin.com/screens/d1f88c4a-a5dc-4a1c-a5f1-f0aaa33cbae0",
+      "appName": "Causal",
+      "structureFamily": "financial-question sections",
+      "fitScores": { "job": 8, "niche": 8, "firstViewport": 8, "cta": 8, "proof": 7, "mobile": 7, "distinctiveness": 8, "buildability": 8, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "content-strategy", "ingredient": "Frame sections around owner questions like 'Are my books clean enough for payroll?' instead of abstract accounting features." },
+        { "layer": "voice-and-tone", "ingredient": "Use plain, calm financial language with no scare tactics or jargon-heavy accountant copy." },
+        { "layer": "layout-structure", "ingredient": "Alternate service tabs with concrete financial question panels and one enquiry path." },
+        { "layer": "performance", "ingredient": "Use static ledger/report artifacts instead of heavy dashboards or animated calculators for the first proof packet." }
+      ],
+      "bannedUses": [ "Do not copy SaaS financial-modeling claims, ARR language, QuickBooks/Xero integrations, or enterprise forecasting proof." ]
+    },
+    {
+      "screenId": "7f33704d-62da-4b87-97aa-7da05887da71",
+      "mobbinUrl": "https://mobbin.com/screens/7f33704d-62da-4b87-97aa-7da05887da71",
+      "sourceUrl": "https://mobbin.com/screens/7f33704d-62da-4b87-97aa-7da05887da71",
+      "appName": "Expensify",
+      "structureFamily": "professional-service editorial page",
+      "fitScores": { "job": 8, "niche": 9, "firstViewport": 8, "cta": 8, "proof": 7, "mobile": 7, "distinctiveness": 7, "buildability": 8, "truth": 7 },
+      "ingredientLedger": [
+        { "layer": "surfaces-and-materials", "ingredient": "Use quiet editorial surfaces and long-form service explanation rather than shiny SaaS cards." },
+        { "layer": "depth", "ingredient": "Let hierarchy come from sidebar/nav, whitespace, and document-like panels instead of heavy shadows." },
+        { "layer": "localization-and-formatting", "ingredient": "Use Edinburgh, shop-owner, payroll, monthly accounts, and UK-format wording only when fixture or owner-approved." },
+        { "layer": "seo-aeo-metadata", "ingredient": "Mirror monthly bookkeeping, payroll setup, and cleanup review as visible headings and agent-readable service facts." }
+      ],
+      "bannedUses": [ "Do not copy accountant program claims, partner benefits, revenue-share language, CPA wording, or meeting photography." ]
+    },
+    {
+      "screenId": "04b4c661-32b6-4faf-8e0c-17b061fe8978",
+      "mobbinUrl": "https://mobbin.com/screens/04b4c661-32b6-4faf-8e0c-17b061fe8978",
+      "sourceUrl": "https://mobbin.com/screens/04b4c661-32b6-4faf-8e0c-17b061fe8978",
+      "appName": "HoneyBook",
+      "structureFamily": "file-handoff process page",
+      "fitScores": { "job": 8, "niche": 7, "firstViewport": 7, "cta": 8, "proof": 7, "mobile": 8, "distinctiveness": 7, "buildability": 9, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "component-states", "ingredient": "Enquiry intake needs states for missing documents, payroll-needed, cleanup-needed, and monthly-support-ready." },
+        { "layer": "interaction-model", "ingredient": "Guide owners through upload/describe/review steps without implying files are processed automatically." },
+        { "layer": "motion", "ingredient": "If animated, only reveal next-step progress or FAQ expansion; avoid decorative financial motion." },
+        { "layer": "spacing-system", "ingredient": "Use generous step spacing and FAQ rhythm so specialist boundaries feel calm." }
+      ],
+      "bannedUses": [ "Do not copy HoneyBook migration promises, file size limits, smart-template claims, or upload automation wording." ]
+    },
+    {
+      "screenId": "eda378d0-2f7a-409e-ab22-197ead0caca9",
+      "mobbinUrl": "https://mobbin.com/screens/eda378d0-2f7a-409e-ab22-197ead0caca9",
+      "sourceUrl": "https://mobbin.com/screens/eda378d0-2f7a-409e-ab22-197ead0caca9",
+      "appName": "Relume",
+      "structureFamily": "package and FAQ wireframe",
+      "fitScores": { "job": 8, "niche": 7, "firstViewport": 7, "cta": 7, "proof": 7, "mobile": 8, "distinctiveness": 7, "buildability": 9, "truth": 9 },
+      "ingredientLedger": [
+        { "layer": "component-anatomy", "ingredient": "Package rows should show service, fit, cadence, required inputs, and enquiry action." },
+        { "layer": "responsive-behavior", "ingredient": "Package comparison must collapse to stacked mobile rows with the enquiry action repeated." },
+        { "layer": "shape", "ingredient": "Use restrained rectangular panels and small badges; avoid rounded SaaS toy-card styling." },
+        { "layer": "forms-and-lead-capture", "ingredient": "FAQ and enquiry should answer document readiness before asking for contact details." }
+      ],
+      "bannedUses": [ "Do not expose wireframe placeholders, generic banking copy, fake prices, or lorem-style plan features." ]
+    },
+    {
+      "screenId": "0d25d5b6-8140-46ae-880a-03483a11c799",
+      "mobbinUrl": "https://mobbin.com/screens/0d25d5b6-8140-46ae-880a-03483a11c799",
+      "sourceUrl": "https://mobbin.com/screens/0d25d5b6-8140-46ae-880a-03483a11c799",
+      "appName": "Medium",
+      "structureFamily": "simple recurring plan choice",
+      "fitScores": { "job": 7, "niche": 7, "firstViewport": 8, "cta": 8, "proof": 7, "mobile": 8, "distinctiveness": 7, "buildability": 8, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "iconography", "ingredient": "Use checkmarks only for factual service inclusions, not implied guarantees." },
+        { "layer": "component-anatomy", "ingredient": "Monthly support cards need cadence, included bookkeeping tasks, exclusions, and enquire CTA." },
+        { "layer": "proof-architecture", "ingredient": "Benefits checklist can be factual service scope rather than social proof." },
+        { "layer": "governance", "ingredient": "Pricing, certification, tax filing, and payroll compliance claims stay hidden unless source-backed." }
+      ],
+      "bannedUses": [ "Do not copy Medium membership benefits, USD pricing, green buttons, creator/publication claims, or subscription positioning." ]
+    }
+  ],
+  "antiReferences": [
+    {
+      "screenId": "8b2bdf72-3b33-4cbe-be7f-d41f8be65b55",
+      "mobbinUrl": "https://mobbin.com/screens/8b2bdf72-3b33-4cbe-be7f-d41f8be65b55",
+      "appName": "Lovable",
+      "rejectionReason": "Generic AI service-card layout would make bookkeeping feel fake and unsupported."
+    },
+    {
+      "screenId": "4877a61c-e61d-4312-9f17-3bf086d7cab1",
+      "mobbinUrl": "https://mobbin.com/screens/4877a61c-e61d-4312-9f17-3bf086d7cab1",
+      "appName": "Spotify",
+      "rejectionReason": "Consumer subscription pricing cards are too cheap-feeling for specialist recurring support."
+    },
+    {
+      "screenId": "58e8a060-a1cc-4e26-ba46-2e61a3c94e85",
+      "mobbinUrl": "https://mobbin.com/screens/58e8a060-a1cc-4e26-ba46-2e61a3c94e85",
+      "appName": "Churnkey",
+      "rejectionReason": "Outcome percentages and growth claims would be unsafe for a fixture bookkeeping service."
+    },
+    {
+      "screenId": "d7b4520d-fad1-42e1-864d-5c67fb761c59",
+      "mobbinUrl": "https://mobbin.com/screens/d7b4520d-fad1-42e1-864d-5c67fb761c59",
+      "appName": "Webflow",
+      "rejectionReason": "Dark portfolio styling and quote CTA are the wrong trust shape for a small-shop bookkeeping decision."
+    }
+  ],
+  "remixDirection": {
+    "summary": "A calm, document-led bookkeeping page that routes small-shop owners into monthly support, payroll setup, or cleanup review, using process clarity and service scope as proof while avoiding licensed-specialist overclaims.",
+    "selectedMoves": [
+      "Wave advisor-style consultation flow rebuilt for bookkeeping triage.",
+      "Origin low-photo specialist-task artifact adapted to bookkeeping, payroll, and cleanup documents.",
+      "Causal's plain financial question rhythm adapted to shop-owner pain points.",
+      "HoneyBook's file-handoff steps adapted to cleanup review intake.",
+      "Medium and Relume plan clarity adapted to monthly bookkeeping support without fake prices."
+    ],
+    "explicitRejects": [
+      "No invented certifications, CPA/licensed status, tax advice, payroll compliance guarantees, reviews, ratings, client counts, or named staff.",
+      "No copied SaaS logos, enterprise dashboard proof, automatic integration claims, or outcome percentages.",
+      "No exact layout copy from any shortlisted Mobbin screen."
+    ]
+  }
+}

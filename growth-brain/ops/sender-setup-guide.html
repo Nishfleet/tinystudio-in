@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TinyStudio Sender Setup Guide</title>
+  <link rel="icon" href="data:," />
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #171717;
+      --muted: #5f6368;
+      --line: #d9ded8;
+      --paper: #faf9f5;
+      --panel: #ffffff;
+      --accent: #0d6b57;
+      --warn: #b43b2d;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.45;
+    }
+    header {
+      border-bottom: 1px solid var(--line);
+      padding: 22px 24px;
+      background: rgba(250, 249, 245, 0.97);
+    }
+    main {
+      width: min(960px, calc(100% - 32px));
+      margin: 24px auto 64px;
+      display: grid;
+      gap: 16px;
+    }
+    h1 { margin: 0; font-size: 28px; letter-spacing: 0; }
+    h2 { margin: 0 0 10px; font-size: 18px; letter-spacing: 0; }
+    .sub, small { color: var(--muted); }
+    section, .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 16px;
+    }
+    .status {
+      border-color: var(--warn);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .card span, .card small { display: block; }
+    .card strong { display: block; margin: 6px 0; font-size: 18px; }
+    code {
+      background: #f4f5f1;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 2px 5px;
+    }
+    li + li { margin-top: 8px; }
+    a { color: var(--accent); }
+    @media (max-width: 760px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Sender Setup Guide</h1>
+    <p class="sub">Generated 2026-05-29 for hello@tinystudio.io.</p>
+  </header>
+  <main>
+    <section class="status">
+      <h2>Current Status</h2>
+      <p><strong>needs work</strong> · tinystudio.io · cap 20/day</p>
+    </section>
+    <section>
+      <h2>DNS Checks</h2>
+      <div class="grid">
+      <div class="card">
+        <span>SPF</span>
+        <strong>ready</strong>
+        <small>tinystudio.io</small>
+      </div>
+
+
+      <div class="card">
+        <span>DMARC</span>
+        <strong>ready</strong>
+        <small>_dmarc.tinystudio.io</small>
+      </div>
+
+
+      <div class="card">
+        <span>DKIM discovery</span>
+        <strong>needs work</strong>
+        <small>common selectors at _domainkey.tinystudio.io</small>
+      </div>
+</div>
+    </section>
+    <section>
+      <h2>Fix First</h2>
+      <ol>
+      <li><strong>missing physical postal address</strong><br>Commercial email needs a valid physical postal address. Use a business address, PO box, or private mailbox before cold email.</li>
+
+
+      <li><strong>DKIM selector not configured</strong><br>Set dkimSelector after enabling DKIM in the mail provider. No common DKIM selectors were found in DNS.</li>
+</ol>
+    </section>
+    <section>
+      <h2>DKIM Discovery</h2>
+      <div class="grid"><p>No common DKIM selector found in DNS yet.</p></div>
+      <p><code>npm run send:configure -- --physical-address=&quot;...&quot; --dkim-selector=... --dry-run</code></p>
+    </section>
+    <section>
+      <h2>Order</h2>
+      <ol>
+        <li>Add the sender postal address in <code>agency-config.json</code>.</li>
+        <li>Enable DKIM in the mail provider and copy the selector.</li>
+        <li>Save the selector as <code>dkimSelector</code>.</li>
+        <li>Add the DKIM TXT record in Cloudflare if the provider gives one.</li>
+        <li>Run <code>npm run send:setup</code>.</li>
+      </ol>
+    </section>
+    <section>
+      <h2>Sources</h2>
+      <p><a href="https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business">FTC CAN-SPAM guide</a> · <a href="https://support.google.com/a/answer/174124">Google DKIM setup</a> · <a href="https://developers.cloudflare.com/dns/manage-dns-records/reference/dns-record-types/">Cloudflare TXT records</a></p>
+    </section>
+  </main>
+</body>
+</html>

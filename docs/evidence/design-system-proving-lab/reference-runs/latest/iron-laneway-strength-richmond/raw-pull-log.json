@@ -1,0 +1,93 @@
+{
+  "schemaVersion": "mobbin.mobbin-pro.raw-pull-log.v1",
+  "sourceProvider": "Mobbin Pro MCP",
+  "platform": "web",
+  "businessId": "iron-laneway-strength-richmond",
+  "businessName": "Iron Laneway Strength",
+  "businessHash": "f3b5adc4c79c652f5f72b6c08a6cd19051962f2e11d40147350214d85a121c12",
+  "searchBriefHash": "bca21c157a96e52807d91c88d3e98f0586c3e2c006d9dddfcb081c1dcd47a5ab",
+  "generatedAt": "2026-05-19T00:00:00Z",
+  "collectionPolicy": {
+    "strategy": "wide-pull-then-compress",
+    "minimumReturnedScreensAcrossQueries": 32,
+    "minimumUniqueRawPoolScreens": 20,
+    "chunkSize": "8 per required query angle",
+    "dedupeMethod": "Mobbin screen id with exclude_screen_ids across query angles"
+  },
+  "toolNotes": [
+    "All four required query angles were run through Mobbin Pro MCP with platform web and deep mode.",
+    "Later query runs used exclude_screen_ids from earlier runs to preserve raw-pool breadth."
+  ],
+  "totalReturned": 32,
+  "uniqueScreenCount": 32,
+  "queryRuns": [
+    {
+      "angle": "niche",
+      "query": "fitness beginner strength coaching, small-group training, and open-gym memberships service marketing website homepage book CTA landing page website inspiration",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "results": [
+        { "screenId": "4d33bcb9-723a-4e0c-8e51-1d8eb021e375", "mobbinUrl": "https://mobbin.com/screens/4d33bcb9-723a-4e0c-8e51-1d8eb021e375", "imageUrl": "https://mobbin.com/api/mcp/short/FTpVnV6m", "appName": "ClassPass", "platform": "web", "observedRole": "fitness proof/stat section with large outcome numbers and trial CTA" },
+        { "screenId": "df19530d-f5a4-41af-86ff-033f640a7f98", "mobbinUrl": "https://mobbin.com/screens/df19530d-f5a4-41af-86ff-033f640a7f98", "imageUrl": "https://mobbin.com/api/mcp/short/5cWxOCyc", "appName": "ClassPass", "platform": "web", "observedRole": "fitness how-it-works section with three numbered steps and device preview" },
+        { "screenId": "ea0217e0-5361-459e-8e6a-4eea4de2fc7b", "mobbinUrl": "https://mobbin.com/screens/ea0217e0-5361-459e-8e6a-4eea4de2fc7b", "imageUrl": "https://mobbin.com/api/mcp/short/hv5tbTxl", "appName": "ClassPass", "platform": "web", "observedRole": "featured studio card grid with class categories, location, ratings, and explore CTA" },
+        { "screenId": "70d8d56b-5c6b-4a3c-8e9e-6cf9629a9545", "mobbinUrl": "https://mobbin.com/screens/70d8d56b-5c6b-4a3c-8e9e-6cf9629a9545", "imageUrl": "https://mobbin.com/api/mcp/short/iMgJyn6Z", "appName": "ClassPass", "platform": "web", "observedRole": "studio fitness explainer with split image/text and oversized type" },
+        { "screenId": "07618baa-ea77-4afc-a17d-1bc305099273", "mobbinUrl": "https://mobbin.com/screens/07618baa-ea77-4afc-a17d-1bc305099273", "imageUrl": "https://mobbin.com/api/mcp/short/n1PVC0wx", "appName": "ClassPass", "platform": "web", "observedRole": "membership saving section with class reservation card and plan CTA" },
+        { "screenId": "0f2e71d1-e70c-421f-a2a9-06c04226b134", "mobbinUrl": "https://mobbin.com/screens/0f2e71d1-e70c-421f-a2a9-06c04226b134", "imageUrl": "https://mobbin.com/api/mcp/short/3dnUSA3C", "appName": "ClassPass", "platform": "web", "observedRole": "plan-selection hero with centered CTA and blue gradient field" },
+        { "screenId": "3b09cf6e-57d2-4a0c-a0f6-c2bfc2e885c8", "mobbinUrl": "https://mobbin.com/screens/3b09cf6e-57d2-4a0c-a0f6-c2bfc2e885c8", "imageUrl": "https://mobbin.com/api/mcp/short/RKJ1VXhF", "appName": "ClassPass", "platform": "web", "observedRole": "results-delivered split photo section with strong fitness imagery and plan CTA" },
+        { "screenId": "e1ba97c4-03e5-4e4e-8329-a4416b87679f", "mobbinUrl": "https://mobbin.com/screens/e1ba97c4-03e5-4e4e-8329-a4416b87679f", "imageUrl": "https://mobbin.com/api/mcp/short/ehjpwa0t", "appName": "ClassPass", "platform": "web", "observedRole": "lead-capture section for local studio guide with email and city fields" }
+      ]
+    },
+    {
+      "angle": "page-job",
+      "query": "book CTA homepage with trust proof, service or product menu, and local customer decision path website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "results": [
+        { "screenId": "d1ef7c5f-0de3-485c-bed1-d5a9253f5a24", "mobbinUrl": "https://mobbin.com/screens/d1ef7c5f-0de3-485c-bed1-d5a9253f5a24", "imageUrl": "https://mobbin.com/api/mcp/short/4lT1OHT1", "appName": "Fresha", "platform": "web", "observedRole": "booking homepage with service, location, date, time search and time-of-day filter" },
+        { "screenId": "c74b0208-22d4-4044-ae2f-1399b9daf5d5", "mobbinUrl": "https://mobbin.com/screens/c74b0208-22d4-4044-ae2f-1399b9daf5d5", "imageUrl": "https://mobbin.com/api/mcp/short/s4aobSBZ", "appName": "Hims", "platform": "web", "observedRole": "large percentage outcome proof hero with portrait and get-started CTA" },
+        { "screenId": "498008f7-fde7-4581-b70c-c8b5ab1d6904", "mobbinUrl": "https://mobbin.com/screens/498008f7-fde7-4581-b70c-c8b5ab1d6904", "imageUrl": "https://mobbin.com/api/mcp/short/CpdEX9yp", "appName": "Fresha", "platform": "web", "observedRole": "booking homepage idle state with treatment, location, date, and time controls" },
+        { "screenId": "a3b51edb-e3b8-4e1d-bf88-ce2d79b28a64", "mobbinUrl": "https://mobbin.com/screens/a3b51edb-e3b8-4e1d-bf88-ce2d79b28a64", "imageUrl": "https://mobbin.com/api/mcp/short/VegQK6vt", "appName": "Airbnb", "platform": "web", "observedRole": "experience detail page with host card, qualifications, reviews, and sticky reserve CTA" },
+        { "screenId": "79bf8e1a-be67-474a-93bb-704d504d802d", "mobbinUrl": "https://mobbin.com/screens/79bf8e1a-be67-474a-93bb-704d504d802d", "imageUrl": "https://mobbin.com/api/mcp/short/Z2fbRQPC", "appName": "Churnkey", "platform": "web", "observedRole": "SaaS conversion hero with primary and secondary CTA plus benefit cards" },
+        { "screenId": "355c6afb-63a2-4c90-bf86-148b617da7c0", "mobbinUrl": "https://mobbin.com/screens/355c6afb-63a2-4c90-bf86-148b617da7c0", "imageUrl": "https://mobbin.com/api/mcp/short/uffQ0YFW", "appName": "SavvyCal", "platform": "web", "observedRole": "editorial scheduling landing hero with oversized type, proof row, and single CTA" },
+        { "screenId": "8ef4767e-dc04-421d-a6d0-4fe3761c6d9c", "mobbinUrl": "https://mobbin.com/screens/8ef4767e-dc04-421d-a6d0-4fe3761c6d9c", "imageUrl": "https://mobbin.com/api/mcp/short/etQ2k4pX", "appName": "ClassPass", "platform": "web", "observedRole": "fitness and wellness collage hero with central offer card and two CTAs" },
+        { "screenId": "279eb3cd-59e0-4169-b80a-883e65f4313b", "mobbinUrl": "https://mobbin.com/screens/279eb3cd-59e0-4169-b80a-883e65f4313b", "imageUrl": "https://mobbin.com/api/mcp/short/urFum6ix", "appName": "Airtasker", "platform": "web", "observedRole": "service-provider marketing section with benefits, package card, and book action" }
+      ]
+    },
+    {
+      "angle": "tone",
+      "query": "premium credible owner-led service business landing page website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "results": [
+        { "screenId": "763c2d5f-64a6-4e0a-bc3a-478b73eda8a9", "mobbinUrl": "https://mobbin.com/screens/763c2d5f-64a6-4e0a-bc3a-478b73eda8a9", "imageUrl": "https://mobbin.com/api/mcp/short/Ft5sIizg", "appName": "Quartz", "platform": "web", "observedRole": "creative studio homepage with simple black type, two-column editorial rhythm, and content navigation" },
+        { "screenId": "059003c5-3de4-4d2b-9999-f4436b2af1f3", "mobbinUrl": "https://mobbin.com/screens/059003c5-3de4-4d2b-9999-f4436b2af1f3", "imageUrl": "https://mobbin.com/api/mcp/short/a8FhGa1b", "appName": "Wellfound", "platform": "web", "observedRole": "consultation service page with sidebar testimonial, progress tabs, and pricing cards" },
+        { "screenId": "9188623a-cebc-41b6-879d-b0f5fcfe3a62", "mobbinUrl": "https://mobbin.com/screens/9188623a-cebc-41b6-879d-b0f5fcfe3a62", "imageUrl": "https://mobbin.com/api/mcp/short/rGNHt7by", "appName": "Medium", "platform": "web", "observedRole": "membership marketing page with editorial type, testimonial strip, and direct CTA" },
+        { "screenId": "615afe90-5d1e-4ad3-b746-3762a738eecd", "mobbinUrl": "https://mobbin.com/screens/615afe90-5d1e-4ad3-b746-3762a738eecd", "imageUrl": "https://mobbin.com/api/mcp/short/BJmOYdOE", "appName": "Medium", "platform": "web", "observedRole": "membership story section with split content blocks and large serif CTA field" },
+        { "screenId": "950fec80-73e0-4de8-83a4-e98d6153d19b", "mobbinUrl": "https://mobbin.com/screens/950fec80-73e0-4de8-83a4-e98d6153d19b", "imageUrl": "https://mobbin.com/api/mcp/short/kXfp5Eh8", "appName": "Wellfound", "platform": "web", "observedRole": "consultation service tabs with recommendation chips and pricing sidebar" },
+        { "screenId": "0a916c2b-a5a8-446d-bae7-5a4c09975ff2", "mobbinUrl": "https://mobbin.com/screens/0a916c2b-a5a8-446d-bae7-5a4c09975ff2", "imageUrl": "https://mobbin.com/api/mcp/short/SPuvugib", "appName": "OpenTable", "platform": "web", "observedRole": "operator testimonial and plan section for service business management" },
+        { "screenId": "465357e1-7656-4bca-ba2b-778cd9e0707d", "mobbinUrl": "https://mobbin.com/screens/465357e1-7656-4bca-ba2b-778cd9e0707d", "imageUrl": "https://mobbin.com/api/mcp/short/FNvt12iM", "appName": "Deezer", "platform": "web", "observedRole": "dark subscription checkout page with loud purple wave and account alert" },
+        { "screenId": "a486f06b-d869-41a1-bb50-bb4619ffab58", "mobbinUrl": "https://mobbin.com/screens/a486f06b-d869-41a1-bb50-bb4619ffab58", "imageUrl": "https://mobbin.com/api/mcp/short/3bpv9WVL", "appName": "ClassPass", "platform": "web", "observedRole": "membership benefits split layout with photo collage and icon list" }
+      ]
+    },
+    {
+      "angle": "constraint",
+      "query": "outcome claim risk class vs membership decision facility-photo dependency responsive mobile-first homepage website not dashboard not app",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "results": [
+        { "screenId": "bb90900e-225c-4477-8e2e-2092aa473296", "mobbinUrl": "https://mobbin.com/screens/bb90900e-225c-4477-8e2e-2092aa473296", "imageUrl": "https://mobbin.com/api/mcp/short/yoq3sSj0", "appName": "Vanta", "platform": "web", "observedRole": "risk-proof SaaS hero with dashboard artifact, CTA, and soft lavender field" },
+        { "screenId": "4ec86703-b0fb-4a1e-bc5e-9c5962b7abff", "mobbinUrl": "https://mobbin.com/screens/4ec86703-b0fb-4a1e-bc5e-9c5962b7abff", "imageUrl": "https://mobbin.com/api/mcp/short/zWOJmBBM", "appName": "Square", "platform": "web", "observedRole": "risk manager explainer with icon columns and enroll CTA" },
+        { "screenId": "e4220651-2fde-476d-86f6-955a6f49d99f", "mobbinUrl": "https://mobbin.com/screens/e4220651-2fde-476d-86f6-955a6f49d99f", "imageUrl": "https://mobbin.com/api/mcp/short/1a3vBelK", "appName": "Airbnb", "platform": "web", "observedRole": "safety-by-design explainer with three icon/text columns and trust caveats" },
+        { "screenId": "997cc2f5-87c7-4e17-888e-3bb0c2d8b0cf", "mobbinUrl": "https://mobbin.com/screens/997cc2f5-87c7-4e17-888e-3bb0c2d8b0cf", "imageUrl": "https://mobbin.com/api/mcp/short/uisKuHKj", "appName": "MasterClass", "platform": "web", "observedRole": "dark membership comparison table with selected plan and continue CTA" },
+        { "screenId": "2f8b11b6-8dda-4765-bba1-7526a80d398c", "mobbinUrl": "https://mobbin.com/screens/2f8b11b6-8dda-4765-bba1-7526a80d398c", "imageUrl": "https://mobbin.com/api/mcp/short/GDEO1ufT", "appName": "Hims", "platform": "web", "observedRole": "health outcome hero with body transformation implication and assessment CTA" },
+        { "screenId": "a758ee2a-db5b-4dbd-8bb8-f9e6bd2d54d9", "mobbinUrl": "https://mobbin.com/screens/a758ee2a-db5b-4dbd-8bb8-f9e6bd2d54d9", "imageUrl": "https://mobbin.com/api/mcp/short/iyAvRuo8", "appName": "OpenTable", "platform": "web", "observedRole": "industry article page with operator-focused headline and related content tiles" },
+        { "screenId": "c0d9c4de-d376-47b6-a4f2-1b4c240707cd", "mobbinUrl": "https://mobbin.com/screens/c0d9c4de-d376-47b6-a4f2-1b4c240707cd", "imageUrl": "https://mobbin.com/api/mcp/short/rWSl0Enm", "appName": "ClassPass", "platform": "web", "observedRole": "membership customization onboarding slide with split image and continue CTA" },
+        { "screenId": "86b3f0ce-64b4-44fc-9705-a120cba6f995", "mobbinUrl": "https://mobbin.com/screens/86b3f0ce-64b4-44fc-9705-a120cba6f995", "imageUrl": "https://mobbin.com/api/mcp/short/dlTeWuOY", "appName": "ClassPass", "platform": "web", "observedRole": "trial-includes onboarding slide with class photo, large type, and next/skip controls" }
+      ]
+    }
+  ]
+}

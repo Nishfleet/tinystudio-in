@@ -1,0 +1,76 @@
+{
+  "schemaVersion": "mobbin.mobbin-pro.leader-led-preview-proof.v1",
+  "businessId": "five-to-nine-0509",
+  "businessName": "Five to Nine",
+  "generatedAt": "2026-05-19T12:53:00Z",
+  "status": "screenshot-captured",
+  "localPreviewUrl": "http://127.0.0.1:4879/concepts/leader-led-finalists.html",
+  "conceptHtmlPath": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/leader-led-finalists.html",
+  "selectedDirectionId": "visibility-command-brief",
+  "selectedDirectionName": "Visibility Command Brief",
+  "whySelected": "Best default from the leader-led set because it combines Peec/Profound AI-visibility proof surfaces, Sprout competitor-report structure, and Similarweb-style market-intelligence clarity without cloning a proxy.",
+  "browserProof": {
+    "tool": "Codex in-app Browser",
+    "servedFrom": "127.0.0.1:4879",
+    "capturedAt": "2026-05-19T12:53:00Z",
+    "captureMode": "one finalist per localhost URL with explicit desktop/mobile viewport overrides",
+    "result": "desktop and mobile screenshots captured for all three leader-led finalist concepts"
+  },
+  "screenshots": [
+    {
+      "directionId": "visibility-command-brief",
+      "viewport": "desktop",
+      "screenshotPath": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/visibility-command-brief.desktop.png",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "directionId": "visibility-command-brief",
+      "viewport": "mobile",
+      "screenshotPath": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/visibility-command-brief.mobile.png",
+      "width": 390,
+      "height": 1240
+    },
+    {
+      "directionId": "market-signal-ledger",
+      "viewport": "desktop",
+      "screenshotPath": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/market-signal-ledger.desktop.png",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "directionId": "market-signal-ledger",
+      "viewport": "mobile",
+      "screenshotPath": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/market-signal-ledger.mobile.png",
+      "width": 390,
+      "height": 1240
+    },
+    {
+      "directionId": "after-hours-intelligence-room",
+      "viewport": "desktop",
+      "screenshotPath": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/after-hours-intelligence-room.desktop.png",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "directionId": "after-hours-intelligence-room",
+      "viewport": "mobile",
+      "screenshotPath": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/after-hours-intelligence-room.mobile.png",
+      "width": 390,
+      "height": 1240
+    }
+  ],
+  "visualReview": {
+    "status": "ready-for-human-review",
+    "currentRecommendation": "Visibility Command Brief",
+    "notes": [
+      "The winning direction is credible and product-led, with CTA visible in the first desktop fold.",
+      "The mobile screenshot keeps the headline, CTA pair, and proof artifact in sequence.",
+      "Human approval is still required before implementation or deploy."
+    ]
+  },
+  "supersedes": [
+    "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/preview-proof.json"
+  ],
+  "approvalState": "human-review-ready"
+}

@@ -1,0 +1,52 @@
+import { existsSync, readFileSync } from "node:fs";
+
+const configPath = "growth-brain/ops/agency-config.json";
+
+const defaults = {
+  founderName: "Nish",
+  offerName: "Tangible Revenue Leak Sprint + Search Trust Layer",
+  founderSprintPrice: "$1,000 founder sprint",
+  standardSprintPriceRange: "$2,500-$5,000",
+  monthlyContinuationRange: "$2,000-$5,000/month",
+  fullStackRetainerRange: "$5,000-$12,000/month",
+  operatorPodRange: "$12,000+/month",
+  optOutLine: "If this is not useful, reply no and I will not follow up.",
+  senderEmail: "hello@tinystudio.io",
+  senderPhysicalAddress: "",
+  dkimSelector: "",
+  manualDailySendCap: 20,
+  meetingPlaceholder: "add meeting link",
+  paymentPlaceholder: "add payment link",
+  legacyFounderSprintPrices: [
+    "$750 founder sprint"
+  ],
+  legacyPriceRanges: [
+    "$750-$1,000",
+    "$1,500-$2,500",
+    "$1,500+/month"
+  ],
+  legacyOfferNames: [
+    "7-day Site Revenue Leak Sprint"
+  ]
+};
+
+export function agencyConfig() {
+  if (!existsSync(configPath)) return defaults;
+  return {
+    ...defaults,
+    ...JSON.parse(readFileSync(configPath, "utf8"))
+  };
+}
+
+export function appendOptOut(value) {
+  const config = agencyConfig();
+  if (/reply\s+no|do not follow up|unsubscribe|opt out/i.test(value)) return value;
+  return `${value.trim()}\n\n${config.optOutLine}`;
+}
+
+export function appendEmailComplianceFooter(value) {
+  const config = agencyConfig();
+  const withOptOut = appendOptOut(value);
+  if (!config.senderPhysicalAddress || withOptOut.includes(config.senderPhysicalAddress)) return withOptOut;
+  return `${withOptOut.trim()}\n\n${config.senderPhysicalAddress}`;
+}

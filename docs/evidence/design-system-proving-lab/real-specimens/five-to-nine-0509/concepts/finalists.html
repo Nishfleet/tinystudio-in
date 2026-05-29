@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Five to Nine Mobbin Pro Finalists</title>
+    <style>
+      :root {
+        --ink: #101113;
+        --muted: #5e6674;
+        --line: #dfe3ea;
+        --blue: #245cff;
+        --green: #13a66b;
+        --amber: #ffb238;
+        --red: #ec4e5f;
+      }
+
+      * { box-sizing: border-box; }
+      html, body { margin: 0; min-height: 100%; }
+      body {
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #f2f4f7;
+        color: var(--ink);
+      }
+
+      .artboard {
+        width: 1440px;
+        height: 900px;
+        overflow: hidden;
+        position: relative;
+        background: #fff;
+      }
+
+      .artboard.mobile {
+        width: 390px;
+        height: 1688px;
+      }
+
+      .nav {
+        position: relative;
+        z-index: 5;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 72px;
+        padding: 0 56px;
+        font-size: 14px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 780;
+      }
+
+      .mark {
+        display: grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        color: #fff;
+        background: var(--ink);
+        font-weight: 850;
+      }
+
+      .links { display: flex; gap: 28px; align-items: center; color: #313640; }
+      .btn {
+        border: 1px solid currentColor;
+        border-radius: 999px;
+        padding: 12px 18px;
+        font-weight: 760;
+        text-decoration: none;
+        color: inherit;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        white-space: nowrap;
+      }
+
+      .btn.primary { color: #fff; background: var(--ink); border-color: var(--ink); }
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 30px;
+        padding: 7px 11px;
+        border-radius: 999px;
+        border: 1px solid rgba(16, 17, 19, .12);
+        font-size: 12px;
+        font-weight: 720;
+        color: #303642;
+        background: rgba(255, 255, 255, .78);
+      }
+
+      .dot { width: 7px; height: 7px; border-radius: 999px; background: var(--green); }
+      .hero { position: relative; z-index: 2; display: grid; grid-template-columns: 560px 1fr; gap: 54px; padding: 70px 64px 0; }
+      h1 { margin: 0; font-size: 84px; line-height: .92; letter-spacing: 0; max-width: 660px; }
+      .lead { margin: 24px 0 0; color: #424957; font-size: 20px; line-height: 1.45; max-width: 580px; }
+      .actions { display: flex; gap: 12px; margin-top: 32px; align-items: center; }
+      .truth { margin-top: 22px; color: #697180; font-size: 14px; max-width: 520px; }
+
+      .artifact {
+        position: relative;
+        border: 1px solid rgba(16, 17, 19, .12);
+        background: #fff;
+        box-shadow: 0 24px 90px rgba(25, 35, 55, .13);
+        overflow: hidden;
+      }
+
+      .artifact-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        padding: 18px 20px;
+        border-bottom: 1px solid var(--line);
+        font-size: 13px;
+      }
+
+      .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 18px; }
+      .kpi { border: 1px solid #e5e8ee; border-radius: 16px; padding: 14px; background: #fbfcfe; }
+      .kpi span, .small { display: block; color: #6a7280; font-size: 12px; }
+      .kpi strong { display: block; margin-top: 8px; font-size: 25px; letter-spacing: 0; }
+
+      .matrix { padding: 0 18px 18px; }
+      .row {
+        display: grid;
+        grid-template-columns: 130px repeat(4, 1fr);
+        border-bottom: 1px solid #edf0f4;
+        min-height: 52px;
+        align-items: center;
+        font-size: 13px;
+      }
+      .row.header { color: #737b88; font-size: 12px; min-height: 38px; }
+      .cell { padding: 10px; }
+      .heat { height: 28px; border-radius: 8px; background: #d9e8ff; display: flex; align-items: center; justify-content: center; font-weight: 760; color: #16376a; }
+      .heat.green { background: #dff7eb; color: #08663f; }
+      .heat.amber { background: #fff2d5; color: #805205; }
+      .heat.red { background: #ffe2e6; color: #842034; }
+
+      .mobile .nav { height: 64px; padding: 0 20px; }
+      .mobile .links { display: none; }
+      .mobile .hero { display: block; padding: 38px 22px 0; }
+      .mobile h1 { font-size: 47px; line-height: .98; }
+      .mobile .lead { font-size: 17px; }
+      .mobile .actions { flex-wrap: wrap; }
+      .mobile .btn { width: 100%; justify-content: center; }
+      .mobile .artifact { margin-top: 34px; }
+      .mobile .kpis { grid-template-columns: repeat(2, 1fr); }
+      .mobile .row { grid-template-columns: 94px repeat(2, 1fr); }
+      .mobile .row .cell:nth-child(n+4) { display: none; }
+
+      .proof-desk {
+        background:
+          linear-gradient(180deg, rgba(237, 242, 255, .92), rgba(255, 255, 255, .96) 48%),
+          radial-gradient(circle at 76% 24%, rgba(36, 92, 255, .18), transparent 30%),
+          #fff;
+      }
+      .proof-desk .artifact { border-radius: 28px; margin-top: 6px; transform: rotate(-1deg); }
+      .proof-desk .status-rail {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        padding: 0 18px 18px;
+      }
+      .proof-card { border: 1px solid #e6eaf1; border-radius: 16px; padding: 14px; background: #fff; }
+      .proof-card b { display: block; font-size: 14px; margin-bottom: 8px; }
+      .proof-card span { display: block; font-size: 12px; color: #68707c; line-height: 1.35; }
+
+      .night {
+        color: #f8fbff;
+        background:
+          radial-gradient(circle at 72% 27%, rgba(74, 115, 255, .48), transparent 20%),
+          radial-gradient(circle at 28% 82%, rgba(255, 178, 56, .18), transparent 24%),
+          linear-gradient(135deg, #090a12, #111827 54%, #080910);
+      }
+      .night .nav, .night .lead, .night .truth, .night .links { color: #e8eef8; }
+      .night .btn.primary { background: #f7fbff; color: #0b0d14; border-color: #f7fbff; }
+      .night .btn { border-color: rgba(255,255,255,.38); }
+      .night .mark { background: #245cff; }
+      .night .hero { grid-template-columns: 610px 1fr; padding-top: 76px; }
+      .night .artifact {
+        margin-top: -10px;
+        border-radius: 34px;
+        background: rgba(12, 18, 30, .72);
+        color: #f8fbff;
+        border-color: rgba(255,255,255,.13);
+        box-shadow: 0 30px 120px rgba(0, 0, 0, .38);
+      }
+      .night .artifact-head, .night .row { border-color: rgba(255,255,255,.11); }
+      .night .row.header, .night .small { color: #aeb8c8; }
+      .night .watchline { padding: 18px; display: grid; gap: 14px; }
+      .night .watch-item { display: grid; grid-template-columns: 44px 1fr 90px; gap: 14px; align-items: center; padding: 14px; border: 1px solid rgba(255,255,255,.1); border-radius: 18px; background: rgba(255,255,255,.055); }
+      .pulse { width: 44px; height: 44px; border-radius: 999px; background: radial-gradient(circle, #9ab4ff 0 22%, rgba(154,180,255,.18) 23% 100%); }
+      .night .watch-item b { display: block; }
+      .night .watch-item span { display: block; color: #aeb8c8; font-size: 12px; margin-top: 4px; }
+      .night .badge { font-size: 11px; font-weight: 760; color: #b8ffd8; }
+
+      .bulletin {
+        background:
+          linear-gradient(90deg, rgba(255,255,255,.94), rgba(255,255,255,.88)),
+          repeating-linear-gradient(90deg, #f8f4ea 0 120px, #f0f5ff 120px 240px);
+      }
+      .bulletin .nav { border-bottom: 2px solid #111; }
+      .bulletin .hero { grid-template-columns: 660px 1fr; padding-top: 46px; }
+      .bulletin h1 { font-family: Georgia, "Times New Roman", serif; font-size: 88px; font-weight: 520; }
+      .bulletin h1 strong { font-family: Inter, sans-serif; font-weight: 880; }
+      .bulletin .artifact { border-radius: 0; box-shadow: none; border: 2px solid #111; background: #fffdf6; }
+      .paper-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-top: 2px solid #111; }
+      .paper-cell { min-height: 138px; padding: 18px; border-right: 2px solid #111; border-bottom: 2px solid #111; }
+      .paper-cell:nth-child(2n) { border-right: 0; }
+      .paper-cell b { display: block; font-size: 23px; line-height: 1.05; }
+      .paper-cell span { display: block; margin-top: 12px; color: #5f5c54; font-size: 13px; line-height: 1.35; }
+      .bulletin .ticker { margin-top: 18px; display: flex; gap: 8px; flex-wrap: wrap; }
+      .bulletin .ticker span { border: 1px solid #111; padding: 8px 10px; background: #ffe8a6; font-size: 12px; font-weight: 780; }
+
+      .console {
+        background: #f7f9fc;
+      }
+      .console .hero { grid-template-columns: 520px 1fr; }
+      .console h1 { font-size: 72px; line-height: .98; }
+      .console .artifact { border-radius: 22px; background: #fff; }
+      .console-grid { display: grid; grid-template-columns: 220px 1fr; min-height: 560px; }
+      .sidebar { background: #111827; color: #f8fbff; padding: 22px; }
+      .sidebar b { display: block; font-size: 16px; }
+      .sidebar span { display: block; color: #aeb8c8; font-size: 12px; margin-top: 5px; }
+      .side-list { margin-top: 28px; display: grid; gap: 10px; }
+      .side-list div { padding: 11px 12px; border-radius: 12px; background: rgba(255,255,255,.07); font-size: 13px; }
+      .console-main { padding: 22px; }
+      .console-main h2 { margin: 0; font-size: 30px; }
+      .pipeline { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 20px; }
+      .pipeline-card { min-height: 142px; border: 1px solid #e3e8f0; border-radius: 16px; padding: 14px; background: #fbfcff; }
+      .pipeline-card b { display: block; font-size: 15px; }
+      .pipeline-card span { display: block; margin-top: 9px; color: #687181; font-size: 12px; line-height: 1.4; }
+      .console-table { margin-top: 18px; border: 1px solid #e3e8f0; border-radius: 16px; overflow: hidden; }
+      .console-table .row { grid-template-columns: 1.2fr .7fr .7fr .7fr; }
+
+      .mobile.night .hero,
+      .mobile.bulletin .hero,
+      .mobile.console .hero { display: block; padding: 38px 22px 0; }
+      .mobile.night h1,
+      .mobile.bulletin h1,
+      .mobile.console h1 { font-size: 46px; line-height: .98; }
+      .mobile.night .artifact,
+      .mobile.bulletin .artifact,
+      .mobile.console .artifact { margin-top: 34px; transform: none; }
+      .mobile.proof-desk .status-rail { display: grid; grid-template-columns: 1fr; }
+      .mobile .night .watch-item,
+      .mobile.night .watch-item { grid-template-columns: 36px 1fr; }
+      .mobile.night .watch-item .badge { grid-column: 2; }
+      .mobile.bulletin .paper-grid { grid-template-columns: 1fr; }
+      .mobile.bulletin .paper-cell { border-right: 0; }
+      .mobile.console .console-grid { grid-template-columns: 1fr; }
+      .mobile.console .sidebar { display: none; }
+      .mobile.console .pipeline { grid-template-columns: 1fr; }
+      .mobile.console .console-table .row { grid-template-columns: 1fr .8fr; }
+      .mobile.console .console-table .row .cell:nth-child(n+3) { display: none; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      const params = new URLSearchParams(location.search);
+      const concept = params.get("concept") || "morning-proof-desk";
+      const view = params.get("view") || "desktop";
+      const mobile = view === "mobile";
+
+      const concepts = {
+        "morning-proof-desk": renderProofDesk,
+        "night-signal-theatre": renderNight,
+        "growth-bulletin": renderBulletin,
+        "pilot-console": renderConsole
+      };
+
+      function nav(extra = "") {
+        return `
+          <header class="nav">
+            <div class="brand"><span class="mark">09</span><span>Five to Nine</span></div>
+            <nav class="links">
+              <span>Search</span><span>Monitoring</span><span>Pilot truth</span>
+              <span class="btn primary">${extra || "Enter pilot"}</span>
+            </nav>
+          </header>`;
+      }
+
+      function renderProofDesk() {
+        return `
+          <main class="artboard ${mobile ? "mobile " : ""}proof-desk">
+            ${nav()}
+            <section class="hero">
+              <div>
+                <span class="chip"><span class="dot"></span> Pilot-ready proof system</span>
+                <h1>See what changed before the next standup.</h1>
+                <p class="lead">Five to Nine turns competitor ads, offers, and landing-page motion into a morning brief with source status attached.</p>
+                <div class="actions"><span class="btn primary">Enter pilot</span><span class="btn">Search public index</span></div>
+                <p class="truth">Fresh, cached, degraded, or demo is always visible. No broad self-serve launch claims.</p>
+              </div>
+              <div class="artifact">
+                <div class="artifact-head"><b>Morning proof desk</b><span class="chip">Source labels visible</span></div>
+                <div class="kpis">
+                  <div class="kpi"><span>Watch terms</span><strong>18</strong></div>
+                  <div class="kpi"><span>New signals</span><strong>7</strong></div>
+                  <div class="kpi"><span>Needs proof</span><strong>3</strong></div>
+                  <div class="kpi"><span>Brief status</span><strong>Review</strong></div>
+                </div>
+                <div class="matrix">
+                  <div class="row header"><div class="cell">Competitor</div><div class="cell">Ads</div><div class="cell">Offer</div><div class="cell">Landing</div><div class="cell">Source</div></div>
+                  <div class="row"><div class="cell"><b>Nykaa</b></div><div class="cell"><span class="heat green">new</span></div><div class="cell"><span class="heat amber">shift</span></div><div class="cell"><span class="heat">same</span></div><div class="cell"><span class="heat green">live</span></div></div>
+                  <div class="row"><div class="cell"><b>Meesho</b></div><div class="cell"><span class="heat">same</span></div><div class="cell"><span class="heat red">COD</span></div><div class="cell"><span class="heat amber">queued</span></div><div class="cell"><span class="heat amber">cached</span></div></div>
+                  <div class="row"><div class="cell"><b>boAt</b></div><div class="cell"><span class="heat green">new</span></div><div class="cell"><span class="heat">bundle</span></div><div class="cell"><span class="heat">same</span></div><div class="cell"><span class="heat green">live</span></div></div>
+                </div>
+                <div class="status-rail">
+                  <div class="proof-card"><b>Recommended next move</b><span>Review COD-heavy creative before touching client copy.</span></div>
+                  <div class="proof-card"><b>Proof trail</b><span>Source, timestamp, confidence, and status travel with each signal.</span></div>
+                  <div class="proof-card"><b>Pilot boundary</b><span>Checkout and WhatsApp delivery remain gated until verified.</span></div>
+                </div>
+              </div>
+            </section>
+          </main>`;
+      }
+
+      function renderNight() {
+        return `
+          <main class="artboard ${mobile ? "mobile " : ""}night">
+            ${nav("Start the watch")}
+            <section class="hero">
+              <div>
+                <span class="chip"><span class="dot"></span> After-hours signal room</span>
+                <h1>The market moves after you log off.</h1>
+                <p class="lead">A night-watch interface for growth teams: competitor motion gets captured, labeled, and queued before the morning decision.</p>
+                <div class="actions"><span class="btn primary">Enter pilot</span><span class="btn">View source rules</span></div>
+                <p class="truth">Dark, cinematic, but still operational: every card has a source state.</p>
+              </div>
+              <div class="artifact">
+                <div class="artifact-head"><b>Tonight's watch</b><span>05:09 briefing window</span></div>
+                <div class="watchline">
+                  <div class="watch-item"><span class="pulse"></span><div><b>Bundle-first hook detected</b><span>boAt creative changed from price-first to bundle-first.</span></div><span class="badge">source live</span></div>
+                  <div class="watch-item"><span class="pulse"></span><div><b>COD pressure still visible</b><span>Meesho signal remains relevant, proof needs review.</span></div><span class="badge">cached live</span></div>
+                  <div class="watch-item"><span class="pulse"></span><div><b>Landing-page capture queued</b><span>Snapshot required before customer-facing alert.</span></div><span class="badge">needs proof</span></div>
+                  <div class="watch-item"><span class="pulse"></span><div><b>Morning brief draft</b><span>Three signals ready for founder review.</span></div><span class="badge">pilot only</span></div>
+                </div>
+              </div>
+            </section>
+          </main>`;
+      }
+
+      function renderBulletin() {
+        return `
+          <main class="artboard ${mobile ? "mobile " : ""}bulletin">
+            ${nav("Read the brief")}
+            <section class="hero">
+              <div>
+                <span class="chip">Growth-team morning edition</span>
+                <h1><strong>Morning intelligence</strong> with receipts.</h1>
+                <p class="lead">A sharper editorial direction: Five to Nine looks less like another dashboard and more like the brief that decides what growth teams do next.</p>
+                <div class="actions"><span class="btn primary">Enter pilot</span><span class="btn">Search public index</span></div>
+                <div class="ticker"><span>New ad</span><span>Offer shift</span><span>Landing proof</span><span>Source status</span></div>
+              </div>
+              <div class="artifact">
+                <div class="artifact-head"><b>05-09 Daily</b><span>Not a newsletter. A proof queue.</span></div>
+                <div class="paper-grid">
+                  <div class="paper-cell"><b>Competitor changed the hook.</b><span>Before: sale-first. After: bundle-first. Source state: live.</span></div>
+                  <div class="paper-cell"><b>COD is still the pressure point.</b><span>Pricing moved, but payment reassurance remains visible.</span></div>
+                  <div class="paper-cell"><b>What to do next.</b><span>Compare current landing copy before changing ad spend.</span></div>
+                  <div class="paper-cell"><b>What not to trust yet.</b><span>Fresh discovery and WhatsApp delivery stay gated until verified.</span></div>
+                </div>
+              </div>
+            </section>
+          </main>`;
+      }
+
+      function renderConsole() {
+        return `
+          <main class="artboard ${mobile ? "mobile " : ""}console">
+            ${nav("Open workspace")}
+            <section class="hero">
+              <div>
+                <span class="chip"><span class="dot"></span> Pilot conversion console</span>
+                <h1>Turn competitor checks into a proof-backed routine.</h1>
+                <p class="lead">A practical SaaS direction for teams that need clarity fast: search, watch, prove, review, and brief.</p>
+                <div class="actions"><span class="btn primary">Enter pilot</span><span class="btn">Search public index</span></div>
+                <p class="truth">Clear for buyers, conservative on claims, built around the actual product spine.</p>
+              </div>
+              <div class="artifact">
+                <div class="console-grid">
+                  <aside class="sidebar">
+                    <b>Workspace</b><span>Growth team pilot</span>
+                    <div class="side-list"><div>Search index</div><div>Watchlists</div><div>Proof queue</div><div>Morning brief</div><div>Pilot truth</div></div>
+                  </aside>
+                  <div class="console-main">
+                    <h2>Today's competitor motion</h2>
+                    <div class="pipeline">
+                      <div class="pipeline-card"><b>Search</b><span>Start from brand, hook, market phrase, or competitor list.</span></div>
+                      <div class="pipeline-card"><b>Watch</b><span>Save the signal and let the run history compound.</span></div>
+                      <div class="pipeline-card"><b>Prove</b><span>Attach source, timestamp, confidence, and status before delivery.</span></div>
+                    </div>
+                    <div class="console-table">
+                      <div class="row header"><div class="cell">Signal</div><div class="cell">Status</div><div class="cell">Priority</div><div class="cell">Next</div></div>
+                      <div class="row"><div class="cell"><b>New creative</b></div><div class="cell">live</div><div class="cell">high</div><div class="cell">Review</div></div>
+                      <div class="row"><div class="cell"><b>Offer shift</b></div><div class="cell">cached</div><div class="cell">medium</div><div class="cell">Verify</div></div>
+                      <div class="row"><div class="cell"><b>Landing page</b></div><div class="cell">queued</div><div class="cell">high</div><div class="cell">Capture</div></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </main>`;
+      }
+
+      document.getElementById("root").innerHTML = (concepts[concept] || renderProofDesk)();
+    </script>
+  </body>
+</html>

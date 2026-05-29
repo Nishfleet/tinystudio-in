@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "mobbin.mobbin-search-brief.v1",
+  "businessId": "five-to-nine-0509",
+  "businessName": "Five to Nine",
+  "businessHash": "source-files-read-2026-05-19",
+  "sourceProvider": "Mobbin Pro MCP",
+  "platform": "web",
+  "requiredQueryAngles": ["niche", "page-job", "tone", "constraint"],
+  "queries": [
+    {
+      "angle": "niche",
+      "mode": "deep",
+      "platform": "web",
+      "query": "marketing website for competitor monitoring SaaS for growth teams proof-backed market intelligence morning brief landing page"
+    },
+    {
+      "angle": "page-job",
+      "mode": "deep",
+      "platform": "web",
+      "query": "market intelligence website competitive analysis alerts proof dashboard for marketing teams landing page SaaS"
+    },
+    {
+      "angle": "tone",
+      "mode": "deep",
+      "platform": "web",
+      "query": "proof backed alerts monitoring product website morning brief source evidence cards growth team SaaS landing page"
+    },
+    {
+      "angle": "constraint",
+      "mode": "deep",
+      "platform": "web",
+      "query": "India growth marketing ecommerce analytics SaaS website competitor ads monitoring landing page bold typography product screenshot"
+    }
+  ],
+  "collectionPolicy": {
+    "sourceCategory": "Mobbin Pro web platform / websites category",
+    "strategy": "wide-pull-then-compress",
+    "minimumReturnedScreensAcrossQueries": 32,
+    "minimumUniqueRawPoolScreens": 20,
+    "packetRawCandidates": { "min": 12, "max": 20 },
+    "shortlist": { "min": 6, "max": 8 },
+    "antiReferences": 2,
+    "transcriptPolicy": "Save full screen IDs, image URLs, Mobbin URLs, app names, query log, shortlist, rejects, and ingredient ledger locally; summarize only counts and decisions in chat."
+  },
+  "noCopyRules": [
+    "Do not copy source brands, logos, product claims, trust claims, screenshots, or exact layouts.",
+    "Do not use Mobbin reference proof as Five to Nine proof.",
+    "Keep 0509 pilot-readiness truth boundaries visible."
+  ]
+}

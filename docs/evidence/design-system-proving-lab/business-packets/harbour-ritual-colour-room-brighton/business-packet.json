@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "mobbin.design-system-proving-lab.business-packet.v2",
+  "businessId": "harbour-ritual-colour-room-brighton",
+  "businessName": "Harbour Ritual Colour Room",
+  "businessModel": "service",
+  "category": "salon",
+  "subcategory": "colour-led salon for gloss, balayage, and blow-dry appointments",
+  "relevanceReason": "Colour-led salons are a core Mobbin Proving Lab niche and expose the system's tendency to overclaim outcomes or lean on unapproved imagery.",
+  "targetCustomerDecision": "Should a new client book a colour consultation first, a gloss refresh, or a blow-dry appointment?",
+  "searchBriefPath": "docs/evidence/design-system-proving-lab/search-briefs/harbour-ritual-colour-room-brighton.json",
+  "searchBriefHash": "7b679daebb460929f2842e38c574f1a91a731b4434338b22fb66f067c9ce2ba2",
+  "referencePacketStatus": "pass",
+  "referencePacketPath": "docs/evidence/design-system-proving-lab/reference-runs/latest/harbour-ritual-colour-room-brighton/reference-packet.json",
+  "rawPullLogPath": "docs/evidence/design-system-proving-lab/reference-runs/latest/harbour-ritual-colour-room-brighton/raw-pull-log.json",
+  "rawPullLogStatus": "pass",
+  "rawPoolReturnedCount": 32,
+  "rawPoolUniqueCount": 32,
+  "referencePacketFailures": [],
+  "directionPacketStatus": "missing",
+  "directionPacketPath": "docs/evidence/design-system-proving-lab/business-packets/harbour-ritual-colour-room-brighton/direction-packet.json",
+  "directionPacketFailures": [
+    "harbour-ritual-colour-room-brighton: missing visual-territory exploration and Mobbin-backed finalist concepts at docs/evidence/design-system-proving-lab/business-packets/harbour-ritual-colour-room-brighton/direction-packet.json"
+  ],
+  "exploredTerritoryCount": 0,
+  "selectedVisualTerritories": [],
+  "chosenDirection": "",
+  "conceptImageCount": 0,
+  "previewProofStatus": "missing",
+  "previewProofPath": "docs/evidence/design-system-proving-lab/business-packets/harbour-ritual-colour-room-brighton/preview-proof.json",
+  "previewProofFailures": [
+    "harbour-ritual-colour-room-brighton: missing rendered preview proof at docs/evidence/design-system-proving-lab/business-packets/harbour-ritual-colour-room-brighton/preview-proof.json"
+  ],
+  "desktopScreenshotStatus": "missing",
+  "mobileScreenshotStatus": "missing",
+  "similarityStatus": "missing",
+  "humanApprovalStatus": "missing",
+  "conceptTodo": [
+    {
+      "step": "explore-visual-territories",
+      "status": "blocked",
+      "required": "explore 6-8 visual territories against the fresh Mobbin packet",
+      "minimumExploredTerritories": 6,
+      "maximumExploredTerritories": 8
+    },
+    {
+      "step": "shortlist-finalists",
+      "status": "blocked",
+      "required": "shortlist 3-4 business-specific screenshot-level finalists",
+      "minimumFinalists": 3,
+      "maximumFinalists": 4,
+      "minimumScore": 8
+    },
+    {
+      "step": "choose-winner",
+      "status": "blocked",
+      "required": "choose one finalist, reject the others with reasons, then write the build brief"
+    }
+  ],
+  "currentStatus": "blocked-before-concepts",
+  "externalUseAllowed": false,
+  "nextAction": "Explore 6-8 visual territories, shortlist 3-4 business-specific screenshot-level finalists, and save direction-packet.json."
+}

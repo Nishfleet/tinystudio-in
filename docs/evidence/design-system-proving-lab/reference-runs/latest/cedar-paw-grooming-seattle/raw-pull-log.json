@@ -1,0 +1,317 @@
+{
+  "schemaVersion": "mobbin.mobbin-pro.raw-pull-log.v1",
+  "sourceProvider": "Mobbin Pro MCP",
+  "platform": "web",
+  "businessId": "cedar-paw-grooming-seattle",
+  "businessName": "Cedar Paw Grooming",
+  "businessHash": "c79c45e7c7f7ef85da562bfff0018f5e0dcd74295e59269cdcc1b4a849cb7d3e",
+  "searchBriefHash": "3e104142ad7f2b3215aa2becd17badd235fbe8ee85af600c415cd8ca5bd769b7",
+  "generatedAt": "2026-05-19T01:30:16Z",
+  "collectionPolicy": {
+    "strategy": "wide-pull-then-compress",
+    "minimumReturnedScreensAcrossQueries": 32,
+    "minimumUniqueRawPoolScreens": 20,
+    "chunkSize": "8 screens per required query angle",
+    "dedupeMethod": "Mobbin screen id with exclude_screen_ids across query chunks"
+  },
+  "toolNotes": [
+    "All references came from Mobbin Pro MCP search_screens on platform web.",
+    "Four required query angles were run with broad 8-result pulls and accumulated exclusions."
+  ],
+  "totalReturned": 32,
+  "uniqueScreenCount": 32,
+  "queryRuns": [
+    {
+      "angle": "niche",
+      "query": "pet-service dog grooming, puppy intro visits, de-shedding, and nail trims service marketing website homepage book CTA landing page website inspiration",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "results": [
+        {
+          "screenId": "5d0af5ca-c15a-4477-99b9-198794bf74f8",
+          "mobbinUrl": "https://mobbin.com/screens/5d0af5ca-c15a-4477-99b9-198794bf74f8",
+          "imageUrl": "https://mobbin.com/api/mcp/short/Bn33nP9V",
+          "appName": "Fresha",
+          "platform": "web",
+          "observedRole": "beauty/wellness booking homepage with strong first-viewport search bar and date/time filters"
+        },
+        {
+          "screenId": "4ad2c84a-2a38-462b-89c0-3474618b2f5b",
+          "mobbinUrl": "https://mobbin.com/screens/4ad2c84a-2a38-462b-89c0-3474618b2f5b",
+          "imageUrl": "https://mobbin.com/api/mcp/short/fl06Q8lh",
+          "appName": "Square",
+          "platform": "web",
+          "observedRole": "service menu detail page with large book/my bookings actions and card-based service rows"
+        },
+        {
+          "screenId": "bbed93f8-7e33-4c5f-9878-54978f24d4cf",
+          "mobbinUrl": "https://mobbin.com/screens/bbed93f8-7e33-4c5f-9878-54978f24d4cf",
+          "imageUrl": "https://mobbin.com/api/mcp/short/Vg8iGycF",
+          "appName": "Fresha",
+          "platform": "web",
+          "observedRole": "date-picker state for local appointment search"
+        },
+        {
+          "screenId": "47cf7f81-6a4f-4c29-ac63-927bc6e4845d",
+          "mobbinUrl": "https://mobbin.com/screens/47cf7f81-6a4f-4c29-ac63-927bc6e4845d",
+          "imageUrl": "https://mobbin.com/api/mcp/short/HzcTFjAN",
+          "appName": "Care.com",
+          "platform": "web",
+          "observedRole": "pet-care need selector with care type, cadence, time, walk length, address, and next CTA"
+        },
+        {
+          "screenId": "1be28b10-3d36-4b55-b612-70150c8258a0",
+          "mobbinUrl": "https://mobbin.com/screens/1be28b10-3d36-4b55-b612-70150c8258a0",
+          "imageUrl": "https://mobbin.com/api/mcp/short/cdUU76kw",
+          "appName": "Fresha",
+          "platform": "web",
+          "observedRole": "booking homepage idle state with minimal search and soft gradient"
+        },
+        {
+          "screenId": "5be39ca4-9089-474a-881b-4739c56333aa",
+          "mobbinUrl": "https://mobbin.com/screens/5be39ca4-9089-474a-881b-4739c56333aa",
+          "imageUrl": "https://mobbin.com/api/mcp/short/r7XW9Uog",
+          "appName": "Care.com",
+          "platform": "web",
+          "observedRole": "care category selector and local search entry with pet-care category visible"
+        },
+        {
+          "screenId": "dc0b8443-1de3-46ed-9fdb-46f3896f94e7",
+          "mobbinUrl": "https://mobbin.com/screens/dc0b8443-1de3-46ed-9fdb-46f3896f94e7",
+          "imageUrl": "https://mobbin.com/api/mcp/short/ClS32gqr",
+          "appName": "Hims",
+          "platform": "web",
+          "observedRole": "three-step service process cards with times and one continue CTA"
+        },
+        {
+          "screenId": "a4ed4d89-766a-4cd7-8e34-92f56ad08a61",
+          "mobbinUrl": "https://mobbin.com/screens/a4ed4d89-766a-4cd7-8e34-92f56ad08a61",
+          "imageUrl": "https://mobbin.com/api/mcp/short/F1cYNr1Z",
+          "appName": "Fresha",
+          "platform": "web",
+          "observedRole": "service rows with categories, duration, prices, and per-row book buttons"
+        }
+      ]
+    },
+    {
+      "angle": "page-job",
+      "query": "book CTA homepage with trust proof, service or product menu, and local customer decision path website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "results": [
+        {
+          "screenId": "5a1b3f0f-a74a-4d83-8a5d-f6b2b05a14fb",
+          "mobbinUrl": "https://mobbin.com/screens/5a1b3f0f-a74a-4d83-8a5d-f6b2b05a14fb",
+          "imageUrl": "https://mobbin.com/api/mcp/short/T1ytyfrB",
+          "appName": "Origin",
+          "platform": "web",
+          "observedRole": "family-protection page with plan comparison, warm hero object, and assessment CTA"
+        },
+        {
+          "screenId": "212942d1-4c49-4ce4-bdaa-32178d36181a",
+          "mobbinUrl": "https://mobbin.com/screens/212942d1-4c49-4ce4-bdaa-32178d36181a",
+          "imageUrl": "https://mobbin.com/api/mcp/short/QqdsyEUx",
+          "appName": "Fresha",
+          "platform": "web",
+          "observedRole": "booking homepage account menu state showing compact utility navigation"
+        },
+        {
+          "screenId": "4db97281-ae9e-47f4-9002-3bc609467c43",
+          "mobbinUrl": "https://mobbin.com/screens/4db97281-ae9e-47f4-9002-3bc609467c43",
+          "imageUrl": "https://mobbin.com/api/mcp/short/IX2qoxlE",
+          "appName": "Amplitude",
+          "platform": "web",
+          "observedRole": "B2B homepage with proof-like product screenshot and large dual CTA"
+        },
+        {
+          "screenId": "79bf8e1a-be67-474a-93bb-704d504d802d",
+          "mobbinUrl": "https://mobbin.com/screens/79bf8e1a-be67-474a-93bb-704d504d802d",
+          "imageUrl": "https://mobbin.com/api/mcp/short/Ds6oTw6F",
+          "appName": "Churnkey",
+          "platform": "web",
+          "observedRole": "subscription-retention hero with strong metrics and floating feature cards"
+        },
+        {
+          "screenId": "bd2e601f-ad0c-482c-aaab-05a5a31e6cd9",
+          "mobbinUrl": "https://mobbin.com/screens/bd2e601f-ad0c-482c-aaab-05a5a31e6cd9",
+          "imageUrl": "https://mobbin.com/api/mcp/short/ei7C4sZa",
+          "appName": "Amplitude",
+          "platform": "web",
+          "observedRole": "homepage state with cookie banner and support bubble layered over product proof"
+        },
+        {
+          "screenId": "b0d1ab2c-e5b0-49e6-b1bb-b7899ddafc73",
+          "mobbinUrl": "https://mobbin.com/screens/b0d1ab2c-e5b0-49e6-b1bb-b7899ddafc73",
+          "imageUrl": "https://mobbin.com/api/mcp/short/SDHuBhiL",
+          "appName": "Square",
+          "platform": "web",
+          "observedRole": "plain service menu page with book buttons, prices, durations, and business details"
+        },
+        {
+          "screenId": "950fec80-73e0-4de8-83a4-e98d6153d19b",
+          "mobbinUrl": "https://mobbin.com/screens/950fec80-73e0-4de8-83a4-e98d6153d19b",
+          "imageUrl": "https://mobbin.com/api/mcp/short/thg1y5vu",
+          "appName": "Wellfound",
+          "platform": "web",
+          "observedRole": "consultation booking sidebar plus package ladder and testimonial card"
+        },
+        {
+          "screenId": "2696cc95-3042-4cc1-97c8-ed54933504a2",
+          "mobbinUrl": "https://mobbin.com/screens/2696cc95-3042-4cc1-97c8-ed54933504a2",
+          "imageUrl": "https://mobbin.com/api/mcp/short/r8VKk8G4",
+          "appName": "Hims",
+          "platform": "web",
+          "observedRole": "service-category cards using product imagery, reviews tile, and soft horizontal scroller"
+        }
+      ]
+    },
+    {
+      "angle": "tone",
+      "query": "premium credible owner-led service business landing page website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "results": [
+        {
+          "screenId": "763b7cc1-340d-4199-ac53-1f5bce3f30f6",
+          "mobbinUrl": "https://mobbin.com/screens/763b7cc1-340d-4199-ac53-1f5bce3f30f6",
+          "imageUrl": "https://mobbin.com/api/mcp/short/jCJWwKNL",
+          "appName": "Fiverr",
+          "platform": "web",
+          "observedRole": "service provider profile with packages, reviews, response time, and contact CTA"
+        },
+        {
+          "screenId": "eddf2c43-cf73-4c1f-8119-c877d51ffbdd",
+          "mobbinUrl": "https://mobbin.com/screens/eddf2c43-cf73-4c1f-8119-c877d51ffbdd",
+          "imageUrl": "https://mobbin.com/api/mcp/short/owOPPHMB",
+          "appName": "Contra",
+          "platform": "web",
+          "observedRole": "solo service offer page with central request-to-book CTA and right pricing rail"
+        },
+        {
+          "screenId": "8b2bdf72-3b33-4cbe-be7f-d41f8be65b55",
+          "mobbinUrl": "https://mobbin.com/screens/8b2bdf72-3b33-4cbe-be7f-d41f8be65b55",
+          "imageUrl": "https://mobbin.com/api/mcp/short/hEBFWD3R",
+          "appName": "Lovable",
+          "platform": "web",
+          "observedRole": "AI-generated generic services section with repeated cards and support chat panel"
+        },
+        {
+          "screenId": "1ce85378-3f18-4ce9-b9a8-66cabce9f6bb",
+          "mobbinUrl": "https://mobbin.com/screens/1ce85378-3f18-4ce9-b9a8-66cabce9f6bb",
+          "imageUrl": "https://mobbin.com/api/mcp/short/1H0eg5XF",
+          "appName": "Fiverr",
+          "platform": "web",
+          "observedRole": "marketplace service profile section with industry tags and service carousel"
+        },
+        {
+          "screenId": "dbffbd43-16c0-432f-93cb-ccc6f0b3e196",
+          "mobbinUrl": "https://mobbin.com/screens/dbffbd43-16c0-432f-93cb-ccc6f0b3e196",
+          "imageUrl": "https://mobbin.com/api/mcp/short/TaOvnb5n",
+          "appName": "Buy Me a Coffee",
+          "platform": "web",
+          "observedRole": "creator commission page with one centered offer card and book-this CTA"
+        },
+        {
+          "screenId": "8ca27875-5683-4bfd-a389-77956dc032c1",
+          "mobbinUrl": "https://mobbin.com/screens/8ca27875-5683-4bfd-a389-77956dc032c1",
+          "imageUrl": "https://mobbin.com/api/mcp/short/I1lPsi3O",
+          "appName": "Airtasker",
+          "platform": "web",
+          "observedRole": "seller onboarding page with get-booked language and booking/price visual overlays"
+        },
+        {
+          "screenId": "8b8c6dc5-a830-4ab1-aae5-52010bf59236",
+          "mobbinUrl": "https://mobbin.com/screens/8b8c6dc5-a830-4ab1-aae5-52010bf59236",
+          "imageUrl": "https://mobbin.com/api/mcp/short/bHMgfV9S",
+          "appName": "Contra",
+          "platform": "web",
+          "observedRole": "service offer page variant with purple request-to-book rail"
+        },
+        {
+          "screenId": "83a35636-2c39-40a4-812f-e9ff22a05d7c",
+          "mobbinUrl": "https://mobbin.com/screens/83a35636-2c39-40a4-812f-e9ff22a05d7c",
+          "imageUrl": "https://mobbin.com/api/mcp/short/QlH9If6W",
+          "appName": "Contra",
+          "platform": "web",
+          "observedRole": "service offer page with review snippet, compact CTA, duration and skills rail"
+        }
+      ]
+    },
+    {
+      "angle": "constraint",
+      "query": "cute-photo temptation service fit by pet need safety claim restraint responsive mobile-first homepage website not dashboard not app",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "results": [
+        {
+          "screenId": "ccc8e559-908a-4df1-bfa9-905b900a61a1",
+          "mobbinUrl": "https://mobbin.com/screens/ccc8e559-908a-4df1-bfa9-905b900a61a1",
+          "imageUrl": "https://mobbin.com/api/mcp/short/rqLhG9lY",
+          "appName": "Care.com",
+          "platform": "web",
+          "observedRole": "pet-care selector with dog walking selected, date/time, walk length, address, and next CTA"
+        },
+        {
+          "screenId": "7c5d5efb-78da-4ffe-a44b-cad32afd1a0f",
+          "mobbinUrl": "https://mobbin.com/screens/7c5d5efb-78da-4ffe-a44b-cad32afd1a0f",
+          "imageUrl": "https://mobbin.com/api/mcp/short/nx0PGDAP",
+          "appName": "Figma",
+          "platform": "web",
+          "observedRole": "AI-generated cat-themed shop with photo banner, category circles, product cards, and orders nav"
+        },
+        {
+          "screenId": "ae56fe58-1f8f-4245-931c-b20b68b6f19f",
+          "mobbinUrl": "https://mobbin.com/screens/ae56fe58-1f8f-4245-931c-b20b68b6f19f",
+          "imageUrl": "https://mobbin.com/api/mcp/short/YbRBzs0H",
+          "appName": "Figma",
+          "platform": "web",
+          "observedRole": "AI-generated cat shop variant showing product-card editing and empty image slot"
+        },
+        {
+          "screenId": "4bd2045f-ae9e-4e58-96e7-5a2f4ec09878",
+          "mobbinUrl": "https://mobbin.com/screens/4bd2045f-ae9e-4e58-96e7-5a2f4ec09878",
+          "imageUrl": "https://mobbin.com/api/mcp/short/kR9Joym1",
+          "appName": "Care.com",
+          "platform": "web",
+          "observedRole": "pet-care flow with boarding selected and start/end date/time fields"
+        },
+        {
+          "screenId": "a513a914-d649-49bb-bd42-e157cf60dbee",
+          "mobbinUrl": "https://mobbin.com/screens/a513a914-d649-49bb-bd42-e157cf60dbee",
+          "imageUrl": "https://mobbin.com/api/mcp/short/zLfEL2Jz",
+          "appName": "Figma",
+          "platform": "web",
+          "observedRole": "AI-generated cat shop page with photo-heavy banner and product list"
+        },
+        {
+          "screenId": "564f3e07-869b-4d1c-8242-88c9d5cd48a9",
+          "mobbinUrl": "https://mobbin.com/screens/564f3e07-869b-4d1c-8242-88c9d5cd48a9",
+          "imageUrl": "https://mobbin.com/api/mcp/short/DKXDUBqQ",
+          "appName": "Figma",
+          "platform": "web",
+          "observedRole": "AI-generated cat shop editing state with selected blank image card"
+        },
+        {
+          "screenId": "f9dc7d29-924f-43a5-8d71-115d6dfc9b91",
+          "mobbinUrl": "https://mobbin.com/screens/f9dc7d29-924f-43a5-8d71-115d6dfc9b91",
+          "imageUrl": "https://mobbin.com/api/mcp/short/fYOCHQ2b",
+          "appName": "Figma",
+          "platform": "web",
+          "observedRole": "AI-generated cat shop scroll state with bottom nav and repeated pet images"
+        },
+        {
+          "screenId": "2094841a-ea58-4bb9-876d-8b14319bed7f",
+          "mobbinUrl": "https://mobbin.com/screens/2094841a-ea58-4bb9-876d-8b14319bed7f",
+          "imageUrl": "https://mobbin.com/api/mcp/short/E29HmFED",
+          "appName": "Amazon",
+          "platform": "web",
+          "observedRole": "pet profile/product personalization page with pet-type image selector and dense ecommerce footer"
+        }
+      ]
+    }
+  ]
+}

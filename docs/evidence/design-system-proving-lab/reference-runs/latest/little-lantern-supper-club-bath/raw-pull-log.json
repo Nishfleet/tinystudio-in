@@ -1,0 +1,332 @@
+{
+  "schemaVersion": "mobbin.mobbin-pro.raw-pull-log.v1",
+  "sourceProvider": "Mobbin Pro MCP",
+  "platform": "web",
+  "businessId": "little-lantern-supper-club-bath",
+  "businessName": "Little Lantern Supper Club",
+  "businessHash": "1023bbe6fdf139c2b64317b3409dc38f71638287e3abeb72fed726c90da3a462",
+  "searchBriefHash": "743b93e3875a062a4e430f8c83ac493cd3733b7df809c1838139022972984be3",
+  "generatedAt": "2026-05-19T01:40:58Z",
+  "collectionPolicy": {
+    "strategy": "wide-pull-then-compress",
+    "minimumReturnedScreensAcrossQueries": 32,
+    "minimumUniqueRawPoolScreens": 20,
+    "chunkSize": 8,
+    "dedupeMethod": "Mobbin screen id with exclude_screen_ids across chunks; one timed-out tone call was retried as two four-screen chunks with the same query."
+  },
+  "totalReturned": 32,
+  "uniqueScreenCount": 32,
+  "queryRuns": [
+    {
+      "angle": "niche",
+      "query": "restaurant-cafe daytime cafe, evening set-menu dinners, and private table enquiries hybrid marketing website homepage view-menu CTA landing page website inspiration",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:40:58Z",
+      "collectionNote": "initial broad niche pull",
+      "results": [
+        {
+          "screenId": "0ad6607f-0aa9-448b-9745-4872a60b87db",
+          "mobbinUrl": "https://mobbin.com/screens/0ad6607f-0aa9-448b-9745-4872a60b87db",
+          "imageUrl": "https://mobbin.com/api/mcp/short/SMXRAnSf",
+          "appName": "OpenTable",
+          "platform": "web",
+          "observedRole": "restaurant detail page with photo tabs, menu section, reservation sidebar, order/takeout card, and gift card module"
+        },
+        {
+          "screenId": "c1f56362-a0ac-4c46-841b-6fea60486249",
+          "mobbinUrl": "https://mobbin.com/screens/c1f56362-a0ac-4c46-841b-6fea60486249",
+          "imageUrl": "https://mobbin.com/api/mcp/short/vjE0SnDX",
+          "appName": "OpenTable",
+          "platform": "web",
+          "observedRole": "reservation-search homepage with date, time, party size, location input, and takeout card carousel"
+        },
+        {
+          "screenId": "cb281c9e-d4ac-4d77-b838-a56418b82be7",
+          "mobbinUrl": "https://mobbin.com/screens/cb281c9e-d4ac-4d77-b838-a56418b82be7",
+          "imageUrl": "https://mobbin.com/api/mcp/short/TqJZAqsh",
+          "appName": "OpenTable",
+          "platform": "web",
+          "observedRole": "city restaurant hero with reservation search, quick-search chips, and account reservation dropdown"
+        },
+        {
+          "screenId": "ec3706f9-edac-40f7-8ef7-7cb522c94c50",
+          "mobbinUrl": "https://mobbin.com/screens/ec3706f9-edac-40f7-8ef7-7cb522c94c50",
+          "imageUrl": "https://mobbin.com/api/mcp/short/pqtBCm2j",
+          "appName": "OpenTable",
+          "platform": "web",
+          "observedRole": "homepage reservation hero with takeout carousel and location correction row"
+        },
+        {
+          "screenId": "86f66100-4cfe-421b-b63b-855ad333268b",
+          "mobbinUrl": "https://mobbin.com/screens/86f66100-4cfe-421b-b63b-855ad333268b",
+          "imageUrl": "https://mobbin.com/api/mcp/short/0MJ9ZBPR",
+          "appName": "OpenTable",
+          "platform": "web",
+          "observedRole": "reservation search page with date-picker open and food card carousel below"
+        },
+        {
+          "screenId": "996ad79e-01ea-477a-b811-ac3e58fc99c9",
+          "mobbinUrl": "https://mobbin.com/screens/996ad79e-01ea-477a-b811-ac3e58fc99c9",
+          "imageUrl": "https://mobbin.com/api/mcp/short/G0a4E8iH",
+          "appName": "OpenTable",
+          "platform": "web",
+          "observedRole": "area reservation homepage with quick-search chips and available-for-breakfast card"
+        },
+        {
+          "screenId": "0fcc4d43-ce2f-43a2-8cdd-171507590598",
+          "mobbinUrl": "https://mobbin.com/screens/0fcc4d43-ce2f-43a2-8cdd-171507590598",
+          "imageUrl": "https://mobbin.com/api/mcp/short/8zPTFbdm",
+          "appName": "OpenTable",
+          "platform": "web",
+          "observedRole": "restaurant detail page with popular dishes, photos, menu tabs, reservation rail, and delivery/takeout options"
+        },
+        {
+          "screenId": "ff307b73-39a0-4899-bcf2-08521035820f",
+          "mobbinUrl": "https://mobbin.com/screens/ff307b73-39a0-4899-bcf2-08521035820f",
+          "imageUrl": "https://mobbin.com/api/mcp/short/L7u8x3r0",
+          "appName": "OpenTable",
+          "platform": "web",
+          "observedRole": "reservation homepage with language menu open and recently viewed card"
+        }
+      ]
+    },
+    {
+      "angle": "page-job",
+      "query": "view-menu CTA homepage with trust proof, service or product menu, and local customer decision path website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:40:58Z",
+      "collectionNote": "broad page-job pull",
+      "results": [
+        {
+          "screenId": "3e2d9eb7-b13b-4e11-96de-906072d407b2",
+          "mobbinUrl": "https://mobbin.com/screens/3e2d9eb7-b13b-4e11-96de-906072d407b2",
+          "imageUrl": "https://mobbin.com/api/mcp/short/VQAc1Lg9",
+          "appName": "Dollar Shave Club",
+          "platform": "web",
+          "observedRole": "dark quote proof block and footer with shop/account/gift navigation"
+        },
+        {
+          "screenId": "ff65f582-a14e-4686-b488-c72538689527",
+          "mobbinUrl": "https://mobbin.com/screens/ff65f582-a14e-4686-b488-c72538689527",
+          "imageUrl": "https://mobbin.com/api/mcp/short/a5AEMVQt",
+          "appName": "Blue Apron",
+          "platform": "web",
+          "observedRole": "menu browse CTA with food lifestyle imagery and testimonial overlay"
+        },
+        {
+          "screenId": "3264e7b8-35ea-4421-906b-58534c1b27f5",
+          "mobbinUrl": "https://mobbin.com/screens/3264e7b8-35ea-4421-906b-58534c1b27f5",
+          "imageUrl": "https://mobbin.com/api/mcp/short/My4TFmv0",
+          "appName": "Blue Apron",
+          "platform": "web",
+          "observedRole": "simple testimonial and FAQ transition with brand nav and signup CTA"
+        },
+        {
+          "screenId": "e888ea97-01f1-4dcc-a82e-f20d21ea71a0",
+          "mobbinUrl": "https://mobbin.com/screens/e888ea97-01f1-4dcc-a82e-f20d21ea71a0",
+          "imageUrl": "https://mobbin.com/api/mcp/short/hrLdkzkk",
+          "appName": "Assembly",
+          "platform": "web",
+          "observedRole": "large testimonial carousel with soft surface, portrait card, and slider marks"
+        },
+        {
+          "screenId": "4d33bcb9-723a-4e0c-8e51-1d8eb021e375",
+          "mobbinUrl": "https://mobbin.com/screens/4d33bcb9-723a-4e0c-8e51-1d8eb021e375",
+          "imageUrl": "https://mobbin.com/api/mcp/short/BnZf8cTL",
+          "appName": "ClassPass",
+          "platform": "web",
+          "observedRole": "giant proof-stat section with CTA band and minimal top nav"
+        },
+        {
+          "screenId": "370972da-101d-4bfc-930f-aecb80c9e87f",
+          "mobbinUrl": "https://mobbin.com/screens/370972da-101d-4bfc-930f-aecb80c9e87f",
+          "imageUrl": "https://mobbin.com/api/mcp/short/iM2NgrD7",
+          "appName": "Mixpanel",
+          "platform": "web",
+          "observedRole": "SaaS hero with logo strip, dashboard artifact, and CTA pair"
+        },
+        {
+          "screenId": "af8b2e78-3f53-4ccf-8d6f-ee5cc1857444",
+          "mobbinUrl": "https://mobbin.com/screens/af8b2e78-3f53-4ccf-8d6f-ee5cc1857444",
+          "imageUrl": "https://mobbin.com/api/mcp/short/6WbJAN3o",
+          "appName": "Blue Apron",
+          "platform": "web",
+          "observedRole": "three-card testimonial grid with fine-print offer disclaimer"
+        },
+        {
+          "screenId": "9a41d4f0-f4e3-40ee-b5a8-de4fb4e48e59",
+          "mobbinUrl": "https://mobbin.com/screens/9a41d4f0-f4e3-40ee-b5a8-de4fb4e48e59",
+          "imageUrl": "https://mobbin.com/api/mcp/short/QISJscEW",
+          "appName": "Assembly",
+          "platform": "web",
+          "observedRole": "trusted-by logo strip above two-column copy block"
+        }
+      ]
+    },
+    {
+      "angle": "tone",
+      "query": "premium credible owner-led hybrid business landing page website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 4,
+      "runAt": "2026-05-19T01:40:58Z",
+      "collectionNote": "first tone chunk after full-width pull timed out",
+      "results": [
+        {
+          "screenId": "621240c8-4025-480f-a37a-c881d47f624f",
+          "mobbinUrl": "https://mobbin.com/screens/621240c8-4025-480f-a37a-c881d47f624f",
+          "imageUrl": "https://mobbin.com/api/mcp/short/ieLzgLCk",
+          "appName": "Mercury",
+          "platform": "web",
+          "observedRole": "quiet premium hero with email field, product artifact, legal banner, and centered navigation"
+        },
+        {
+          "screenId": "f566146e-9c63-4adf-a59c-3fe14732bb2c",
+          "mobbinUrl": "https://mobbin.com/screens/f566146e-9c63-4adf-a59c-3fe14732bb2c",
+          "imageUrl": "https://mobbin.com/api/mcp/short/3S6v4A4x",
+          "appName": "Pinterest",
+          "platform": "web",
+          "observedRole": "clean centered business hero with alert bar, CTA pair, and visual collage peeking below"
+        },
+        {
+          "screenId": "d50e648a-f8c0-465b-becf-2260bf571b15",
+          "mobbinUrl": "https://mobbin.com/screens/d50e648a-f8c0-465b-becf-2260bf571b15",
+          "imageUrl": "https://mobbin.com/api/mcp/short/HIXCKiS2",
+          "appName": "Revolut Business",
+          "platform": "web",
+          "observedRole": "dark product hero with single object, concise CTA, and strong first-viewport drama"
+        },
+        {
+          "screenId": "7ae44b4d-3837-4ee5-b05d-288ebe240b88",
+          "mobbinUrl": "https://mobbin.com/screens/7ae44b4d-3837-4ee5-b05d-288ebe240b88",
+          "imageUrl": "https://mobbin.com/api/mcp/short/Pdai5x5p",
+          "appName": "MasterClass",
+          "platform": "web",
+          "observedRole": "premium dark work section with guide download, contact-sales CTA, and celebrity portrait strip"
+        }
+      ]
+    },
+    {
+      "angle": "tone",
+      "query": "premium credible owner-led hybrid business landing page website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 4,
+      "runAt": "2026-05-19T01:40:58Z",
+      "collectionNote": "second tone chunk with exclusions to preserve breadth",
+      "results": [
+        {
+          "screenId": "b9115905-c49a-4af0-8b08-97ebd69296ba",
+          "mobbinUrl": "https://mobbin.com/screens/b9115905-c49a-4af0-8b08-97ebd69296ba",
+          "imageUrl": "https://mobbin.com/api/mcp/short/S6UaC1jX",
+          "appName": "Webflow",
+          "platform": "web",
+          "observedRole": "dark portfolio site inside builder UI with quote CTA and work grid"
+        },
+        {
+          "screenId": "3d29eb1f-7249-4a01-ac5c-540862bf62e4",
+          "mobbinUrl": "https://mobbin.com/screens/3d29eb1f-7249-4a01-ac5c-540862bf62e4",
+          "imageUrl": "https://mobbin.com/api/mcp/short/41bVnKGj",
+          "appName": "Contra",
+          "platform": "web",
+          "observedRole": "dark independent-hiring hero with large type, navigation, and abstract 3D objects"
+        },
+        {
+          "screenId": "ef0e8cd5-e7f7-43f3-b060-1236747f1af4",
+          "mobbinUrl": "https://mobbin.com/screens/ef0e8cd5-e7f7-43f3-b060-1236747f1af4",
+          "imageUrl": "https://mobbin.com/api/mcp/short/L0PfGixv",
+          "appName": "Lovable",
+          "platform": "web",
+          "observedRole": "AI-generated services homepage shown inside builder chrome with CTA pair and service cards"
+        },
+        {
+          "screenId": "a059c461-e45c-43fc-8bd4-535b765d3de5",
+          "mobbinUrl": "https://mobbin.com/screens/a059c461-e45c-43fc-8bd4-535b765d3de5",
+          "imageUrl": "https://mobbin.com/api/mcp/short/OvUSUiUw",
+          "appName": "ClassPass",
+          "platform": "web",
+          "observedRole": "resources landing page with phone mockups, request-quote CTA, and lead-form section below"
+        }
+      ]
+    },
+    {
+      "angle": "constraint",
+      "query": "multiple visitor jobs food-photo temptation hours/menu freshness responsive mobile-first homepage website not dashboard not app",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:40:58Z",
+      "collectionNote": "constraint pull focused on menu freshness and food-photo risk",
+      "results": [
+        {
+          "screenId": "932645d3-cd97-4ae0-8faa-2a02678a0dff",
+          "mobbinUrl": "https://mobbin.com/screens/932645d3-cd97-4ae0-8faa-2a02678a0dff",
+          "imageUrl": "https://mobbin.com/api/mcp/short/c2zXmMTd",
+          "appName": "OpenTable",
+          "platform": "web",
+          "observedRole": "restaurant detail page with food-photo tab active, menu section, reservation card, and gift card option"
+        },
+        {
+          "screenId": "aa44d43b-0c4d-45ed-a6a0-5bd336fd4d68",
+          "mobbinUrl": "https://mobbin.com/screens/aa44d43b-0c4d-45ed-a6a0-5bd336fd4d68",
+          "imageUrl": "https://mobbin.com/api/mcp/short/2XYEy0ud",
+          "appName": "sweetgreen",
+          "platform": "web",
+          "observedRole": "split menu campaign hero with view-menu CTA, food-prep photo, and order-again strip"
+        },
+        {
+          "screenId": "920bd87d-0b75-46ab-bebf-f050cc9316ca",
+          "mobbinUrl": "https://mobbin.com/screens/920bd87d-0b75-46ab-bebf-f050cc9316ca",
+          "imageUrl": "https://mobbin.com/api/mcp/short/V8QatYLf",
+          "appName": "sweetgreen",
+          "platform": "web",
+          "observedRole": "split new-menu hero with order-now CTA, large bowl photo, and reorder item modules"
+        },
+        {
+          "screenId": "0c76fa81-d160-4ff8-b9de-a542761f0e79",
+          "mobbinUrl": "https://mobbin.com/screens/0c76fa81-d160-4ff8-b9de-a542761f0e79",
+          "imageUrl": "https://mobbin.com/api/mcp/short/G2oU2EDR",
+          "appName": "OpenTable",
+          "platform": "web",
+          "observedRole": "menu tab detail page with menu categories, last-updated note, full-menu button, and reservation sidebar"
+        },
+        {
+          "screenId": "7f7433f8-cfa2-484f-b74f-768d0b19f927",
+          "mobbinUrl": "https://mobbin.com/screens/7f7433f8-cfa2-484f-b74f-768d0b19f927",
+          "imageUrl": "https://mobbin.com/api/mcp/short/KcZ4tfQD",
+          "appName": "DoorDash",
+          "platform": "web",
+          "observedRole": "restaurant storefront with side menu, featured items grid, cart drawer, deal modules, and store info"
+        },
+        {
+          "screenId": "d3ae7216-023d-489e-a38c-6cdae7de388c",
+          "mobbinUrl": "https://mobbin.com/screens/d3ae7216-023d-489e-a38c-6cdae7de388c",
+          "imageUrl": "https://mobbin.com/api/mcp/short/S3QdTS8V",
+          "appName": "Uber Eats",
+          "platform": "web",
+          "observedRole": "restaurant delivery page with map, search, categories, savings banner, and featured items"
+        },
+        {
+          "screenId": "a7c805cf-6b76-434e-aa89-26add7b32109",
+          "mobbinUrl": "https://mobbin.com/screens/a7c805cf-6b76-434e-aa89-26add7b32109",
+          "imageUrl": "https://mobbin.com/api/mcp/short/3m180Owt",
+          "appName": "OpenTable",
+          "platform": "web",
+          "observedRole": "restaurant detail page with interior photo tab active and reservation sidebar"
+        },
+        {
+          "screenId": "ea5f8a67-051c-44ad-904c-18126f18d146",
+          "mobbinUrl": "https://mobbin.com/screens/ea5f8a67-051c-44ad-904c-18126f18d146",
+          "imageUrl": "https://mobbin.com/api/mcp/short/VD3aVOpa",
+          "appName": "OpenTable",
+          "platform": "web",
+          "observedRole": "long menu detail page with categorized dishes and reservation sidebar"
+        }
+      ]
+    }
+  ]
+}

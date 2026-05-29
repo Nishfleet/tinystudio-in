@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "mobbin.design-system-proving-lab.business-packet.v2",
+  "businessId": "dockyard-barber-rooms-cork",
+  "businessName": "Dockyard Barber Rooms",
+  "businessModel": "service",
+  "category": "barber",
+  "subcategory": "cuts, beard trims, and father-son haircut appointments",
+  "relevanceReason": "Barbers are a strong Mobbin Proving Lab wedge and require a different structure from salons: faster decisions, sharper service menus, and mobile-first booking clarity.",
+  "targetCustomerDecision": "Is this the right booking path for a standard cut, beard trim, or parent-child visit?",
+  "searchBriefPath": "docs/evidence/design-system-proving-lab/search-briefs/dockyard-barber-rooms-cork.json",
+  "searchBriefHash": "dfc80ccbde4b4c53f256643f861816739eda540ca5d07da3ad00f3ada519fe18",
+  "referencePacketStatus": "pass",
+  "referencePacketPath": "docs/evidence/design-system-proving-lab/reference-runs/latest/dockyard-barber-rooms-cork/reference-packet.json",
+  "rawPullLogPath": "docs/evidence/design-system-proving-lab/reference-runs/latest/dockyard-barber-rooms-cork/raw-pull-log.json",
+  "rawPullLogStatus": "pass",
+  "rawPoolReturnedCount": 32,
+  "rawPoolUniqueCount": 32,
+  "referencePacketFailures": [],
+  "directionPacketStatus": "missing",
+  "directionPacketPath": "docs/evidence/design-system-proving-lab/business-packets/dockyard-barber-rooms-cork/direction-packet.json",
+  "directionPacketFailures": [
+    "dockyard-barber-rooms-cork: missing visual-territory exploration and Mobbin-backed finalist concepts at docs/evidence/design-system-proving-lab/business-packets/dockyard-barber-rooms-cork/direction-packet.json"
+  ],
+  "exploredTerritoryCount": 0,
+  "selectedVisualTerritories": [],
+  "chosenDirection": "",
+  "conceptImageCount": 0,
+  "previewProofStatus": "missing",
+  "previewProofPath": "docs/evidence/design-system-proving-lab/business-packets/dockyard-barber-rooms-cork/preview-proof.json",
+  "previewProofFailures": [
+    "dockyard-barber-rooms-cork: missing rendered preview proof at docs/evidence/design-system-proving-lab/business-packets/dockyard-barber-rooms-cork/preview-proof.json"
+  ],
+  "desktopScreenshotStatus": "missing",
+  "mobileScreenshotStatus": "missing",
+  "similarityStatus": "missing",
+  "humanApprovalStatus": "missing",
+  "conceptTodo": [
+    {
+      "step": "explore-visual-territories",
+      "status": "blocked",
+      "required": "explore 6-8 visual territories against the fresh Mobbin packet",
+      "minimumExploredTerritories": 6,
+      "maximumExploredTerritories": 8
+    },
+    {
+      "step": "shortlist-finalists",
+      "status": "blocked",
+      "required": "shortlist 3-4 business-specific screenshot-level finalists",
+      "minimumFinalists": 3,
+      "maximumFinalists": 4,
+      "minimumScore": 8
+    },
+    {
+      "step": "choose-winner",
+      "status": "blocked",
+      "required": "choose one finalist, reject the others with reasons, then write the build brief"
+    }
+  ],
+  "currentStatus": "blocked-before-concepts",
+  "externalUseAllowed": false,
+  "nextAction": "Explore 6-8 visual territories, shortlist 3-4 business-specific screenshot-level finalists, and save direction-packet.json."
+}

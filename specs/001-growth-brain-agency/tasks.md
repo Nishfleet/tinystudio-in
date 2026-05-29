@@ -1,0 +1,58 @@
+# Tasks: Growth Brain Agency Operating Kit
+
+- [x] Rename root docs from Mobbin-only to TinyStudio Growth Brain.
+- [x] Preserve Mobbin as the design-reference subsystem.
+- [x] Add the 7-Day Site Revenue Leak Sprint offer.
+- [x] Add the 7-day delivery checklist.
+- [x] Add client delivery and weekly report templates.
+- [x] Add Loom audit script and outreach tracker.
+- [x] Add the first seven agent workflows.
+- [x] Add Site Architecture Fixer for SEO and AI visibility audits.
+- [x] Add agency operating model from the full video review.
+- [x] Add daily sales, lead scoring, Loom, sprint, and retainer workflows.
+- [x] Add client sprint scaffold command.
+- [x] Add prospect audit scaffold command.
+- [x] Add buyer room, proposal, sales call, objection, and follow-up assets.
+- [x] Add claim-proof, acceptance, scorecard, and client delight gates.
+- [x] Add retainer health score, expansion triggers, and case-study template.
+- [x] Add vertical-specific audit playbooks.
+- [x] Add AI/search visibility prompt bank and workflow.
+- [x] Add value calculator and pricing rules.
+- [x] Add implementation handoff and client communication cadence.
+- [x] Add command-center, metrics dashboard, and daily review templates.
+- [x] Add prospecting query bank, warm-network scripts, and first-50 template.
+- [x] Add batch prospect import command.
+- [x] Add prospect contact-plan command.
+- [x] Add Loom package generator for prospect folders.
+- [x] Add Loom recording script generator.
+- [x] Add recording queue export.
+- [x] Add browser recording cockpit export.
+- [x] Add focused recording teleprompter export.
+- [x] Add Loom link injector for recorded audits.
+- [x] Add next-message generator for email, forms, DMs, sends, and follow-ups.
+- [x] Add prospect outbox for recorded Looms.
+- [x] Add one-shot send-prep command for recorded Looms.
+- [x] Add batch send-prep command for recorded Loom batches.
+- [x] Add batch sent completion command.
+- [x] Add send checklist for channel-specific outbound.
+- [x] Add managed IT one-page sales sheet and export command.
+- [x] Add prospect pipeline stage tracker and follow-up scheduler.
+- [x] Add due follow-up cockpit.
+- [x] Add reply-prep package generator.
+- [x] Add sales call prep generator.
+- [x] Add call-booked prep generator.
+- [x] Add post-call close package generator.
+- [x] Add prospect-to-client conversion command.
+- [x] Add client kickoff generator.
+- [x] Add client delivery cockpit generator.
+- [x] Add current-market-signal research notes.
+- [x] Add the reusable client brain template.
+- [x] Add the first 14-day action plan.
+- [x] Add prospect and client readiness gates.
+- [x] Add outbound claim-safety check.
+- [x] Add live daily command-center command.
+- [x] Add browser growth cockpit.
+- [x] Add live growth metrics export.
+- [x] Add proof and learning library export.
+- [x] Add a repo check for kit completeness and claim safety.
+- [x] Run `npm test`.

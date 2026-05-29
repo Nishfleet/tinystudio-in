@@ -1,0 +1,355 @@
+{
+  "schemaVersion": "mobbin.mobbin-pro.per-redesign-reference-packet.v1",
+  "sourceProvider": "Mobbin Pro MCP",
+  "platform": "web",
+  "businessId": "moss-and-kiln-ceramics-portland",
+  "businessName": "Moss & Kiln Ceramics",
+  "businessHash": "2763acef2939e9509d3113db7731c92df099ee9bc18cf314ce4d486933271695",
+  "searchBriefHash": "5254fb04ab9b4698652159dae62397d33280d667b39cfb3639cab20d6b804129",
+  "generatedAt": "2026-05-19T01:39:08Z",
+  "rawPullLogPath": "docs/evidence/design-system-proving-lab/reference-runs/latest/moss-and-kiln-ceramics-portland/raw-pull-log.json",
+  "rawPullLogHash": "955d2b53d84a027b5aed9e3749234829757de0702ea6f6e99cf7bd2aa2c75712",
+  "queryLog": [
+    {
+      "angle": "niche",
+      "query": "specialty-retail handmade ceramic mugs, planters, dinnerware sets, and gift orders product marketing website homepage purchase CTA landing page website inspiration",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:39:08Z"
+    },
+    {
+      "angle": "page-job",
+      "query": "purchase CTA homepage with trust proof, service or product menu, and local customer decision path website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:39:08Z"
+    },
+    {
+      "angle": "tone",
+      "query": "premium credible owner-led product business landing page website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:39:08Z"
+    },
+    {
+      "angle": "constraint",
+      "query": "product purchase inventory-grid responsive mobile-first homepage website not dashboard not app",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:39:08Z"
+    }
+  ],
+  "rawCandidates": [
+    {
+      "screenId": "3ed792cd-a39b-4025-a6b1-991407ae8da2",
+      "mobbinUrl": "https://mobbin.com/screens/3ed792cd-a39b-4025-a6b1-991407ae8da2",
+      "sourceUrl": "https://mobbin.com/screens/3ed792cd-a39b-4025-a6b1-991407ae8da2",
+      "imageUrl": "https://mobbin.com/api/mcp/short/eNSSwkjm",
+      "appName": "HODINKEE",
+      "selectionReason": "Premium object-led shop hero for handmade ceramics without needing a generic store grid first."
+    },
+    {
+      "screenId": "e2b39890-dbca-4349-b0e4-73f7b6f1caaa",
+      "mobbinUrl": "https://mobbin.com/screens/e2b39890-dbca-4349-b0e4-73f7b6f1caaa",
+      "sourceUrl": "https://mobbin.com/screens/e2b39890-dbca-4349-b0e4-73f7b6f1caaa",
+      "imageUrl": "https://mobbin.com/api/mcp/short/y2JyT1lh",
+      "appName": "HODINKEE",
+      "selectionReason": "Lifestyle commerce hero plus staff-picks rhythm fits artisan product storytelling."
+    },
+    {
+      "screenId": "dbb9db25-8f3e-4943-953a-ecd514a3a0b4",
+      "mobbinUrl": "https://mobbin.com/screens/dbb9db25-8f3e-4943-953a-ecd514a3a0b4",
+      "sourceUrl": "https://mobbin.com/screens/dbb9db25-8f3e-4943-953a-ecd514a3a0b4",
+      "imageUrl": "https://mobbin.com/api/mcp/short/r8RJULsX",
+      "appName": "Shopify",
+      "selectionReason": "Simple store homepage helps calibrate the minimum viable purchase path."
+    },
+    {
+      "screenId": "f6352ef8-0262-4a31-9a20-c0f2383d7f91",
+      "mobbinUrl": "https://mobbin.com/screens/f6352ef8-0262-4a31-9a20-c0f2383d7f91",
+      "sourceUrl": "https://mobbin.com/screens/f6352ef8-0262-4a31-9a20-c0f2383d7f91",
+      "imageUrl": "https://mobbin.com/api/mcp/short/cFklzjac",
+      "appName": "Faire",
+      "selectionReason": "Category carousel maps directly to mugs, planters, dinnerware, and gift-order browsing."
+    },
+    {
+      "screenId": "87d9b209-533c-4176-9717-e541ec849255",
+      "mobbinUrl": "https://mobbin.com/screens/87d9b209-533c-4176-9717-e541ec849255",
+      "sourceUrl": "https://mobbin.com/screens/87d9b209-533c-4176-9717-e541ec849255",
+      "imageUrl": "https://mobbin.com/api/mcp/short/02VJdEBy",
+      "appName": "Etsy",
+      "selectionReason": "Handmade product grid shows buyer information needs, but needs strong banned-use controls."
+    },
+    {
+      "screenId": "6f50f2d3-7d2a-4893-bbbc-2b1ec3664300",
+      "mobbinUrl": "https://mobbin.com/screens/6f50f2d3-7d2a-4893-bbbc-2b1ec3664300",
+      "sourceUrl": "https://mobbin.com/screens/6f50f2d3-7d2a-4893-bbbc-2b1ec3664300",
+      "imageUrl": "https://mobbin.com/api/mcp/short/3WUfPFhA",
+      "appName": "IKEA",
+      "selectionReason": "Shop-by-color rail fits glaze/color browsing for ceramics."
+    },
+    {
+      "screenId": "e226a68b-6f47-413c-9cdd-281e257dbf2e",
+      "mobbinUrl": "https://mobbin.com/screens/e226a68b-6f47-413c-9cdd-281e257dbf2e",
+      "sourceUrl": "https://mobbin.com/screens/e226a68b-6f47-413c-9cdd-281e257dbf2e",
+      "imageUrl": "https://mobbin.com/api/mcp/short/FerZZNMg",
+      "appName": "IKEA",
+      "selectionReason": "Editorial homewares blocks are useful for curated studio-market and set-order explanation."
+    },
+    {
+      "screenId": "98e12353-e7cd-4ae6-8eed-f2afc60ce3c5",
+      "mobbinUrl": "https://mobbin.com/screens/98e12353-e7cd-4ae6-8eed-f2afc60ce3c5",
+      "sourceUrl": "https://mobbin.com/screens/98e12353-e7cd-4ae6-8eed-f2afc60ce3c5",
+      "imageUrl": "https://mobbin.com/api/mcp/short/Pv8nQjwX",
+      "appName": "HODINKEE",
+      "selectionReason": "Arrival-led shop structure can become a latest-drop ceramics section."
+    },
+    {
+      "screenId": "502a37d5-2047-439a-893b-60190dde51e4",
+      "mobbinUrl": "https://mobbin.com/screens/502a37d5-2047-439a-893b-60190dde51e4",
+      "sourceUrl": "https://mobbin.com/screens/502a37d5-2047-439a-893b-60190dde51e4",
+      "imageUrl": "https://mobbin.com/api/mcp/short/tu2dRSgW",
+      "appName": "Hims",
+      "selectionReason": "Product-card layout has strong photo, description, price, and learn-more balance."
+    },
+    {
+      "screenId": "688caa0f-ba83-47ee-b4e1-e1ee8066d59f",
+      "mobbinUrl": "https://mobbin.com/screens/688caa0f-ba83-47ee-b4e1-e1ee8066d59f",
+      "sourceUrl": "https://mobbin.com/screens/688caa0f-ba83-47ee-b4e1-e1ee8066d59f",
+      "imageUrl": "https://mobbin.com/api/mcp/short/emk9dU2k",
+      "appName": "Hims",
+      "selectionReason": "Buy-now plus learn-more card state is useful for ready-to-ship versus set-enquiry split."
+    },
+    {
+      "screenId": "329e37e0-ff02-4efe-82a4-4cabbb83e774",
+      "mobbinUrl": "https://mobbin.com/screens/329e37e0-ff02-4efe-82a4-4cabbb83e774",
+      "sourceUrl": "https://mobbin.com/screens/329e37e0-ff02-4efe-82a4-4cabbb83e774",
+      "imageUrl": "https://mobbin.com/api/mcp/short/V7JbLJHd",
+      "appName": "Maze",
+      "selectionReason": "Object-still-life strip suggests a refined non-stock material visual system."
+    },
+    {
+      "screenId": "3bed3d27-98a5-4c72-baa0-ca8a1507f853",
+      "mobbinUrl": "https://mobbin.com/screens/3bed3d27-98a5-4c72-baa0-ca8a1507f853",
+      "sourceUrl": "https://mobbin.com/screens/3bed3d27-98a5-4c72-baa0-ca8a1507f853",
+      "imageUrl": "https://mobbin.com/api/mcp/short/IjIKvlJE",
+      "appName": "Apple",
+      "selectionReason": "Retail category rail and shopping-help prompts are useful as a scale reference."
+    },
+    {
+      "screenId": "2d278d2c-75c4-4b7a-97ca-1cbe93d9bf24",
+      "mobbinUrl": "https://mobbin.com/screens/2d278d2c-75c4-4b7a-97ca-1cbe93d9bf24",
+      "sourceUrl": "https://mobbin.com/screens/2d278d2c-75c4-4b7a-97ca-1cbe93d9bf24",
+      "imageUrl": "https://mobbin.com/api/mcp/short/8ihT2vLU",
+      "appName": "Glide",
+      "selectionReason": "Inventory grouping is useful as an internal anti-reference and search/filter warning."
+    },
+    {
+      "screenId": "9fc089ce-43ad-45b9-9aac-da67d410b857",
+      "mobbinUrl": "https://mobbin.com/screens/9fc089ce-43ad-45b9-9aac-da67d410b857",
+      "sourceUrl": "https://mobbin.com/screens/9fc089ce-43ad-45b9-9aac-da67d410b857",
+      "imageUrl": "https://mobbin.com/api/mcp/short/J8Le9r5i",
+      "appName": "Faire",
+      "selectionReason": "Saved home-items grid shows B2B price/minimum/favorite complexity to avoid or simplify."
+    },
+    {
+      "screenId": "450e8b95-34a3-4e97-b02c-fd5d584a6971",
+      "mobbinUrl": "https://mobbin.com/screens/450e8b95-34a3-4e97-b02c-fd5d584a6971",
+      "sourceUrl": "https://mobbin.com/screens/450e8b95-34a3-4e97-b02c-fd5d584a6971",
+      "imageUrl": "https://mobbin.com/api/mcp/short/95bEPG4n",
+      "appName": "Blue Apron",
+      "selectionReason": "Large category tiles help structure ready-to-ship, dinnerware sets, gifts, and studio-market paths."
+    },
+    {
+      "screenId": "cfd97b07-2e10-4cda-9594-dd1fcb3b2eb4",
+      "mobbinUrl": "https://mobbin.com/screens/cfd97b07-2e10-4cda-9594-dd1fcb3b2eb4",
+      "sourceUrl": "https://mobbin.com/screens/cfd97b07-2e10-4cda-9594-dd1fcb3b2eb4",
+      "imageUrl": "https://mobbin.com/api/mcp/short/rFYBIpFx",
+      "appName": "Shop",
+      "selectionReason": "Dense commerce grid is a useful anti-reference for a small artisan storefront."
+    }
+  ],
+  "shortlist": [
+    {
+      "screenId": "3ed792cd-a39b-4025-a6b1-991407ae8da2",
+      "mobbinUrl": "https://mobbin.com/screens/3ed792cd-a39b-4025-a6b1-991407ae8da2",
+      "sourceUrl": "https://mobbin.com/screens/3ed792cd-a39b-4025-a6b1-991407ae8da2",
+      "appName": "HODINKEE",
+      "structureFamily": "premium object-led shop hero",
+      "fitScores": { "job": 8, "niche": 7, "firstViewport": 9, "cta": 8, "proof": 7, "mobile": 8, "distinctiveness": 8, "buildability": 8, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "business-job", "ingredient": "Make the first decision a product purchase or set enquiry, not a generic brand admiration moment." },
+        { "layer": "layout-structure", "ingredient": "Use one large object-led hero with a direct shop or latest-drop CTA before category browsing." },
+        { "layer": "typography", "ingredient": "Use restrained editorial type that makes handmade products feel considered without fake luxury claims." },
+        { "layer": "media-direction", "ingredient": "Let one approved ceramic still life carry the first viewport if real product media exists." }
+      ],
+      "bannedUses": [
+        "Do not copy HODINKEE watch imagery, vintage claims, resale categories, insurance links, or luxury scarcity language."
+      ]
+    },
+    {
+      "screenId": "f6352ef8-0262-4a31-9a20-c0f2383d7f91",
+      "mobbinUrl": "https://mobbin.com/screens/f6352ef8-0262-4a31-9a20-c0f2383d7f91",
+      "sourceUrl": "https://mobbin.com/screens/f6352ef8-0262-4a31-9a20-c0f2383d7f91",
+      "appName": "Faire",
+      "structureFamily": "category carousel marketplace",
+      "fitScores": { "job": 9, "niche": 9, "firstViewport": 8, "cta": 8, "proof": 7, "mobile": 8, "distinctiveness": 7, "buildability": 8, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "information-architecture", "ingredient": "Expose mugs, planters, dinnerware, gifts, and studio market as shopper paths before deep inventory." },
+        { "layer": "content-strategy", "ingredient": "Use category copy that explains buying intent: ready-to-ship, small set enquiry, or in-person market visit." },
+        { "layer": "responsive-behavior", "ingredient": "Carousel categories must become scrollable, thumb-friendly rows on mobile." },
+        { "layer": "localization-and-formatting", "ingredient": "Use Portland studio-market language, local pickup/visit labels, and US currency only when source-backed." }
+      ],
+      "bannedUses": [
+        "Do not copy wholesale marketplace language, brand-count claims, trade-show discounts, product photos, or Faire account/cart affordances."
+      ]
+    },
+    {
+      "screenId": "87d9b209-533c-4176-9717-e541ec849255",
+      "mobbinUrl": "https://mobbin.com/screens/87d9b209-533c-4176-9717-e541ec849255",
+      "sourceUrl": "https://mobbin.com/screens/87d9b209-533c-4176-9717-e541ec849255",
+      "appName": "Etsy",
+      "structureFamily": "handmade product grid",
+      "fitScores": { "job": 8, "niche": 9, "firstViewport": 7, "cta": 8, "proof": 8, "mobile": 8, "distinctiveness": 7, "buildability": 8, "truth": 7 },
+      "ingredientLedger": [
+        { "layer": "component-anatomy", "ingredient": "Product cards need image, product name, price/availability if verified, and a clear add/view action." },
+        { "layer": "component-states", "ingredient": "Cards need sold-out, made-to-order, enquiry-only, selected, hover, focus, and loading states." },
+        { "layer": "forms-and-lead-capture", "ingredient": "Small dinnerware sets should route to a short enquiry form instead of a fake add-to-cart flow." },
+        { "layer": "proof-architecture", "ingredient": "Only show ratings, bestseller badges, discounts, order urgency, or reviews when Moss & Kiln provides proof." }
+      ],
+      "bannedUses": [
+        "Do not copy Etsy seller badges, ratings, discounts, scarcity text, shipping claims, ad labels, or marketplace basket controls."
+      ]
+    },
+    {
+      "screenId": "6f50f2d3-7d2a-4893-bbbc-2b1ec3664300",
+      "mobbinUrl": "https://mobbin.com/screens/6f50f2d3-7d2a-4893-bbbc-2b1ec3664300",
+      "sourceUrl": "https://mobbin.com/screens/6f50f2d3-7d2a-4893-bbbc-2b1ec3664300",
+      "appName": "IKEA",
+      "structureFamily": "shop-by-color rail",
+      "fitScores": { "job": 8, "niche": 8, "firstViewport": 7, "cta": 8, "proof": 7, "mobile": 8, "distinctiveness": 8, "buildability": 8, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "color-system", "ingredient": "Glaze/color browsing can become a real commerce filter if the palette is restrained and product-backed." },
+        { "layer": "surfaces-and-materials", "ingredient": "Use clay, glaze, shelf, and paper-like surfaces rather than generic ecommerce gray cards." },
+        { "layer": "shape", "ingredient": "Let product silhouettes and simple pill CTAs carry softness; avoid rounded-card overload." },
+        { "layer": "interaction-model", "ingredient": "Color/category chips should filter products or scroll to real collections, not act as decorative tags." }
+      ],
+      "bannedUses": [
+        "Do not copy IKEA photography, product names, shop-by-color labels, room-set scale, or mass-retail tone."
+      ]
+    },
+    {
+      "screenId": "e226a68b-6f47-413c-9cdd-281e257dbf2e",
+      "mobbinUrl": "https://mobbin.com/screens/e226a68b-6f47-413c-9cdd-281e257dbf2e",
+      "sourceUrl": "https://mobbin.com/screens/e226a68b-6f47-413c-9cdd-281e257dbf2e",
+      "appName": "IKEA",
+      "structureFamily": "editorial homewares blocks",
+      "fitScores": { "job": 8, "niche": 8, "firstViewport": 7, "cta": 7, "proof": 7, "mobile": 8, "distinctiveness": 7, "buildability": 8, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "voice-and-tone", "ingredient": "Write like a clear studio operator: material, use case, care, pickup/order path, and availability." },
+        { "layer": "spacing-system", "ingredient": "Give product editorial blocks generous whitespace so handmade detail feels inspectable." },
+        { "layer": "depth", "ingredient": "Depth should come from photography, overlap, and section rhythm rather than heavy shadows." },
+        { "layer": "illustration-graphics", "ingredient": "If photos are thin, use glaze swatches, kiln marks, maker notes, or line drawings as truthful support." }
+      ],
+      "bannedUses": [
+        "Do not copy IKEA sustainability claims, affordability framing, trend language, or furniture/home-room copy."
+      ]
+    },
+    {
+      "screenId": "688caa0f-ba83-47ee-b4e1-e1ee8066d59f",
+      "mobbinUrl": "https://mobbin.com/screens/688caa0f-ba83-47ee-b4e1-e1ee8066d59f",
+      "sourceUrl": "https://mobbin.com/screens/688caa0f-ba83-47ee-b4e1-e1ee8066d59f",
+      "appName": "Hims",
+      "structureFamily": "buy-now product cards",
+      "fitScores": { "job": 8, "niche": 7, "firstViewport": 8, "cta": 9, "proof": 7, "mobile": 8, "distinctiveness": 7, "buildability": 8, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "cta-system", "ingredient": "Ready-to-ship pieces should use buy/view CTAs while set orders use enquire CTAs." },
+        { "layer": "accessibility", "ingredient": "Product-card CTAs, price text, image alt text, and filters need keyboard and screen-reader labels." },
+        { "layer": "performance", "ingredient": "Use optimized product images and avoid heavy galleries until the core inventory path is fast." },
+        { "layer": "implementation-tokens", "ingredient": "Tokenize product-card width, image ratio, CTA height, gap, focus ring, and clay/glaze colors." }
+      ],
+      "bannedUses": [
+        "Do not copy Hims medical copy, subscription notes, provider claims, ingredient claims, or regulated disclaimers."
+      ]
+    },
+    {
+      "screenId": "329e37e0-ff02-4efe-82a4-4cabbb83e774",
+      "mobbinUrl": "https://mobbin.com/screens/329e37e0-ff02-4efe-82a4-4cabbb83e774",
+      "sourceUrl": "https://mobbin.com/screens/329e37e0-ff02-4efe-82a4-4cabbb83e774",
+      "appName": "Maze",
+      "structureFamily": "object-still-life hero",
+      "fitScores": { "job": 7, "niche": 7, "firstViewport": 8, "cta": 8, "proof": 7, "mobile": 8, "distinctiveness": 8, "buildability": 8, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "media-direction", "ingredient": "Build a ceramics still-life strip from approved products, clay tools, glaze swatches, or truthful abstract material references." },
+        { "layer": "motion", "ingredient": "If motion is used, limit it to subtle product rail reveal, add-to-cart feedback, or market-date reveal." },
+        { "layer": "iconography", "ingredient": "Use simple utility icons only for pickup, shipping, set enquiry, care, and market visit." },
+        { "layer": "seo-aeo-metadata", "ingredient": "Visible collection names and product availability should map to agent-readable product facts and local market info." }
+      ],
+      "bannedUses": [
+        "Do not copy Maze SaaS positioning, research/product-decision claims, colored 3D props, or customer-insight proof."
+      ]
+    },
+    {
+      "screenId": "450e8b95-34a3-4e97-b02c-fd5d584a6971",
+      "mobbinUrl": "https://mobbin.com/screens/450e8b95-34a3-4e97-b02c-fd5d584a6971",
+      "sourceUrl": "https://mobbin.com/screens/450e8b95-34a3-4e97-b02c-fd5d584a6971",
+      "appName": "Blue Apron",
+      "structureFamily": "large category tiles",
+      "fitScores": { "job": 8, "niche": 7, "firstViewport": 7, "cta": 8, "proof": 7, "mobile": 8, "distinctiveness": 7, "buildability": 8, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "business-job", "ingredient": "Split shopper paths into buy a piece, enquire about a set, buy a gift, or visit the market." },
+        { "layer": "governance", "ingredient": "Block claims about handmade volume, lead times, kiln process, sustainability, or market dates unless source-backed." },
+        { "layer": "localization-and-formatting", "ingredient": "Keep currency, pickup, shipping, and market-visit labels local and explicit." },
+        { "layer": "responsive-behavior", "ingredient": "Large category tiles should stack cleanly and keep the primary purchase/enquiry path visible on mobile." }
+      ],
+      "bannedUses": [
+        "Do not copy meal-kit categories, shipping thresholds, food photography, subscription logic, or pantry-market claims."
+      ]
+    }
+  ],
+  "antiReferences": [
+    {
+      "screenId": "2d278d2c-75c4-4b7a-97ca-1cbe93d9bf24",
+      "mobbinUrl": "https://mobbin.com/screens/2d278d2c-75c4-4b7a-97ca-1cbe93d9bf24",
+      "appName": "Glide",
+      "rejectionReason": "Internal inventory grid language would make a public ceramics shop feel like an admin tool."
+    },
+    {
+      "screenId": "cfd97b07-2e10-4cda-9594-dd1fcb3b2eb4",
+      "mobbinUrl": "https://mobbin.com/screens/cfd97b07-2e10-4cda-9594-dd1fcb3b2eb4",
+      "appName": "Shop",
+      "rejectionReason": "Dense marketplace grid, QR/app footer, ratings, discounts, and broad product mix are wrong for a small artisan storefront."
+    },
+    {
+      "screenId": "02234de8-062a-4ec5-a34f-0e05912958cc",
+      "mobbinUrl": "https://mobbin.com/screens/02234de8-062a-4ec5-a34f-0e05912958cc",
+      "appName": "OKX",
+      "rejectionReason": "Dark fintech hero, mega-menu complexity, and trading CTAs create the wrong trust model and tone."
+    },
+    {
+      "screenId": "9dae958f-c1a5-4b8f-9409-875008fd9b71",
+      "mobbinUrl": "https://mobbin.com/screens/9dae958f-c1a5-4b8f-9409-875008fd9b71",
+      "appName": "Productboard",
+      "rejectionReason": "SaaS proof screenshots, AI banner, and enterprise CTAs do not translate to a product-led ceramics shop."
+    }
+  ],
+  "remixDirection": {
+    "summary": "A product-led ceramics storefront with an object-led hero, glaze/category browsing, clear ready-to-ship versus set-enquiry paths, and truthful studio-market/local pickup context.",
+    "selectedMoves": [
+      "HODINKEE object-led hero discipline, rebuilt around approved ceramics media and a purchase CTA.",
+      "Faire category-carousel logic for mugs, planters, dinnerware, gifts, and studio market browsing.",
+      "Etsy product-card information density, stripped of marketplace badges, fake ratings, and scarcity.",
+      "IKEA shop-by-color rail adapted into glaze/color collection filtering.",
+      "Hims buy-now/learn-more product-card state adapted to buy ready-to-ship or enquire about a set."
+    ],
+    "explicitRejects": [
+      "No invented product photos, prices, stock counts, discounts, ratings, reviews, maker claims, sustainability claims, or market dates.",
+      "No marketplace clutter, admin inventory UI, SaaS proof screenshots, crypto/finance tone, or exact layout copy.",
+      "No exact layout copy from any shortlisted Mobbin screen."
+    ]
+  }
+}

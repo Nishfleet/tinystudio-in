@@ -1,0 +1,111 @@
+{
+  "schemaVersion": "mobbin.mobbin-search-brief.v1",
+  "businessId": "dockyard-barber-rooms-cork",
+  "businessName": "Dockyard Barber Rooms",
+  "businessModel": "service",
+  "category": "barber",
+  "subcategory": "cuts, beard trims, and father-son haircut appointments",
+  "targetCustomerDecision": "Is this the right booking path for a standard cut, beard trim, or parent-child visit?",
+  "primaryAction": "book",
+  "sourceProvider": "Mobbin Pro MCP",
+  "platform": "web",
+  "requiredQueryAngles": [
+    "niche",
+    "page-job",
+    "tone",
+    "constraint"
+  ],
+  "requiredRawCandidates": {
+    "min": 12,
+    "max": 20
+  },
+  "requiredShortlist": {
+    "min": 6,
+    "max": 8
+  },
+  "requiredAntiReferences": 2,
+  "requiredIngredientLayers": [
+    "business-job",
+    "information-architecture",
+    "content-strategy",
+    "voice-and-tone",
+    "typography",
+    "layout-structure",
+    "spacing-system",
+    "responsive-behavior",
+    "color-system",
+    "surfaces-and-materials",
+    "depth",
+    "shape",
+    "component-anatomy",
+    "component-states",
+    "interaction-model",
+    "motion",
+    "media-direction",
+    "iconography",
+    "illustration-graphics",
+    "proof-architecture",
+    "cta-system",
+    "forms-and-lead-capture",
+    "accessibility",
+    "localization-and-formatting",
+    "seo-aeo-metadata",
+    "performance",
+    "implementation-tokens",
+    "governance"
+  ],
+  "collectionPolicy": {
+    "sourceCategory": "Mobbin Pro web platform / websites category",
+    "strategy": "wide-pull-then-compress",
+    "minimumReturnedScreensAcrossQueries": 32,
+    "minimumUniqueRawPoolScreens": 20,
+    "packetRawCandidates": {
+      "min": 12,
+      "max": 20
+    },
+    "recommendedChunkSize": 8,
+    "chunkRule": "Use repeated Mobbin MCP calls with exclude_screen_ids when one large pull times out; chunking is allowed, narrowing the search to save transcript space is not.",
+    "transcriptPolicy": "Save the full raw Mobbin metadata and links in raw-pull-log.json. The chat/report should show only counts, hashes, shortlist, and blockers."
+  },
+  "queries": [
+    {
+      "angle": "niche",
+      "query": "barber cuts, beard trims, and father-son haircut appointments service marketing website homepage book CTA landing page website inspiration",
+      "mode": "deep",
+      "platform": "web",
+      "minimumRawCandidates": 12,
+      "targetRawCandidates": 20
+    },
+    {
+      "angle": "page-job",
+      "query": "book CTA homepage with trust proof, service or product menu, and local customer decision path website",
+      "mode": "deep",
+      "platform": "web",
+      "minimumRawCandidates": 12,
+      "targetRawCandidates": 20
+    },
+    {
+      "angle": "tone",
+      "query": "premium credible owner-led service business landing page website",
+      "mode": "deep",
+      "platform": "web",
+      "minimumRawCandidates": 12,
+      "targetRawCandidates": 20
+    },
+    {
+      "angle": "constraint",
+      "query": "family booking path service duration comparison masculine visual language without cliche responsive mobile-first homepage website not dashboard not app",
+      "mode": "deep",
+      "platform": "web",
+      "minimumRawCandidates": 12,
+      "targetRawCandidates": 20
+    }
+  ],
+  "noCopyRules": [
+    "Do not copy source brands, logos, product claims, trust claims, screenshots, or exact layouts.",
+    "Do not use Mobbin reference proof as business proof.",
+    "Every selected ingredient must map to this business job or a quality requirement."
+  ],
+  "briefHash": "dfc80ccbde4b4c53f256643f861816739eda540ca5d07da3ad00f3ada519fe18",
+  "businessHash": "0d679c3d70b47e267178e3c61c238c30dca32e3fcc672f9ad836eed933f092ae"
+}

@@ -1,0 +1,1882 @@
+{
+  "schemaVersion": "mobbin.design-system-proving-lab.benchmark-businesses.v2",
+  "createdAt": "2026-05-18",
+  "fixtureMode": "fictional-benchmark-only",
+  "customerVisible": false,
+  "notes": [
+    "Every business in this file is fictional fixture data for Mobbin Proving Lab design-system benchmarking.",
+    "These are not real prospects, customers, reviews, ratings, awards, addresses, or source-backed claims.",
+    "Use these fixtures to stress Business Reality Pack, Mobbin reference selection, concepting, variability, truth, photo, and mobile gates before any outreach or public-home redesign."
+  ],
+  "globalGuardrails": {
+    "allowedUses": [
+      "internal proving-lab fixture generation",
+      "Mobbin Pro search brief construction",
+      "three-concept benchmark planning",
+      "copy, proof, photo, mobile, and variability gate testing"
+    ],
+    "blockedUses": [
+      "outreach",
+      "sales copy",
+      "customer-visible case studies",
+      "public claims",
+      "real lead scoring",
+      "rendering fake staff, customers, premises, reviews, ratings, certifications, awards, or outcomes"
+    ],
+    "defaultForbiddenClaims": [
+      "reviews",
+      "ratings",
+      "awards",
+      "certifications",
+      "years in business",
+      "licensed status",
+      "medical outcomes",
+      "fitness or learning outcomes",
+      "guaranteed response times",
+      "named owner or staff biographies",
+      "real premises photos",
+      "customer counts",
+      "revenue or lead results"
+    ]
+  },
+  "businesses": [
+    {
+      "id": "harbour-ritual-colour-room-brighton",
+      "mode": "fixture",
+      "businessName": "Harbour Ritual Colour Room",
+      "businessModel": "service",
+      "category": "salon",
+      "subcategory": "colour-led salon for gloss, balayage, and blow-dry appointments",
+      "city": "Brighton",
+      "country": "United Kingdom",
+      "market": "United Kingdom owner-led service fixture",
+      "ownerLedStatus": "fixture-owner-led",
+      "currentPresence": {
+        "fixtureProfile": "fixture://harbour-ritual-colour-room-brighton",
+        "realWebsite": null,
+        "socialOrListing": null
+      },
+      "redesignOpportunity": "Colour-led salons are a core Mobbin Proving Lab niche and expose the system's tendency to overclaim outcomes or lean on unapproved imagery.",
+      "targetVisitor": "A local customer deciding whether Harbour Ritual Colour Room is the right fit before taking action.",
+      "targetCustomerDecision": "Should a new client book a colour consultation first, a gloss refresh, or a blow-dry appointment?",
+      "primaryAction": "book",
+      "offerings": [
+        {
+          "name": "Colour consultation",
+          "role": "first step for new colour clients",
+          "fixtureDetail": "30 minute planning appointment",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Gloss refresh",
+          "role": "maintenance service for shine and tone",
+          "fixtureDetail": "45 minute service",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Balayage planning",
+          "role": "higher-consideration colour path",
+          "fixtureDetail": "consult-first only",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Blow dry",
+          "role": "lower-friction booking path",
+          "fixtureDetail": "60 minute styling appointment",
+          "sourceStatus": "fixture-only"
+        }
+      ],
+      "services": [
+        {
+          "name": "Colour consultation",
+          "role": "first step for new colour clients",
+          "fixtureDetail": "30 minute planning appointment",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Gloss refresh",
+          "role": "maintenance service for shine and tone",
+          "fixtureDetail": "45 minute service",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Balayage planning",
+          "role": "higher-consideration colour path",
+          "fixtureDetail": "consult-first only",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Blow dry",
+          "role": "lower-friction booking path",
+          "fixtureDetail": "60 minute styling appointment",
+          "sourceStatus": "fixture-only"
+        }
+      ],
+      "products": [],
+      "contactPath": "fixture booking path; real booking/contact URL required before send",
+      "bookingOrEnquiryPath": "fixture booking path; real booking/contact URL required before send",
+      "groundingSignals": [
+        "North Laine, Brighton",
+        "4 fixture offerings",
+        "fixture booking path; real booking/contact URL required before send",
+        "Colour consultation: 30 minute planning appointment",
+        "Gloss refresh: 45 minute service",
+        "owner-approved service menu",
+        "real booking/contact path"
+      ],
+      "approvedPhotos": null,
+      "photoConstraint": {
+        "mode": "photo-free-until-owner-supplied",
+        "allowedMedia": [
+          "type-led colour menu",
+          "abstract swatch system",
+          "service ledger",
+          "empty-chair illustration only if clearly non-real"
+        ],
+        "blockedMedia": [
+          "stock hair models",
+          "fake before-and-after images",
+          "invented salon interiors",
+          "borrowed directory photos"
+        ]
+      },
+      "allowedClaims": [
+        "fictional service names and durations from this fixture",
+        "area-level Brighton location",
+        "consultation-first flow",
+        "photo approval is missing"
+      ],
+      "forbiddenClaims": [
+        "reviews",
+        "ratings",
+        "awards",
+        "certifications",
+        "years in business",
+        "licensed status",
+        "medical outcomes",
+        "fitness or learning outcomes",
+        "guaranteed response times",
+        "named owner or staff biographies",
+        "real premises photos",
+        "customer counts",
+        "revenue or lead results",
+        "hair transformation claims",
+        "colour correction results",
+        "stylist names",
+        "reviews or ratings",
+        "before-and-after photos"
+      ],
+      "regulatedRisk": "standard-local-business-review",
+      "sourceUrls": [],
+      "fixtureSourceNotes": [
+        "All usable facts are limited to this JSON fixture and must remain marked as fictional.",
+        "Built to test a consultation-led salon page where the design must avoid fake beauty proof while still feeling commercially credible.",
+        "Fictional fixture only; not a real prospect, customer, review, address, or sourced claim."
+      ],
+      "benchmarkConstraintTags": [
+        "high-photo temptation",
+        "consultation-first CTA",
+        "service menu clarity",
+        "premium feel without luxury cliches",
+        "editorial consultation hero",
+        "service decision ladder",
+        "photo-free swatch visual",
+        "mobile sticky consultation CTA",
+        "service",
+        "book",
+        "salon"
+      ],
+      "priorityScore": 92,
+      "status": "pass",
+      "blockers": [],
+      "relevanceReason": "Colour-led salons are a core Mobbin Proving Lab niche and expose the system's tendency to overclaim outcomes or lean on unapproved imagery."
+    },
+    {
+      "id": "dockyard-barber-rooms-cork",
+      "mode": "fixture",
+      "businessName": "Dockyard Barber Rooms",
+      "businessModel": "service",
+      "category": "barber",
+      "subcategory": "cuts, beard trims, and father-son haircut appointments",
+      "city": "Cork",
+      "country": "Ireland",
+      "market": "Ireland owner-led service fixture",
+      "ownerLedStatus": "fixture-owner-led",
+      "currentPresence": {
+        "fixtureProfile": "fixture://dockyard-barber-rooms-cork",
+        "realWebsite": null,
+        "socialOrListing": null
+      },
+      "redesignOpportunity": "Barbers are a strong Mobbin Proving Lab wedge and require a different structure from salons: faster decisions, sharper service menus, and mobile-first booking clarity.",
+      "targetVisitor": "A local customer deciding whether Dockyard Barber Rooms is the right fit before taking action.",
+      "targetCustomerDecision": "Is this the right booking path for a standard cut, beard trim, or parent-child visit?",
+      "primaryAction": "book",
+      "offerings": [
+        {
+          "name": "Standard cut",
+          "role": "default adult appointment",
+          "fixtureDetail": "30 minute slot",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Skin fade",
+          "role": "specific higher-skill cut path",
+          "fixtureDetail": "45 minute slot",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Beard trim and shape",
+          "role": "add-on or standalone grooming path",
+          "fixtureDetail": "20 minute slot",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Parent and child cut",
+          "role": "family booking path",
+          "fixtureDetail": "two linked appointments",
+          "sourceStatus": "fixture-only"
+        }
+      ],
+      "services": [
+        {
+          "name": "Standard cut",
+          "role": "default adult appointment",
+          "fixtureDetail": "30 minute slot",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Skin fade",
+          "role": "specific higher-skill cut path",
+          "fixtureDetail": "45 minute slot",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Beard trim and shape",
+          "role": "add-on or standalone grooming path",
+          "fixtureDetail": "20 minute slot",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Parent and child cut",
+          "role": "family booking path",
+          "fixtureDetail": "two linked appointments",
+          "sourceStatus": "fixture-only"
+        }
+      ],
+      "products": [],
+      "contactPath": "fixture booking path; real booking/contact URL required before send",
+      "bookingOrEnquiryPath": "fixture booking path; real booking/contact URL required before send",
+      "groundingSignals": [
+        "Shandon, Cork",
+        "4 fixture offerings",
+        "fixture booking path; real booking/contact URL required before send",
+        "Standard cut: 30 minute slot",
+        "Skin fade: 45 minute slot",
+        "real booking URL or phone path",
+        "verified hours"
+      ],
+      "approvedPhotos": null,
+      "photoConstraint": {
+        "mode": "no-real-photo-fixture",
+        "allowedMedia": [
+          "bold appointment board",
+          "tool silhouette icons",
+          "poster typography",
+          "service queue visualization"
+        ],
+        "blockedMedia": [
+          "fake barber portraits",
+          "fake shopfront",
+          "stock customers in chairs",
+          "borrowed haircut results"
+        ]
+      },
+      "allowedClaims": [
+        "fictional service names and slot lengths from this fixture",
+        "Shandon, Cork area-level location",
+        "family booking need",
+        "photo approval is missing"
+      ],
+      "forbiddenClaims": [
+        "reviews",
+        "ratings",
+        "awards",
+        "certifications",
+        "years in business",
+        "licensed status",
+        "medical outcomes",
+        "fitness or learning outcomes",
+        "guaranteed response times",
+        "named owner or staff biographies",
+        "real premises photos",
+        "customer counts",
+        "revenue or lead results",
+        "walk-in availability",
+        "licensed barber claims",
+        "barber names",
+        "reviews or ratings",
+        "heritage or years-open claims"
+      ],
+      "regulatedRisk": "standard-local-business-review",
+      "sourceUrls": [],
+      "fixtureSourceNotes": [
+        "All barber services and timing details are fixture-only and must not be described as sourced.",
+        "Built to test a hard-edged grooming page that cannot rely on fake atmosphere or social proof.",
+        "Fictional fixture only; not a real prospect, customer, review, address, or sourced claim."
+      ],
+      "benchmarkConstraintTags": [
+        "family booking path",
+        "service duration comparison",
+        "masculine visual language without cliche",
+        "no-photo credibility",
+        "poster-first hero",
+        "appointment menu grid",
+        "fast-scan service chips",
+        "map/contact proof slot held until sourced",
+        "service",
+        "book",
+        "barber"
+      ],
+      "priorityScore": 92,
+      "status": "pass",
+      "blockers": [],
+      "relevanceReason": "Barbers are a strong Mobbin Proving Lab wedge and require a different structure from salons: faster decisions, sharper service menus, and mobile-first booking clarity."
+    },
+    {
+      "id": "clearwell-family-dental-halifax",
+      "mode": "fixture",
+      "businessName": "Clearwell Family Dental",
+      "businessModel": "service",
+      "category": "clinic",
+      "subcategory": "check-ups, hygiene appointments, emergency triage, and cosmetic consults",
+      "city": "Halifax",
+      "country": "Canada",
+      "market": "Canada owner-led service fixture",
+      "ownerLedStatus": "fixture-owner-led",
+      "currentPresence": {
+        "fixtureProfile": "fixture://clearwell-family-dental-halifax",
+        "realWebsite": null,
+        "socialOrListing": null
+      },
+      "redesignOpportunity": "Dental and clinic pages are high-value local-service targets but must fail closed on proof, licensing, and outcome claims.",
+      "targetVisitor": "A local customer deciding whether Clearwell Family Dental is the right fit before taking action.",
+      "targetCustomerDecision": "Can a patient quickly choose between a routine check-up, hygiene visit, urgent dental issue, or cosmetic consultation?",
+      "primaryAction": "enquire",
+      "offerings": [
+        {
+          "name": "New patient check-up",
+          "role": "first appointment path",
+          "fixtureDetail": "routine intake",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Dental hygiene visit",
+          "role": "maintenance appointment path",
+          "fixtureDetail": "cleaning appointment",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Urgent dental concern",
+          "role": "triage path without medical claims",
+          "fixtureDetail": "request-based assessment",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Cosmetic consultation",
+          "role": "exploratory enquiry path",
+          "fixtureDetail": "consultation only",
+          "sourceStatus": "fixture-only"
+        }
+      ],
+      "services": [
+        {
+          "name": "New patient check-up",
+          "role": "first appointment path",
+          "fixtureDetail": "routine intake",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Dental hygiene visit",
+          "role": "maintenance appointment path",
+          "fixtureDetail": "cleaning appointment",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Urgent dental concern",
+          "role": "triage path without medical claims",
+          "fixtureDetail": "request-based assessment",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Cosmetic consultation",
+          "role": "exploratory enquiry path",
+          "fixtureDetail": "consultation only",
+          "sourceStatus": "fixture-only"
+        }
+      ],
+      "products": [],
+      "contactPath": "fixture enquiry path; real phone/email/booking link required before send",
+      "bookingOrEnquiryPath": "fixture enquiry path; real phone/email/booking link required before send",
+      "groundingSignals": [
+        "North End, Halifax",
+        "4 fixture offerings",
+        "fixture enquiry path; real phone/email/booking link required before send",
+        "New patient check-up: routine intake",
+        "Dental hygiene visit: cleaning appointment",
+        "legal/regulated-category review",
+        "verified clinic services"
+      ],
+      "approvedPhotos": null,
+      "photoConstraint": {
+        "mode": "regulated-no-photo-until-approved",
+        "allowedMedia": [
+          "clean wayfinding cards",
+          "appointment type selector",
+          "calm clinic-grade surfaces",
+          "non-figurative care icons"
+        ],
+        "blockedMedia": [
+          "fake dentists",
+          "fake patients",
+          "clinical procedure photos",
+          "smile result imagery",
+          "fake clinic interiors"
+        ]
+      },
+      "allowedClaims": [
+        "fictional service categories from this fixture",
+        "area-level Halifax location",
+        "clear routing by appointment type",
+        "extra review required because the category is regulated"
+      ],
+      "forbiddenClaims": [
+        "reviews",
+        "ratings",
+        "awards",
+        "certifications",
+        "years in business",
+        "licensed status",
+        "medical outcomes",
+        "fitness or learning outcomes",
+        "guaranteed response times",
+        "named owner or staff biographies",
+        "real premises photos",
+        "customer counts",
+        "revenue or lead results",
+        "clinical outcomes",
+        "painless treatment claims",
+        "emergency response promises",
+        "licensed dentist names",
+        "insurance acceptance",
+        "reviews or ratings",
+        "before-and-after images"
+      ],
+      "regulatedRisk": "extra-review-required",
+      "sourceUrls": [],
+      "fixtureSourceNotes": [
+        "This fixture is for regulated-category design testing only and must default to hold/review before any real-world use.",
+        "Built to test whether the system can produce trust and routing clarity without unsafe healthcare claims.",
+        "Fictional fixture only; not a real prospect, customer, review, address, or sourced claim."
+      ],
+      "benchmarkConstraintTags": [
+        "regulated category",
+        "urgent path wording",
+        "trust without fake credentials",
+        "clinical design restraint",
+        "route-picker hero",
+        "high-contrast appointment cards",
+        "safety-note proof area",
+        "mobile emergency/request split without promises",
+        "service",
+        "enquire",
+        "clinic"
+      ],
+      "priorityScore": 92,
+      "status": "pass",
+      "blockers": [],
+      "relevanceReason": "Dental and clinic pages are high-value local-service targets but must fail closed on proof, licensing, and outcome claims."
+    },
+    {
+      "id": "iron-laneway-strength-richmond",
+      "mode": "fixture",
+      "businessName": "Iron Laneway Strength",
+      "businessModel": "service",
+      "category": "fitness",
+      "subcategory": "beginner strength coaching, small-group training, and open-gym memberships",
+      "city": "Melbourne",
+      "country": "Australia",
+      "market": "Australia owner-led service fixture",
+      "ownerLedStatus": "fixture-owner-led",
+      "currentPresence": {
+        "fixtureProfile": "fixture://iron-laneway-strength-richmond",
+        "realWebsite": null,
+        "socialOrListing": null
+      },
+      "redesignOpportunity": "Fitness studios are visually tempting but risky: the system must sell a first visit without fake bodies, fake results, or coach credentials.",
+      "targetVisitor": "A local customer deciding whether Iron Laneway Strength is the right fit before taking action.",
+      "targetCustomerDecision": "Should a nervous beginner book a starter assessment, join a small group class, or ask about open-gym access?",
+      "primaryAction": "book",
+      "offerings": [
+        {
+          "name": "Starter assessment",
+          "role": "lowest-risk first step",
+          "fixtureDetail": "45 minute intro",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Small group strength",
+          "role": "core recurring service",
+          "fixtureDetail": "six-person cap in fixture data",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Open gym access",
+          "role": "self-guided membership option",
+          "fixtureDetail": "member-only access",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Technique review",
+          "role": "trust-building service for form concerns",
+          "fixtureDetail": "one-to-one review",
+          "sourceStatus": "fixture-only"
+        }
+      ],
+      "services": [
+        {
+          "name": "Starter assessment",
+          "role": "lowest-risk first step",
+          "fixtureDetail": "45 minute intro",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Small group strength",
+          "role": "core recurring service",
+          "fixtureDetail": "six-person cap in fixture data",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Open gym access",
+          "role": "self-guided membership option",
+          "fixtureDetail": "member-only access",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Technique review",
+          "role": "trust-building service for form concerns",
+          "fixtureDetail": "one-to-one review",
+          "sourceStatus": "fixture-only"
+        }
+      ],
+      "products": [],
+      "contactPath": "fixture booking path; real booking/contact URL required before send",
+      "bookingOrEnquiryPath": "fixture booking path; real booking/contact URL required before send",
+      "groundingSignals": [
+        "Richmond, Melbourne",
+        "4 fixture offerings",
+        "fixture booking path; real booking/contact URL required before send",
+        "Starter assessment: 45 minute intro",
+        "Small group strength: six-person cap in fixture data",
+        "verified coach credentials if shown",
+        "real schedule or enquiry path"
+      ],
+      "approvedPhotos": null,
+      "photoConstraint": {
+        "mode": "facility-photos-required-for-photo-led-version",
+        "allowedMedia": [
+          "equipment plan diagram",
+          "class pathway cards",
+          "no-photo assessment flow",
+          "bold typography with training blocks"
+        ],
+        "blockedMedia": [
+          "stock athletes",
+          "fake member photos",
+          "body transformation imagery",
+          "invented coach portraits"
+        ]
+      },
+      "allowedClaims": [
+        "fictional service names from this fixture",
+        "beginner-friendly positioning as fixture intent",
+        "area-level Melbourne location",
+        "class-size cap only as fixture data, not a sourced claim"
+      ],
+      "forbiddenClaims": [
+        "reviews",
+        "ratings",
+        "awards",
+        "certifications",
+        "years in business",
+        "licensed status",
+        "medical outcomes",
+        "fitness or learning outcomes",
+        "guaranteed response times",
+        "named owner or staff biographies",
+        "real premises photos",
+        "customer counts",
+        "revenue or lead results",
+        "weight loss outcomes",
+        "strength gain guarantees",
+        "coach qualifications",
+        "transformation photos",
+        "member testimonials",
+        "reviews or ratings"
+      ],
+      "regulatedRisk": "standard-local-business-review",
+      "sourceUrls": [],
+      "fixtureSourceNotes": [
+        "Fixture services are invented to test conversion structure and cannot be represented as a real gym offering.",
+        "Built to test beginner trust, class-path clarity, and performance-claim restraint.",
+        "Fictional fixture only; not a real prospect, customer, review, address, or sourced claim."
+      ],
+      "benchmarkConstraintTags": [
+        "outcome claim risk",
+        "class vs membership decision",
+        "facility-photo dependency",
+        "mobile schedule/CTA clarity",
+        "assessment-led hero",
+        "class pathway timeline",
+        "training block visual system",
+        "sticky mobile assessment action",
+        "service",
+        "book",
+        "fitness"
+      ],
+      "priorityScore": 92,
+      "status": "pass",
+      "blockers": [],
+      "relevanceReason": "Fitness studios are visually tempting but risky: the system must sell a first visit without fake bodies, fake results, or coach credentials."
+    },
+    {
+      "id": "maple-row-maths-tutoring-toronto",
+      "mode": "fixture",
+      "businessName": "Maple Row Maths Tutoring",
+      "businessModel": "service",
+      "category": "education",
+      "subcategory": "secondary-school maths support, exam prep, and parent consultations",
+      "city": "Toronto",
+      "country": "Canada",
+      "market": "Canada owner-led service fixture",
+      "ownerLedStatus": "fixture-owner-led",
+      "currentPresence": {
+        "fixtureProfile": "fixture://maple-row-maths-tutoring-toronto",
+        "realWebsite": null,
+        "socialOrListing": null
+      },
+      "redesignOpportunity": "Tutoring is a Mobbin Proving Lab target with strong enquiry intent, but the design must avoid fake academic outcomes and student imagery.",
+      "targetVisitor": "A local customer deciding whether Maple Row Maths Tutoring is the right fit before taking action.",
+      "targetCustomerDecision": "Should a parent request a diagnostic call for weekly maths support, exam prep, or confidence rebuilding?",
+      "primaryAction": "enquire",
+      "offerings": [
+        {
+          "name": "Year 7-10 maths support",
+          "role": "ongoing weekly help",
+          "fixtureDetail": "weekly sessions",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Exam prep sprint",
+          "role": "deadline-driven enquiry",
+          "fixtureDetail": "four-week block",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Homework reset",
+          "role": "confidence-building lower-pressure option",
+          "fixtureDetail": "short-term support",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Parent diagnostic call",
+          "role": "first step before matching the support type",
+          "fixtureDetail": "15 minute call",
+          "sourceStatus": "fixture-only"
+        }
+      ],
+      "services": [
+        {
+          "name": "Year 7-10 maths support",
+          "role": "ongoing weekly help",
+          "fixtureDetail": "weekly sessions",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Exam prep sprint",
+          "role": "deadline-driven enquiry",
+          "fixtureDetail": "four-week block",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Homework reset",
+          "role": "confidence-building lower-pressure option",
+          "fixtureDetail": "short-term support",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Parent diagnostic call",
+          "role": "first step before matching the support type",
+          "fixtureDetail": "15 minute call",
+          "sourceStatus": "fixture-only"
+        }
+      ],
+      "products": [],
+      "contactPath": "fixture enquiry path; real phone/email/booking link required before send",
+      "bookingOrEnquiryPath": "fixture enquiry path; real phone/email/booking link required before send",
+      "groundingSignals": [
+        "Roncesvalles, Toronto",
+        "4 fixture offerings",
+        "fixture enquiry path; real phone/email/booking link required before send",
+        "Year 7-10 maths support: weekly sessions",
+        "Exam prep sprint: four-week block",
+        "verified tutor credentials if displayed",
+        "real parent contact path"
+      ],
+      "approvedPhotos": null,
+      "photoConstraint": {
+        "mode": "student-privacy-safe-no-photo-default",
+        "allowedMedia": [
+          "worksheet artifact motif",
+          "lesson pathway diagram",
+          "parent decision cards",
+          "abstract graph-paper system"
+        ],
+        "blockedMedia": [
+          "stock children",
+          "fake classroom photos",
+          "student faces",
+          "invented tutor portrait"
+        ]
+      },
+      "allowedClaims": [
+        "fictional service paths from this fixture",
+        "parent-first decision flow",
+        "area-level Toronto location",
+        "diagnostic call as primary action"
+      ],
+      "forbiddenClaims": [
+        "reviews",
+        "ratings",
+        "awards",
+        "certifications",
+        "years in business",
+        "licensed status",
+        "medical outcomes",
+        "fitness or learning outcomes",
+        "guaranteed response times",
+        "named owner or staff biographies",
+        "real premises photos",
+        "customer counts",
+        "revenue or lead results",
+        "grade improvement guarantees",
+        "school acceptance claims",
+        "tutor credentials",
+        "student testimonials",
+        "exam pass rates",
+        "reviews or ratings"
+      ],
+      "regulatedRisk": "extra-review-required",
+      "sourceUrls": [],
+      "fixtureSourceNotes": [
+        "All education services are fixture-only and must avoid outcome claims.",
+        "Built to test a professional but parent-friendly service page with privacy-safe visual rules.",
+        "Fictional fixture only; not a real prospect, customer, review, address, or sourced claim."
+      ],
+      "benchmarkConstraintTags": [
+        "parent decision anxiety",
+        "privacy-safe visuals",
+        "outcome-claim risk",
+        "service-path explanation",
+        "parent-call hero",
+        "diagnostic flow diagram",
+        "worksheet-like layout rhythm",
+        "FAQ/help microcopy states",
+        "service",
+        "enquire",
+        "education"
+      ],
+      "priorityScore": 92,
+      "status": "pass",
+      "blockers": [],
+      "relevanceReason": "Tutoring is a Mobbin Proving Lab target with strong enquiry intent, but the design must avoid fake academic outcomes and student imagery."
+    },
+    {
+      "id": "ridge-gutter-roofcare-auckland",
+      "mode": "fixture",
+      "businessName": "Ridge & Gutter Roofcare",
+      "businessModel": "service",
+      "category": "home-service",
+      "subcategory": "roof cleaning, gutter clearing, leak checks, and seasonal maintenance",
+      "city": "Auckland",
+      "country": "New Zealand",
+      "market": "New Zealand owner-led service fixture",
+      "ownerLedStatus": "fixture-owner-led",
+      "currentPresence": {
+        "fixtureProfile": "fixture://ridge-gutter-roofcare-auckland",
+        "realWebsite": null,
+        "socialOrListing": null
+      },
+      "redesignOpportunity": "Home services force the design system to handle quote urgency, trust gaps, safety wording, and no-photo constraints outside the beauty niche.",
+      "targetVisitor": "A local customer deciding whether Ridge & Gutter Roofcare is the right fit before taking action.",
+      "targetCustomerDecision": "Should a homeowner request a quote for gutter clearing, roof moss treatment, or a leak-check visit?",
+      "primaryAction": "quote",
+      "offerings": [
+        {
+          "name": "Gutter clearing",
+          "role": "urgent/simple quote path",
+          "fixtureDetail": "single-service quote",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Roof moss treatment",
+          "role": "seasonal maintenance option",
+          "fixtureDetail": "inspection first",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Leak check visit",
+          "role": "problem-led enquiry",
+          "fixtureDetail": "site visit request",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Seasonal maintenance plan",
+          "role": "recurring service upsell",
+          "fixtureDetail": "quote-only",
+          "sourceStatus": "fixture-only"
+        }
+      ],
+      "services": [
+        {
+          "name": "Gutter clearing",
+          "role": "urgent/simple quote path",
+          "fixtureDetail": "single-service quote",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Roof moss treatment",
+          "role": "seasonal maintenance option",
+          "fixtureDetail": "inspection first",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Leak check visit",
+          "role": "problem-led enquiry",
+          "fixtureDetail": "site visit request",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Seasonal maintenance plan",
+          "role": "recurring service upsell",
+          "fixtureDetail": "quote-only",
+          "sourceStatus": "fixture-only"
+        }
+      ],
+      "products": [],
+      "contactPath": "fixture quote request path; real phone/email/quote form required before send",
+      "bookingOrEnquiryPath": "fixture quote request path; real phone/email/quote form required before send",
+      "groundingSignals": [
+        "Mount Albert, Auckland",
+        "4 fixture offerings",
+        "fixture quote request path; real phone/email/quote form required before send",
+        "Gutter clearing: single-service quote",
+        "Roof moss treatment: inspection first",
+        "verified service area",
+        "real phone or quote form"
+      ],
+      "approvedPhotos": null,
+      "photoConstraint": {
+        "mode": "no-worksite-photo-until-approved",
+        "allowedMedia": [
+          "quote checklist layout",
+          "service area map placeholder marked fixture-only",
+          "maintenance calendar motif",
+          "roofline diagram"
+        ],
+        "blockedMedia": [
+          "fake roof damage",
+          "fake before-and-after images",
+          "stock tradespeople",
+          "invented branded van"
+        ]
+      },
+      "allowedClaims": [
+        "fictional service categories from this fixture",
+        "area-level Auckland location",
+        "quote-first flow",
+        "before/after proof is missing and blocked"
+      ],
+      "forbiddenClaims": [
+        "reviews",
+        "ratings",
+        "awards",
+        "certifications",
+        "years in business",
+        "licensed status",
+        "medical outcomes",
+        "fitness or learning outcomes",
+        "guaranteed response times",
+        "named owner or staff biographies",
+        "real premises photos",
+        "customer counts",
+        "revenue or lead results",
+        "licensed roofer claims",
+        "insurance claims",
+        "same-day guarantee",
+        "safety certifications",
+        "before-and-after photos",
+        "reviews or ratings"
+      ],
+      "regulatedRisk": "standard-local-business-review",
+      "sourceUrls": [],
+      "fixtureSourceNotes": [
+        "The contractor, service area, and services are fictional benchmark inputs only.",
+        "Built to test a quote-first home service flow that needs practical clarity more than brand flourish.",
+        "Fictional fixture only; not a real prospect, customer, review, address, or sourced claim."
+      ],
+      "benchmarkConstraintTags": [
+        "quote-first CTA",
+        "homeowner problem routing",
+        "safety/legal wording risk",
+        "visual credibility without job photos",
+        "problem-selector hero",
+        "quote checklist component",
+        "seasonal maintenance band",
+        "trust/proof hold state",
+        "service",
+        "quote",
+        "home-service"
+      ],
+      "priorityScore": 92,
+      "status": "pass",
+      "blockers": [],
+      "relevanceReason": "Home services force the design system to handle quote urgency, trust gaps, safety wording, and no-photo constraints outside the beauty niche."
+    },
+    {
+      "id": "little-lantern-supper-club-bath",
+      "mode": "fixture",
+      "businessName": "Little Lantern Supper Club",
+      "businessModel": "hybrid",
+      "category": "restaurant-cafe",
+      "subcategory": "daytime cafe, evening set-menu dinners, and private table enquiries",
+      "city": "Bath",
+      "country": "United Kingdom",
+      "market": "United Kingdom owner-led hybrid fixture",
+      "ownerLedStatus": "fixture-owner-led",
+      "currentPresence": {
+        "fixtureProfile": "fixture://little-lantern-supper-club-bath",
+        "realWebsite": null,
+        "socialOrListing": null
+      },
+      "redesignOpportunity": "Restaurants and cafes are visually asset-heavy and quickly expose whether the system can separate menu browsing, reservations, and private enquiries.",
+      "targetVisitor": "A local customer deciding whether Little Lantern Supper Club is the right fit before taking action.",
+      "targetCustomerDecision": "Is the visitor trying to see today's cafe menu, book a supper-club table, or ask about a private dinner?",
+      "primaryAction": "view-menu",
+      "offerings": [
+        {
+          "name": "Cafe menu",
+          "role": "daytime visit path",
+          "fixtureDetail": "sample fixture sections only",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Friday supper club",
+          "role": "reservation-led evening path",
+          "fixtureDetail": "set menu fixture",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Private table enquiry",
+          "role": "higher-value enquiry",
+          "fixtureDetail": "request path",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Gift voucher enquiry",
+          "role": "secondary purchase path",
+          "fixtureDetail": "enquiry only",
+          "sourceStatus": "fixture-only"
+        }
+      ],
+      "services": [
+        {
+          "name": "Cafe menu",
+          "role": "daytime visit path",
+          "fixtureDetail": "sample fixture sections only",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Friday supper club",
+          "role": "reservation-led evening path",
+          "fixtureDetail": "set menu fixture",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Private table enquiry",
+          "role": "higher-value enquiry",
+          "fixtureDetail": "request path",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Gift voucher enquiry",
+          "role": "secondary purchase path",
+          "fixtureDetail": "enquiry only",
+          "sourceStatus": "fixture-only"
+        }
+      ],
+      "products": [
+        {
+          "name": "Cafe menu",
+          "role": "daytime visit path",
+          "fixtureDetail": "sample fixture sections only",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Friday supper club",
+          "role": "reservation-led evening path",
+          "fixtureDetail": "set menu fixture",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Private table enquiry",
+          "role": "higher-value enquiry",
+          "fixtureDetail": "request path",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Gift voucher enquiry",
+          "role": "secondary purchase path",
+          "fixtureDetail": "enquiry only",
+          "sourceStatus": "fixture-only"
+        }
+      ],
+      "contactPath": "fixture menu/table enquiry path; real menu and booking/contact required before send",
+      "bookingOrEnquiryPath": "fixture menu/table enquiry path; real menu and booking/contact required before send",
+      "groundingSignals": [
+        "Walcot, Bath",
+        "4 fixture offerings",
+        "fixture menu/table enquiry path; real menu and booking/contact required before send",
+        "Cafe menu: sample fixture sections only",
+        "Friday supper club: set menu fixture",
+        "verified menu",
+        "real reservation or enquiry path"
+      ],
+      "approvedPhotos": null,
+      "photoConstraint": {
+        "mode": "food-photo-required-before-photo-led-version",
+        "allowedMedia": [
+          "text-led menu board",
+          "reservation card",
+          "illustrated table plan",
+          "paper receipt motif"
+        ],
+        "blockedMedia": [
+          "stock food photography",
+          "fake restaurant interior",
+          "fake guests",
+          "invented dishes shown as real"
+        ]
+      },
+      "allowedClaims": [
+        "fictional menu sections from this fixture",
+        "area-level Bath location",
+        "separate cafe and supper-club visitor jobs",
+        "photo approval is missing"
+      ],
+      "forbiddenClaims": [
+        "reviews",
+        "ratings",
+        "awards",
+        "certifications",
+        "years in business",
+        "licensed status",
+        "medical outcomes",
+        "fitness or learning outcomes",
+        "guaranteed response times",
+        "named owner or staff biographies",
+        "real premises photos",
+        "customer counts",
+        "revenue or lead results",
+        "chef names",
+        "press mentions",
+        "review quotes",
+        "dietary guarantees",
+        "real dish photos",
+        "opening hours"
+      ],
+      "regulatedRisk": "standard-local-business-review",
+      "sourceUrls": [],
+      "fixtureSourceNotes": [
+        "The restaurant, menus, booking paths, and locations are fictional and cannot be rendered as a real venue.",
+        "Built to test menu structure, reservation hierarchy, and media discipline in a food context.",
+        "Fictional fixture only; not a real prospect, customer, review, address, or sourced claim."
+      ],
+      "benchmarkConstraintTags": [
+        "multiple visitor jobs",
+        "food-photo temptation",
+        "hours/menu freshness",
+        "reservation CTA hierarchy",
+        "menu-board first viewport",
+        "reservation rail",
+        "private event enquiry block",
+        "freshness/hold state for menu details",
+        "hybrid",
+        "view-menu",
+        "restaurant-cafe"
+      ],
+      "priorityScore": 92,
+      "status": "pass",
+      "blockers": [],
+      "relevanceReason": "Restaurants and cafes are visually asset-heavy and quickly expose whether the system can separate menu browsing, reservations, and private enquiries."
+    },
+    {
+      "id": "ledger-lane-bookkeepers-edinburgh",
+      "mode": "fixture",
+      "businessName": "Ledger Lane Bookkeepers",
+      "businessModel": "service",
+      "category": "professional-service",
+      "subcategory": "bookkeeping, payroll setup, and monthly accounts support for small shops",
+      "city": "Edinburgh",
+      "country": "United Kingdom",
+      "market": "United Kingdom owner-led service fixture",
+      "ownerLedStatus": "fixture-owner-led",
+      "currentPresence": {
+        "fixtureProfile": "fixture://ledger-lane-bookkeepers-edinburgh",
+        "realWebsite": null,
+        "socialOrListing": null
+      },
+      "redesignOpportunity": "Professional services broaden the benchmark beyond image-led local businesses and test plain-English trust without fake compliance proof.",
+      "targetVisitor": "A local customer deciding whether Ledger Lane Bookkeepers is the right fit before taking action.",
+      "targetCustomerDecision": "Should a shop owner request monthly bookkeeping help, a payroll setup call, or a cleanup review?",
+      "primaryAction": "enquire",
+      "offerings": [
+        {
+          "name": "Monthly bookkeeping",
+          "role": "core recurring package",
+          "fixtureDetail": "monthly support",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Payroll setup",
+          "role": "project-based setup path",
+          "fixtureDetail": "setup call",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Books cleanup review",
+          "role": "pain-led first step",
+          "fixtureDetail": "review request",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "VAT return support",
+          "role": "compliance-adjacent enquiry requiring careful wording",
+          "fixtureDetail": "support enquiry",
+          "sourceStatus": "fixture-only"
+        }
+      ],
+      "services": [
+        {
+          "name": "Monthly bookkeeping",
+          "role": "core recurring package",
+          "fixtureDetail": "monthly support",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Payroll setup",
+          "role": "project-based setup path",
+          "fixtureDetail": "setup call",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Books cleanup review",
+          "role": "pain-led first step",
+          "fixtureDetail": "review request",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "VAT return support",
+          "role": "compliance-adjacent enquiry requiring careful wording",
+          "fixtureDetail": "support enquiry",
+          "sourceStatus": "fixture-only"
+        }
+      ],
+      "products": [],
+      "contactPath": "fixture enquiry path; real phone/email/booking link required before send",
+      "bookingOrEnquiryPath": "fixture enquiry path; real phone/email/booking link required before send",
+      "groundingSignals": [
+        "Leith, Edinburgh",
+        "4 fixture offerings",
+        "fixture enquiry path; real phone/email/booking link required before send",
+        "Monthly bookkeeping: monthly support",
+        "Payroll setup: setup call",
+        "verified professional credentials if shown",
+        "approved service scope"
+      ],
+      "approvedPhotos": null,
+      "photoConstraint": {
+        "mode": "no-photo-professional-default",
+        "allowedMedia": [
+          "document stack motif",
+          "plain-English workflow cards",
+          "checklist UI",
+          "calendar/report artifact"
+        ],
+        "blockedMedia": [
+          "stock accountants",
+          "fake office team",
+          "security lock imagery implying certification",
+          "client logos"
+        ]
+      },
+      "allowedClaims": [
+        "fictional service categories from this fixture",
+        "area-level Edinburgh location",
+        "small-shop owner audience",
+        "plain-English support framing"
+      ],
+      "forbiddenClaims": [
+        "reviews",
+        "ratings",
+        "awards",
+        "certifications",
+        "years in business",
+        "licensed status",
+        "medical outcomes",
+        "fitness or learning outcomes",
+        "guaranteed response times",
+        "named owner or staff biographies",
+        "real premises photos",
+        "customer counts",
+        "revenue or lead results",
+        "qualified accountant claims",
+        "tax/legal advice",
+        "HMRC outcome claims",
+        "client revenue claims",
+        "reviews or ratings",
+        "security/compliance certifications"
+      ],
+      "regulatedRisk": "standard-local-business-review",
+      "sourceUrls": [],
+      "fixtureSourceNotes": [
+        "All business facts are fictional and must avoid professional credential or compliance claims.",
+        "Built to test a quieter professional-service conversion page where trust comes from clarity and scope, not fake badges.",
+        "Fictional fixture only; not a real prospect, customer, review, address, or sourced claim."
+      ],
+      "benchmarkConstraintTags": [
+        "licensed-specialist boundary",
+        "low-photo category",
+        "recurring service package clarity",
+        "scope and trust without badges",
+        "plain checklist hero",
+        "package comparison table",
+        "scope boundary note",
+        "call-request form states",
+        "service",
+        "enquire",
+        "professional-service"
+      ],
+      "priorityScore": 92,
+      "status": "pass",
+      "blockers": [],
+      "relevanceReason": "Professional services broaden the benchmark beyond image-led local businesses and test plain-English trust without fake compliance proof."
+    },
+    {
+      "id": "meadow-skin-consult-room-wellington",
+      "mode": "fixture",
+      "businessName": "Meadow Skin Consult Room",
+      "businessModel": "service",
+      "category": "aesthetics",
+      "subcategory": "skin consultations, facials, peels, and treatment planning",
+      "city": "Wellington",
+      "country": "New Zealand",
+      "market": "New Zealand owner-led service fixture",
+      "ownerLedStatus": "fixture-owner-led",
+      "currentPresence": {
+        "fixtureProfile": "fixture://meadow-skin-consult-room-wellington",
+        "realWebsite": null,
+        "socialOrListing": null
+      },
+      "redesignOpportunity": "Skin and aesthetics are commercially attractive but proof-sensitive, making them a strong benchmark for truth and restraint.",
+      "targetVisitor": "A local customer deciding whether Meadow Skin Consult Room is the right fit before taking action.",
+      "targetCustomerDecision": "Should a first-time client book a skin consultation before choosing a facial, peel, or treatment plan?",
+      "primaryAction": "enquire",
+      "offerings": [
+        {
+          "name": "First skin consultation",
+          "role": "required first step",
+          "fixtureDetail": "consult-first",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Hydration facial",
+          "role": "lower-risk service path",
+          "fixtureDetail": "60 minute facial",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Gentle peel consultation",
+          "role": "regulated/careful treatment path",
+          "fixtureDetail": "consultation before treatment",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Treatment plan review",
+          "role": "follow-up path",
+          "fixtureDetail": "review appointment",
+          "sourceStatus": "fixture-only"
+        }
+      ],
+      "services": [
+        {
+          "name": "First skin consultation",
+          "role": "required first step",
+          "fixtureDetail": "consult-first",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Hydration facial",
+          "role": "lower-risk service path",
+          "fixtureDetail": "60 minute facial",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Gentle peel consultation",
+          "role": "regulated/careful treatment path",
+          "fixtureDetail": "consultation before treatment",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Treatment plan review",
+          "role": "follow-up path",
+          "fixtureDetail": "review appointment",
+          "sourceStatus": "fixture-only"
+        }
+      ],
+      "products": [],
+      "contactPath": "fixture enquiry path; real phone/email/booking link required before send",
+      "bookingOrEnquiryPath": "fixture enquiry path; real phone/email/booking link required before send",
+      "groundingSignals": [
+        "Te Aro, Wellington",
+        "4 fixture offerings",
+        "fixture enquiry path; real phone/email/booking link required before send",
+        "First skin consultation: consult-first",
+        "Hydration facial: 60 minute facial",
+        "regulated-category wording review",
+        "verified practitioner credentials if displayed"
+      ],
+      "approvedPhotos": null,
+      "photoConstraint": {
+        "mode": "no-results-imagery",
+        "allowedMedia": [
+          "consultation pathway visual",
+          "care plan cards",
+          "soft service ledger",
+          "abstract ingredient-free skin motif"
+        ],
+        "blockedMedia": [
+          "fake skin results",
+          "model faces",
+          "procedure imagery",
+          "product bottles implying real brands",
+          "clinic room photos not supplied by owner"
+        ]
+      },
+      "allowedClaims": [
+        "fictional service categories from this fixture",
+        "consult-first treatment flow",
+        "area-level Wellington location",
+        "extra review required for aesthetics wording"
+      ],
+      "forbiddenClaims": [
+        "reviews",
+        "ratings",
+        "awards",
+        "certifications",
+        "years in business",
+        "licensed status",
+        "medical outcomes",
+        "fitness or learning outcomes",
+        "guaranteed response times",
+        "named owner or staff biographies",
+        "real premises photos",
+        "customer counts",
+        "revenue or lead results",
+        "skin result claims",
+        "before-and-after photos",
+        "medical-grade claims",
+        "practitioner credentials",
+        "product claims",
+        "reviews or ratings"
+      ],
+      "regulatedRisk": "extra-review-required",
+      "sourceUrls": [],
+      "fixtureSourceNotes": [
+        "All treatment services are fictional and must be handled as review-only because aesthetics claims are sensitive.",
+        "Built to test careful service routing and high-trust visual design without unsafe outcomes.",
+        "Fictional fixture only; not a real prospect, customer, review, address, or sourced claim."
+      ],
+      "benchmarkConstraintTags": [
+        "regulated-adjacent claims",
+        "result-photo temptation",
+        "consult-first decision",
+        "premium calm without vague luxury",
+        "consultation-first hero",
+        "treatment pathway accordion",
+        "proof-missing hold state",
+        "soft but structured mobile flow",
+        "service",
+        "enquire",
+        "aesthetics"
+      ],
+      "priorityScore": 92,
+      "status": "pass",
+      "blockers": [],
+      "relevanceReason": "Skin and aesthetics are commercially attractive but proof-sensitive, making them a strong benchmark for truth and restraint."
+    },
+    {
+      "id": "cedar-paw-grooming-seattle",
+      "mode": "fixture",
+      "businessName": "Cedar Paw Grooming",
+      "businessModel": "service",
+      "category": "pet-service",
+      "subcategory": "dog grooming, puppy intro visits, de-shedding, and nail trims",
+      "city": "Seattle",
+      "country": "United States",
+      "market": "United States owner-led service fixture",
+      "ownerLedStatus": "fixture-owner-led",
+      "currentPresence": {
+        "fixtureProfile": "fixture://cedar-paw-grooming-seattle",
+        "realWebsite": null,
+        "socialOrListing": null
+      },
+      "redesignOpportunity": "Pet grooming is a practical local-service niche with booking intent, photo temptation, and multiple service-choice paths.",
+      "targetVisitor": "A local customer deciding whether Cedar Paw Grooming is the right fit before taking action.",
+      "targetCustomerDecision": "Should a pet owner book a full groom, puppy intro, de-shedding visit, or quick nail trim?",
+      "primaryAction": "book",
+      "offerings": [
+        {
+          "name": "Full groom",
+          "role": "main appointment path",
+          "fixtureDetail": "breed/coat details required",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Puppy intro visit",
+          "role": "first-timer reassurance path",
+          "fixtureDetail": "short visit",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "De-shedding session",
+          "role": "seasonal maintenance path",
+          "fixtureDetail": "coat-type dependent",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Nail trim",
+          "role": "quick service path",
+          "fixtureDetail": "short appointment",
+          "sourceStatus": "fixture-only"
+        }
+      ],
+      "services": [
+        {
+          "name": "Full groom",
+          "role": "main appointment path",
+          "fixtureDetail": "breed/coat details required",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Puppy intro visit",
+          "role": "first-timer reassurance path",
+          "fixtureDetail": "short visit",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "De-shedding session",
+          "role": "seasonal maintenance path",
+          "fixtureDetail": "coat-type dependent",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Nail trim",
+          "role": "quick service path",
+          "fixtureDetail": "short appointment",
+          "sourceStatus": "fixture-only"
+        }
+      ],
+      "products": [],
+      "contactPath": "fixture booking path; real booking/contact URL required before send",
+      "bookingOrEnquiryPath": "fixture booking path; real booking/contact URL required before send",
+      "groundingSignals": [
+        "Ballard, Seattle",
+        "4 fixture offerings",
+        "fixture booking path; real booking/contact URL required before send",
+        "Full groom: breed/coat details required",
+        "Puppy intro visit: short visit",
+        "verified contact or booking path",
+        "owner-approved pet/studio photos"
+      ],
+      "approvedPhotos": null,
+      "photoConstraint": {
+        "mode": "no-pet-photo-until-owner-supplied",
+        "allowedMedia": [
+          "service selector with coat-type prompts",
+          "line icons for grooming tools",
+          "appointment prep checklist",
+          "warm no-photo card system"
+        ],
+        "blockedMedia": [
+          "stock dogs",
+          "fake before-and-after pet photos",
+          "invented groomer portraits",
+          "fake salon interior"
+        ]
+      },
+      "allowedClaims": [
+        "fictional service categories from this fixture",
+        "area-level Seattle location",
+        "pet-owner service selection flow",
+        "photo approval is missing"
+      ],
+      "forbiddenClaims": [
+        "reviews",
+        "ratings",
+        "awards",
+        "certifications",
+        "years in business",
+        "licensed status",
+        "medical outcomes",
+        "fitness or learning outcomes",
+        "guaranteed response times",
+        "named owner or staff biographies",
+        "real premises photos",
+        "customer counts",
+        "revenue or lead results",
+        "certified groomer claims",
+        "anxiety-free guarantees",
+        "breed expertise claims",
+        "pet photos",
+        "reviews or ratings",
+        "safety claims"
+      ],
+      "regulatedRisk": "standard-local-business-review",
+      "sourceUrls": [],
+      "fixtureSourceNotes": [
+        "The grooming studio and service details are fictional and cannot imply real pet safety claims.",
+        "Built to test friendly service selection and trust without cute but fake photography.",
+        "Fictional fixture only; not a real prospect, customer, review, address, or sourced claim."
+      ],
+      "benchmarkConstraintTags": [
+        "cute-photo temptation",
+        "service fit by pet need",
+        "safety claim restraint",
+        "friendly but not childish design",
+        "service selector hero",
+        "prep checklist component",
+        "coat/visit prompts",
+        "mobile-friendly booking request",
+        "service",
+        "book",
+        "pet-service"
+      ],
+      "priorityScore": 92,
+      "status": "pass",
+      "blockers": [],
+      "relevanceReason": "Pet grooming is a practical local-service niche with booking intent, photo temptation, and multiple service-choice paths."
+    },
+    {
+      "id": "southbank-pilates-club-london",
+      "mode": "fixture",
+      "businessName": "Southbank Pilates Club",
+      "businessModel": "service",
+      "category": "pilates",
+      "subcategory": "reformer intro classes, private sessions, and small-group membership",
+      "city": "London",
+      "country": "United Kingdom",
+      "market": "United Kingdom owner-led service fixture",
+      "ownerLedStatus": "fixture-owner-led",
+      "currentPresence": {
+        "fixtureProfile": "fixture://southbank-pilates-club-london",
+        "realWebsite": null,
+        "socialOrListing": null
+      },
+      "redesignOpportunity": "Pilates is a high-frequency local booking niche where the design must separate intro, private, and membership paths without copying the gym fixture.",
+      "targetVisitor": "A local customer deciding whether Southbank Pilates Club is the right fit before taking action.",
+      "targetCustomerDecision": "Should a visitor start with a reformer intro, private session, or small-group membership enquiry?",
+      "primaryAction": "book",
+      "offerings": [
+        {
+          "name": "Reformer intro",
+          "role": "new-client first class",
+          "fixtureDetail": "intro class",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Private pilates session",
+          "role": "higher-touch path",
+          "fixtureDetail": "one-to-one session",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Small-group reformer",
+          "role": "core recurring class path",
+          "fixtureDetail": "small class",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Membership enquiry",
+          "role": "recurring revenue enquiry",
+          "fixtureDetail": "enquiry only",
+          "sourceStatus": "fixture-only"
+        }
+      ],
+      "services": [
+        {
+          "name": "Reformer intro",
+          "role": "new-client first class",
+          "fixtureDetail": "intro class",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Private pilates session",
+          "role": "higher-touch path",
+          "fixtureDetail": "one-to-one session",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Small-group reformer",
+          "role": "core recurring class path",
+          "fixtureDetail": "small class",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Membership enquiry",
+          "role": "recurring revenue enquiry",
+          "fixtureDetail": "enquiry only",
+          "sourceStatus": "fixture-only"
+        }
+      ],
+      "products": [],
+      "contactPath": "fixture booking path; real booking/contact URL required before send",
+      "bookingOrEnquiryPath": "fixture booking path; real booking/contact URL required before send",
+      "groundingSignals": [
+        "South Bank, London",
+        "4 fixture offerings",
+        "fixture booking path; real booking/contact URL required before send",
+        "Reformer intro: intro class",
+        "Private pilates session: one-to-one session",
+        "verified schedule or booking path",
+        "approved instructor credentials if shown"
+      ],
+      "approvedPhotos": null,
+      "photoConstraint": {
+        "mode": "studio-photo-required-before-photo-led-version",
+        "allowedMedia": [
+          "class pathway cards",
+          "movement-line motif",
+          "membership ladder",
+          "studio schedule placeholder marked fixture-only"
+        ],
+        "blockedMedia": [
+          "stock pilates bodies",
+          "fake reformer studio images",
+          "instructor portraits",
+          "body outcome imagery"
+        ]
+      },
+      "allowedClaims": [
+        "fictional class paths from this fixture",
+        "area-level London location",
+        "intro-first flow",
+        "photo approval is missing"
+      ],
+      "forbiddenClaims": [
+        "reviews",
+        "ratings",
+        "awards",
+        "certifications",
+        "years in business",
+        "licensed status",
+        "medical outcomes",
+        "fitness or learning outcomes",
+        "guaranteed response times",
+        "named owner or staff biographies",
+        "real premises photos",
+        "customer counts",
+        "revenue or lead results",
+        "instructor qualifications",
+        "rehabilitation claims",
+        "body transformation claims",
+        "celebrity/client proof",
+        "reviews or ratings",
+        "studio equipment photos"
+      ],
+      "regulatedRisk": "standard-local-business-review",
+      "sourceUrls": [],
+      "fixtureSourceNotes": [
+        "All class, membership, and location details are fictional benchmark inputs only.",
+        "Built to test a polished fitness/wellness booking page that cannot lean on aspirational body imagery.",
+        "Fictional fixture only; not a real prospect, customer, review, address, or sourced claim."
+      ],
+      "benchmarkConstraintTags": [
+        "same broad category as fitness but different taste",
+        "membership vs class path",
+        "body-image claim risk",
+        "studio-photo dependency",
+        "calm class-path hero",
+        "membership ladder",
+        "schedule teaser component",
+        "private/session CTA split",
+        "service",
+        "book",
+        "pilates"
+      ],
+      "priorityScore": 92,
+      "status": "pass",
+      "blockers": [],
+      "relevanceReason": "Pilates is a high-frequency local booking niche where the design must separate intro, private, and membership paths without copying the gym fixture."
+    },
+    {
+      "id": "moss-and-kiln-ceramics-portland",
+      "mode": "fixture",
+      "businessName": "Moss & Kiln Ceramics",
+      "businessModel": "product",
+      "category": "specialty-retail",
+      "subcategory": "handmade ceramic mugs, planters, dinnerware sets, and gift orders",
+      "city": "Portland",
+      "country": "United States",
+      "market": "United States owner-led product fixture",
+      "ownerLedStatus": "fixture-owner-led",
+      "currentPresence": {
+        "fixtureProfile": "fixture://moss-and-kiln-ceramics-portland",
+        "realWebsite": null,
+        "socialOrListing": null
+      },
+      "redesignOpportunity": "A product-led fixture that tests whether Mobbin Proving Lab can sell tangible goods without becoming an appointment-page template.",
+      "targetVisitor": "A gift buyer or homeware shopper comparing product quality, price, availability, and order path on mobile.",
+      "targetCustomerDecision": "Should a shopper buy a ready-to-ship piece, enquire about a small dinnerware set, or visit the studio market? ",
+      "primaryAction": "purchase",
+      "offerings": [
+        {
+          "name": "Thrown mug pair",
+          "role": "entry purchase path",
+          "fixtureDetail": "two-piece ready-to-ship set",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Window-sill planter",
+          "role": "giftable product path",
+          "fixtureDetail": "small-batch planter option",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Dinnerware set enquiry",
+          "role": "higher-consideration custom order path",
+          "fixtureDetail": "quote-first set enquiry",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Studio market pickup",
+          "role": "local visit path",
+          "fixtureDetail": "pickup and market table option",
+          "sourceStatus": "fixture-only"
+        }
+      ],
+      "services": [],
+      "products": [
+        {
+          "name": "Thrown mug pair",
+          "role": "entry purchase path",
+          "fixtureDetail": "two-piece ready-to-ship set",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Window-sill planter",
+          "role": "giftable product path",
+          "fixtureDetail": "small-batch planter option",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Dinnerware set enquiry",
+          "role": "higher-consideration custom order path",
+          "fixtureDetail": "quote-first set enquiry",
+          "sourceStatus": "fixture-only"
+        },
+        {
+          "name": "Studio market pickup",
+          "role": "local visit path",
+          "fixtureDetail": "pickup and market table option",
+          "sourceStatus": "fixture-only"
+        }
+      ],
+      "contactPath": "fixture purchase/enquiry path; real checkout, pickup, or email path required before send",
+      "bookingOrEnquiryPath": "fixture purchase/enquiry path; real checkout, pickup, or email path required before send",
+      "groundingSignals": [
+        "Portland product studio fixture",
+        "four product/order paths",
+        "ready-to-ship vs enquiry decision",
+        "local pickup path",
+        "photo approval missing"
+      ],
+      "approvedPhotos": null,
+      "photoConstraint": {
+        "mode": "product-photo-required-before-send",
+        "allowedMedia": [
+          "neutral product placeholders",
+          "ceramic form silhouettes",
+          "inventory grid"
+        ],
+        "blockedMedia": [
+          "fake product photography",
+          "borrowed maker photos",
+          "fake studio images"
+        ]
+      },
+      "allowedClaims": [
+        "fictional product names from this fixture",
+        "Portland area-level fixture",
+        "ready-to-ship vs enquiry distinction"
+      ],
+      "forbiddenClaims": [
+        "reviews",
+        "ratings",
+        "awards",
+        "certifications",
+        "years in business",
+        "licensed status",
+        "medical outcomes",
+        "fitness or learning outcomes",
+        "guaranteed response times",
+        "named owner or staff biographies",
+        "real premises photos",
+        "customer counts",
+        "revenue or lead results",
+        "real handmade provenance",
+        "real stock availability",
+        "shipping promises",
+        "returns policy",
+        "artist biography"
+      ],
+      "regulatedRisk": "standard-local-business-review",
+      "sourceUrls": [],
+      "fixtureSourceNotes": [
+        "Fictional product-led fixture only; not a real retailer.",
+        "Designed to test product photography, price/order proof, and purchase CTA patterns."
+      ],
+      "benchmarkConstraintTags": [
+        "product",
+        "purchase",
+        "inventory-grid",
+        "product-photo-required",
+        "gift-buyer",
+        "local-pickup"
+      ],
+      "priorityScore": 91,
+      "status": "pass",
+      "blockers": [],
+      "relevanceReason": "Product-led owner businesses need the same self-serve design quality but different proof, media, CTA, and section logic than appointment businesses."
+    }
+  ]
+}

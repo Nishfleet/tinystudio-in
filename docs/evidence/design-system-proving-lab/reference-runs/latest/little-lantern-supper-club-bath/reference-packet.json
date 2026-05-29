@@ -1,0 +1,576 @@
+{
+  "schemaVersion": "mobbin.mobbin-pro.per-redesign-reference-packet.v1",
+  "sourceProvider": "Mobbin Pro MCP",
+  "platform": "web",
+  "businessId": "little-lantern-supper-club-bath",
+  "businessName": "Little Lantern Supper Club",
+  "businessHash": "1023bbe6fdf139c2b64317b3409dc38f71638287e3abeb72fed726c90da3a462",
+  "searchBriefHash": "743b93e3875a062a4e430f8c83ac493cd3733b7df809c1838139022972984be3",
+  "generatedAt": "2026-05-19T01:40:58Z",
+  "rawPullLogPath": "docs/evidence/design-system-proving-lab/reference-runs/latest/little-lantern-supper-club-bath/raw-pull-log.json",
+  "rawPullLogHash": "af2b368887bb74127e1ef65c4935daa143273ed1699f73ff55b8719dac50efaf",
+  "queryLog": [
+    {
+      "angle": "niche",
+      "query": "restaurant-cafe daytime cafe, evening set-menu dinners, and private table enquiries hybrid marketing website homepage view-menu CTA landing page website inspiration",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:40:58Z",
+      "collectionNote": "initial broad niche pull"
+    },
+    {
+      "angle": "page-job",
+      "query": "view-menu CTA homepage with trust proof, service or product menu, and local customer decision path website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:40:58Z",
+      "collectionNote": "broad page-job pull"
+    },
+    {
+      "angle": "tone",
+      "query": "premium credible owner-led hybrid business landing page website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 4,
+      "runAt": "2026-05-19T01:40:58Z",
+      "collectionNote": "first tone chunk after full-width pull timed out"
+    },
+    {
+      "angle": "tone",
+      "query": "premium credible owner-led hybrid business landing page website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 4,
+      "runAt": "2026-05-19T01:40:58Z",
+      "collectionNote": "second tone chunk with exclusions to preserve breadth"
+    },
+    {
+      "angle": "constraint",
+      "query": "multiple visitor jobs food-photo temptation hours/menu freshness responsive mobile-first homepage website not dashboard not app",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:40:58Z",
+      "collectionNote": "constraint pull focused on menu freshness and food-photo risk"
+    }
+  ],
+  "rawCandidates": [
+    {
+      "screenId": "0ad6607f-0aa9-448b-9745-4872a60b87db",
+      "mobbinUrl": "https://mobbin.com/screens/0ad6607f-0aa9-448b-9745-4872a60b87db",
+      "sourceUrl": "https://mobbin.com/screens/0ad6607f-0aa9-448b-9745-4872a60b87db",
+      "imageUrl": "https://mobbin.com/api/mcp/short/SMXRAnSf",
+      "appName": "OpenTable",
+      "selectionReason": "Best restaurant-detail reference for menu tabs plus reservation sidebar, but food/photos/proof are not reusable."
+    },
+    {
+      "screenId": "c1f56362-a0ac-4c46-841b-6fea60486249",
+      "mobbinUrl": "https://mobbin.com/screens/c1f56362-a0ac-4c46-841b-6fea60486249",
+      "sourceUrl": "https://mobbin.com/screens/c1f56362-a0ac-4c46-841b-6fea60486249",
+      "imageUrl": "https://mobbin.com/api/mcp/short/vjE0SnDX",
+      "appName": "OpenTable",
+      "selectionReason": "Clear first-viewport decision bar for booking/search jobs; maps to menu/table/private enquiry routing."
+    },
+    {
+      "screenId": "cb281c9e-d4ac-4d77-b838-a56418b82be7",
+      "mobbinUrl": "https://mobbin.com/screens/cb281c9e-d4ac-4d77-b838-a56418b82be7",
+      "sourceUrl": "https://mobbin.com/screens/cb281c9e-d4ac-4d77-b838-a56418b82be7",
+      "imageUrl": "https://mobbin.com/api/mcp/short/TqJZAqsh",
+      "appName": "OpenTable",
+      "selectionReason": "Quick-search chips and account dropdown show multiple visitor jobs without burying the CTA."
+    },
+    {
+      "screenId": "996ad79e-01ea-477a-b811-ac3e58fc99c9",
+      "mobbinUrl": "https://mobbin.com/screens/996ad79e-01ea-477a-b811-ac3e58fc99c9",
+      "sourceUrl": "https://mobbin.com/screens/996ad79e-01ea-477a-b811-ac3e58fc99c9",
+      "imageUrl": "https://mobbin.com/api/mcp/short/G0a4E8iH",
+      "appName": "OpenTable",
+      "selectionReason": "Breakfast/availability row shows time-sensitive food decisions; useful with strong freshness gates."
+    },
+    {
+      "screenId": "0fcc4d43-ce2f-43a2-8cdd-171507590598",
+      "mobbinUrl": "https://mobbin.com/screens/0fcc4d43-ce2f-43a2-8cdd-171507590598",
+      "sourceUrl": "https://mobbin.com/screens/0fcc4d43-ce2f-43a2-8cdd-171507590598",
+      "imageUrl": "https://mobbin.com/api/mcp/short/8zPTFbdm",
+      "appName": "OpenTable",
+      "selectionReason": "Popular dishes plus menu tabs show how food proof can be structured, while invented dishes are banned."
+    },
+    {
+      "screenId": "3e2d9eb7-b13b-4e11-96de-906072d407b2",
+      "mobbinUrl": "https://mobbin.com/screens/3e2d9eb7-b13b-4e11-96de-906072d407b2",
+      "sourceUrl": "https://mobbin.com/screens/3e2d9eb7-b13b-4e11-96de-906072d407b2",
+      "imageUrl": "https://mobbin.com/api/mcp/short/VQAc1Lg9",
+      "appName": "Dollar Shave Club",
+      "selectionReason": "Dark quote block is an anti-proof reference and a footer/nav contrast reference."
+    },
+    {
+      "screenId": "ff65f582-a14e-4686-b488-c72538689527",
+      "mobbinUrl": "https://mobbin.com/screens/ff65f582-a14e-4686-b488-c72538689527",
+      "sourceUrl": "https://mobbin.com/screens/ff65f582-a14e-4686-b488-c72538689527",
+      "imageUrl": "https://mobbin.com/api/mcp/short/a5AEMVQt",
+      "appName": "Blue Apron",
+      "selectionReason": "Browse-menu CTA and food scene composition are useful as a media discipline stress test."
+    },
+    {
+      "screenId": "e888ea97-01f1-4dcc-a82e-f20d21ea71a0",
+      "mobbinUrl": "https://mobbin.com/screens/e888ea97-01f1-4dcc-a82e-f20d21ea71a0",
+      "sourceUrl": "https://mobbin.com/screens/e888ea97-01f1-4dcc-a82e-f20d21ea71a0",
+      "imageUrl": "https://mobbin.com/api/mcp/short/hrLdkzkk",
+      "appName": "Assembly",
+      "selectionReason": "Soft proof carousel can become source-backed process/menu freshness proof."
+    },
+    {
+      "screenId": "4d33bcb9-723a-4e0c-8e51-1d8eb021e375",
+      "mobbinUrl": "https://mobbin.com/screens/4d33bcb9-723a-4e0c-8e51-1d8eb021e375",
+      "sourceUrl": "https://mobbin.com/screens/4d33bcb9-723a-4e0c-8e51-1d8eb021e375",
+      "imageUrl": "https://mobbin.com/api/mcp/short/BnZf8cTL",
+      "appName": "ClassPass",
+      "selectionReason": "Large outcome-stat proof is useful mainly as an anti-reference for fake venue metrics."
+    },
+    {
+      "screenId": "af8b2e78-3f53-4ccf-8d6f-ee5cc1857444",
+      "mobbinUrl": "https://mobbin.com/screens/af8b2e78-3f53-4ccf-8d6f-ee5cc1857444",
+      "sourceUrl": "https://mobbin.com/screens/af8b2e78-3f53-4ccf-8d6f-ee5cc1857444",
+      "imageUrl": "https://mobbin.com/api/mcp/short/6WbJAN3o",
+      "appName": "Blue Apron",
+      "selectionReason": "Three-card quote grid and fine print help define what not to invent for a fixture restaurant."
+    },
+    {
+      "screenId": "621240c8-4025-480f-a37a-c881d47f624f",
+      "mobbinUrl": "https://mobbin.com/screens/621240c8-4025-480f-a37a-c881d47f624f",
+      "sourceUrl": "https://mobbin.com/screens/621240c8-4025-480f-a37a-c881d47f624f",
+      "imageUrl": "https://mobbin.com/api/mcp/short/ieLzgLCk",
+      "appName": "Mercury",
+      "selectionReason": "Premium calm hero with artifact and legal strip supports a restrained menu-freshness notice pattern."
+    },
+    {
+      "screenId": "f566146e-9c63-4adf-a59c-3fe14732bb2c",
+      "mobbinUrl": "https://mobbin.com/screens/f566146e-9c63-4adf-a59c-3fe14732bb2c",
+      "sourceUrl": "https://mobbin.com/screens/f566146e-9c63-4adf-a59c-3fe14732bb2c",
+      "imageUrl": "https://mobbin.com/api/mcp/short/3S6v4A4x",
+      "appName": "Pinterest",
+      "selectionReason": "Centered business hero with alert bar gives a simple template for menu freshness and visitor-job routing."
+    },
+    {
+      "screenId": "d50e648a-f8c0-465b-becf-2260bf571b15",
+      "mobbinUrl": "https://mobbin.com/screens/d50e648a-f8c0-465b-becf-2260bf571b15",
+      "sourceUrl": "https://mobbin.com/screens/d50e648a-f8c0-465b-becf-2260bf571b15",
+      "imageUrl": "https://mobbin.com/api/mcp/short/HIXCKiS2",
+      "appName": "Revolut Business",
+      "selectionReason": "Dark object-led product hero is a dramatic anti-reference for this food fixture unless remixed heavily."
+    },
+    {
+      "screenId": "7ae44b4d-3837-4ee5-b05d-288ebe240b88",
+      "mobbinUrl": "https://mobbin.com/screens/7ae44b4d-3837-4ee5-b05d-288ebe240b88",
+      "sourceUrl": "https://mobbin.com/screens/7ae44b4d-3837-4ee5-b05d-288ebe240b88",
+      "imageUrl": "https://mobbin.com/api/mcp/short/Pdai5x5p",
+      "appName": "MasterClass",
+      "selectionReason": "Premium dark editorial CTA section useful as a supper-club mood reference but not for portraits/celebrity proof."
+    },
+    {
+      "screenId": "a059c461-e45c-43fc-8bd4-535b765d3de5",
+      "mobbinUrl": "https://mobbin.com/screens/a059c461-e45c-43fc-8bd4-535b765d3de5",
+      "sourceUrl": "https://mobbin.com/screens/a059c461-e45c-43fc-8bd4-535b765d3de5",
+      "imageUrl": "https://mobbin.com/api/mcp/short/OvUSUiUw",
+      "appName": "ClassPass",
+      "selectionReason": "Resource page lead form and phone mockup suggest how private dinner enquiry can sit after primary menu CTA."
+    },
+    {
+      "screenId": "932645d3-cd97-4ae0-8faa-2a02678a0dff",
+      "mobbinUrl": "https://mobbin.com/screens/932645d3-cd97-4ae0-8faa-2a02678a0dff",
+      "sourceUrl": "https://mobbin.com/screens/932645d3-cd97-4ae0-8faa-2a02678a0dff",
+      "imageUrl": "https://mobbin.com/api/mcp/short/c2zXmMTd",
+      "appName": "OpenTable",
+      "selectionReason": "Food-photo-heavy restaurant detail is a precise anti-reference for unapproved dish images."
+    },
+    {
+      "screenId": "aa44d43b-0c4d-45ed-a6a0-5bd336fd4d68",
+      "mobbinUrl": "https://mobbin.com/screens/aa44d43b-0c4d-45ed-a6a0-5bd336fd4d68",
+      "sourceUrl": "https://mobbin.com/screens/aa44d43b-0c4d-45ed-a6a0-5bd336fd4d68",
+      "imageUrl": "https://mobbin.com/api/mcp/short/2XYEy0ud",
+      "appName": "sweetgreen",
+      "selectionReason": "Split view-menu hero shows direct menu CTA and food media contrast."
+    },
+    {
+      "screenId": "0c76fa81-d160-4ff8-b9de-a542761f0e79",
+      "mobbinUrl": "https://mobbin.com/screens/0c76fa81-d160-4ff8-b9de-a542761f0e79",
+      "sourceUrl": "https://mobbin.com/screens/0c76fa81-d160-4ff8-b9de-a542761f0e79",
+      "imageUrl": "https://mobbin.com/api/mcp/short/G2oU2EDR",
+      "appName": "OpenTable",
+      "selectionReason": "Menu detail with last-updated note is central to menu freshness governance."
+    },
+    {
+      "screenId": "7f7433f8-cfa2-484f-b74f-768d0b19f927",
+      "mobbinUrl": "https://mobbin.com/screens/7f7433f8-cfa2-484f-b74f-768d0b19f927",
+      "sourceUrl": "https://mobbin.com/screens/7f7433f8-cfa2-484f-b74f-768d0b19f927",
+      "imageUrl": "https://mobbin.com/api/mcp/short/KcZ4tfQD",
+      "appName": "DoorDash",
+      "selectionReason": "Marketplace restaurant menu structure shows category nav, cart state, and item grid patterns."
+    },
+    {
+      "screenId": "d3ae7216-023d-489e-a38c-6cdae7de388c",
+      "mobbinUrl": "https://mobbin.com/screens/d3ae7216-023d-489e-a38c-6cdae7de388c",
+      "sourceUrl": "https://mobbin.com/screens/d3ae7216-023d-489e-a38c-6cdae7de388c",
+      "imageUrl": "https://mobbin.com/api/mcp/short/S3QdTS8V",
+      "appName": "Uber Eats",
+      "selectionReason": "Delivery-storefront map/category/deal layout is a useful anti-reference for app-like clutter."
+    }
+  ],
+  "shortlist": [
+    {
+      "screenId": "c1f56362-a0ac-4c46-841b-6fea60486249",
+      "mobbinUrl": "https://mobbin.com/screens/c1f56362-a0ac-4c46-841b-6fea60486249",
+      "sourceUrl": "https://mobbin.com/screens/c1f56362-a0ac-4c46-841b-6fea60486249",
+      "appName": "OpenTable",
+      "structureFamily": "reservation search hero",
+      "fitScores": {
+        "job": 9,
+        "niche": 8,
+        "firstViewport": 9,
+        "cta": 9,
+        "proof": 8,
+        "mobile": 8,
+        "distinctiveness": 8,
+        "buildability": 8,
+        "truth": 8
+      },
+      "ingredientLedger": [
+        {
+          "layer": "business-job",
+          "ingredient": "The first viewport must separate menu browsing, table booking, and private dinner enquiry instead of forcing one generic CTA."
+        },
+        {
+          "layer": "information-architecture",
+          "ingredient": "Use a visible visitor-job bar with menu, supper club, private table, and voucher paths."
+        },
+        {
+          "layer": "layout-structure",
+          "ingredient": "Hero can be wide and quiet if the decision controls remain visible in the first fold."
+        },
+        {
+          "layer": "responsive-behavior",
+          "ingredient": "Desktop horizontal decision bar should become four stacked thumb-friendly actions on mobile."
+        }
+      ],
+      "bannedUses": [
+        "Do not copy OpenTable marketplace inventory, restaurant names, location detection, stars, reviews, or reservation availability."
+      ]
+    },
+    {
+      "screenId": "0ad6607f-0aa9-448b-9745-4872a60b87db",
+      "mobbinUrl": "https://mobbin.com/screens/0ad6607f-0aa9-448b-9745-4872a60b87db",
+      "sourceUrl": "https://mobbin.com/screens/0ad6607f-0aa9-448b-9745-4872a60b87db",
+      "appName": "OpenTable",
+      "structureFamily": "detail page with reservation rail",
+      "fitScores": {
+        "job": 9,
+        "niche": 9,
+        "firstViewport": 8,
+        "cta": 9,
+        "proof": 8,
+        "mobile": 8,
+        "distinctiveness": 8,
+        "buildability": 8,
+        "truth": 7
+      },
+      "ingredientLedger": [
+        {
+          "layer": "content-strategy",
+          "ingredient": "Menu detail, reservation action, and gift/private enquiry can coexist if each has clear freshness/source status."
+        },
+        {
+          "layer": "cta-system",
+          "ingredient": "Primary view-menu CTA should stay separate from reserve/enquire actions so visitors do not misread availability."
+        },
+        {
+          "layer": "forms-and-lead-capture",
+          "ingredient": "Private-table enquiry needs a small request form, not a fake live booking widget."
+        },
+        {
+          "layer": "localization-and-formatting",
+          "ingredient": "Use Bath/Walcot only at area level and do not show hours, phone, or prices unless verified."
+        }
+      ],
+      "bannedUses": [
+        "Do not copy photos, dish names, ratings, reviews, reservation slots, phone numbers, payment cards, or gift-card fulfillment claims."
+      ]
+    },
+    {
+      "screenId": "aa44d43b-0c4d-45ed-a6a0-5bd336fd4d68",
+      "mobbinUrl": "https://mobbin.com/screens/aa44d43b-0c4d-45ed-a6a0-5bd336fd4d68",
+      "sourceUrl": "https://mobbin.com/screens/aa44d43b-0c4d-45ed-a6a0-5bd336fd4d68",
+      "appName": "sweetgreen",
+      "structureFamily": "split menu campaign hero",
+      "fitScores": {
+        "job": 8,
+        "niche": 8,
+        "firstViewport": 8,
+        "cta": 8,
+        "proof": 8,
+        "mobile": 8,
+        "distinctiveness": 8,
+        "buildability": 8,
+        "truth": 8
+      },
+      "ingredientLedger": [
+        {
+          "layer": "media-direction",
+          "ingredient": "A split hero can reserve a media side for owner-supplied food photos; before approval use menu-board or receipt artifacts."
+        },
+        {
+          "layer": "color-system",
+          "ingredient": "Use a pale dining-room base with one citrus or lantern accent for menu action, not a full food-app palette."
+        },
+        {
+          "layer": "surfaces-and-materials",
+          "ingredient": "Flat paper/menu surfaces should replace glossy restaurant marketplace cards."
+        },
+        {
+          "layer": "shape",
+          "ingredient": "Keep menu panels crisp with slight rounding; avoid app-like pill overload."
+        }
+      ],
+      "bannedUses": [
+        "Do not copy Sweetgreen brand, dish imagery, rewards/order account UI, late-order status, or order-again modules."
+      ]
+    },
+    {
+      "screenId": "0c76fa81-d160-4ff8-b9de-a542761f0e79",
+      "mobbinUrl": "https://mobbin.com/screens/0c76fa81-d160-4ff8-b9de-a542761f0e79",
+      "sourceUrl": "https://mobbin.com/screens/0c76fa81-d160-4ff8-b9de-a542761f0e79",
+      "appName": "OpenTable",
+      "structureFamily": "fresh menu detail",
+      "fitScores": {
+        "job": 9,
+        "niche": 9,
+        "firstViewport": 8,
+        "cta": 8,
+        "proof": 8,
+        "mobile": 8,
+        "distinctiveness": 8,
+        "buildability": 8,
+        "truth": 9
+      },
+      "ingredientLedger": [
+        {
+          "layer": "component-anatomy",
+          "ingredient": "Menu sections need category tabs, item rows, short descriptions, source status, and a clear full-menu path."
+        },
+        {
+          "layer": "component-states",
+          "ingredient": "Menu state needs fresh, stale, unavailable, and owner-review-required labels."
+        },
+        {
+          "layer": "accessibility",
+          "ingredient": "Menu tabs and reservation/enquiry controls require keyboard order, visible focus, and readable mobile text."
+        },
+        {
+          "layer": "seo-aeo-metadata",
+          "ingredient": "Visible menu categories should map to truthful structured data only when the menu is verified."
+        }
+      ],
+      "bannedUses": [
+        "Do not copy dish names, prices, third-party menu provider marks, review counts, reservation slots, or last-updated dates."
+      ]
+    },
+    {
+      "screenId": "e888ea97-01f1-4dcc-a82e-f20d21ea71a0",
+      "mobbinUrl": "https://mobbin.com/screens/e888ea97-01f1-4dcc-a82e-f20d21ea71a0",
+      "sourceUrl": "https://mobbin.com/screens/e888ea97-01f1-4dcc-a82e-f20d21ea71a0",
+      "appName": "Assembly",
+      "structureFamily": "soft proof carousel",
+      "fitScores": {
+        "job": 8,
+        "niche": 7,
+        "firstViewport": 8,
+        "cta": 8,
+        "proof": 9,
+        "mobile": 8,
+        "distinctiveness": 8,
+        "buildability": 8,
+        "truth": 8
+      },
+      "ingredientLedger": [
+        {
+          "layer": "proof-architecture",
+          "ingredient": "Use the proof area for source-backed facts: menu verified status, photo status, contact path, and fixture limitations."
+        },
+        {
+          "layer": "depth",
+          "ingredient": "Use one soft layered proof surface rather than nested card stacks."
+        },
+        {
+          "layer": "motion",
+          "ingredient": "Optional proof motion should be manual carousel or subtle reveal, never auto-rotating fake testimonials."
+        },
+        {
+          "layer": "voice-and-tone",
+          "ingredient": "Replace testimonial drama with concise restaurant operations language: menu, table, private dinner, voucher."
+        }
+      ],
+      "bannedUses": [
+        "Do not invent customer quotes, portraits, names, logos, review snippets, or satisfaction claims."
+      ]
+    },
+    {
+      "screenId": "f566146e-9c63-4adf-a59c-3fe14732bb2c",
+      "mobbinUrl": "https://mobbin.com/screens/f566146e-9c63-4adf-a59c-3fe14732bb2c",
+      "sourceUrl": "https://mobbin.com/screens/f566146e-9c63-4adf-a59c-3fe14732bb2c",
+      "appName": "Pinterest",
+      "structureFamily": "centered business hero with alert bar",
+      "fitScores": {
+        "job": 8,
+        "niche": 8,
+        "firstViewport": 9,
+        "cta": 8,
+        "proof": 8,
+        "mobile": 8,
+        "distinctiveness": 8,
+        "buildability": 8,
+        "truth": 8
+      },
+      "ingredientLedger": [
+        {
+          "layer": "typography",
+          "ingredient": "Use large confident sans headline with a warmer supporting type rhythm for menu sections."
+        },
+        {
+          "layer": "spacing-system",
+          "ingredient": "Let the hero breathe, but keep the menu/action rail visible on desktop and early on mobile."
+        },
+        {
+          "layer": "iconography",
+          "ingredient": "Use tiny functional symbols for menu, table, private enquiry, and voucher instead of decorative food icons."
+        },
+        {
+          "layer": "governance",
+          "ingredient": "Alert/freshness bar should disclose fixture or stale menu status rather than pretending today’s menu is verified."
+        }
+      ],
+      "bannedUses": [
+        "Do not copy Pinterest trend claims, ad-platform messaging, business-account CTAs, or decorative social-commerce imagery."
+      ]
+    },
+    {
+      "screenId": "a059c461-e45c-43fc-8bd4-535b765d3de5",
+      "mobbinUrl": "https://mobbin.com/screens/a059c461-e45c-43fc-8bd4-535b765d3de5",
+      "sourceUrl": "https://mobbin.com/screens/a059c461-e45c-43fc-8bd4-535b765d3de5",
+      "appName": "ClassPass",
+      "structureFamily": "resource lead form section",
+      "fitScores": {
+        "job": 8,
+        "niche": 7,
+        "firstViewport": 8,
+        "cta": 8,
+        "proof": 8,
+        "mobile": 8,
+        "distinctiveness": 8,
+        "buildability": 9,
+        "truth": 8
+      },
+      "ingredientLedger": [
+        {
+          "layer": "interaction-model",
+          "ingredient": "Secondary path can lead from private dinner block into a short enquiry form after menu browsing."
+        },
+        {
+          "layer": "illustration-graphics",
+          "ingredient": "Phone/menu mockups can become paper menu, table plan, or receipt graphics without fake food photos."
+        },
+        {
+          "layer": "performance",
+          "ingredient": "A static menu-board artifact avoids heavy photo galleries until real assets are supplied."
+        },
+        {
+          "layer": "implementation-tokens",
+          "ingredient": "Define tokens for menu paper, lantern accent, reservation rail, stale/fresh labels, and action states."
+        }
+      ],
+      "bannedUses": [
+        "Do not copy corporate wellness language, phone UI screenshots, lead-magnet claims, star reviews, or case-study language."
+      ]
+    },
+    {
+      "screenId": "7f7433f8-cfa2-484f-b74f-768d0b19f927",
+      "mobbinUrl": "https://mobbin.com/screens/7f7433f8-cfa2-484f-b74f-768d0b19f927",
+      "sourceUrl": "https://mobbin.com/screens/7f7433f8-cfa2-484f-b74f-768d0b19f927",
+      "appName": "DoorDash",
+      "structureFamily": "marketplace menu storefront",
+      "fitScores": {
+        "job": 8,
+        "niche": 8,
+        "firstViewport": 8,
+        "cta": 8,
+        "proof": 8,
+        "mobile": 7,
+        "distinctiveness": 7,
+        "buildability": 8,
+        "truth": 8
+      },
+      "ingredientLedger": [
+        {
+          "layer": "surfaces-and-materials",
+          "ingredient": "A dense menu/catalog layout is useful only below the first decision point, with a calm owner-site wrapper."
+        },
+        {
+          "layer": "component-states",
+          "ingredient": "Item cards need unavailable/photo-missing/source-missing states before they become customer-visible."
+        },
+        {
+          "layer": "forms-and-lead-capture",
+          "ingredient": "Cart patterns should become enquiry/reservation intent, not fake ordering."
+        },
+        {
+          "layer": "performance",
+          "ingredient": "Do not load a marketplace-style item grid unless actual menu data and photos are approved."
+        }
+      ],
+      "bannedUses": [
+        "Do not copy DoorDash app shell, cart drawer, discounts, ratings, delivery distance, prices, item photos, or ordering functionality."
+      ]
+    }
+  ],
+  "antiReferences": [
+    {
+      "screenId": "932645d3-cd97-4ae0-8faa-2a02678a0dff",
+      "mobbinUrl": "https://mobbin.com/screens/932645d3-cd97-4ae0-8faa-2a02678a0dff",
+      "appName": "OpenTable",
+      "rejectionReason": "Food-photo gallery would create fake dish and interior proof without owner-supplied media."
+    },
+    {
+      "screenId": "4d33bcb9-723a-4e0c-8e51-1d8eb021e375",
+      "mobbinUrl": "https://mobbin.com/screens/4d33bcb9-723a-4e0c-8e51-1d8eb021e375",
+      "appName": "ClassPass",
+      "rejectionReason": "Giant stats would invent customer, booking, or popularity proof."
+    },
+    {
+      "screenId": "d3ae7216-023d-489e-a38c-6cdae7de388c",
+      "mobbinUrl": "https://mobbin.com/screens/d3ae7216-023d-489e-a38c-6cdae7de388c",
+      "appName": "Uber Eats",
+      "rejectionReason": "Delivery marketplace map/deal UI would turn a venue page into an app clone and imply unsupported ordering."
+    },
+    {
+      "screenId": "7ae44b4d-3837-4ee5-b05d-288ebe240b88",
+      "mobbinUrl": "https://mobbin.com/screens/7ae44b4d-3837-4ee5-b05d-288ebe240b88",
+      "appName": "MasterClass",
+      "rejectionReason": "Celebrity portrait strip and dark premium mood overpower the small local supper-club job."
+    }
+  ],
+  "remixDirection": {
+    "summary": "A menu-first hybrid restaurant page: first-fold visitor-job selector, no-photo menu-board artifact, clear cafe/supper/private paths, source/freshness status, and a restrained reservation/enquiry rail.",
+    "selectedMoves": [
+      "OpenTable reservation decision bar remixed into menu/table/private/voucher routing without marketplace proof.",
+      "Sweetgreen split menu hero remixed as a no-photo menu-board and paper receipt system.",
+      "OpenTable menu freshness detail converted into explicit source/freshness governance.",
+      "Assembly proof surface converted into source-backed menu/contact/photo status, not testimonials.",
+      "ClassPass resource/form pattern adapted into private dinner enquiry below the menu decision."
+    ],
+    "explicitRejects": [
+      "No stock food photos, invented dish photos, fake interiors, guests, chefs, reviews, ratings, prices, opening hours, delivery promises, or reservation availability.",
+      "No marketplace cart, delivery app shell, SaaS dashboard proof, logo strips, celebrity imagery, or copied brand colors.",
+      "No exact layout copy from Mobbin; use only ingredient-level structure, state, and hierarchy lessons."
+    ]
+  }
+}

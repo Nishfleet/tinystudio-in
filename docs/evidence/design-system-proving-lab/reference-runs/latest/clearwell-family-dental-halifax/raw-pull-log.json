@@ -1,0 +1,317 @@
+{
+  "schemaVersion": "mobbin.mobbin-pro.raw-pull-log.v1",
+  "sourceProvider": "Mobbin Pro MCP",
+  "platform": "web",
+  "businessId": "clearwell-family-dental-halifax",
+  "businessName": "Clearwell Family Dental",
+  "businessHash": "f7b2e73ac0c657cf5aa97c417fa12ab8bc1626f728c1ff4181f77e79cd2351cb",
+  "searchBriefHash": "f863f4c89088704a0c57fa80d92a812e545358da2b0152675793e56520974d31",
+  "generatedAt": "2026-05-19T01:29:31Z",
+  "collectionPolicy": {
+    "strategy": "wide-pull-then-compress",
+    "minimumReturnedScreensAcrossQueries": 32,
+    "minimumUniqueRawPoolScreens": 20,
+    "chunkSize": 8,
+    "dedupeMethod": "Mobbin screen id with exclude_screen_ids across chunks"
+  },
+  "totalReturned": 32,
+  "uniqueScreenCount": 32,
+  "queryRuns": [
+    {
+      "angle": "niche",
+      "query": "clinic check-ups, hygiene appointments, emergency triage, and cosmetic consults service marketing website homepage enquire CTA landing page website inspiration",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:29:31Z",
+      "results": [
+        {
+          "screenId": "c007aa4c-b965-40b5-813f-326c3cd54e70",
+          "mobbinUrl": "https://mobbin.com/screens/c007aa4c-b965-40b5-813f-326c3cd54e70",
+          "imageUrl": "https://mobbin.com/api/mcp/short/ThJBTbjZ",
+          "appName": "Hims",
+          "platform": "web",
+          "observedRole": "provider trust panel with licensed medical providers, portrait tiles, calm beige section, and get-started CTA"
+        },
+        {
+          "screenId": "d477944c-945f-4791-ad13-b760ec3e300b",
+          "mobbinUrl": "https://mobbin.com/screens/d477944c-945f-4791-ad13-b760ec3e300b",
+          "imageUrl": "https://mobbin.com/api/mcp/short/mRnHOFfo",
+          "appName": "Hims",
+          "platform": "web",
+          "observedRole": "consult-with-provider split section with large type, provider portrait, and restrained CTA"
+        },
+        {
+          "screenId": "8d4eff12-c0f0-4e22-9d6c-38ec3cff1a89",
+          "mobbinUrl": "https://mobbin.com/screens/8d4eff12-c0f0-4e22-9d6c-38ec3cff1a89",
+          "imageUrl": "https://mobbin.com/api/mcp/short/SVPy5Nzu",
+          "appName": "Hims",
+          "platform": "web",
+          "observedRole": "photo-led visit-start section with large rounded image and single CTA"
+        },
+        {
+          "screenId": "d067dbc0-666e-47cc-9475-a89b2ab44cf6",
+          "mobbinUrl": "https://mobbin.com/screens/d067dbc0-666e-47cc-9475-a89b2ab44cf6",
+          "imageUrl": "https://mobbin.com/api/mcp/short/unlNAvWg",
+          "appName": "Hims",
+          "platform": "web",
+          "observedRole": "primary-care treatment card with action CTA, card hierarchy, and emergency caveat"
+        },
+        {
+          "screenId": "5ab19f61-9dbd-4b3a-a7a0-bb5500c0d8c9",
+          "mobbinUrl": "https://mobbin.com/screens/5ab19f61-9dbd-4b3a-a7a0-bb5500c0d8c9",
+          "imageUrl": "https://mobbin.com/api/mcp/short/dHT2tfl6",
+          "appName": "Hims",
+          "platform": "web",
+          "observedRole": "provider app proof section with phone mock, bullet hierarchy, and yellow shape accent"
+        },
+        {
+          "screenId": "e788da3e-eebd-4810-baa5-72d2705f43b7",
+          "mobbinUrl": "https://mobbin.com/screens/e788da3e-eebd-4810-baa5-72d2705f43b7",
+          "imageUrl": "https://mobbin.com/api/mcp/short/E8yyxwrv",
+          "appName": "Hers",
+          "platform": "web",
+          "observedRole": "treatment category grid with cards, section intro, and top proof strip"
+        },
+        {
+          "screenId": "2f8b11b6-8dda-4765-bba1-7526a80d398c",
+          "mobbinUrl": "https://mobbin.com/screens/2f8b11b6-8dda-4765-bba1-7526a80d398c",
+          "imageUrl": "https://mobbin.com/api/mcp/short/qTpuoh5J",
+          "appName": "Hims",
+          "platform": "web",
+          "observedRole": "assessment hero with photo panel, checklist bullets, and direct start CTA"
+        },
+        {
+          "screenId": "86653781-f7a3-4a3e-b79d-483ea79165d0",
+          "mobbinUrl": "https://mobbin.com/screens/86653781-f7a3-4a3e-b79d-483ea79165d0",
+          "imageUrl": "https://mobbin.com/api/mcp/short/tnkapK9H",
+          "appName": "Hims",
+          "platform": "web",
+          "observedRole": "large lifestyle hero with overlaid CTAs and bottom product decision cards"
+        }
+      ]
+    },
+    {
+      "angle": "page-job",
+      "query": "enquire CTA homepage with trust proof, service or product menu, and local customer decision path website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:29:31Z",
+      "results": [
+        {
+          "screenId": "b937aa57-cfb8-4224-be14-a7941dfa4e72",
+          "mobbinUrl": "https://mobbin.com/screens/b937aa57-cfb8-4224-be14-a7941dfa4e72",
+          "imageUrl": "https://mobbin.com/api/mcp/short/0r3PHWKm",
+          "appName": "NordVPN",
+          "platform": "web",
+          "observedRole": "trust and CTA hero with top alert bar, security promise, and red primary action"
+        },
+        {
+          "screenId": "72973b86-4925-4ead-9a52-0a886d093efc",
+          "mobbinUrl": "https://mobbin.com/screens/72973b86-4925-4ead-9a52-0a886d093efc",
+          "imageUrl": "https://mobbin.com/api/mcp/short/PN3QIGSC",
+          "appName": "Sana AI",
+          "platform": "web",
+          "observedRole": "end-page proof and footer section with customer logos and dark book-intro CTA block"
+        },
+        {
+          "screenId": "5614bbf3-48c2-4ac9-9a6f-659b63388f52",
+          "mobbinUrl": "https://mobbin.com/screens/5614bbf3-48c2-4ac9-9a6f-659b63388f52",
+          "imageUrl": "https://mobbin.com/api/mcp/short/oGhCEJnm",
+          "appName": "Tripadvisor",
+          "platform": "web",
+          "observedRole": "subscription benefits page with centered CTA, icon benefit row, and large savings claim"
+        },
+        {
+          "screenId": "e888ea97-01f1-4dcc-a82e-f20d21ea71a0",
+          "mobbinUrl": "https://mobbin.com/screens/e888ea97-01f1-4dcc-a82e-f20d21ea71a0",
+          "imageUrl": "https://mobbin.com/api/mcp/short/h8qS0Hev",
+          "appName": "Assembly",
+          "platform": "web",
+          "observedRole": "testimonial proof carousel with quote, portrait card, subdued green type, and swipe affordance"
+        },
+        {
+          "screenId": "cc3ceac7-28de-4c61-b01c-0d2b47c69ee8",
+          "mobbinUrl": "https://mobbin.com/screens/cc3ceac7-28de-4c61-b01c-0d2b47c69ee8",
+          "imageUrl": "https://mobbin.com/api/mcp/short/1PMZ16g3",
+          "appName": "v0",
+          "platform": "web",
+          "observedRole": "AI builder preview/editor screen with hero, improvement bullets, and internal tooling chrome"
+        },
+        {
+          "screenId": "46ef7aad-6e73-4207-8f78-24a8bfe1294b",
+          "mobbinUrl": "https://mobbin.com/screens/46ef7aad-6e73-4207-8f78-24a8bfe1294b",
+          "imageUrl": "https://mobbin.com/api/mcp/short/1dtZKhbk",
+          "appName": "Linktree",
+          "platform": "web",
+          "observedRole": "trial/signup page with feature list, sticky bottom CTA, and product preview"
+        },
+        {
+          "screenId": "03b4ad2b-abd6-410d-ae78-5498b68fdf13",
+          "mobbinUrl": "https://mobbin.com/screens/03b4ad2b-abd6-410d-ae78-5498b68fdf13",
+          "imageUrl": "https://mobbin.com/api/mcp/short/iiuKKmtx",
+          "appName": "Blue Apron",
+          "platform": "web",
+          "observedRole": "product-photo hero with offer bar, food imagery, and purchase CTA"
+        },
+        {
+          "screenId": "e43e90ac-4489-44b5-bd06-93e546c5c48b",
+          "mobbinUrl": "https://mobbin.com/screens/e43e90ac-4489-44b5-bd06-93e546c5c48b",
+          "imageUrl": "https://mobbin.com/api/mcp/short/31KDb1yf",
+          "appName": "Deel",
+          "platform": "web",
+          "observedRole": "dashboard/app screen with yellow expert-support card and internal tool proof"
+        }
+      ]
+    },
+    {
+      "angle": "tone",
+      "query": "premium credible owner-led service business landing page website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:29:31Z",
+      "results": [
+        {
+          "screenId": "844c949c-af95-4f4f-8909-952c25e6b51c",
+          "mobbinUrl": "https://mobbin.com/screens/844c949c-af95-4f4f-8909-952c25e6b51c",
+          "imageUrl": "https://mobbin.com/api/mcp/short/FSvwyVJZ",
+          "appName": "LinkedIn",
+          "platform": "web",
+          "observedRole": "premium benefits page with illustration column, checklist feature groups, CTA, and unavailable-feature tooltip"
+        },
+        {
+          "screenId": "70ad3f39-9eaf-4e21-a0dd-bc447c536085",
+          "mobbinUrl": "https://mobbin.com/screens/70ad3f39-9eaf-4e21-a0dd-bc447c536085",
+          "imageUrl": "https://mobbin.com/api/mcp/short/0faUd20r",
+          "appName": "LinkedIn",
+          "platform": "web",
+          "observedRole": "professional plan-comparison grid with muted top bands and repeated learn-more actions"
+        },
+        {
+          "screenId": "845f4851-7cf8-4efd-b147-4f102d52c0be",
+          "mobbinUrl": "https://mobbin.com/screens/845f4851-7cf8-4efd-b147-4f102d52c0be",
+          "imageUrl": "https://mobbin.com/api/mcp/short/yFGSssMq",
+          "appName": "Mailchimp",
+          "platform": "web",
+          "observedRole": "site preview/editor frame showing service section, CTA, and discount banner inside builder chrome"
+        },
+        {
+          "screenId": "93111cb4-0389-48de-9233-22b16f436f63",
+          "mobbinUrl": "https://mobbin.com/screens/93111cb4-0389-48de-9233-22b16f436f63",
+          "imageUrl": "https://mobbin.com/api/mcp/short/VVJEmvve",
+          "appName": "Mailchimp",
+          "platform": "web",
+          "observedRole": "centered service homepage hero with oversized serif headline, simple nav, and single CTA"
+        },
+        {
+          "screenId": "55fbc5cb-e629-4e63-be8f-c3892af4e22d",
+          "mobbinUrl": "https://mobbin.com/screens/55fbc5cb-e629-4e63-be8f-c3892af4e22d",
+          "imageUrl": "https://mobbin.com/api/mcp/short/OwjMdwt4",
+          "appName": "Fiverr",
+          "platform": "web",
+          "observedRole": "tailored-solutions card grid with link CTAs, proof-like illustrations, and compact service taxonomy"
+        },
+        {
+          "screenId": "7dde5c54-8366-4a8f-af5f-7426eca49b6d",
+          "mobbinUrl": "https://mobbin.com/screens/7dde5c54-8366-4a8f-af5f-7426eca49b6d",
+          "imageUrl": "https://mobbin.com/api/mcp/short/PNHgXiOG",
+          "appName": "OpenTable",
+          "platform": "web",
+          "observedRole": "marketing benefits section with icon trio, checklist copy, screenshot artifact, and claim-heavy proof"
+        },
+        {
+          "screenId": "cc518cad-ad48-4da1-9399-6a52f3d2ba62",
+          "mobbinUrl": "https://mobbin.com/screens/cc518cad-ad48-4da1-9399-6a52f3d2ba62",
+          "imageUrl": "https://mobbin.com/api/mcp/short/j4roz8VV",
+          "appName": "Lovable",
+          "platform": "web",
+          "observedRole": "AI builder screen showing generated services homepage inside editor UI"
+        },
+        {
+          "screenId": "8b8dc2c2-47dd-4cae-9b67-2a885bd435e9",
+          "mobbinUrl": "https://mobbin.com/screens/8b8dc2c2-47dd-4cae-9b67-2a885bd435e9",
+          "imageUrl": "https://mobbin.com/api/mcp/short/J1AftOkd",
+          "appName": "v0",
+          "platform": "web",
+          "observedRole": "AI builder screen with SaaS landing page hero, sidebar prompt, and generic feature promises"
+        }
+      ]
+    },
+    {
+      "angle": "constraint",
+      "query": "regulated category urgent path wording trust without fake credentials responsive mobile-first homepage website not dashboard not app",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:29:31Z",
+      "results": [
+        {
+          "screenId": "6aa7d066-a33a-4899-8ca0-98eae07422e5",
+          "mobbinUrl": "https://mobbin.com/screens/6aa7d066-a33a-4899-8ca0-98eae07422e5",
+          "imageUrl": "https://mobbin.com/api/mcp/short/adApd1Kd",
+          "appName": "Hers",
+          "platform": "web",
+          "observedRole": "regulated proof tile layout with doctor-trusted and pharmacy-regulated claim blocks plus CTA"
+        },
+        {
+          "screenId": "8a5050a7-88d9-4e76-ac94-4eef2100cb54",
+          "mobbinUrl": "https://mobbin.com/screens/8a5050a7-88d9-4e76-ac94-4eef2100cb54",
+          "imageUrl": "https://mobbin.com/api/mcp/short/VVxe7RJ6",
+          "appName": "Elicit",
+          "platform": "web",
+          "observedRole": "research-product hero with large centered claim, gradient field, CTA, and institution logo strip"
+        },
+        {
+          "screenId": "bb90900e-225c-4477-8e2e-2092aa473296",
+          "mobbinUrl": "https://mobbin.com/screens/bb90900e-225c-4477-8e2e-2092aa473296",
+          "imageUrl": "https://mobbin.com/api/mcp/short/NY56qdOB",
+          "appName": "Vanta",
+          "platform": "web",
+          "observedRole": "trust/compliance homepage with alert bar, serif-accent headline, dashboard artifact, and demo CTA"
+        },
+        {
+          "screenId": "35d579c4-3fa9-47e2-8d20-bce2758033d7",
+          "mobbinUrl": "https://mobbin.com/screens/35d579c4-3fa9-47e2-8d20-bce2758033d7",
+          "imageUrl": "https://mobbin.com/api/mcp/short/pgOU9MV7",
+          "appName": "Monarch",
+          "platform": "web",
+          "observedRole": "advisor-style onboarding letter with portrait, credential reassurance, fiduciary wording, and single CTA"
+        },
+        {
+          "screenId": "99079b0c-c0fc-4c93-800a-3a38d885f767",
+          "mobbinUrl": "https://mobbin.com/screens/99079b0c-c0fc-4c93-800a-3a38d885f767",
+          "imageUrl": "https://mobbin.com/api/mcp/short/U0pqSKUj",
+          "appName": "Hims",
+          "platform": "web",
+          "observedRole": "minimal provider-support screen with calm centered text, plenty of whitespace, and bottom CTA"
+        },
+        {
+          "screenId": "ae6c954c-e003-49f8-993f-f56696f053cf",
+          "mobbinUrl": "https://mobbin.com/screens/ae6c954c-e003-49f8-993f-f56696f053cf",
+          "imageUrl": "https://mobbin.com/api/mcp/short/0oKJiiDb",
+          "appName": "WRITER",
+          "platform": "web",
+          "observedRole": "dark enterprise hero with statistic, portrait, logos, and dual demo/trial CTAs"
+        },
+        {
+          "screenId": "8edde093-4739-4a72-9e7d-569c45b888da",
+          "mobbinUrl": "https://mobbin.com/screens/8edde093-4739-4a72-9e7d-569c45b888da",
+          "imageUrl": "https://mobbin.com/api/mcp/short/8uCPwWoi",
+          "appName": "Grammarly",
+          "platform": "web",
+          "observedRole": "responsible-AI hero with product proof artifact, legal microcopy, logo strip, and signup CTAs"
+        },
+        {
+          "screenId": "96c22ab1-c5bb-4968-9549-247e4756a84b",
+          "mobbinUrl": "https://mobbin.com/screens/96c22ab1-c5bb-4968-9549-247e4756a84b",
+          "imageUrl": "https://mobbin.com/api/mcp/short/RWh68rew",
+          "appName": "Hers",
+          "platform": "web",
+          "observedRole": "mega-menu state over regulated care tiles, schedule messaging, and licensed-provider claims"
+        }
+      ]
+    }
+  ]
+}

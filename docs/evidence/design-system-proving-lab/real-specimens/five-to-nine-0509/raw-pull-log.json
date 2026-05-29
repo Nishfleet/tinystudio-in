@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "mobbin.mobbin-pro.raw-pull-log.v1",
+  "businessId": "five-to-nine-0509",
+  "generatedAt": "2026-05-19T09:54:28Z",
+  "sourceProvider": "Mobbin Pro MCP",
+  "platform": "web",
+  "queryLog": [
+    {
+      "angle": "niche",
+      "query": "marketing website for competitor monitoring SaaS for growth teams proof-backed market intelligence morning brief landing page",
+      "mode": "deep",
+      "limit": 8,
+      "returned": 8
+    },
+    {
+      "angle": "page-job",
+      "query": "market intelligence website competitive analysis alerts proof dashboard for marketing teams landing page SaaS",
+      "mode": "deep",
+      "limit": 8,
+      "returned": 8
+    },
+    {
+      "angle": "tone",
+      "query": "proof backed alerts monitoring product website morning brief source evidence cards growth team SaaS landing page",
+      "mode": "deep",
+      "limit": 8,
+      "returned": 8
+    },
+    {
+      "angle": "constraint",
+      "query": "India growth marketing ecommerce analytics SaaS website competitor ads monitoring landing page bold typography product screenshot",
+      "mode": "deep",
+      "limit": 8,
+      "returned": 8
+    }
+  ],
+  "rawPoolReturnedCount": 32,
+  "rawPoolUniqueCount": 31,
+  "rawCandidates": [
+    { "screenId": "1e2d86ea-d8b6-4284-b769-7dd2485de758", "appName": "Clearbit", "mobbinUrl": "https://mobbin.com/screens/1e2d86ea-d8b6-4284-b769-7dd2485de758", "imageUrl": "https://mobbin.com/api/mcp/short/CT2BLXBQ", "queryAngle": "niche" },
+    { "screenId": "b5d920dd-ae5f-4b3c-9eaa-70105e85a5ca", "appName": "Peec AI", "mobbinUrl": "https://mobbin.com/screens/b5d920dd-ae5f-4b3c-9eaa-70105e85a5ca", "imageUrl": "https://mobbin.com/api/mcp/short/nyEnYDoG", "queryAngle": "niche" },
+    { "screenId": "73d6435a-f8be-429c-9d52-d4cd0fab19de", "appName": "Apollo", "mobbinUrl": "https://mobbin.com/screens/73d6435a-f8be-429c-9d52-d4cd0fab19de", "imageUrl": "https://mobbin.com/api/mcp/short/Crg1tn5I", "queryAngle": "niche" },
+    { "screenId": "3db1827e-24bb-4148-bef8-6d38f36e8116", "appName": "Apollo", "mobbinUrl": "https://mobbin.com/screens/3db1827e-24bb-4148-bef8-6d38f36e8116", "imageUrl": "https://mobbin.com/api/mcp/short/kcjPHioC", "queryAngle": "niche" },
+    { "screenId": "329e37e0-ff02-4efe-82a4-4cabbb83e774", "appName": "Maze", "mobbinUrl": "https://mobbin.com/screens/329e37e0-ff02-4efe-82a4-4cabbb83e774", "imageUrl": "https://mobbin.com/api/mcp/short/Kkzhq9oU", "queryAngle": "niche" },
+    { "screenId": "c57f5d0f-2dd1-4806-8a6f-0d5d4ac97e8c", "appName": "Plausible Analytics", "mobbinUrl": "https://mobbin.com/screens/c57f5d0f-2dd1-4806-8a6f-0d5d4ac97e8c", "imageUrl": "https://mobbin.com/api/mcp/short/YaFhZnUq", "queryAngle": "niche" },
+    { "screenId": "cdb703ff-9199-4328-802c-0c39193cbdbc", "appName": "Better Stack", "mobbinUrl": "https://mobbin.com/screens/cdb703ff-9199-4328-802c-0c39193cbdbc", "imageUrl": "https://mobbin.com/api/mcp/short/Tkvd83Vz", "queryAngle": "niche" },
+    { "screenId": "b6054ff6-45b3-4de0-a480-465892bc3724", "appName": "Sprout Social", "mobbinUrl": "https://mobbin.com/screens/b6054ff6-45b3-4de0-a480-465892bc3724", "imageUrl": "https://mobbin.com/api/mcp/short/PMKvnVYv", "queryAngle": "niche" },
+    { "screenId": "6122a545-4c62-4743-a67f-7e93d1bb84fa", "appName": "Profound", "mobbinUrl": "https://mobbin.com/screens/6122a545-4c62-4743-a67f-7e93d1bb84fa", "imageUrl": "https://mobbin.com/api/mcp/short/0l8XdYOJ", "queryAngle": "page-job" },
+    { "screenId": "bd140b6c-33cf-431f-a25e-52d58bc84a91", "appName": "Peec AI", "mobbinUrl": "https://mobbin.com/screens/bd140b6c-33cf-431f-a25e-52d58bc84a91", "imageUrl": "https://mobbin.com/api/mcp/short/EioXfhFG", "queryAngle": "page-job" },
+    { "screenId": "b5d920dd-ae5f-4b3c-9eaa-70105e85a5ca", "appName": "Peec AI", "mobbinUrl": "https://mobbin.com/screens/b5d920dd-ae5f-4b3c-9eaa-70105e85a5ca", "imageUrl": "https://mobbin.com/api/mcp/short/bjMfylNE", "queryAngle": "page-job" },
+    { "screenId": "b6e6e9d8-3f56-445e-a4d8-6ed24a3be855", "appName": "Profound", "mobbinUrl": "https://mobbin.com/screens/b6e6e9d8-3f56-445e-a4d8-6ed24a3be855", "imageUrl": "https://mobbin.com/api/mcp/short/K7eH4GrE", "queryAngle": "page-job" },
+    { "screenId": "b0590443-627a-4533-934a-5ebcf03534a5", "appName": "June", "mobbinUrl": "https://mobbin.com/screens/b0590443-627a-4533-934a-5ebcf03534a5", "imageUrl": "https://mobbin.com/api/mcp/short/bS6H1Wl9", "queryAngle": "page-job" },
+    { "screenId": "f5f717ee-2591-4d2d-92e2-1e93e18da155", "appName": "Amplitude", "mobbinUrl": "https://mobbin.com/screens/f5f717ee-2591-4d2d-92e2-1e93e18da155", "imageUrl": "https://mobbin.com/api/mcp/short/9gPYoT6Z", "queryAngle": "page-job" },
+    { "screenId": "cd4557d7-ce93-4e30-9fd9-670666fc8869", "appName": "Amplitude", "mobbinUrl": "https://mobbin.com/screens/cd4557d7-ce93-4e30-9fd9-670666fc8869", "imageUrl": "https://mobbin.com/api/mcp/short/ptBT58Rx", "queryAngle": "page-job" },
+    { "screenId": "829ff233-3299-49c8-8a12-1ce3277d4bb8", "appName": "Google Analytics", "mobbinUrl": "https://mobbin.com/screens/829ff233-3299-49c8-8a12-1ce3277d4bb8", "imageUrl": "https://mobbin.com/api/mcp/short/gVs8W97m", "queryAngle": "page-job" },
+    { "screenId": "05fd8746-cbf7-4c79-b050-a8f897a959ec", "appName": "Assembly", "mobbinUrl": "https://mobbin.com/screens/05fd8746-cbf7-4c79-b050-a8f897a959ec", "imageUrl": "https://mobbin.com/api/mcp/short/fVZxcREG", "queryAngle": "tone" },
+    { "screenId": "71e85279-38da-49cc-a0e1-bf0a8ae3d113", "appName": "Savee", "mobbinUrl": "https://mobbin.com/screens/71e85279-38da-49cc-a0e1-bf0a8ae3d113", "imageUrl": "https://mobbin.com/api/mcp/short/W6QlmkdD", "queryAngle": "tone" },
+    { "screenId": "e888ea97-01f1-4dcc-a82e-f20d21ea71a0", "appName": "Assembly", "mobbinUrl": "https://mobbin.com/screens/e888ea97-01f1-4dcc-a82e-f20d21ea71a0", "imageUrl": "https://mobbin.com/api/mcp/short/Dcwb02ez", "queryAngle": "tone" },
+    { "screenId": "acb0b802-8805-47ff-87d0-61e5342925ef", "appName": "Contra", "mobbinUrl": "https://mobbin.com/screens/acb0b802-8805-47ff-87d0-61e5342925ef", "imageUrl": "https://mobbin.com/api/mcp/short/F6pC5h6g", "queryAngle": "tone" },
+    { "screenId": "ff37defa-ea96-45fe-af6b-a9848c629c1e", "appName": "Sana AI", "mobbinUrl": "https://mobbin.com/screens/ff37defa-ea96-45fe-af6b-a9848c629c1e", "imageUrl": "https://mobbin.com/api/mcp/short/NplkWJAz", "queryAngle": "tone" },
+    { "screenId": "6929ddb6-58a8-46c1-b02b-a7ec51179c3d", "appName": "Fey", "mobbinUrl": "https://mobbin.com/screens/6929ddb6-58a8-46c1-b02b-a7ec51179c3d", "imageUrl": "https://mobbin.com/api/mcp/short/2UrPNTBd", "queryAngle": "tone" },
+    { "screenId": "030281b9-475b-4cc8-9629-4b1bcca9c181", "appName": "Contra", "mobbinUrl": "https://mobbin.com/screens/030281b9-475b-4cc8-9629-4b1bcca9c181", "imageUrl": "https://mobbin.com/api/mcp/short/U1TokxKJ", "queryAngle": "tone" },
+    { "screenId": "ab25a888-37ed-4697-aa45-1175aa86d2f7", "appName": "YouTube", "mobbinUrl": "https://mobbin.com/screens/ab25a888-37ed-4697-aa45-1175aa86d2f7", "imageUrl": "https://mobbin.com/api/mcp/short/FxZc8ACX", "queryAngle": "tone" },
+    { "screenId": "a8eb45e6-ca91-450d-a459-5fcfc3a0325f", "appName": "Fibery", "mobbinUrl": "https://mobbin.com/screens/a8eb45e6-ca91-450d-a459-5fcfc3a0325f", "imageUrl": "https://mobbin.com/api/mcp/short/LlUToHS1", "queryAngle": "constraint" },
+    { "screenId": "d897d98e-42b2-4ff4-a3f7-03a12f079588", "appName": "Visitors", "mobbinUrl": "https://mobbin.com/screens/d897d98e-42b2-4ff4-a3f7-03a12f079588", "imageUrl": "https://mobbin.com/api/mcp/short/5SXL1FLR", "queryAngle": "constraint" },
+    { "screenId": "b840e398-8b41-4259-917a-1f0d989b54a6", "appName": "Coda", "mobbinUrl": "https://mobbin.com/screens/b840e398-8b41-4259-917a-1f0d989b54a6", "imageUrl": "https://mobbin.com/api/mcp/short/dygo2BAI", "queryAngle": "constraint" },
+    { "screenId": "60f2d386-d2f7-4e6b-90df-f21f284f0136", "appName": "Time2book", "mobbinUrl": "https://mobbin.com/screens/60f2d386-d2f7-4e6b-90df-f21f284f0136", "imageUrl": "https://mobbin.com/api/mcp/short/6u7q1G1W", "queryAngle": "constraint" },
+    { "screenId": "8b8dc2c2-47dd-4cae-9b67-2a885bd435e9", "appName": "v0", "mobbinUrl": "https://mobbin.com/screens/8b8dc2c2-47dd-4cae-9b67-2a885bd435e9", "imageUrl": "https://mobbin.com/api/mcp/short/LhqEKcGP", "queryAngle": "constraint" },
+    { "screenId": "7d8b276e-b850-40f0-8692-ffe16dde5a8a", "appName": "Wrangle", "mobbinUrl": "https://mobbin.com/screens/7d8b276e-b850-40f0-8692-ffe16dde5a8a", "imageUrl": "https://mobbin.com/api/mcp/short/LZwj1iTw", "queryAngle": "constraint" },
+    { "screenId": "cf9f8929-c1a4-4f96-9d64-e52b1843e1aa", "appName": "Aboard", "mobbinUrl": "https://mobbin.com/screens/cf9f8929-c1a4-4f96-9d64-e52b1843e1aa", "imageUrl": "https://mobbin.com/api/mcp/short/4oJ9YS0m", "queryAngle": "constraint" },
+    { "screenId": "ec7fc1f1-531f-4152-bb93-190c11013280", "appName": "beehiiv", "mobbinUrl": "https://mobbin.com/screens/ec7fc1f1-531f-4152-bb93-190c11013280", "imageUrl": "https://mobbin.com/api/mcp/short/O9U6tOZT", "queryAngle": "constraint" }
+  ]
+}

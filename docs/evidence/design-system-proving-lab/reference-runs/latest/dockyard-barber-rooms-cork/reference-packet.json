@@ -1,0 +1,228 @@
+{
+  "schemaVersion": "mobbin.mobbin-pro.per-redesign-reference-packet.v1",
+  "sourceProvider": "Mobbin Pro MCP",
+  "platform": "web",
+  "businessId": "dockyard-barber-rooms-cork",
+  "businessName": "Dockyard Barber Rooms",
+  "businessHash": "0d679c3d70b47e267178e3c61c238c30dca32e3fcc672f9ad836eed933f092ae",
+  "searchBriefHash": "dfc80ccbde4b4c53f256643f861816739eda540ca5d07da3ad00f3ada519fe18",
+  "generatedAt": "2026-05-18T18:35:14Z",
+  "rawPullLogPath": "docs/evidence/design-system-proving-lab/reference-runs/latest/dockyard-barber-rooms-cork/raw-pull-log.json",
+  "rawPullLogHash": "223152717e093321d65e71a4ee1f3ccf2f9036d3a12f036f0bb6e906854c6eef",
+  "queryLog": [
+    {
+      "angle": "niche",
+      "query": "barber cuts, beard trims, and father-son haircut appointments service marketing website homepage book CTA landing page website inspiration",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-18T18:35:14Z"
+    },
+    {
+      "angle": "page-job",
+      "query": "book CTA homepage with trust proof, service or product menu, and local customer decision path website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-18T18:35:14Z",
+      "notes": "Collected as a 6-result retry plus a 2-result retry after an 8-result chunk timed out."
+    },
+    {
+      "angle": "tone",
+      "query": "premium credible owner-led service business landing page website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-18T18:35:14Z"
+    },
+    {
+      "angle": "constraint",
+      "query": "family booking path service duration comparison masculine visual language without cliche responsive mobile-first homepage website not dashboard not app",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-18T18:35:14Z"
+    }
+  ],
+  "rawCandidates": [
+    { "screenId": "dee32578-d821-4f80-886e-7f379aac30b3", "mobbinUrl": "https://mobbin.com/screens/dee32578-d821-4f80-886e-7f379aac30b3", "sourceUrl": "https://mobbin.com/screens/dee32578-d821-4f80-886e-7f379aac30b3", "imageUrl": "https://mobbin.com/api/mcp/short/GE2NRtTq", "appName": "Fresha", "selectionReason": "Booking-first hero model for a fast service decision." },
+    { "screenId": "b14f3f5b-2785-4fbb-a487-266b2bef1d08", "mobbinUrl": "https://mobbin.com/screens/b14f3f5b-2785-4fbb-a487-266b2bef1d08", "sourceUrl": "https://mobbin.com/screens/b14f3f5b-2785-4fbb-a487-266b2bef1d08", "imageUrl": "https://mobbin.com/api/mcp/short/y4gmugy3", "appName": "Fresha", "selectionReason": "Venue-detail page pattern for service proof and booking placement." },
+    { "screenId": "de7ad5b2-44d4-430d-9543-194a44da61bd", "mobbinUrl": "https://mobbin.com/screens/de7ad5b2-44d4-430d-9543-194a44da61bd", "sourceUrl": "https://mobbin.com/screens/de7ad5b2-44d4-430d-9543-194a44da61bd", "imageUrl": "https://mobbin.com/api/mcp/short/y9Fay93N", "appName": "Fresha", "selectionReason": "Service rows map cleanly to cut, beard trim, and father-son appointment comparison." },
+    { "screenId": "bf8f9c28-b22f-4e0e-b4a3-b91e2b7274d4", "mobbinUrl": "https://mobbin.com/screens/bf8f9c28-b22f-4e0e-b4a3-b91e2b7274d4", "sourceUrl": "https://mobbin.com/screens/bf8f9c28-b22f-4e0e-b4a3-b91e2b7274d4", "imageUrl": "https://mobbin.com/api/mcp/short/uERhxjCr", "appName": "Dollar Shave Club", "selectionReason": "Grooming category tone reference without barber-shop cliche." },
+    { "screenId": "212942d1-4c49-4ce4-bdaa-32178d36181a", "mobbinUrl": "https://mobbin.com/screens/212942d1-4c49-4ce4-bdaa-32178d36181a", "sourceUrl": "https://mobbin.com/screens/212942d1-4c49-4ce4-bdaa-32178d36181a", "imageUrl": "https://mobbin.com/api/mcp/short/GT4QV6PX", "appName": "Fresha", "selectionReason": "Compact menu state shows how to keep mobile navigation light." },
+    { "screenId": "923e5154-c265-436e-8d2f-2a1c56699a06", "mobbinUrl": "https://mobbin.com/screens/923e5154-c265-436e-8d2f-2a1c56699a06", "sourceUrl": "https://mobbin.com/screens/923e5154-c265-436e-8d2f-2a1c56699a06", "imageUrl": "https://mobbin.com/api/mcp/short/LNP6A2HA", "appName": "Fresha", "selectionReason": "Menu overlay offers a reference for light utility navigation." },
+    { "screenId": "21e0a06b-28b7-4868-b56c-393eb6c90c05", "mobbinUrl": "https://mobbin.com/screens/21e0a06b-28b7-4868-b56c-393eb6c90c05", "sourceUrl": "https://mobbin.com/screens/21e0a06b-28b7-4868-b56c-393eb6c90c05", "imageUrl": "https://mobbin.com/api/mcp/short/IktJsfRT", "appName": "Cal.com", "selectionReason": "Appointment duration and date/time selection map well to barber services." },
+    { "screenId": "239426a9-172a-483f-a9c8-f7268fa9fca3", "mobbinUrl": "https://mobbin.com/screens/239426a9-172a-483f-a9c8-f7268fa9fca3", "sourceUrl": "https://mobbin.com/screens/239426a9-172a-483f-a9c8-f7268fa9fca3", "imageUrl": "https://mobbin.com/api/mcp/short/eFwpgqQz", "appName": "Braintrust", "selectionReason": "Dark scheduling card gives a controlled masculine contrast without fake barbershop nostalgia." },
+    { "screenId": "25ca82a4-a1c6-464c-8c98-ea1cfe9ed835", "mobbinUrl": "https://mobbin.com/screens/25ca82a4-a1c6-464c-8c98-ea1cfe9ed835", "sourceUrl": "https://mobbin.com/screens/25ca82a4-a1c6-464c-8c98-ea1cfe9ed835", "imageUrl": "https://mobbin.com/api/mcp/short/XzfR17Om", "appName": "Airbnb", "selectionReason": "Group/guest count pattern is useful for parent-child appointment branching." },
+    { "screenId": "084d5db1-92f7-45dd-8fde-76e63893d492", "mobbinUrl": "https://mobbin.com/screens/084d5db1-92f7-45dd-8fde-76e63893d492", "sourceUrl": "https://mobbin.com/screens/084d5db1-92f7-45dd-8fde-76e63893d492", "imageUrl": "https://mobbin.com/api/mcp/short/6m6g554J", "appName": "Open", "selectionReason": "Sparse editorial tone reference for premium-but-plain service presentation." },
+    { "screenId": "29bb5829-7385-4c93-9762-952c4c97b820", "mobbinUrl": "https://mobbin.com/screens/29bb5829-7385-4c93-9762-952c4c97b820", "sourceUrl": "https://mobbin.com/screens/29bb5829-7385-4c93-9762-952c4c97b820", "imageUrl": "https://mobbin.com/api/mcp/short/XfOdKhTw", "appName": "ClassPass", "selectionReason": "Business-provider page gives useful image cluster and benefit-copy warning patterns." },
+    { "screenId": "efb21b8e-721e-47bc-ab33-3d1844d05ed4", "mobbinUrl": "https://mobbin.com/screens/efb21b8e-721e-47bc-ab33-3d1844d05ed4", "sourceUrl": "https://mobbin.com/screens/efb21b8e-721e-47bc-ab33-3d1844d05ed4", "imageUrl": "https://mobbin.com/api/mcp/short/FuIVCcm1", "appName": "Fresha", "selectionReason": "Provider-side booking benefit page is useful for explaining easy online booking, but not for customer-visible proof." },
+    { "screenId": "8b2bdf72-3b33-4cbe-be7f-d41f8be65b55", "mobbinUrl": "https://mobbin.com/screens/8b2bdf72-3b33-4cbe-be7f-d41f8be65b55", "sourceUrl": "https://mobbin.com/screens/8b2bdf72-3b33-4cbe-be7f-d41f8be65b55", "imageUrl": "https://mobbin.com/api/mcp/short/BU7F3BXa", "appName": "Lovable", "selectionReason": "Generic service-card page is useful as an anti-reference." },
+    { "screenId": "22cfa1a2-3a90-4957-9d6d-405c1b940dd2", "mobbinUrl": "https://mobbin.com/screens/22cfa1a2-3a90-4957-9d6d-405c1b940dd2", "sourceUrl": "https://mobbin.com/screens/22cfa1a2-3a90-4957-9d6d-405c1b940dd2", "imageUrl": "https://mobbin.com/api/mcp/short/9V13X9uL", "appName": "Webflow", "selectionReason": "Dark portfolio treatment is useful as a cliche warning for masculine visuals." },
+    { "screenId": "4431e5d4-03ce-47ea-bde3-2cafd4eb53d0", "mobbinUrl": "https://mobbin.com/screens/4431e5d4-03ce-47ea-bde3-2cafd4eb53d0", "sourceUrl": "https://mobbin.com/screens/4431e5d4-03ce-47ea-bde3-2cafd4eb53d0", "imageUrl": "https://mobbin.com/api/mcp/short/sMhV2HeH", "appName": "Square", "selectionReason": "Admin-side booking setup is useful as an anti-reference for customer-facing pages." },
+    { "screenId": "8480cf8e-6812-4588-a2e1-e37d7d62d12e", "mobbinUrl": "https://mobbin.com/screens/8480cf8e-6812-4588-a2e1-e37d7d62d12e", "sourceUrl": "https://mobbin.com/screens/8480cf8e-6812-4588-a2e1-e37d7d62d12e", "imageUrl": "https://mobbin.com/api/mcp/short/tNkIUBaw", "appName": "Airbnb", "selectionReason": "Group booking modal helps stress family-visit branching and price/guest clarity." }
+  ],
+  "shortlist": [
+    {
+      "screenId": "dee32578-d821-4f80-886e-7f379aac30b3",
+      "mobbinUrl": "https://mobbin.com/screens/dee32578-d821-4f80-886e-7f379aac30b3",
+      "sourceUrl": "https://mobbin.com/screens/dee32578-d821-4f80-886e-7f379aac30b3",
+      "appName": "Fresha",
+      "structureFamily": "booking-search hero",
+      "fitScores": { "job": 9, "niche": 8, "firstViewport": 9, "cta": 9, "proof": 7, "mobile": 8, "distinctiveness": 7, "buildability": 8, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "business-job", "ingredient": "Make the first action a booking decision for cut, beard, or father-son appointment." },
+        { "layer": "information-architecture", "ingredient": "Lead with fast appointment choice, then explain service differences below." },
+        { "layer": "layout-structure", "ingredient": "Use a calm booking hero with one strong horizontal action area." },
+        { "layer": "responsive-behavior", "ingredient": "Collapse booking controls into large mobile rows with clear service labels." }
+      ],
+      "bannedUses": [ "Do not copy Fresha's beauty category language, pastel identity, appointment counts, or marketplace promise." ]
+    },
+    {
+      "screenId": "de7ad5b2-44d4-430d-9543-194a44da61bd",
+      "mobbinUrl": "https://mobbin.com/screens/de7ad5b2-44d4-430d-9543-194a44da61bd",
+      "sourceUrl": "https://mobbin.com/screens/de7ad5b2-44d4-430d-9543-194a44da61bd",
+      "appName": "Fresha",
+      "structureFamily": "service-menu rows",
+      "fitScores": { "job": 9, "niche": 8, "firstViewport": 8, "cta": 9, "proof": 7, "mobile": 8, "distinctiveness": 7, "buildability": 9, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "proof-architecture", "ingredient": "Show process and service clarity as proof when reviews or ratings are not source-backed." },
+        { "layer": "cta-system", "ingredient": "Each service row should have a book action so visitors do not hunt for the next step." },
+        { "layer": "forms-and-lead-capture", "ingredient": "Different service rows can route to different booking durations or enquiry prompts." },
+        { "layer": "accessibility", "ingredient": "Service rows need scannable labels, durations, and button names for keyboard and touch users." }
+      ],
+      "bannedUses": [ "Do not invent prices, ratings, photos, staff names, or service claims from the reference." ]
+    },
+    {
+      "screenId": "bf8f9c28-b22f-4e0e-b4a3-b91e2b7274d4",
+      "mobbinUrl": "https://mobbin.com/screens/bf8f9c28-b22f-4e0e-b4a3-b91e2b7274d4",
+      "sourceUrl": "https://mobbin.com/screens/bf8f9c28-b22f-4e0e-b4a3-b91e2b7274d4",
+      "appName": "Dollar Shave Club",
+      "structureFamily": "grooming product stage",
+      "fitScores": { "job": 7, "niche": 8, "firstViewport": 8, "cta": 7, "proof": 7, "mobile": 7, "distinctiveness": 8, "buildability": 8, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "media-direction", "ingredient": "A grooming-object still life can replace fake shop interiors if actual photos are absent." },
+        { "layer": "color-system", "ingredient": "Use deeper navy/cream accents carefully instead of generic black-and-gold barber cliche." },
+        { "layer": "surfaces-and-materials", "ingredient": "Flat product staging can create polish without heavy shadows." },
+        { "layer": "shape", "ingredient": "Use crisp geometry and simple controls rather than ornate vintage motifs." }
+      ],
+      "bannedUses": [ "Do not copy Dollar Shave Club products, packaging, subscription language, or consumer-goods positioning." ]
+    },
+    {
+      "screenId": "21e0a06b-28b7-4868-b56c-393eb6c90c05",
+      "mobbinUrl": "https://mobbin.com/screens/21e0a06b-28b7-4868-b56c-393eb6c90c05",
+      "sourceUrl": "https://mobbin.com/screens/21e0a06b-28b7-4868-b56c-393eb6c90c05",
+      "appName": "Cal.com",
+      "structureFamily": "duration-first booking flow",
+      "fitScores": { "job": 8, "niche": 7, "firstViewport": 7, "cta": 8, "proof": 7, "mobile": 8, "distinctiveness": 7, "buildability": 8, "truth": 9 },
+      "ingredientLedger": [
+        { "layer": "interaction-model", "ingredient": "Let the visitor choose service duration before date/time when that lowers booking hesitation." },
+        { "layer": "component-states", "ingredient": "Duration, selected date, unavailable slot, and repeated-family booking states must be explicit." },
+        { "layer": "localization-and-formatting", "ingredient": "Use local time, duration, and booking labels that match the Cork context." },
+        { "layer": "implementation-tokens", "ingredient": "Date/time selectors need stable tokenized sizes so rows do not shift across devices." }
+      ],
+      "bannedUses": [ "Do not expose raw scheduling-app complexity, calendar overlays, or internal account UI." ]
+    },
+    {
+      "screenId": "239426a9-172a-483f-a9c8-f7268fa9fca3",
+      "mobbinUrl": "https://mobbin.com/screens/239426a9-172a-483f-a9c8-f7268fa9fca3",
+      "sourceUrl": "https://mobbin.com/screens/239426a9-172a-483f-a9c8-f7268fa9fca3",
+      "appName": "Braintrust",
+      "structureFamily": "split consultation scheduler",
+      "fitScores": { "job": 8, "niche": 7, "firstViewport": 7, "cta": 8, "proof": 7, "mobile": 7, "distinctiveness": 8, "buildability": 8, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "typography", "ingredient": "Use a compact, confident type rhythm instead of exaggerated macho display type." },
+        { "layer": "voice-and-tone", "ingredient": "Write like a clear local operator: direct service names, no swagger copy." },
+        { "layer": "depth", "ingredient": "A dark booking block can anchor the page without making the whole site gloomy." },
+        { "layer": "component-anatomy", "ingredient": "Pair a calendar/list region with a plain next action and escape route." }
+      ],
+      "bannedUses": [ "Do not copy Braintrust branding, black calendar visuals wholesale, or consultation marketplace language." ]
+    },
+    {
+      "screenId": "25ca82a4-a1c6-464c-8c98-ea1cfe9ed835",
+      "mobbinUrl": "https://mobbin.com/screens/25ca82a4-a1c6-464c-8c98-ea1cfe9ed835",
+      "sourceUrl": "https://mobbin.com/screens/25ca82a4-a1c6-464c-8c98-ea1cfe9ed835",
+      "appName": "Airbnb",
+      "structureFamily": "group booking selector",
+      "fitScores": { "job": 8, "niche": 7, "firstViewport": 7, "cta": 8, "proof": 7, "mobile": 8, "distinctiveness": 7, "buildability": 8, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "content-strategy", "ingredient": "Separate parent-child booking from standard cut and beard trim to reduce uncertainty." },
+        { "layer": "spacing-system", "ingredient": "Use enough breathing room around family/party controls so booking does not feel crowded." },
+        { "layer": "forms-and-lead-capture", "ingredient": "Parent-child booking can use a simple party selector or grouped appointment prompt." },
+        { "layer": "seo-aeo-metadata", "ingredient": "Expose service names and duration rules in visible and agent-readable metadata." }
+      ],
+      "bannedUses": [ "Do not copy travel/experience pricing, guest labels, or Airbnb brand patterns." ]
+    },
+    {
+      "screenId": "084d5db1-92f7-45dd-8fde-76e63893d492",
+      "mobbinUrl": "https://mobbin.com/screens/084d5db1-92f7-45dd-8fde-76e63893d492",
+      "sourceUrl": "https://mobbin.com/screens/084d5db1-92f7-45dd-8fde-76e63893d492",
+      "appName": "Open",
+      "structureFamily": "sparse editorial membership page",
+      "fitScores": { "job": 7, "niche": 7, "firstViewport": 8, "cta": 7, "proof": 7, "mobile": 7, "distinctiveness": 8, "buildability": 7, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "motion", "ingredient": "If used, movement should be subtle: menu reveal, service selection, or booking step transition." },
+        { "layer": "illustration-graphics", "ingredient": "A strong no-photo graphic can carry atmosphere without pretending to show the shop." },
+        { "layer": "iconography", "ingredient": "Use utility icons only where they clarify service, time, location, or family visit." },
+        { "layer": "performance", "ingredient": "Avoid full-bleed heavy video or photo assets until real shop media exists." }
+      ],
+      "bannedUses": [ "Do not use meditation/wellness positioning, subscription copy, or unapproved lifestyle photography." ]
+    },
+    {
+      "screenId": "212942d1-4c49-4ce4-bdaa-32178d36181a",
+      "mobbinUrl": "https://mobbin.com/screens/212942d1-4c49-4ce4-bdaa-32178d36181a",
+      "sourceUrl": "https://mobbin.com/screens/212942d1-4c49-4ce4-bdaa-32178d36181a",
+      "appName": "Fresha",
+      "structureFamily": "compact utility menu",
+      "fitScores": { "job": 7, "niche": 7, "firstViewport": 7, "cta": 7, "proof": 7, "mobile": 8, "distinctiveness": 7, "buildability": 8, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "accessibility", "ingredient": "Mobile menus need clear labels and reachable touch targets." },
+        { "layer": "governance", "ingredient": "Utility navigation must not expose unready claims, unsupported booking modes, or fake business details." },
+        { "layer": "proof-architecture", "ingredient": "Keep proof areas absent or process-based until real reviews, photos, and shop details are approved." },
+        { "layer": "cta-system", "ingredient": "The primary booking action should remain available when menus are open." }
+      ],
+      "bannedUses": [ "Do not copy account menu items, marketplace links, language selector, or app-download CTA." ]
+    }
+  ],
+  "antiReferences": [
+    {
+      "screenId": "8b2bdf72-3b33-4cbe-be7f-d41f8be65b55",
+      "mobbinUrl": "https://mobbin.com/screens/8b2bdf72-3b33-4cbe-be7f-d41f8be65b55",
+      "appName": "Lovable",
+      "rejectionReason": "Generic AI service-card layout would make the barber page feel template-made."
+    },
+    {
+      "screenId": "22cfa1a2-3a90-4957-9d6d-405c1b940dd2",
+      "mobbinUrl": "https://mobbin.com/screens/22cfa1a2-3a90-4957-9d6d-405c1b940dd2",
+      "appName": "Webflow",
+      "rejectionReason": "Dark agency portfolio styling is the wrong kind of masculine and would become a cliche."
+    },
+    {
+      "screenId": "4431e5d4-03ce-47ea-bde3-2cafd4eb53d0",
+      "mobbinUrl": "https://mobbin.com/screens/4431e5d4-03ce-47ea-bde3-2cafd4eb53d0",
+      "appName": "Square",
+      "rejectionReason": "Admin setup UI is not a customer-facing barber website reference."
+    },
+    {
+      "screenId": "29bb5829-7385-4c93-9762-952c4c97b820",
+      "mobbinUrl": "https://mobbin.com/screens/29bb5829-7385-4c93-9762-952c4c97b820",
+      "appName": "ClassPass",
+      "rejectionReason": "Provider growth claims and marketplace revenue proof cannot be reused for a local barber fixture."
+    }
+  ],
+  "remixDirection": {
+    "summary": "A fast-booking barber page with crisp service comparison, a restrained grooming-object visual system, explicit family-visit branching, and a mobile-first booking path.",
+    "selectedMoves": [
+      "Fresha-style booking/search discipline, rebuilt around cut, beard, and father-son visit choices.",
+      "Fresha service-row logic for duration comparison and per-service CTAs.",
+      "Dollar Shave Club grooming-object restraint without subscription or product-store positioning.",
+      "Cal.com duration selector logic for appointment length clarity.",
+      "Airbnb group selector logic adapted to parent-child appointment grouping."
+    ],
+    "explicitRejects": [
+      "No fake shop photos, ratings, reviews, barber names, heritage story, or masculine cliche palette.",
+      "No marketplace appointment counts, provider-growth claims, or admin UI.",
+      "No exact layout copy from any shortlisted screen."
+    ]
+  }
+}

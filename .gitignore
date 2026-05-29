@@ -1,0 +1,27 @@
+.DS_Store
+node_modules/
+.playwright-mcp/
+.env
+.env.local
+.env.*.local
+
+# Generated outputs. Keep source, context, scripts, docs, and approved templates in git;
+# regenerate previews and run reports when needed.
+artifacts/
+previews/
+private-previews/
+runs/
+runtime/backups/
+clients/
+prospects/
+prospect-imports/
+
+# Local logs and temporary files.
+*.log
+*.tmp
+.sisyphus/
+.wrangler/
+**/.wrangler/
+
+# Local visual verification captures. Keep durable concept assets under docs/assets/.
+/*.png

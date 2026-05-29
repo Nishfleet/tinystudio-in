@@ -1,0 +1,111 @@
+{
+  "schemaVersion": "mobbin.mobbin-search-brief.v1",
+  "businessId": "harbour-ritual-colour-room-brighton",
+  "businessName": "Harbour Ritual Colour Room",
+  "businessModel": "service",
+  "category": "salon",
+  "subcategory": "colour-led salon for gloss, balayage, and blow-dry appointments",
+  "targetCustomerDecision": "Should a new client book a colour consultation first, a gloss refresh, or a blow-dry appointment?",
+  "primaryAction": "book",
+  "sourceProvider": "Mobbin Pro MCP",
+  "platform": "web",
+  "requiredQueryAngles": [
+    "niche",
+    "page-job",
+    "tone",
+    "constraint"
+  ],
+  "requiredRawCandidates": {
+    "min": 12,
+    "max": 20
+  },
+  "requiredShortlist": {
+    "min": 6,
+    "max": 8
+  },
+  "requiredAntiReferences": 2,
+  "requiredIngredientLayers": [
+    "business-job",
+    "information-architecture",
+    "content-strategy",
+    "voice-and-tone",
+    "typography",
+    "layout-structure",
+    "spacing-system",
+    "responsive-behavior",
+    "color-system",
+    "surfaces-and-materials",
+    "depth",
+    "shape",
+    "component-anatomy",
+    "component-states",
+    "interaction-model",
+    "motion",
+    "media-direction",
+    "iconography",
+    "illustration-graphics",
+    "proof-architecture",
+    "cta-system",
+    "forms-and-lead-capture",
+    "accessibility",
+    "localization-and-formatting",
+    "seo-aeo-metadata",
+    "performance",
+    "implementation-tokens",
+    "governance"
+  ],
+  "collectionPolicy": {
+    "sourceCategory": "Mobbin Pro web platform / websites category",
+    "strategy": "wide-pull-then-compress",
+    "minimumReturnedScreensAcrossQueries": 32,
+    "minimumUniqueRawPoolScreens": 20,
+    "packetRawCandidates": {
+      "min": 12,
+      "max": 20
+    },
+    "recommendedChunkSize": 8,
+    "chunkRule": "Use repeated Mobbin MCP calls with exclude_screen_ids when one large pull times out; chunking is allowed, narrowing the search to save transcript space is not.",
+    "transcriptPolicy": "Save the full raw Mobbin metadata and links in raw-pull-log.json. The chat/report should show only counts, hashes, shortlist, and blockers."
+  },
+  "queries": [
+    {
+      "angle": "niche",
+      "query": "salon colour-led salon for gloss, balayage, and blow-dry appointments service marketing website homepage book CTA landing page website inspiration",
+      "mode": "deep",
+      "platform": "web",
+      "minimumRawCandidates": 12,
+      "targetRawCandidates": 20
+    },
+    {
+      "angle": "page-job",
+      "query": "book CTA homepage with trust proof, service or product menu, and local customer decision path website",
+      "mode": "deep",
+      "platform": "web",
+      "minimumRawCandidates": 12,
+      "targetRawCandidates": 20
+    },
+    {
+      "angle": "tone",
+      "query": "premium credible owner-led service business landing page website",
+      "mode": "deep",
+      "platform": "web",
+      "minimumRawCandidates": 12,
+      "targetRawCandidates": 20
+    },
+    {
+      "angle": "constraint",
+      "query": "high-photo temptation consultation-first CTA service menu clarity responsive mobile-first homepage website not dashboard not app",
+      "mode": "deep",
+      "platform": "web",
+      "minimumRawCandidates": 12,
+      "targetRawCandidates": 20
+    }
+  ],
+  "noCopyRules": [
+    "Do not copy source brands, logos, product claims, trust claims, screenshots, or exact layouts.",
+    "Do not use Mobbin reference proof as business proof.",
+    "Every selected ingredient must map to this business job or a quality requirement."
+  ],
+  "briefHash": "7b679daebb460929f2842e38c574f1a91a731b4434338b22fb66f067c9ce2ba2",
+  "businessHash": "9426edf2a0c14cd44bae4f4947697d3cc6f13d824c4fd40ad0f9f7d915fd9e50"
+}

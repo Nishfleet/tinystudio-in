@@ -1,0 +1,283 @@
+{
+  "schemaVersion": "mobbin.mobbin-pro.leaderboard-proxy-ledger.v1",
+  "businessId": "five-to-nine-0509",
+  "businessName": "Five to Nine",
+  "generatedAt": "2026-05-19T10:58:41Z",
+  "status": "top-performing-proxy-ledger-complete",
+  "boundary": "This ledger uses public evidence proxies for category leadership and landing-page maturity. It does not claim private conversion-rate proof.",
+  "tightNiche": {
+    "job": "Growth and marketing teams need to see competitor, market, search, social, and AI-visibility changes early enough to act.",
+    "pageJob": "Make Five to Nine feel like a credible market-intelligence SaaS landing page, not a generic AI redesign.",
+    "includedMarkets": [
+      "competitive intelligence",
+      "market intelligence",
+      "search and AI visibility",
+      "social and media intelligence",
+      "growth-team signal monitoring"
+    ]
+  },
+  "scoringRubric": {
+    "maxScore": 100,
+    "weights": {
+      "nicheFit": 25,
+      "publicScaleProxy": 25,
+      "currentMomentum": 15,
+      "landingPageMaturity": 15,
+      "visualReferenceAvailability": 10,
+      "fitWithFiveToNineTruthBoundary": 10
+    },
+    "notes": [
+      "ARR, revenue, customer count, acquisition value, and funding are stronger performance proxies than visual similarity.",
+      "Mobbin search relevance alone is not performance proof.",
+      "If Mobbin lacks an exact leader, the replacement must be labeled visualProxy."
+    ]
+  },
+  "leaderboard": [
+    {
+      "rank": 1,
+      "company": "AlphaSense",
+      "category": "enterprise market intelligence",
+      "proxyType": "official ARR and customer scale",
+      "publicEvidence": [
+        {
+          "claim": "Surpassed $500M ARR in October 2025.",
+          "sourceUrl": "https://www.alpha-sense.com/press/alphasense-surpasses-500m-in-arr/"
+        },
+        {
+          "claim": "Over 6,500 customers, including 88% of the S&P 100.",
+          "sourceUrl": "https://www.alpha-sense.com/press/alphasense-surpasses-500m-in-arr/"
+        }
+      ],
+      "score": 93,
+      "confidence": "high",
+      "factsVsInference": {
+        "facts": ["$500M+ ARR", "6,500+ customers", "88% of S&P 100"],
+        "inference": "Enterprise market-intelligence north star for credibility, IA, proof density, and high-stakes decision language."
+      }
+    },
+    {
+      "rank": 2,
+      "company": "Semrush",
+      "category": "online visibility, SEO, GEO, competitive research",
+      "proxyType": "official revenue, ARR, acquisition proof",
+      "publicEvidence": [
+        {
+          "claim": "2025 revenue was $443.6M and ARR was $471.4M.",
+          "sourceUrl": "https://www.semrush.com/news/448771-semrush-announces-fourth-quarter-and-full-year-2025-financial-results/"
+        },
+        {
+          "claim": "Adobe completed the Semrush acquisition on April 28, 2026, strengthening brand visibility capabilities.",
+          "sourceUrl": "https://www.semrush.com/news/455953-adobe-completes-semrush-acquisition-strengthening-cx-enterprise-with-enhanced-brand-visibility-capabilities/"
+        }
+      ],
+      "score": 92,
+      "confidence": "high",
+      "factsVsInference": {
+        "facts": ["$443.6M 2025 revenue", "$471.4M ARR", "Adobe acquisition completed April 28, 2026"],
+        "inference": "Best-fit public benchmark for search, AI visibility, competitive research, and buyer-safe SaaS proof."
+      }
+    },
+    {
+      "rank": 3,
+      "company": "Sprout Social",
+      "category": "social listening and customer signal intelligence",
+      "proxyType": "official revenue and enterprise customer count",
+      "publicEvidence": [
+        {
+          "claim": "2025 revenue was $457.5M.",
+          "sourceUrl": "https://investors.sproutsocial.com/news/news-details/2026/Sprout-Social-Announces-Fourth-Quarter-2025-Financial-Results/default.aspx"
+        },
+        {
+          "claim": "Sprout reported 3,803 customers contributing at least $30K ARR and 2,022 contributing at least $50K ARR.",
+          "sourceUrl": "https://investors.sproutsocial.com/news/news-details/2026/Sprout-Social-Announces-Fourth-Quarter-2025-Financial-Results/default.aspx"
+        }
+      ],
+      "score": 89,
+      "confidence": "high",
+      "factsVsInference": {
+        "facts": ["$457.5M 2025 revenue", "3,803 customers at $30K+ ARR", "2,022 customers at $50K+ ARR"],
+        "inference": "Strong visual and structural model for social/consumer-signal monitoring and enterprise CTA discipline."
+      }
+    },
+    {
+      "rank": 4,
+      "company": "Similarweb",
+      "category": "digital market intelligence and competitive traffic analysis",
+      "proxyType": "official revenue and customer count",
+      "publicEvidence": [
+        {
+          "claim": "2025 revenue was $282.6M.",
+          "sourceUrl": "https://ir.similarweb.com/news-events/press-releases/detail/145/similarweb-announces-fourth-quarter-and-fiscal-2025-results"
+        },
+        {
+          "claim": "6,128 customers and 454 customers with $100K+ ARR as of December 31, 2025.",
+          "sourceUrl": "https://ir.similarweb.com/news-events/press-releases/detail/145/similarweb-announces-fourth-quarter-and-fiscal-2025-results"
+        }
+      ],
+      "score": 88,
+      "confidence": "high",
+      "factsVsInference": {
+        "facts": ["$282.6M 2025 revenue", "6,128 customers", "454 $100K+ ARR customers"],
+        "inference": "Direct benchmark for market-traffic proof, competitor trend framing, and data credibility."
+      }
+    },
+    {
+      "rank": 5,
+      "company": "Ahrefs",
+      "category": "search, competitor, backlink, and AI visibility data",
+      "proxyType": "official data-scale proof",
+      "publicEvidence": [
+        {
+          "claim": "Ahrefs reports 400M monthly AI prompts, 35T live backlinks, 19.2B content pages, and 217 locations covered.",
+          "sourceUrl": "https://ahrefs.com/big-data"
+        },
+        {
+          "claim": "Ahrefs Site Explorer positions competitor growth, traffic, keywords, backlinks, paid ads, and Brand Radar as core workflows.",
+          "sourceUrl": "https://ahrefs.com/site-explorer"
+        }
+      ],
+      "score": 85,
+      "confidence": "high for product scale, medium for revenue",
+      "factsVsInference": {
+        "facts": ["400M monthly AI prompts", "35T live backlinks", "19.2B content pages"],
+        "inference": "Useful benchmark for data-scale storytelling, but revenue/conversion performance is not public here."
+      }
+    },
+    {
+      "rank": 6,
+      "company": "Meltwater",
+      "category": "media, social, AI, and competitive intelligence",
+      "proxyType": "official customer count and platform breadth",
+      "publicEvidence": [
+        {
+          "claim": "Trusted by 27,000+ organizations worldwide.",
+          "sourceUrl": "https://www.meltwater.com/en"
+        },
+        {
+          "claim": "Meltwater combines media, social, and AI signals into one intelligence platform.",
+          "sourceUrl": "https://www.meltwater.com/en"
+        }
+      ],
+      "score": 83,
+      "confidence": "high for customer count, medium for revenue",
+      "factsVsInference": {
+        "facts": ["27,000+ organizations", "media/social/AI intelligence positioning"],
+        "inference": "Useful benchmark for multi-signal positioning and broad intelligence architecture."
+      }
+    },
+    {
+      "rank": 7,
+      "company": "Profound",
+      "category": "AI visibility and answer-engine optimization",
+      "proxyType": "funding, customer traction, category fit",
+      "publicEvidence": [
+        {
+          "claim": "Raised $35M Series B, bringing total funding to $58.5M.",
+          "sourceUrl": "https://www.prnewswire.com/news-releases/profound-raises-35m-series-b-as-ai-search-becomes-the-next-platform-shift-302527764.html"
+        },
+        {
+          "claim": "More than 2,000 marketers from over 500 organizations rely on the platform daily.",
+          "sourceUrl": "https://www.prnewswire.com/news-releases/profound-raises-35m-series-b-as-ai-search-becomes-the-next-platform-shift-302527764.html"
+        }
+      ],
+      "score": 81,
+      "confidence": "high for traction, medium for revenue",
+      "factsVsInference": {
+        "facts": ["$58.5M total funding", "500+ organizations", "2,000+ marketers"],
+        "inference": "Strong emerging-category reference for AI-search visibility and product-screenshot proof."
+      }
+    },
+    {
+      "rank": 8,
+      "company": "Peec AI",
+      "category": "AI search analytics and brand visibility",
+      "proxyType": "ARR, funding, customer count",
+      "publicEvidence": [
+        {
+          "claim": "Raised $21M Series A to help brands win in AI search.",
+          "sourceUrl": "https://peec.ai/blog/we-raised-21m-series-a-to-help-brands-win-in-ai-search"
+        },
+        {
+          "claim": "Peec reports 1,300+ brands and agencies onboarded since February 2025, 300+ customers added per month, and $4M+ ARR in 10 months.",
+          "sourceUrl": "https://peec.ai/blog/we-raised-21m-series-a-to-help-brands-win-in-ai-search"
+        }
+      ],
+      "score": 78,
+      "confidence": "medium-high",
+      "factsVsInference": {
+        "facts": ["$21M Series A", "$29M total funding", "1,300+ brands and agencies", "$4M+ ARR"],
+        "inference": "Most visually direct Mobbin reference for Five to Nine's AI/search visibility side, but still an emerging challenger."
+      }
+    },
+    {
+      "rank": 9,
+      "company": "Brandwatch",
+      "category": "consumer intelligence and social listening",
+      "proxyType": "enterprise trust proxy",
+      "publicEvidence": [
+        {
+          "claim": "Trusted by half of the Forbes 100.",
+          "sourceUrl": "https://www.cision.com/about/press-releases/2025-press-releases/brandwatch-strengthens-ai-leadership-with-deeper-insights-and-expanded-data-coverage-302621990/"
+        }
+      ],
+      "score": 76,
+      "confidence": "medium-high",
+      "factsVsInference": {
+        "facts": ["trusted by half of Forbes 100"],
+        "inference": "Useful category benchmark, but less direct to 0509 than Sprout/Meltwater."
+      }
+    },
+    {
+      "rank": 10,
+      "company": "Klue",
+      "category": "competitive intelligence and win-loss enablement",
+      "proxyType": "category/review and case-study proxy",
+      "publicEvidence": [
+        {
+          "claim": "Klue says 250,000+ users rely on the platform and that it ranks as a G2 industry leader in 4 categories.",
+          "sourceUrl": "https://klue.com/"
+        }
+      ],
+      "score": 74,
+      "confidence": "medium",
+      "factsVsInference": {
+        "facts": ["250,000+ users", "G2 leader claim"],
+        "inference": "Strong category-fit proof, but weaker public scale data than the top eight."
+      }
+    },
+    {
+      "rank": 11,
+      "company": "Crayon",
+      "category": "competitive intelligence and market monitoring",
+      "proxyType": "category/review and case-study proxy",
+      "publicEvidence": [
+        {
+          "claim": "Crayon remains a direct category reference for competitive intelligence; use as category-fit proof, not revenue proof.",
+          "sourceUrl": "https://www.crayon.co/"
+        }
+      ],
+      "score": 72,
+      "confidence": "medium",
+      "factsVsInference": {
+        "facts": ["direct CI category fit"],
+        "inference": "Useful for feature vocabulary and buyer job, but not enough public performance evidence for the top eight."
+      }
+    }
+  ],
+  "bestEvidenceSetForDesign": [
+    "AlphaSense",
+    "Semrush",
+    "Sprout Social",
+    "Similarweb",
+    "Ahrefs",
+    "Meltwater",
+    "Profound",
+    "Peec AI"
+  ],
+  "categoryFitButNotPrimary": [
+    "Brandwatch",
+    "Klue",
+    "Crayon"
+  ],
+  "requiredDesignConsequence": "The visual direction must feel like a serious SaaS intelligence product: clear enterprise nav, one very strong headline, visible product artifact, source/status proof, category-specific metrics, and buyer-safe CTA. It must not reuse the earlier generic Mobbin Proving Lab public-home flavor."
+}

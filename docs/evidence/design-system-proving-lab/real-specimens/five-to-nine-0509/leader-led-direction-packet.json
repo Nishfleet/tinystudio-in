@@ -1,0 +1,77 @@
+{
+  "schemaVersion": "mobbin.mobbin-pro.leader-led-direction-packet.v1",
+  "businessId": "five-to-nine-0509",
+  "businessName": "Five to Nine",
+  "generatedAt": "2026-05-19T10:58:41Z",
+  "referencePacketPath": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/leader-led-reference-packet.json",
+  "leaderboardProxyLedgerPath": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/leaderboard-proxy-ledger.json",
+  "conceptHtmlPath": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/leader-led-finalists.html",
+  "status": "screenshot-captured",
+  "browserProof": {
+    "tool": "Codex in-app Browser",
+    "capturedAt": "2026-05-19T12:53:00Z",
+    "localPreviewUrl": "http://127.0.0.1:4879/concepts/leader-led-finalists.html",
+    "captureMode": "one finalist per localhost URL with explicit desktop/mobile viewport overrides",
+    "screenshots": [
+      "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/visibility-command-brief.desktop.png",
+      "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/visibility-command-brief.mobile.png",
+      "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/market-signal-ledger.desktop.png",
+      "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/market-signal-ledger.mobile.png",
+      "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/after-hours-intelligence-room.desktop.png",
+      "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/after-hours-intelligence-room.mobile.png"
+    ]
+  },
+  "directions": [
+    {
+      "directionId": "visibility-command-brief",
+      "directionName": "Visibility Command Brief",
+      "territories": ["minimalist", "corporate-saas", "proof-led-data"],
+      "referenceInputs": ["Peec AI", "Profound", "Sprout Social", "Clearbit visual proxy", "Mixpanel visual proxy"],
+      "whyItFits": "Best default because it makes the market-intelligence artifact visible before the fold and feels closest to top SaaS leader pages.",
+      "scoreBeforeScreenshot": 9.2,
+      "screenshots": {
+        "desktop": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/visibility-command-brief.desktop.png",
+        "mobile": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/visibility-command-brief.mobile.png"
+      }
+    },
+    {
+      "directionId": "market-signal-ledger",
+      "directionName": "Market Signal Ledger",
+      "territories": ["editorial-magazine", "typographic", "proof-led-data"],
+      "referenceInputs": ["Profound", "Ahrefs public data proof", "Semrush public category proof", "Peec AI"],
+      "whyItFits": "Turns Five to Nine into a source-controlled morning market changelog, with a much more distinct rhythm than a generic dashboard.",
+      "scoreBeforeScreenshot": 8.8,
+      "screenshots": {
+        "desktop": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/market-signal-ledger.desktop.png",
+        "mobile": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/market-signal-ledger.mobile.png"
+      }
+    },
+    {
+      "directionId": "after-hours-intelligence-room",
+      "directionName": "After-Hours Intelligence Room",
+      "territories": ["dark-mode", "immersive-cinematic", "proof-led-data"],
+      "referenceInputs": ["Fey visual proxy", "Profound", "Sprout Social", "AlphaSense public proof"],
+      "whyItFits": "Memorable and premium, but must pass readability and claim discipline before it can beat the lighter command brief.",
+      "scoreBeforeScreenshot": 8.5,
+      "screenshots": {
+        "desktop": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/after-hours-intelligence-room.desktop.png",
+        "mobile": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/after-hours-intelligence-room.mobile.png"
+      }
+    }
+  ],
+  "currentRecommendation": "Visibility Command Brief",
+  "rejectedFromThisSet": [
+    {
+      "direction": "generic AI SaaS gradient",
+      "reason": "Not tied to top leader evidence, not ownable, and too close to the rejected prior taste failure."
+    },
+    {
+      "direction": "pure enterprise corporate",
+      "reason": "Trustworthy but forgettable; does not prove variability or Five to Nine's source-backed monitoring job."
+    },
+    {
+      "direction": "visual proxy clone",
+      "reason": "A visual proxy can provide ingredients but cannot become the design or be called top-performing proof."
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "schemaVersion": "mobbin.mobbin-pro.raw-pull-log.v1",
+  "sourceProvider": "Mobbin Pro MCP",
+  "platform": "web",
+  "businessId": "ledger-lane-bookkeepers-edinburgh",
+  "businessName": "Ledger Lane Bookkeepers",
+  "businessHash": "ae208070b637868aca48a9476c96c5814b678af69d10de868f63b9efe57b4221",
+  "searchBriefHash": "10592d40c17fe5fcdac5534fe1e2928d8b0d578e96687c41cc598de1b4d6903f",
+  "generatedAt": "2026-05-19T01:39:10Z",
+  "collectionPolicy": {
+    "strategy": "wide-pull-then-compress",
+    "minimumReturnedScreensAcrossQueries": 32,
+    "minimumUniqueRawPoolScreens": 20,
+    "chunkSize": "8 per required query angle",
+    "dedupeMethod": "Mobbin screen id with exclude_screen_ids across query angles"
+  },
+  "toolNotes": [
+    "All four required query angles were run through Mobbin Pro MCP with platform web and deep mode.",
+    "Later query runs used exclude_screen_ids from earlier runs to keep the raw pool broad."
+  ],
+  "totalReturned": 32,
+  "uniqueScreenCount": 32,
+  "queryRuns": [
+    {
+      "angle": "niche",
+      "query": "professional-service bookkeeping, payroll setup, and monthly accounts support for small shops service marketing website homepage enquire CTA landing page website inspiration",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "results": [
+        { "screenId": "9f10df1a-9e14-4ce6-a020-c80f83bf0fa9", "mobbinUrl": "https://mobbin.com/screens/9f10df1a-9e14-4ce6-a020-c80f83bf0fa9", "imageUrl": "https://mobbin.com/api/mcp/short/7hZfJyk2", "appName": "Wave", "platform": "web", "observedRole": "advisor-hiring page with bookkeeping help, consultation CTA, and three-step getting-started section" },
+        { "screenId": "7fe31123-4016-474b-b818-f0807021ce64", "mobbinUrl": "https://mobbin.com/screens/7fe31123-4016-474b-b818-f0807021ce64", "imageUrl": "https://mobbin.com/api/mcp/short/jADaUejg", "appName": "Origin", "platform": "web", "observedRole": "tax filing page with low-photo calculator artifact, deadline banner, and file-options section" },
+        { "screenId": "380c20de-7066-4ab8-ac57-908e77f6cf7a", "mobbinUrl": "https://mobbin.com/screens/380c20de-7066-4ab8-ac57-908e77f6cf7a", "imageUrl": "https://mobbin.com/api/mcp/short/UHRYm5rg", "appName": "Wave", "platform": "web", "observedRole": "small-business finance homepage with form-first signup and accounting illustrations" },
+        { "screenId": "d1f88c4a-a5dc-4a1c-a5f1-f0aaa33cbae0", "mobbinUrl": "https://mobbin.com/screens/d1f88c4a-a5dc-4a1c-a5f1-f0aaa33cbae0", "imageUrl": "https://mobbin.com/api/mcp/short/67t0GzeY", "appName": "Causal", "platform": "web", "observedRole": "financial planning homepage with service tabs, plain financial questions, and green data-artifact band" },
+        { "screenId": "7f33704d-62da-4b87-97aa-7da05887da71", "mobbinUrl": "https://mobbin.com/screens/7f33704d-62da-4b87-97aa-7da05887da71", "imageUrl": "https://mobbin.com/api/mcp/short/ku3V0ynZ", "appName": "Expensify", "platform": "web", "observedRole": "accountants program page with sidebar nav, professional-service copy, and partner CTA" },
+        { "screenId": "d945702b-2623-48d8-bb2e-f3834eee1388", "mobbinUrl": "https://mobbin.com/screens/d945702b-2623-48d8-bb2e-f3834eee1388", "imageUrl": "https://mobbin.com/api/mcp/short/vHWSLyr9", "appName": "Jobber", "platform": "web", "observedRole": "service-business operations homepage with email CTA, trust ratings, and photo collage" },
+        { "screenId": "6a69b9c9-b224-4b41-9c19-18509e6d5592", "mobbinUrl": "https://mobbin.com/screens/6a69b9c9-b224-4b41-9c19-18509e6d5592", "imageUrl": "https://mobbin.com/api/mcp/short/E8XxSrBD", "appName": "Wave", "platform": "web", "observedRole": "receipts feature page with scan/expense copy, app-store CTAs, and accounting sidebar" },
+        { "screenId": "b43a5493-ba3c-4f16-bfd3-e1993276b29c", "mobbinUrl": "https://mobbin.com/screens/b43a5493-ba3c-4f16-bfd3-e1993276b29c", "imageUrl": "https://mobbin.com/api/mcp/short/mVuBqczj", "appName": "7shifts", "platform": "web", "observedRole": "payroll solution page with demo CTA, icon benefit grid, and restaurant accounting proof" }
+      ]
+    },
+    {
+      "angle": "page-job",
+      "query": "enquire CTA homepage with trust proof, service or product menu, and local customer decision path website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "results": [
+        { "screenId": "370972da-101d-4bfc-930f-aecb80c9e87f", "mobbinUrl": "https://mobbin.com/screens/370972da-101d-4bfc-930f-aecb80c9e87f", "imageUrl": "https://mobbin.com/api/mcp/short/NkcTiVv5", "appName": "Mixpanel", "platform": "web", "observedRole": "analytics homepage with contact-sales CTA, logo proof, and dashboard artifact" },
+        { "screenId": "16b57997-c4f9-4c93-9e97-fb02bd1277e3", "mobbinUrl": "https://mobbin.com/screens/16b57997-c4f9-4c93-9e97-fb02bd1277e3", "imageUrl": "https://mobbin.com/api/mcp/short/G7ev1Bm6", "appName": "Superhuman Mail", "platform": "web", "observedRole": "talk-to-sales form with benefits checklist, select field, and trusted-by logos" },
+        { "screenId": "58e8a060-a1cc-4e26-ba46-2e61a3c94e85", "mobbinUrl": "https://mobbin.com/screens/58e8a060-a1cc-4e26-ba46-2e61a3c94e85", "imageUrl": "https://mobbin.com/api/mcp/short/iQrTFmwU", "appName": "Churnkey", "platform": "web", "observedRole": "service menu card grid with outcome-heavy claims and book-demo CTA" },
+        { "screenId": "1b3ae63c-6df2-47f7-b41a-dc9c0b07e227", "mobbinUrl": "https://mobbin.com/screens/1b3ae63c-6df2-47f7-b41a-dc9c0b07e227", "imageUrl": "https://mobbin.com/api/mcp/short/tEdKqPvC", "appName": "Figma", "platform": "web", "observedRole": "large brand hero with collaboration CTA and product canvas artifact" },
+        { "screenId": "e888ea97-01f1-4dcc-a82e-f20d21ea71a0", "mobbinUrl": "https://mobbin.com/screens/e888ea97-01f1-4dcc-a82e-f20d21ea71a0", "imageUrl": "https://mobbin.com/api/mcp/short/oeIu2MjO", "appName": "Assembly", "platform": "web", "observedRole": "testimonial carousel with oversized quote, customer photo, and minimal nav" },
+        { "screenId": "ed6d5e76-1e29-4db3-9688-5c7c55082f42", "mobbinUrl": "https://mobbin.com/screens/ed6d5e76-1e29-4db3-9688-5c7c55082f42", "imageUrl": "https://mobbin.com/api/mcp/short/692anunm", "appName": "Clearbit", "platform": "web", "observedRole": "lead-generation homepage with proof logos, quote form, and product preview" },
+        { "screenId": "7c094322-574c-4265-8e26-65247e07394e", "mobbinUrl": "https://mobbin.com/screens/7c094322-574c-4265-8e26-65247e07394e", "imageUrl": "https://mobbin.com/api/mcp/short/kkMWk1oo", "appName": "Dovetail", "platform": "web", "observedRole": "research SaaS homepage with two CTAs, logo proof, and embedded product editor" },
+        { "screenId": "1cf4d866-013c-47da-851e-309a279afe1a", "mobbinUrl": "https://mobbin.com/screens/1cf4d866-013c-47da-851e-309a279afe1a", "imageUrl": "https://mobbin.com/api/mcp/short/zRK8FMUt", "appName": "v0", "platform": "web", "observedRole": "AI-generated landing page preview with generic business operations copy and placeholder image" }
+      ]
+    },
+    {
+      "angle": "tone",
+      "query": "premium credible owner-led service business landing page website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "results": [
+        { "screenId": "8b2bdf72-3b33-4cbe-be7f-d41f8be65b55", "mobbinUrl": "https://mobbin.com/screens/8b2bdf72-3b33-4cbe-be7f-d41f8be65b55", "imageUrl": "https://mobbin.com/api/mcp/short/1XQhgVsY", "appName": "Lovable", "platform": "web", "observedRole": "AI-generated service-card website preview with generic service grid" },
+        { "screenId": "ef0e8cd5-e7f7-43f3-b060-1236747f1af4", "mobbinUrl": "https://mobbin.com/screens/ef0e8cd5-e7f7-43f3-b060-1236747f1af4", "imageUrl": "https://mobbin.com/api/mcp/short/n65Q5MoT", "appName": "Lovable", "platform": "web", "observedRole": "AI-generated software-service homepage with centered hero and service cards" },
+        { "screenId": "d7b4520d-fad1-42e1-864d-5c67fb761c59", "mobbinUrl": "https://mobbin.com/screens/d7b4520d-fad1-42e1-864d-5c67fb761c59", "imageUrl": "https://mobbin.com/api/mcp/short/GcrzFFUW", "appName": "Webflow", "platform": "web", "observedRole": "dark portfolio service homepage with quote CTA and latest-work gallery" },
+        { "screenId": "eda378d0-2f7a-409e-ab22-197ead0caca9", "mobbinUrl": "https://mobbin.com/screens/eda378d0-2f7a-409e-ab22-197ead0caca9", "imageUrl": "https://mobbin.com/api/mcp/short/GRizJYmk", "appName": "Relume", "platform": "web", "observedRole": "banking landing-page wireframe with pricing-plan table and long FAQ structure" },
+        { "screenId": "cc518cad-ad48-4da1-9399-6a52f3d2ba62", "mobbinUrl": "https://mobbin.com/screens/cc518cad-ad48-4da1-9399-6a52f3d2ba62", "imageUrl": "https://mobbin.com/api/mcp/short/WxP0RUBB", "appName": "Lovable", "platform": "web", "observedRole": "generic AI-generated agency homepage with hero and service cards" },
+        { "screenId": "e03c0e93-82d2-4c20-882f-6395ea8c4303", "mobbinUrl": "https://mobbin.com/screens/e03c0e93-82d2-4c20-882f-6395ea8c4303", "imageUrl": "https://mobbin.com/api/mcp/short/BcG0PWcL", "appName": "Contra", "platform": "web", "observedRole": "independent service provider page with project tiles and fixed-price service row" },
+        { "screenId": "04b4c661-32b6-4faf-8e0c-17b061fe8978", "mobbinUrl": "https://mobbin.com/screens/04b4c661-32b6-4faf-8e0c-17b061fe8978", "imageUrl": "https://mobbin.com/api/mcp/short/byMRNOMA", "appName": "HoneyBook", "platform": "web", "observedRole": "file-migration service page with three-step process, CTA, and FAQ accordion" },
+        { "screenId": "ecb02407-8fbb-42b4-82bb-4eacbab721b5", "mobbinUrl": "https://mobbin.com/screens/ecb02407-8fbb-42b4-82bb-4eacbab721b5", "imageUrl": "https://mobbin.com/api/mcp/short/d4JpHUia", "appName": "ClassPass", "platform": "web", "observedRole": "provider education page with app preview, tabbed audience switcher, and onboarding explanation" }
+      ]
+    },
+    {
+      "angle": "constraint",
+      "query": "licensed-specialist boundary low-photo category recurring service package clarity responsive mobile-first homepage website not dashboard not app",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "results": [
+        { "screenId": "55eaf656-c1df-44d0-837e-d3b2c94180f1", "mobbinUrl": "https://mobbin.com/screens/55eaf656-c1df-44d0-837e-d3b2c94180f1", "imageUrl": "https://mobbin.com/api/mcp/short/FLw21d9P", "appName": "mymind", "platform": "web", "observedRole": "subscription plan page with large serif headline, plan cards, and monthly/yearly toggle" },
+        { "screenId": "4877a61c-e61d-4312-9f17-3bf086d7cab1", "mobbinUrl": "https://mobbin.com/screens/4877a61c-e61d-4312-9f17-3bf086d7cab1", "imageUrl": "https://mobbin.com/api/mcp/short/JjuXaMZD", "appName": "Spotify", "platform": "web", "observedRole": "premium pricing comparison cards with payment logos and repeated CTAs" },
+        { "screenId": "f25ea628-490b-412c-981c-d47cb2259503", "mobbinUrl": "https://mobbin.com/screens/f25ea628-490b-412c-981c-d47cb2259503", "imageUrl": "https://mobbin.com/api/mcp/short/PQ0jWcDb", "appName": "ClassPass", "platform": "web", "observedRole": "plan pricing section with monthly tiers and footer navigation" },
+        { "screenId": "56a09733-9ec1-44fc-a205-7c45e2ef81ce", "mobbinUrl": "https://mobbin.com/screens/56a09733-9ec1-44fc-a205-7c45e2ef81ce", "imageUrl": "https://mobbin.com/api/mcp/short/zj8sFC2d", "appName": "Synthesia", "platform": "web", "observedRole": "pricing page with plan cards, review proof, and book-demo CTA" },
+        { "screenId": "ba8dc5ed-2069-46cd-89dc-f5fa15f957c4", "mobbinUrl": "https://mobbin.com/screens/ba8dc5ed-2069-46cd-89dc-f5fa15f957c4", "imageUrl": "https://mobbin.com/api/mcp/short/1SJRM6sm", "appName": "NYT Cooking", "platform": "web", "observedRole": "subscription benefits and monthly/annual plan choice with editorial restraint" },
+        { "screenId": "0d25d5b6-8140-46ae-880a-03483a11c799", "mobbinUrl": "https://mobbin.com/screens/0d25d5b6-8140-46ae-880a-03483a11c799", "imageUrl": "https://mobbin.com/api/mcp/short/VltrKbTy", "appName": "Medium", "platform": "web", "observedRole": "membership pricing page with benefits checklist and two plan cards" },
+        { "screenId": "4b06e7e0-6173-4836-bd9e-4ce28b9898eb", "mobbinUrl": "https://mobbin.com/screens/4b06e7e0-6173-4836-bd9e-4ce28b9898eb", "imageUrl": "https://mobbin.com/api/mcp/short/YWCDxGvs", "appName": "ClassPass", "platform": "web", "observedRole": "carousel-style available plans section with plan cards and benefit list" },
+        { "screenId": "6d43f9dc-91b2-4231-9a04-7cd2459c8b5a", "mobbinUrl": "https://mobbin.com/screens/6d43f9dc-91b2-4231-9a04-7cd2459c8b5a", "imageUrl": "https://mobbin.com/api/mcp/short/8uU4PAfN", "appName": "Circle", "platform": "web", "observedRole": "in-app pricing comparison table with billing toggle and feature rows" }
+      ]
+    }
+  ]
+}

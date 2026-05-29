@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "mobbin.real-specimen.business-reality-pack.v1",
+  "businessId": "five-to-nine-0509",
+  "internalName": "0509",
+  "customerFacingName": "Five to Nine",
+  "businessModel": "product",
+  "category": "SaaS",
+  "subcategory": "proof-backed competitor monitoring for growth teams",
+  "market": "India-first growth teams and agencies",
+  "primaryAction": "enter-pilot",
+  "secondaryAction": "search-public-index",
+  "targetCustomerDecision": "A growth lead decides whether Five to Nine is credible enough to pilot for competitor ad, offer, and landing-page monitoring.",
+  "corePromise": "See what changed, with proof.",
+  "northStarStory": "Five to Nine closes the gap between when a team stops checking and when the next decision gets made.",
+  "productShape": [
+    "Public analysis is the hook.",
+    "Retained monitoring is the product.",
+    "Workspace memory is the compounding layer."
+  ],
+  "verifiedProductTruth": [
+    "Public search route exists.",
+    "Authenticated workspace exists.",
+    "Watchlists, collections, digests, reports, share/export flows exist.",
+    "Region-aware pricing display exists.",
+    "Product is pilot-ready, not broad self-serve launch ready."
+  ],
+  "blockedClaims": [
+    "Do not claim broad self-serve launch.",
+    "Do not claim live checkout or automatic subscription management.",
+    "Do not claim non-beta Meta ads tracking.",
+    "Do not claim customer WhatsApp delivery.",
+    "Do not claim SOC 2, HIPAA, GDPR compliance, zero retention, or no training."
+  ],
+  "launchState": "pilot-readiness",
+  "knownLaunchBlockers": [
+    "Fresh discovery reliability needs proof before broad launch.",
+    "Razorpay production setup and signed webhook verification are not complete.",
+    "Customer WhatsApp delivery requires opt-in, template readiness, provider sends, and webhook reconciliation."
+  ],
+  "sourceFiles": [
+    "/Users/nish/Vibecoded projects/0509/README.md",
+    "/Users/nish/Vibecoded projects/0509/MEMORY.md",
+    "/Users/nish/Vibecoded projects/0509/docs/launch-readiness.md",
+    "/Users/nish/Vibecoded projects/0509/docs/superpowers/artifacts/2026-04-22-five-to-nine-north-star.md",
+    "/Users/nish/Vibecoded projects/0509/app/routes/marketing.tsx",
+    "/Users/nish/Vibecoded projects/0509/app/lib/public-markdown.ts"
+  ],
+  "truthBoundary": "This specimen may redesign the public marketing direction only. It must preserve pilot-readiness wording and source-status honesty."
+}

@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Five to Nine Leader-Led Finalists</title>
+    <style>
+      :root {
+        --ink: #090b0f;
+        --text: #14171d;
+        --muted: #5f6876;
+        --line: #e0e5ec;
+        --paper: #f6f8fb;
+        --green: #00b873;
+        --blue: #245cff;
+        --amber: #ffbe45;
+        --red: #eb5266;
+        --dark: #080a10;
+      }
+
+      * { box-sizing: border-box; }
+      html, body { margin: 0; min-height: 100%; }
+      body {
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #d8dde5;
+        color: var(--text);
+      }
+
+      .board {
+        width: 1440px;
+        min-height: 900px;
+        overflow: hidden;
+        position: relative;
+        background: #fff;
+        border-bottom: 1px solid #b9c0ca;
+      }
+
+      .mobile-board {
+        width: 390px;
+        min-height: 1240px;
+        overflow: hidden;
+        position: relative;
+        background: #fff;
+        border-bottom: 1px solid #b9c0ca;
+      }
+
+      .nav {
+        height: 74px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 56px;
+        font-size: 14px;
+        font-weight: 720;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        font-weight: 860;
+      }
+
+      .mark {
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        display: grid;
+        place-items: center;
+        background: var(--ink);
+        color: #fff;
+        font-weight: 900;
+        letter-spacing: 0;
+      }
+
+      .links {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+        color: #313844;
+      }
+
+      .actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0 17px;
+        border-radius: 999px;
+        border: 1px solid currentColor;
+        color: inherit;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 820;
+        white-space: nowrap;
+      }
+
+      .btn.primary {
+        background: var(--ink);
+        border-color: var(--ink);
+        color: #fff;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 31px;
+        padding: 0 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(10, 12, 16, .11);
+        background: rgba(255, 255, 255, .78);
+        color: #3f4752;
+        font-size: 12px;
+        font-weight: 820;
+      }
+
+      .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--green);
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 86px;
+        line-height: .92;
+        letter-spacing: 0;
+        max-width: 760px;
+      }
+
+      .lead {
+        margin: 24px 0 0;
+        max-width: 600px;
+        font-size: 20px;
+        line-height: 1.45;
+        color: #414956;
+      }
+
+      .hero-actions {
+        margin-top: 31px;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .artifact {
+        border: 1px solid var(--line);
+        background: #fff;
+        box-shadow: 0 28px 90px rgba(18, 28, 44, .13);
+        overflow: hidden;
+      }
+
+      .artifact-head {
+        min-height: 58px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 0 18px;
+        border-bottom: 1px solid var(--line);
+        font-size: 13px;
+        font-weight: 760;
+      }
+
+      .filters {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .pill {
+        display: inline-flex;
+        min-height: 30px;
+        align-items: center;
+        justify-content: center;
+        padding: 0 11px;
+        border-radius: 999px;
+        border: 1px solid #d8dee8;
+        background: #fff;
+        color: #4f5967;
+        font-size: 12px;
+        font-weight: 780;
+      }
+
+      .pill.live {
+        color: #075d3c;
+        background: #e7fbf2;
+        border-color: #bfeeda;
+      }
+
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .metric {
+        min-height: 94px;
+        padding: 18px;
+        border-right: 1px solid var(--line);
+      }
+
+      .metric:last-child { border-right: 0; }
+      .metric span {
+        display: block;
+        color: #6b7482;
+        font-size: 12px;
+        font-weight: 720;
+      }
+      .metric strong {
+        display: block;
+        margin-top: 10px;
+        font-size: 31px;
+        line-height: 1;
+        letter-spacing: 0;
+      }
+
+      .chart {
+        height: 190px;
+        margin: 18px;
+        position: relative;
+        border: 1px solid #edf0f5;
+        border-radius: 18px;
+        background:
+          linear-gradient(#edf1f6 1px, transparent 1px) 0 32px / 100% 38px,
+          linear-gradient(90deg, #edf1f6 1px, transparent 1px) 0 0 / 92px 100%,
+          #fff;
+      }
+
+      .chart::before,
+      .chart::after {
+        content: "";
+        position: absolute;
+        left: 44px;
+        right: 44px;
+        height: 4px;
+        border-radius: 999px;
+      }
+
+      .chart::before {
+        top: 68px;
+        background: linear-gradient(90deg, var(--green), var(--blue), var(--amber));
+        transform: skewY(-6deg);
+      }
+
+      .chart::after {
+        top: 116px;
+        background: linear-gradient(90deg, #b9c4d4, #6a7689, #b9c4d4);
+        transform: skewY(5deg);
+      }
+
+      .table {
+        margin: 0 18px 20px;
+        border: 1px solid #e5e9f0;
+        border-radius: 16px;
+        overflow: hidden;
+      }
+
+      .row {
+        display: grid;
+        grid-template-columns: 1.1fr .9fr .7fr .7fr 1.2fr;
+        min-height: 50px;
+        align-items: center;
+        border-bottom: 1px solid #edf0f5;
+        font-size: 13px;
+      }
+
+      .row:last-child { border-bottom: 0; }
+      .row.head {
+        min-height: 38px;
+        color: #727b89;
+        background: #fbfcfe;
+        font-size: 12px;
+        font-weight: 760;
+      }
+
+      .cell {
+        padding: 10px 12px;
+        min-width: 0;
+      }
+
+      .cell b { display: block; }
+      .cell span { display: block; color: #6d7685; font-size: 12px; margin-top: 3px; }
+      .tag {
+        display: inline-flex;
+        min-height: 26px;
+        align-items: center;
+        border-radius: 999px;
+        padding: 0 9px;
+        background: #eef4ff;
+        color: #184b9d;
+        font-size: 11px;
+        font-weight: 840;
+      }
+      .tag.green { background: #e5f9ef; color: #0d6b45; }
+      .tag.amber { background: #fff4da; color: #84580d; }
+
+      .command {
+        background:
+          linear-gradient(180deg, #f8fbff 0%, #fff 42%),
+          #fff;
+      }
+      .command .hero {
+        display: grid;
+        grid-template-columns: 585px 1fr;
+        gap: 56px;
+        padding: 64px 64px 0;
+      }
+      .command h1 em {
+        color: #6d7480;
+        font-style: normal;
+      }
+      .command .artifact {
+        border-radius: 28px;
+        margin-top: -4px;
+      }
+      .source-strip {
+        display: flex;
+        justify-content: space-between;
+        gap: 14px;
+        margin: 34px 64px 0;
+        padding-top: 22px;
+        border-top: 1px solid #dfe5ef;
+        color: #687282;
+        font-size: 13px;
+        font-weight: 740;
+      }
+
+      .ledger {
+        background: #fffdf6;
+      }
+      .ledger .nav {
+        border-bottom: 2px solid var(--ink);
+      }
+      .ledger .hero {
+        display: grid;
+        grid-template-columns: 610px 1fr;
+        gap: 52px;
+        padding: 52px 60px 0;
+      }
+      .ledger h1 {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 90px;
+        font-weight: 520;
+        line-height: .94;
+      }
+      .ledger h1 strong {
+        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+        font-weight: 900;
+      }
+      .ledger .artifact {
+        border: 2px solid var(--ink);
+        border-radius: 0;
+        box-shadow: 12px 12px 0 #111;
+        background: #fffef9;
+      }
+      .brief-head {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 18px;
+        padding: 22px;
+        border-bottom: 2px solid var(--ink);
+      }
+      .brief-head b {
+        display: block;
+        font-size: 28px;
+        line-height: 1;
+      }
+      .brief-head span,
+      .brief-copy {
+        color: #615d52;
+        font-size: 13px;
+        line-height: 1.4;
+      }
+      .brief-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .brief-cell {
+        min-height: 156px;
+        padding: 20px;
+        border-right: 2px solid var(--ink);
+        border-bottom: 2px solid var(--ink);
+      }
+      .brief-cell:nth-child(2n) { border-right: 0; }
+      .brief-cell b {
+        display: block;
+        font-size: 26px;
+        line-height: 1.05;
+      }
+      .brief-cell span {
+        display: block;
+        margin-top: 12px;
+        color: #5f5a4c;
+        font-size: 13px;
+        line-height: 1.45;
+      }
+      .ticker {
+        margin: 34px 60px 0;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        border: 2px solid var(--ink);
+        background: var(--ink);
+        gap: 2px;
+      }
+      .ticker div {
+        min-height: 88px;
+        background: #fffdf6;
+        padding: 15px;
+      }
+      .ticker b {
+        display: block;
+        font-size: 22px;
+      }
+      .ticker span {
+        display: block;
+        margin-top: 8px;
+        color: #645f54;
+        font-size: 12px;
+        line-height: 1.35;
+      }
+
+      .room {
+        color: #f6f8ff;
+        background:
+          linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px) 0 0 / 78px 78px,
+          linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px) 0 0 / 78px 78px,
+          linear-gradient(145deg, #07080c 0%, #111622 54%, #07080c 100%);
+      }
+      .room .nav,
+      .room .links,
+      .room .lead {
+        color: #e6ecf8;
+      }
+      .room .mark {
+        background: #f6f8ff;
+        color: var(--ink);
+      }
+      .room .btn.primary {
+        background: #f6f8ff;
+        color: var(--ink);
+        border-color: #f6f8ff;
+      }
+      .room .hero {
+        display: grid;
+        grid-template-columns: 590px 1fr;
+        gap: 58px;
+        padding: 68px 64px 0;
+      }
+      .room h1 {
+        max-width: 630px;
+      }
+      .room h1 em {
+        color: #9eb8ff;
+        font-style: normal;
+      }
+      .room .artifact {
+        border-radius: 30px;
+        background: rgba(10, 15, 25, .82);
+        border-color: rgba(255,255,255,.14);
+        box-shadow: 0 32px 120px rgba(0,0,0,.42);
+      }
+      .room .artifact-head,
+      .room .metric,
+      .room .row,
+      .room .table {
+        border-color: rgba(255,255,255,.12);
+      }
+      .room .artifact-head,
+      .room .row.head,
+      .room .metric span,
+      .room .cell span {
+        color: #aeb8ca;
+      }
+      .room .metrics,
+      .room .row.head,
+      .room .table,
+      .room .chart {
+        background: rgba(255,255,255,.035);
+      }
+      .room .chart {
+        border-color: rgba(255,255,255,.1);
+        background:
+          linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px) 0 32px / 100% 38px,
+          linear-gradient(90deg, rgba(255,255,255,.07) 1px, transparent 1px) 0 0 / 92px 100%,
+          rgba(255,255,255,.03);
+      }
+      .room .pill {
+        color: #dde6f7;
+        background: rgba(255,255,255,.07);
+        border-color: rgba(255,255,255,.12);
+      }
+      .room .pill.live {
+        color: #c6ffdf;
+        background: rgba(0, 184, 115, .16);
+        border-color: rgba(0, 184, 115, .32);
+      }
+      .room .tag {
+        background: rgba(36, 92, 255, .24);
+        color: #d5e0ff;
+      }
+      .room .tag.green {
+        background: rgba(0, 184, 115, .18);
+        color: #c7ffe1;
+      }
+      .room .tag.amber {
+        background: rgba(255, 190, 69, .17);
+        color: #ffe7ad;
+      }
+      .room .source-strip {
+        color: #aeb8ca;
+        border-color: rgba(255,255,255,.12);
+      }
+
+      .mobile-board .nav {
+        height: 64px;
+        padding: 0 20px;
+      }
+      .mobile-board .links,
+      .mobile-board .nav .actions {
+        display: none;
+      }
+      .mobile-board .hero,
+      .mobile-board.command .hero,
+      .mobile-board.ledger .hero,
+      .mobile-board.room .hero {
+        display: block;
+        padding: 36px 22px 0;
+      }
+      .mobile-board h1,
+      .mobile-board.ledger h1,
+      .mobile-board.room h1 {
+        font-size: 46px;
+        line-height: .98;
+        max-width: 100%;
+      }
+      .mobile-board .lead {
+        font-size: 16px;
+        line-height: 1.45;
+      }
+      .mobile-board .hero-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+      .mobile-board .artifact {
+        margin-top: 32px;
+        border-radius: 20px;
+        box-shadow: 0 18px 54px rgba(18, 28, 44, .16);
+      }
+      .mobile-board.ledger .artifact {
+        border-radius: 0;
+        box-shadow: 7px 7px 0 #111;
+      }
+      .mobile-board .metrics {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .mobile-board .metric {
+        min-height: 84px;
+        padding: 14px;
+      }
+      .mobile-board .metric strong {
+        font-size: 24px;
+      }
+      .mobile-board .chart {
+        height: 150px;
+        margin: 14px;
+      }
+      .mobile-board .table {
+        margin: 0 14px 16px;
+      }
+      .mobile-board .row {
+        grid-template-columns: 1fr .78fr;
+      }
+      .mobile-board .row .cell:nth-child(n+3) {
+        display: none;
+      }
+      .mobile-board .source-strip {
+        display: grid;
+        gap: 9px;
+        margin: 26px 22px 0;
+      }
+      .mobile-board .brief-head {
+        grid-template-columns: 1fr;
+      }
+      .mobile-board .brief-grid {
+        grid-template-columns: 1fr;
+      }
+      .mobile-board .brief-cell {
+        border-right: 0;
+      }
+      .mobile-board .ticker {
+        margin: 28px 22px 0;
+        grid-template-columns: 1fr;
+      }
+
+      html.shot-mode,
+      html.shot-mode body {
+        margin: 0;
+        padding: 0;
+        background: #f4f0e8;
+        overflow: hidden;
+      }
+
+      html.shot-mode .board,
+      html.shot-mode .mobile-board {
+        margin: 0;
+      }
+
+      html.shot-mode [hidden] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="board command" id="visibility-command-desktop">
+      <nav class="nav">
+        <div class="brand"><span class="mark">59</span><span>Five to Nine</span></div>
+        <div class="links"><span>Product</span><span>Use cases</span><span>Proof</span><span>Pilot</span></div>
+        <div class="actions"><a class="btn" href="#">Login</a><a class="btn primary" href="#">Request pilot access</a></div>
+      </nav>
+      <div class="hero">
+        <div>
+          <span class="eyebrow"><span class="dot"></span> Leader-led market intelligence proof</span>
+          <h1>See market moves <em>before they cost you.</em></h1>
+          <p class="lead">Five to Nine watches competitor pages, search visibility, AI answers, ads, and social signals, then turns the change into a source-backed brief for growth teams.</p>
+          <div class="hero-actions"><a class="btn primary" href="#">Request pilot access</a><a class="btn" href="#">See sample brief</a></div>
+        </div>
+        <div class="artifact">
+          <div class="artifact-head">
+            <span>Market Watch / Visibility command</span>
+            <div class="filters"><span class="pill live">Live sources</span><span class="pill">7 days</span><span class="pill">AI + search + social</span></div>
+          </div>
+          <div class="metrics">
+            <div class="metric"><span>New competitor moves</span><strong>14</strong></div>
+            <div class="metric"><span>AI answer shifts</span><strong>8</strong></div>
+            <div class="metric"><span>Source-backed</span><strong>92%</strong></div>
+            <div class="metric"><span>Needs review</span><strong>3</strong></div>
+          </div>
+          <div class="chart"></div>
+          <div class="table">
+            <div class="row head"><div class="cell">Competitor</div><div class="cell">Observed change</div><div class="cell">Source</div><div class="cell">Impact</div><div class="cell">Next action</div></div>
+            <div class="row"><div class="cell"><b>Category leader</b><span>Pricing page</span></div><div class="cell">New enterprise plan copy</div><div class="cell"><span class="tag green">Live</span></div><div class="cell">High</div><div class="cell">Update battlecard before sales call</div></div>
+            <div class="row"><div class="cell"><b>AI visibility rival</b><span>LLM answer</span></div><div class="cell">Mention share increased</div><div class="cell"><span class="tag">Cached</span></div><div class="cell">Medium</div><div class="cell">Review source coverage gap</div></div>
+            <div class="row"><div class="cell"><b>Social signal</b><span>Campaign launch</span></div><div class="cell">New partner proof surfaced</div><div class="cell"><span class="tag amber">Verify</span></div><div class="cell">Watch</div><div class="cell">Hold until second source lands</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="source-strip">
+        <span>Benchmarked against AlphaSense, Semrush, Similarweb, Ahrefs, Sprout, Meltwater, Profound, and Peec.</span>
+        <span>No private conversion claims. No fake customer logos. No unsupported live monitoring claims.</span>
+      </div>
+    </section>
+
+    <section class="board ledger" id="market-signal-ledger-desktop">
+      <nav class="nav">
+        <div class="brand"><span class="mark">59</span><span>Five to Nine</span></div>
+        <div class="links"><span>Briefs</span><span>Watchlists</span><span>Sources</span><span>Pilot</span></div>
+        <div class="actions"><a class="btn" href="#">Public index</a><a class="btn primary" href="#">Request access</a></div>
+      </nav>
+      <div class="hero">
+        <div>
+          <span class="eyebrow"><span class="dot"></span> Tuesday market ledger / 09:00</span>
+          <h1>Your competitors changed. <strong>Here is the receipt.</strong></h1>
+          <p class="lead">A morning brief for teams that need the market version of a source-controlled changelog.</p>
+          <div class="hero-actions"><a class="btn primary" href="#">Read sample brief</a><a class="btn" href="#">Join pilot</a></div>
+        </div>
+        <div class="artifact">
+          <div class="brief-head">
+            <div><b>Search visibility moved first.</b><p class="brief-copy">Three rivals changed AI/search language before updating paid ads. Two sources are live, one is pending review.</p></div>
+            <span>Prepared 08:52 IST<br />Source status: mixed</span>
+          </div>
+          <div class="brief-grid">
+            <div class="brief-cell"><b>1. New claim found</b><span>Enterprise visibility copy appeared on a pricing page and in AI answers within the same window.</span></div>
+            <div class="brief-cell"><b>2. Proof strength</b><span>Live page capture plus cached answer. Paid ad evidence is not confirmed yet.</span></div>
+            <div class="brief-cell"><b>3. Why it matters</b><span>The category is moving from SEO dashboards to brand visibility across AI, search, and owned channels.</span></div>
+            <div class="brief-cell"><b>4. Next move</b><span>Update positioning and watch for follow-up campaign pages before changing pricing copy.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="ticker">
+        <div><b>8</b><span>leader benchmarks checked</span></div>
+        <div><b>7</b><span>Mobbin references shortlisted</span></div>
+        <div><b>5</b><span>exact leader gaps logged</span></div>
+        <div><b>0</b><span>unsupported 0509 claims allowed</span></div>
+      </div>
+    </section>
+
+    <section class="board room" id="after-hours-room-desktop">
+      <nav class="nav">
+        <div class="brand"><span class="mark">59</span><span>Five to Nine</span></div>
+        <div class="links"><span>Signals</span><span>Proof</span><span>Briefs</span><span>Pilot</span></div>
+        <div class="actions"><a class="btn" href="#">Login</a><a class="btn primary" href="#">Enter pilot</a></div>
+      </nav>
+      <div class="hero">
+        <div>
+          <span class="eyebrow"><span class="dot"></span> After-hours intelligence room</span>
+          <h1>The market moved while your team was <em>offline.</em></h1>
+          <p class="lead">Five to Nine turns overnight changes into a ranked source trail before the first growth meeting starts.</p>
+          <div class="hero-actions"><a class="btn primary" href="#">Enter pilot</a><a class="btn" href="#">Inspect proof trail</a></div>
+        </div>
+        <div class="artifact">
+          <div class="artifact-head">
+            <span>Night scan / Priority queue</span>
+            <div class="filters"><span class="pill live">Running</span><span class="pill">Asia + US</span><span class="pill">07:45 refresh</span></div>
+          </div>
+          <div class="metrics">
+            <div class="metric"><span>Critical shifts</span><strong>4</strong></div>
+            <div class="metric"><span>Watchlist touched</span><strong>11</strong></div>
+            <div class="metric"><span>Proof complete</span><strong>76%</strong></div>
+            <div class="metric"><span>Review queue</span><strong>6</strong></div>
+          </div>
+          <div class="chart"></div>
+          <div class="table">
+            <div class="row head"><div class="cell">Signal</div><div class="cell">Source trail</div><div class="cell">State</div><div class="cell">Risk</div><div class="cell">Morning brief note</div></div>
+            <div class="row"><div class="cell"><b>AI answer changed</b><span>Prompt cluster</span></div><div class="cell">Chat + page match</div><div class="cell"><span class="tag green">Ready</span></div><div class="cell">High</div><div class="cell">Competitor owns new comparison term</div></div>
+            <div class="row"><div class="cell"><b>Paid landing page</b><span>Campaign URL</span></div><div class="cell">One source only</div><div class="cell"><span class="tag amber">Review</span></div><div class="cell">Medium</div><div class="cell">Wait for second capture</div></div>
+            <div class="row"><div class="cell"><b>Partner proof</b><span>Social + site</span></div><div class="cell">Two live sources</div><div class="cell"><span class="tag green">Ready</span></div><div class="cell">Medium</div><div class="cell">Add to weekly competitor brief</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="source-strip">
+        <span>Dark premium route uses Fey only as visual proxy for atmosphere.</span>
+        <span>Proof architecture still comes from Peec, Profound, Sprout, Semrush, Similarweb, Ahrefs, and AlphaSense.</span>
+      </div>
+    </section>
+
+    <section class="mobile-board command" id="visibility-command-mobile">
+      <nav class="nav"><div class="brand"><span class="mark">59</span><span>Five to Nine</span></div></nav>
+      <div class="hero">
+        <span class="eyebrow"><span class="dot"></span> Leader-led market intelligence proof</span>
+        <h1>See market moves <em>before they cost you.</em></h1>
+        <p class="lead">Source-backed competitor, search, AI, ad, and social changes for growth teams.</p>
+        <div class="hero-actions"><a class="btn primary" href="#">Request pilot access</a><a class="btn" href="#">See sample brief</a></div>
+        <div class="artifact">
+          <div class="artifact-head"><span>Visibility command</span><span class="pill live">Live</span></div>
+          <div class="metrics">
+            <div class="metric"><span>Moves</span><strong>14</strong></div>
+            <div class="metric"><span>AI shifts</span><strong>8</strong></div>
+            <div class="metric"><span>Proof</span><strong>92%</strong></div>
+            <div class="metric"><span>Review</span><strong>3</strong></div>
+          </div>
+          <div class="chart"></div>
+          <div class="table">
+            <div class="row head"><div class="cell">Competitor</div><div class="cell">State</div></div>
+            <div class="row"><div class="cell"><b>Category leader</b><span>New enterprise copy</span></div><div class="cell"><span class="tag green">Live</span></div></div>
+            <div class="row"><div class="cell"><b>AI visibility rival</b><span>Mention share increased</span></div><div class="cell"><span class="tag">Cached</span></div></div>
+            <div class="row"><div class="cell"><b>Social signal</b><span>Partner proof surfaced</span></div><div class="cell"><span class="tag amber">Verify</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="source-strip"><span>Benchmarked against the top proxy leader set.</span><span>No private conversion claims.</span></div>
+    </section>
+
+    <section class="mobile-board ledger" id="market-signal-ledger-mobile">
+      <nav class="nav"><div class="brand"><span class="mark">59</span><span>Five to Nine</span></div></nav>
+      <div class="hero">
+        <span class="eyebrow"><span class="dot"></span> Tuesday market ledger</span>
+        <h1>Your competitors changed. <strong>Here is the receipt.</strong></h1>
+        <p class="lead">A morning brief for teams that need a source-controlled market changelog.</p>
+        <div class="hero-actions"><a class="btn primary" href="#">Read sample brief</a><a class="btn" href="#">Join pilot</a></div>
+        <div class="artifact">
+          <div class="brief-head"><div><b>Search visibility moved first.</b><p class="brief-copy">Three rivals changed AI/search language before updating paid ads.</p></div><span>08:52 IST<br />Mixed sources</span></div>
+          <div class="brief-grid">
+            <div class="brief-cell"><b>1. New claim found</b><span>Enterprise visibility copy appeared on a pricing page and in AI answers.</span></div>
+            <div class="brief-cell"><b>2. Proof strength</b><span>Live page capture plus cached answer. Paid ad evidence is not confirmed yet.</span></div>
+            <div class="brief-cell"><b>3. Why it matters</b><span>The category is moving from SEO dashboards to brand visibility across AI and search.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="ticker"><div><b>8</b><span>leader benchmarks checked</span></div><div><b>7</b><span>Mobbin references shortlisted</span></div><div><b>0</b><span>unsupported 0509 claims allowed</span></div></div>
+    </section>
+
+    <section class="mobile-board room" id="after-hours-room-mobile">
+      <nav class="nav"><div class="brand"><span class="mark">59</span><span>Five to Nine</span></div></nav>
+      <div class="hero">
+        <span class="eyebrow"><span class="dot"></span> After-hours intelligence room</span>
+        <h1>The market moved while your team was <em>offline.</em></h1>
+        <p class="lead">Ranked source trails before the first growth meeting starts.</p>
+        <div class="hero-actions"><a class="btn primary" href="#">Enter pilot</a><a class="btn" href="#">Inspect proof trail</a></div>
+        <div class="artifact">
+          <div class="artifact-head"><span>Night scan</span><span class="pill live">Running</span></div>
+          <div class="metrics">
+            <div class="metric"><span>Critical</span><strong>4</strong></div>
+            <div class="metric"><span>Touched</span><strong>11</strong></div>
+            <div class="metric"><span>Ready</span><strong>76%</strong></div>
+            <div class="metric"><span>Review</span><strong>6</strong></div>
+          </div>
+          <div class="chart"></div>
+          <div class="table">
+            <div class="row head"><div class="cell">Signal</div><div class="cell">State</div></div>
+            <div class="row"><div class="cell"><b>AI answer changed</b><span>Competitor owns new term</span></div><div class="cell"><span class="tag green">Ready</span></div></div>
+            <div class="row"><div class="cell"><b>Paid landing page</b><span>One source only</span></div><div class="cell"><span class="tag amber">Review</span></div></div>
+            <div class="row"><div class="cell"><b>Partner proof</b><span>Two live sources</span></div><div class="cell"><span class="tag green">Ready</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="source-strip"><span>Dark route uses Fey only as visual proxy.</span><span>Proof architecture stays source-led.</span></div>
+    </section>
+    <script>
+      (() => {
+        const shot = new URLSearchParams(window.location.search).get("shot");
+        if (!shot) return;
+        document.documentElement.classList.add("shot-mode");
+        for (const section of document.querySelectorAll(".board, .mobile-board")) {
+          section.hidden = section.id !== shot;
+        }
+      })();
+    </script>
+  </body>
+</html>

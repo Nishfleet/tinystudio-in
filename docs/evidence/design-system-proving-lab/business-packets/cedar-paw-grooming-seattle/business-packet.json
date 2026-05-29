@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "mobbin.design-system-proving-lab.business-packet.v2",
+  "businessId": "cedar-paw-grooming-seattle",
+  "businessName": "Cedar Paw Grooming",
+  "businessModel": "service",
+  "category": "pet-service",
+  "subcategory": "dog grooming, puppy intro visits, de-shedding, and nail trims",
+  "relevanceReason": "Pet grooming is a practical local-service niche with booking intent, photo temptation, and multiple service-choice paths.",
+  "targetCustomerDecision": "Should a pet owner book a full groom, puppy intro, de-shedding visit, or quick nail trim?",
+  "searchBriefPath": "docs/evidence/design-system-proving-lab/search-briefs/cedar-paw-grooming-seattle.json",
+  "searchBriefHash": "3e104142ad7f2b3215aa2becd17badd235fbe8ee85af600c415cd8ca5bd769b7",
+  "referencePacketStatus": "pass",
+  "referencePacketPath": "docs/evidence/design-system-proving-lab/reference-runs/latest/cedar-paw-grooming-seattle/reference-packet.json",
+  "rawPullLogPath": "docs/evidence/design-system-proving-lab/reference-runs/latest/cedar-paw-grooming-seattle/raw-pull-log.json",
+  "rawPullLogStatus": "pass",
+  "rawPoolReturnedCount": 32,
+  "rawPoolUniqueCount": 32,
+  "referencePacketFailures": [],
+  "directionPacketStatus": "missing",
+  "directionPacketPath": "docs/evidence/design-system-proving-lab/business-packets/cedar-paw-grooming-seattle/direction-packet.json",
+  "directionPacketFailures": [
+    "cedar-paw-grooming-seattle: missing visual-territory exploration and Mobbin-backed finalist concepts at docs/evidence/design-system-proving-lab/business-packets/cedar-paw-grooming-seattle/direction-packet.json"
+  ],
+  "exploredTerritoryCount": 0,
+  "selectedVisualTerritories": [],
+  "chosenDirection": "",
+  "conceptImageCount": 0,
+  "previewProofStatus": "missing",
+  "previewProofPath": "docs/evidence/design-system-proving-lab/business-packets/cedar-paw-grooming-seattle/preview-proof.json",
+  "previewProofFailures": [
+    "cedar-paw-grooming-seattle: missing rendered preview proof at docs/evidence/design-system-proving-lab/business-packets/cedar-paw-grooming-seattle/preview-proof.json"
+  ],
+  "desktopScreenshotStatus": "missing",
+  "mobileScreenshotStatus": "missing",
+  "similarityStatus": "missing",
+  "humanApprovalStatus": "missing",
+  "conceptTodo": [
+    {
+      "step": "explore-visual-territories",
+      "status": "blocked",
+      "required": "explore 6-8 visual territories against the fresh Mobbin packet",
+      "minimumExploredTerritories": 6,
+      "maximumExploredTerritories": 8
+    },
+    {
+      "step": "shortlist-finalists",
+      "status": "blocked",
+      "required": "shortlist 3-4 business-specific screenshot-level finalists",
+      "minimumFinalists": 3,
+      "maximumFinalists": 4,
+      "minimumScore": 8
+    },
+    {
+      "step": "choose-winner",
+      "status": "blocked",
+      "required": "choose one finalist, reject the others with reasons, then write the build brief"
+    }
+  ],
+  "currentStatus": "blocked-before-concepts",
+  "externalUseAllowed": false,
+  "nextAction": "Explore 6-8 visual territories, shortlist 3-4 business-specific screenshot-level finalists, and save direction-packet.json."
+}

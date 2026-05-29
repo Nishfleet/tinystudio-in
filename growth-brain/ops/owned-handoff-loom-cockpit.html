@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Owned Handoff Loom Cockpit</title>
+  <style>
+    body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f7f5f0; color: #191816; }
+    main { max-width: 1160px; margin: 0 auto; padding: 40px 20px 64px; }
+    h1 { margin: 0 0 10px; font-size: clamp(31px, 5vw, 54px); letter-spacing: 0; }
+    p { max-width: 860px; color: #4d4942; line-height: 1.55; }
+    .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 28px 0; }
+    .stat, .card { background: #fffdfa; border: 1px solid #ded8cc; border-radius: 8px; box-shadow: 0 1px 0 rgba(0,0,0,.03); }
+    .stat { padding: 15px; }
+    .stat b { display: block; font-size: 30px; }
+    .stat span { color: #625d54; font-size: 13px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+    .card { padding: 20px; }
+    .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .meta span { border-radius: 999px; padding: 5px 9px; font-size: 12px; background: #eee8dc; }
+    .meta .good { background: #dff3df; color: #155724; }
+    .meta .bad { background: #ffe1dc; color: #842015; }
+    h2 { margin: 0 0 16px; font-size: 22px; letter-spacing: 0; }
+    h3 { margin: 18px 0 8px; font-size: 13px; text-transform: uppercase; color: #6f675a; letter-spacing: .08em; }
+    dl { margin: 0; display: grid; gap: 8px; }
+    dt { color: #6f675a; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+    dd { margin: 0 0 10px; line-height: 1.5; }
+    code { display: block; white-space: normal; overflow-wrap: anywhere; background: #191816; color: #fffdfa; border-radius: 6px; padding: 10px; font-size: 13px; }
+    .links { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0 0; }
+    a { color: #1f4b99; font-weight: 700; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Owned Handoff Loom Cockpit</h1>
+    <p>This does not approve work automatically. It makes the proof delta visible, prepares the handoff Loom, and keeps sprint acceptance blocked until a real Loom URL exists.</p>
+    <section class="summary">
+      <div class="stat"><b>3</b><span>owned startup clients</span></div>
+      <div class="stat"><b>3</b><span>ready to record</span></div>
+      <div class="stat"><b>0</b><span>blocked</span></div>
+      <div class="stat"><b>6</b><span>approved claims</span></div>
+    </section>
+    <section class="grid">
+
+      <article class="card">
+        <div class="meta">
+          <span>clients/ai-converter</span>
+          <span class="good">ready-to-record</span>
+          <span>2 approved claim(s)</span>
+        </div>
+        <h2>AI Converter</h2>
+        <dl>
+          <dt>Before</dt>
+          <dd>Broad homepage promise: preview private files before checkout across many file types.</dd>
+          <dt>After</dt>
+          <dd>Sharper accounting path: bank statement PDFs in, accounting CSV out, with Wave, QuickBooks, Xero, and spreadsheet routes visible.</dd>
+          <dt>Client-visible value</dt>
+          <dd>The buyer can understand the most valuable use case faster, while the page keeps clear limits around accounting imports and review.</dd>
+          <dt>Next measurement</dt>
+          <dd>Compare visits, upload starts, preview completions, and checkout starts on accounting pages versus the broad homepage path.</dd>
+        </dl>
+        <div class="links">
+          <a href="clients/ai-converter/handoff-loom-script.md">Handoff Script</a>
+          <a href="clients/ai-converter/client-dashboard.md">Client Dashboard</a>
+          <a href="clients/ai-converter/delivery-cockpit.html">Delivery Cockpit</a>
+        </div>
+        <h3>Complete After Loom</h3>
+        <code>npm run client:acceptance -- clients/ai-converter --handoff-loom=LOOM_URL --reviewer=&quot;Nish&quot;</code>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span>clients/siterep</span>
+          <span class="good">ready-to-record</span>
+          <span>2 approved claim(s)</span>
+        </div>
+        <h2>SiteRep</h2>
+        <dl>
+          <dt>Before</dt>
+          <dd>A website assistant can drift into broad AI support claims that buyers cannot verify.</dd>
+          <dt>After</dt>
+          <dd>The product contract is tighter: source-backed answers, lead capture, owner inbox, proof gaps, source repair, and gated customer activation.</dd>
+          <dt>Client-visible value</dt>
+          <dd>The buyer sees a safer product promise with concrete owner workflows instead of vague AI replacement language.</dd>
+          <dt>Next measurement</dt>
+          <dd>Track widget install proof, public lead capture proof, proof-gap tickets, and source repair completion.</dd>
+        </dl>
+        <div class="links">
+          <a href="clients/siterep/handoff-loom-script.md">Handoff Script</a>
+          <a href="clients/siterep/client-dashboard.md">Client Dashboard</a>
+          <a href="clients/siterep/delivery-cockpit.html">Delivery Cockpit</a>
+        </div>
+        <h3>Complete After Loom</h3>
+        <code>npm run client:acceptance -- clients/siterep --handoff-loom=LOOM_URL --reviewer=&quot;Nish&quot;</code>
+      </article>
+      <article class="card">
+        <div class="meta">
+          <span>clients/five-to-nine-0509</span>
+          <span class="good">ready-to-record</span>
+          <span>2 approved claim(s)</span>
+        </div>
+        <h2>Five to Nine 0509</h2>
+        <dl>
+          <dt>Before</dt>
+          <dd>Competitor monitoring could read like generic market intelligence without a retention proof loop.</dd>
+          <dt>After</dt>
+          <dd>The product promise is concrete: see what changed, with proof, through watchlists, proof capture, daily briefs, weekly digests, reports, and share/export flows.</dd>
+          <dt>Client-visible value</dt>
+          <dd>The buyer gets decision-ready competitor changes with proof trails instead of another dashboard to inspect manually.</dd>
+          <dt>Next measurement</dt>
+          <dd>Track fresh monitoring runs, proof captures, sent digests, and weekly report usefulness before broad launch.</dd>
+        </dl>
+        <div class="links">
+          <a href="clients/five-to-nine-0509/handoff-loom-script.md">Handoff Script</a>
+          <a href="clients/five-to-nine-0509/client-dashboard.md">Client Dashboard</a>
+          <a href="clients/five-to-nine-0509/delivery-cockpit.html">Delivery Cockpit</a>
+        </div>
+        <h3>Complete After Loom</h3>
+        <code>npm run client:acceptance -- clients/five-to-nine-0509 --handoff-loom=LOOM_URL --reviewer=&quot;Nish&quot;</code>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

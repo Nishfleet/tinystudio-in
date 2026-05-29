@@ -1,0 +1,227 @@
+{
+  "schemaVersion": "mobbin.mobbin-pro.per-redesign-reference-packet.v1",
+  "sourceProvider": "Mobbin Pro MCP",
+  "platform": "web",
+  "businessId": "iron-laneway-strength-richmond",
+  "businessName": "Iron Laneway Strength",
+  "businessHash": "f3b5adc4c79c652f5f72b6c08a6cd19051962f2e11d40147350214d85a121c12",
+  "searchBriefHash": "bca21c157a96e52807d91c88d3e98f0586c3e2c006d9dddfcb081c1dcd47a5ab",
+  "generatedAt": "2026-05-19T01:30:22Z",
+  "rawPullLogPath": "docs/evidence/design-system-proving-lab/reference-runs/latest/iron-laneway-strength-richmond/raw-pull-log.json",
+  "rawPullLogHash": "dcd79f199d0eac9b89e628969d68c8bca08d168dc92e12089422396be52cb79b",
+  "queryLog": [
+    {
+      "angle": "niche",
+      "query": "fitness beginner strength coaching, small-group training, and open-gym memberships service marketing website homepage book CTA landing page website inspiration",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:30:22Z"
+    },
+    {
+      "angle": "page-job",
+      "query": "book CTA homepage with trust proof, service or product menu, and local customer decision path website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:30:22Z"
+    },
+    {
+      "angle": "tone",
+      "query": "premium credible owner-led service business landing page website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:30:22Z"
+    },
+    {
+      "angle": "constraint",
+      "query": "outcome claim risk class vs membership decision facility-photo dependency responsive mobile-first homepage website not dashboard not app",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:30:22Z"
+    }
+  ],
+  "rawCandidates": [
+    { "screenId": "d1ef7c5f-0de3-485c-bed1-d5a9253f5a24", "mobbinUrl": "https://mobbin.com/screens/d1ef7c5f-0de3-485c-bed1-d5a9253f5a24", "sourceUrl": "https://mobbin.com/screens/d1ef7c5f-0de3-485c-bed1-d5a9253f5a24", "imageUrl": "https://mobbin.com/api/mcp/short/4lT1OHT1", "appName": "Fresha", "selectionReason": "Direct booking decision model with service, location, date, and time controls." },
+    { "screenId": "498008f7-fde7-4581-b70c-c8b5ab1d6904", "mobbinUrl": "https://mobbin.com/screens/498008f7-fde7-4581-b70c-c8b5ab1d6904", "sourceUrl": "https://mobbin.com/screens/498008f7-fde7-4581-b70c-c8b5ab1d6904", "imageUrl": "https://mobbin.com/api/mcp/short/CpdEX9yp", "appName": "Fresha", "selectionReason": "Idle booking search state can map to assessment, class, and open-gym choice." },
+    { "screenId": "ea0217e0-5361-459e-8e6a-4eea4de2fc7b", "mobbinUrl": "https://mobbin.com/screens/ea0217e0-5361-459e-8e6a-4eea4de2fc7b", "sourceUrl": "https://mobbin.com/screens/ea0217e0-5361-459e-8e6a-4eea4de2fc7b", "imageUrl": "https://mobbin.com/api/mcp/short/hv5tbTxl", "appName": "ClassPass", "selectionReason": "Studio card grid shows how classes and facility options can be compared visually." },
+    { "screenId": "df19530d-f5a4-41af-86ff-033f640a7f98", "mobbinUrl": "https://mobbin.com/screens/df19530d-f5a4-41af-86ff-033f640a7f98", "sourceUrl": "https://mobbin.com/screens/df19530d-f5a4-41af-86ff-033f640a7f98", "imageUrl": "https://mobbin.com/api/mcp/short/5cWxOCyc", "appName": "ClassPass", "selectionReason": "Three-step explainer helps turn nervous beginner onboarding into a concrete path." },
+    { "screenId": "70d8d56b-5c6b-4a3c-8e9e-6cf9629a9545", "mobbinUrl": "https://mobbin.com/screens/70d8d56b-5c6b-4a3c-8e9e-6cf9629a9545", "sourceUrl": "https://mobbin.com/screens/70d8d56b-5c6b-4a3c-8e9e-6cf9629a9545", "imageUrl": "https://mobbin.com/api/mcp/short/iMgJyn6Z", "appName": "ClassPass", "selectionReason": "Split editorial fitness section gives a strong first-viewport content model." },
+    { "screenId": "07618baa-ea77-4afc-a17d-1bc305099273", "mobbinUrl": "https://mobbin.com/screens/07618baa-ea77-4afc-a17d-1bc305099273", "sourceUrl": "https://mobbin.com/screens/07618baa-ea77-4afc-a17d-1bc305099273", "imageUrl": "https://mobbin.com/api/mcp/short/n1PVC0wx", "appName": "ClassPass", "selectionReason": "Membership section with class reservation card helps compare membership versus class entry." },
+    { "screenId": "355c6afb-63a2-4c90-bf86-148b617da7c0", "mobbinUrl": "https://mobbin.com/screens/355c6afb-63a2-4c90-bf86-148b617da7c0", "sourceUrl": "https://mobbin.com/screens/355c6afb-63a2-4c90-bf86-148b617da7c0", "imageUrl": "https://mobbin.com/api/mcp/short/uffQ0YFW", "appName": "SavvyCal", "selectionReason": "Editorial scheduling hero offers a non-gym, appointment-first type rhythm." },
+    { "screenId": "a3b51edb-e3b8-4e1d-bf88-ce2d79b28a64", "mobbinUrl": "https://mobbin.com/screens/a3b51edb-e3b8-4e1d-bf88-ce2d79b28a64", "sourceUrl": "https://mobbin.com/screens/a3b51edb-e3b8-4e1d-bf88-ce2d79b28a64", "imageUrl": "https://mobbin.com/api/mcp/short/VegQK6vt", "appName": "Airbnb", "selectionReason": "Experience-detail page models host/process proof and reserve CTA, with proof caveats." },
+    { "screenId": "059003c5-3de4-4d2b-9999-f4436b2af1f3", "mobbinUrl": "https://mobbin.com/screens/059003c5-3de4-4d2b-9999-f4436b2af1f3", "sourceUrl": "https://mobbin.com/screens/059003c5-3de4-4d2b-9999-f4436b2af1f3", "imageUrl": "https://mobbin.com/api/mcp/short/a8FhGa1b", "appName": "Wellfound", "selectionReason": "Consultation service layout is useful for starter assessment and package comparison." },
+    { "screenId": "9188623a-cebc-41b6-879d-b0f5fcfe3a62", "mobbinUrl": "https://mobbin.com/screens/9188623a-cebc-41b6-879d-b0f5fcfe3a62", "sourceUrl": "https://mobbin.com/screens/9188623a-cebc-41b6-879d-b0f5fcfe3a62", "imageUrl": "https://mobbin.com/api/mcp/short/rGNHt7by", "appName": "Medium", "selectionReason": "Membership editorial page is useful for calmer open-gym membership framing." },
+    { "screenId": "bb90900e-225c-4477-8e2e-2092aa473296", "mobbinUrl": "https://mobbin.com/screens/bb90900e-225c-4477-8e2e-2092aa473296", "sourceUrl": "https://mobbin.com/screens/bb90900e-225c-4477-8e2e-2092aa473296", "imageUrl": "https://mobbin.com/api/mcp/short/yoq3sSj0", "appName": "Vanta", "selectionReason": "Proof-artifact hero is useful for showing a training plan or assessment ledger without fake facility photos." },
+    { "screenId": "997cc2f5-87c7-4e17-888e-3bb0c2d8b0cf", "mobbinUrl": "https://mobbin.com/screens/997cc2f5-87c7-4e17-888e-3bb0c2d8b0cf", "sourceUrl": "https://mobbin.com/screens/997cc2f5-87c7-4e17-888e-3bb0c2d8b0cf", "imageUrl": "https://mobbin.com/api/mcp/short/uisKuHKj", "appName": "MasterClass", "selectionReason": "Membership comparison table maps to assessment, small group, and open-gym plan differences." },
+    { "screenId": "c0d9c4de-d376-47b6-a4f2-1b4c240707cd", "mobbinUrl": "https://mobbin.com/screens/c0d9c4de-d376-47b6-a4f2-1b4c240707cd", "sourceUrl": "https://mobbin.com/screens/c0d9c4de-d376-47b6-a4f2-1b4c240707cd", "imageUrl": "https://mobbin.com/api/mcp/short/rWSl0Enm", "appName": "ClassPass", "selectionReason": "Membership customization slide shows plan flexibility language and split composition." },
+    { "screenId": "86b3f0ce-64b4-44fc-9705-a120cba6f995", "mobbinUrl": "https://mobbin.com/screens/86b3f0ce-64b4-44fc-9705-a120cba6f995", "sourceUrl": "https://mobbin.com/screens/86b3f0ce-64b4-44fc-9705-a120cba6f995", "imageUrl": "https://mobbin.com/api/mcp/short/dlTeWuOY", "appName": "ClassPass", "selectionReason": "Onboarding slide clarifies what a starter offer includes, with strong mobile-first sequencing." },
+    { "screenId": "c74b0208-22d4-4044-ae2f-1399b9daf5d5", "mobbinUrl": "https://mobbin.com/screens/c74b0208-22d4-4044-ae2f-1399b9daf5d5", "sourceUrl": "https://mobbin.com/screens/c74b0208-22d4-4044-ae2f-1399b9daf5d5", "imageUrl": "https://mobbin.com/api/mcp/short/s4aobSBZ", "appName": "Hims", "selectionReason": "Clear anti-reference for invented fitness outcomes and body proof." },
+    { "screenId": "465357e1-7656-4bca-ba2b-778cd9e0707d", "mobbinUrl": "https://mobbin.com/screens/465357e1-7656-4bca-ba2b-778cd9e0707d", "sourceUrl": "https://mobbin.com/screens/465357e1-7656-4bca-ba2b-778cd9e0707d", "imageUrl": "https://mobbin.com/api/mcp/short/FNvt12iM", "appName": "Deezer", "selectionReason": "Clear anti-reference for loud subscription styling and dark entertainment palette." }
+  ],
+  "shortlist": [
+    {
+      "screenId": "d1ef7c5f-0de3-485c-bed1-d5a9253f5a24",
+      "mobbinUrl": "https://mobbin.com/screens/d1ef7c5f-0de3-485c-bed1-d5a9253f5a24",
+      "sourceUrl": "https://mobbin.com/screens/d1ef7c5f-0de3-485c-bed1-d5a9253f5a24",
+      "appName": "Fresha",
+      "structureFamily": "booking-search hero",
+      "fitScores": { "job": 9, "niche": 8, "firstViewport": 9, "cta": 9, "proof": 7, "mobile": 8, "distinctiveness": 7, "buildability": 8, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "business-job", "ingredient": "Make the first decision assessment, small-group class, or open-gym access instead of generic motivation." },
+        { "layer": "information-architecture", "ingredient": "Hero can act as a guided booking/search module, then unpack the three entry paths below." },
+        { "layer": "cta-system", "ingredient": "Primary CTA should stay assessment/book focused while secondary paths explain class and membership options." },
+        { "layer": "forms-and-lead-capture", "ingredient": "Short enquiry fields can ask beginner goal, preferred path, and contact method without implying live availability." }
+      ],
+      "bannedUses": [ "Do not copy Fresha's beauty marketplace language, live appointment counts, pastel brand treatment, or app download CTA." ]
+    },
+    {
+      "screenId": "ea0217e0-5361-459e-8e6a-4eea4de2fc7b",
+      "mobbinUrl": "https://mobbin.com/screens/ea0217e0-5361-459e-8e6a-4eea4de2fc7b",
+      "sourceUrl": "https://mobbin.com/screens/ea0217e0-5361-459e-8e6a-4eea4de2fc7b",
+      "appName": "ClassPass",
+      "structureFamily": "featured studio grid",
+      "fitScores": { "job": 8, "niche": 9, "firstViewport": 8, "cta": 8, "proof": 7, "mobile": 8, "distinctiveness": 7, "buildability": 8, "truth": 7 },
+      "ingredientLedger": [
+        { "layer": "content-strategy", "ingredient": "Compare beginner assessment, group training, and open-gym access as visible choices, not hidden nav items." },
+        { "layer": "media-direction", "ingredient": "If photos are absent, show facility zones, lift cards, or program cards as explicit non-photo artifacts." },
+        { "layer": "proof-architecture", "ingredient": "Service clarity and program fit can be proof when ratings, member counts, or transformations are not source-backed." },
+        { "layer": "performance", "ingredient": "A static card grid can replace heavy image galleries until owner-approved gym photos exist." }
+      ],
+      "bannedUses": [ "Do not invent ratings, studio names, locations, class photos, or marketplace inventory." ]
+    },
+    {
+      "screenId": "df19530d-f5a4-41af-86ff-033f640a7f98",
+      "mobbinUrl": "https://mobbin.com/screens/df19530d-f5a4-41af-86ff-033f640a7f98",
+      "sourceUrl": "https://mobbin.com/screens/df19530d-f5a4-41af-86ff-033f640a7f98",
+      "appName": "ClassPass",
+      "structureFamily": "numbered beginner process",
+      "fitScores": { "job": 9, "niche": 8, "firstViewport": 7, "cta": 8, "proof": 7, "mobile": 8, "distinctiveness": 7, "buildability": 9, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "voice-and-tone", "ingredient": "Write plainly for nervous beginners: choose a path, meet a coach, train with a small group." },
+        { "layer": "spacing-system", "ingredient": "Give each onboarding step enough space that the page feels calm rather than high-pressure." },
+        { "layer": "iconography", "ingredient": "Numbered steps are clearer than generic dumbbell icons when explaining the first visit." },
+        { "layer": "governance", "ingredient": "Do not imply coaching credentials, safety outcomes, or body changes unless the business supplies proof." }
+      ],
+      "bannedUses": [ "Do not reuse expert-trainer claims, music-playlist copy, results language, or ClassPass range promises." ]
+    },
+    {
+      "screenId": "70d8d56b-5c6b-4a3c-8e9e-6cf9629a9545",
+      "mobbinUrl": "https://mobbin.com/screens/70d8d56b-5c6b-4a3c-8e9e-6cf9629a9545",
+      "sourceUrl": "https://mobbin.com/screens/70d8d56b-5c6b-4a3c-8e9e-6cf9629a9545",
+      "appName": "ClassPass",
+      "structureFamily": "split editorial fitness section",
+      "fitScores": { "job": 8, "niche": 9, "firstViewport": 9, "cta": 8, "proof": 7, "mobile": 7, "distinctiveness": 8, "buildability": 8, "truth": 7 },
+      "ingredientLedger": [
+        { "layer": "typography", "ingredient": "Use assertive but approachable display type; avoid aggressive gym-bro shouting." },
+        { "layer": "layout-structure", "ingredient": "A split first viewport can pair a starter-assessment promise with one strong service-choice artifact." },
+        { "layer": "responsive-behavior", "ingredient": "On mobile, stack the image/artifact after the decision copy and keep the booking action above the fold." },
+        { "layer": "color-system", "ingredient": "Use a disciplined action accent against neutral gym materials instead of a one-note dark steel palette." }
+      ],
+      "bannedUses": [ "Do not use unapproved athlete photos, body-outcome copy, best-in-class instructor claims, or broad marketplace language." ]
+    },
+    {
+      "screenId": "07618baa-ea77-4afc-a17d-1bc305099273",
+      "mobbinUrl": "https://mobbin.com/screens/07618baa-ea77-4afc-a17d-1bc305099273",
+      "sourceUrl": "https://mobbin.com/screens/07618baa-ea77-4afc-a17d-1bc305099273",
+      "appName": "ClassPass",
+      "structureFamily": "membership offer with reservation card",
+      "fitScores": { "job": 8, "niche": 8, "firstViewport": 8, "cta": 8, "proof": 7, "mobile": 8, "distinctiveness": 7, "buildability": 8, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "surfaces-and-materials", "ingredient": "Use a compact reservation/program card as the main surface instead of stacking unrelated marketing cards." },
+        { "layer": "depth", "ingredient": "Reserve shadows for the active decision module; keep other sections flatter." },
+        { "layer": "shape", "ingredient": "Rounded program cards can soften strength training for beginners without making the page playful." },
+        { "layer": "component-anatomy", "ingredient": "Program cards need path name, who it is for, time/commitment note, and one next action." }
+      ],
+      "bannedUses": [ "Do not copy discount claims, credit economics, free-trial copy, or specific class inventory." ]
+    },
+    {
+      "screenId": "997cc2f5-87c7-4e17-888e-3bb0c2d8b0cf",
+      "mobbinUrl": "https://mobbin.com/screens/997cc2f5-87c7-4e17-888e-3bb0c2d8b0cf",
+      "sourceUrl": "https://mobbin.com/screens/997cc2f5-87c7-4e17-888e-3bb0c2d8b0cf",
+      "appName": "MasterClass",
+      "structureFamily": "membership comparison table",
+      "fitScores": { "job": 8, "niche": 7, "firstViewport": 7, "cta": 8, "proof": 7, "mobile": 7, "distinctiveness": 8, "buildability": 8, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "component-states", "ingredient": "Path comparison needs selected, recommended, unavailable, and enquire states for uncertain members." },
+        { "layer": "interaction-model", "ingredient": "Let visitors compare starter assessment, small group, and open-gym access before committing." },
+        { "layer": "localization-and-formatting", "ingredient": "Membership labels, session durations, and local Richmond wording must come from fixture or owner-approved facts." },
+        { "layer": "implementation-tokens", "ingredient": "Table columns, buttons, and badges should use stable sizing tokens so comparison stays readable on mobile." }
+      ],
+      "bannedUses": [ "Do not use streaming membership language, device counts, selected-plan pricing, or entertainment dark-mode drama." ]
+    },
+    {
+      "screenId": "a3b51edb-e3b8-4e1d-bf88-ce2d79b28a64",
+      "mobbinUrl": "https://mobbin.com/screens/a3b51edb-e3b8-4e1d-bf88-ce2d79b28a64",
+      "sourceUrl": "https://mobbin.com/screens/a3b51edb-e3b8-4e1d-bf88-ce2d79b28a64",
+      "appName": "Airbnb",
+      "structureFamily": "experience detail with host proof",
+      "fitScores": { "job": 8, "niche": 7, "firstViewport": 8, "cta": 8, "proof": 8, "mobile": 8, "distinctiveness": 7, "buildability": 7, "truth": 7 },
+      "ingredientLedger": [
+        { "layer": "accessibility", "ingredient": "Reserve/book actions, plan cards, and proof sections need clear names and touch targets." },
+        { "layer": "seo-aeo-metadata", "ingredient": "Expose beginner assessment, small-group training, and open-gym access in visible page structure and agent-readable metadata." },
+        { "layer": "illustration-graphics", "ingredient": "Use training-plan artifacts, rack/floor-zone diagrams, or beginner-path marks instead of fake member portraits." },
+        { "layer": "media-direction", "ingredient": "Owner-supplied facility photos can support proof later; until then, media must be clearly non-real or program-led." }
+      ],
+      "bannedUses": [ "Do not invent instructor portraits, qualifications, reviews, star ratings, exact price, or host biography." ]
+    },
+    {
+      "screenId": "355c6afb-63a2-4c90-bf86-148b617da7c0",
+      "mobbinUrl": "https://mobbin.com/screens/355c6afb-63a2-4c90-bf86-148b617da7c0",
+      "sourceUrl": "https://mobbin.com/screens/355c6afb-63a2-4c90-bf86-148b617da7c0",
+      "appName": "SavvyCal",
+      "structureFamily": "editorial scheduling hero",
+      "fitScores": { "job": 8, "niche": 7, "firstViewport": 9, "cta": 9, "proof": 8, "mobile": 8, "distinctiveness": 9, "buildability": 8, "truth": 9 },
+      "ingredientLedger": [
+        { "layer": "motion", "ingredient": "Any movement should clarify path selection, such as assessment/class/open-gym tab transitions." },
+        { "layer": "forms-and-lead-capture", "ingredient": "A short booking request can route nervous beginners without pretending to show live class inventory." },
+        { "layer": "proof-architecture", "ingredient": "Use owner-approved process proof before testimonials or transformation claims." },
+        { "layer": "governance", "ingredient": "Reject all copied testimonials, stars, risk-free language, or health/fitness outcome promises." }
+      ],
+      "bannedUses": [ "Do not copy review quotes, star ratings, yellow CTA, SaaS proof, or scheduling-product positioning." ]
+    }
+  ],
+  "antiReferences": [
+    {
+      "screenId": "c74b0208-22d4-4044-ae2f-1399b9daf5d5",
+      "mobbinUrl": "https://mobbin.com/screens/c74b0208-22d4-4044-ae2f-1399b9daf5d5",
+      "appName": "Hims",
+      "rejectionReason": "Large percentage outcome proof and body-adjacent imagery would create unsupported fitness result claims."
+    },
+    {
+      "screenId": "2f8b11b6-8dda-4765-bba1-7526a80d398c",
+      "mobbinUrl": "https://mobbin.com/screens/2f8b11b6-8dda-4765-bba1-7526a80d398c",
+      "appName": "Hims",
+      "rejectionReason": "Body-transformation implication is unsafe for a beginner strength fixture without medical or coaching proof."
+    },
+    {
+      "screenId": "465357e1-7656-4bca-ba2b-778cd9e0707d",
+      "mobbinUrl": "https://mobbin.com/screens/465357e1-7656-4bca-ba2b-778cd9e0707d",
+      "appName": "Deezer",
+      "rejectionReason": "Loud purple subscription checkout styling is too entertainment-led and would overpower the local gym decision."
+    },
+    {
+      "screenId": "bb90900e-225c-4477-8e2e-2092aa473296",
+      "mobbinUrl": "https://mobbin.com/screens/bb90900e-225c-4477-8e2e-2092aa473296",
+      "appName": "Vanta",
+      "rejectionReason": "SaaS dashboard proof should not be copied; only the idea of a proof artifact is reusable."
+    }
+  ],
+  "remixDirection": {
+    "summary": "A beginner-safe strength studio page that starts with three clear paths, uses calm booking/search logic, compares assessment/class/open-gym choices, and treats process clarity as proof until real facility photos or member proof exist.",
+    "selectedMoves": [
+      "Fresha-style service/date/time decision module rebuilt around starter assessment, small-group class, and open-gym access.",
+      "ClassPass process and studio-card logic adapted to one local studio without marketplace proof or ratings.",
+      "MasterClass comparison-table clarity adapted to program-path comparison.",
+      "SavvyCal editorial scheduling confidence adapted to a plain assessment-booking hero.",
+      "Airbnb experience-detail proof structure adapted only as process proof, not invented trainer proof."
+    ],
+    "explicitRejects": [
+      "No invented member photos, trainer names, qualifications, reviews, ratings, transformations, strength outcomes, or safety guarantees.",
+      "No copied marketplace inventory, free-trial economics, app-download CTA, or broad fitness platform claims.",
+      "No exact layout copy from any shortlisted Mobbin screen."
+    ]
+  }
+}

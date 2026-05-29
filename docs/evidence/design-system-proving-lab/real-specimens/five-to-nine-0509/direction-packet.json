@@ -1,0 +1,226 @@
+{
+  "schemaVersion": "mobbin.mobbin-pro.visual-territory-direction-packet.v1",
+  "businessId": "five-to-nine-0509",
+  "businessName": "Five to Nine",
+  "generatedAt": "2026-05-19T10:08:57Z",
+  "sourceProvider": "Mobbin Pro MCP",
+  "platform": "web",
+  "businessHash": "source-files-read-2026-05-19",
+  "searchBriefPath": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/search-brief.json",
+  "searchBriefHash": "5343993096d1c594a51fb923c06412df571938fd0cdcb18214250856e35bf2af",
+  "referencePacketPath": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/reference-packet.json",
+  "referencePacketHash": "7673c6eacbcec94647e76a9dd387fa3c19c3af55884489e5a8b3ea1b4557ccd0",
+  "visualTerritoryTaxonomyVersion": "mobbin.visual-territories.v1",
+  "exploredTerritories": [
+    {
+      "territoryId": "proof-led-data-led",
+      "businessSpecificName": "Source-labeled morning proof desk for growth teams",
+      "fitReason": "Five to Nine wins when a growth lead immediately sees source status, timestamps, and the next action instead of abstract AI promise copy.",
+      "status": "shortlisted",
+      "fitScore": 9.5
+    },
+    {
+      "territoryId": "minimalist",
+      "businessSpecificName": "Calm analytics-grade pilot homepage",
+      "fitReason": "The product is still pilot-ready, so restraint and legible proof surfaces create more trust than a loud launch campaign.",
+      "status": "shortlisted",
+      "fitScore": 9.1
+    },
+    {
+      "territoryId": "dark-mode",
+      "businessSpecificName": "After-hours signal room for overnight market motion",
+      "fitReason": "The current headline already owns the after-hours story, and a dark monitoring surface can make that story memorable without overclaiming.",
+      "status": "shortlisted",
+      "fitScore": 8.8
+    },
+    {
+      "territoryId": "immersive-cinematic",
+      "businessSpecificName": "Night-watch command story with restrained cinematic depth",
+      "fitReason": "A cinematic treatment could make the market-never-sleeps idea feel premium, but only if the proof cards stay readable and operational.",
+      "status": "shortlisted",
+      "fitScore": 8.4
+    },
+    {
+      "territoryId": "editorial-magazine",
+      "businessSpecificName": "Growth-team morning bulletin with receipts",
+      "fitReason": "Five to Nine ships a briefing habit, so editorial rhythm and date-stamped evidence can make the value feel concrete before signup.",
+      "status": "shortlisted",
+      "fitScore": 8.7
+    },
+    {
+      "territoryId": "typographic",
+      "businessSpecificName": "Large direct claim with compact proof typography",
+      "fitReason": "The product needs one memorable sentence and dense proof labels; typographic hierarchy can deliver both without decorative noise.",
+      "status": "shortlisted",
+      "fitScore": 8.6
+    },
+    {
+      "territoryId": "utility-conversion-first",
+      "businessSpecificName": "Pilot conversion console that explains the workflow",
+      "fitReason": "A practical console direction makes the search, watch, prove, review, and brief workflow obvious to a buyer who wants operational clarity.",
+      "status": "shortlisted",
+      "fitScore": 8.3
+    },
+    {
+      "territoryId": "corporate-traditional",
+      "businessSpecificName": "Conservative market-intelligence platform page",
+      "fitReason": "This is safe for enterprise credibility, but it risks making Five to Nine feel like another generic SaaS dashboard before the product has the proof moat.",
+      "status": "rejected",
+      "fitScore": 7.4
+    }
+  ],
+  "directions": [
+    {
+      "directionId": "morning-proof-desk",
+      "directionName": "Morning Proof Desk",
+      "visualTerritories": ["proof-led-data-led", "minimalist", "typographic"],
+      "jobStructure": "The visitor sees the promise, pilot boundary, and a product-like proof artifact in the first fold, then understands that every signal carries source status.",
+      "ownerWouldPayBecause": "A growth lead can imagine using the product in a morning standup because the page shows competitor motion, proof status, and recommended next moves.",
+      "materiallyDifferentBecause": "It avoids generic AI gradients and fake authority by making the proof queue itself the hero object.",
+      "score": 9.3,
+      "referenceInputs": [
+        { "screenId": "b5d920dd-ae5f-4b3c-9eaa-70105e85a5ca", "appName": "Peec AI", "ingredient": "calm SaaS hero with product artifact visible before the fold" },
+        { "screenId": "6122a545-4c62-4743-a67f-7e93d1bb84fa", "appName": "Profound", "ingredient": "comparison matrix structure for competitor proof" },
+        { "screenId": "cd4557d7-ce93-4e30-9fd9-670666fc8869", "appName": "Amplitude", "ingredient": "timestamped alert rows and status-led monitoring language" },
+        { "screenId": "c57f5d0f-2dd1-4806-8a6f-0d5d4ac97e8c", "appName": "Plausible Analytics", "ingredient": "simple analytics surface with readable proof labels" }
+      ],
+      "antiReferenceInputs": [
+        { "screenId": "8b8dc2c2-47dd-4cae-9b67-2a885bd435e9", "appName": "v0", "avoid": "generic generated AI landing-page structure" }
+      ],
+      "selectedIngredients": [
+        "Huge direct headline tied to the morning decision moment.",
+        "Proof artifact centered in the first viewport on desktop.",
+        "Status colors map to source states rather than decoration.",
+        "Pilot boundary is visible before any pricing or signup claim.",
+        "Primary CTA is Enter pilot and secondary CTA is Search public index.",
+        "Cards use low radius and quiet depth to feel like a work surface.",
+        "Mobile stacks the proof desk immediately after the headline and CTAs."
+      ],
+      "rejectedIngredients": [
+        "No customer logos or compliance badges without current source proof.",
+        "No screenshot copying from Mobbin reference apps.",
+        "No launch-ready checkout or WhatsApp delivery claim.",
+        "No purple-blue gradient dominance."
+      ],
+      "desktopFirstViewportPath": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/morning-proof-desk.desktop.png",
+      "mobileFirstTwoScreensPath": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/morning-proof-desk.mobile.png"
+    },
+    {
+      "directionId": "night-signal-theatre",
+      "directionName": "Night Signal Theatre",
+      "visualTerritories": ["dark-mode", "immersive-cinematic", "proof-led-data-led"],
+      "jobStructure": "The visitor enters an after-hours monitoring room where competitor signals are queued, labeled, and ready before the morning decision window.",
+      "ownerWouldPayBecause": "The dark signal-room story makes the pain memorable: markets move while the team is offline, and Five to Nine packages the change before work starts.",
+      "materiallyDifferentBecause": "It turns the existing headline into an atmospheric product story while still grounding every row in source states.",
+      "score": 8.8,
+      "referenceInputs": [
+        { "screenId": "cdb703ff-9199-4328-802c-0c39193cbdbc", "appName": "Better Stack", "ingredient": "dark monitoring atmosphere with a focused CTA" },
+        { "screenId": "6929ddb6-58a8-46c1-b02b-a7ec51179c3d", "appName": "Fey", "ingredient": "premium dark product surface and high-contrast focus" },
+        { "screenId": "cd4557d7-ce93-4e30-9fd9-670666fc8869", "appName": "Amplitude", "ingredient": "alert list rhythm and priority/status labeling" }
+      ],
+      "antiReferenceInputs": [
+        { "screenId": "71e85279-38da-49cc-a0e1-bf0a8ae3d113", "appName": "Savee", "avoid": "dark mood grid without enough product proof meaning" }
+      ],
+      "selectedIngredients": [
+        "Use the existing after-hours headline as the emotional hook.",
+        "Signal rows show source live, cached live, needs proof, and pilot only.",
+        "One bright CTA keeps the page commercially direct.",
+        "Soft glow supports the overnight story without replacing product detail.",
+        "Hero artifact stays functional instead of decorative.",
+        "Mobile keeps the signal room readable before secondary content."
+      ],
+      "rejectedIngredients": [
+        "No cinematic motion that hides the core proof cards.",
+        "No low-contrast dark dashboard text.",
+        "No fake monitoring of named brands as a live claim."
+      ],
+      "desktopFirstViewportPath": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/night-signal-theatre.desktop.png",
+      "mobileFirstTwoScreensPath": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/night-signal-theatre.mobile.png"
+    },
+    {
+      "directionId": "growth-bulletin",
+      "directionName": "Growth Bulletin",
+      "visualTerritories": ["editorial-magazine", "typographic", "proof-led-data-led"],
+      "jobStructure": "The visitor reads Five to Nine like a morning market bulletin: one lead change, a short evidence trail, and a decision-ready brief.",
+      "ownerWouldPayBecause": "It frames the product as a repeatable briefing ritual, which matches how growth teams already share market changes internally.",
+      "materiallyDifferentBecause": "It borrows editorial hierarchy for scanability but keeps the content accountable with receipt-style proof blocks.",
+      "score": 8.6,
+      "referenceInputs": [
+        { "screenId": "b0590443-627a-4533-934a-5ebcf03534a5", "appName": "June", "ingredient": "report-led hero and a simple product story" },
+        { "screenId": "ec7fc1f1-531f-4152-bb93-190c11013280", "appName": "beehiiv", "ingredient": "strong typographic growth-team energy" },
+        { "screenId": "b840e398-8b41-4259-917a-1f0d989b54a6", "appName": "Coda", "ingredient": "document/workspace artifact as a credible hero surface" }
+      ],
+      "antiReferenceInputs": [
+        { "screenId": "ab25a888-37ed-4697-aa45-1175aa86d2f7", "appName": "YouTube", "avoid": "consumer testimonial grid and unsupported social proof" }
+      ],
+      "selectedIngredients": [
+        "Morning brief language turns monitoring into a habit.",
+        "Date-stamped editorial modules imply a repeatable cadence.",
+        "Receipt cards keep the page truthful and source-backed.",
+        "Typography creates variability from the proof-desk direction.",
+        "CTA remains pilot-first and does not introduce checkout.",
+        "Mobile reads like a concise briefing rather than a dashboard squeeze."
+      ],
+      "rejectedIngredients": [
+        "No magazine-style filler headlines without product evidence.",
+        "No invented customer quotes or logos.",
+        "No playful editorial style that weakens operational trust."
+      ],
+      "desktopFirstViewportPath": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/growth-bulletin.desktop.png",
+      "mobileFirstTwoScreensPath": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/growth-bulletin.mobile.png"
+    },
+    {
+      "directionId": "pilot-console",
+      "directionName": "Pilot Conversion Console",
+      "visualTerritories": ["utility-conversion-first", "minimalist", "corporate-traditional"],
+      "jobStructure": "The visitor sees a practical workflow console that explains search, watch, prove, review, and brief as a gated pilot path.",
+      "ownerWouldPayBecause": "It reduces uncertainty for a buyer who wants to know exactly what the pilot does and where the current product boundaries sit.",
+      "materiallyDifferentBecause": "It is the most conservative direction, useful as a safe fallback when product clarity matters more than memorability.",
+      "score": 8.3,
+      "referenceInputs": [
+        { "screenId": "b6054ff6-45b3-4de0-a480-465892bc3724", "appName": "Sprout Social", "ingredient": "marketing-team dashboard and enterprise CTA structure" },
+        { "screenId": "a8eb45e6-ca91-450d-a459-5fcfc3a0325f", "appName": "Fibery", "ingredient": "operating-system positioning with product UI collage" },
+        { "screenId": "1e2d86ea-d8b6-4284-b769-7dd2485de758", "appName": "Clearbit", "ingredient": "data-in and data-out value proposition with a supporting panel" }
+      ],
+      "antiReferenceInputs": [
+        { "screenId": "73d6435a-f8be-429c-9d52-d4cd0fab19de", "appName": "Apollo", "avoid": "lead-database conversion pattern that implies a different product" }
+      ],
+      "selectedIngredients": [
+        "Simple workflow blocks make the product path easy to understand.",
+        "A workspace sidebar suggests retained monitoring without claiming broad self-serve launch.",
+        "Status table makes the proof job visible.",
+        "CTA pair remains pilot and public index.",
+        "Conservative color system supports enterprise trust.",
+        "Mobile keeps the workflow first instead of hiding it under marketing copy."
+      ],
+      "rejectedIngredients": [
+        "No enterprise compliance posture that the product cannot prove.",
+        "No generic CRM or sales-database positioning.",
+        "No crowded dashboard montage that makes the pilot feel fake."
+      ],
+      "desktopFirstViewportPath": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/pilot-console.desktop.png",
+      "mobileFirstTwoScreensPath": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/concepts/pilot-console.mobile.png"
+    }
+  ],
+  "chosenDirectionId": "morning-proof-desk",
+  "rejectedDirections": [
+    {
+      "directionId": "night-signal-theatre",
+      "reason": "Strong and memorable, but higher visual drama creates more implementation risk and could distract from the source-status proof job."
+    },
+    {
+      "directionId": "growth-bulletin",
+      "reason": "Distinct and useful for a future content-led route, but the product proof artifact is less instantly legible than the proof-desk route."
+    },
+    {
+      "directionId": "pilot-console",
+      "reason": "Clear and safe, but it feels closer to a generic SaaS workflow page and does not make Five to Nine as ownable."
+    }
+  ],
+  "winnerRationale": "Morning Proof Desk is the strongest 0509 direction because it combines the actual product promise, the pilot truth boundary, and a source-labeled proof artifact in the first viewport without copying any Mobbin reference.",
+  "notYetBuildableAsLivePageBecause": [
+    "Human approval is missing.",
+    "This is a concept proof, not an edit to /Users/nish/Vibecoded projects/0509/app/routes/marketing.tsx.",
+    "The final live build still needs app implementation, browser verification, no-unsupported-claim review, and deploy gate checks."
+  ]
+}

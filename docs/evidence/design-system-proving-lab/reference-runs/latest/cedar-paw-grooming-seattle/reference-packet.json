@@ -1,0 +1,531 @@
+{
+  "schemaVersion": "mobbin.mobbin-pro.per-redesign-reference-packet.v1",
+  "sourceProvider": "Mobbin Pro MCP",
+  "platform": "web",
+  "businessId": "cedar-paw-grooming-seattle",
+  "businessName": "Cedar Paw Grooming",
+  "businessHash": "c79c45e7c7f7ef85da562bfff0018f5e0dcd74295e59269cdcc1b4a849cb7d3e",
+  "searchBriefHash": "3e104142ad7f2b3215aa2becd17badd235fbe8ee85af600c415cd8ca5bd769b7",
+  "generatedAt": "2026-05-19T01:30:16Z",
+  "rawPullLogPath": "docs/evidence/design-system-proving-lab/reference-runs/latest/cedar-paw-grooming-seattle/raw-pull-log.json",
+  "rawPullLogHash": "d55b63139bbb68eef50d5e176a6187858f27b97e53705e886c321f9e0e42f1ed",
+  "queryLog": [
+    {
+      "angle": "niche",
+      "query": "pet-service dog grooming, puppy intro visits, de-shedding, and nail trims service marketing website homepage book CTA landing page website inspiration",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:30:16Z"
+    },
+    {
+      "angle": "page-job",
+      "query": "book CTA homepage with trust proof, service or product menu, and local customer decision path website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:30:16Z"
+    },
+    {
+      "angle": "tone",
+      "query": "premium credible owner-led service business landing page website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:30:16Z"
+    },
+    {
+      "angle": "constraint",
+      "query": "cute-photo temptation service fit by pet need safety claim restraint responsive mobile-first homepage website not dashboard not app",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:30:16Z"
+    }
+  ],
+  "rawCandidates": [
+    {
+      "screenId": "5d0af5ca-c15a-4477-99b9-198794bf74f8",
+      "mobbinUrl": "https://mobbin.com/screens/5d0af5ca-c15a-4477-99b9-198794bf74f8",
+      "sourceUrl": "https://mobbin.com/screens/5d0af5ca-c15a-4477-99b9-198794bf74f8",
+      "imageUrl": "https://mobbin.com/api/mcp/short/Bn33nP9V",
+      "appName": "Fresha",
+      "selectionReason": "Booking-search hero model for fast service/date/location decisions."
+    },
+    {
+      "screenId": "47cf7f81-6a4f-4c29-ac63-927bc6e4845d",
+      "mobbinUrl": "https://mobbin.com/screens/47cf7f81-6a4f-4c29-ac63-927bc6e4845d",
+      "sourceUrl": "https://mobbin.com/screens/47cf7f81-6a4f-4c29-ac63-927bc6e4845d",
+      "imageUrl": "https://mobbin.com/api/mcp/short/HzcTFjAN",
+      "appName": "Care.com",
+      "selectionReason": "Best pet-adjacent decision flow for choosing care type, cadence, and duration."
+    },
+    {
+      "screenId": "5be39ca4-9089-474a-881b-4739c56333aa",
+      "mobbinUrl": "https://mobbin.com/screens/5be39ca4-9089-474a-881b-4739c56333aa",
+      "sourceUrl": "https://mobbin.com/screens/5be39ca4-9089-474a-881b-4739c56333aa",
+      "imageUrl": "https://mobbin.com/api/mcp/short/r7XW9Uog",
+      "appName": "Care.com",
+      "selectionReason": "Shows broad care-category discovery without starting with a fake groomer photo."
+    },
+    {
+      "screenId": "dc0b8443-1de3-46ed-9fdb-46f3896f94e7",
+      "mobbinUrl": "https://mobbin.com/screens/dc0b8443-1de3-46ed-9fdb-46f3896f94e7",
+      "sourceUrl": "https://mobbin.com/screens/dc0b8443-1de3-46ed-9fdb-46f3896f94e7",
+      "imageUrl": "https://mobbin.com/api/mcp/short/ClS32gqr",
+      "appName": "Hims",
+      "selectionReason": "Three-step process section maps to intake, coat/service fit, and appointment prep."
+    },
+    {
+      "screenId": "a4ed4d89-766a-4cd7-8e34-92f56ad08a61",
+      "mobbinUrl": "https://mobbin.com/screens/a4ed4d89-766a-4cd7-8e34-92f56ad08a61",
+      "sourceUrl": "https://mobbin.com/screens/a4ed4d89-766a-4cd7-8e34-92f56ad08a61",
+      "imageUrl": "https://mobbin.com/api/mcp/short/F1cYNr1Z",
+      "appName": "Fresha",
+      "selectionReason": "Service rows with duration/price/action logic for full groom, puppy intro, de-shed, and nails."
+    },
+    {
+      "screenId": "5a1b3f0f-a74a-4d83-8a5d-f6b2b05a14fb",
+      "mobbinUrl": "https://mobbin.com/screens/5a1b3f0f-a74a-4d83-8a5d-f6b2b05a14fb",
+      "sourceUrl": "https://mobbin.com/screens/5a1b3f0f-a74a-4d83-8a5d-f6b2b05a14fb",
+      "imageUrl": "https://mobbin.com/api/mcp/short/T1ytyfrB",
+      "appName": "Origin",
+      "selectionReason": "Warm family-confidence plan comparison adapts to anxious pet-owner decisions."
+    },
+    {
+      "screenId": "b0d1ab2c-e5b0-49e6-b1bb-b7899ddafc73",
+      "mobbinUrl": "https://mobbin.com/screens/b0d1ab2c-e5b0-49e6-b1bb-b7899ddafc73",
+      "sourceUrl": "https://mobbin.com/screens/b0d1ab2c-e5b0-49e6-b1bb-b7899ddafc73",
+      "imageUrl": "https://mobbin.com/api/mcp/short/SDHuBhiL",
+      "appName": "Square",
+      "selectionReason": "Plain service-menu anatomy with book actions and business details."
+    },
+    {
+      "screenId": "2696cc95-3042-4cc1-97c8-ed54933504a2",
+      "mobbinUrl": "https://mobbin.com/screens/2696cc95-3042-4cc1-97c8-ed54933504a2",
+      "sourceUrl": "https://mobbin.com/screens/2696cc95-3042-4cc1-97c8-ed54933504a2",
+      "imageUrl": "https://mobbin.com/api/mcp/short/r8VKk8G4",
+      "appName": "Hims",
+      "selectionReason": "Soft category cards and review tile show how photo temptation can be restrained."
+    },
+    {
+      "screenId": "763b7cc1-340d-4199-ac53-1f5bce3f30f6",
+      "mobbinUrl": "https://mobbin.com/screens/763b7cc1-340d-4199-ac53-1f5bce3f30f6",
+      "sourceUrl": "https://mobbin.com/screens/763b7cc1-340d-4199-ac53-1f5bce3f30f6",
+      "imageUrl": "https://mobbin.com/api/mcp/short/jCJWwKNL",
+      "appName": "Fiverr",
+      "selectionReason": "Provider profile proof structure is useful for verified response/service facts."
+    },
+    {
+      "screenId": "eddf2c43-cf73-4c1f-8119-c877d51ffbdd",
+      "mobbinUrl": "https://mobbin.com/screens/eddf2c43-cf73-4c1f-8119-c877d51ffbdd",
+      "sourceUrl": "https://mobbin.com/screens/eddf2c43-cf73-4c1f-8119-c877d51ffbdd",
+      "imageUrl": "https://mobbin.com/api/mcp/short/owOPPHMB",
+      "appName": "Contra",
+      "selectionReason": "Single-offer booking page with sticky pricing rail and service details."
+    },
+    {
+      "screenId": "dbffbd43-16c0-432f-93cb-ccc6f0b3e196",
+      "mobbinUrl": "https://mobbin.com/screens/dbffbd43-16c0-432f-93cb-ccc6f0b3e196",
+      "sourceUrl": "https://mobbin.com/screens/dbffbd43-16c0-432f-93cb-ccc6f0b3e196",
+      "imageUrl": "https://mobbin.com/api/mcp/short/TaOvnb5n",
+      "appName": "Buy Me a Coffee",
+      "selectionReason": "Centered booking card is useful for one constrained appointment offer."
+    },
+    {
+      "screenId": "8ca27875-5683-4bfd-a389-77956dc032c1",
+      "mobbinUrl": "https://mobbin.com/screens/8ca27875-5683-4bfd-a389-77956dc032c1",
+      "sourceUrl": "https://mobbin.com/screens/8ca27875-5683-4bfd-a389-77956dc032c1",
+      "imageUrl": "https://mobbin.com/api/mcp/short/I1lPsi3O",
+      "appName": "Airtasker",
+      "selectionReason": "Booked/price visual overlays suggest safe proof artifacts without copying claims."
+    },
+    {
+      "screenId": "ccc8e559-908a-4df1-bfa9-905b900a61a1",
+      "mobbinUrl": "https://mobbin.com/screens/ccc8e559-908a-4df1-bfa9-905b900a61a1",
+      "sourceUrl": "https://mobbin.com/screens/ccc8e559-908a-4df1-bfa9-905b900a61a1",
+      "imageUrl": "https://mobbin.com/api/mcp/short/rqLhG9lY",
+      "appName": "Care.com",
+      "selectionReason": "Pet-specific flow state with selected care option, time, duration, and next CTA."
+    },
+    {
+      "screenId": "4bd2045f-ae9e-4e58-96e7-5a2f4ec09878",
+      "mobbinUrl": "https://mobbin.com/screens/4bd2045f-ae9e-4e58-96e7-5a2f4ec09878",
+      "sourceUrl": "https://mobbin.com/screens/4bd2045f-ae9e-4e58-96e7-5a2f4ec09878",
+      "imageUrl": "https://mobbin.com/api/mcp/short/kR9Joym1",
+      "appName": "Care.com",
+      "selectionReason": "Pet-care date/time flow helps distinguish recurring/longer care from quick visits."
+    },
+    {
+      "screenId": "2094841a-ea58-4bb9-876d-8b14319bed7f",
+      "mobbinUrl": "https://mobbin.com/screens/2094841a-ea58-4bb9-876d-8b14319bed7f",
+      "sourceUrl": "https://mobbin.com/screens/2094841a-ea58-4bb9-876d-8b14319bed7f",
+      "imageUrl": "https://mobbin.com/api/mcp/short/E29HmFED",
+      "appName": "Amazon",
+      "selectionReason": "Pet-type selection warns against ecommerce density while inspiring pet-specific choice tokens."
+    },
+    {
+      "screenId": "8b2bdf72-3b33-4cbe-be7f-d41f8be65b55",
+      "mobbinUrl": "https://mobbin.com/screens/8b2bdf72-3b33-4cbe-be7f-d41f8be65b55",
+      "sourceUrl": "https://mobbin.com/screens/8b2bdf72-3b33-4cbe-be7f-d41f8be65b55",
+      "imageUrl": "https://mobbin.com/api/mcp/short/hEBFWD3R",
+      "appName": "Lovable",
+      "selectionReason": "Generic service-card page is useful as an anti-reference."
+    }
+  ],
+  "shortlist": [
+    {
+      "screenId": "47cf7f81-6a4f-4c29-ac63-927bc6e4845d",
+      "mobbinUrl": "https://mobbin.com/screens/47cf7f81-6a4f-4c29-ac63-927bc6e4845d",
+      "sourceUrl": "https://mobbin.com/screens/47cf7f81-6a4f-4c29-ac63-927bc6e4845d",
+      "appName": "Care.com",
+      "structureFamily": "pet need selector",
+      "fitScores": {
+        "job": 9,
+        "niche": 9,
+        "firstViewport": 8,
+        "cta": 8,
+        "proof": 7,
+        "mobile": 8,
+        "distinctiveness": 8,
+        "buildability": 8,
+        "truth": 8
+      },
+      "ingredientLedger": [
+        {
+          "layer": "business-job",
+          "ingredient": "Make the page help owners choose the right visit: full groom, puppy intro, de-shed, or nail trim."
+        },
+        {
+          "layer": "information-architecture",
+          "ingredient": "Start with pet need and visit type before explaining the grooming menu."
+        },
+        {
+          "layer": "component-anatomy",
+          "ingredient": "Use large selectable service tiles with label, short description, and next-step CTA."
+        },
+        {
+          "layer": "interaction-model",
+          "ingredient": "Selecting a pet need should reveal the safest next booking or enquiry path without a full app flow."
+        }
+      ],
+      "bannedUses": [
+        "Do not copy Care.com caregiver marketplace positioning, puns, address collection wording, or care categories that Cedar Paw does not offer."
+      ]
+    },
+    {
+      "screenId": "a4ed4d89-766a-4cd7-8e34-92f56ad08a61",
+      "mobbinUrl": "https://mobbin.com/screens/a4ed4d89-766a-4cd7-8e34-92f56ad08a61",
+      "sourceUrl": "https://mobbin.com/screens/a4ed4d89-766a-4cd7-8e34-92f56ad08a61",
+      "appName": "Fresha",
+      "structureFamily": "service menu rows",
+      "fitScores": {
+        "job": 9,
+        "niche": 8,
+        "firstViewport": 8,
+        "cta": 9,
+        "proof": 7,
+        "mobile": 8,
+        "distinctiveness": 7,
+        "buildability": 9,
+        "truth": 8
+      },
+      "ingredientLedger": [
+        {
+          "layer": "content-strategy",
+          "ingredient": "Turn services into clear rows: full groom, puppy intro, de-shed, nail trim, each with a plain reason to choose it."
+        },
+        {
+          "layer": "cta-system",
+          "ingredient": "Each row needs a book/enquire action so the owner does not have to return to the hero."
+        },
+        {
+          "layer": "forms-and-lead-capture",
+          "ingredient": "Route complex coat/puppy cases to a short fit question instead of pretending availability is known."
+        },
+        {
+          "layer": "accessibility",
+          "ingredient": "Rows need readable labels, visible focus, and touch-sized book buttons."
+        }
+      ],
+      "bannedUses": [
+        "Do not invent prices, ratings, reviews, salon names, staff names, pet photos, or exact Fresha category language."
+      ]
+    },
+    {
+      "screenId": "ccc8e559-908a-4df1-bfa9-905b900a61a1",
+      "mobbinUrl": "https://mobbin.com/screens/ccc8e559-908a-4df1-bfa9-905b900a61a1",
+      "sourceUrl": "https://mobbin.com/screens/ccc8e559-908a-4df1-bfa9-905b900a61a1",
+      "appName": "Care.com",
+      "structureFamily": "pet appointment flow",
+      "fitScores": {
+        "job": 9,
+        "niche": 9,
+        "firstViewport": 8,
+        "cta": 8,
+        "proof": 7,
+        "mobile": 9,
+        "distinctiveness": 8,
+        "buildability": 8,
+        "truth": 8
+      },
+      "ingredientLedger": [
+        {
+          "layer": "responsive-behavior",
+          "ingredient": "Collapse the pet-need selector into a vertical mobile flow with one strong next button."
+        },
+        {
+          "layer": "component-states",
+          "ingredient": "Service, cadence, time, duration, selected, disabled, and empty states must be explicit."
+        },
+        {
+          "layer": "localization-and-formatting",
+          "ingredient": "Use Seattle-local time, US phone/address formatting, and service-duration language only when verified."
+        },
+        {
+          "layer": "governance",
+          "ingredient": "Do not expose address or private pet details until the owner has chosen a real booking/contact path."
+        }
+      ],
+      "bannedUses": [
+        "Do not copy dog-walking labels, confirmed-caregiver privacy copy, address values, or recurring-care promises."
+      ]
+    },
+    {
+      "screenId": "dc0b8443-1de3-46ed-9fdb-46f3896f94e7",
+      "mobbinUrl": "https://mobbin.com/screens/dc0b8443-1de3-46ed-9fdb-46f3896f94e7",
+      "sourceUrl": "https://mobbin.com/screens/dc0b8443-1de3-46ed-9fdb-46f3896f94e7",
+      "appName": "Hims",
+      "structureFamily": "three-step reassurance process",
+      "fitScores": {
+        "job": 8,
+        "niche": 7,
+        "firstViewport": 8,
+        "cta": 8,
+        "proof": 7,
+        "mobile": 8,
+        "distinctiveness": 7,
+        "buildability": 8,
+        "truth": 8
+      },
+      "ingredientLedger": [
+        {
+          "layer": "proof-architecture",
+          "ingredient": "When reviews/photos are unavailable, use process proof: intake, coat check, groom plan, pickup instructions."
+        },
+        {
+          "layer": "voice-and-tone",
+          "ingredient": "Write calmly for anxious pet owners: practical, specific, and safety-conscious without medical or certification claims."
+        },
+        {
+          "layer": "spacing-system",
+          "ingredient": "Give each process step enough room so safety guidance feels deliberate, not buried."
+        },
+        {
+          "layer": "illustration-graphics",
+          "ingredient": "Use grooming-object or step icons only as support, never as fake pet outcomes."
+        }
+      ],
+      "bannedUses": [
+        "Do not copy healthcare/provider copy, treatment timelines, doctor portraits, medication graphics, or guaranteed outcomes."
+      ]
+    },
+    {
+      "screenId": "5a1b3f0f-a74a-4d83-8a5d-f6b2b05a14fb",
+      "mobbinUrl": "https://mobbin.com/screens/5a1b3f0f-a74a-4d83-8a5d-f6b2b05a14fb",
+      "sourceUrl": "https://mobbin.com/screens/5a1b3f0f-a74a-4d83-8a5d-f6b2b05a14fb",
+      "appName": "Origin",
+      "structureFamily": "warm assessment hero",
+      "fitScores": {
+        "job": 8,
+        "niche": 7,
+        "firstViewport": 9,
+        "cta": 8,
+        "proof": 7,
+        "mobile": 8,
+        "distinctiveness": 8,
+        "buildability": 8,
+        "truth": 8
+      },
+      "ingredientLedger": [
+        {
+          "layer": "typography",
+          "ingredient": "Use a warm, confident headline scale that feels careful rather than cute or frantic."
+        },
+        {
+          "layer": "color-system",
+          "ingredient": "Warm neutral surfaces can create trust while avoiding cartoon pet colors and all-green sameness."
+        },
+        {
+          "layer": "surfaces-and-materials",
+          "ingredient": "A soft assessment band can hold the first action without making the whole page a stack of cards."
+        },
+        {
+          "layer": "depth",
+          "ingredient": "Use low, controlled depth around the chooser only; avoid heavy shadows on every section."
+        }
+      ],
+      "bannedUses": [
+        "Do not copy legal-plan language, family asset claims, plan pricing, or financial product structure."
+      ]
+    },
+    {
+      "screenId": "2696cc95-3042-4cc1-97c8-ed54933504a2",
+      "mobbinUrl": "https://mobbin.com/screens/2696cc95-3042-4cc1-97c8-ed54933504a2",
+      "sourceUrl": "https://mobbin.com/screens/2696cc95-3042-4cc1-97c8-ed54933504a2",
+      "appName": "Hims",
+      "structureFamily": "soft category card rail",
+      "fitScores": {
+        "job": 7,
+        "niche": 7,
+        "firstViewport": 8,
+        "cta": 7,
+        "proof": 7,
+        "mobile": 8,
+        "distinctiveness": 7,
+        "buildability": 8,
+        "truth": 8
+      },
+      "ingredientLedger": [
+        {
+          "layer": "media-direction",
+          "ingredient": "If real pet/grooming photos are missing, use restrained service artifacts and approved placeholders rather than cute stock pets."
+        },
+        {
+          "layer": "iconography",
+          "ingredient": "Icons should clarify coat care, puppy intro, de-shed, nails, timing, and location only."
+        },
+        {
+          "layer": "shape",
+          "ingredient": "Use gentle but stable radii for pet-friendly warmth; avoid toy-like bubbles everywhere."
+        },
+        {
+          "layer": "performance",
+          "ingredient": "Prefer static lightweight imagery or CSS service markers until owner-supplied photos are approved."
+        }
+      ],
+      "bannedUses": [
+        "Do not copy medical-product imagery, review graphics, supplement claims, or Hims/Hers brand styling."
+      ]
+    },
+    {
+      "screenId": "eddf2c43-cf73-4c1f-8119-c877d51ffbdd",
+      "mobbinUrl": "https://mobbin.com/screens/eddf2c43-cf73-4c1f-8119-c877d51ffbdd",
+      "sourceUrl": "https://mobbin.com/screens/eddf2c43-cf73-4c1f-8119-c877d51ffbdd",
+      "appName": "Contra",
+      "structureFamily": "single-offer booking rail",
+      "fitScores": {
+        "job": 8,
+        "niche": 7,
+        "firstViewport": 8,
+        "cta": 8,
+        "proof": 7,
+        "mobile": 8,
+        "distinctiveness": 7,
+        "buildability": 8,
+        "truth": 9
+      },
+      "ingredientLedger": [
+        {
+          "layer": "layout-structure",
+          "ingredient": "Pair a plain service explanation column with a persistent booking/enquiry rail for the chosen visit."
+        },
+        {
+          "layer": "motion",
+          "ingredient": "If motion is used, keep it to selected-service transitions or rail updates, not decorative pet animations."
+        },
+        {
+          "layer": "implementation-tokens",
+          "ingredient": "Tokenize one action color, neutral surfaces, row spacing, focus rings, and service tile sizes."
+        },
+        {
+          "layer": "seo-aeo-metadata",
+          "ingredient": "Expose service names, location, and contact path as visible and agent-readable facts."
+        }
+      ],
+      "bannedUses": [
+        "Do not copy freelancer marketplace UI, sidebar nav, hourly/fixed pricing labels, skills chips, or profile identity."
+      ]
+    },
+    {
+      "screenId": "763b7cc1-340d-4199-ac53-1f5bce3f30f6",
+      "mobbinUrl": "https://mobbin.com/screens/763b7cc1-340d-4199-ac53-1f5bce3f30f6",
+      "sourceUrl": "https://mobbin.com/screens/763b7cc1-340d-4199-ac53-1f5bce3f30f6",
+      "appName": "Fiverr",
+      "structureFamily": "provider proof and packages",
+      "fitScores": {
+        "job": 8,
+        "niche": 7,
+        "firstViewport": 8,
+        "cta": 8,
+        "proof": 8,
+        "mobile": 7,
+        "distinctiveness": 7,
+        "buildability": 8,
+        "truth": 7
+      },
+      "ingredientLedger": [
+        {
+          "layer": "business-job",
+          "ingredient": "Support package comparison without overwhelming the immediate booking decision."
+        },
+        {
+          "layer": "proof-architecture",
+          "ingredient": "Only use response time, ratings, reviews, certifications, or package counts if Cedar Paw provides source proof."
+        },
+        {
+          "layer": "content-strategy",
+          "ingredient": "Group service packages by owner decision rather than internal grooming jargon."
+        },
+        {
+          "layer": "accessibility",
+          "ingredient": "Package cards must remain scannable and operable when stacked on mobile."
+        }
+      ],
+      "bannedUses": [
+        "Do not copy Fiverr badges, pro labels, review counts, response-time claims, package prices, or marketplace contact menus."
+      ]
+    }
+  ],
+  "antiReferences": [
+    {
+      "screenId": "8b2bdf72-3b33-4cbe-be7f-d41f8be65b55",
+      "mobbinUrl": "https://mobbin.com/screens/8b2bdf72-3b33-4cbe-be7f-d41f8be65b55",
+      "appName": "Lovable",
+      "rejectionReason": "Generic AI service-card layout would make the pet grooming page feel template-made and unspecific."
+    },
+    {
+      "screenId": "2094841a-ea58-4bb9-876d-8b14319bed7f",
+      "mobbinUrl": "https://mobbin.com/screens/2094841a-ea58-4bb9-876d-8b14319bed7f",
+      "appName": "Amazon",
+      "rejectionReason": "Dense ecommerce navigation and pet-product personalization are wrong for a local appointment page."
+    },
+    {
+      "screenId": "7c5d5efb-78da-4ffe-a44b-cad32afd1a0f",
+      "mobbinUrl": "https://mobbin.com/screens/7c5d5efb-78da-4ffe-a44b-cad32afd1a0f",
+      "appName": "Figma",
+      "rejectionReason": "Cute stock-cat shop imagery is a warning against photo-led pet cuteness when owner-approved grooming photos are unavailable."
+    },
+    {
+      "screenId": "79bf8e1a-be67-474a-93bb-704d504d802d",
+      "mobbinUrl": "https://mobbin.com/screens/79bf8e1a-be67-474a-93bb-704d504d802d",
+      "appName": "Churnkey",
+      "rejectionReason": "B2B metric claims and floating SaaS cards would create fake proof and the wrong business tone."
+    }
+  ],
+  "remixDirection": {
+    "summary": "A calm pet-grooming booking page that starts with the owner decision, uses service-fit tiles and service rows, replaces cute stock-photo temptation with grooming-process artifacts, and keeps proof strictly source-backed.",
+    "selectedMoves": [
+      "Care.com-style pet need selector adapted to grooming visit choice, not marketplace care matching.",
+      "Fresha/Square service-row clarity for full groom, puppy intro, de-shed, and nail trim actions.",
+      "Hims process-card restraint translated into grooming intake, coat check, groom plan, and pickup prep.",
+      "Origin warm assessment tone for anxious owner confidence without legal/financial claims.",
+      "Contra-style booking rail for the chosen service, rebuilt as a local grooming enquiry/booking module."
+    ],
+    "explicitRejects": [
+      "No invented dog photos, before-after images, groomer names, review counts, safety certifications, prices, or veterinary claims.",
+      "No marketplace appointment counts, ecommerce pet-product navigation, SaaS metrics, or generic AI service cards.",
+      "No exact layout copy from any shortlisted Mobbin screen."
+    ]
+  }
+}

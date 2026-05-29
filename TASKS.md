@@ -1,0 +1,173 @@
+# Tasks
+
+## Active
+
+- [ ] **Record first 5 Loom audits** - LayerLogix, PROTBYTE, Sagiss, Scorpion Technology, and Stradiant now have recording scripts; run `prospect:rehearsal -- --limit=5`, use `market:proof-cockpit`, then run `market:after-recording -- --from-clipboard` with the Loom URLs.
+- [ ] **Fill owned-product business metrics** - live public delivery metrics are now filled; paste one product analytics or sales metric per owned product with `npm run owned:metrics -- --from-clipboard` before calling AI Converter, SiteRep, and 0509 full business case studies.
+- [ ] **Complete owned-startup handoff Loom acceptance** - AI Converter, SiteRep, and 0509 now have source-reviewed claims and scorecards; run `npm run owned:handoff`, record the real handoff Looms, then complete each acceptance command.
+- [ ] **Run market learning review after first send batch** - use `npm run market:learn` before changing lead fit, hook, first message, or channel.
+- [ ] **Close first paid sprint** - use the buyer room, proposal, and follow-up sequence.
+- [ ] **Deliver first sprint** - create a client folder, run the sprint, and update the client brain.
+
+## Waiting On
+
+- [ ] **First client data** - waiting on paid client intake before measuring actual delivery friction.
+
+## Someday
+
+- [ ] **Build intake form** - only after first client friction is visible.
+- [ ] **Export buyer room to PDF/site** - only after one buyer room has helped close or nearly close.
+- [ ] **Deepen weekly report automation** - add analytics ingestion after retained clients expose the real reporting pattern.
+
+## Done
+
+- [x] ~~Open full proof stack in record mode~~ (2026-05-29) - `growth:start -- --view=record` now opens the mission, rehearsal gate, teleprompter, and market proof cockpit so recording starts from the proof workflow.
+- [x] ~~Add one-command post-recording proof prep~~ (2026-05-29) - `market:after-recording` now updates Loom URLs, preserves tangible proof notes, prepares send packages, refreshes the outbox, and refreshes the proof cockpit without marking anything sent.
+- [x] ~~Add pre-recording rehearsal quality gate~~ (2026-05-29) - first-batch Looms now get scored for specific leak, buyer-visible value, first fix, clean ask, timing, and send route before recording.
+- [x] ~~Tighten recording script buyer-impact language~~ (2026-05-29) - first-batch Loom talk tracks now use prospect-specific promise, route, and proof cues, and `value:stress` checks the spoken talk track for generic impact language.
+- [x] ~~Tighten tangible proof value specificity~~ (2026-05-29) - proof-run rows now build client-visible value from the prospect's own promise, CTA route, and proof cues, and `value:stress` flags generic or repeated buyer-value language.
+- [x] ~~Approve owned-startup proof claims~~ (2026-05-29) - AI Converter, SiteRep, and 0509 now have source-reviewed owned proof claims and approved scorecards; these remain owned proof, not external market proof.
+- [x] ~~Pick one first vertical~~ (2026-05-29) - picked Texas managed IT/cybersecurity as the first outbound wedge.
+- [x] ~~Seed first prospect batch~~ (2026-05-29) - imported 29 Texas managed IT/cybersecurity prospects.
+- [x] ~~Prep first 5 Loom packages~~ (2026-05-29) - first five prospects are blocked only by real Loom links.
+- [x] ~~Build first-50 prospect list~~ (2026-05-29) - imported 50 Texas managed IT/cybersecurity prospects.
+- [x] ~~Add prospect contact plan~~ (2026-05-29) - prospects can now get a contact route file with emails, forms, contact pages, phones, and socials found on their own site.
+- [x] ~~Add follow-up tracking~~ (2026-05-29) - prospect stages can now schedule due follow-ups.
+- [x] ~~Add reply-to-client handoff~~ (2026-05-29) - sales call prep and prospect-to-client conversion are now scripted.
+- [x] ~~Add client kickoff generator~~ (2026-05-29) - paid sprint can now start with a clear context checklist.
+- [x] ~~Add batch recording queue~~ (2026-05-29) - closest-to-send prospects can now be exported into one recording file.
+- [x] ~~Add channel-aware recording scripts~~ (2026-05-29) - recording scripts now mark sent with contact-form, DM, or email route data.
+- [x] ~~Shorten cold Loom scripts~~ (2026-05-29) - default recording script is now 2-3 minutes instead of 4-6 minutes.
+- [x] ~~Add recording cockpit~~ (2026-05-29) - recording batch now has one browser page with copyable commands.
+- [x] ~~Fix recording local file links~~ (2026-05-29) - teleprompter and recording cockpit now link to prospect files relative to the generated `prospects/` pages instead of broken repo-root paths.
+- [x] ~~Add recording cockpit Loom validation~~ (2026-05-29) - one-off recording commands now require real Loom share/embed URLs before copying.
+- [x] ~~Add recording cockpit quality gate~~ (2026-05-29) - one-off send-prep, send copy, and sent-stage commands now require leak, impact, fix, and ask checks.
+- [x] ~~Route recording handoff through outbox~~ (2026-05-29) - recording cockpit and recording scripts no longer expose direct Mark Sent shortcuts after a Loom is recorded.
+- [x] ~~Add recording teleprompter~~ (2026-05-29) - first five Looms now have a focused large-text recording view.
+- [x] ~~Add recording teleprompter validation~~ (2026-05-29) - the recording screen now counts only valid Loom links and keeps each video on leak, impact, fix, and ask.
+- [x] ~~Add recording teleprompter timer~~ (2026-05-29) - each Loom now has a 3-minute timer so batch recording stays fast.
+- [x] ~~Add send route to recording teleprompter~~ (2026-05-29) - each recording card now shows the best contact route and contact-plan link before the Loom is recorded.
+- [x] ~~Add sender channel guidance to recording teleprompter~~ (2026-05-29) - recording cards now show whether email is clean or whether contact forms/DMs should be used first.
+- [x] ~~Add next-message generator~~ (2026-05-29) - first sends and follow-ups are now generated from stage.
+- [x] ~~Add prospect outbox~~ (2026-05-29) - recorded Looms now get one send page with channel copy and stage commands.
+- [x] ~~Add channel-specific send copy~~ (2026-05-29) - outbound now includes email, contact-form, and DM versions.
+- [x] ~~Add one-shot send prep~~ (2026-05-29) - after recording, one Loom URL now creates the send package.
+- [x] ~~Require approval for one-shot send prep~~ (2026-05-29) - single Loom send prep now requires `--approved` from the quality gate unless explicitly forced.
+- [x] ~~Auto-refresh outbox after one-shot send prep~~ (2026-05-29) - single Loom prep now updates the outbox immediately after creating the send package.
+- [x] ~~Add batch send prep~~ (2026-05-29) - multiple recorded Loom URLs can now create send packages in one run.
+- [x] ~~Auto-refresh outbox after batch send prep~~ (2026-05-29) - approved Loom batch prep now creates send packages and refreshes the outbox in the same step.
+- [x] ~~Add batch sent completion~~ (2026-05-29) - after a batch is sent, one command now marks all prospects sent and schedules follow-ups.
+- [x] ~~Add outbox batch sent sheet~~ (2026-05-29) - outbox now captures the channel used per prospect and `batch-sent` can complete the batch from clipboard.
+- [x] ~~Add managed IT sales one-pager~~ (2026-05-29) - first niche now has a printable offer sheet.
+- [x] ~~Add follow-up cockpit~~ (2026-05-29) - due follow-ups now get one browser page with copy and stage commands.
+- [x] ~~Add reply prep~~ (2026-05-29) - prospect replies now become call-booking packages in one command.
+- [x] ~~Stop reply sends from falsely booking calls~~ (2026-05-29) - reply next-message output now waits for a confirmed time before suggesting call-booked prep.
+- [x] ~~Add call-booked prep~~ (2026-05-29) - booked calls now get confirmation copy, agenda, call prep, and close-loop commands.
+- [x] ~~Require real call time for booked-call prep~~ (2026-05-29) - call-booked prep now refuses placeholder call times unless explicitly forced for recovery.
+- [x] ~~Add post-call close package~~ (2026-05-29) - sales calls now produce a scoped decision follow-up, payment CTA, and conversion commands.
+- [x] ~~Guard close prep behind real sales conversation~~ (2026-05-29) - close prep now requires a call-booked or won prospect unless explicitly forced for recovery.
+- [x] ~~Guard prospect-to-client conversion~~ (2026-05-29) - conversion now requires the prospect to be explicitly marked won and have a close package unless forced for recovery.
+- [x] ~~Add payment approval to client intake~~ (2026-05-29) - client intake and kickoff now track payment/written approval explicitly before delivery starts.
+- [x] ~~Add client delivery cockpit~~ (2026-05-29) - paid sprint folders now get one delivery board with file status, warnings, client updates, and handoff copy.
+- [x] ~~Gate client delivery copy blocks~~ (2026-05-29) - delivery cockpit copy now requires review, and handoff copy is blocked until client readiness is clean.
+- [x] ~~Block client copy placeholders~~ (2026-05-29) - delivery cockpit update and handoff copy are now editable and refuse to copy while bracket placeholders remain.
+- [x] ~~Tighten client readiness proof gates~~ (2026-05-29) - client readiness now requires real approved claim rows and a scorecard average of 4+ with no score below 3.
+- [x] ~~Make sprint acceptance checklist machine-checkable~~ (2026-05-29) - acceptance checks now use real checkboxes and client readiness blocks handoff until they are complete.
+- [x] ~~Require filled delivery artifacts~~ (2026-05-29) - client readiness now blocks blank delivery, implementation handoff, and week-1 report templates before final handoff.
+- [x] ~~Add outbound claim-safety check~~ (2026-05-29) - generated outbound/client-facing materials are now scanned for unprovable claims.
+- [x] ~~Add live metrics export~~ (2026-05-29) - funnel counts and conversion rates now generate from current pipeline state.
+- [x] ~~Add growth cockpit~~ (2026-05-29) - one browser start screen now links today, metrics, recording, follow-ups, and sales sheet.
+- [x] ~~Add proof and learning library~~ (2026-05-29) - audit patterns, pipeline notes, client learnings, and reusable claims now export into one compounding reference.
+- [x] ~~Add daily money mission~~ (2026-05-29) - one command now formalizes the daily workflow around the current bottleneck, exact queue, send batch, follow-up loop, and proof/metrics refresh.
+- [x] ~~Add daily mission Loom validation~~ (2026-05-29) - the mission page now filters invalid Loom URLs before batch send prep.
+- [x] ~~Tighten workflow docs around the mission command~~ (2026-05-29) - command center, daily sales, and Loom workflows now start from `growth:start` instead of loose daily activity.
+- [x] ~~Add sales cockpit~~ (2026-05-29) - replied, call-booked, and approved prospects now have one browser page with copy, package preview, and next-step commands.
+- [x] ~~Make sales cockpit stage-specific~~ (2026-05-29) - the sales cockpit now hides wrong-stage high-stakes commands and requires confirmation before copying conversion/lost/booking commands.
+- [x] ~~Add mission generator to test gate~~ (2026-05-29) - regular verification now exercises the daily mission, cockpit refresh chain, and new sales cockpit wiring.
+- [x] ~~Add one-command startup~~ (2026-05-29) - `growth:start` now refreshes the mission/cockpit pages and opens the right browser view, with focused record/send/follow-up/sales modes.
+- [x] ~~Make startup bottleneck-aware~~ (2026-05-29) - `growth:start` now defaults to the current bottleneck view instead of a generic mission page.
+- [x] ~~Add batch contact-plan enrichment~~ (2026-05-29) - next-batch prospects can now get contact routes in one command instead of one prospect at a time.
+- [x] ~~Add clipboard batch-send prep~~ (2026-05-29) - copied Loom-link sheets can now go straight into batch send prep without manually editing `prospects/loom-links.txt`.
+- [x] ~~Add lead scoring cockpit and batch scorer~~ (2026-05-29) - unscored prospects now get a browser scoring surface, copyable scoring sheet, and clipboard batch importer.
+- [x] ~~Tighten lead scoring import gate~~ (2026-05-29) - batch scoring now rejects impossible scores, missing reasons, and score/priority mismatches before prospects can enter the recording queue.
+- [x] ~~Add lead-score integrity check~~ (2026-05-29) - tests now catch stale Loom-duration labels, impossible scores, and score/priority drift in existing prospect folders.
+- [x] ~~Add outbound send-readiness guardrail~~ (2026-05-29) - generated first sends/follow-ups now include opt-out language, and `send:check` scans send artifacts before sending.
+- [x] ~~Normalize outbound templates~~ (2026-05-29) - future and existing outreach templates can be normalized so manual copies include no-follow-up language.
+- [x] ~~Speed up daily startup~~ (2026-05-29) - shared prospect-readiness logic removed repeated per-prospect Node subprocesses; record startup dropped from about 15.2s to about 1.4s in local timing.
+- [x] ~~Ignore smoke-test artifacts in live dashboards~~ (2026-05-29) - command center, metrics, and proof library now ignore kit/import smoke folders so failed tests cannot pollute real pipeline counts.
+- [x] ~~Centralize agency defaults~~ (2026-05-29) - founder name, offer name, price defaults, placeholders, and opt-out language now live in `growth-brain/ops/agency-config.json` and feed generated copy.
+- [x] ~~Add agency defaults check~~ (2026-05-29) - test gate now fails if stale founder pricing, price ranges, or offer naming reappear in active workflow artifacts.
+- [x] ~~Add growth doctor~~ (2026-05-29) - one command now reports workflow health, safety gates, current money bottleneck, and the next command to run.
+- [x] ~~Make growth doctor recording-prep aware~~ (2026-05-29) - doctor now sends fresh prepped batches straight to the recording view instead of looping on prep.
+- [x] ~~Add Loom URL guardrail~~ (2026-05-29) - single and batch send prep now reject generic web links so the wrong URL cannot reach outreach.
+- [x] ~~Validate Loom URLs in metrics and outbox~~ (2026-05-29) - live counts and outbox readiness now count only real Loom share/embed links, not any pasted URL.
+- [x] ~~Require approved send packages for ready-to-send~~ (2026-05-29) - metrics and outbox no longer treat a raw Loom link as send-ready without a matching approved send package.
+- [x] ~~Align outbox with ready send packages~~ (2026-05-29) - the outbox now requires the matching send package to be both Loom-approved and readiness-ready before it appears.
+- [x] ~~Guard batch sent completion~~ (2026-05-29) - batch-sent now refuses to mark prospects sent unless matching ready send packages already exist.
+- [x] ~~Require Loom approval for batch sent completion~~ (2026-05-29) - batch-sent now also requires Loom quality approval, including dry-run checks, before a sent row is trusted.
+- [x] ~~Add recording site preflight~~ (2026-05-29) - queued recording sites can now be checked before a Loom block to avoid dead-page recording friction.
+- [x] ~~Add live page snapshots~~ (2026-05-29) - recording prep now pulls page promises, headings, CTAs, and proof cues into each prospect folder.
+- [x] ~~Add one-command recording prep~~ (2026-05-29) - one command now checks sites, refreshes snapshots/scripts, and rebuilds the recording queue, cockpit, teleprompter, and mission page.
+- [x] ~~Make recording scripts snapshot-aware~~ (2026-05-29) - talk tracks now include live page promise, route, CTA, and proof cues so Looms are faster to record and sharper for buyers.
+- [x] ~~Add recording sharpness brief~~ (2026-05-29) - recording prep now turns the saved angle/copy rules into a per-prospect market-stage, direct-response, So-What, and proof-guardrail brief before each Loom.
+- [x] ~~Add snapshot freshness guard~~ (2026-05-29) - future prospects no longer look recording-ready without a page snapshot and snapshot-aware script.
+- [x] ~~Refresh contact plans during recording prep~~ (2026-05-29) - recording batches now refresh send routes before the Loom block, so recorded Looms can move straight into outbox work.
+- [x] ~~Add outbound sender setup check~~ (2026-05-29) - sender readiness now warns on missing physical address, DKIM selector, SPF, DMARC, and daily cap before cold email sessions.
+- [x] ~~Add sender setup guide~~ (2026-05-29) - sender warnings now produce a plain checklist with current DNS status, exact config fields, and source links.
+- [x] ~~Add sender-aware channel guidance~~ (2026-05-29) - send packages and outbox now route toward contact forms or DMs while sender setup has warnings.
+- [x] ~~Add send channel memory~~ (2026-05-29) - sent and follow-up stages now remember whether the touch used email, contact form, or DM.
+- [x] ~~Add business-day follow-up scheduling~~ (2026-05-29) - first-send follow-ups now avoid weekend due dates.
+- [x] ~~Guard premature follow-up staging~~ (2026-05-29) - follow-up stages now refuse to advance before the prospect is sent, before the prior follow-up, or before the due date unless explicitly forced.
+- [x] ~~Preserve full follow-up channel memory~~ (2026-05-29) - follow-up cockpit stage commands now keep LinkedIn, X, phone, mixed, and other manual routes instead of falling back to email/contact-form/DM.
+- [x] ~~Gate follow-up stage buttons behind sent confirmation~~ (2026-05-29) - the follow-up cockpit now requires `Sent this follow-up` before copying Mark Follow-Up commands.
+- [x] ~~Guard premature sales progression~~ (2026-05-29) - replied, call-booked, and won stages now follow the real funnel order unless explicitly forced for recovery.
+- [x] ~~Require learning notes for lost/paused prospects~~ (2026-05-29) - lost and paused stages now require a note unless explicitly forced, so objections and disqualifiers keep compounding.
+- [x] ~~Require real loss reasons in sales cockpit~~ (2026-05-29) - Mark Lost buttons now need a specific loss reason before copying the stage command.
+- [x] ~~Add sales placeholder guard~~ (2026-05-29) - call-booked and close packages now treat fake meeting/payment placeholders as blank, and `send:check` scans sales packages before they are trusted.
+- [x] ~~Add recording quality gate~~ (2026-05-29) - teleprompter batch-copy now requires a valid Loom URL plus confirmed leak, buyer impact, first fix, and clean ask.
+- [x] ~~Add daily mission Loom approval gate~~ (2026-05-29) - the mission page now uses the same approved Loom sheet rules as the teleprompter, so quality checks cannot be bypassed.
+- [x] ~~Require approved Loom rows for clipboard batch prep~~ (2026-05-29) - batch send prep now rejects clipboard Loom rows without an `approved` marker from the quality gate.
+- [x] ~~Add outbox sent-confirmation gate~~ (2026-05-29) - batch-sent sheet now includes only prospects checked as actually sent, so partial send sessions do not falsely advance the pipeline.
+- [x] ~~Gate outbox stage buttons behind sent confirmation~~ (2026-05-29) - individual Mark Sent buttons now require the same `Sent this message` checkbox as the batch sent sheet.
+- [x] ~~Add full-channel outbox stage buttons~~ (2026-05-29) - individual Mark Sent buttons now cover contact form, DM, LinkedIn, X, phone, mixed, other, and email.
+- [x] ~~Block email while sender setup is dirty~~ (2026-05-29) - outbox, follow-up, recording, and batch-sent flows now force contact forms/DMs until sender setup is clean.
+- [x] ~~Add conversion optimization playbook~~ (2026-05-29) - page, copy, angle, email, distribution, and paid-ads heuristics now live inside Growth Brain.
+- [x] ~~Gate client delivery with conversion scorecard~~ (2026-05-29) - every client sprint now gets a conversion scorecard and final readiness blocks until it is filled and approved.
+- [x] ~~Add revenue page conversion skill~~ (2026-05-29) - local skill now audits landing pages, sales pages, product pages, lead forms, ad-message match, and conversion copy.
+- [x] ~~Add recording quality notes~~ (2026-05-29) - approved Loom rows now require leak, impact, fix, and ask notes that flow into the send package.
+- [x] ~~Surface recording notes in outbox~~ (2026-05-29) - send review now shows the exact Loom notes before copy/send decisions.
+- [x] ~~Add marketing-agent workbench~~ (2026-05-29) - daily research, content, competitor monitoring, lead research, briefings, and paid ads loops now live in Growth Brain.
+- [x] ~~Add AI/search no-hack rules~~ (2026-05-29) - AEO/GEO work now rejects fake AI-only shortcuts and stays grounded in useful SEO.
+- [x] ~~Add market parity readiness gate~~ (2026-05-29) - 11/10/comparable/better-than-market claims now require real Loom, reply, close, delivery, approved-proof, and weekly-report evidence.
+- [x] ~~Add 11/10 proof run~~ (2026-05-29) - failed parity gates now export the exact Loom batch, proof-capture rows, send route, and sales/delivery/retention evidence needed next.
+- [x] ~~Add weekly/monthly retention checkups~~ (2026-05-29) - retention prep now exports checkups plus a dashboard without sending automatically.
+- [x] ~~Add internal owner dashboard~~ (2026-05-29) - one concise dashboard now shows bottleneck, next/pending actions, funnel counts, retention risk, and 11/10 blockers.
+- [x] ~~Add dashboard to-do list~~ (2026-05-29) - internal dashboard now pulls active, waiting, and backlog tasks from `TASKS.md` so pending actions stay visible.
+- [x] ~~Build client-facing retention dashboard~~ (2026-05-29) - client dashboard now shows shipped work, learnings, next action, approved proof, and missing proof warnings without fake metrics.
+- [x] ~~Add guarded renewal review~~ (2026-05-29) - month-end review now blocks renewal/upsell asks until weekly proof, client dashboard, readiness, and approved claims are clean.
+- [x] ~~Prefill proof-run Loom sheet~~ (2026-05-29) - 11/10 proof run now writes `prospects/loom-links.txt` with exact leak, impact, fix, and ask notes so only real Loom URLs need replacing.
+- [x] ~~Add owned-startup proof lane~~ (2026-05-29) - AI Converter, SiteRep, and 0509 can now stress-test delivery and retention without being counted as external market proof.
+- [x] ~~Add tangible improvement moat gate~~ (2026-05-29) - client delivery now requires before/after, proof source, client-visible value, and next measurement.
+- [x] ~~Add value/retention stress test~~ (2026-05-29) - one command now audits internal dashboard, client dashboard, tangible proof, delight, retention, owned-startup proof, and external market proof.
+- [x] ~~Fill owned-startup tangible proof rows~~ (2026-05-29) - `owned:proof` now captures draft before/after proof packets for AI Converter, SiteRep, and 0509 without counting them as external market proof.
+- [x] ~~Add owned-startup proof review packets~~ (2026-05-29) - `owned:proof` now fills claim-review packets, draft claim ledgers, scorecards, and implementation handoffs without approving claims automatically.
+- [x] ~~Add guarded client proof review command~~ (2026-05-29) - `client:proof-review` now lists, approves, or removes claim rows with an explicit reviewer and refreshes proof dashboards without completing acceptance checks automatically.
+- [x] ~~Add owned proof review rollup~~ (2026-05-29) - `owned:proof-review` now summarizes AI Converter, SiteRep, and 0509 claim approval status in one command.
+- [x] ~~Add guarded sprint acceptance command~~ (2026-05-29) - `client:acceptance` now completes final acceptance only after proof, scorecard, delivery, and handoff gates are clean.
+- [x] ~~Add market proof-run checker~~ (2026-05-29) - `market:proof-check` now verifies the 5-Loom proof session from approved rows through send packages and actual sent proof.
+- [x] ~~Add guarded sender configuration command~~ (2026-05-29) - `send:configure` now applies real postal address and DKIM selector, reruns sender trust checks, and regenerates the sender guide.
+- [x] ~~Harden proof approval with source evidence status~~ (2026-05-29) - proof claims cannot be approved until source evidence is found/confirmed, and owned-startup claim review now writes a concise approval queue.
+- [x] ~~Add owned proof approval cockpit~~ (2026-05-29) - `owned:proof-review` now writes Markdown and HTML review surfaces with source snippets plus approve/remove commands.
+- [x] ~~Add retention automation verifier~~ (2026-05-29) - `retention:automation-check` now proves the scheduled retention prep loop is active, repo-scoped, and cannot auto-send or auto-approve claims.
+- [x] ~~Add market proof cockpit~~ (2026-05-29) - `market:proof-cockpit` now shows the first external proof run as tangible improvement rows with before/leak, after/fix, client-visible value, next measurement, missing proof, route, and next command.
+- [x] ~~Add owned proof bulk review commands~~ (2026-05-29) - `owned:proof-review` now gives each owned startup a source-ready bulk dry-run, apply command, and acceptance dry-run so delivery proof can be cleared faster without auto-approval.
+- [x] ~~Make client dashboard lead with tangible improvement~~ (2026-05-29) - client dashboards now show this week's before, after, proof source, client-visible value, and next measurement before activity details.
+- [x] ~~Add owned-startup handoff Loom cockpit~~ (2026-05-29) - `owned:handoff` now prepares one proof-delta recording script per owned startup and keeps acceptance blocked until a real Loom URL exists.
+- [x] ~~Add competitive proof matrix~~ (2026-05-29) - `market:benchmark` now compares TinyStudio against AI CRO tools, large CRO agencies, enterprise experimentation, specialist CRO agencies, and AI automation audits, then blocks unsupported better/comparable claims.
+- [x] ~~Add DKIM discovery to sender trust checks~~ (2026-05-29) - `send:setup` now probes common DKIM selectors and `send:guide` prints candidate selectors plus the dry-run configure command when DNS exposes one.
+- [x] ~~Block unsafe email from market proof counts~~ (2026-05-29) - `market:proof-check` now refuses to count email sends as proof while sender setup still warns, keeping contact forms/DMs as the safe proof route.
+- [x] ~~Add market learning review~~ (2026-05-29) - `market:learn` now reviews send/reply/follow-up evidence and proposes the next one-variable batch experiment.
+- [x] ~~Add measurement contract gate~~ (2026-05-29) - client weekly reports, dashboards, and value stress tests now require a signal, source, owner, next check, baseline/current state, and decision rule for every tangible improvement.
+- [x] ~~Add owned-product case-study packets~~ (2026-05-29) - `owned:case-studies` now creates sales-safe proof packets for AI Converter, SiteRep, and 0509, labels them owned-product proof, and blocks full case-study readiness until current metrics are filled.
+- [x] ~~Add owned-product metric capture~~ (2026-05-29) - `owned:metrics` now updates owned-product weekly reports, analytics notes, dashboards, and case-study packets from a pasted real-metric sheet.
+- [x] ~~Add owned-product live signal capture~~ (2026-05-29) - `owned:live-signals` checks AI Converter, SiteRep, and 0509 public proof surfaces, writes live-signal reports, and updates owned packets with real delivery metrics while keeping revenue proof blocked.

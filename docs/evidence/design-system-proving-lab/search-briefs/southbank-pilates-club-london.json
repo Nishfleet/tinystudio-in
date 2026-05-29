@@ -1,0 +1,111 @@
+{
+  "schemaVersion": "mobbin.mobbin-search-brief.v1",
+  "businessId": "southbank-pilates-club-london",
+  "businessName": "Southbank Pilates Club",
+  "businessModel": "service",
+  "category": "pilates",
+  "subcategory": "reformer intro classes, private sessions, and small-group membership",
+  "targetCustomerDecision": "Should a visitor start with a reformer intro, private session, or small-group membership enquiry?",
+  "primaryAction": "book",
+  "sourceProvider": "Mobbin Pro MCP",
+  "platform": "web",
+  "requiredQueryAngles": [
+    "niche",
+    "page-job",
+    "tone",
+    "constraint"
+  ],
+  "requiredRawCandidates": {
+    "min": 12,
+    "max": 20
+  },
+  "requiredShortlist": {
+    "min": 6,
+    "max": 8
+  },
+  "requiredAntiReferences": 2,
+  "requiredIngredientLayers": [
+    "business-job",
+    "information-architecture",
+    "content-strategy",
+    "voice-and-tone",
+    "typography",
+    "layout-structure",
+    "spacing-system",
+    "responsive-behavior",
+    "color-system",
+    "surfaces-and-materials",
+    "depth",
+    "shape",
+    "component-anatomy",
+    "component-states",
+    "interaction-model",
+    "motion",
+    "media-direction",
+    "iconography",
+    "illustration-graphics",
+    "proof-architecture",
+    "cta-system",
+    "forms-and-lead-capture",
+    "accessibility",
+    "localization-and-formatting",
+    "seo-aeo-metadata",
+    "performance",
+    "implementation-tokens",
+    "governance"
+  ],
+  "collectionPolicy": {
+    "sourceCategory": "Mobbin Pro web platform / websites category",
+    "strategy": "wide-pull-then-compress",
+    "minimumReturnedScreensAcrossQueries": 32,
+    "minimumUniqueRawPoolScreens": 20,
+    "packetRawCandidates": {
+      "min": 12,
+      "max": 20
+    },
+    "recommendedChunkSize": 8,
+    "chunkRule": "Use repeated Mobbin MCP calls with exclude_screen_ids when one large pull times out; chunking is allowed, narrowing the search to save transcript space is not.",
+    "transcriptPolicy": "Save the full raw Mobbin metadata and links in raw-pull-log.json. The chat/report should show only counts, hashes, shortlist, and blockers."
+  },
+  "queries": [
+    {
+      "angle": "niche",
+      "query": "pilates reformer intro classes, private sessions, and small-group membership service marketing website homepage book CTA landing page website inspiration",
+      "mode": "deep",
+      "platform": "web",
+      "minimumRawCandidates": 12,
+      "targetRawCandidates": 20
+    },
+    {
+      "angle": "page-job",
+      "query": "book CTA homepage with trust proof, service or product menu, and local customer decision path website",
+      "mode": "deep",
+      "platform": "web",
+      "minimumRawCandidates": 12,
+      "targetRawCandidates": 20
+    },
+    {
+      "angle": "tone",
+      "query": "premium credible owner-led service business landing page website",
+      "mode": "deep",
+      "platform": "web",
+      "minimumRawCandidates": 12,
+      "targetRawCandidates": 20
+    },
+    {
+      "angle": "constraint",
+      "query": "same broad category as fitness but different taste membership vs class path body-image claim risk responsive mobile-first homepage website not dashboard not app",
+      "mode": "deep",
+      "platform": "web",
+      "minimumRawCandidates": 12,
+      "targetRawCandidates": 20
+    }
+  ],
+  "noCopyRules": [
+    "Do not copy source brands, logos, product claims, trust claims, screenshots, or exact layouts.",
+    "Do not use Mobbin reference proof as business proof.",
+    "Every selected ingredient must map to this business job or a quality requirement."
+  ],
+  "briefHash": "6b1dc44de0f21750df9de2b9b7dfd6c8e715611796022de4c4242c27e0485365",
+  "businessHash": "df714dfbc212604ec46c8fb233a5d14feb19ec40fb7c090f3f6cb675e33aea90"
+}

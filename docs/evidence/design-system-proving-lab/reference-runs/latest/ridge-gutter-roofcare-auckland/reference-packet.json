@@ -1,0 +1,206 @@
+{
+  "schemaVersion": "mobbin.mobbin-pro.per-redesign-reference-packet.v1",
+  "sourceProvider": "Mobbin Pro MCP",
+  "platform": "web",
+  "businessId": "ridge-gutter-roofcare-auckland",
+  "businessName": "Ridge & Gutter Roofcare",
+  "businessHash": "48383a6571056891bf73f86a4cae4b6bd211003926c5d131931798283fc49d56",
+  "searchBriefHash": "1686e70f12951bffa9a69eaec670f7195dfb4152ff803c0c14b5a3d85561de3b",
+  "generatedAt": "2026-05-19T01:30:40.000Z",
+  "rawPullLogPath": "docs/evidence/design-system-proving-lab/reference-runs/latest/ridge-gutter-roofcare-auckland/raw-pull-log.json",
+  "rawPullLogHash": "15c2a6459d81b81106249d2bef491b1e70f7c4ed9c174ce95ed269af0f20d0b9",
+  "queryLog": [
+    { "angle": "niche", "query": "home-service roof cleaning, gutter clearing, leak checks, and seasonal maintenance service marketing website homepage quote CTA landing page website inspiration", "mode": "deep", "platform": "web", "returnedCount": 10, "runAt": "2026-05-19T00:00:00.000Z" },
+    { "angle": "page-job", "query": "quote CTA homepage with trust proof, service or product menu, and local customer decision path website", "mode": "deep", "platform": "web", "returnedCount": 10, "runAt": "2026-05-19T00:00:00.000Z" },
+    { "angle": "tone", "query": "premium credible owner-led service business landing page website", "mode": "deep", "platform": "web", "returnedCount": 10, "runAt": "2026-05-19T00:00:00.000Z" },
+    { "angle": "constraint", "query": "quote-first CTA homeowner problem routing safety/legal wording risk responsive mobile-first homepage website not dashboard not app", "mode": "deep", "platform": "web", "returnedCount": 10, "runAt": "2026-05-19T00:00:00.000Z" }
+  ],
+  "rawCandidates": [
+    { "screenId": "e441aa4b-608d-4ba1-8e26-bd66e362a9e6", "mobbinUrl": "https://mobbin.com/screens/e441aa4b-608d-4ba1-8e26-bd66e362a9e6", "sourceUrl": "https://mobbin.com/screens/e441aa4b-608d-4ba1-8e26-bd66e362a9e6", "imageUrl": "https://mobbin.com/api/mcp/short/fFxvJQxC", "appName": "Airtasker", "selectionReason": "Quote-first task entry with homeowner-style problem chips and a strong one-line request field." },
+    { "screenId": "3f0f1fb8-b6d6-43b7-8d19-3b4253d3b6f3", "mobbinUrl": "https://mobbin.com/screens/3f0f1fb8-b6d6-43b7-8d19-3b4253d3b6f3", "sourceUrl": "https://mobbin.com/screens/3f0f1fb8-b6d6-43b7-8d19-3b4253d3b6f3", "imageUrl": "https://mobbin.com/api/mcp/short/oughk9xb", "appName": "Airtasker", "selectionReason": "Marketplace home-service hero shows how to sell action speed while keeping categories visible." },
+    { "screenId": "8840c427-54f4-4dbd-b6ee-67ca77e81584", "mobbinUrl": "https://mobbin.com/screens/8840c427-54f4-4dbd-b6ee-67ca77e81584", "sourceUrl": "https://mobbin.com/screens/8840c427-54f4-4dbd-b6ee-67ca77e81584", "imageUrl": "https://mobbin.com/api/mcp/short/ZXEq5DXI", "appName": "Care.com", "selectionReason": "Risk and compliance card structure maps well to safety-led home maintenance proof." },
+    { "screenId": "b71895dd-c96b-4cb6-85d7-881e1e804566", "mobbinUrl": "https://mobbin.com/screens/b71895dd-c96b-4cb6-85d7-881e1e804566", "sourceUrl": "https://mobbin.com/screens/b71895dd-c96b-4cb6-85d7-881e1e804566", "imageUrl": "https://mobbin.com/api/mcp/short/mFTPJFru", "appName": "HODINKEE", "selectionReason": "Address-first quote step gives a clean model for location-dependent service estimates." },
+    { "screenId": "d9f34864-273b-4c34-ae98-f5567c824252", "mobbinUrl": "https://mobbin.com/screens/d9f34864-273b-4c34-ae98-f5567c824252", "sourceUrl": "https://mobbin.com/screens/d9f34864-273b-4c34-ae98-f5567c824252", "imageUrl": "https://mobbin.com/api/mcp/short/9WnBWQjg", "appName": "HODINKEE", "selectionReason": "FAQ and dark quote CTA band show how to pair caution copy with a decisive action." },
+    { "screenId": "3c5cc95f-164a-4888-9ba9-71b79f8d5b55", "mobbinUrl": "https://mobbin.com/screens/3c5cc95f-164a-4888-9ba9-71b79f8d5b55", "sourceUrl": "https://mobbin.com/screens/3c5cc95f-164a-4888-9ba9-71b79f8d5b55", "imageUrl": "https://mobbin.com/api/mcp/short/1m3C68Da", "appName": "Klook", "selectionReason": "Quote module, benefit cards, and light illustration style are useful for non-photo service routing." },
+    { "screenId": "7c4991b4-1b2a-48d5-a6e5-ae929d7da449", "mobbinUrl": "https://mobbin.com/screens/7c4991b4-1b2a-48d5-a6e5-ae929d7da449", "sourceUrl": "https://mobbin.com/screens/7c4991b4-1b2a-48d5-a6e5-ae929d7da449", "imageUrl": "https://mobbin.com/api/mcp/short/lLELEdFV", "appName": "Origin", "selectionReason": "Minimal progressive stepper is useful for a quote flow that starts with location and service type." },
+    { "screenId": "e03c0e93-82d2-4c20-882f-6395ea8c4303", "mobbinUrl": "https://mobbin.com/screens/e03c0e93-82d2-4c20-882f-6395ea8c4303", "sourceUrl": "https://mobbin.com/screens/e03c0e93-82d2-4c20-882f-6395ea8c4303", "imageUrl": "https://mobbin.com/api/mcp/short/LeYqbtva", "appName": "Contra", "selectionReason": "Owner-led service menu row and restrained portfolio structure fit a small specialist operator." },
+    { "screenId": "83a35636-2c39-40a4-812f-e9ff22a05d7c", "mobbinUrl": "https://mobbin.com/screens/83a35636-2c39-40a4-812f-e9ff22a05d7c", "sourceUrl": "https://mobbin.com/screens/83a35636-2c39-40a4-812f-e9ff22a05d7c", "imageUrl": "https://mobbin.com/api/mcp/short/cRnlT4of", "appName": "Contra", "selectionReason": "Service detail panel shows clean contact CTA, duration, and compact fact chips." },
+    { "screenId": "b2a6f5f4-a142-407f-aa69-032f1b925ada", "mobbinUrl": "https://mobbin.com/screens/b2a6f5f4-a142-407f-aa69-032f1b925ada", "sourceUrl": "https://mobbin.com/screens/b2a6f5f4-a142-407f-aa69-032f1b925ada", "imageUrl": "https://mobbin.com/api/mcp/short/FGjlaOHW", "appName": "OpenTable", "selectionReason": "Local area directory and owner CTA block are useful as a location-service footer reference." },
+    { "screenId": "ed6d5e76-1e29-4db3-9688-5c7c55082f42", "mobbinUrl": "https://mobbin.com/screens/ed6d5e76-1e29-4db3-9688-5c7c55082f42", "sourceUrl": "https://mobbin.com/screens/ed6d5e76-1e29-4db3-9688-5c7c55082f42", "imageUrl": "https://mobbin.com/api/mcp/short/33i2K3aK", "appName": "Clearbit", "selectionReason": "Quote CTA and trusted-by strip are useful only after removing unsupported logo proof." },
+    { "screenId": "1d6c0904-9595-43d9-b7e5-1be5f9971119", "mobbinUrl": "https://mobbin.com/screens/1d6c0904-9595-43d9-b7e5-1be5f9971119", "sourceUrl": "https://mobbin.com/screens/1d6c0904-9595-43d9-b7e5-1be5f9971119", "imageUrl": "https://mobbin.com/api/mcp/short/rIhw3pU4", "appName": "Wave", "selectionReason": "Insurance quote copy and benefit icons are relevant, but the admin shell makes it an anti-reference." },
+    { "screenId": "cdba0833-3575-422e-929d-31290ba72e9b", "mobbinUrl": "https://mobbin.com/screens/cdba0833-3575-422e-929d-31290ba72e9b", "sourceUrl": "https://mobbin.com/screens/cdba0833-3575-422e-929d-31290ba72e9b", "imageUrl": "https://mobbin.com/api/mcp/short/dJWoogQo", "appName": "Blue Apron", "selectionReason": "Product photo offer panel is useful as an anti-reference for image-led service pages without owner photos." },
+    { "screenId": "c74b0208-22d4-4044-ae2f-1399b9daf5d5", "mobbinUrl": "https://mobbin.com/screens/c74b0208-22d4-4044-ae2f-1399b9daf5d5", "sourceUrl": "https://mobbin.com/screens/c74b0208-22d4-4044-ae2f-1399b9daf5d5", "imageUrl": "https://mobbin.com/api/mcp/short/NGpdQfui", "appName": "Hims", "selectionReason": "Outcome-stat hero is a strong warning against invented performance claims." },
+    { "screenId": "1bb4fded-b6e6-4271-8522-d5a85048bcf3", "mobbinUrl": "https://mobbin.com/screens/1bb4fded-b6e6-4271-8522-d5a85048bcf3", "sourceUrl": "https://mobbin.com/screens/1bb4fded-b6e6-4271-8522-d5a85048bcf3", "imageUrl": "https://mobbin.com/api/mcp/short/y74emoUT", "appName": "Lovable", "selectionReason": "Generic AI service-card layout is useful as an anti-reference for template sameness." },
+    { "screenId": "1977fc93-2b97-4e13-9f54-f0a6b292fbe1", "mobbinUrl": "https://mobbin.com/screens/1977fc93-2b97-4e13-9f54-f0a6b292fbe1", "sourceUrl": "https://mobbin.com/screens/1977fc93-2b97-4e13-9f54-f0a6b292fbe1", "imageUrl": "https://mobbin.com/api/mcp/short/A3qGXZNs", "appName": "Squarespace", "selectionReason": "Template service-pricing panel helps reject generic productized service sections." }
+  ],
+  "shortlist": [
+    {
+      "screenId": "e441aa4b-608d-4ba1-8e26-bd66e362a9e6",
+      "mobbinUrl": "https://mobbin.com/screens/e441aa4b-608d-4ba1-8e26-bd66e362a9e6",
+      "sourceUrl": "https://mobbin.com/screens/e441aa4b-608d-4ba1-8e26-bd66e362a9e6",
+      "appName": "Airtasker",
+      "structureFamily": "task-posting quote hero",
+      "fitScores": { "job": 9, "niche": 9, "firstViewport": 9, "cta": 9, "proof": 7, "mobile": 8, "distinctiveness": 8, "buildability": 8, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "business-job", "ingredient": "Make the first job a homeowner problem statement: gutters, moss, leak check, or seasonal roofcare quote." },
+        { "layer": "information-architecture", "ingredient": "Start with quote entry and problem chips, then move into service fit, safety notes, and proof." },
+        { "layer": "layout-structure", "ingredient": "Use a broad hero with a dominant request field and quick service chips below it." },
+        { "layer": "responsive-behavior", "ingredient": "Collapse the request field and chips into stacked mobile tap targets with one visible quote CTA." },
+        { "layer": "cta-system", "ingredient": "Primary CTA should ask for quote details, not promise instant booking or fixed pricing." }
+      ],
+      "bannedUses": [ "Do not copy Airtasker's marketplace promise, blue brand system, tasker economics, fake task prices, or broad gig categories." ]
+    },
+    {
+      "screenId": "8840c427-54f4-4dbd-b6ee-67ca77e81584",
+      "mobbinUrl": "https://mobbin.com/screens/8840c427-54f4-4dbd-b6ee-67ca77e81584",
+      "sourceUrl": "https://mobbin.com/screens/8840c427-54f4-4dbd-b6ee-67ca77e81584",
+      "appName": "Care.com",
+      "structureFamily": "risk-reduction proof cards",
+      "fitScores": { "job": 8, "niche": 7, "firstViewport": 8, "cta": 8, "proof": 9, "mobile": 8, "distinctiveness": 7, "buildability": 8, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "content-strategy", "ingredient": "Frame services around homeowner risk reduction: blocked gutters, roof moss, leak checks, and maintenance timing." },
+        { "layer": "voice-and-tone", "ingredient": "Use plain safety language and practical outcomes instead of fear-heavy emergency copy." },
+        { "layer": "surfaces-and-materials", "ingredient": "Soft neutral panels can separate risk, service, and quote information without turning the whole page into cards." },
+        { "layer": "depth", "ingredient": "Keep proof panels shallow and quiet so the quote action remains more important than decoration." },
+        { "layer": "proof-architecture", "ingredient": "Use process proof and safety steps only; hold reviews, guarantees, insurance, or years-in-business until source-backed." },
+        { "layer": "seo-aeo-metadata", "ingredient": "Visible service names and risk language should map cleanly to agent-readable service facts." },
+        { "layer": "governance", "ingredient": "Every trust cue must be owner-approved before it appears in visible or markdown content." }
+      ],
+      "bannedUses": [ "Do not copy Care.com's caregiver payroll claims, guarantee language, reviews, star ratings, prices, compliance guarantees, or human photos." ]
+    },
+    {
+      "screenId": "b71895dd-c96b-4cb6-85d7-881e1e804566",
+      "mobbinUrl": "https://mobbin.com/screens/b71895dd-c96b-4cb6-85d7-881e1e804566",
+      "sourceUrl": "https://mobbin.com/screens/b71895dd-c96b-4cb6-85d7-881e1e804566",
+      "appName": "HODINKEE",
+      "structureFamily": "progressive quote form",
+      "fitScores": { "job": 9, "niche": 7, "firstViewport": 8, "cta": 9, "proof": 7, "mobile": 8, "distinctiveness": 8, "buildability": 8, "truth": 9 },
+      "ingredientLedger": [
+        { "layer": "component-anatomy", "ingredient": "Quote form needs label, local area, service type, optional notes, privacy reassurance, and a clear next button." },
+        { "layer": "component-states", "ingredient": "Include empty, focus, selected service, invalid contact, submitting, and sent states." },
+        { "layer": "interaction-model", "ingredient": "Progressive quote capture can start with suburb or service problem before asking for contact details." },
+        { "layer": "forms-and-lead-capture", "ingredient": "Use a short quote form that captures the visit reason without implying guaranteed availability or price." },
+        { "layer": "accessibility", "ingredient": "Inputs need real labels, keyboard focus, error text, and touch targets large enough for mobile homeowners." },
+        { "layer": "localization-and-formatting", "ingredient": "Use Auckland suburb, NZ phone, and seasonal maintenance wording rather than US address defaults." }
+      ],
+      "bannedUses": [ "Do not copy watch-insurance wording, exact quote steps, policy/legal disclaimers, luxury product framing, or Chubb-backed trust language." ]
+    },
+    {
+      "screenId": "3c5cc95f-164a-4888-9ba9-71b79f8d5b55",
+      "mobbinUrl": "https://mobbin.com/screens/3c5cc95f-164a-4888-9ba9-71b79f8d5b55",
+      "sourceUrl": "https://mobbin.com/screens/3c5cc95f-164a-4888-9ba9-71b79f8d5b55",
+      "appName": "Klook",
+      "structureFamily": "illustrated quote module",
+      "fitScores": { "job": 8, "niche": 7, "firstViewport": 9, "cta": 9, "proof": 7, "mobile": 8, "distinctiveness": 8, "buildability": 8, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "color-system", "ingredient": "Use a controlled safety/action accent for quote actions and service chips, balanced by white and weathered roof neutrals." },
+        { "layer": "shape", "ingredient": "Use rounded quote containers sparingly; service cards can be softer while CTAs stay crisp." },
+        { "layer": "media-direction", "ingredient": "When owner photos are unavailable, use roofline, ladder, gutter, and weather artifact graphics instead of fake crew photos." },
+        { "layer": "iconography", "ingredient": "Icons should clarify water flow, moss, leak, ladder safety, location, and quote step only." },
+        { "layer": "illustration-graphics", "ingredient": "Illustrations can carry service context, but must stay practical and not cartoonish for a safety-sensitive home service." }
+      ],
+      "bannedUses": [ "Do not copy travel insurance messaging, vacation imagery, global coverage claims, orange Klook identity, or illustrated luggage assets." ]
+    },
+    {
+      "screenId": "7c4991b4-1b2a-48d5-a6e5-ae929d7da449",
+      "mobbinUrl": "https://mobbin.com/screens/7c4991b4-1b2a-48d5-a6e5-ae929d7da449",
+      "sourceUrl": "https://mobbin.com/screens/7c4991b4-1b2a-48d5-a6e5-ae929d7da449",
+      "appName": "Origin",
+      "structureFamily": "minimal step-by-step qualifier",
+      "fitScores": { "job": 8, "niche": 7, "firstViewport": 8, "cta": 8, "proof": 7, "mobile": 8, "distinctiveness": 8, "buildability": 9, "truth": 9 },
+      "ingredientLedger": [
+        { "layer": "motion", "ingredient": "Any motion should be functional: advancing quote steps, revealing the next field, or confirming submission." },
+        { "layer": "component-states", "ingredient": "Step indicators should show current, completed, disabled, and error states without hiding the task." },
+        { "layer": "interaction-model", "ingredient": "A short multi-step flow can reduce cognitive load when service type, suburb, and contact are all required." },
+        { "layer": "performance", "ingredient": "The quote path should be static-first and light, without video backgrounds or heavy app-shell dependencies." }
+      ],
+      "bannedUses": [ "Do not copy Origin's financial-planning flow, state selector, account framing, subscription copy, or sparse page as an empty aesthetic." ]
+    },
+    {
+      "screenId": "e03c0e93-82d2-4c20-882f-6395ea8c4303",
+      "mobbinUrl": "https://mobbin.com/screens/e03c0e93-82d2-4c20-882f-6395ea8c4303",
+      "sourceUrl": "https://mobbin.com/screens/e03c0e93-82d2-4c20-882f-6395ea8c4303",
+      "appName": "Contra",
+      "structureFamily": "owner-led service menu",
+      "fitScores": { "job": 8, "niche": 7, "firstViewport": 7, "cta": 8, "proof": 7, "mobile": 8, "distinctiveness": 8, "buildability": 9, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "typography", "ingredient": "Use confident plain headings and compact service labels instead of overbuilt contractor display type." },
+        { "layer": "spacing-system", "ingredient": "Give service rows enough vertical room for problem, visit type, and next action without crowding mobile." },
+        { "layer": "surfaces-and-materials", "ingredient": "Use fine borders and quiet panels for service comparison rather than glossy cards." },
+        { "layer": "implementation-tokens", "ingredient": "Tokenize service-row height, border, action color, chip gap, and field radius for consistent build output." }
+      ],
+      "bannedUses": [ "Do not copy Contra portfolios, creative-service pricing, project images, freelancer marketplace UI, or exact service-row proportions." ]
+    },
+    {
+      "screenId": "d9f34864-273b-4c34-ae98-f5567c824252",
+      "mobbinUrl": "https://mobbin.com/screens/d9f34864-273b-4c34-ae98-f5567c824252",
+      "sourceUrl": "https://mobbin.com/screens/d9f34864-273b-4c34-ae98-f5567c824252",
+      "appName": "HODINKEE",
+      "structureFamily": "faq plus final quote band",
+      "fitScores": { "job": 8, "niche": 7, "firstViewport": 7, "cta": 8, "proof": 8, "mobile": 8, "distinctiveness": 7, "buildability": 8, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "content-strategy", "ingredient": "Use FAQ rows for safety, access, moss treatment, rain delays, and quote expectations." },
+        { "layer": "voice-and-tone", "ingredient": "Answer homeowner concerns directly without legal overreach or scare tactics." },
+        { "layer": "depth", "ingredient": "A single darker final-CTA band can create urgency without turning the entire page heavy." },
+        { "layer": "proof-architecture", "ingredient": "FAQ clarity can act as proof while real reviews, licenses, and guarantees are unavailable." }
+      ],
+      "bannedUses": [ "Do not copy watch collection insurance claims, appraisal copy, investment protection language, dark watch imagery, or guaranteed coverage language." ]
+    },
+    {
+      "screenId": "b2a6f5f4-a142-407f-aa69-032f1b925ada",
+      "mobbinUrl": "https://mobbin.com/screens/b2a6f5f4-a142-407f-aa69-032f1b925ada",
+      "sourceUrl": "https://mobbin.com/screens/b2a6f5f4-a142-407f-aa69-032f1b925ada",
+      "appName": "OpenTable",
+      "structureFamily": "local directory plus owner CTA",
+      "fitScores": { "job": 7, "niche": 7, "firstViewport": 7, "cta": 8, "proof": 7, "mobile": 8, "distinctiveness": 7, "buildability": 8, "truth": 8 },
+      "ingredientLedger": [
+        { "layer": "localization-and-formatting", "ingredient": "Footer and service-area copy should name Auckland areas only when owner-approved." },
+        { "layer": "information-architecture", "ingredient": "Service-area browsing belongs below quote intent, not above the first action." },
+        { "layer": "accessibility", "ingredient": "Location lists need readable grouping and should not become dense link farms on mobile." },
+        { "layer": "seo-aeo-metadata", "ingredient": "Service-area structure should support local search and agent answers without adding unverified suburbs." }
+      ],
+      "bannedUses": [ "Do not copy restaurant city directories, reservation inventory, dining photography, marketplace proof, or restaurateur recruitment language." ]
+    }
+  ],
+  "antiReferences": [
+    {
+      "screenId": "1d6c0904-9595-43d9-b7e5-1be5f9971119",
+      "mobbinUrl": "https://mobbin.com/screens/1d6c0904-9595-43d9-b7e5-1be5f9971119",
+      "appName": "Wave",
+      "rejectionReason": "Business-dashboard shell and left navigation are not customer-facing home-service page references."
+    },
+    {
+      "screenId": "cdba0833-3575-422e-929d-31290ba72e9b",
+      "mobbinUrl": "https://mobbin.com/screens/cdba0833-3575-422e-929d-31290ba72e9b",
+      "appName": "Blue Apron",
+      "rejectionReason": "Food-product photography and discount offer mechanics would create the wrong proof model for no-photo roofcare."
+    },
+    {
+      "screenId": "c74b0208-22d4-4044-ae2f-1399b9daf5d5",
+      "mobbinUrl": "https://mobbin.com/screens/c74b0208-22d4-4044-ae2f-1399b9daf5d5",
+      "appName": "Hims",
+      "rejectionReason": "Large outcome statistics and treatment claims would invite fake maintenance results or safety claims."
+    },
+    {
+      "screenId": "1bb4fded-b6e6-4271-8522-d5a85048bcf3",
+      "mobbinUrl": "https://mobbin.com/screens/1bb4fded-b6e6-4271-8522-d5a85048bcf3",
+      "appName": "Lovable",
+      "rejectionReason": "Generic AI-generated agency service cards would make the roofcare page look template-made and untrustworthy."
+    }
+  ],
+  "remixDirection": {
+    "summary": "A quote-first Auckland roofcare page with homeowner problem routing, practical safety/proof panels, a short progressive quote path, and no-photo roofline/maintenance graphics instead of fake crew imagery.",
+    "selectedMoves": [
+      "Airtasker-style problem-entry hero, rebuilt around gutter, moss, leak-check, and seasonal maintenance quote paths.",
+      "HODINKEE-style progressive quote capture, localized for Auckland service area and contact details.",
+      "Care.com-style risk-reduction cards rewritten as source-safe maintenance and safety clarity.",
+      "Klook-style illustrated quote module adapted into practical roof, gutter, ladder, and weather artifacts.",
+      "Contra-style owner-led service rows for clear comparison without fake prices or credentials."
+    ],
+    "explicitRejects": [
+      "No invented reviews, guarantees, insurance, license claims, emergency availability, fixed prices, or before-and-after outcomes.",
+      "No fake crew photos, roof photos, logos, badges, or suburb/service-area claims without owner approval.",
+      "No dashboard UI, marketplace economics, exact layouts, copied brand colors, or source-brand claims."
+    ]
+  }
+}

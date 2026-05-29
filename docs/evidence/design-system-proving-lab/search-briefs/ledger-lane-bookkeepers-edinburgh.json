@@ -1,0 +1,111 @@
+{
+  "schemaVersion": "mobbin.mobbin-search-brief.v1",
+  "businessId": "ledger-lane-bookkeepers-edinburgh",
+  "businessName": "Ledger Lane Bookkeepers",
+  "businessModel": "service",
+  "category": "professional-service",
+  "subcategory": "bookkeeping, payroll setup, and monthly accounts support for small shops",
+  "targetCustomerDecision": "Should a shop owner request monthly bookkeeping help, a payroll setup call, or a cleanup review?",
+  "primaryAction": "enquire",
+  "sourceProvider": "Mobbin Pro MCP",
+  "platform": "web",
+  "requiredQueryAngles": [
+    "niche",
+    "page-job",
+    "tone",
+    "constraint"
+  ],
+  "requiredRawCandidates": {
+    "min": 12,
+    "max": 20
+  },
+  "requiredShortlist": {
+    "min": 6,
+    "max": 8
+  },
+  "requiredAntiReferences": 2,
+  "requiredIngredientLayers": [
+    "business-job",
+    "information-architecture",
+    "content-strategy",
+    "voice-and-tone",
+    "typography",
+    "layout-structure",
+    "spacing-system",
+    "responsive-behavior",
+    "color-system",
+    "surfaces-and-materials",
+    "depth",
+    "shape",
+    "component-anatomy",
+    "component-states",
+    "interaction-model",
+    "motion",
+    "media-direction",
+    "iconography",
+    "illustration-graphics",
+    "proof-architecture",
+    "cta-system",
+    "forms-and-lead-capture",
+    "accessibility",
+    "localization-and-formatting",
+    "seo-aeo-metadata",
+    "performance",
+    "implementation-tokens",
+    "governance"
+  ],
+  "collectionPolicy": {
+    "sourceCategory": "Mobbin Pro web platform / websites category",
+    "strategy": "wide-pull-then-compress",
+    "minimumReturnedScreensAcrossQueries": 32,
+    "minimumUniqueRawPoolScreens": 20,
+    "packetRawCandidates": {
+      "min": 12,
+      "max": 20
+    },
+    "recommendedChunkSize": 8,
+    "chunkRule": "Use repeated Mobbin MCP calls with exclude_screen_ids when one large pull times out; chunking is allowed, narrowing the search to save transcript space is not.",
+    "transcriptPolicy": "Save the full raw Mobbin metadata and links in raw-pull-log.json. The chat/report should show only counts, hashes, shortlist, and blockers."
+  },
+  "queries": [
+    {
+      "angle": "niche",
+      "query": "professional-service bookkeeping, payroll setup, and monthly accounts support for small shops service marketing website homepage enquire CTA landing page website inspiration",
+      "mode": "deep",
+      "platform": "web",
+      "minimumRawCandidates": 12,
+      "targetRawCandidates": 20
+    },
+    {
+      "angle": "page-job",
+      "query": "enquire CTA homepage with trust proof, service or product menu, and local customer decision path website",
+      "mode": "deep",
+      "platform": "web",
+      "minimumRawCandidates": 12,
+      "targetRawCandidates": 20
+    },
+    {
+      "angle": "tone",
+      "query": "premium credible owner-led service business landing page website",
+      "mode": "deep",
+      "platform": "web",
+      "minimumRawCandidates": 12,
+      "targetRawCandidates": 20
+    },
+    {
+      "angle": "constraint",
+      "query": "licensed-specialist boundary low-photo category recurring service package clarity responsive mobile-first homepage website not dashboard not app",
+      "mode": "deep",
+      "platform": "web",
+      "minimumRawCandidates": 12,
+      "targetRawCandidates": 20
+    }
+  ],
+  "noCopyRules": [
+    "Do not copy source brands, logos, product claims, trust claims, screenshots, or exact layouts.",
+    "Do not use Mobbin reference proof as business proof.",
+    "Every selected ingredient must map to this business job or a quality requirement."
+  ],
+  "briefHash": "10592d40c17fe5fcdac5534fe1e2928d8b0d578e96687c41cc598de1b4d6903f",
+  "businessHash": "ae208070b637868aca48a9476c96c5814b678af69d10de868f63b9efe57b4221"
+}

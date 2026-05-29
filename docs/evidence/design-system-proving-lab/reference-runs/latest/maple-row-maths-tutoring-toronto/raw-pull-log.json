@@ -1,0 +1,98 @@
+{
+  "schemaVersion": "mobbin.mobbin-pro.raw-pull-log.v1",
+  "sourceProvider": "Mobbin Pro MCP",
+  "platform": "web",
+  "businessId": "maple-row-maths-tutoring-toronto",
+  "businessName": "Maple Row Maths Tutoring",
+  "businessHash": "dc548810e1f9886d2d9708aa996a55b6e105d67a314a79212504da11e0d733f1",
+  "searchBriefHash": "6a4c45b10262a8bf01752f0cd5549fbf0e81ab8b814d485151a696c88b85553c",
+  "generatedAt": "2026-05-19T01:27:45Z",
+  "collectionPolicy": {
+    "strategy": "wide-pull-then-compress",
+    "minimumReturnedScreensAcrossQueries": 32,
+    "minimumUniqueRawPoolScreens": 20,
+    "chunkSize": "8 per required query angle",
+    "dedupeMethod": "Mobbin screen id with exclude_screen_ids across chunks"
+  },
+  "toolNotes": [
+    "Mobbin Pro MCP was available in this context.",
+    "Each required search angle returned 8 web screens.",
+    "exclude_screen_ids was used after the first query to keep the raw pool broad and unique."
+  ],
+  "totalReturned": 32,
+  "uniqueScreenCount": 32,
+  "queryRuns": [
+    {
+      "angle": "niche",
+      "query": "education secondary-school maths support, exam prep, and parent consultations service marketing website homepage enquire CTA landing page website inspiration",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:27:45Z",
+      "results": [
+        { "screenId": "a15d5191-68ce-42ab-a23b-cc250091d3f5", "mobbinUrl": "https://mobbin.com/screens/a15d5191-68ce-42ab-a23b-cc250091d3f5", "imageUrl": "https://mobbin.com/api/mcp/short/kiDOYOYv", "appName": "Preply", "platform": "web", "observedRole": "tutor marketplace hero with subject selector, parent-safe lesson promise, and prominent find-tutor CTA" },
+        { "screenId": "49cf5c96-52d1-4330-916a-aaff99566662", "mobbinUrl": "https://mobbin.com/screens/49cf5c96-52d1-4330-916a-aaff99566662", "imageUrl": "https://mobbin.com/api/mcp/short/FulvDEbY", "appName": "SuperHi", "platform": "web", "observedRole": "education homepage with playful geometric brand system, course discovery CTA, and learner-count proof" },
+        { "screenId": "1aabd472-a12e-4a2c-aba0-67298c66de67", "mobbinUrl": "https://mobbin.com/screens/1aabd472-a12e-4a2c-aba0-67298c66de67", "imageUrl": "https://mobbin.com/api/mcp/short/E1uM270g", "appName": "Codecademy", "platform": "web", "observedRole": "instructor-led bootcamp page with high-stakes learning promise, bullet proof, date module, and reserve-seat CTA" },
+        { "screenId": "0f3b1572-74a1-4f46-b5b9-a04308abd57d", "mobbinUrl": "https://mobbin.com/screens/0f3b1572-74a1-4f46-b5b9-a04308abd57d", "imageUrl": "https://mobbin.com/api/mcp/short/EVQeEyaM", "appName": "SuperHi", "platform": "web", "observedRole": "catalog discovery interface with search, course cards, tags, and playful education graphics" },
+        { "screenId": "014ce7cf-92a3-4f70-8059-60a7c1d3f4ec", "mobbinUrl": "https://mobbin.com/screens/014ce7cf-92a3-4f70-8059-60a7c1d3f4ec", "imageUrl": "https://mobbin.com/api/mcp/short/xqbgqd7c", "appName": "Codecademy", "platform": "web", "observedRole": "course catalog page with guided prompt, subject chips, topic list, and upcoming program cards" },
+        { "screenId": "fdf5d380-c5e7-42ad-8633-ff7343b3c99b", "mobbinUrl": "https://mobbin.com/screens/fdf5d380-c5e7-42ad-8633-ff7343b3c99b", "imageUrl": "https://mobbin.com/api/mcp/short/HjiG1MJF", "appName": "Skillshare", "platform": "web", "observedRole": "learning catalog homepage with large course hero, watch CTA, and scrollable class cards" },
+        { "screenId": "3ec2344b-68f2-47d1-ae21-44ff95a5d93f", "mobbinUrl": "https://mobbin.com/screens/3ec2344b-68f2-47d1-ae21-44ff95a5d93f", "imageUrl": "https://mobbin.com/api/mcp/short/hRrN6yRt", "appName": "Preply", "platform": "web", "observedRole": "language tutor homepage with bold color, tutor image stack, proof stats, and subject cards" },
+        { "screenId": "c43a0081-cdb4-4def-bac8-b29fd6278a50", "mobbinUrl": "https://mobbin.com/screens/c43a0081-cdb4-4def-bac8-b29fd6278a50", "imageUrl": "https://mobbin.com/api/mcp/short/JnoKBMN4", "appName": "Skillshare", "platform": "web", "observedRole": "learning homepage carousel state with instructor-led hero and recommendation shelves" }
+      ]
+    },
+    {
+      "angle": "page-job",
+      "query": "enquire CTA homepage with trust proof, service or product menu, and local customer decision path website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:27:45Z",
+      "results": [
+        { "screenId": "4db97281-ae9e-47f4-9002-3bc609467c43", "mobbinUrl": "https://mobbin.com/screens/4db97281-ae9e-47f4-9002-3bc609467c43", "imageUrl": "https://mobbin.com/api/mcp/short/oUTBBYOg", "appName": "Amplitude", "platform": "web", "observedRole": "B2B homepage with clear primary and secondary CTAs plus large product proof artifact" },
+        { "screenId": "f96f7969-880c-465e-ad94-126b2b7377a6", "mobbinUrl": "https://mobbin.com/screens/f96f7969-880c-465e-ad94-126b2b7377a6", "imageUrl": "https://mobbin.com/api/mcp/short/c3ASW95v", "appName": "Hims", "platform": "web", "observedRole": "consumer service menu overlay with category list, product cards, and health-adjacent claim risk" },
+        { "screenId": "5cfdc3d9-a6e8-4e86-8651-3c9763fec58d", "mobbinUrl": "https://mobbin.com/screens/5cfdc3d9-a6e8-4e86-8651-3c9763fec58d", "imageUrl": "https://mobbin.com/api/mcp/short/xt2bHxBS", "appName": "Buy Me a Coffee", "platform": "web", "observedRole": "creator membership page with offer tiers, join CTA, and personal introduction section" },
+        { "screenId": "c82f08a0-97cb-4ba9-9a2a-5ac795f6303a", "mobbinUrl": "https://mobbin.com/screens/c82f08a0-97cb-4ba9-9a2a-5ac795f6303a", "imageUrl": "https://mobbin.com/api/mcp/short/IYY5dwtD", "appName": "Uvodo", "platform": "web", "observedRole": "solo-business platform homepage with trust marker, pricing card, payment CTA, and floating proof tiles" },
+        { "screenId": "72973b86-4925-4ead-9a52-0a886d093efc", "mobbinUrl": "https://mobbin.com/screens/72973b86-4925-4ead-9a52-0a886d093efc", "imageUrl": "https://mobbin.com/api/mcp/short/Nldkr0Vj", "appName": "Sana AI", "platform": "web", "observedRole": "learning platform lower page with customer proof logos and custom introduction CTA band" },
+        { "screenId": "9dae958f-c1a5-4b8f-9409-875008fd9b71", "mobbinUrl": "https://mobbin.com/screens/9dae958f-c1a5-4b8f-9409-875008fd9b71", "imageUrl": "https://mobbin.com/api/mcp/short/ZkI6faDt", "appName": "Productboard", "platform": "web", "observedRole": "SaaS hero with product collage, request-demo CTA, trial CTA, and soft proof cards" },
+        { "screenId": "37b8a514-3d42-47c6-8d0c-fcf15a2f5db3", "mobbinUrl": "https://mobbin.com/screens/37b8a514-3d42-47c6-8d0c-fcf15a2f5db3", "imageUrl": "https://mobbin.com/api/mcp/short/UhCD37jw", "appName": "Lemon Squeezy", "platform": "web", "observedRole": "software payments hero with strong purple field, logo proof strip, and large product screenshot" },
+        { "screenId": "9a41d4f0-f4e3-40ee-b5a8-de4fb4e48e59", "mobbinUrl": "https://mobbin.com/screens/9a41d4f0-f4e3-40ee-b5a8-de4fb4e48e59", "imageUrl": "https://mobbin.com/api/mcp/short/JfdLwQIC", "appName": "Assembly", "platform": "web", "observedRole": "marketing page section with customer logo proof and two-column explanatory copy" }
+      ]
+    },
+    {
+      "angle": "tone",
+      "query": "premium credible owner-led service business landing page website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:27:45Z",
+      "results": [
+        { "screenId": "8ca27875-5683-4bfd-a389-77956dc032c1", "mobbinUrl": "https://mobbin.com/screens/8ca27875-5683-4bfd-a389-77956dc032c1", "imageUrl": "https://mobbin.com/api/mcp/short/q1oAVx4i", "appName": "Airtasker", "platform": "web", "observedRole": "service-provider acquisition page with get-found/get-booked sections, price/rating overlays, and service marketplace framing" },
+        { "screenId": "29bb5829-7385-4c93-9762-952c4c97b820", "mobbinUrl": "https://mobbin.com/screens/29bb5829-7385-4c93-9762-952c4c97b820", "imageUrl": "https://mobbin.com/api/mcp/short/TLztDZZt", "appName": "ClassPass", "platform": "web", "observedRole": "business listing page with benefit copy, circular photo collage, and unsupported revenue/customer stats" },
+        { "screenId": "cc518cad-ad48-4da1-9399-6a52f3d2ba62", "mobbinUrl": "https://mobbin.com/screens/cc518cad-ad48-4da1-9399-6a52f3d2ba62", "imageUrl": "https://mobbin.com/api/mcp/short/idYrSUWW", "appName": "Lovable", "platform": "web", "observedRole": "generated service-business site with generic services, testimonials, and contact CTA" },
+        { "screenId": "992f30f8-8657-46de-8a06-37835d940001", "mobbinUrl": "https://mobbin.com/screens/992f30f8-8657-46de-8a06-37835d940001", "imageUrl": "https://mobbin.com/api/mcp/short/clLtCvs4", "appName": "Contra", "platform": "web", "observedRole": "independent-professional hero with large serif/sans type pairing, waitlist CTA, and portfolio artifact card" },
+        { "screenId": "efbb3d8b-a965-4461-9f49-a736c956c1cf", "mobbinUrl": "https://mobbin.com/screens/efbb3d8b-a965-4461-9f49-a736c956c1cf", "imageUrl": "https://mobbin.com/api/mcp/short/wMDpN2YH", "appName": "Rocket Money", "platform": "web", "observedRole": "conversion/payment page with benefit checklist and detailed form, useful as lead-capture caution" },
+        { "screenId": "a889dc79-8d34-4801-8879-7573ea2b9a31", "mobbinUrl": "https://mobbin.com/screens/a889dc79-8d34-4801-8879-7573ea2b9a31", "imageUrl": "https://mobbin.com/api/mcp/short/oXBm6yk7", "appName": "Spotify", "platform": "web", "observedRole": "subscription offer page with large blue offer field and simple feature icons" },
+        { "screenId": "fa590456-8218-482f-821f-07f02bffc6fc", "mobbinUrl": "https://mobbin.com/screens/fa590456-8218-482f-821f-07f02bffc6fc", "imageUrl": "https://mobbin.com/api/mcp/short/JWx66HbG", "appName": "Copilot", "platform": "web", "observedRole": "professional client-portal marketing page with centered hero, trial CTA, and embedded portal screenshot" },
+        { "screenId": "2953a3fe-c5f0-47eb-a2aa-d36db2f5884c", "mobbinUrl": "https://mobbin.com/screens/2953a3fe-c5f0-47eb-a2aa-d36db2f5884c", "imageUrl": "https://mobbin.com/api/mcp/short/ktQprMs3", "appName": "YouTube", "platform": "web", "observedRole": "subscription upgrade page with spare centered copy and family-plan secondary action" }
+      ]
+    },
+    {
+      "angle": "constraint",
+      "query": "parent decision anxiety privacy-safe visuals outcome-claim risk responsive mobile-first homepage website not dashboard not app",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:27:45Z",
+      "results": [
+        { "screenId": "7fa39fb3-063a-4f62-9781-7f7bb440e3ac", "mobbinUrl": "https://mobbin.com/screens/7fa39fb3-063a-4f62-9781-7f7bb440e3ac", "imageUrl": "https://mobbin.com/api/mcp/short/TugG127Q", "appName": "YouTube", "platform": "web", "observedRole": "YouTube Kids page section explaining safer online experience with parent-child imagery and continue CTA" },
+        { "screenId": "e572dc7d-73dd-46ba-b725-3fb1384035df", "mobbinUrl": "https://mobbin.com/screens/e572dc7d-73dd-46ba-b725-3fb1384035df", "imageUrl": "https://mobbin.com/api/mcp/short/sbJEUZgn", "appName": "YouTube", "platform": "web", "observedRole": "parent resources section with approval-control message, large illustration/screenshot, and learn-more CTA" },
+        { "screenId": "ff9c53df-9723-4947-93c1-d0d84a3b010f", "mobbinUrl": "https://mobbin.com/screens/ff9c53df-9723-4947-93c1-d0d84a3b010f", "imageUrl": "https://mobbin.com/api/mcp/short/jxBWijdE", "appName": "Instagram", "platform": "web", "observedRole": "parent guide page with sparse resource links and family-center support language" },
+        { "screenId": "62a85a87-c0e2-4285-9423-d9d71c93f688", "mobbinUrl": "https://mobbin.com/screens/62a85a87-c0e2-4285-9423-d9d71c93f688", "imageUrl": "https://mobbin.com/api/mcp/short/tW5uWNh4", "appName": "Instagram", "platform": "web", "observedRole": "family center education hub with parent support copy, vertical accent lines, and mobile page preview" },
+        { "screenId": "ebd81eed-7f01-42c9-a248-ed5922068f78", "mobbinUrl": "https://mobbin.com/screens/ebd81eed-7f01-42c9-a248-ed5922068f78", "imageUrl": "https://mobbin.com/api/mcp/short/LpNOEKbA", "appName": "YouTube", "platform": "web", "observedRole": "family resources section with healthy habits headline, soft color block, parent-child photo, and learn-more CTA" },
+        { "screenId": "0b014dac-20b6-44ef-a083-041943c9df1e", "mobbinUrl": "https://mobbin.com/screens/0b014dac-20b6-44ef-a083-041943c9df1e", "imageUrl": "https://mobbin.com/api/mcp/short/vmYAbzcz", "appName": "TikTok", "platform": "web", "observedRole": "safety and privacy controls page with large card, CTA, and embedded video/illustration panel" },
+        { "screenId": "81fd59ff-8b65-4628-b3ed-ed527fa93412", "mobbinUrl": "https://mobbin.com/screens/81fd59ff-8b65-4628-b3ed-ed527fa93412", "imageUrl": "https://mobbin.com/api/mcp/short/es2GKn9y", "appName": "YouTube", "platform": "web", "observedRole": "app download page with oversized copy, platform CTAs, and large empty color field" },
+        { "screenId": "7e1829b0-8b2f-4436-87aa-5255f1f34729", "mobbinUrl": "https://mobbin.com/screens/7e1829b0-8b2f-4436-87aa-5255f1f34729", "imageUrl": "https://mobbin.com/api/mcp/short/gj9auwt0", "appName": "Instagram", "platform": "web", "observedRole": "parent guide partner section with sparse typography and unstructured proof claim risk" }
+      ]
+    }
+  ]
+}

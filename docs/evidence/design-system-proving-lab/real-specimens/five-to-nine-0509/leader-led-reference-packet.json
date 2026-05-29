@@ -1,0 +1,261 @@
+{
+  "schemaVersion": "mobbin.mobbin-pro.leader-led-reference-packet.v1",
+  "businessId": "five-to-nine-0509",
+  "businessName": "Five to Nine",
+  "generatedAt": "2026-05-19T10:58:41Z",
+  "sourceProvider": "Mobbin Pro MCP plus public source evidence",
+  "platform": "web",
+  "leaderboardProxyLedgerPath": "docs/evidence/design-system-proving-lab/real-specimens/five-to-nine-0509/leaderboard-proxy-ledger.json",
+  "oldPacketStatus": "superseded-by-leader-led-redo",
+  "ruleApplied": "Define top-performing proxy leaders first, then pull Mobbin Pro references. Exact leader gaps are recorded and replacements are labeled visualProxy.",
+  "mobbinQueryLog": [
+    {
+      "query": "Profound AI visibility platform website landing page marketing analytics SaaS",
+      "mode": "deep",
+      "limit": 4,
+      "returned": ["Peec AI", "Basedash", "Profound", "June"]
+    },
+    {
+      "query": "Sprout Social social listening competitive intelligence website landing page SaaS analytics",
+      "mode": "deep",
+      "limit": 4,
+      "returned": ["Sprout Social", "Sprout Social", "Sprout Social", "Sprout Social"]
+    },
+    {
+      "query": "Semrush Similarweb Ahrefs SEO competitor analysis market intelligence website landing page",
+      "mode": "deep",
+      "limit": 8,
+      "returned": ["Clearbit", "Mixpanel", "Apollo", "Peec AI", "OpenTable", "Sprout Social", "Unsplash", "Tripadvisor"]
+    },
+    {
+      "query": "Crayon Klue competitive intelligence battlecards competitor monitoring SaaS website landing page product screenshot",
+      "mode": "deep",
+      "limit": 8,
+      "returned": ["Peec AI", "Sprout Social", "Sprout Social", "Sprout Social", "Relevance AI", "Sprout Social", "WRITER", "Relevance AI"]
+    },
+    {
+      "query": "AlphaSense market intelligence enterprise AI research platform website landing page SaaS",
+      "mode": "deep",
+      "limit": 6,
+      "returned": ["Clearbit", "Peec AI", "Apollo", "Fey", "Clearbit", "Sprout Social"]
+    },
+    {
+      "query": "Meltwater Brandwatch media intelligence social listening AI signals website landing page SaaS",
+      "mode": "deep",
+      "limit": 6,
+      "returned": ["Sprout Social", "Peec AI", "Sprout Social", "Sprout Social", "Sprout Social", "Peec AI"]
+    }
+  ],
+  "exactMobbinLeaderReferences": [
+    {
+      "leader": "Peec AI",
+      "screenId": "b5d920dd-ae5f-4b3c-9eaa-70105e85a5ca",
+      "mobbinUrl": "https://mobbin.com/screens/b5d920dd-ae5f-4b3c-9eaa-70105e85a5ca",
+      "imageUrl": "https://mobbin.com/api/mcp/short/PSfadHyq",
+      "role": "AI-search analytics landing page with huge direct headline, muted two-tone type, centered CTA pair, and a visible dashboard artifact.",
+      "ingredientsToUse": [
+        "large direct category headline",
+        "metrics chips in support copy",
+        "product artifact before the fold",
+        "quiet black/white interface with one accent"
+      ]
+    },
+    {
+      "leader": "Profound",
+      "screenId": "5347a0b1-edc4-4779-9fbc-b4986af297a2",
+      "mobbinUrl": "https://mobbin.com/screens/5347a0b1-edc4-4779-9fbc-b4986af297a2",
+      "imageUrl": "https://mobbin.com/api/mcp/short/3sCHAbls",
+      "role": "AI visibility dashboard reference with top tabs, clear metric cards, chart focus, platform filters, and domain/referral tables.",
+      "ingredientsToUse": [
+        "source/platform filters above the artifact",
+        "metric row with AI citations, training, referrals, and referral percentage",
+        "large line chart as proof surface",
+        "bottom tables for pages and platforms"
+      ]
+    },
+    {
+      "leader": "Sprout Social",
+      "screenId": "d37b9018-4428-4dc4-82c1-c99487b1376b",
+      "mobbinUrl": "https://mobbin.com/screens/d37b9018-4428-4dc4-82c1-c99487b1376b",
+      "imageUrl": "https://mobbin.com/api/mcp/short/LQcVZNDn",
+      "role": "Competitor performance report reference with left navigation, report filters, demo/proof banner, competitor average table, and enterprise data density.",
+      "ingredientsToUse": [
+        "left-side product navigation",
+        "competitor performance as a named report",
+        "date range and filter controls",
+        "competitor rows with platform names and sortable metrics"
+      ]
+    },
+    {
+      "leader": "Sprout Social",
+      "screenId": "db70d28a-284e-4135-83bc-1e9416c7bce9",
+      "mobbinUrl": "https://mobbin.com/screens/db70d28a-284e-4135-83bc-1e9416c7bce9",
+      "imageUrl": "https://mobbin.com/api/mcp/short/SsPKcrmm",
+      "role": "Social intelligence marketing page with mature nav, product screenshot, calm green field, and enterprise CTA structure.",
+      "ingredientsToUse": [
+        "disciplined top nav with product dropdowns",
+        "serious enterprise CTA pair",
+        "product UI offset to the right",
+        "subtle proof strip below hero"
+      ]
+    }
+  ],
+  "missingExactLeaderReferences": [
+    {
+      "leader": "AlphaSense",
+      "mobbinStatus": "no exact Mobbin screen found in this run",
+      "replacement": "Fey or Clearbit may be used only as visualProxy for premium data-product mood, not as AlphaSense performance proof."
+    },
+    {
+      "leader": "Semrush",
+      "mobbinStatus": "no exact Mobbin screen found in this run",
+      "replacement": "Peec AI is a direct category-adjacent visual proxy for AI/search visibility; Semrush performance proof remains public-source only."
+    },
+    {
+      "leader": "Similarweb",
+      "mobbinStatus": "no exact Mobbin screen found in this run",
+      "replacement": "Clearbit or Mixpanel may be used only as visualProxy for data-in/data-out and analytics proof surfaces."
+    },
+    {
+      "leader": "Ahrefs",
+      "mobbinStatus": "no exact Mobbin screen found in this run",
+      "replacement": "No exact Mobbin visual. Use Ahrefs public source evidence for data-scale content, not visual styling."
+    },
+    {
+      "leader": "Meltwater",
+      "mobbinStatus": "no exact Mobbin screen found in this run",
+      "replacement": "Sprout Social exact references can cover social/media intelligence UI patterns, but not Meltwater performance proof."
+    }
+  ],
+  "visualProxies": [
+    {
+      "proxyFor": ["Similarweb", "AlphaSense"],
+      "appName": "Clearbit",
+      "screenId": "1e2d86ea-d8b6-4284-b769-7dd2485de758",
+      "mobbinUrl": "https://mobbin.com/screens/1e2d86ea-d8b6-4284-b769-7dd2485de758",
+      "imageUrl": "https://mobbin.com/api/mcp/short/qsyHKFZE",
+      "allowedUse": "data-in/data-out value proposition, side panel artifact, B2B data product clarity",
+      "forbiddenUse": "Do not call Clearbit a top-performing competitor-monitoring leader for 0509."
+    },
+    {
+      "proxyFor": ["Similarweb", "Sprout Social"],
+      "appName": "Mixpanel",
+      "screenId": "6d92262b-3ce4-49ff-a419-0fb1492018ed",
+      "mobbinUrl": "https://mobbin.com/screens/6d92262b-3ce4-49ff-a419-0fb1492018ed",
+      "imageUrl": "https://mobbin.com/api/mcp/short/Flm7TWNr",
+      "allowedUse": "decision-oriented analytics artifact with hypothesis, chart, and human-readable insight",
+      "forbiddenUse": "Do not turn 0509 into a product analytics tool."
+    },
+    {
+      "proxyFor": ["AlphaSense"],
+      "appName": "Fey",
+      "screenId": "6ab947c7-5f99-48de-bcbb-ad68619ceaa3",
+      "mobbinUrl": "https://mobbin.com/screens/6ab947c7-5f99-48de-bcbb-ad68619ceaa3",
+      "imageUrl": "https://mobbin.com/api/mcp/short/0qjEeVE3",
+      "allowedUse": "premium dark data cockpit depth for one alternate direction",
+      "forbiddenUse": "Do not use finance positioning or decorative laptop darkness without readable proof."
+    }
+  ],
+  "shortlist": [
+    {
+      "referenceType": "exactLeader",
+      "leader": "Peec AI",
+      "screenId": "b5d920dd-ae5f-4b3c-9eaa-70105e85a5ca",
+      "selectionReason": "Most direct visual match for AI/search visibility SaaS with visible product artifact."
+    },
+    {
+      "referenceType": "exactLeader",
+      "leader": "Profound",
+      "screenId": "5347a0b1-edc4-4779-9fbc-b4986af297a2",
+      "selectionReason": "Most direct visual match for AI visibility proof surfaces and platform filters."
+    },
+    {
+      "referenceType": "exactLeader",
+      "leader": "Sprout Social",
+      "screenId": "d37b9018-4428-4dc4-82c1-c99487b1376b",
+      "selectionReason": "Best exact competitor-performance product UI reference."
+    },
+    {
+      "referenceType": "exactLeader",
+      "leader": "Sprout Social",
+      "screenId": "db70d28a-284e-4135-83bc-1e9416c7bce9",
+      "selectionReason": "Best exact mature enterprise SaaS marketing-page reference from the leader set."
+    },
+    {
+      "referenceType": "visualProxy",
+      "leader": "Similarweb",
+      "proxyApp": "Clearbit",
+      "screenId": "1e2d86ea-d8b6-4284-b769-7dd2485de758",
+      "selectionReason": "Strong data-product clarity for the Similarweb-style market intelligence gap."
+    },
+    {
+      "referenceType": "visualProxy",
+      "leader": "Similarweb",
+      "proxyApp": "Mixpanel",
+      "screenId": "6d92262b-3ce4-49ff-a419-0fb1492018ed",
+      "selectionReason": "Decision-oriented product artifact helps avoid static dashboard wallpaper."
+    },
+    {
+      "referenceType": "visualProxy",
+      "leader": "AlphaSense",
+      "proxyApp": "Fey",
+      "screenId": "6ab947c7-5f99-48de-bcbb-ad68619ceaa3",
+      "selectionReason": "Premium data-product atmosphere for a dark/immersive alternate direction."
+    }
+  ],
+  "antiReferences": [
+    {
+      "appName": "Apollo",
+      "reason": "Strong SaaS, but sales-lead database positioning would pull 0509 into the wrong product category."
+    },
+    {
+      "appName": "OpenTable",
+      "reason": "Advertising/restaurant page is too far from 0509's market-intelligence job."
+    },
+    {
+      "appName": "Unsplash",
+      "reason": "Audience card layout is not a market-intelligence SaaS landing page."
+    },
+    {
+      "appName": "Tripadvisor",
+      "reason": "API/content proof has useful stats but wrong customer job and visual category."
+    }
+  ],
+  "ingredientLedger": {
+    "informationArchitecture": [
+      "Top nav must feel like a real SaaS product: Product, Use cases, Proof, Pricing/Pilot, Login.",
+      "Hero must pair a top-performing-proxy proof claim with a visible product artifact.",
+      "Follow hero with leader-inspired proof modules: visibility, competitor moves, source status, recommended action."
+    ],
+    "typography": [
+      "Huge direct headline inspired by Peec and Semrush category language.",
+      "Muted second-line type can show scope without adding a weak subtitle.",
+      "Product artifact labels must be smaller but high-contrast, like Profound and Sprout."
+    ],
+    "color": [
+      "Base should be white, black, and restrained graphite.",
+      "Use one signal accent for live/source/status, not a decorative brand gradient.",
+      "Dark variant allowed only as a premium alternate, not default unless readability wins."
+    ],
+    "productArtifact": [
+      "Use an actual 0509-style market watch artifact: source, competitor, change, impact, confidence, next action.",
+      "Never paste Mobbin screenshots into the final UI.",
+      "Use reference structure, not reference brands or claims."
+    ],
+    "proof": [
+      "Any public scale proof belongs to the benchmark ledger, not the 0509 sales copy unless it is about 0509.",
+      "The 0509 page can say pilot, source-backed, and proof-first only if current product truth supports it.",
+      "No enterprise customer logos, compliance badges, ROI numbers, or live monitoring claims unless verified for 0509."
+    ],
+    "motion": [
+      "If used, motion should show signal freshness or source state changes.",
+      "Do not use motion to hide missing product truth."
+    ],
+    "cta": [
+      "Primary CTA: Join pilot or Request pilot access.",
+      "Secondary CTA: See sample brief or Search public index.",
+      "No self-serve checkout unless the product and billing path are live."
+    ]
+  },
+  "designDecision": "The redo should stop treating 0509 as a Mobbin Proving Lab-flavored proof desk and instead make it feel like a serious search/social/AI market-intelligence SaaS: Peec/Profound for AI visibility, Sprout for competitor performance and enterprise SaaS maturity, Clearbit/Mixpanel/Fey only as clearly labeled visual proxies for missing exact leaders."
+}

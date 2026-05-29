@@ -1,0 +1,89 @@
+{
+  "schemaVersion": "mobbin.mobbin-pro.raw-pull-log.v1",
+  "sourceProvider": "Mobbin Pro MCP",
+  "platform": "web",
+  "businessId": "harbour-ritual-colour-room-brighton",
+  "businessName": "Harbour Ritual Colour Room",
+  "businessHash": "9426edf2a0c14cd44bae4f4947697d3cc6f13d824c4fd40ad0f9f7d915fd9e50",
+  "searchBriefHash": "7b679daebb460929f2842e38c574f1a91a731b4434338b22fb66f067c9ce2ba2",
+  "generatedAt": "2026-05-18T18:35:14Z",
+  "collectionPolicy": {
+    "strategy": "wide-pull-then-compress",
+    "minimumReturnedScreensAcrossQueries": 32,
+    "minimumUniqueRawPoolScreens": 20,
+    "chunkSize": 8,
+    "dedupeMethod": "Mobbin screen id with exclude_screen_ids across chunks"
+  },
+  "totalReturned": 32,
+  "uniqueScreenCount": 32,
+  "queryRuns": [
+    {
+      "angle": "niche",
+      "query": "salon colour-led salon for gloss, balayage, and blow-dry appointments service marketing website homepage book CTA landing page website inspiration",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "results": [
+        { "screenId": "60b09119-52d3-418c-bd64-f73e16b56c4a", "mobbinUrl": "https://mobbin.com/screens/60b09119-52d3-418c-bd64-f73e16b56c4a", "imageUrl": "https://mobbin.com/api/mcp/short/P3lfJtjo", "appName": "Fresha", "platform": "web", "observedRole": "beauty marketplace homepage with large serif headline, location/date/time search bar, and treatment-first booking intent" },
+        { "screenId": "1b2c8274-18b1-497b-82a5-8dc2438f734b", "mobbinUrl": "https://mobbin.com/screens/1b2c8274-18b1-497b-82a5-8dc2438f734b", "imageUrl": "https://mobbin.com/api/mcp/short/i4dqlcZk", "appName": "Fresha", "platform": "web", "observedRole": "beauty booking homepage with date picker overlay and calm pastel background" },
+        { "screenId": "b14f3f5b-2785-4fbb-a487-266b2bef1d08", "mobbinUrl": "https://mobbin.com/screens/b14f3f5b-2785-4fbb-a487-266b2bef1d08", "imageUrl": "https://mobbin.com/api/mcp/short/D3jUW1YN", "appName": "Fresha", "platform": "web", "observedRole": "salon detail page with venue photo grid, rating header, service tabs, and book-now card" },
+        { "screenId": "71f05473-cf92-40bc-a6eb-e9ab35d459ee", "mobbinUrl": "https://mobbin.com/screens/71f05473-cf92-40bc-a6eb-e9ab35d459ee", "imageUrl": "https://mobbin.com/api/mcp/short/0ZkobpwO", "appName": "Fresha", "platform": "web", "observedRole": "salon detail page variant with favourite toast and anchored service booking card" },
+        { "screenId": "8ef4767e-dc04-421d-a6d0-4fe3761c6d9c", "mobbinUrl": "https://mobbin.com/screens/8ef4767e-dc04-421d-a6d0-4fe3761c6d9c", "imageUrl": "https://mobbin.com/api/mcp/short/bOB5FutS", "appName": "ClassPass", "platform": "web", "observedRole": "wellness hero with image collage surround, centered offer card, and dual CTA stack" },
+        { "screenId": "07f1acb1-7f36-499f-8411-8c9a2f31bb3d", "mobbinUrl": "https://mobbin.com/screens/07f1acb1-7f36-499f-8411-8c9a2f31bb3d", "imageUrl": "https://mobbin.com/api/mcp/short/Ux4zHUoO", "appName": "Fresha", "platform": "web", "observedRole": "beauty booking homepage with location suggestion overlay and search focus state" },
+        { "screenId": "b239767c-f3eb-4602-852d-03715690388c", "mobbinUrl": "https://mobbin.com/screens/b239767c-f3eb-4602-852d-03715690388c", "imageUrl": "https://mobbin.com/api/mcp/short/1pcwAFoF", "appName": "Fresha", "platform": "web", "observedRole": "venue about section with map, no-review state, and booking/action summary card" },
+        { "screenId": "a51b0aa9-519a-497c-ab95-65d0b6478fd2", "mobbinUrl": "https://mobbin.com/screens/a51b0aa9-519a-497c-ab95-65d0b6478fd2", "imageUrl": "https://mobbin.com/api/mcp/short/mhvRDuNl", "appName": "Fresha", "platform": "web", "observedRole": "venue team and reviews section with staff initials, rating block, and sticky book card" }
+      ]
+    },
+    {
+      "angle": "page-job",
+      "query": "book CTA homepage with trust proof, service or product menu, and local customer decision path website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "results": [
+        { "screenId": "d1ef7c5f-0de3-485c-bed1-d5a9253f5a24", "mobbinUrl": "https://mobbin.com/screens/d1ef7c5f-0de3-485c-bed1-d5a9253f5a24", "imageUrl": "https://mobbin.com/api/mcp/short/yWG6r46v", "appName": "Fresha", "platform": "web", "observedRole": "beauty homepage with morning time filter overlay and appointment-count proof" },
+        { "screenId": "4d33bcb9-723a-4e0c-8e51-1d8eb021e375", "mobbinUrl": "https://mobbin.com/screens/4d33bcb9-723a-4e0c-8e51-1d8eb021e375", "imageUrl": "https://mobbin.com/api/mcp/short/YRHfUVrK", "appName": "ClassPass", "platform": "web", "observedRole": "proof statistics section with giant outlined numbers and below-fold CTA" },
+        { "screenId": "c74b0208-22d4-4044-ae2f-1399b9daf5d5", "mobbinUrl": "https://mobbin.com/screens/c74b0208-22d4-4044-ae2f-1399b9daf5d5", "imageUrl": "https://mobbin.com/api/mcp/short/z05qpV4Z", "appName": "Hims", "platform": "web", "observedRole": "high-claim treatment proof block with giant percentage over portrait media" },
+        { "screenId": "0b68f8e9-3c79-4302-83c6-990eefc611d7", "mobbinUrl": "https://mobbin.com/screens/0b68f8e9-3c79-4302-83c6-990eefc611d7", "imageUrl": "https://mobbin.com/api/mcp/short/N1wpJwv8", "appName": "Fresha", "platform": "web", "observedRole": "beauty homepage category menu overlay with treatment categories and search bar" },
+        { "screenId": "355c6afb-63a2-4c90-bf86-148b617da7c0", "mobbinUrl": "https://mobbin.com/screens/355c6afb-63a2-4c90-bf86-148b617da7c0", "imageUrl": "https://mobbin.com/api/mcp/short/ansMJHPk", "appName": "SavvyCal", "platform": "web", "observedRole": "premium scheduling homepage with testimonial row, oversized editorial serif hero, and single yellow CTA" },
+        { "screenId": "ac34f524-8752-4de8-b8f6-664276712abe", "mobbinUrl": "https://mobbin.com/screens/ac34f524-8752-4de8-b8f6-664276712abe", "imageUrl": "https://mobbin.com/api/mcp/short/hTDschAb", "appName": "Cal.com", "platform": "web", "observedRole": "scheduler homepage with app preview panel, trust logo strip, and direct get-started path" },
+        { "screenId": "996ad79e-01ea-477a-b811-ac3e58fc99c9", "mobbinUrl": "https://mobbin.com/screens/996ad79e-01ea-477a-b811-ac3e58fc99c9", "imageUrl": "https://mobbin.com/api/mcp/short/gnTA3Yxq", "appName": "OpenTable", "platform": "web", "observedRole": "reservation marketplace homepage with city context, date/time/party form, and quick-search proof paths" },
+        { "screenId": "de7ad5b2-44d4-430d-9543-194a44da61bd", "mobbinUrl": "https://mobbin.com/screens/de7ad5b2-44d4-430d-9543-194a44da61bd", "imageUrl": "https://mobbin.com/api/mcp/short/9w2eTaX2", "appName": "Fresha", "platform": "web", "observedRole": "venue services list with category tabs, prices, duration rows, book buttons, and sticky venue card" }
+      ]
+    },
+    {
+      "angle": "tone",
+      "query": "premium credible owner-led service business landing page website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "results": [
+        { "screenId": "9ba359d8-f59e-492e-b64f-35d1b783a4d3", "mobbinUrl": "https://mobbin.com/screens/9ba359d8-f59e-492e-b64f-35d1b783a4d3", "imageUrl": "https://mobbin.com/api/mcp/short/YaTl5Ytr", "appName": "YouTube", "platform": "web", "observedRole": "generic premium subscription page with centered offer and simple feature icons" },
+        { "screenId": "a889dc79-8d34-4801-8879-7573ea2b9a31", "mobbinUrl": "https://mobbin.com/screens/a889dc79-8d34-4801-8879-7573ea2b9a31", "imageUrl": "https://mobbin.com/api/mcp/short/Z6MZpA8B", "appName": "Spotify", "platform": "web", "observedRole": "bold subscription landing page with color block hero and plan CTA" },
+        { "screenId": "2953a3fe-c5f0-47eb-a2aa-d36db2f5884c", "mobbinUrl": "https://mobbin.com/screens/2953a3fe-c5f0-47eb-a2aa-d36db2f5884c", "imageUrl": "https://mobbin.com/api/mcp/short/dYIvzVDy", "appName": "YouTube", "platform": "web", "observedRole": "YouTube premium page with centered claim, restrained CTAs, and plan section lead-in" },
+        { "screenId": "1dcb0938-46ad-47ec-b178-b2ded8ab2561", "mobbinUrl": "https://mobbin.com/screens/1dcb0938-46ad-47ec-b178-b2ded8ab2561", "imageUrl": "https://mobbin.com/api/mcp/short/bDUGhhTa", "appName": "LinkedIn", "platform": "web", "observedRole": "professional subscription plan comparison with card grid and understated proof header" },
+        { "screenId": "465357e1-7656-4bca-ba2b-778cd9e0707d", "mobbinUrl": "https://mobbin.com/screens/465357e1-7656-4bca-ba2b-778cd9e0707d", "imageUrl": "https://mobbin.com/api/mcp/short/btFrkRb6", "appName": "Deezer", "platform": "web", "observedRole": "dark music subscription page with dramatic headline, purple wave, and offer card" },
+        { "screenId": "70ad3f39-9eaf-4e21-a0dd-bc447c536085", "mobbinUrl": "https://mobbin.com/screens/70ad3f39-9eaf-4e21-a0dd-bc447c536085", "imageUrl": "https://mobbin.com/api/mcp/short/OtRedWp1", "appName": "LinkedIn", "platform": "web", "observedRole": "multi-card professional plan matrix with muted color bars and action links" },
+        { "screenId": "229bb634-83f3-4ea2-8dad-97210999c97c", "mobbinUrl": "https://mobbin.com/screens/229bb634-83f3-4ea2-8dad-97210999c97c", "imageUrl": "https://mobbin.com/api/mcp/short/pwSdkRG6", "appName": "Spotify", "platform": "web", "observedRole": "blue subscription hero with simple CTA pair and benefit section" },
+        { "screenId": "9d8ab216-06f8-4ff2-8828-05afe485dadc", "mobbinUrl": "https://mobbin.com/screens/9d8ab216-06f8-4ff2-8828-05afe485dadc", "imageUrl": "https://mobbin.com/api/mcp/short/lfA8saNk", "appName": "YouTube", "platform": "web", "observedRole": "premium plan page with hero, price copy, and plan-picker lead-in" }
+      ]
+    },
+    {
+      "angle": "constraint",
+      "query": "high-photo temptation consultation-first CTA service menu clarity responsive mobile-first homepage website not dashboard not app",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "results": [
+        { "screenId": "c47c522d-758e-4549-83cd-2319378b2442", "mobbinUrl": "https://mobbin.com/screens/c47c522d-758e-4549-83cd-2319378b2442", "imageUrl": "https://mobbin.com/api/mcp/short/8QIdZiwE", "appName": "Behance", "platform": "web", "observedRole": "photography landing page reference shown inside Behance viewer with heavy borrowed imagery dependence" },
+        { "screenId": "d477944c-945f-4791-ad13-b760ec3e300b", "mobbinUrl": "https://mobbin.com/screens/d477944c-945f-4791-ad13-b760ec3e300b", "imageUrl": "https://mobbin.com/api/mcp/short/5ddMfSIs", "appName": "Hims", "platform": "web", "observedRole": "consult-first provider section with split copy/media layout and low-friction get-started CTA" },
+        { "screenId": "03b4ad2b-abd6-410d-ae78-5498b68fdf13", "mobbinUrl": "https://mobbin.com/screens/03b4ad2b-abd6-410d-ae78-5498b68fdf13", "imageUrl": "https://mobbin.com/api/mcp/short/fWjMtmlB", "appName": "Blue Apron", "platform": "web", "observedRole": "food product homepage with oversized product photography, offer bar, and purchase CTA" },
+        { "screenId": "cce1eda5-2961-49a6-af50-72290e7b96a3", "mobbinUrl": "https://mobbin.com/screens/cce1eda5-2961-49a6-af50-72290e7b96a3", "imageUrl": "https://mobbin.com/api/mcp/short/Sb6E4PqO", "appName": "Hims", "platform": "web", "observedRole": "telehealth product section with photo-led support promise and price-led CTA" },
+        { "screenId": "3ecf1a04-6943-4ca2-8d32-7c2613ed9ed6", "mobbinUrl": "https://mobbin.com/screens/3ecf1a04-6943-4ca2-8d32-7c2613ed9ed6", "imageUrl": "https://mobbin.com/api/mcp/short/lieSRjOl", "appName": "Hers", "platform": "web", "observedRole": "consult-first healthcare hero with bullet proof, product/device visual, and rounded section transition" },
+        { "screenId": "14e68f0e-6726-4966-b758-b7450ec039f7", "mobbinUrl": "https://mobbin.com/screens/14e68f0e-6726-4966-b758-b7450ec039f7", "imageUrl": "https://mobbin.com/api/mcp/short/ruv3D3RF", "appName": "Hers", "platform": "web", "observedRole": "how-it-works section with numbered process steps, card overlays, and consultation CTA" },
+        { "screenId": "8d4eff12-c0f0-4e22-9d6c-38ec3cff1a89", "mobbinUrl": "https://mobbin.com/screens/8d4eff12-c0f0-4e22-9d6c-38ec3cff1a89", "imageUrl": "https://mobbin.com/api/mcp/short/gXXba4er", "appName": "Hims", "platform": "web", "observedRole": "photo-led visit-start section with calm copy and single CTA" },
+        { "screenId": "04ae05ba-3a5a-4696-9da9-40182e39186e", "mobbinUrl": "https://mobbin.com/screens/04ae05ba-3a5a-4696-9da9-40182e39186e", "imageUrl": "https://mobbin.com/api/mcp/short/HgPPzZ2S", "appName": "Hers", "platform": "web", "observedRole": "hero with large portrait image, claim bullets, small-print proof caveats, and quiz CTA" }
+      ]
+    }
+  ]
+}

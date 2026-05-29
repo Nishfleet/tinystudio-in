@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "mobbin.design-system-proving-lab.business-packet.v2",
+  "businessId": "iron-laneway-strength-richmond",
+  "businessName": "Iron Laneway Strength",
+  "businessModel": "service",
+  "category": "fitness",
+  "subcategory": "beginner strength coaching, small-group training, and open-gym memberships",
+  "relevanceReason": "Fitness studios are visually tempting but risky: the system must sell a first visit without fake bodies, fake results, or coach credentials.",
+  "targetCustomerDecision": "Should a nervous beginner book a starter assessment, join a small group class, or ask about open-gym access?",
+  "searchBriefPath": "docs/evidence/design-system-proving-lab/search-briefs/iron-laneway-strength-richmond.json",
+  "searchBriefHash": "bca21c157a96e52807d91c88d3e98f0586c3e2c006d9dddfcb081c1dcd47a5ab",
+  "referencePacketStatus": "pass",
+  "referencePacketPath": "docs/evidence/design-system-proving-lab/reference-runs/latest/iron-laneway-strength-richmond/reference-packet.json",
+  "rawPullLogPath": "docs/evidence/design-system-proving-lab/reference-runs/latest/iron-laneway-strength-richmond/raw-pull-log.json",
+  "rawPullLogStatus": "pass",
+  "rawPoolReturnedCount": 32,
+  "rawPoolUniqueCount": 32,
+  "referencePacketFailures": [],
+  "directionPacketStatus": "missing",
+  "directionPacketPath": "docs/evidence/design-system-proving-lab/business-packets/iron-laneway-strength-richmond/direction-packet.json",
+  "directionPacketFailures": [
+    "iron-laneway-strength-richmond: missing visual-territory exploration and Mobbin-backed finalist concepts at docs/evidence/design-system-proving-lab/business-packets/iron-laneway-strength-richmond/direction-packet.json"
+  ],
+  "exploredTerritoryCount": 0,
+  "selectedVisualTerritories": [],
+  "chosenDirection": "",
+  "conceptImageCount": 0,
+  "previewProofStatus": "missing",
+  "previewProofPath": "docs/evidence/design-system-proving-lab/business-packets/iron-laneway-strength-richmond/preview-proof.json",
+  "previewProofFailures": [
+    "iron-laneway-strength-richmond: missing rendered preview proof at docs/evidence/design-system-proving-lab/business-packets/iron-laneway-strength-richmond/preview-proof.json"
+  ],
+  "desktopScreenshotStatus": "missing",
+  "mobileScreenshotStatus": "missing",
+  "similarityStatus": "missing",
+  "humanApprovalStatus": "missing",
+  "conceptTodo": [
+    {
+      "step": "explore-visual-territories",
+      "status": "blocked",
+      "required": "explore 6-8 visual territories against the fresh Mobbin packet",
+      "minimumExploredTerritories": 6,
+      "maximumExploredTerritories": 8
+    },
+    {
+      "step": "shortlist-finalists",
+      "status": "blocked",
+      "required": "shortlist 3-4 business-specific screenshot-level finalists",
+      "minimumFinalists": 3,
+      "maximumFinalists": 4,
+      "minimumScore": 8
+    },
+    {
+      "step": "choose-winner",
+      "status": "blocked",
+      "required": "choose one finalist, reject the others with reasons, then write the build brief"
+    }
+  ],
+  "currentStatus": "blocked-before-concepts",
+  "externalUseAllowed": false,
+  "nextAction": "Explore 6-8 visual territories, shortlist 3-4 business-specific screenshot-level finalists, and save direction-packet.json."
+}

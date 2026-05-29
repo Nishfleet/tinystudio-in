@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.mobbin-proving-lab-os/schemas/business.schema.json",
+  "title": "Mobbin Proving Lab Business",
+  "description": "Universal source-of-truth record for a local/service business. The same record should power website previews, AI concierge knowledge, owner reports, and outreach packets.",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "business",
+    "contact",
+    "sources",
+    "currentSystems",
+    "offerCatalog",
+    "customerPath",
+    "frontOffice",
+    "approvalStatus"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "mobbin-proving-lab-business.v1"
+    },
+    "business": {
+      "type": "object",
+      "required": ["id", "slug", "name", "categories", "verticalPack", "location"],
+      "properties": {
+        "id": { "type": "string" },
+        "slug": { "type": "string" },
+        "name": { "type": "string" },
+        "categories": { "type": "array", "items": { "type": "string" } },
+        "verticalPack": { "type": "string" },
+        "positioning": { "type": "array", "items": { "type": "string" } },
+        "location": {
+          "type": "object",
+          "required": ["city", "region", "country"],
+          "properties": {
+            "address": { "type": "string" },
+            "city": { "type": "string" },
+            "region": { "type": "string" },
+            "country": { "type": "string" }
+          }
+        }
+      }
+    },
+    "contact": {
+      "type": "object",
+      "properties": {
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "website": { "type": "string" },
+        "bookingUrl": { "type": "string" },
+        "primaryChannel": { "type": "string" }
+      }
+    },
+    "brand": {
+      "type": "object",
+      "properties": {
+        "colors": { "type": "object" },
+        "logoUrl": { "type": "string" },
+        "tone": { "type": "array", "items": { "type": "string" } },
+        "visualConcept": { "type": "string" }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["label", "url", "type"],
+        "properties": {
+          "label": { "type": "string" },
+          "url": { "type": "string" },
+          "type": { "type": "string" },
+          "facts": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "currentSystems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "name", "role", "replaceNow"],
+        "properties": {
+          "type": { "type": "string" },
+          "name": { "type": "string" },
+          "role": { "type": "string" },
+          "url": { "type": "string" },
+          "replaceNow": { "type": "boolean" }
+        }
+      }
+    },
+    "offerCatalog": {
+      "type": "object",
+      "required": ["groups"],
+      "properties": {
+        "groups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["group", "items"],
+            "properties": {
+              "group": { "type": "string" },
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["name"],
+                  "properties": {
+                    "name": { "type": "string" },
+                    "price": { "type": "string" },
+                    "duration": { "type": "string" },
+                    "description": { "type": "string" },
+                    "source": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "customerPath": {
+      "type": "object",
+      "required": ["primaryAction", "visitorDecision", "routes"],
+      "properties": {
+        "primaryAction": { "type": "string" },
+        "secondaryAction": { "type": "string" },
+        "visitorDecision": { "type": "string" },
+        "routes": { "type": "array", "items": { "type": "object" } },
+        "customerQuestions": { "type": "array", "items": { "type": "string" } },
+        "objections": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "frontOffice": {
+      "type": "object",
+      "required": ["productName", "modules", "actions", "ownerMetrics"],
+      "properties": {
+        "productName": { "type": "string" },
+        "promise": { "type": "string" },
+        "pricingHypothesis": { "type": "string" },
+        "modules": { "type": "array", "items": { "type": "string" } },
+        "actions": { "type": "array", "items": { "type": "object" } },
+        "aiConcierge": { "type": "object" },
+        "ownerMetrics": { "type": "array", "items": { "type": "object" } }
+      }
+    },
+    "content": {
+      "type": "object"
+    },
+    "assets": {
+      "type": "object"
+    },
+    "guardrails": {
+      "type": "object"
+    },
+    "approvalStatus": {
+      "type": "object",
+      "required": ["previewMode", "sendable"],
+      "properties": {
+        "previewMode": { "type": "string" },
+        "sendable": { "type": "boolean" }
+      }
+    }
+  }
+}

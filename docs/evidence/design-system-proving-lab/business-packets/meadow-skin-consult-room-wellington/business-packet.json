@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "mobbin.design-system-proving-lab.business-packet.v2",
+  "businessId": "meadow-skin-consult-room-wellington",
+  "businessName": "Meadow Skin Consult Room",
+  "businessModel": "service",
+  "category": "aesthetics",
+  "subcategory": "skin consultations, facials, peels, and treatment planning",
+  "relevanceReason": "Skin and aesthetics are commercially attractive but proof-sensitive, making them a strong benchmark for truth and restraint.",
+  "targetCustomerDecision": "Should a first-time client book a skin consultation before choosing a facial, peel, or treatment plan?",
+  "searchBriefPath": "docs/evidence/design-system-proving-lab/search-briefs/meadow-skin-consult-room-wellington.json",
+  "searchBriefHash": "128b829214553c4ef50039c16545e79d9d99dd7113999012d986f7dc316b79c9",
+  "referencePacketStatus": "pass",
+  "referencePacketPath": "docs/evidence/design-system-proving-lab/reference-runs/latest/meadow-skin-consult-room-wellington/reference-packet.json",
+  "rawPullLogPath": "docs/evidence/design-system-proving-lab/reference-runs/latest/meadow-skin-consult-room-wellington/raw-pull-log.json",
+  "rawPullLogStatus": "pass",
+  "rawPoolReturnedCount": 32,
+  "rawPoolUniqueCount": 32,
+  "referencePacketFailures": [],
+  "directionPacketStatus": "missing",
+  "directionPacketPath": "docs/evidence/design-system-proving-lab/business-packets/meadow-skin-consult-room-wellington/direction-packet.json",
+  "directionPacketFailures": [
+    "meadow-skin-consult-room-wellington: missing visual-territory exploration and Mobbin-backed finalist concepts at docs/evidence/design-system-proving-lab/business-packets/meadow-skin-consult-room-wellington/direction-packet.json"
+  ],
+  "exploredTerritoryCount": 0,
+  "selectedVisualTerritories": [],
+  "chosenDirection": "",
+  "conceptImageCount": 0,
+  "previewProofStatus": "missing",
+  "previewProofPath": "docs/evidence/design-system-proving-lab/business-packets/meadow-skin-consult-room-wellington/preview-proof.json",
+  "previewProofFailures": [
+    "meadow-skin-consult-room-wellington: missing rendered preview proof at docs/evidence/design-system-proving-lab/business-packets/meadow-skin-consult-room-wellington/preview-proof.json"
+  ],
+  "desktopScreenshotStatus": "missing",
+  "mobileScreenshotStatus": "missing",
+  "similarityStatus": "missing",
+  "humanApprovalStatus": "missing",
+  "conceptTodo": [
+    {
+      "step": "explore-visual-territories",
+      "status": "blocked",
+      "required": "explore 6-8 visual territories against the fresh Mobbin packet",
+      "minimumExploredTerritories": 6,
+      "maximumExploredTerritories": 8
+    },
+    {
+      "step": "shortlist-finalists",
+      "status": "blocked",
+      "required": "shortlist 3-4 business-specific screenshot-level finalists",
+      "minimumFinalists": 3,
+      "maximumFinalists": 4,
+      "minimumScore": 8
+    },
+    {
+      "step": "choose-winner",
+      "status": "blocked",
+      "required": "choose one finalist, reject the others with reasons, then write the build brief"
+    }
+  ],
+  "currentStatus": "blocked-before-concepts",
+  "externalUseAllowed": false,
+  "nextAction": "Explore 6-8 visual territories, shortlist 3-4 business-specific screenshot-level finalists, and save direction-packet.json."
+}

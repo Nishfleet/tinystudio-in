@@ -1,0 +1,98 @@
+{
+  "schemaVersion": "mobbin.mobbin-pro.raw-pull-log.v1",
+  "sourceProvider": "Mobbin Pro MCP",
+  "platform": "web",
+  "businessId": "southbank-pilates-club-london",
+  "businessName": "Southbank Pilates Club",
+  "businessHash": "df714dfbc212604ec46c8fb233a5d14feb19ec40fb7c090f3f6cb675e33aea90",
+  "searchBriefHash": "6b1dc44de0f21750df9de2b9b7dfd6c8e715611796022de4c4242c27e0485365",
+  "generatedAt": "2026-05-19T01:37:56.000Z",
+  "totalReturned": 36,
+  "uniqueScreenCount": 36,
+  "queryRuns": [
+    {
+      "angle": "niche",
+      "query": "pilates reformer intro classes, private sessions, and small-group membership service marketing website homepage book CTA landing page website inspiration",
+      "mode": "deep",
+      "platform": "web",
+      "limit": 10,
+      "imageFormat": "jpg",
+      "returnedCount": 6,
+      "runAt": "2026-05-19T01:37:56.000Z",
+      "results": [
+        { "id": "db948a58-427b-44f2-8281-1741d107cc34", "screenId": "db948a58-427b-44f2-8281-1741d107cc34", "mobbinUrl": "https://mobbin.com/screens/db948a58-427b-44f2-8281-1741d107cc34", "sourceUrl": "https://mobbin.com/screens/db948a58-427b-44f2-8281-1741d107cc34", "imageUrl": "https://mobbin.com/api/mcp/short/JaBhfwCh", "appName": "Time2book", "platform": "web" },
+        { "id": "218acec2-04d6-4791-b6c1-38cab613a1c2", "screenId": "218acec2-04d6-4791-b6c1-38cab613a1c2", "mobbinUrl": "https://mobbin.com/screens/218acec2-04d6-4791-b6c1-38cab613a1c2", "sourceUrl": "https://mobbin.com/screens/218acec2-04d6-4791-b6c1-38cab613a1c2", "imageUrl": "https://mobbin.com/api/mcp/short/oqhuA90d", "appName": "Time2book", "platform": "web" },
+        { "id": "68a2a15a-d008-492d-a016-580d9c257d57", "screenId": "68a2a15a-d008-492d-a016-580d9c257d57", "mobbinUrl": "https://mobbin.com/screens/68a2a15a-d008-492d-a016-580d9c257d57", "sourceUrl": "https://mobbin.com/screens/68a2a15a-d008-492d-a016-580d9c257d57", "imageUrl": "https://mobbin.com/api/mcp/short/EFvI4ar5", "appName": "ClassPass", "platform": "web" },
+        { "id": "ea0217e0-5361-459e-8e6a-4eea4de2fc7b", "screenId": "ea0217e0-5361-459e-8e6a-4eea4de2fc7b", "mobbinUrl": "https://mobbin.com/screens/ea0217e0-5361-459e-8e6a-4eea4de2fc7b", "sourceUrl": "https://mobbin.com/screens/ea0217e0-5361-459e-8e6a-4eea4de2fc7b", "imageUrl": "https://mobbin.com/api/mcp/short/I6TOTmT7", "appName": "ClassPass", "platform": "web" },
+        { "id": "e327103c-404c-4431-8bc6-0916b52d1572", "screenId": "e327103c-404c-4431-8bc6-0916b52d1572", "mobbinUrl": "https://mobbin.com/screens/e327103c-404c-4431-8bc6-0916b52d1572", "sourceUrl": "https://mobbin.com/screens/e327103c-404c-4431-8bc6-0916b52d1572", "imageUrl": "https://mobbin.com/api/mcp/short/E0nYHwU5", "appName": "ClassPass", "platform": "web" },
+        { "id": "60f2d386-d2f7-4e6b-90df-f21f284f0136", "screenId": "60f2d386-d2f7-4e6b-90df-f21f284f0136", "mobbinUrl": "https://mobbin.com/screens/60f2d386-d2f7-4e6b-90df-f21f284f0136", "sourceUrl": "https://mobbin.com/screens/60f2d386-d2f7-4e6b-90df-f21f284f0136", "imageUrl": "https://mobbin.com/api/mcp/short/nuSKjLJW", "appName": "Time2book", "platform": "web" }
+      ]
+    },
+    {
+      "angle": "page-job",
+      "query": "book CTA homepage with trust proof, service or product menu, and local customer decision path website",
+      "mode": "deep",
+      "platform": "web",
+      "limit": 10,
+      "imageFormat": "jpg",
+      "returnedCount": 10,
+      "runAt": "2026-05-19T01:37:56.000Z",
+      "results": [
+        { "id": "212942d1-4c49-4ce4-bdaa-32178d36181a", "screenId": "212942d1-4c49-4ce4-bdaa-32178d36181a", "mobbinUrl": "https://mobbin.com/screens/212942d1-4c49-4ce4-bdaa-32178d36181a", "sourceUrl": "https://mobbin.com/screens/212942d1-4c49-4ce4-bdaa-32178d36181a", "imageUrl": "https://mobbin.com/api/mcp/short/U4WkCzWY", "appName": "Fresha", "platform": "web" },
+        { "id": "60b09119-52d3-418c-bd64-f73e16b56c4a", "screenId": "60b09119-52d3-418c-bd64-f73e16b56c4a", "mobbinUrl": "https://mobbin.com/screens/60b09119-52d3-418c-bd64-f73e16b56c4a", "sourceUrl": "https://mobbin.com/screens/60b09119-52d3-418c-bd64-f73e16b56c4a", "imageUrl": "https://mobbin.com/api/mcp/short/BEFmYk8M", "appName": "Fresha", "platform": "web" },
+        { "id": "923e5154-c265-436e-8d2f-2a1c56699a06", "screenId": "923e5154-c265-436e-8d2f-2a1c56699a06", "mobbinUrl": "https://mobbin.com/screens/923e5154-c265-436e-8d2f-2a1c56699a06", "sourceUrl": "https://mobbin.com/screens/923e5154-c265-436e-8d2f-2a1c56699a06", "imageUrl": "https://mobbin.com/api/mcp/short/HFCZqI14", "appName": "Fresha", "platform": "web" },
+        { "id": "5d0af5ca-c15a-4477-99b9-198794bf74f8", "screenId": "5d0af5ca-c15a-4477-99b9-198794bf74f8", "mobbinUrl": "https://mobbin.com/screens/5d0af5ca-c15a-4477-99b9-198794bf74f8", "sourceUrl": "https://mobbin.com/screens/5d0af5ca-c15a-4477-99b9-198794bf74f8", "imageUrl": "https://mobbin.com/api/mcp/short/vKajN4xR", "appName": "Fresha", "platform": "web" },
+        { "id": "d1ef7c5f-0de3-485c-bed1-d5a9253f5a24", "screenId": "d1ef7c5f-0de3-485c-bed1-d5a9253f5a24", "mobbinUrl": "https://mobbin.com/screens/d1ef7c5f-0de3-485c-bed1-d5a9253f5a24", "sourceUrl": "https://mobbin.com/screens/d1ef7c5f-0de3-485c-bed1-d5a9253f5a24", "imageUrl": "https://mobbin.com/api/mcp/short/5A4w13ND", "appName": "Fresha", "platform": "web" },
+        { "id": "5ab19f61-9dbd-4b3a-a7a0-bb5500c0d8c9", "screenId": "5ab19f61-9dbd-4b3a-a7a0-bb5500c0d8c9", "mobbinUrl": "https://mobbin.com/screens/5ab19f61-9dbd-4b3a-a7a0-bb5500c0d8c9", "sourceUrl": "https://mobbin.com/screens/5ab19f61-9dbd-4b3a-a7a0-bb5500c0d8c9", "imageUrl": "https://mobbin.com/api/mcp/short/Kr2FJ8eG", "appName": "Hims", "platform": "web" },
+        { "id": "51ede66f-1d56-4c4a-89bd-d9dcf71d9818", "screenId": "51ede66f-1d56-4c4a-89bd-d9dcf71d9818", "mobbinUrl": "https://mobbin.com/screens/51ede66f-1d56-4c4a-89bd-d9dcf71d9818", "sourceUrl": "https://mobbin.com/screens/51ede66f-1d56-4c4a-89bd-d9dcf71d9818", "imageUrl": "https://mobbin.com/api/mcp/short/RYVUlb2T", "appName": "ClassPass", "platform": "web" },
+        { "id": "79bf8e1a-be67-474a-93bb-704d504d802d", "screenId": "79bf8e1a-be67-474a-93bb-704d504d802d", "mobbinUrl": "https://mobbin.com/screens/79bf8e1a-be67-474a-93bb-704d504d802d", "sourceUrl": "https://mobbin.com/screens/79bf8e1a-be67-474a-93bb-704d504d802d", "imageUrl": "https://mobbin.com/api/mcp/short/IZPUQJ2T", "appName": "Churnkey", "platform": "web" },
+        { "id": "3fddd406-a125-4fe5-a446-b2db714f7222", "screenId": "3fddd406-a125-4fe5-a446-b2db714f7222", "mobbinUrl": "https://mobbin.com/screens/3fddd406-a125-4fe5-a446-b2db714f7222", "sourceUrl": "https://mobbin.com/screens/3fddd406-a125-4fe5-a446-b2db714f7222", "imageUrl": "https://mobbin.com/api/mcp/short/hj7cmZs4", "appName": "Hims", "platform": "web" },
+        { "id": "b43a5493-ba3c-4f16-bfd3-e1993276b29c", "screenId": "b43a5493-ba3c-4f16-bfd3-e1993276b29c", "mobbinUrl": "https://mobbin.com/screens/b43a5493-ba3c-4f16-bfd3-e1993276b29c", "sourceUrl": "https://mobbin.com/screens/b43a5493-ba3c-4f16-bfd3-e1993276b29c", "imageUrl": "https://mobbin.com/api/mcp/short/wVAWONe7", "appName": "7shifts", "platform": "web" }
+      ]
+    },
+    {
+      "angle": "tone",
+      "query": "premium credible owner-led service business landing page website",
+      "mode": "deep",
+      "platform": "web",
+      "limit": 10,
+      "imageFormat": "jpg",
+      "returnedCount": 10,
+      "runAt": "2026-05-19T01:37:56.000Z",
+      "results": [
+        { "id": "9ba359d8-f59e-492e-b64f-35d1b783a4d3", "screenId": "9ba359d8-f59e-492e-b64f-35d1b783a4d3", "mobbinUrl": "https://mobbin.com/screens/9ba359d8-f59e-492e-b64f-35d1b783a4d3", "sourceUrl": "https://mobbin.com/screens/9ba359d8-f59e-492e-b64f-35d1b783a4d3", "imageUrl": "https://mobbin.com/api/mcp/short/4PMgzW2v", "appName": "YouTube", "platform": "web" },
+        { "id": "efbb3d8b-a965-4461-9f49-a736c956c1cf", "screenId": "efbb3d8b-a965-4461-9f49-a736c956c1cf", "mobbinUrl": "https://mobbin.com/screens/efbb3d8b-a965-4461-9f49-a736c956c1cf", "sourceUrl": "https://mobbin.com/screens/efbb3d8b-a965-4461-9f49-a736c956c1cf", "imageUrl": "https://mobbin.com/api/mcp/short/gHjc9xpB", "appName": "Rocket Money", "platform": "web" },
+        { "id": "a889dc79-8d34-4801-8879-7573ea2b9a31", "screenId": "a889dc79-8d34-4801-8879-7573ea2b9a31", "mobbinUrl": "https://mobbin.com/screens/a889dc79-8d34-4801-8879-7573ea2b9a31", "sourceUrl": "https://mobbin.com/screens/a889dc79-8d34-4801-8879-7573ea2b9a31", "imageUrl": "https://mobbin.com/api/mcp/short/0EOeg7ZB", "appName": "Spotify", "platform": "web" },
+        { "id": "2953a3fe-c5f0-47eb-a2aa-d36db2f5884c", "screenId": "2953a3fe-c5f0-47eb-a2aa-d36db2f5884c", "mobbinUrl": "https://mobbin.com/screens/2953a3fe-c5f0-47eb-a2aa-d36db2f5884c", "sourceUrl": "https://mobbin.com/screens/2953a3fe-c5f0-47eb-a2aa-d36db2f5884c", "imageUrl": "https://mobbin.com/api/mcp/short/mt4j5wc2", "appName": "YouTube", "platform": "web" },
+        { "id": "71897230-d08b-4268-90fa-353cdc0a34b8", "screenId": "71897230-d08b-4268-90fa-353cdc0a34b8", "mobbinUrl": "https://mobbin.com/screens/71897230-d08b-4268-90fa-353cdc0a34b8", "sourceUrl": "https://mobbin.com/screens/71897230-d08b-4268-90fa-353cdc0a34b8", "imageUrl": "https://mobbin.com/api/mcp/short/U8OJGRkk", "appName": "Spotify", "platform": "web" },
+        { "id": "0b4b920c-2985-4b1f-b3d2-c9742b1cc1e6", "screenId": "0b4b920c-2985-4b1f-b3d2-c9742b1cc1e6", "mobbinUrl": "https://mobbin.com/screens/0b4b920c-2985-4b1f-b3d2-c9742b1cc1e6", "sourceUrl": "https://mobbin.com/screens/0b4b920c-2985-4b1f-b3d2-c9742b1cc1e6", "imageUrl": "https://mobbin.com/api/mcp/short/yW844bVA", "appName": "Tripadvisor", "platform": "web" },
+        { "id": "5fa58df1-fea8-4d78-8bd6-5ef208ca39c3", "screenId": "5fa58df1-fea8-4d78-8bd6-5ef208ca39c3", "mobbinUrl": "https://mobbin.com/screens/5fa58df1-fea8-4d78-8bd6-5ef208ca39c3", "sourceUrl": "https://mobbin.com/screens/5fa58df1-fea8-4d78-8bd6-5ef208ca39c3", "imageUrl": "https://mobbin.com/api/mcp/short/mhMcjr8j", "appName": "Rocket Money", "platform": "web" },
+        { "id": "1dcb0938-46ad-47ec-b178-b2ded8ab2561", "screenId": "1dcb0938-46ad-47ec-b178-b2ded8ab2561", "mobbinUrl": "https://mobbin.com/screens/1dcb0938-46ad-47ec-b178-b2ded8ab2561", "sourceUrl": "https://mobbin.com/screens/1dcb0938-46ad-47ec-b178-b2ded8ab2561", "imageUrl": "https://mobbin.com/api/mcp/short/7TmdpBCP", "appName": "LinkedIn", "platform": "web" },
+        { "id": "465357e1-7656-4bca-ba2b-778cd9e0707d", "screenId": "465357e1-7656-4bca-ba2b-778cd9e0707d", "mobbinUrl": "https://mobbin.com/screens/465357e1-7656-4bca-ba2b-778cd9e0707d", "sourceUrl": "https://mobbin.com/screens/465357e1-7656-4bca-ba2b-778cd9e0707d", "imageUrl": "https://mobbin.com/api/mcp/short/pz0isKut", "appName": "Deezer", "platform": "web" },
+        { "id": "70ad3f39-9eaf-4e21-a0dd-bc447c536085", "screenId": "70ad3f39-9eaf-4e21-a0dd-bc447c536085", "mobbinUrl": "https://mobbin.com/screens/70ad3f39-9eaf-4e21-a0dd-bc447c536085", "sourceUrl": "https://mobbin.com/screens/70ad3f39-9eaf-4e21-a0dd-bc447c536085", "imageUrl": "https://mobbin.com/api/mcp/short/mEst9Jlz", "appName": "LinkedIn", "platform": "web" }
+      ]
+    },
+    {
+      "angle": "constraint",
+      "query": "same broad category as fitness but different taste membership vs class path body-image claim risk responsive mobile-first homepage website not dashboard not app",
+      "mode": "deep",
+      "platform": "web",
+      "limit": 10,
+      "imageFormat": "jpg",
+      "returnedCount": 10,
+      "runAt": "2026-05-19T01:37:56.000Z",
+      "results": [
+        { "id": "07618baa-ea77-4afc-a17d-1bc305099273", "screenId": "07618baa-ea77-4afc-a17d-1bc305099273", "mobbinUrl": "https://mobbin.com/screens/07618baa-ea77-4afc-a17d-1bc305099273", "sourceUrl": "https://mobbin.com/screens/07618baa-ea77-4afc-a17d-1bc305099273", "imageUrl": "https://mobbin.com/api/mcp/short/HVXI6UzF", "appName": "ClassPass", "platform": "web" },
+        { "id": "b24c9254-b443-4175-b0f1-ba159299eb07", "screenId": "b24c9254-b443-4175-b0f1-ba159299eb07", "mobbinUrl": "https://mobbin.com/screens/b24c9254-b443-4175-b0f1-ba159299eb07", "sourceUrl": "https://mobbin.com/screens/b24c9254-b443-4175-b0f1-ba159299eb07", "imageUrl": "https://mobbin.com/api/mcp/short/RoQ9aGwu", "appName": "ClassPass", "platform": "web" },
+        { "id": "c2af7fb0-0789-45dc-ab2a-5a7c227a0417", "screenId": "c2af7fb0-0789-45dc-ab2a-5a7c227a0417", "mobbinUrl": "https://mobbin.com/screens/c2af7fb0-0789-45dc-ab2a-5a7c227a0417", "sourceUrl": "https://mobbin.com/screens/c2af7fb0-0789-45dc-ab2a-5a7c227a0417", "imageUrl": "https://mobbin.com/api/mcp/short/YFcFEFP8", "appName": "ClassPass", "platform": "web" },
+        { "id": "fe4f3bc1-172d-42e3-a9a1-3bcb0f7d9ba7", "screenId": "fe4f3bc1-172d-42e3-a9a1-3bcb0f7d9ba7", "mobbinUrl": "https://mobbin.com/screens/fe4f3bc1-172d-42e3-a9a1-3bcb0f7d9ba7", "sourceUrl": "https://mobbin.com/screens/fe4f3bc1-172d-42e3-a9a1-3bcb0f7d9ba7", "imageUrl": "https://mobbin.com/api/mcp/short/z5h6OXBR", "appName": "ClassPass", "platform": "web" },
+        { "id": "8ef4767e-dc04-421d-a6d0-4fe3761c6d9c", "screenId": "8ef4767e-dc04-421d-a6d0-4fe3761c6d9c", "mobbinUrl": "https://mobbin.com/screens/8ef4767e-dc04-421d-a6d0-4fe3761c6d9c", "sourceUrl": "https://mobbin.com/screens/8ef4767e-dc04-421d-a6d0-4fe3761c6d9c", "imageUrl": "https://mobbin.com/api/mcp/short/tBWiqFkK", "appName": "ClassPass", "platform": "web" },
+        { "id": "4c1a64b2-4f31-4efa-9f25-e7ecf01d88c5", "screenId": "4c1a64b2-4f31-4efa-9f25-e7ecf01d88c5", "mobbinUrl": "https://mobbin.com/screens/4c1a64b2-4f31-4efa-9f25-e7ecf01d88c5", "sourceUrl": "https://mobbin.com/screens/4c1a64b2-4f31-4efa-9f25-e7ecf01d88c5", "imageUrl": "https://mobbin.com/api/mcp/short/6LwMrZ7N", "appName": "ClassPass", "platform": "web" },
+        { "id": "4cd18b77-536d-487c-8c87-a7f2feabb557", "screenId": "4cd18b77-536d-487c-8c87-a7f2feabb557", "mobbinUrl": "https://mobbin.com/screens/4cd18b77-536d-487c-8c87-a7f2feabb557", "sourceUrl": "https://mobbin.com/screens/4cd18b77-536d-487c-8c87-a7f2feabb557", "imageUrl": "https://mobbin.com/api/mcp/short/NIZ8Dhsc", "appName": "ClassPass", "platform": "web" },
+        { "id": "bb3eddd9-0900-453f-a681-c84a2e657613", "screenId": "bb3eddd9-0900-453f-a681-c84a2e657613", "mobbinUrl": "https://mobbin.com/screens/bb3eddd9-0900-453f-a681-c84a2e657613", "sourceUrl": "https://mobbin.com/screens/bb3eddd9-0900-453f-a681-c84a2e657613", "imageUrl": "https://mobbin.com/api/mcp/short/o2fKgOVU", "appName": "ClassPass", "platform": "web" },
+        { "id": "95f8901e-32fc-42c9-af2b-dc96f17ac5df", "screenId": "95f8901e-32fc-42c9-af2b-dc96f17ac5df", "mobbinUrl": "https://mobbin.com/screens/95f8901e-32fc-42c9-af2b-dc96f17ac5df", "sourceUrl": "https://mobbin.com/screens/95f8901e-32fc-42c9-af2b-dc96f17ac5df", "imageUrl": "https://mobbin.com/api/mcp/short/W9NiQWuA", "appName": "ClassPass", "platform": "web" },
+        { "id": "3f564fad-85dc-413f-afa4-b191555455c4", "screenId": "3f564fad-85dc-413f-afa4-b191555455c4", "mobbinUrl": "https://mobbin.com/screens/3f564fad-85dc-413f-afa4-b191555455c4", "sourceUrl": "https://mobbin.com/screens/3f564fad-85dc-413f-afa4-b191555455c4", "imageUrl": "https://mobbin.com/api/mcp/short/64OWinCm", "appName": "ClassPass", "platform": "web" }
+      ]
+    }
+  ]
+}

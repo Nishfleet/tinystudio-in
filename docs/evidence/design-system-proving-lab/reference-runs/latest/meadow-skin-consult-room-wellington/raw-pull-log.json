@@ -1,0 +1,111 @@
+{
+  "schemaVersion": "mobbin.mobbin-pro.raw-pull-log.v1",
+  "sourceProvider": "Mobbin Pro MCP",
+  "platform": "web",
+  "businessId": "meadow-skin-consult-room-wellington",
+  "businessName": "Meadow Skin Consult Room",
+  "businessHash": "657ffac756336e1961872fb2665469830f3a7510c5951c62bc87207abceeb0be",
+  "searchBriefHash": "128b829214553c4ef50039c16545e79d9d99dd7113999012d986f7dc316b79c9",
+  "generatedAt": "2026-05-19T01:43:08Z",
+  "collectionPolicy": {
+    "strategy": "wide-pull-then-compress",
+    "minimumReturnedScreensAcrossQueries": 32,
+    "minimumUniqueRawPoolScreens": 20,
+    "chunkSize": "8 per required query angle, with page-job collected as two 4-result chunks after larger retries timed out",
+    "dedupeMethod": "Mobbin screen id with exclude_screen_ids across chunks"
+  },
+  "toolNotes": [
+    "Mobbin Pro MCP was available in this context.",
+    "The page-job query timed out at limit 8 after 120 seconds.",
+    "The same page-job query also timed out at limit 6 after 120 seconds.",
+    "The page-job query was then retried in two 4-result chunks without narrowing the search intent."
+  ],
+  "totalReturned": 32,
+  "uniqueScreenCount": 32,
+  "queryRuns": [
+    {
+      "angle": "niche",
+      "query": "aesthetics skin consultations, facials, peels, and treatment planning service marketing website homepage enquire CTA landing page website inspiration",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:43:08Z",
+      "results": [
+        { "screenId": "9c2a7bd2-b9c4-4ca3-b5f0-6741d5cfcced", "mobbinUrl": "https://mobbin.com/screens/9c2a7bd2-b9c4-4ca3-b5f0-6741d5cfcced", "imageUrl": "https://mobbin.com/api/mcp/short/JRn4Lrsz", "appName": "Hims", "platform": "web", "observedRole": "skin product and treatment-benefit section with bullet claims, product visual, and get-started CTA" },
+        { "screenId": "25bedf12-f244-4833-a69e-4857c319d026", "mobbinUrl": "https://mobbin.com/screens/25bedf12-f244-4833-a69e-4857c319d026", "imageUrl": "https://mobbin.com/api/mcp/short/eNiwkBpA", "appName": "Hims", "platform": "web", "observedRole": "anti-aging product enrolment page with price, state selector, legal consent, and start-visit CTA" },
+        { "screenId": "b99b4e59-f601-4a75-a9d6-135330897695", "mobbinUrl": "https://mobbin.com/screens/b99b4e59-f601-4a75-a9d6-135330897695", "imageUrl": "https://mobbin.com/api/mcp/short/1gl2smOa", "appName": "Hims", "platform": "web", "observedRole": "consult-first skincare process section with online consultation, provider review, and fulfillment steps" },
+        { "screenId": "ab0b71d7-d26f-4948-92a8-714ab194cac1", "mobbinUrl": "https://mobbin.com/screens/ab0b71d7-d26f-4948-92a8-714ab194cac1", "imageUrl": "https://mobbin.com/api/mcp/short/K5RkrnZv", "appName": "Hims", "platform": "web", "observedRole": "telemedicine explanation section with phone artifact, medical prop, and regulated-care narrative" },
+        { "screenId": "23179705-948f-42b9-b98f-f5704f0b979c", "mobbinUrl": "https://mobbin.com/screens/23179705-948f-42b9-b98f-f5704f0b979c", "imageUrl": "https://mobbin.com/api/mcp/short/Ad17F54v", "appName": "Hims", "platform": "web", "observedRole": "full-bleed skincare product hero with strong outcome claims and single CTA" },
+        { "screenId": "d5134dda-2d0a-4785-88f2-e79d2246cfb2", "mobbinUrl": "https://mobbin.com/screens/d5134dda-2d0a-4785-88f2-e79d2246cfb2", "imageUrl": "https://mobbin.com/api/mcp/short/6g7fGOLF", "appName": "Hims", "platform": "web", "observedRole": "skincare category/product rail with benefit bullets and provider/trust proof" },
+        { "screenId": "21bfbd9e-7a13-4dd0-aed0-654fe7da8cca", "mobbinUrl": "https://mobbin.com/screens/21bfbd9e-7a13-4dd0-aed0-654fe7da8cca", "imageUrl": "https://mobbin.com/api/mcp/short/QqTw1vz1", "appName": "Hims", "platform": "web", "observedRole": "anti-aging product category with product cards, safety-information link, buy/learn CTAs, and close-up skin photo" },
+        { "screenId": "66fd36f4-2991-4ea7-8fa8-fee5ec928163", "mobbinUrl": "https://mobbin.com/screens/66fd36f4-2991-4ea7-8fa8-fee5ec928163", "imageUrl": "https://mobbin.com/api/mcp/short/RXbOPqAP", "appName": "Hims", "platform": "web", "observedRole": "large skincare product hero with before/after-adjacent claims and product photography" }
+      ]
+    },
+    {
+      "angle": "page-job",
+      "query": "enquire CTA homepage with trust proof, service or product menu, and local customer decision path website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 4,
+      "runAt": "2026-05-19T01:43:08Z",
+      "notes": "Collected after limit 8 and limit 6 attempts timed out.",
+      "results": [
+        { "screenId": "212942d1-4c49-4ce4-bdaa-32178d36181a", "mobbinUrl": "https://mobbin.com/screens/212942d1-4c49-4ce4-bdaa-32178d36181a", "imageUrl": "https://mobbin.com/api/mcp/short/SYeFDvze", "appName": "Fresha", "platform": "web", "observedRole": "beauty/wellness booking homepage with treatment, location, date, and time search plus account menu state" },
+        { "screenId": "e327103c-404c-4431-8bc6-0916b52d1572", "mobbinUrl": "https://mobbin.com/screens/e327103c-404c-4431-8bc6-0916b52d1572", "imageUrl": "https://mobbin.com/api/mcp/short/oRgNdy6Q", "appName": "ClassPass", "platform": "web", "observedRole": "local wellness venue page with map, contact details, tabs, rating, and safety/cleanliness section" },
+        { "screenId": "923e5154-c265-436e-8d2f-2a1c56699a06", "mobbinUrl": "https://mobbin.com/screens/923e5154-c265-436e-8d2f-2a1c56699a06", "imageUrl": "https://mobbin.com/api/mcp/short/7YLMYqdt", "appName": "Fresha", "platform": "web", "observedRole": "booking homepage with treatment search, date/time controls, and simplified menu overlay" },
+        { "screenId": "1926963a-1b7c-41ca-8ca9-67e497e093c5", "mobbinUrl": "https://mobbin.com/screens/1926963a-1b7c-41ca-8ca9-67e497e093c5", "imageUrl": "https://mobbin.com/api/mcp/short/OZJSNPhv", "appName": "Square", "platform": "web", "observedRole": "local service booking page with consultation row, location, hours, map, and book-now links" }
+      ]
+    },
+    {
+      "angle": "page-job",
+      "query": "enquire CTA homepage with trust proof, service or product menu, and local customer decision path website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 4,
+      "runAt": "2026-05-19T01:43:08Z",
+      "notes": "Second 4-result chunk for the same search intent.",
+      "results": [
+        { "screenId": "72973b86-4925-4ead-9a52-0a886d093efc", "mobbinUrl": "https://mobbin.com/screens/72973b86-4925-4ead-9a52-0a886d093efc", "imageUrl": "https://mobbin.com/api/mcp/short/0YoilZNd", "appName": "Sana AI", "platform": "web", "observedRole": "learning platform proof and dark custom-introduction CTA band" },
+        { "screenId": "9c904c3c-1269-4b2b-8e50-9f315641a713", "mobbinUrl": "https://mobbin.com/screens/9c904c3c-1269-4b2b-8e50-9f315641a713", "imageUrl": "https://mobbin.com/api/mcp/short/7RLYa18P", "appName": "Dovetail", "platform": "web", "observedRole": "dark trust/proof hero with contact-sales CTA, trial CTA, app-grid artifact, and rating/logos" },
+        { "screenId": "1d2cb753-711f-4a52-9c94-dbf36fd5d108", "mobbinUrl": "https://mobbin.com/screens/1d2cb753-711f-4a52-9c94-dbf36fd5d108", "imageUrl": "https://mobbin.com/api/mcp/short/6yJCE4pI", "appName": "ClassPass", "platform": "web", "observedRole": "testimonial and brand-logo proof section with quote, customer logos, and request-quote CTA" },
+        { "screenId": "57e9c942-2129-41c7-b705-7c02a09f44a4", "mobbinUrl": "https://mobbin.com/screens/57e9c942-2129-41c7-b705-7c02a09f44a4", "imageUrl": "https://mobbin.com/api/mcp/short/zuzhphF5", "appName": "Render", "platform": "web", "observedRole": "developer product hero with two CTAs, grid visual artifact, and top announcement bar" }
+      ]
+    },
+    {
+      "angle": "tone",
+      "query": "premium credible owner-led service business landing page website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:43:08Z",
+      "results": [
+        { "screenId": "1bb4fded-b6e6-4271-8522-d5a85048bcf3", "mobbinUrl": "https://mobbin.com/screens/1bb4fded-b6e6-4271-8522-d5a85048bcf3", "imageUrl": "https://mobbin.com/api/mcp/short/2SRf3r5I", "appName": "Lovable", "platform": "web", "observedRole": "AI-generated service website with generic service cards, testimonials, and contact CTA" },
+        { "screenId": "afa1eeb5-cbb4-44c3-a733-4410b7273200", "mobbinUrl": "https://mobbin.com/screens/afa1eeb5-cbb4-44c3-a733-4410b7273200", "imageUrl": "https://mobbin.com/api/mcp/short/wQTLRnsV", "appName": "Lovable", "platform": "web", "observedRole": "AI-generated service website variant with visible prompt panel and generic service copy" },
+        { "screenId": "ff6513c3-2888-458a-be0f-a634852e1760", "mobbinUrl": "https://mobbin.com/screens/ff6513c3-2888-458a-be0f-a634852e1760", "imageUrl": "https://mobbin.com/api/mcp/short/MTOZQ0b6", "appName": "Contra", "platform": "web", "observedRole": "professional service detail page with phase breakdown, request-to-book CTA, price card, skills, tools, and links" },
+        { "screenId": "b9115905-c49a-4af0-8b08-97ebd69296ba", "mobbinUrl": "https://mobbin.com/screens/b9115905-c49a-4af0-8b08-97ebd69296ba", "imageUrl": "https://mobbin.com/api/mcp/short/md14lVnp", "appName": "Webflow", "platform": "web", "observedRole": "dark portfolio service homepage with overlay editing UI, quote CTA, and image-heavy work grid" },
+        { "screenId": "3dc52a7c-e04a-465b-a69b-9134eafe3ab7", "mobbinUrl": "https://mobbin.com/screens/3dc52a7c-e04a-465b-a69b-9134eafe3ab7", "imageUrl": "https://mobbin.com/api/mcp/short/Ujwe9p9q", "appName": "Contra", "platform": "web", "observedRole": "independent profile hero with giant type, location/service labels, pale background, and waitlist state" },
+        { "screenId": "bc9d6f5e-3fb6-43a7-8dc2-47459f551a95", "mobbinUrl": "https://mobbin.com/screens/bc9d6f5e-3fb6-43a7-8dc2-47459f551a95", "imageUrl": "https://mobbin.com/api/mcp/short/GezO0HUi", "appName": "Lovable", "platform": "web", "observedRole": "generic AI service page with service tiles and soft pastel template styling" },
+        { "screenId": "8b8dc2c2-47dd-4cae-9b67-2a885bd435e9", "mobbinUrl": "https://mobbin.com/screens/8b8dc2c2-47dd-4cae-9b67-2a885bd435e9", "imageUrl": "https://mobbin.com/api/mcp/short/XqvKidcR", "appName": "v0", "platform": "web", "observedRole": "generated SaaS landing page with generic claims, free-trial CTA, and placeholder media card" },
+        { "screenId": "2c111480-c2e2-4552-8363-7d873d4f554d", "mobbinUrl": "https://mobbin.com/screens/2c111480-c2e2-4552-8363-7d873d4f554d", "imageUrl": "https://mobbin.com/api/mcp/short/MFCdcuhE", "appName": "Webflow", "platform": "web", "observedRole": "dark portfolio service page with comments panel and quote CTA, useful as an anti-reference" }
+      ]
+    },
+    {
+      "angle": "constraint",
+      "query": "regulated-adjacent claims result-photo temptation consult-first decision responsive mobile-first homepage website not dashboard not app",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:43:08Z",
+      "results": [
+        { "screenId": "5f8aa021-b9bb-460c-8a51-ea2e9813dc0e", "mobbinUrl": "https://mobbin.com/screens/5f8aa021-b9bb-460c-8a51-ea2e9813dc0e", "imageUrl": "https://mobbin.com/api/mcp/short/o6QZySY9", "appName": "HODINKEE", "platform": "web", "observedRole": "regulated-adjacent insurance page with process bullets, help line, and restrained illustration" },
+        { "screenId": "08581deb-7de6-4fa8-b1e4-47b6eb8b16d3", "mobbinUrl": "https://mobbin.com/screens/08581deb-7de6-4fa8-b1e4-47b6eb8b16d3", "imageUrl": "https://mobbin.com/api/mcp/short/bvdObTJ0", "appName": "Hims", "platform": "web", "observedRole": "how-primary-care-visits-work section with centered headline and mobile assessment artifact" },
+        { "screenId": "12555f0e-ee97-4790-a702-c9f6520b33e6", "mobbinUrl": "https://mobbin.com/screens/12555f0e-ee97-4790-a702-c9f6520b33e6", "imageUrl": "https://mobbin.com/api/mcp/short/mpnVI6tb", "appName": "Hims", "platform": "web", "observedRole": "post-treatment/app category section with delivery, app prompt, and sensitive wellness category cards" },
+        { "screenId": "98e1b5af-6b51-4f95-9d27-46b096e16431", "mobbinUrl": "https://mobbin.com/screens/98e1b5af-6b51-4f95-9d27-46b096e16431", "imageUrl": "https://mobbin.com/api/mcp/short/bqMSTqu7", "appName": "Hims", "platform": "web", "observedRole": "how-it-works section with giant type, icon steps, and assessment CTA" },
+        { "screenId": "918abb9e-a6d7-439c-b5cc-f65dfadc146b", "mobbinUrl": "https://mobbin.com/screens/918abb9e-a6d7-439c-b5cc-f65dfadc146b", "imageUrl": "https://mobbin.com/api/mcp/short/xEmJ6Plj", "appName": "HODINKEE", "platform": "web", "observedRole": "knowledge-base landing page with search hero, FAQ cards, and image-heavy premium service styling" },
+        { "screenId": "f757e7f2-94b7-4d58-9400-d37b437598e2", "mobbinUrl": "https://mobbin.com/screens/f757e7f2-94b7-4d58-9400-d37b437598e2", "imageUrl": "https://mobbin.com/api/mcp/short/AJkeDFna", "appName": "HODINKEE", "platform": "web", "observedRole": "knowledge-base search state with FAQ list and precise answer-navigation pattern" },
+        { "screenId": "a04422eb-bdf3-4a41-9379-95938bf90446", "mobbinUrl": "https://mobbin.com/screens/a04422eb-bdf3-4a41-9379-95938bf90446", "imageUrl": "https://mobbin.com/api/mcp/short/QXiuBeSU", "appName": "Hims", "platform": "web", "observedRole": "treatment cost breakdown with checklist, legal pricing notes, sensitive face/product imagery, and assessment CTA" },
+        { "screenId": "e84927d0-e569-4290-8a5d-90252a0b6daa", "mobbinUrl": "https://mobbin.com/screens/e84927d0-e569-4290-8a5d-90252a0b6daa", "imageUrl": "https://mobbin.com/api/mcp/short/Blgps8mO", "appName": "Hims", "platform": "web", "observedRole": "what-to-expect section with four large icon steps and offer transition" }
+      ]
+    }
+  ]
+}

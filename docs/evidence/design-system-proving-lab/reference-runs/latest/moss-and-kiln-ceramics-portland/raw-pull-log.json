@@ -1,0 +1,93 @@
+{
+  "schemaVersion": "mobbin.mobbin-pro.raw-pull-log.v1",
+  "sourceProvider": "Mobbin Pro MCP",
+  "platform": "web",
+  "businessId": "moss-and-kiln-ceramics-portland",
+  "businessName": "Moss & Kiln Ceramics",
+  "businessHash": "2763acef2939e9509d3113db7731c92df099ee9bc18cf314ce4d486933271695",
+  "searchBriefHash": "5254fb04ab9b4698652159dae62397d33280d667b39cfb3639cab20d6b804129",
+  "generatedAt": "2026-05-19T01:39:08Z",
+  "collectionPolicy": {
+    "strategy": "wide-pull-then-compress",
+    "minimumReturnedScreensAcrossQueries": 32,
+    "minimumUniqueRawPoolScreens": 20,
+    "chunkSize": "8 screens per required query angle",
+    "dedupeMethod": "Mobbin screen id with exclude_screen_ids across query chunks"
+  },
+  "toolNotes": [
+    "All references came from Mobbin Pro MCP search_screens on platform web.",
+    "Four required query angles were run with broad 8-result pulls and accumulated exclusions."
+  ],
+  "totalReturned": 32,
+  "uniqueScreenCount": 32,
+  "queryRuns": [
+    {
+      "angle": "niche",
+      "query": "specialty-retail handmade ceramic mugs, planters, dinnerware sets, and gift orders product marketing website homepage purchase CTA landing page website inspiration",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "results": [
+        { "screenId": "3ed792cd-a39b-4025-a6b1-991407ae8da2", "mobbinUrl": "https://mobbin.com/screens/3ed792cd-a39b-4025-a6b1-991407ae8da2", "imageUrl": "https://mobbin.com/api/mcp/short/eNSSwkjm", "appName": "HODINKEE", "platform": "web", "observedRole": "premium vintage product hero with large atmospheric still-life image and shop-now CTA" },
+        { "screenId": "e2b39890-dbca-4349-b0e4-73f7b6f1caaa", "mobbinUrl": "https://mobbin.com/screens/e2b39890-dbca-4349-b0e4-73f7b6f1caaa", "imageUrl": "https://mobbin.com/api/mcp/short/y2JyT1lh", "appName": "HODINKEE", "platform": "web", "observedRole": "lifestyle commerce hero followed by staff-picks section and editorial product framing" },
+        { "screenId": "dbb9db25-8f3e-4943-953a-ecd514a3a0b4", "mobbinUrl": "https://mobbin.com/screens/dbb9db25-8f3e-4943-953a-ecd514a3a0b4", "imageUrl": "https://mobbin.com/api/mcp/short/r8RJULsX", "appName": "Shopify", "platform": "web", "observedRole": "simple store homepage with full-width product-shelf hero and shop-all CTA" },
+        { "screenId": "f6352ef8-0262-4a31-9a20-c0f2383d7f91", "mobbinUrl": "https://mobbin.com/screens/f6352ef8-0262-4a31-9a20-c0f2383d7f91", "imageUrl": "https://mobbin.com/api/mcp/short/cFklzjac", "appName": "Faire", "platform": "web", "observedRole": "marketplace category carousel for dinnerware, drinkware, tabletop decor, and seasonal market CTA" },
+        { "screenId": "87d9b209-533c-4176-9717-e541ec849255", "mobbinUrl": "https://mobbin.com/screens/87d9b209-533c-4176-9717-e541ec849255", "imageUrl": "https://mobbin.com/api/mcp/short/02VJdEBy", "appName": "Etsy", "platform": "web", "observedRole": "handmade home-decor product grid with prices, badges, ratings, favorites, and basket actions" },
+        { "screenId": "6f50f2d3-7d2a-4893-bbbc-2b1ec3664300", "mobbinUrl": "https://mobbin.com/screens/6f50f2d3-7d2a-4893-bbbc-2b1ec3664300", "imageUrl": "https://mobbin.com/api/mcp/short/3WUfPFhA", "appName": "IKEA", "platform": "web", "observedRole": "shop-by-color home accessories rail with ceramics-like product photography and shop-all controls" },
+        { "screenId": "59e773aa-6443-4fb0-b42f-11ba4b4e4e06", "mobbinUrl": "https://mobbin.com/screens/59e773aa-6443-4fb0-b42f-11ba4b4e4e06", "imageUrl": "https://mobbin.com/api/mcp/short/Axm8CfCi", "appName": "Etsy", "platform": "web", "observedRole": "personalized gifts and decor discovery page with saved item cards and category circles" },
+        { "screenId": "e226a68b-6f47-413c-9cdd-281e257dbf2e", "mobbinUrl": "https://mobbin.com/screens/e226a68b-6f47-413c-9cdd-281e257dbf2e", "imageUrl": "https://mobbin.com/api/mcp/short/FerZZNMg", "appName": "IKEA", "platform": "web", "observedRole": "editorial homewares section using large product images and curated styles/trends copy blocks" }
+      ]
+    },
+    {
+      "angle": "page-job",
+      "query": "purchase CTA homepage with trust proof, service or product menu, and local customer decision path website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "results": [
+        { "screenId": "02234de8-062a-4ec5-a34f-0e05912958cc", "mobbinUrl": "https://mobbin.com/screens/02234de8-062a-4ec5-a34f-0e05912958cc", "imageUrl": "https://mobbin.com/api/mcp/short/oOTkwcLT", "appName": "OKX", "platform": "web", "observedRole": "dark product homepage with mega menu and dual purchase/trade actions" },
+        { "screenId": "937adb3d-9e14-4300-af7d-5b4a95fc87b9", "mobbinUrl": "https://mobbin.com/screens/937adb3d-9e14-4300-af7d-5b4a95fc87b9", "imageUrl": "https://mobbin.com/api/mcp/short/Amq5uFvZ", "appName": "Coda", "platform": "web", "observedRole": "product-led hero with strong headline, two CTAs, and large object-like visual" },
+        { "screenId": "25bedf12-f244-4833-a69e-4857c319d026", "mobbinUrl": "https://mobbin.com/screens/25bedf12-f244-4833-a69e-4857c319d026", "imageUrl": "https://mobbin.com/api/mcp/short/78KOByMy", "appName": "Hims", "platform": "web", "observedRole": "single product purchase funnel with product image, state selector, consent checkbox, and primary CTA" },
+        { "screenId": "2ab66ce0-edb7-42e8-8174-e2136573cc0f", "mobbinUrl": "https://mobbin.com/screens/2ab66ce0-edb7-42e8-8174-e2136573cc0f", "imageUrl": "https://mobbin.com/api/mcp/short/hsGfMOP7", "appName": "Hims", "platform": "web", "observedRole": "product bundle section with three cards, copy, imagery, and learn-more buttons" },
+        { "screenId": "38746fe2-c4da-4e72-9764-a662be516372", "mobbinUrl": "https://mobbin.com/screens/38746fe2-c4da-4e72-9764-a662be516372", "imageUrl": "https://mobbin.com/api/mcp/short/Bi6zIzYT", "appName": "Whop", "platform": "web", "observedRole": "finance product page with app mockup, feature icons, waitlist CTA, and legal small print" },
+        { "screenId": "98e12353-e7cd-4ae6-8eed-f2afc60ce3c5", "mobbinUrl": "https://mobbin.com/screens/98e12353-e7cd-4ae6-8eed-f2afc60ce3c5", "imageUrl": "https://mobbin.com/api/mcp/short/Pv8nQjwX", "appName": "HODINKEE", "platform": "web", "observedRole": "premium product hero with account dropdown, full-bleed image, shop-now CTA, and arrivals section" },
+        { "screenId": "89d76eab-a47a-4b8b-bbfd-f8304d8c7243", "mobbinUrl": "https://mobbin.com/screens/89d76eab-a47a-4b8b-bbfd-f8304d8c7243", "imageUrl": "https://mobbin.com/api/mcp/short/wwp9ZE4g", "appName": "Google Maps", "platform": "web", "observedRole": "product card grid with location-related product categories and CTA buttons" },
+        { "screenId": "5cfdc3d9-a6e8-4e86-8651-3c9763fec58d", "mobbinUrl": "https://mobbin.com/screens/5cfdc3d9-a6e8-4e86-8651-3c9763fec58d", "imageUrl": "https://mobbin.com/api/mcp/short/HqGmZw0J", "appName": "Buy Me a Coffee", "platform": "web", "observedRole": "creator shop/membership page with featured digital products and a sticky support rail" }
+      ]
+    },
+    {
+      "angle": "tone",
+      "query": "premium credible owner-led product business landing page website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "results": [
+        { "screenId": "b4184bb0-a34a-4898-af2c-36b7100952df", "mobbinUrl": "https://mobbin.com/screens/b4184bb0-a34a-4898-af2c-36b7100952df", "imageUrl": "https://mobbin.com/api/mcp/short/btkL72Ab", "appName": "Uvodo", "platform": "web", "observedRole": "storefront template with abstract hero image, buy-now CTA, mission block, and chat button" },
+        { "screenId": "34e92084-8dff-47a8-8196-294106e5d6be", "mobbinUrl": "https://mobbin.com/screens/34e92084-8dff-47a8-8196-294106e5d6be", "imageUrl": "https://mobbin.com/api/mcp/short/IN7postu", "appName": "The Leap", "platform": "web", "observedRole": "creator product platform hero with expressive type, neon CTA, and interactive demo preview" },
+        { "screenId": "502a37d5-2047-439a-893b-60190dde51e4", "mobbinUrl": "https://mobbin.com/screens/502a37d5-2047-439a-893b-60190dde51e4", "imageUrl": "https://mobbin.com/api/mcp/short/tu2dRSgW", "appName": "Hims", "platform": "web", "observedRole": "skincare product grid with product photos, prices, descriptions, and learn-more buttons" },
+        { "screenId": "9dae958f-c1a5-4b8f-9409-875008fd9b71", "mobbinUrl": "https://mobbin.com/screens/9dae958f-c1a5-4b8f-9409-875008fd9b71", "imageUrl": "https://mobbin.com/api/mcp/short/EcxU0lQ4", "appName": "Productboard", "platform": "web", "observedRole": "SaaS proof hero with banner, centered headline, dual CTA, and layered product screenshots" },
+        { "screenId": "890845a4-591c-4e83-9510-228820ce3340", "mobbinUrl": "https://mobbin.com/screens/890845a4-591c-4e83-9510-228820ce3340", "imageUrl": "https://mobbin.com/api/mcp/short/UM4xgXgo", "appName": "Sana AI", "platform": "web", "observedRole": "product-family landing page with large editorial type and two product cards" },
+        { "screenId": "688caa0f-ba83-47ee-b4e1-e1ee8066d59f", "mobbinUrl": "https://mobbin.com/screens/688caa0f-ba83-47ee-b4e1-e1ee8066d59f", "imageUrl": "https://mobbin.com/api/mcp/short/emk9dU2k", "appName": "Hims", "platform": "web", "observedRole": "product grid variant with buy-now and learn-more actions under each item" },
+        { "screenId": "329e37e0-ff02-4efe-82a4-4cabbb83e774", "mobbinUrl": "https://mobbin.com/screens/329e37e0-ff02-4efe-82a4-4cabbb83e774", "imageUrl": "https://mobbin.com/api/mcp/short/V7JbLJHd", "appName": "Maze", "platform": "web", "observedRole": "premium homepage with object-still-life strip, centered CTA, and restrained palette" },
+        { "screenId": "3bed3d27-98a5-4c72-baa0-ca8a1507f853", "mobbinUrl": "https://mobbin.com/screens/3bed3d27-98a5-4c72-baa0-ca8a1507f853", "imageUrl": "https://mobbin.com/api/mcp/short/IjIKvlJE", "appName": "Apple", "platform": "web", "observedRole": "large retail homepage with category icon rail, product cards, and shopping-help prompts" }
+      ]
+    },
+    {
+      "angle": "constraint",
+      "query": "product purchase inventory-grid responsive mobile-first homepage website not dashboard not app",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "results": [
+        { "screenId": "2d278d2c-75c4-4b7a-97ca-1cbe93d9bf24", "mobbinUrl": "https://mobbin.com/screens/2d278d2c-75c4-4b7a-97ca-1cbe93d9bf24", "imageUrl": "https://mobbin.com/api/mcp/short/8ihT2vLU", "appName": "Glide", "platform": "web", "observedRole": "inventory grid with grouped product cards, search, filter, and add-product controls" },
+        { "screenId": "1d3ed016-eec5-4365-abe2-13a2f34d9956", "mobbinUrl": "https://mobbin.com/screens/1d3ed016-eec5-4365-abe2-13a2f34d9956", "imageUrl": "https://mobbin.com/api/mcp/short/6kQgZRn3", "appName": "Glide", "platform": "web", "observedRole": "app-builder interface showing inventory card configuration and filters" },
+        { "screenId": "eeeeafb7-1e51-44f8-bd7b-cd894a72b737", "mobbinUrl": "https://mobbin.com/screens/eeeeafb7-1e51-44f8-bd7b-cd894a72b737", "imageUrl": "https://mobbin.com/api/mcp/short/1sQ7L6nv", "appName": "Glide", "platform": "web", "observedRole": "inventory grid with success state and multiple grouped product sections" },
+        { "screenId": "234f377e-a321-4de7-adef-c8f7c636a57d", "mobbinUrl": "https://mobbin.com/screens/234f377e-a321-4de7-adef-c8f7c636a57d", "imageUrl": "https://mobbin.com/api/mcp/short/f9RNrDqp", "appName": "Glide", "platform": "web", "observedRole": "builder-side card/list/table style selector with editable inventory collection" },
+        { "screenId": "9fc089ce-43ad-45b9-9aac-da67d410b857", "mobbinUrl": "https://mobbin.com/screens/9fc089ce-43ad-45b9-9aac-da67d410b857", "imageUrl": "https://mobbin.com/api/mcp/short/J8Le9r5i", "appName": "Faire", "platform": "web", "observedRole": "saved home-items grid with product price, minimums, color variants, sort, and favorites" },
+        { "screenId": "450e8b95-34a3-4e97-b02c-fd5d584a6971", "mobbinUrl": "https://mobbin.com/screens/450e8b95-34a3-4e97-b02c-fd5d584a6971", "imageUrl": "https://mobbin.com/api/mcp/short/95bEPG4n", "appName": "Blue Apron", "platform": "web", "observedRole": "market category section with four large product/category image tiles and arrow CTAs" },
+        { "screenId": "cfd97b07-2e10-4cda-9594-dd1fcb3b2eb4", "mobbinUrl": "https://mobbin.com/screens/cfd97b07-2e10-4cda-9594-dd1fcb3b2eb4", "imageUrl": "https://mobbin.com/api/mcp/short/rFYBIpFx", "appName": "Shop", "platform": "web", "observedRole": "dense product grid with search, favorites, ratings, discounts, and mobile app footer prompts" },
+        { "screenId": "66e20fe7-1ac3-427f-8f11-8ebf0fe4fa67", "mobbinUrl": "https://mobbin.com/screens/66e20fe7-1ac3-427f-8f11-8ebf0fe4fa67", "imageUrl": "https://mobbin.com/api/mcp/short/yEeUT0xj", "appName": "Nike", "platform": "web", "observedRole": "minimal product grid with large isolated product images and product names" }
+      ]
+    }
+  ]
+}

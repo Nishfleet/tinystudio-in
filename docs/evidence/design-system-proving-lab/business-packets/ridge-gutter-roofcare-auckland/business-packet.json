@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "mobbin.design-system-proving-lab.business-packet.v2",
+  "businessId": "ridge-gutter-roofcare-auckland",
+  "businessName": "Ridge & Gutter Roofcare",
+  "businessModel": "service",
+  "category": "home-service",
+  "subcategory": "roof cleaning, gutter clearing, leak checks, and seasonal maintenance",
+  "relevanceReason": "Home services force the design system to handle quote urgency, trust gaps, safety wording, and no-photo constraints outside the beauty niche.",
+  "targetCustomerDecision": "Should a homeowner request a quote for gutter clearing, roof moss treatment, or a leak-check visit?",
+  "searchBriefPath": "docs/evidence/design-system-proving-lab/search-briefs/ridge-gutter-roofcare-auckland.json",
+  "searchBriefHash": "1686e70f12951bffa9a69eaec670f7195dfb4152ff803c0c14b5a3d85561de3b",
+  "referencePacketStatus": "pass",
+  "referencePacketPath": "docs/evidence/design-system-proving-lab/reference-runs/latest/ridge-gutter-roofcare-auckland/reference-packet.json",
+  "rawPullLogPath": "docs/evidence/design-system-proving-lab/reference-runs/latest/ridge-gutter-roofcare-auckland/raw-pull-log.json",
+  "rawPullLogStatus": "pass",
+  "rawPoolReturnedCount": 40,
+  "rawPoolUniqueCount": 39,
+  "referencePacketFailures": [],
+  "directionPacketStatus": "missing",
+  "directionPacketPath": "docs/evidence/design-system-proving-lab/business-packets/ridge-gutter-roofcare-auckland/direction-packet.json",
+  "directionPacketFailures": [
+    "ridge-gutter-roofcare-auckland: missing visual-territory exploration and Mobbin-backed finalist concepts at docs/evidence/design-system-proving-lab/business-packets/ridge-gutter-roofcare-auckland/direction-packet.json"
+  ],
+  "exploredTerritoryCount": 0,
+  "selectedVisualTerritories": [],
+  "chosenDirection": "",
+  "conceptImageCount": 0,
+  "previewProofStatus": "missing",
+  "previewProofPath": "docs/evidence/design-system-proving-lab/business-packets/ridge-gutter-roofcare-auckland/preview-proof.json",
+  "previewProofFailures": [
+    "ridge-gutter-roofcare-auckland: missing rendered preview proof at docs/evidence/design-system-proving-lab/business-packets/ridge-gutter-roofcare-auckland/preview-proof.json"
+  ],
+  "desktopScreenshotStatus": "missing",
+  "mobileScreenshotStatus": "missing",
+  "similarityStatus": "missing",
+  "humanApprovalStatus": "missing",
+  "conceptTodo": [
+    {
+      "step": "explore-visual-territories",
+      "status": "blocked",
+      "required": "explore 6-8 visual territories against the fresh Mobbin packet",
+      "minimumExploredTerritories": 6,
+      "maximumExploredTerritories": 8
+    },
+    {
+      "step": "shortlist-finalists",
+      "status": "blocked",
+      "required": "shortlist 3-4 business-specific screenshot-level finalists",
+      "minimumFinalists": 3,
+      "maximumFinalists": 4,
+      "minimumScore": 8
+    },
+    {
+      "step": "choose-winner",
+      "status": "blocked",
+      "required": "choose one finalist, reject the others with reasons, then write the build brief"
+    }
+  ],
+  "currentStatus": "blocked-before-concepts",
+  "externalUseAllowed": false,
+  "nextAction": "Explore 6-8 visual territories, shortlist 3-4 business-specific screenshot-level finalists, and save direction-packet.json."
+}

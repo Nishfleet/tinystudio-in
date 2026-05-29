@@ -1,0 +1,563 @@
+{
+  "schemaVersion": "mobbin.mobbin-pro.per-redesign-reference-packet.v1",
+  "sourceProvider": "Mobbin Pro MCP",
+  "platform": "web",
+  "businessId": "clearwell-family-dental-halifax",
+  "businessName": "Clearwell Family Dental",
+  "businessHash": "f7b2e73ac0c657cf5aa97c417fa12ab8bc1626f728c1ff4181f77e79cd2351cb",
+  "searchBriefHash": "f863f4c89088704a0c57fa80d92a812e545358da2b0152675793e56520974d31",
+  "generatedAt": "2026-05-19T01:29:31Z",
+  "rawPullLogPath": "docs/evidence/design-system-proving-lab/reference-runs/latest/clearwell-family-dental-halifax/raw-pull-log.json",
+  "rawPullLogHash": "2eabf692b95bbef2668b002b852d1e4c43c9b0e2fb9fa3cad6489b407bb965dc",
+  "queryLog": [
+    {
+      "angle": "niche",
+      "query": "clinic check-ups, hygiene appointments, emergency triage, and cosmetic consults service marketing website homepage enquire CTA landing page website inspiration",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:29:31Z"
+    },
+    {
+      "angle": "page-job",
+      "query": "enquire CTA homepage with trust proof, service or product menu, and local customer decision path website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:29:31Z"
+    },
+    {
+      "angle": "tone",
+      "query": "premium credible owner-led service business landing page website",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:29:31Z"
+    },
+    {
+      "angle": "constraint",
+      "query": "regulated category urgent path wording trust without fake credentials responsive mobile-first homepage website not dashboard not app",
+      "mode": "deep",
+      "platform": "web",
+      "returnedCount": 8,
+      "runAt": "2026-05-19T01:29:31Z"
+    }
+  ],
+  "rawCandidates": [
+    {
+      "screenId": "c007aa4c-b965-40b5-813f-326c3cd54e70",
+      "mobbinUrl": "https://mobbin.com/screens/c007aa4c-b965-40b5-813f-326c3cd54e70",
+      "sourceUrl": "https://mobbin.com/screens/c007aa4c-b965-40b5-813f-326c3cd54e70",
+      "imageUrl": "https://mobbin.com/api/mcp/short/ThJBTbjZ",
+      "appName": "Hims",
+      "selectionReason": "Direct regulated-care trust architecture; useful for reassurance layout, unsafe if copied as credentials."
+    },
+    {
+      "screenId": "d477944c-945f-4791-ad13-b760ec3e300b",
+      "mobbinUrl": "https://mobbin.com/screens/d477944c-945f-4791-ad13-b760ec3e300b",
+      "sourceUrl": "https://mobbin.com/screens/d477944c-945f-4791-ad13-b760ec3e300b",
+      "imageUrl": "https://mobbin.com/api/mcp/short/mRnHOFfo",
+      "appName": "Hims",
+      "selectionReason": "Consult-first service explanation with calm split hierarchy that maps to cosmetic consults."
+    },
+    {
+      "screenId": "d067dbc0-666e-47cc-9475-a89b2ab44cf6",
+      "mobbinUrl": "https://mobbin.com/screens/d067dbc0-666e-47cc-9475-a89b2ab44cf6",
+      "sourceUrl": "https://mobbin.com/screens/d067dbc0-666e-47cc-9475-a89b2ab44cf6",
+      "imageUrl": "https://mobbin.com/api/mcp/short/unlNAvWg",
+      "appName": "Hims",
+      "selectionReason": "Urgent-vs-routine card logic with a visible caveat; helpful for dental triage wording."
+    },
+    {
+      "screenId": "5ab19f61-9dbd-4b3a-a7a0-bb5500c0d8c9",
+      "mobbinUrl": "https://mobbin.com/screens/5ab19f61-9dbd-4b3a-a7a0-bb5500c0d8c9",
+      "sourceUrl": "https://mobbin.com/screens/5ab19f61-9dbd-4b3a-a7a0-bb5500c0d8c9",
+      "imageUrl": "https://mobbin.com/api/mcp/short/dHT2tfl6",
+      "appName": "Hims",
+      "selectionReason": "Phone/proof artifact and checklist hierarchy for request flow explanation."
+    },
+    {
+      "screenId": "e788da3e-eebd-4810-baa5-72d2705f43b7",
+      "mobbinUrl": "https://mobbin.com/screens/e788da3e-eebd-4810-baa5-72d2705f43b7",
+      "sourceUrl": "https://mobbin.com/screens/e788da3e-eebd-4810-baa5-72d2705f43b7",
+      "imageUrl": "https://mobbin.com/api/mcp/short/E8yyxwrv",
+      "appName": "Hers",
+      "selectionReason": "Category grid structure maps to check-up, hygiene, urgent, and cosmetic enquiry paths."
+    },
+    {
+      "screenId": "2f8b11b6-8dda-4765-bba1-7526a80d398c",
+      "mobbinUrl": "https://mobbin.com/screens/2f8b11b6-8dda-4765-bba1-7526a80d398c",
+      "sourceUrl": "https://mobbin.com/screens/2f8b11b6-8dda-4765-bba1-7526a80d398c",
+      "imageUrl": "https://mobbin.com/api/mcp/short/qTpuoh5J",
+      "appName": "Hims",
+      "selectionReason": "Checklist-led assessment hero shows how to make a first-step CTA feel clear."
+    },
+    {
+      "screenId": "b937aa57-cfb8-4224-be14-a7941dfa4e72",
+      "mobbinUrl": "https://mobbin.com/screens/b937aa57-cfb8-4224-be14-a7941dfa4e72",
+      "sourceUrl": "https://mobbin.com/screens/b937aa57-cfb8-4224-be14-a7941dfa4e72",
+      "imageUrl": "https://mobbin.com/api/mcp/short/0r3PHWKm",
+      "appName": "NordVPN",
+      "selectionReason": "Trust/alert bar pattern can become a careful regulated review notice without proof overreach."
+    },
+    {
+      "screenId": "72973b86-4925-4ead-9a52-0a886d093efc",
+      "mobbinUrl": "https://mobbin.com/screens/72973b86-4925-4ead-9a52-0a886d093efc",
+      "sourceUrl": "https://mobbin.com/screens/72973b86-4925-4ead-9a52-0a886d093efc",
+      "imageUrl": "https://mobbin.com/api/mcp/short/PN3QIGSC",
+      "appName": "Sana AI",
+      "selectionReason": "Dark CTA footer and proof row useful for final enquiry handoff, not logo proof."
+    },
+    {
+      "screenId": "5614bbf3-48c2-4ac9-9a6f-659b63388f52",
+      "mobbinUrl": "https://mobbin.com/screens/5614bbf3-48c2-4ac9-9a6f-659b63388f52",
+      "sourceUrl": "https://mobbin.com/screens/5614bbf3-48c2-4ac9-9a6f-659b63388f52",
+      "imageUrl": "https://mobbin.com/api/mcp/short/oGhCEJnm",
+      "appName": "Tripadvisor",
+      "selectionReason": "Benefit icon row is structurally useful but claim style is a caution reference."
+    },
+    {
+      "screenId": "e888ea97-01f1-4dcc-a82e-f20d21ea71a0",
+      "mobbinUrl": "https://mobbin.com/screens/e888ea97-01f1-4dcc-a82e-f20d21ea71a0",
+      "sourceUrl": "https://mobbin.com/screens/e888ea97-01f1-4dcc-a82e-f20d21ea71a0",
+      "imageUrl": "https://mobbin.com/api/mcp/short/h8qS0Hev",
+      "appName": "Assembly",
+      "selectionReason": "Proof-carousel composition can become source-backed process proof without fake testimonials."
+    },
+    {
+      "screenId": "03b4ad2b-abd6-410d-ae78-5498b68fdf13",
+      "mobbinUrl": "https://mobbin.com/screens/03b4ad2b-abd6-410d-ae78-5498b68fdf13",
+      "sourceUrl": "https://mobbin.com/screens/03b4ad2b-abd6-410d-ae78-5498b68fdf13",
+      "imageUrl": "https://mobbin.com/api/mcp/short/iiuKKmtx",
+      "appName": "Blue Apron",
+      "selectionReason": "Photo-heavy offer hero is a useful anti-reference for fake clinic or smile imagery."
+    },
+    {
+      "screenId": "e43e90ac-4489-44b5-bd06-93e546c5c48b",
+      "mobbinUrl": "https://mobbin.com/screens/e43e90ac-4489-44b5-bd06-93e546c5c48b",
+      "sourceUrl": "https://mobbin.com/screens/e43e90ac-4489-44b5-bd06-93e546c5c48b",
+      "imageUrl": "https://mobbin.com/api/mcp/short/31KDb1yf",
+      "appName": "Deel",
+      "selectionReason": "Dashboard support card is a useful anti-reference for internal app leakage."
+    },
+    {
+      "screenId": "70ad3f39-9eaf-4e21-a0dd-bc447c536085",
+      "mobbinUrl": "https://mobbin.com/screens/70ad3f39-9eaf-4e21-a0dd-bc447c536085",
+      "sourceUrl": "https://mobbin.com/screens/70ad3f39-9eaf-4e21-a0dd-bc447c536085",
+      "imageUrl": "https://mobbin.com/api/mcp/short/0faUd20r",
+      "appName": "LinkedIn",
+      "selectionReason": "Plan comparison grid can inspire appointment-type comparison while avoiding subscription copy."
+    },
+    {
+      "screenId": "93111cb4-0389-48de-9233-22b16f436f63",
+      "mobbinUrl": "https://mobbin.com/screens/93111cb4-0389-48de-9233-22b16f436f63",
+      "sourceUrl": "https://mobbin.com/screens/93111cb4-0389-48de-9233-22b16f436f63",
+      "imageUrl": "https://mobbin.com/api/mcp/short/VVJEmvve",
+      "appName": "Mailchimp",
+      "selectionReason": "Centered serif service hero offers quiet typography and visible CTA discipline."
+    },
+    {
+      "screenId": "55fbc5cb-e629-4e63-be8f-c3892af4e22d",
+      "mobbinUrl": "https://mobbin.com/screens/55fbc5cb-e629-4e63-be8f-c3892af4e22d",
+      "sourceUrl": "https://mobbin.com/screens/55fbc5cb-e629-4e63-be8f-c3892af4e22d",
+      "imageUrl": "https://mobbin.com/api/mcp/short/OwjMdwt4",
+      "appName": "Fiverr",
+      "selectionReason": "Service solution grid offers scannable cards and link-level CTAs for appointment types."
+    },
+    {
+      "screenId": "7dde5c54-8366-4a8f-af5f-7426eca49b6d",
+      "mobbinUrl": "https://mobbin.com/screens/7dde5c54-8366-4a8f-af5f-7426eca49b6d",
+      "sourceUrl": "https://mobbin.com/screens/7dde5c54-8366-4a8f-af5f-7426eca49b6d",
+      "imageUrl": "https://mobbin.com/api/mcp/short/PNHgXiOG",
+      "appName": "OpenTable",
+      "selectionReason": "Icon trio plus artifact layout is useful for explaining patient routing, but its ROI claims are banned."
+    },
+    {
+      "screenId": "6aa7d066-a33a-4899-8ca0-98eae07422e5",
+      "mobbinUrl": "https://mobbin.com/screens/6aa7d066-a33a-4899-8ca0-98eae07422e5",
+      "sourceUrl": "https://mobbin.com/screens/6aa7d066-a33a-4899-8ca0-98eae07422e5",
+      "imageUrl": "https://mobbin.com/api/mcp/short/adApd1Kd",
+      "appName": "Hers",
+      "selectionReason": "Regulated proof tiles are directly relevant as a governance stress test and anti-credential warning."
+    },
+    {
+      "screenId": "bb90900e-225c-4477-8e2e-2092aa473296",
+      "mobbinUrl": "https://mobbin.com/screens/bb90900e-225c-4477-8e2e-2092aa473296",
+      "sourceUrl": "https://mobbin.com/screens/bb90900e-225c-4477-8e2e-2092aa473296",
+      "imageUrl": "https://mobbin.com/api/mcp/short/NY56qdOB",
+      "appName": "Vanta",
+      "selectionReason": "Trust/compliance hero shows alert-bar plus proof-artifact pattern for high-caution categories."
+    },
+    {
+      "screenId": "35d579c4-3fa9-47e2-8d20-bce2758033d7",
+      "mobbinUrl": "https://mobbin.com/screens/35d579c4-3fa9-47e2-8d20-bce2758033d7",
+      "sourceUrl": "https://mobbin.com/screens/35d579c4-3fa9-47e2-8d20-bce2758033d7",
+      "imageUrl": "https://mobbin.com/api/mcp/short/pgOU9MV7",
+      "appName": "Monarch",
+      "selectionReason": "Plain letter-style reassurance is useful for regulated decisions, without copying credentials."
+    },
+    {
+      "screenId": "8edde093-4739-4a72-9e7d-569c45b888da",
+      "mobbinUrl": "https://mobbin.com/screens/8edde093-4739-4a72-9e7d-569c45b888da",
+      "sourceUrl": "https://mobbin.com/screens/8edde093-4739-4a72-9e7d-569c45b888da",
+      "imageUrl": "https://mobbin.com/api/mcp/short/8uCPwWoi",
+      "appName": "Grammarly",
+      "selectionReason": "Responsible-claim hero and legal microcopy pattern maps to dental truth boundaries."
+    }
+  ],
+  "shortlist": [
+    {
+      "screenId": "c007aa4c-b965-40b5-813f-326c3cd54e70",
+      "mobbinUrl": "https://mobbin.com/screens/c007aa4c-b965-40b5-813f-326c3cd54e70",
+      "sourceUrl": "https://mobbin.com/screens/c007aa4c-b965-40b5-813f-326c3cd54e70",
+      "appName": "Hims",
+      "structureFamily": "regulated trust reassurance panel",
+      "fitScores": {
+        "job": 9,
+        "niche": 9,
+        "firstViewport": 8,
+        "cta": 8,
+        "proof": 9,
+        "mobile": 8,
+        "distinctiveness": 8,
+        "buildability": 8,
+        "truth": 7
+      },
+      "ingredientLedger": [
+        {
+          "layer": "business-job",
+          "ingredient": "Make the first promise route patients to the right safe next action, not to a broad lifestyle claim."
+        },
+        {
+          "layer": "proof-architecture",
+          "ingredient": "Trust content can sit in calm proof tiles, but only source-backed credentials may appear."
+        },
+        {
+          "layer": "media-direction",
+          "ingredient": "Use non-figurative clinic wayfinding or appointment artifacts until owner-supplied photos are approved."
+        },
+        {
+          "layer": "governance",
+          "ingredient": "Credentials, medical authority, and outcome language must be blocked unless directly verified."
+        }
+      ],
+      "bannedUses": [
+        "Do not copy provider portraits, licensed-provider claims, medical badges, or the Hims brand/voice."
+      ]
+    },
+    {
+      "screenId": "e788da3e-eebd-4810-baa5-72d2705f43b7",
+      "mobbinUrl": "https://mobbin.com/screens/e788da3e-eebd-4810-baa5-72d2705f43b7",
+      "sourceUrl": "https://mobbin.com/screens/e788da3e-eebd-4810-baa5-72d2705f43b7",
+      "appName": "Hers",
+      "structureFamily": "category route grid",
+      "fitScores": {
+        "job": 9,
+        "niche": 8,
+        "firstViewport": 8,
+        "cta": 9,
+        "proof": 8,
+        "mobile": 8,
+        "distinctiveness": 8,
+        "buildability": 8,
+        "truth": 8
+      },
+      "ingredientLedger": [
+        {
+          "layer": "information-architecture",
+          "ingredient": "Split the homepage around four patient routes: check-up, hygiene, urgent concern, and cosmetic consult."
+        },
+        {
+          "layer": "component-anatomy",
+          "ingredient": "Each route card needs title, short eligibility cue, risk note, and one enquiry action."
+        },
+        {
+          "layer": "cta-system",
+          "ingredient": "Primary CTA stays enquiry-led while route cards provide specific secondary actions."
+        },
+        {
+          "layer": "responsive-behavior",
+          "ingredient": "The four-route grid should collapse into thumb-sized stacked decision cards on mobile."
+        }
+      ],
+      "bannedUses": [
+        "Do not copy treatment categories, product cards, sticky proof strip claims, or health-commerce language."
+      ]
+    },
+    {
+      "screenId": "d067dbc0-666e-47cc-9475-a89b2ab44cf6",
+      "mobbinUrl": "https://mobbin.com/screens/d067dbc0-666e-47cc-9475-a89b2ab44cf6",
+      "sourceUrl": "https://mobbin.com/screens/d067dbc0-666e-47cc-9475-a89b2ab44cf6",
+      "appName": "Hims",
+      "structureFamily": "triage caveat card",
+      "fitScores": {
+        "job": 9,
+        "niche": 9,
+        "firstViewport": 8,
+        "cta": 8,
+        "proof": 8,
+        "mobile": 8,
+        "distinctiveness": 8,
+        "buildability": 8,
+        "truth": 9
+      },
+      "ingredientLedger": [
+        {
+          "layer": "content-strategy",
+          "ingredient": "Urgent dental concerns need careful routing language and a caveat that the page is not emergency treatment."
+        },
+        {
+          "layer": "voice-and-tone",
+          "ingredient": "Use plain, low-drama clinical wording that reduces anxiety without making response promises."
+        },
+        {
+          "layer": "forms-and-lead-capture",
+          "ingredient": "The enquiry form should ask appointment type and contact preference, not diagnose symptoms."
+        },
+        {
+          "layer": "accessibility",
+          "ingredient": "Urgent-route labels must be clear without relying on color alone."
+        }
+      ],
+      "bannedUses": [
+        "Do not copy primary-care claims, prescriptions, emergency guarantees, or medical-condition language."
+      ]
+    },
+    {
+      "screenId": "e888ea97-01f1-4dcc-a82e-f20d21ea71a0",
+      "mobbinUrl": "https://mobbin.com/screens/e888ea97-01f1-4dcc-a82e-f20d21ea71a0",
+      "sourceUrl": "https://mobbin.com/screens/e888ea97-01f1-4dcc-a82e-f20d21ea71a0",
+      "appName": "Assembly",
+      "structureFamily": "source-backed proof carousel",
+      "fitScores": {
+        "job": 8,
+        "niche": 7,
+        "firstViewport": 8,
+        "cta": 8,
+        "proof": 9,
+        "mobile": 8,
+        "distinctiveness": 8,
+        "buildability": 8,
+        "truth": 8
+      },
+      "ingredientLedger": [
+        {
+          "layer": "surfaces-and-materials",
+          "ingredient": "A restrained proof surface can feel premium without heavy shadows or nested cards."
+        },
+        {
+          "layer": "depth",
+          "ingredient": "Use subtle layering between proof text, selector, and visual anchor rather than dramatic 3D effects."
+        },
+        {
+          "layer": "motion",
+          "ingredient": "If animated, proof panels should advance slowly or only on interaction, never distract from enquiry."
+        },
+        {
+          "layer": "proof-architecture",
+          "ingredient": "Replace testimonials with verified proof types: service menu, contact path, review-needed note, and source status."
+        }
+      ],
+      "bannedUses": [
+        "Do not invent customer quotes, portraits, names, employer logos, or satisfaction claims."
+      ]
+    },
+    {
+      "screenId": "93111cb4-0389-48de-9233-22b16f436f63",
+      "mobbinUrl": "https://mobbin.com/screens/93111cb4-0389-48de-9233-22b16f436f63",
+      "sourceUrl": "https://mobbin.com/screens/93111cb4-0389-48de-9233-22b16f436f63",
+      "appName": "Mailchimp",
+      "structureFamily": "quiet centered service hero",
+      "fitScores": {
+        "job": 8,
+        "niche": 7,
+        "firstViewport": 9,
+        "cta": 8,
+        "proof": 8,
+        "mobile": 8,
+        "distinctiveness": 8,
+        "buildability": 8,
+        "truth": 8
+      },
+      "ingredientLedger": [
+        {
+          "layer": "typography",
+          "ingredient": "A large quiet serif headline can create trust while the body copy stays factual and clinical."
+        },
+        {
+          "layer": "layout-structure",
+          "ingredient": "Use centered first-fold hierarchy only if the route picker or CTA remains visible without scrolling on desktop."
+        },
+        {
+          "layer": "spacing-system",
+          "ingredient": "Clinic restraint should come from generous vertical rhythm and clear grouping, not empty prestige spacing."
+        },
+        {
+          "layer": "color-system",
+          "ingredient": "Pair warm clinical white with one sharp action accent and a second muted safety color."
+        }
+      ],
+      "bannedUses": [
+        "Do not copy Mailchimp preview chrome, discount copy, generic consultancy wording, or the exact hero composition."
+      ]
+    },
+    {
+      "screenId": "55fbc5cb-e629-4e63-be8f-c3892af4e22d",
+      "mobbinUrl": "https://mobbin.com/screens/55fbc5cb-e629-4e63-be8f-c3892af4e22d",
+      "sourceUrl": "https://mobbin.com/screens/55fbc5cb-e629-4e63-be8f-c3892af4e22d",
+      "appName": "Fiverr",
+      "structureFamily": "solution card taxonomy",
+      "fitScores": {
+        "job": 8,
+        "niche": 7,
+        "firstViewport": 8,
+        "cta": 8,
+        "proof": 8,
+        "mobile": 8,
+        "distinctiveness": 8,
+        "buildability": 9,
+        "truth": 8
+      },
+      "ingredientLedger": [
+        {
+          "layer": "shape",
+          "ingredient": "Use crisp appointment cards with modest radius so the clinic page feels serious, not playful."
+        },
+        {
+          "layer": "iconography",
+          "ingredient": "Icons should signal route type only: check-up, hygiene, urgent concern, cosmetic consult."
+        },
+        {
+          "layer": "illustration-graphics",
+          "ingredient": "Small abstract appointment artifacts can replace fake clinical photos."
+        },
+        {
+          "layer": "implementation-tokens",
+          "ingredient": "Create tokens for route-card border, caution tint, action accent, and clinical surface."
+        }
+      ],
+      "bannedUses": [
+        "Do not copy freelancer marketplace search, star ratings, expert names, refund promises, or pro-vetting claims."
+      ]
+    },
+    {
+      "screenId": "35d579c4-3fa9-47e2-8d20-bce2758033d7",
+      "mobbinUrl": "https://mobbin.com/screens/35d579c4-3fa9-47e2-8d20-bce2758033d7",
+      "sourceUrl": "https://mobbin.com/screens/35d579c4-3fa9-47e2-8d20-bce2758033d7",
+      "appName": "Monarch",
+      "structureFamily": "personal reassurance letter",
+      "fitScores": {
+        "job": 8,
+        "niche": 8,
+        "firstViewport": 8,
+        "cta": 8,
+        "proof": 8,
+        "mobile": 8,
+        "distinctiveness": 8,
+        "buildability": 8,
+        "truth": 8
+      },
+      "ingredientLedger": [
+        {
+          "layer": "interaction-model",
+          "ingredient": "A short guided intake can feel like a calm letter: choose route, add contact, confirm review-needed status."
+        },
+        {
+          "layer": "localization-and-formatting",
+          "ingredient": "Use Halifax/North End wording only at area level and avoid address, insurance, or clinic hours unless verified."
+        },
+        {
+          "layer": "voice-and-tone",
+          "ingredient": "A regulated service page can speak plainly and personally without naming fictional staff."
+        },
+        {
+          "layer": "governance",
+          "ingredient": "Any title, credential, insurance, or clinical promise stays out until proof is supplied."
+        }
+      ],
+      "bannedUses": [
+        "Do not copy advisor name, credentials, portrait, fiduciary/legal language, or finance-specific claims."
+      ]
+    },
+    {
+      "screenId": "8edde093-4739-4a72-9e7d-569c45b888da",
+      "mobbinUrl": "https://mobbin.com/screens/8edde093-4739-4a72-9e7d-569c45b888da",
+      "sourceUrl": "https://mobbin.com/screens/8edde093-4739-4a72-9e7d-569c45b888da",
+      "appName": "Grammarly",
+      "structureFamily": "responsible-claims hero",
+      "fitScores": {
+        "job": 8,
+        "niche": 7,
+        "firstViewport": 8,
+        "cta": 8,
+        "proof": 8,
+        "mobile": 8,
+        "distinctiveness": 8,
+        "buildability": 8,
+        "truth": 9
+      },
+      "ingredientLedger": [
+        {
+          "layer": "component-states",
+          "ingredient": "Enquiry buttons and route cards need active, focus, disabled, and review-required states."
+        },
+        {
+          "layer": "seo-aeo-metadata",
+          "ingredient": "Visible appointment categories should map to truthful page metadata and agent-readable service facts."
+        },
+        {
+          "layer": "performance",
+          "ingredient": "Prefer static CSS route artifacts over heavy image galleries until approved clinic media exists."
+        },
+        {
+          "layer": "accessibility",
+          "ingredient": "Legal/review-needed notes must remain readable on mobile, not hidden in tiny footnotes."
+        }
+      ],
+      "bannedUses": [
+        "Do not copy customer logo strip, AI-reputation claims, product UI screenshot, or signup-with-Google flow."
+      ]
+    }
+  ],
+  "antiReferences": [
+    {
+      "screenId": "03b4ad2b-abd6-410d-ae78-5498b68fdf13",
+      "mobbinUrl": "https://mobbin.com/screens/03b4ad2b-abd6-410d-ae78-5498b68fdf13",
+      "appName": "Blue Apron",
+      "rejectionReason": "Photo-led product offer would encourage fake clinic, patient, or smile-result imagery."
+    },
+    {
+      "screenId": "e43e90ac-4489-44b5-bd06-93e546c5c48b",
+      "mobbinUrl": "https://mobbin.com/screens/e43e90ac-4489-44b5-bd06-93e546c5c48b",
+      "appName": "Deel",
+      "rejectionReason": "Dashboard/app proof leaks internal tooling and does not answer a local patient enquiry decision."
+    },
+    {
+      "screenId": "ae6c954c-e003-49f8-993f-f56696f053cf",
+      "mobbinUrl": "https://mobbin.com/screens/ae6c954c-e003-49f8-993f-f56696f053cf",
+      "appName": "WRITER",
+      "rejectionReason": "Dark enterprise hero, portrait quote, logos, and percentage proof would create untrue clinic authority."
+    },
+    {
+      "screenId": "6aa7d066-a33a-4899-8ca0-98eae07422e5",
+      "mobbinUrl": "https://mobbin.com/screens/6aa7d066-a33a-4899-8ca0-98eae07422e5",
+      "appName": "Hers",
+      "rejectionReason": "Useful governance stress test, but doctor-trusted and FDA/pharmacy claims are not available to this fixture."
+    }
+  ],
+  "remixDirection": {
+    "summary": "A regulated, route-picker dental page that feels calm and useful: quiet serif first fold, visible enquiry CTA, four appointment paths, source-backed proof/status ledger, and a no-photo clinical wayfinding artifact.",
+    "selectedMoves": [
+      "Hers/Hims regulated-care structure remixed into safe appointment routing with no borrowed credentials.",
+      "Mailchimp quiet service hero typography, rebuilt without builder chrome or generic consultancy copy.",
+      "Fiverr/OpenTable card taxonomy converted into four patient decision routes.",
+      "Assembly proof surface converted from testimonials into verified-fact and review-needed proof blocks.",
+      "Grammarly-style responsible microcopy adapted into readable regulated-category caveats."
+    ],
+    "explicitRejects": [
+      "No fake dentists, fake patient photos, clinical interiors, smile results, insurance acceptance, reviews, ratings, emergency guarantees, licensed names, or medical outcomes.",
+      "No SaaS logo-strip proof, dashboard screenshots, app-builder chrome, marketplace inventory, or enterprise statistics.",
+      "No exact visual copy from any Mobbin reference; all ingredients must be remixed around this fixture business job."
+    ]
+  }
+}

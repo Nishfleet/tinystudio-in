@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TinyStudio Internal Dashboard</title>
+  <style>
+    :root { color-scheme: light; --ink:#14161a; --muted:#667085; --line:#d9e1ea; --paper:#f7f9fc; --good:#0f7b45; --warn:#9a5b00; --bad:#b42318; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #fff; color: var(--ink); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { max-width: 1160px; margin: 0 auto; padding: 28px 18px 44px; }
+    header { display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: end; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+    h1 { margin: 0; font-size: clamp(30px, 4vw, 46px); line-height: 1; letter-spacing: 0; }
+    p { color: var(--muted); margin: 8px 0 0; max-width: 760px; }
+    .date { color: var(--muted); font-size: 14px; text-align: right; white-space: nowrap; }
+    .next { margin: 20px 0; padding: 18px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); }
+    .next h2, section h2 { margin: 0 0 10px; font-size: 18px; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .command { display: inline-block; margin-top: 10px; padding: 8px 10px; background: #fff; border: 1px solid var(--line); border-radius: 6px; color: #344054; }
+    .cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 18px 0; }
+    .card { min-height: 76px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); padding: 13px; }
+    .card b { display:block; font-size: 27px; line-height: 1; margin-bottom: 8px; }
+    .card span { color: var(--muted); font-size: 13px; }
+    table { width: 100%; border-collapse: collapse; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; margin-bottom: 18px; }
+    th, td { text-align: left; padding: 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { background: var(--paper); color: #475467; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+    .pill { display: inline-flex; border-radius: 999px; padding: 4px 8px; color: white; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .03em; }
+    .good { background: var(--good); }
+    .warn { background: var(--warn); }
+    .bad { background: var(--bad); }
+    .links { color: var(--muted); font-size: 14px; }
+    @media (max-width: 760px) {
+      header { display:block; }
+      .date { text-align:left; margin-top: 10px; }
+      .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      table { display: block; overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <h1>Internal Dashboard</h1>
+        <p>One concise owner view: what matters, what is blocked, and what to do next.</p>
+      </div>
+      <div class="date">Generated 2026-05-29</div>
+    </header>
+    <section class="next">
+      <h2>Next Move</h2>
+      <div>Record the scored Looms. This is the current money bottleneck.</div>
+      <code class="command">npm run growth:start -- --view=record</code>
+    </section>
+    <section class="cards">
+      <div class="card"><b>5</b><span>Scored</span></div>
+      <div class="card"><b></b><span>Looms</span></div>
+      <div class="card"><b></b><span>Sends</span></div>
+      <div class="card"><b></b><span>Replies</span></div>
+      <div class="card"><b></b><span>Calls</span></div>
+      <div class="card"><b></b><span>Closed</span></div>
+      <div class="card"><b>3</b><span>Clients</span></div>
+      <div class="card"><b></b><span>Due follow-up</span></div>
+    </section>
+    <section>
+      <h2>Status</h2>
+      <table><thead><tr><th>Area</th><th>Status</th><th>Detail</th></tr></thead><tbody>
+        <tr>
+          <td>Workflow</td>
+          <td><span class="pill warn">warning</span></td>
+          <td>warn: 2 warning(s)</td>
+        </tr>
+        <tr>
+          <td>Money bottleneck</td>
+          <td><span class="pill bad">record</span></td>
+          <td>Record the scored Looms. This is the current money bottleneck.</td>
+        </tr>
+        <tr>
+          <td>Retention</td>
+          <td><span class="pill good">ready</span></td>
+          <td>3/3 weekly reports ready; 0 high-risk client(s)</td>
+        </tr>
+        <tr>
+          <td>Market proof cockpit</td>
+          <td><span class="pill bad">needs-recording</span></td>
+          <td>0/5 sent proof rows; 5 tangible improvement rows</td>
+        </tr>
+        <tr>
+          <td>Sender trust</td>
+          <td><span class="pill warn">warn</span></td>
+          <td>Email setup is not clean yet. Prefer contact forms or DMs until send:setup is clean. Warnings: missing physical postal address; DKIM selector not configured</td>
+        </tr>
+        <tr>
+          <td>Recording rehearsal</td>
+          <td><span class="pill good">ready</span></td>
+          <td>5 script(s); minimum 10/10</td>
+        </tr>
+        <tr>
+          <td>Market learning</td>
+          <td><span class="pill bad">needs-first-proof-batch</span></td>
+          <td>next: npm run growth:start -- --view=record</td>
+        </tr>
+        <tr>
+          <td>Owned handoff</td>
+          <td><span class="pill bad">ready-to-record</span></td>
+          <td>3/3 owned proof handoff(s) ready to record</td>
+        </tr>
+        <tr>
+          <td>Owned case studies</td>
+          <td><span class="pill warn">delivery-proof-ready</span></td>
+          <td>3/3 delivery-proof ready; 0/3 business-metric ready; 0 need metric</td>
+        </tr>
+        <tr>
+          <td>11/10 proof</td>
+          <td><span class="pill bad">not-11-10-yet</span></td>
+          <td>3/10 full-pass areas</td>
+        </tr>
+      </tbody></table>
+    </section>
+    <section>
+      <h2>Next / Pending Actions</h2>
+      <table><thead><tr><th>Priority</th><th>Action</th><th>Command</th><th>Why</th></tr></thead><tbody>
+        <tr>
+          <td><span class="pill bad">P0</span></td>
+          <td>Record the scored Looms. This is the current money bottleneck.</td>
+          <td><code>npm run growth:start -- --view=record</code></td>
+          <td>Current bottleneck</td>
+        </tr>
+        <tr>
+          <td><span class="pill good">P2</span></td>
+          <td>Owned product business metrics: 0/3 packet(s) have business metrics</td>
+          <td><code>npm run owned:metrics -- --from-clipboard</code></td>
+          <td>Full case-study blocker</td>
+        </tr>
+        <tr>
+          <td><span class="pill warn">P1</span></td>
+          <td>Sender setup: missing physical postal address; DKIM selector not configured. Use contact form or DM for now.</td>
+          <td><code>npm run send:guide</code></td>
+          <td>Sender trust blocker</td>
+        </tr>
+        <tr>
+          <td><span class="pill warn">P1</span></td>
+          <td>Client: ai-converter - Sprint acceptance checklist is not complete</td>
+          <td><code>npm run owned:handoff</code></td>
+          <td>Pending action</td>
+        </tr>
+        <tr>
+          <td><span class="pill warn">P1</span></td>
+          <td>Client: five-to-nine-0509 - Sprint acceptance checklist is not complete</td>
+          <td><code>npm run owned:handoff</code></td>
+          <td>Pending action</td>
+        </tr>
+        <tr>
+          <td><span class="pill warn">P1</span></td>
+          <td>Client: siterep - Sprint acceptance checklist is not complete</td>
+          <td><code>npm run owned:handoff</code></td>
+          <td>Pending action</td>
+        </tr>
+        <tr>
+          <td><span class="pill bad">P0</span></td>
+          <td>Prospect: LayerLogix - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.</td>
+          <td><code>npm run growth:start -- --view=record</code></td>
+          <td>Pending action</td>
+        </tr>
+        <tr>
+          <td><span class="pill bad">P0</span></td>
+          <td>Prospect: PROTBYTE - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.</td>
+          <td><code>npm run growth:start -- --view=record</code></td>
+          <td>Pending action</td>
+        </tr>
+        <tr>
+          <td><span class="pill bad">P0</span></td>
+          <td>Prospect: Sagiss - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.</td>
+          <td><code>npm run growth:start -- --view=record</code></td>
+          <td>Pending action</td>
+        </tr>
+        <tr>
+          <td><span class="pill bad">P0</span></td>
+          <td>Prospect: Scorpion Technology - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.</td>
+          <td><code>npm run growth:start -- --view=record</code></td>
+          <td>Pending action</td>
+        </tr>
+        <tr>
+          <td><span class="pill bad">P0</span></td>
+          <td>Prospect: Stradiant - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.</td>
+          <td><code>npm run growth:start -- --view=record</code></td>
+          <td>Pending action</td>
+        </tr>
+        <tr>
+          <td><span class="pill bad">P0</span></td>
+          <td>Task: **Record first 5 Loom audits** - LayerLogix, PROTBYTE, Sagiss, Scorpion Technology, and Stradiant now have recording scripts; run `prospect:rehearsal -- --limit=5`, use `market:proof-cockpit`, then run `market:after-recording -- --from-clipboard` with the Loom URLs.</td>
+          <td><code>npm run prospect:rehearsal -- --limit=5</code></td>
+          <td>Open task</td>
+        </tr>
+        <tr>
+          <td><span class="pill bad">P0</span></td>
+          <td>Task: **Fill owned-product business metrics** - live public delivery metrics are now filled; paste one product analytics or sales metric per owned product with `npm run owned:metrics -- --from-clipboard` before calling AI Converter, SiteRep, and 0509 full business case studies.</td>
+          <td><code>npm run owned:metrics -- --from-clipboard</code></td>
+          <td>Open task</td>
+        </tr>
+        <tr>
+          <td><span class="pill bad">P0</span></td>
+          <td>Task: **Complete owned-startup handoff Loom acceptance** - AI Converter, SiteRep, and 0509 now have source-reviewed claims and scorecards; run `npm run owned:handoff`, record the real handoff Looms, then complete each acceptance command.</td>
+          <td><code>npm run owned:handoff</code></td>
+          <td>Open task</td>
+        </tr>
+      </tbody></table>
+    </section>
+    <section>
+      <h2>To-Do List</h2>
+      <table><thead><tr><th>Bucket</th><th>Priority</th><th>Task</th><th>Command</th></tr></thead><tbody>
+        <tr>
+          <td>Active</td>
+          <td><span class="pill bad">P0</span></td>
+          <td>**Record first 5 Loom audits** - LayerLogix, PROTBYTE, Sagiss, Scorpion Technology, and Stradiant now have recording scripts; run `prospect:rehearsal -- --limit=5`, use `market:proof-cockpit`, then run `market:after-recording -- --from-clipboard` with the Loom URLs.</td>
+          <td><code>npm run growth:start -- --view=record</code></td>
+        </tr>
+        <tr>
+          <td>Active</td>
+          <td><span class="pill bad">P0</span></td>
+          <td>**Fill owned-product business metrics** - live public delivery metrics are now filled; paste one product analytics or sales metric per owned product with `npm run owned:metrics -- --from-clipboard` before calling AI Converter, SiteRep, and 0509 full business case studies.</td>
+          <td><code>npm run owned:metrics -- --from-clipboard</code></td>
+        </tr>
+        <tr>
+          <td>Active</td>
+          <td><span class="pill bad">P0</span></td>
+          <td>**Complete owned-startup handoff Loom acceptance** - AI Converter, SiteRep, and 0509 now have source-reviewed claims and scorecards; run `npm run owned:handoff`, record the real handoff Looms, then complete each acceptance command.</td>
+          <td><code>npm run owned:handoff</code></td>
+        </tr>
+        <tr>
+          <td>Active</td>
+          <td><span class="pill bad">P0</span></td>
+          <td>**Run market learning review after first send batch** - use `npm run market:learn` before changing lead fit, hook, first message, or channel.</td>
+          <td><code>npm run market:learn</code></td>
+        </tr>
+        <tr>
+          <td>Active</td>
+          <td><span class="pill bad">P0</span></td>
+          <td>**Close first paid sprint** - use the buyer room, proposal, and follow-up sequence.</td>
+          <td><code>npm run growth:start -- --view=sales</code></td>
+        </tr>
+        <tr>
+          <td>Active</td>
+          <td><span class="pill bad">P0</span></td>
+          <td>**Deliver first sprint** - create a client folder, run the sprint, and update the client brain.</td>
+          <td><code>npm run retention:checkups</code></td>
+        </tr>
+        <tr>
+          <td>Waiting On</td>
+          <td><span class="pill warn">P1</span></td>
+          <td>**First client data** - waiting on paid client intake before measuring actual delivery friction.</td>
+          <td><code>npm run retention:checkups</code></td>
+        </tr>
+        <tr>
+          <td>Backlog</td>
+          <td><span class="pill good">P2</span></td>
+          <td>**Build intake form** - only after first client friction is visible.</td>
+          <td><code>npm run client:new -- client-slug</code></td>
+        </tr>
+        <tr>
+          <td>Backlog</td>
+          <td><span class="pill good">P2</span></td>
+          <td>**Export buyer room to PDF/site** - only after one buyer room has helped close or nearly close.</td>
+          <td><code>npm run growth:start -- --view=sales</code></td>
+        </tr>
+        <tr>
+          <td>Backlog</td>
+          <td><span class="pill good">P2</span></td>
+          <td>**Deepen weekly report automation** - add analytics ingestion after retained clients expose the real reporting pattern.</td>
+          <td><code>npm run retention:checkups</code></td>
+        </tr>
+      </tbody></table>
+    </section>
+    <section>
+      <h2>11/10 Blockers</h2>
+      <table><thead><tr><th>Area</th><th>Evidence</th><th>Command</th></tr></thead><tbody>
+        <tr><td>Sender trust</td><td>missing physical postal address; DKIM selector not configured</td><td><code>npm run send:configure -- --physical-address=&quot;...&quot; --dkim-selector=... --dry-run</code></td></tr>
+        <tr><td>Market proof</td><td>0/5 Looms, 0/5 sends, 0 replies</td><td><code>npm run market:proof-cockpit</code></td></tr>
+        <tr><td>Sales proof</td><td>0 won sprint(s) with close package and won note</td><td><code>npm run growth:start -- --view=sales</code></td></tr>
+        <tr><td>Delivery proof</td><td>0 external and 0 owned-startup ready client(s); approved claim folders: 0 external, 3 owned-startup</td><td><code>npm run owned:handoff</code></td></tr>
+      </tbody></table>
+    </section>
+    <p class="links">Retention dashboard: growth-brain/ops/retention-dashboard.html · Sender setup: growth-brain/ops/sender-setup-guide.html · Market proof cockpit: growth-brain/ops/market-proof-cockpit.html · Owned handoff cockpit: growth-brain/ops/owned-handoff-loom-cockpit.html · Growth doctor: growth-brain/ops/growth-doctor.md · Market parity: growth-brain/ops/market-parity-readiness.md</p>
+  </main>
+</body>
+</html>
