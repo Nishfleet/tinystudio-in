@@ -1,6 +1,6 @@
 # Owned Handoff Loom Cockpit
 
-Generated: 2026-05-29
+Generated: 2026-06-04
 
 ## Rule
 

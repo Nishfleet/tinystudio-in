@@ -1,6 +1,6 @@
 # Market Proof Run Check
 
-Generated: 2026-05-29
+Generated: 2026-06-04
 
 ## Verdict
 
@@ -25,11 +25,11 @@ npm run growth:start -- --view=record
 
 | Line | Prospect | Loom | Status | Missing |
 |---:|---|---|---|---|
-| 5 | prospects/layerlogix | LOOM_URL | needs-recording | Loom URL must be a Loom share or embed link like https://www.loom.com/share/...; row is not ready; send package is not ready |
-| 6 | prospects/protbyte | LOOM_URL | needs-recording | Loom URL must be a Loom share or embed link like https://www.loom.com/share/...; row is not ready; send package is not ready |
-| 7 | prospects/sagiss | LOOM_URL | needs-recording | Loom URL must be a Loom share or embed link like https://www.loom.com/share/...; row is not ready; send package is not ready |
-| 8 | prospects/scorpion-technology | LOOM_URL | needs-recording | Loom URL must be a Loom share or embed link like https://www.loom.com/share/...; row is not ready; send package is not ready |
-| 9 | prospects/stradiant | LOOM_URL | needs-recording | Loom URL must be a Loom share or embed link like https://www.loom.com/share/...; row is not ready; send package is not ready |
+| 5 | prospects/byteme-networks | LOOM_URL | needs-recording | Loom URL must be a Loom share or embed link like https://www.loom.com/share/...; row is not ready; send package is not ready |
+| 6 | prospects/it-umbrella-group | LOOM_URL | needs-recording | Loom URL must be a Loom share or embed link like https://www.loom.com/share/...; row is not ready; send package is not ready |
+| 7 | prospects/talos-cyber-solutions | LOOM_URL | needs-recording | Loom URL must be a Loom share or embed link like https://www.loom.com/share/...; row is not ready; send package is not ready |
+| 8 | prospects/xentz-technologies | LOOM_URL | needs-recording | Loom URL must be a Loom share or embed link like https://www.loom.com/share/...; row is not ready; send package is not ready |
+| 9 | prospects/ypm-it-solutions | LOOM_URL | needs-recording | Loom URL must be a Loom share or embed link like https://www.loom.com/share/...; row is not ready; send package is not ready |
 
 ## Rules
 

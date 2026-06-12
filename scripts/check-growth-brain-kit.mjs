@@ -36,6 +36,16 @@ const requiredFiles = [
   "growth-brain/ops/owned-handoff-loom-cockpit.html",
   "growth-brain/ops/competitive-proof-matrix.md",
   "growth-brain/ops/competitive-proof-matrix.html",
+  "growth-brain/ops/model-routing-standard.md",
+  "growth-brain/ops/unit-economics-ledger.md",
+  "growth-brain/ops/pre-revenue-agent-orchestration.md",
+  "growth-brain/ops/parallel-production-pool.md",
+  "growth-brain/ops/specialist-escalation-lane.md",
+  "growth-brain/ops/verifier-agent-gate.md",
+  "growth-brain/ops/handoff-agent-gate.md",
+  "growth-brain/ops/skills-library-feedback-loop.md",
+  "growth-brain/ops/background-agent-pool.md",
+  "growth-brain/ops/pre-revenue-agent-parity-ledger.md",
   "growth-brain/positioning/tangible-improvement-moat.md",
   "growth-brain/prospecting/search-query-bank.md",
   "growth-brain/prospecting/warm-network-scripts.md",
@@ -108,6 +118,10 @@ const requiredFiles = [
   "growth-brain/client-brain-template/weekly-learnings.md",
   "docs/strategy/growth-brain-agency-plan.md",
   "docs/strategy/first-14-days.md",
+  "docs/strategy/solo-ai-agency-pre-customer-parity.md",
+  "docs/strategy/solo-ai-agency-90-day-rollout.md",
+  "docs/strategy/90-day-start-here.md",
+  "docs/strategy/friction-triggered-build-backlog.md",
   "docs/strategy/market-parity-benchmark-2026.md",
   "docs/research/current-market-signals-2026.md",
   "docs/research/rob-hoffman-agency-video-notes-2026-04-19.md",
@@ -185,6 +199,9 @@ const requiredFiles = [
   "scripts/export-proof-library.mjs",
   "scripts/export-market-benchmark.mjs",
   "scripts/check-market-parity-readiness.mjs",
+  "scripts/export-agent-orchestration-run.mjs",
+  "scripts/check-pre-revenue-agent-parity.mjs",
+  "scripts/check-article-parity-readiness.mjs",
   "scripts/export-market-proof-run.mjs",
   "scripts/check-market-proof-run.mjs",
   "scripts/export-market-proof-cockpit.mjs",
@@ -616,6 +633,21 @@ for (const file of ["scripts/prepare-prospect-send.mjs", "scripts/prepare-prospe
 }
 
 {
+  const orchestration = readFileSync("growth-brain/ops/pre-revenue-agent-orchestration.md", "utf8");
+  for (const phrase of ["one operator", "three human touchpoints", "parallel production lanes", "specialist escalation", "verifier QA", "skills/library feedback", "It does not mean TinyStudio has paid-client proof"]) {
+    if (!orchestration.includes(phrase)) failures.push(`pre-revenue agent orchestration missing ${phrase}`);
+  }
+  const run = readFileSync("scripts/export-agent-orchestration-run.mjs", "utf8");
+  for (const phrase of ["Pre-Revenue Agent Parity Run", "Operator Touchpoints", "Parallel Production Pool", "Specialist Escalation", "Verifier Gate", "Handoff Gate", "Skills Library Feedback", "Background Pool", "Unit Economics"]) {
+    if (!run.includes(phrase)) failures.push(`agent orchestration run exporter missing ${phrase}`);
+  }
+  const checker = readFileSync("scripts/check-pre-revenue-agent-parity.mjs", "utf8");
+  for (const phrase of ["pre-revenue-agent-diagram-parity", "agent:run", "agent:parity", "commercialProof", "blocked-until-real-paid-client-rows"]) {
+    if (!checker.includes(phrase)) failures.push(`pre-revenue agent parity checker missing ${phrase}`);
+  }
+}
+
+{
   const parity = readFileSync("scripts/check-market-parity-readiness.mjs", "utf8");
   for (const phrase of ["Market proof", "Sales proof", "Delivery proof", "Retention proof", "Competitive Benchmark", "export-market-benchmark.mjs", "Owned Startup Proof Lane", "owned-startup", "check-client-weekly-report.mjs", "hasWonSalesProof", "approved claim folders", "market:benchmark", "market:proof-run", "--strict", "--skip-kit"]) {
     if (!parity.includes(phrase)) failures.push(`market parity readiness script missing ${phrase}`);
@@ -736,7 +768,7 @@ for (const file of deliveryFiles) {
 
 for (const file of opsFiles) {
   const content = readFileSync(file, "utf8");
-  if (!/(Scoreboard|Metric|Review|Decision Rule|Today|Dashboard|Next Move|Checkups)/.test(content)) failures.push(`${file} missing command-center structure`);
+  if (!/(Scoreboard|Metric|Review|Decision Rule|Today|Dashboard|Next Move|Checkups|Operator|Specialist|Verifier|Handoff|Background|Unit Economics|Production Pool|Skills Library|Component Ledger)/.test(content)) failures.push(`${file} missing command-center or agent-parity structure`);
 }
 
 for (const file of prospectingFiles) {

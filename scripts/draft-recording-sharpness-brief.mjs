@@ -161,7 +161,12 @@ const description = labeledValue(pagePromise, "Description");
 const score = leadScore.match(/Score:\s*([^\n]+)/)?.[1]?.trim() || "not scored";
 const priority = leadScore.match(/Priority:\s*([^\n]+)/)?.[1]?.trim() || "unknown";
 const wedgeMatch = outline.match(/## Wedge\n+([\s\S]*?)(?:\n## |$)/);
-const wedge = clean(wedgeMatch?.[1]?.split("\n").find((line) => line.trim() && !line.includes("Pick one")) || "Site architecture");
+const wedge = clean(
+  wedgeMatch?.[1]
+    ?.split("\n")
+    .map((line) => line.trim().replace(/^-+\s*/, ""))
+    .find((line) => line && !line.includes("Pick one")) || "Site architecture"
+);
 const mainPage = lineValue(outline, 2, "the main money page");
 const leak = lineValue(outline, 3, "the page is making the buyer work too hard before the next step is obvious");
 const impact = lineValue(outline, 4, "this creates friction for buyers and makes the offer harder to understand");

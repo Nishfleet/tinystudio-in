@@ -33,6 +33,7 @@ These directly help close or deliver the first paid sprint:
 - Sender-aware channel guidance and dirty-sender email blocking in send packages, recording, outbox, follow-up, and batch-sent flows.
 - Revenue page conversion audit skill.
 - Marketing-agent workbench for daily research, content, competitor monitoring, lead research, briefings, and paid ads ops.
+- Pre-revenue agent orchestration packet and parity gate for operator touchpoints, route, parallel lanes, specialist escalation, verifier QA, handoff, skills/library feedback, report-only background pool, and unit economics.
 - Market parity readiness gate for honest 11/10/comparable/better-than-market claims.
 - 11/10 proof run that converts parity blockers into exact proof-capture actions.
 - Reply prep, call-booked prep, sales-call prep, and post-call close package.
@@ -54,7 +55,7 @@ Only build these after real delivery exposes the repeated pain:
 
 ## Do Not Build Yet
 
-- Complex agent orchestration.
+- Live complex agent orchestration with unattended model workers.
 - Paid ads for TinyStudio.
 - Public marketing site with many pages.
 - Automated publishing into client systems.

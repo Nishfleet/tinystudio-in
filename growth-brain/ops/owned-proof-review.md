@@ -1,6 +1,6 @@
 # Owned Startup Proof Review
 
-Generated: 2026-05-29
+Generated: 2026-06-04
 
 ## Rule
 
@@ -32,7 +32,7 @@ This is the wedge: every client should see a concrete before/after movement, the
 
 | Client | # | Source Status | Current Status | Claim | Source Evidence | Dry-Run Approval Command | Dry-Run Remove Command |
 |---|---:|---|---|---|---|---|---|
-| clients/ai-converter | 1 | source-found | approved | AI Converter has a preview-first bank statement PDF to accounting CSV path. | public/llms.txt: found<br>public/bank-statement-converter-for-bookkeepers/index.html: found<br>aiconverter-accounting-wedge-desktop.png: found | `npm run client:proof-review -- clients/ai-converter --approve=1 --reviewer="Nish" --dry-run` | `npm run client:proof-review -- clients/ai-converter --remove=1 --reviewer="Nish" --dry-run` |
+| clients/ai-converter | 1 | source-found | approved | AI Converter has a preview-first bank statement PDF to accounting CSV path. | public/llms.txt: found<br>public/bank-statement-converter-for-bookkeepers/index.html: found<br>aiconverter-accounting-wedge-desktop.png: missing | `npm run client:proof-review -- clients/ai-converter --approve=1 --reviewer="Nish" --dry-run` | `npm run client:proof-review -- clients/ai-converter --remove=1 --reviewer="Nish" --dry-run` |
 | clients/ai-converter | 2 | source-found | approved | AI Converter keeps accounting import promises bounded by review and software-specific CSV routes. | public/bank-statement-converter-for-bookkeepers/index.html: found | `npm run client:proof-review -- clients/ai-converter --approve=2 --reviewer="Nish" --dry-run` | `npm run client:proof-review -- clients/ai-converter --remove=2 --reviewer="Nish" --dry-run` |
 | clients/siterep | 1 | source-found | approved | SiteRep is positioned around source-backed answers, lead capture, owner-visible repair loops, and gated customer activation. | public/llms.txt: found<br>tests/sitegpt-parity.test.js: found<br>tests/launch-readiness.test.js: found | `npm run client:proof-review -- clients/siterep --approve=1 --reviewer="Nish" --dry-run` | `npm run client:proof-review -- clients/siterep --remove=1 --reviewer="Nish" --dry-run` |
 | clients/siterep | 2 | source-found | approved | SiteRep's safer promise is not full helpdesk, CRM, or compliance replacement. | tests/launch-readiness.test.js: found<br>tests/reliability-belt.test.js: found | `npm run client:proof-review -- clients/siterep --approve=2 --reviewer="Nish" --dry-run` | `npm run client:proof-review -- clients/siterep --remove=2 --reviewer="Nish" --dry-run` |

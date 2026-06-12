@@ -48,7 +48,14 @@ function scriptToBlocks(markdown) {
     .split(/\n(?=### |## )/g)
     .map((block) => block.trim())
     .filter(Boolean)
-    .map((block) => `<section class="scriptBlock"><pre>${escapeHtml(block)}</pre></section>`)
+    .map((block) => {
+      const match = block.match(/^(#{2,3})\s+(.+?)\n+([\s\S]*)$/);
+      if (!match) return `<section class="scriptBlock"><pre>${escapeHtml(block)}</pre></section>`;
+      return `<section class="scriptBlock">
+        <h3>${escapeHtml(match[2])}</h3>
+        <pre>${escapeHtml(match[3].trim())}</pre>
+      </section>`;
+    })
     .join("\n");
 }
 
@@ -97,77 +104,123 @@ const prospects = listFolders("prospects")
 
 const nav = prospects.map((prospect, index) => {
   const slug = prospect.path.split("/").at(-1);
-  return `<a href="#${escapeHtml(slug)}">${index + 1}. ${escapeHtml(prospect.name)}</a>`;
+  return `<a class="queueLink" href="#${escapeHtml(slug)}" data-target="${escapeHtml(slug)}">
+    <span>${index + 1}</span>
+    <strong>${escapeHtml(prospect.name)}</strong>
+  </a>`;
 }).join("\n");
 
 const pages = prospects.map((prospect, index) => {
   const slug = prospect.path.split("/").at(-1);
   const line = `${prospect.path}|`;
   return `
-    <article class="prospect" id="${escapeHtml(slug)}">
-      <div class="topline">
-        <span>${index + 1} / ${prospects.length}</span>
-        <span>${escapeHtml(prospect.warnings.length ? prospect.warnings.join("; ") : "ready")}</span>
+    <article class="prospect" id="${escapeHtml(slug)}" data-prospect="${escapeHtml(prospect.path)}">
+      <div class="prospectHeader">
+        <div>
+          <div class="topline">
+            <span>Script ${index + 1} of ${prospects.length}</span>
+            <span>${escapeHtml(prospect.warnings.length ? prospect.warnings.join("; ") : "ready")}</span>
+          </div>
+          <h2>${escapeHtml(prospect.name)}</h2>
+        </div>
+        <a class="siteButton" href="${escapeHtml(prospect.website)}" target="_blank" rel="noreferrer">Open site</a>
       </div>
-      <h2>${escapeHtml(prospect.name)}</h2>
-      <p class="routeLine">Send route: ${escapeHtml(prospect.contactRoute)}</p>
+
+      <div class="routeCard">
+        <strong>Send route:</strong>
+        <span>${escapeHtml(prospect.contactRoute)}</span>
+      </div>
       <p class="${channelGuidance.emailReady ? "channelReady" : "channelWarning"}">Channel rule: ${escapeHtml(channelGuidance.rule)}</p>
-      <div class="qualityBar">
-        <label class="qualityCheck">
-          <input type="checkbox" data-quality="leak" data-path="${escapeHtml(prospect.path)}" />
-          <span>Visible leak</span>
-        </label>
-        <label class="qualityCheck">
-          <input type="checkbox" data-quality="impact" data-path="${escapeHtml(prospect.path)}" />
-          <span>Buyer impact</span>
-        </label>
-        <label class="qualityCheck">
-          <input type="checkbox" data-quality="fix" data-path="${escapeHtml(prospect.path)}" />
-          <span>First fix</span>
-        </label>
-        <label class="qualityCheck">
-          <input type="checkbox" data-quality="ask" data-path="${escapeHtml(prospect.path)}" />
-          <span>Clean ask</span>
-        </label>
-      </div>
-      <div class="qualityNotes">
-        <label>
-          <span>Leak note</span>
-          <textarea data-note="leak" data-path="${escapeHtml(prospect.path)}" placeholder="What exact visible leak did the Loom show?"></textarea>
-        </label>
-        <label>
-          <span>Impact note</span>
-          <textarea data-note="impact" data-path="${escapeHtml(prospect.path)}" placeholder="Why should this buyer care now?"></textarea>
-        </label>
-        <label>
-          <span>Fix note</span>
-          <textarea data-note="fix" data-path="${escapeHtml(prospect.path)}" placeholder="What is the first fix we would make?"></textarea>
-        </label>
-        <label>
-          <span>Ask note</span>
-          <textarea data-note="ask" data-path="${escapeHtml(prospect.path)}" placeholder="What is the clean next-step ask?"></textarea>
-        </label>
-      </div>
-      <div class="timerRow">
-        <strong id="timer-${escapeHtml(slug)}" class="timerTime" data-seconds="180">3:00</strong>
-        <button data-timer-start="${escapeHtml(slug)}">Start 3:00</button>
-        <button data-timer-reset="${escapeHtml(slug)}">Reset</button>
-      </div>
-      <div class="actions">
-        <a href="${escapeHtml(prospect.website)}" target="_blank" rel="noreferrer">Open Site</a>
-        <a href="${escapeHtml(localHref(join(prospect.path, "page-snapshot.md")))}" target="_blank" rel="noreferrer">Snapshot</a>
-        <a href="${escapeHtml(localHref(join(prospect.path, "recording-sharpness-brief.md")))}" target="_blank" rel="noreferrer">Sharpness</a>
-        <a href="${escapeHtml(localHref(join(prospect.path, "contact-plan.md")))}" target="_blank" rel="noreferrer">Contact Plan</a>
-        <button data-copy="${escapeHtml(line)}">Copy Batch Line</button>
-        <button data-copy="${escapeHtml(`npm run prospect:send-prep -- ${prospect.path} https://www.loom.com/share/... --approved`)}">Copy Send Prep</button>
-      </div>
-      <label for="loom-${escapeHtml(slug)}">Loom URL</label>
-      <input id="loom-${escapeHtml(slug)}" class="loomInput" placeholder="https://www.loom.com/share/..." data-path="${escapeHtml(prospect.path)}" />
-      <p class="inputStatus" id="status-loom-${escapeHtml(slug)}">Needs a Loom share or embed URL.</p>
-      <button class="copyFilled" data-input="loom-${escapeHtml(slug)}">Copy Filled Batch Line</button>
-      ${prospect.brief ? `<div class="sharpnessBrief">${briefToBlocks(prospect.brief)}</div>` : ""}
-      <div class="script">
-        ${prospect.script ? scriptToBlocks(prospect.script) : `<section class="scriptBlock"><pre>Run npm run prospect:script -- ${escapeHtml(prospect.path)}</pre></section>`}
+      <p class="channelMeta">Recommended channel now: ${escapeHtml(channelGuidance.recommendedChannel)}${channelGuidance.warnings.length ? ` (${escapeHtml(channelGuidance.warnings.join("; "))})` : ""}</p>
+
+      <div class="recordingGrid">
+        <section class="scriptPane" aria-label="${escapeHtml(prospect.name)} script">
+          <div class="scriptToolbar">
+            <span>Read this, then show the live page</span>
+            <a href="#${escapeHtml(index + 1 < prospects.length ? prospects[index + 1].path.split("/").at(-1) : prospects[0].path.split("/").at(-1))}">${index + 1 < prospects.length ? "Next script" : "Back to first"}</a>
+          </div>
+          <div class="script">
+            ${prospect.script ? scriptToBlocks(prospect.script) : `<section class="scriptBlock"><pre>Run npm run prospect:script -- ${escapeHtml(prospect.path)}</pre></section>`}
+          </div>
+        </section>
+
+        <aside class="recordingPanel" aria-label="${escapeHtml(prospect.name)} recording controls">
+          <section class="panelBlock timerBlock">
+            <span class="panelLabel">Recording timer</span>
+            <strong id="timer-${escapeHtml(slug)}" class="timerTime" data-seconds="180">3:00</strong>
+            <div class="buttonRow">
+              <button data-timer-start="${escapeHtml(slug)}">Start 3:00</button>
+              <button data-timer-reset="${escapeHtml(slug)}">Reset</button>
+            </div>
+          </section>
+
+          <section class="panelBlock">
+            <span class="panelLabel">Required checks</span>
+            <div class="qualityBar">
+              <label class="qualityCheck">
+                <input type="checkbox" data-quality="leak" data-path="${escapeHtml(prospect.path)}" />
+                <span>Visible leak</span>
+              </label>
+              <label class="qualityCheck">
+                <input type="checkbox" data-quality="impact" data-path="${escapeHtml(prospect.path)}" />
+                <span>Buyer impact</span>
+              </label>
+              <label class="qualityCheck">
+                <input type="checkbox" data-quality="fix" data-path="${escapeHtml(prospect.path)}" />
+                <span>First fix</span>
+              </label>
+              <label class="qualityCheck">
+                <input type="checkbox" data-quality="ask" data-path="${escapeHtml(prospect.path)}" />
+                <span>Clean ask</span>
+              </label>
+            </div>
+          </section>
+
+          <section class="panelBlock">
+            <span class="panelLabel">Paste Loom URL</span>
+            <input id="loom-${escapeHtml(slug)}" class="loomInput" placeholder="https://www.loom.com/share/..." data-path="${escapeHtml(prospect.path)}" />
+            <p class="inputStatus" id="status-loom-${escapeHtml(slug)}">Needs a Loom share or embed URL.</p>
+            <button class="copyFilled primaryButton" data-input="loom-${escapeHtml(slug)}">Copy approved row</button>
+          </section>
+
+          <details class="panelBlock notesDetails">
+            <summary>Approval notes</summary>
+            <div class="qualityNotes">
+              <label>
+                <span>Leak note</span>
+                <textarea data-note="leak" data-path="${escapeHtml(prospect.path)}" placeholder="What exact visible leak did the Loom show?"></textarea>
+              </label>
+              <label>
+                <span>Impact note</span>
+                <textarea data-note="impact" data-path="${escapeHtml(prospect.path)}" placeholder="Why should this buyer care now?"></textarea>
+              </label>
+              <label>
+                <span>Fix note</span>
+                <textarea data-note="fix" data-path="${escapeHtml(prospect.path)}" placeholder="What is the first fix we would make?"></textarea>
+              </label>
+              <label>
+                <span>Ask note</span>
+                <textarea data-note="ask" data-path="${escapeHtml(prospect.path)}" placeholder="What is the clean next-step ask?"></textarea>
+              </label>
+            </div>
+          </details>
+
+          <details class="panelBlock sharpnessDetails" open>
+            <summary>Sharpness cues</summary>
+            ${prospect.brief ? `<div class="sharpnessBrief">${briefToBlocks(prospect.brief)}</div>` : "<p>No sharpness brief yet.</p>"}
+          </details>
+
+          <section class="panelBlock">
+            <span class="panelLabel">Files and copy</span>
+            <div class="actions">
+              <a href="${escapeHtml(localHref(join(prospect.path, "page-snapshot.md")))}" target="_blank" rel="noreferrer">Snapshot</a>
+              <a href="${escapeHtml(localHref(join(prospect.path, "recording-sharpness-brief.md")))}" target="_blank" rel="noreferrer">Sharpness</a>
+              <a href="${escapeHtml(localHref(join(prospect.path, "contact-plan.md")))}" target="_blank" rel="noreferrer">Contact Plan</a>
+              <button data-copy="${escapeHtml(line)}">Copy empty row</button>
+              <button data-copy="${escapeHtml(`npm run prospect:send-prep -- ${prospect.path} https://www.loom.com/share/... --approved`)}">Copy send prep</button>
+            </div>
+          </section>
+        </aside>
       </div>
     </article>
   `;
@@ -183,152 +236,378 @@ const html = `<!doctype html>
   <style>
     :root {
       color-scheme: light;
-      --ink: #171717;
-      --muted: #5f6368;
-      --line: #d9ded8;
-      --paper: #faf9f5;
+      --ink: #0a2540;
+      --muted: #425466;
+      --quiet: #697386;
+      --soft: #f6f9fc;
+      --line: #e3e8ee;
+      --line-strong: #cbd6e2;
+      --paper: #f6f9fc;
       --panel: #ffffff;
-      --accent: #0d6b57;
+      --panel-2: #f7fafc;
+      --accent: #635bff;
+      --accent-2: #80e9ff;
+      --success: #00a66f;
+      --warning: #a8552a;
+      --warning-bg: #fff8f2;
+      --warning-line: #ffd8b6;
+      --focus: #635bff;
+      --shadow: 0 1px 1px rgba(10, 37, 64, 0.05);
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
       background: var(--paper);
       color: var(--ink);
-      line-height: 1.45;
+      line-height: 1.42;
+      letter-spacing: 0;
+    }
+    :focus-visible {
+      outline: 3px solid rgba(99, 91, 255, 0.25);
+      outline-offset: 2px;
     }
     header {
       position: sticky;
       top: 0;
-      z-index: 2;
+      z-index: 5;
       border-bottom: 1px solid var(--line);
-      background: rgba(250, 249, 245, 0.97);
-      padding: 14px 20px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      padding: 0;
+    }
+    .topShell {
+      width: 100%;
+      min-height: 58px;
+      padding: 0 20px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 20px;
+      align-items: center;
     }
     h1 {
       margin: 0;
-      font-size: 22px;
+      font-size: 18px;
+      font-weight: 680;
       letter-spacing: 0;
     }
     .sub {
-      margin: 3px 0 0;
+      margin: 2px 0 0;
       color: var(--muted);
+      font-size: 12px;
+    }
+    .crumb {
+      color: var(--quiet);
+      font-size: 11px;
+      font-weight: 700;
+      margin: 0 0 2px;
+      text-transform: uppercase;
+    }
+    .crumb strong { color: var(--accent); }
+    .topMetrics {
+      display: flex;
+      gap: 0;
+      align-items: center;
+    }
+    .topMetric {
+      min-width: 104px;
+      border-left: 1px solid var(--line);
+      background: transparent;
+      padding: 2px 16px;
+    }
+    .topMetric strong {
+      display: block;
+      color: var(--ink);
       font-size: 13px;
+      line-height: 1.15;
+      font-variant-numeric: tabular-nums;
+    }
+    .topMetric span {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 11px;
+      white-space: nowrap;
     }
     .layout {
       display: grid;
-      grid-template-columns: 220px minmax(0, 1fr);
-      gap: 24px;
-      width: min(1280px, calc(100% - 32px));
-      margin: 20px auto 80px;
+      grid-template-columns: 236px minmax(0, 1fr);
+      gap: 0;
+      width: 100%;
+      margin: 0;
       align-items: start;
     }
+    main { min-width: 0; }
     nav {
       position: sticky;
-      top: 84px;
+      top: 58px;
       display: grid;
-      gap: 8px;
+      gap: 6px;
+      min-height: calc(100vh - 58px);
+      border-right: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.78);
+      padding: 14px 12px;
     }
     .sessionPanel {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--panel);
-      padding: 10px;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      border-radius: 0;
+      background: transparent;
+      padding: 0 0 12px;
       display: grid;
       gap: 8px;
+      box-shadow: none;
     }
     .sessionCount {
-      color: var(--accent);
-      font-size: 13px;
-      font-weight: 700;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
     }
-    nav a, .actions a, button {
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      background: #f6f8f5;
+    .sessionPanel button { width: 100%; }
+    .queueLink {
+      border: 1px solid transparent;
+      border-radius: 5px;
+      background: transparent;
       color: var(--ink);
       min-height: 38px;
-      padding: 8px 10px;
+      padding: 6px 8px;
+      text-decoration: none;
+      display: grid;
+      grid-template-columns: 22px minmax(0, 1fr);
+      gap: 7px;
+      align-items: center;
+      transition: border-color 140ms ease, background 140ms ease, box-shadow 140ms ease;
+    }
+    .queueLink span {
+      width: 22px;
+      height: 22px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #edf2f7;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+    .queueLink strong {
+      min-width: 0;
+      overflow-wrap: anywhere;
+      font-size: 12px;
+      font-weight: 650;
+      letter-spacing: 0;
+    }
+    .queueLink:hover,
+    .queueLink.active {
+      border-color: #d8e0ea;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+    .queueLink.active span {
+      background: var(--accent);
+      color: white;
+    }
+    .actions a, button, .siteButton, .scriptToolbar a {
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: var(--panel-2);
+      color: var(--ink);
+      min-height: 30px;
+      padding: 6px 9px;
       font: inherit;
-      font-size: 13px;
+      font-size: 12px;
+      font-weight: 600;
       text-decoration: none;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      text-align: center;
+      transition: border-color 140ms ease, background 140ms ease, color 140ms ease, box-shadow 140ms ease;
     }
-    nav a:hover, .actions a:hover, button:hover { border-color: var(--accent); }
+    .actions a:hover, button:hover, .siteButton:hover, .scriptToolbar a:hover {
+      border-color: var(--accent);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(99, 91, 255, 0.08);
+    }
+    .primaryButton {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+      font-weight: 700;
+    }
+    .primaryButton:hover { background: #4f46e5; color: white; }
     .prospect {
       min-height: calc(100vh - 110px);
       border: 1px solid var(--line);
-      border-radius: 8px;
+      border-radius: 6px;
       background: var(--panel);
-      padding: 24px;
-      margin-bottom: 24px;
+      padding: 0;
+      margin: 18px 20px 20px;
+      box-shadow: var(--shadow);
+      scroll-margin-top: 72px;
+      overflow: hidden;
+    }
+    .prospectHeader {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 16px;
+      border-bottom: 1px solid var(--line);
+      padding: 16px 18px 14px;
+      margin-bottom: 0;
     }
     .topline {
       display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      color: var(--accent);
-      font-size: 12px;
+      flex-wrap: wrap;
+      gap: 12px;
+      color: var(--quiet);
+      font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
     }
     h2 {
-      margin: 8px 0 14px;
-      font-size: 34px;
-      line-height: 1.05;
+      margin: 5px 0 0;
+      font-size: 26px;
+      font-weight: 680;
+      line-height: 1.12;
       letter-spacing: 0;
     }
-    .routeLine {
-      margin: -6px 0 14px;
+    .routeCard {
+      display: grid;
+      grid-template-columns: 96px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      border-bottom: 1px solid var(--line);
+      background: #fbfdff;
+      padding: 10px 18px;
+      margin-bottom: 0;
       color: var(--muted);
-      font-size: 14px;
-      font-weight: 700;
+      font-size: 13px;
+    }
+    .routeCard strong {
+      color: var(--quiet);
+      text-transform: uppercase;
+      font-size: 11px;
     }
     .channelWarning, .channelReady {
-      margin: -6px 0 14px;
-      border: 1px solid #efc7be;
-      border-radius: 6px;
-      background: #fff7f4;
+      margin: 0;
+      border: 0;
+      border-bottom: 1px solid var(--warning-line);
+      border-radius: 0;
+      background: var(--warning-bg);
       color: #7a281f;
-      padding: 8px 10px;
-      font-size: 13px;
-      font-weight: 700;
+      padding: 9px 18px;
+      font-size: 12px;
+      font-weight: 600;
     }
     .channelReady {
-      border-color: #b9d5c8;
-      background: #f4faf6;
-      color: #164536;
+      border-color: #b7ead9;
+      background: #f1fdf8;
+      color: #076448;
+    }
+    .channelMeta {
+      margin: 0;
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+      padding: 8px 18px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .recordingGrid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 372px;
+      gap: 0;
+      align-items: start;
+    }
+    .scriptPane {
+      min-width: 0;
+      border-right: 1px solid var(--line);
+      background: #fff;
+    }
+    .scriptToolbar {
+      position: sticky;
+      top: 58px;
+      z-index: 3;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      border-radius: 0;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      padding: 9px 18px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .recordingPanel {
+      position: sticky;
+      top: 58px;
+      display: grid;
+      gap: 0;
+      background: #fbfdff;
+    }
+    .panelBlock {
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      border-radius: 0;
+      background: transparent;
+      padding: 13px 14px;
+      box-shadow: none;
+    }
+    .panelLabel,
+    .notesDetails summary,
+    .sharpnessDetails summary {
+      display: block;
+      color: var(--quiet);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0;
+      margin-bottom: 8px;
+    }
+    .notesDetails summary,
+    .sharpnessDetails summary {
+      cursor: pointer;
+      margin-bottom: 0;
+    }
+    .notesDetails[open] summary,
+    .sharpnessDetails[open] summary {
+      margin-bottom: 10px;
     }
     .qualityBar {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 8px;
-      margin: 0 0 14px;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin: 0;
     }
     .qualityBar .qualityCheck {
       border: 1px solid var(--line);
-      border-radius: 6px;
-      background: #f6f8f5;
+      border-radius: 4px;
+      background: #fff;
       color: var(--muted);
-      padding: 8px 10px;
-      font-size: 13px;
-      font-weight: 700;
+      padding: 7px 8px;
+      font-size: 12px;
+      font-weight: 600;
       display: flex;
       gap: 8px;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       margin: 0;
       cursor: pointer;
     }
     .qualityBar .qualityCheck:has(input:checked) {
-      border-color: var(--accent);
-      background: #f0f7f3;
-      color: #164536;
+      border-color: #9a95ff;
+      background: #f4f3ff;
+      color: var(--ink);
     }
     .qualityBar .qualityCheck input {
       accent-color: var(--accent);
@@ -336,15 +615,13 @@ const html = `<!doctype html>
     }
     .qualityNotes {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 8px;
-      margin: -4px 0 14px;
     }
     .qualityNotes label {
       margin: 0;
       color: var(--muted);
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 600;
     }
     .qualityNotes span {
       display: block;
@@ -352,10 +629,10 @@ const html = `<!doctype html>
     }
     .qualityNotes textarea {
       width: 100%;
-      min-height: 78px;
+      min-height: 64px;
       border: 1px solid var(--line);
-      border-radius: 6px;
-      background: #fbfcfb;
+      border-radius: 4px;
+      background: #fff;
       color: var(--ink);
       font: inherit;
       font-size: 13px;
@@ -364,29 +641,29 @@ const html = `<!doctype html>
       resize: vertical;
     }
     .qualityNotes textarea.valid {
-      border-color: var(--accent);
-      background: #f0f7f3;
+      border-color: #8bd7be;
+      background: #f3fffb;
     }
     .qualityNotes textarea.invalid {
       border-color: #b43b2d;
       background: #fff5f2;
     }
-    .timerRow {
+    .timerBlock {
       display: grid;
-      grid-template-columns: 120px minmax(0, 1fr) minmax(0, 1fr);
-      gap: 8px;
-      align-items: center;
-      margin: 0 0 14px;
+      gap: 10px;
     }
     .timerTime {
       border: 1px solid var(--line);
-      border-radius: 6px;
-      background: #fbfcfb;
+      border-radius: 4px;
+      background: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 38px;
-      font-size: 22px;
+      min-height: 58px;
+      font-size: 34px;
+      font-weight: 650;
+      color: var(--ink);
+      line-height: 1;
       font-variant-numeric: tabular-nums;
     }
     .timerTime.running {
@@ -398,11 +675,15 @@ const html = `<!doctype html>
       color: #7a281f;
       background: #fff5f2;
     }
+    .buttonRow {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
     .actions {
       display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: 8px;
-      margin-bottom: 14px;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
     }
     label {
       display: block;
@@ -414,14 +695,14 @@ const html = `<!doctype html>
       width: 100%;
       min-height: 42px;
       border: 1px solid var(--line);
-      border-radius: 6px;
+      border-radius: 4px;
       padding: 8px 10px;
       font: inherit;
       margin-bottom: 8px;
     }
     .loomInput.valid {
-      border-color: var(--accent);
-      background: #f0f7f3;
+      border-color: #8bd7be;
+      background: #f3fffb;
     }
     .loomInput.invalid {
       border-color: #b43b2d;
@@ -437,20 +718,14 @@ const html = `<!doctype html>
     .inputStatus.invalid { color: #7a281f; }
     .copyFilled {
       width: 100%;
-      margin-bottom: 18px;
     }
     .sharpnessBrief {
-      border: 1px solid #cddcd4;
-      border-radius: 8px;
-      background: #f5fbf7;
-      padding: 14px;
-      margin-bottom: 18px;
       display: grid;
       gap: 10px;
     }
     .briefBlock {
-      border-top: 1px solid #d9e7de;
-      padding-top: 10px;
+      border-top: 1px solid var(--line);
+      padding-top: 9px;
     }
     .briefBlock:first-child {
       border-top: 0;
@@ -458,39 +733,58 @@ const html = `<!doctype html>
     }
     .briefBlock h3 {
       margin: 0 0 6px;
-      color: var(--accent);
-      font-size: 13px;
+      color: var(--quiet);
+      font-size: 11px;
+      font-weight: 700;
       letter-spacing: 0;
       text-transform: uppercase;
     }
     .briefBlock pre {
-      font-size: 15px;
+      font-size: 13px;
       line-height: 1.45;
     }
     .script {
       display: grid;
-      gap: 12px;
+      gap: 0;
     }
     .scriptBlock {
-      border-top: 1px solid var(--line);
-      padding-top: 14px;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      border-radius: 0;
+      background: #fff;
+      overflow: hidden;
+      box-shadow: none;
+    }
+    .scriptBlock h3 {
+      margin: 0;
+      border-bottom: 1px solid var(--line);
+      background: #f7fafc;
+      color: var(--quiet);
+      padding: 9px 18px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0;
     }
     pre {
       white-space: pre-wrap;
-      overflow-wrap: anywhere;
+      overflow-wrap: break-word;
       margin: 0;
       font: inherit;
-      font-size: clamp(18px, 2.1vw, 28px);
-      line-height: 1.45;
+      font-size: clamp(17px, 1.25vw, 20px);
+      font-weight: 450;
+      line-height: 1.5;
+      padding: 16px 18px;
+      color: #1a1f36;
     }
     .toast {
       position: fixed;
       right: 18px;
       bottom: 18px;
-      background: var(--ink);
+      background: #1a1f36;
       color: white;
       padding: 10px 12px;
-      border-radius: 6px;
+      border-radius: 5px;
       opacity: 0;
       transform: translateY(8px);
       transition: 150ms ease;
@@ -500,23 +794,47 @@ const html = `<!doctype html>
       opacity: 1;
       transform: translateY(0);
     }
-    @media (max-width: 860px) {
+    @media (max-width: 1180px) {
+      .recordingGrid { grid-template-columns: 1fr; }
+      .recordingPanel, .scriptToolbar { position: static; }
+      .recordingPanel { border-top: 1px solid var(--line); }
+      .scriptPane { border-right: 0; }
+      .actions { grid-template-columns: 1fr; }
+      h2 { font-size: 24px; }
+      pre { font-size: 18px; }
+    }
+    @media (max-width: 760px) {
       header { position: static; }
+      .topShell {
+        width: min(100% - 28px, 760px);
+        grid-template-columns: 1fr;
+        padding: 14px 0;
+      }
+      .topMetrics {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .topMetric {
+        min-width: 0;
+      }
       .layout { grid-template-columns: 1fr; }
       nav { position: static; }
-      .qualityBar { grid-template-columns: 1fr 1fr; }
-      .qualityNotes { grid-template-columns: 1fr; }
-      .timerRow { grid-template-columns: 1fr; }
-      .actions { grid-template-columns: 1fr; }
-      h2 { font-size: 28px; }
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>TinyStudio Recording Teleprompter</h1>
-    <p class="sub">${prospects.length} scripts. Record the batch, paste Loom URLs, copy the filled sheet.</p>
-    <p class="sub">Recommended channel now: ${escapeHtml(channelGuidance.recommendedChannel)}${channelGuidance.warnings.length ? ` (${escapeHtml(channelGuidance.warnings.join("; "))})` : ""}</p>
+    <div class="topShell">
+      <div>
+        <p class="crumb"><strong>TinyStudio</strong> / Proof batch</p>
+        <h1>Recording cockpit</h1>
+        <p class="sub">${prospects.length} scripts. Record the batch, paste Loom URLs, copy the filled sheet.</p>
+      </div>
+      <div class="topMetrics" aria-label="Batch status">
+        <div class="topMetric"><strong id="topApprovedCount">0/${prospects.length}</strong><span>approved Looms</span></div>
+        <div class="topMetric"><strong>3:00</strong><span>target length</span></div>
+        <div class="topMetric"><strong>${escapeHtml(channelGuidance.recommendedChannel)}</strong><span>send channel</span></div>
+      </div>
+    </div>
   </header>
   <div class="layout">
     <nav>
@@ -555,6 +873,7 @@ const html = `<!doctype html>
     const storedQuality = JSON.parse(localStorage.getItem(qualityStorageKey) || "{}");
     const storedNotes = JSON.parse(localStorage.getItem(noteStorageKey) || "{}");
     const sessionCount = document.getElementById("sessionCount");
+    const topApprovedCount = document.getElementById("topApprovedCount");
 
     function isValidLoomUrl(value) {
       try {
@@ -756,6 +1075,7 @@ const html = `<!doctype html>
         input.classList.toggle("invalid", Boolean(value) && value.length < 8);
       }
       sessionCount.textContent = approved + " / " + inputs.length + " approved Looms";
+      if (topApprovedCount) topApprovedCount.textContent = approved + "/" + inputs.length;
       sessionCount.title = [
         filled === valid ? "" : String(filled - valid) + " invalid Loom link(s)",
         valid === approved ? "" : String(valid - approved) + " Loom check(s) or note set(s) incomplete"

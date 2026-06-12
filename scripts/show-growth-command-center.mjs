@@ -106,6 +106,7 @@ const prospects = listFolders("prospects").map((path) => {
   const pipeline = readJson(join(path, "pipeline.json"));
   const readiness = checkProspectReadiness(path);
   const nextAction = pipelineAction(pipeline) || prospectAction(readiness);
+  const pipelineUrgency = pipelineWeight(pipeline);
   return {
     path,
     name: metadata.name || path.split("/").at(-1),
@@ -115,7 +116,9 @@ const prospects = listFolders("prospects").map((path) => {
     nextFollowUpAt: pipeline.nextFollowUpAt || "",
     status: readiness.status,
     warnings: readiness.warnings,
-    readinessWeight: Math.min(prospectWarningWeight(readiness.warnings), pipelineWeight(pipeline)),
+    readinessWeight: pipelineUrgency === 0
+      ? 0
+      : prospectWarningWeight(readiness.warnings) + pipelineUrgency,
     nextAction
   };
 }).sort((a, b) => a.readinessWeight - b.readinessWeight || a.name.localeCompare(b.name));

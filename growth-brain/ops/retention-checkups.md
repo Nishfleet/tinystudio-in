@@ -1,6 +1,6 @@
 # Retention Checkups
 
-Generated: 2026-05-29
+Generated: 2026-06-04
 
 This is the retention control surface. It should make weekly and monthly client checkups automatic to prepare, but it does not send anything automatically and never fakes proof.
 
@@ -13,7 +13,7 @@ This is the retention control surface. It should make weekly and monthly client 
 | Weekly reports ready | 3 |
 | High-risk clients | 0 |
 | Watch clients | 3 |
-| Monthly review due now | 3 |
+| Monthly review due now | 0 |
 
 ## Weekly Checkups
 
@@ -27,9 +27,9 @@ This is the retention control surface. It should make weekly and monthly client 
 
 | Client | Monthly review | Current lane | Next action |
 |---|---|---|---|
-| AI Converter | due | Landing page and conversion path | Run renewal review: npm run client:renewal -- clients/ai-converter |
-| Five to Nine 0509 | due | Offer clarity and landing page conversion path | Run renewal review: npm run client:renewal -- clients/five-to-nine-0509 |
-| SiteRep | due | Product positioning and proof-led website flow | Run renewal review: npm run client:renewal -- clients/siterep |
+| AI Converter | not due | Landing page and conversion path | Not due this week; keep the weekly loop moving. |
+| Five to Nine 0509 | not due | Offer clarity and landing page conversion path | Not due this week; keep the weekly loop moving. |
+| SiteRep | not due | Product positioning and proof-led website flow | Not due this week; keep the weekly loop moving. |
 
 ## Dashboard
 

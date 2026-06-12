@@ -40,6 +40,14 @@ The business is simple: sell a Tangible Revenue Leak Sprint + Search Trust Layer
 - `growth-brain/ops/11-10-proof-run.md` turns the 11/10 blockers into the exact next proof-capture run.
 - `growth-brain/ops/market-proof-run-check.md` verifies whether the 5-Loom proof session is recorded, send-prepped, and actually sent.
 - `growth-brain/ops/market-proof-cockpit.html` is the tangible-improvement proof cockpit for the first external proof run.
+- `docs/strategy/solo-ai-agency-pre-customer-parity.md` defines the pre-customer/pre-revenue parity gate against the solo AI agency article; `npm run article:parity` checks that the public workflow view, internal workflow engine, acquisition loop, and proof boundaries are all present.
+- `docs/strategy/solo-ai-agency-90-day-rollout.md` adapts the article's 90-day path to TinyStudio without claiming revenue before proof exists.
+- `docs/strategy/90-day-start-here.md` is the Day 1 runbook for starting the first proof batch.
+- `docs/strategy/friction-triggered-build-backlog.md` parks cold email setup, intake form, background agents, hard-wired model routing, and public case-study pages until real friction proves they are needed.
+- `growth-brain/ops/pre-revenue-agent-orchestration.md` maps the agent-agency diagram into TinyStudio's pre-revenue operating architecture: operator touchpoints, intake, routing, parallel lanes, specialist escalation, verifier QA, handoff, skills/library feedback, background pool, and unit economics.
+- `scripts/export-agent-orchestration-run.mjs` creates the current diagram-shaped work packet; `npm run agent:parity` verifies that pre-revenue diagram parity is present without claiming revenue or autonomous delivery.
+- `growth-brain/ops/model-routing-standard.md` defines workhorse, specialist, utility, and manual task routing.
+- `growth-brain/ops/unit-economics-ledger.md` defines what cost, time, and review data must be captured before any margin or delivery-cost claim.
 - The active Codex automation `TinyStudio Retention Checkups` prepares weekly checkups every Friday and flags month-end reviews; it never sends client messages automatically.
 - `growth-brain/prospecting/` contains query banks, warm-network scripts, and first-50 templates.
 - `growth-brain/agents/` contains the first repeatable agent workflows, including the marketing-agent workbench loops.
@@ -106,6 +114,9 @@ npm run market:after-recording -- --from-clipboard
 npm run market:proof-check
 npm run market:proof-cockpit
 npm run market:learn
+npm run article:parity
+npm run agent:run
+npm run agent:parity
 npm run owned:startups
 npm run owned:proof
 npm run owned:proof-review

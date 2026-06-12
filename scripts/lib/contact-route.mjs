@@ -83,6 +83,10 @@ export function safeNonEmailRoute(contactPlanMarkdown) {
 export function routedContactPlan(contactPlanMarkdown, { emailReady = false } = {}) {
   const bestRoute = firstLine(section(contactPlanMarkdown, "Best Route")) || "Open contact plan";
   if (emailReady || !isEmailRoute(bestRoute)) return bestRoute;
+  const savedSafeRoute = firstLine(section(contactPlanMarkdown, "Safe Route While Email Blocked"));
+  if (savedSafeRoute && !/contact-plan needs|no non-email/i.test(savedSafeRoute)) {
+    return `${savedSafeRoute}. Email route after sender setup: ${bestRoute}`;
+  }
   return `${safeNonEmailRoute(contactPlanMarkdown)}. Email route after sender setup: ${bestRoute}`;
 }
 

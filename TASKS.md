@@ -2,7 +2,7 @@
 
 ## Active
 
-- [ ] **Record first 5 Loom audits** - LayerLogix, PROTBYTE, Sagiss, Scorpion Technology, and Stradiant now have recording scripts; run `prospect:rehearsal -- --limit=5`, use `market:proof-cockpit`, then run `market:after-recording -- --from-clipboard` with the Loom URLs.
+- [ ] **Record first 5 Loom audits** - ByteMe Networks, IT Umbrella Group, Talos Cyber Solutions, Xentz Technologies, and YPM IT Solutions now have recording scripts; run `prospect:rehearsal -- --limit=5`, use `market:proof-cockpit`, then run `market:after-recording -- --from-clipboard` with the Loom URLs.
 - [ ] **Fill owned-product business metrics** - live public delivery metrics are now filled; paste one product analytics or sales metric per owned product with `npm run owned:metrics -- --from-clipboard` before calling AI Converter, SiteRep, and 0509 full business case studies.
 - [ ] **Complete owned-startup handoff Loom acceptance** - AI Converter, SiteRep, and 0509 now have source-reviewed claims and scorecards; run `npm run owned:handoff`, record the real handoff Looms, then complete each acceptance command.
 - [ ] **Run market learning review after first send batch** - use `npm run market:learn` before changing lead fit, hook, first message, or channel.
@@ -21,6 +21,7 @@
 
 ## Done
 
+- [x] ~~Add pre-revenue agent diagram parity gate~~ (2026-06-04) - `agent:run` now creates the diagram-shaped operating packet, and `agent:parity` verifies intake, route, parallel lanes, specialist escalation, verifier QA, handoff, skills/library feedback, report-only background pool, and unit economics without claiming revenue or autonomous delivery.
 - [x] ~~Open full proof stack in record mode~~ (2026-05-29) - `growth:start -- --view=record` now opens the mission, rehearsal gate, teleprompter, and market proof cockpit so recording starts from the proof workflow.
 - [x] ~~Add one-command post-recording proof prep~~ (2026-05-29) - `market:after-recording` now updates Loom URLs, preserves tangible proof notes, prepares send packages, refreshes the outbox, and refreshes the proof cockpit without marking anything sent.
 - [x] ~~Add pre-recording rehearsal quality gate~~ (2026-05-29) - first-batch Looms now get scored for specific leak, buyer-visible value, first fix, clean ask, timing, and send route before recording.
