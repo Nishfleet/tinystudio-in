@@ -120,6 +120,7 @@ const requiredFiles = [
   "scripts/check-outbound-send-readiness.mjs",
   "scripts/date-utils.mjs",
   "scripts/lib/contact-route.mjs",
+  "scripts/lib/list-operational-folders.mjs",
   "scripts/lib/reply-worthy-proof.mjs",
   "scripts/draft-client-kickoff.mjs",
   "scripts/export-client-facing-dashboard.mjs",
@@ -139,6 +140,7 @@ const requiredFiles = [
   "scripts/update-owned-product-metrics.mjs",
   "scripts/export-owned-product-live-signals.mjs",
   "scripts/export-owned-handoff-loom-cockpit.mjs",
+  "scripts/complete-owned-handoff-looms.mjs",
   "scripts/check-retention-automation.mjs",
   "scripts/seed-owned-startup-proof-lane.mjs",
   "scripts/export-owned-startup-proof-capture.mjs",
@@ -182,6 +184,7 @@ const requiredFiles = [
   "scripts/export-growth-cockpit.mjs",
   "scripts/export-growth-metrics.mjs",
   "scripts/export-internal-dashboard.mjs",
+  "scripts/check-generated-ui-surfaces.mjs",
   "scripts/export-proof-library.mjs",
   "scripts/export-market-benchmark.mjs",
   "scripts/check-market-parity-readiness.mjs",
@@ -446,7 +449,7 @@ for (const file of ["scripts/prepare-prospect-send.mjs", "scripts/prepare-prospe
     if (!ownedProofReview.includes(phrase)) failures.push(`owned proof review script missing ${phrase}`);
   }
   const ownedCaseStudies = readFileSync("scripts/export-owned-product-case-studies.mjs", "utf8");
-  for (const phrase of ["Owned-Product Case Studies", "owned-product delivery proof", "External client proof is market proof", "Sales-Safe Outbound Line", "delivery-proof-ready", "Business metric", "needs-current-metric", "Current Metric", "Measurement Contract", "Do not say this is client proof"]) {
+  for (const phrase of ["Owned-Product Case Studies", "owned-product delivery proof", "External client proof is market proof", "Sales-Safe Outbound Line", "delivery-proof-ready", "Business metric", "needs-current-metric", "needsBusinessMetric", "Business Metric Capture Sheet", "LAST_REAL_VALUE", "Current Metric", "Measurement Contract", "Do not say this is client proof"]) {
     if (!ownedCaseStudies.includes(phrase)) failures.push(`owned product case-study exporter missing ${phrase}`);
   }
   const clientWorkflow = readFileSync("scripts/export-client-repeatable-workflow.mjs", "utf8");
@@ -458,7 +461,7 @@ for (const file of ["scripts/prepare-prospect-send.mjs", "scripts/prepare-prospe
     if (!ownedWorkflow.includes(phrase)) failures.push(`owned product workflow proof exporter missing ${phrase}`);
   }
   const ownedMetrics = readFileSync("scripts/update-owned-product-metrics.mjs", "utf8");
-  for (const phrase of ["Owned Product Metrics Update", "--from-clipboard", "clients/ai-converter|Upload starts", "missing current metric value", "export-owned-product-case-studies.mjs", "Only use real observed numbers"]) {
+  for (const phrase of ["Owned Product Metrics Update", "--from-clipboard", "clients/ai-converter|Upload starts", "LAST_REAL_VALUE", "missing current metric value", "export-owned-product-case-studies.mjs", "Only use real observed numbers"]) {
     if (!ownedMetrics.includes(phrase)) failures.push(`owned product metrics updater missing ${phrase}`);
   }
   const ownedLiveSignals = readFileSync("scripts/export-owned-product-live-signals.mjs", "utf8");
@@ -466,8 +469,12 @@ for (const file of ["scripts/prepare-prospect-send.mjs", "scripts/prepare-prospe
     if (!ownedLiveSignals.includes(phrase)) failures.push(`owned product live-signal exporter missing ${phrase}`);
   }
   const ownedHandoff = readFileSync("scripts/export-owned-handoff-loom-cockpit.mjs", "utf8");
-  for (const phrase of ["Owned Handoff Loom Cockpit", "ready-to-record", "does not approve work automatically", "proof delta", "client:acceptance", "handoff-loom=LOOM_URL", "Handoff Loom Script", "What felt valuable", "This is owned-startup proof"]) {
+  for (const phrase of ["Owned Handoff Loom Cockpit", "ready-to-record", "Batch Completion Sheet", "owned:handoff-complete", "does not approve work automatically", "proof delta", "client:acceptance", "handoff-loom=LOOM_URL", "Handoff Loom Script", "What felt valuable", "This is owned-startup proof"]) {
     if (!ownedHandoff.includes(phrase)) failures.push(`owned handoff Loom cockpit missing ${phrase}`);
+  }
+  const ownedHandoffCompletion = readFileSync("scripts/complete-owned-handoff-looms.mjs", "utf8");
+  for (const phrase of ["Owned Handoff Completion", "--from-clipboard", "--reviewer", "review-client-acceptance.mjs", "isValidLoomUrl", "does not create market proof", "owned:handoff-complete", "Real Loom share/embed URLs are required"]) {
+    if (!ownedHandoffCompletion.includes(phrase)) failures.push(`owned handoff completion missing ${phrase}`);
   }
   const retentionCheckups = readFileSync("scripts/export-retention-checkups.mjs", "utf8");
   for (const phrase of ["retention-dashboard.html", "Monthly Checkups", "Weekly Checkups", "weeklyCommand", "Client confirmation", "continue/retain signal", "Record proof handoff", "owned:handoff", "--monthly", "client:renewal", "does not send anything automatically"]) {
@@ -502,7 +509,7 @@ for (const file of ["scripts/prepare-prospect-send.mjs", "scripts/prepare-prospe
     if (!product.includes(phrase)) failures.push(`product context missing ${phrase}`);
   }
   const valueStress = readFileSync("scripts/export-value-retention-stress-test.mjs", "utf8");
-  for (const phrase of ["Value And Retention Stress Test", "tangible improvement proof", "Customer-perceived value proof", "clientConfirmation", "Measurement contract", "clientsWithMeasurementContracts", "Comprehensive weekly value stack", "Market proof execution cockpit", "Client dashboard value proof", "Value proof score", "Handoff proof readiness", "owned:live-signals", "owned:handoff", "averageValueProofScore", "Paid client value proof", "Owned startup proof lane", "Owned product case-study packets", "ownedCaseStudyDeliveryReady", "ownedCaseStudyNeedsMetrics", "External market proof", "duplicateBuyerValueRows", "Do not claim competitors lack this"]) {
+  for (const phrase of ["Value And Retention Stress Test", "tangible improvement proof", "Customer-perceived value proof", "clientConfirmation", "Measurement contract", "clientsWithMeasurementContracts", "Comprehensive weekly value stack", "Market proof execution cockpit", "Client dashboard value proof", "Value proof score", "Handoff proof readiness", "owned:live-signals", "owned:handoff", "averageValueProofScore", "Paid client value proof", "Owned startup proof lane", "Owned product case-study packets", "ownedCaseStudyDeliveryReady", "ownedCaseStudyNeedsMetrics", "ownedCaseStudyNeedsBusinessMetrics", "External market proof", "duplicateBuyerValueRows", "Do not claim competitors lack this"]) {
     if (!valueStress.includes(phrase)) failures.push(`value retention stress test missing ${phrase}`);
   }
   const ownedProof = readFileSync("scripts/export-owned-startup-proof-capture.mjs", "utf8");
@@ -628,6 +635,10 @@ for (const file of ["scripts/prepare-prospect-send.mjs", "scripts/prepare-prospe
   for (const phrase of ["URL-only", "--from-clipboard", "Existing Notes Preserved", "isValidLoomUrl", "prospects/loom-links.txt", "market-recordings-update.md", "preserve existing leak, impact, fix, and ask notes"]) {
     if (!recordings.includes(phrase)) failures.push(`market recordings updater missing ${phrase}`);
   }
+  const operationalFolders = readFileSync("scripts/lib/list-operational-folders.mjs", "utf8");
+  for (const phrase of ["listClientFolders", "listProspectFolders", "isTransientWorkspaceName", "requiredFiles", "kit", "import"]) {
+    if (!operationalFolders.includes(phrase)) failures.push(`operational folder helper missing ${phrase}`);
+  }
   const proofRunCheck = readFileSync("scripts/check-market-proof-run.mjs", "utf8");
   for (const phrase of ["Market Proof Run Check", "ready-for-send-prep", "ready-to-mark-sent", "sent-proof-captured", "recording-notes.md", "prospects/loom-links.txt", "sendChannelGuidance", "email send cannot count while sender setup is not clean", "Recommended send channel"]) {
     if (!proofRunCheck.includes(phrase)) failures.push(`market proof-run checker missing ${phrase}`);
@@ -636,8 +647,12 @@ for (const file of ["scripts/prepare-prospect-send.mjs", "scripts/prepare-prospe
   for (const phrase of ["Market Proof Cockpit", "Tangible Improvement Queue", "before", "after", "client-visible value", "next measurement", "check-market-proof-run.mjs", "prospect:send-prep", "sendChannelGuidance", "routedContactPlan", "proofRunImpact", "genericImpact", "LOOM_URL"]) {
     if (!proofCockpit.includes(phrase)) failures.push(`market proof cockpit missing ${phrase}`);
   }
+  const uiCheck = readFileSync("scripts/check-generated-ui-surfaces.mjs", "utf8");
+  for (const phrase of ["Generated UI", "market-proof-cockpit.html", "recording-teleprompter.html", "owned-product-case-studies.html", "Business Metric Capture Sheet", "mobile-list", "proof-card", "viewport", "toast", "overflow-x: auto"]) {
+    if (!uiCheck.includes(phrase)) failures.push(`generated UI surface checker missing ${phrase}`);
+  }
   const afterRecording = readFileSync("scripts/prepare-market-proof-after-recording.mjs", "utf8");
-  for (const phrase of ["Market After Recording", "update-market-proof-looms.mjs", "prepare-prospect-batch-send.mjs", "export-prospect-outbox.mjs", "export-market-proof-cockpit.mjs", "does not mark anything sent", "tangible improvement proof"]) {
+  for (const phrase of ["Market After Recording", "recording-progress-saved", "update-market-proof-looms.mjs", "prepare-prospect-batch-send.mjs", "export-prospect-outbox.mjs", "export-market-proof-cockpit.mjs", "does not mark anything sent", "tangible improvement proof"]) {
     if (!afterRecording.includes(phrase)) failures.push(`market after-recording prep missing ${phrase}`);
   }
   const marketLearning = readFileSync("scripts/export-market-learning-review.mjs", "utf8");
@@ -768,6 +783,37 @@ try {
   }
 } catch (error) {
   failures.push(`growth metrics smoke test failed: ${error.message}`);
+}
+
+try {
+  const tempClient = "clients/kit-acceptance-test";
+  mkdirSync(tempClient, { recursive: true });
+  mkdirSync(`${tempClient}/reports`, { recursive: true });
+  const metricsOutput = execFileSync("node", ["scripts/export-growth-metrics.mjs", "--output=prospects/kit-live-metrics.md"], {
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "pipe"]
+  });
+  const metricsResult = JSON.parse(metricsOutput);
+  const parityOutput = execFileSync("node", [
+    "scripts/check-market-parity-readiness.mjs",
+    "--skip-kit",
+    "--output=prospects/kit-operational-folder-parity.md"
+  ], {
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "pipe"]
+  });
+  const parityResult = JSON.parse(parityOutput);
+  if (metricsResult.counts.clients !== 3 || parityResult.counts.clients !== 3) {
+    failures.push("operational reports counted a transient kit client folder as a real client");
+  }
+  rmSync(tempClient, { recursive: true, force: true });
+  rmSync("prospects/kit-live-metrics.md", { force: true });
+  rmSync("prospects/kit-operational-folder-parity.md", { force: true });
+} catch (error) {
+  rmSync("clients/kit-acceptance-test", { recursive: true, force: true });
+  rmSync("prospects/kit-live-metrics.md", { force: true });
+  rmSync("prospects/kit-operational-folder-parity.md", { force: true });
+  failures.push(`operational folder filtering smoke test failed: ${error.message}`);
 }
 
 try {
@@ -1016,6 +1062,64 @@ try {
 }
 
 try {
+  const sheet = "prospects/kit-after-recording-partial-links.txt";
+  const input = "prospects/kit-after-recording-partial-input.txt";
+  const reportPath = "prospects/kit-after-recording-partial.md";
+  const recordingsReportPath = "prospects/kit-after-recording-partial-update.md";
+  const checkPath = "prospects/kit-after-recording-partial-check.md";
+  const proofPath = "prospects/kit-after-recording-partial-cockpit.md";
+  const proofHtmlPath = "prospects/kit-after-recording-partial-cockpit.html";
+  const packagePath = "prospects/kit-after-recording-partial-package.md";
+  const outboxPath = "prospects/kit-after-recording-partial-outbox.html";
+  const loomLink = "https://www.loom.com/share/abcdef1234567890";
+  writeFileSync(sheet, [
+    "prospects/layerlogix|LOOM_URL|approved|specific visible leak|buyer impact from the recording|first fix shown in the recording|ask if they want the sprint plan",
+    "prospects/protbyte|LOOM_URL|approved|second visible leak|second buyer impact from recording|second first fix shown|second clean ask"
+  ].join("\n") + "\n");
+  writeFileSync(input, `${loomLink}\n`);
+  const output = execFileSync("node", [
+    "scripts/prepare-market-proof-after-recording.mjs",
+    sheet,
+    `--input=${input}`,
+    `--report=${reportPath}`,
+    `--recordings-report=${recordingsReportPath}`,
+    `--check-output=${checkPath}`,
+    `--proof-output=${proofPath}`,
+    `--proof-html=${proofHtmlPath}`,
+    `--package=${packagePath}`,
+    `--outbox=${outboxPath}`
+  ], {
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "pipe"]
+  });
+  const result = JSON.parse(output);
+  const report = readFileSync(reportPath, "utf8");
+  if (result.status !== "recording-progress-saved" || result.recordings.updated !== 1 || result.proofAfter.status !== "needs-recording" || result.batchSend !== null || result.nextCommand !== "npm run growth:start -- --view=record" || !report.includes("Do not run send prep")) {
+    failures.push("market after-recording prep did not save partial recording progress safely");
+  }
+  rmSync(sheet, { force: true });
+  rmSync(input, { force: true });
+  rmSync(reportPath, { force: true });
+  rmSync(recordingsReportPath, { force: true });
+  rmSync(checkPath, { force: true });
+  rmSync(proofPath, { force: true });
+  rmSync(proofHtmlPath, { force: true });
+  rmSync(packagePath, { force: true });
+  rmSync(outboxPath, { force: true });
+} catch (error) {
+  rmSync("prospects/kit-after-recording-partial-links.txt", { force: true });
+  rmSync("prospects/kit-after-recording-partial-input.txt", { force: true });
+  rmSync("prospects/kit-after-recording-partial.md", { force: true });
+  rmSync("prospects/kit-after-recording-partial-update.md", { force: true });
+  rmSync("prospects/kit-after-recording-partial-check.md", { force: true });
+  rmSync("prospects/kit-after-recording-partial-cockpit.md", { force: true });
+  rmSync("prospects/kit-after-recording-partial-cockpit.html", { force: true });
+  rmSync("prospects/kit-after-recording-partial-package.md", { force: true });
+  rmSync("prospects/kit-after-recording-partial-outbox.html", { force: true });
+  failures.push(`market after-recording partial progress smoke test failed: ${error.message}`);
+}
+
+try {
   const input = "prospects/kit-market-proof-run-links.txt";
   const outputPath = "prospects/kit-market-proof-run-check.md";
   writeFileSync(input, "prospects/layerlogix|LOOM_URL|approved|specific leak|buyer impact|first fix|clean ask\n");
@@ -1178,12 +1282,12 @@ try {
     stdio: ["ignore", "pipe", "pipe"]
   });
   const result = JSON.parse(output);
-  if (!["ready", "delivery-proof-ready", "needs-current-metrics"].includes(result.status) || !Array.isArray(result.packets) || result.packets.length !== 3 || !existsSync("growth-brain/ops/owned-product-case-studies.md") || !existsSync("growth-brain/ops/owned-product-case-studies.html")) {
+  if (!["ready", "delivery-proof-ready", "needs-current-metrics"].includes(result.status) || !Array.isArray(result.packets) || result.packets.length !== 3 || typeof result.needsBusinessMetric !== "number" || !existsSync("growth-brain/ops/owned-product-case-studies.md") || !existsSync("growth-brain/ops/owned-product-case-studies.html")) {
     failures.push("owned product case-study exporter did not create three owned-product proof packets");
   }
   const ownedCaseStudies = readFileSync("growth-brain/ops/owned-product-case-studies.md", "utf8");
   const ownedCaseStudiesHtml = readFileSync("growth-brain/ops/owned-product-case-studies.html", "utf8");
-  if (!ownedCaseStudies.includes("Owned startup proof = delivery proof") || !ownedCaseStudies.includes("External client proof = market proof") || !ownedCaseStudies.includes("Outbound-Safe Proof Lines") || !ownedCaseStudies.includes("Business-metric case-study ready") || !ownedCaseStudiesHtml.includes("Owned-Product Case Studies")) {
+  if (!ownedCaseStudies.includes("Owned startup proof = delivery proof") || !ownedCaseStudies.includes("External client proof = market proof") || !ownedCaseStudies.includes("Outbound-Safe Proof Lines") || !ownedCaseStudies.includes("Business-metric case-study ready") || !ownedCaseStudies.includes("Need business metric") || !ownedCaseStudies.includes("Business Metric Capture Sheet") || !ownedCaseStudiesHtml.includes("Owned-Product Case Studies")) {
     failures.push("owned product case-study exporter missing honest proof labels or outbound-safe lines");
   }
   for (const clientPath of ["clients/ai-converter", "clients/siterep", "clients/five-to-nine-0509"]) {
@@ -1247,7 +1351,7 @@ try {
     stdio: ["ignore", "pipe", "pipe"]
   });
   const result = JSON.parse(output);
-  if (result.status !== "ready-to-record" || result.clients !== 3 || result.readyToRecord !== 3 || !existsSync("growth-brain/ops/owned-handoff-loom-cockpit.md") || !existsSync("growth-brain/ops/owned-handoff-loom-cockpit.html")) {
+  if (result.status !== "ready-to-record" || result.clients !== 3 || result.readyToRecord !== 3 || result.accepted !== 0 || !existsSync("growth-brain/ops/owned-handoff-loom-cockpit.md") || !existsSync("growth-brain/ops/owned-handoff-loom-cockpit.html")) {
     failures.push("owned handoff Loom cockpit did not expose all ready-to-record owned startups");
   }
   const handoff = readFileSync("growth-brain/ops/owned-handoff-loom-cockpit.md", "utf8");
@@ -1258,7 +1362,7 @@ try {
       failures.push(`${clientPath} handoff Loom script missing proof-delta recording guardrails`);
     }
   }
-  if (!handoff.includes("Owned Handoff Loom Cockpit") || !handoff.includes("proof delta") || !handoff.includes("ready-to-record") || !handoff.includes("Complete After Loom") || !handoffHtml.includes("Owned Handoff Loom Cockpit")) {
+  if (!handoff.includes("Owned Handoff Loom Cockpit") || !handoff.includes("proof delta") || !handoff.includes("ready-to-record") || !handoff.includes("Batch Completion Sheet") || !handoff.includes("owned:handoff-complete") || !handoff.includes("Complete After Loom") || !handoffHtml.includes("Owned Handoff Loom Cockpit")) {
     failures.push("owned handoff Loom cockpit missing proof-delta queue or completion command");
   }
 } catch (error) {
@@ -1351,6 +1455,43 @@ try {
 } catch (error) {
   rmSync("clients/kit-acceptance-test", { recursive: true, force: true });
   failures.push(`client acceptance smoke test failed: ${error.message}`);
+}
+
+try {
+  const tempClient = "clients/kit-handoff-complete-test";
+  const inputPath = ".tmp/kit-handoff-complete.txt";
+  const reportPath = ".tmp/kit-handoff-complete.md";
+  rmSync(tempClient, { recursive: true, force: true });
+  mkdirSync(".tmp", { recursive: true });
+  cpSync("clients/ai-converter", tempClient, { recursive: true });
+  writeFileSync(inputPath, `${tempClient}|https://www.loom.com/share/1234567890abcdef1234567890abcdef\n`);
+  const output = execFileSync("node", [
+    "scripts/complete-owned-handoff-looms.mjs",
+    `--clients=${tempClient}`,
+    `--input=${inputPath}`,
+    "--reviewer=Kit Reviewer",
+    `--report=${reportPath}`
+  ], {
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "pipe"]
+  });
+  const result = JSON.parse(output);
+  const report = readFileSync(reportPath, "utf8");
+  const readiness = JSON.parse(execFileSync("node", ["scripts/check-client-readiness.mjs", tempClient], {
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "pipe"]
+  }));
+  if (result.status !== "handoff-acceptance-complete" || result.updated.length !== 1 || result.remaining.length !== 0 || readiness.status !== "ready" || !report.includes("does not create market proof")) {
+    failures.push("owned handoff completion did not safely complete a reviewed handoff Loom");
+  }
+  rmSync(tempClient, { recursive: true, force: true });
+  rmSync(inputPath, { force: true });
+  rmSync(reportPath, { force: true });
+} catch (error) {
+  rmSync("clients/kit-handoff-complete-test", { recursive: true, force: true });
+  rmSync(".tmp/kit-handoff-complete.txt", { force: true });
+  rmSync(".tmp/kit-handoff-complete.md", { force: true });
+  failures.push(`owned handoff completion smoke test failed: ${error.message}`);
 }
 
 try {

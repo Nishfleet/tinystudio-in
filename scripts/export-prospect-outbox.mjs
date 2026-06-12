@@ -37,9 +37,12 @@ function runJson(commandArgs) {
 }
 
 function section(markdown, heading, fallback = "") {
-  const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const match = markdown.match(new RegExp(`## ${escaped}\\n+([\\s\\S]*?)(?:\\n## |$)`));
-  return match ? match[1].trim() : fallback;
+  const lines = String(markdown || "").split("\n");
+  const start = lines.findIndex((line) => line.trimEnd() === `## ${heading}`);
+  if (start < 0) return fallback;
+  const end = lines.findIndex((line, index) => index > start && line.startsWith("## "));
+  const body = lines.slice(start + 1, end < 0 ? undefined : end).join("\n").trim();
+  return body || fallback;
 }
 
 function lineValue(content, pattern, fallback = "") {
@@ -555,10 +558,39 @@ const html = `<!doctype html>
       toast.classList.add("show");
       setTimeout(() => toast.classList.remove("show"), 1200);
     }
+    async function copyText(text, successText = "Copied") {
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          showToast(successText);
+          return true;
+        }
+      } catch {}
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "fixed";
+      textarea.style.left = "-9999px";
+      document.body.appendChild(textarea);
+      textarea.select();
+      let copied = false;
+      try {
+        copied = document.execCommand("copy");
+      } catch {
+        copied = false;
+      }
+      textarea.remove();
+      if (copied) {
+        showToast(successText);
+        return true;
+      }
+      window.prompt("Copy this:", text);
+      showToast("Select and copy manually");
+      return false;
+    }
     for (const button of document.querySelectorAll("button[data-copy]")) {
       button.addEventListener("click", async () => {
-        await navigator.clipboard.writeText(button.dataset.copy);
-        showToast("Copied");
+        await copyText(button.dataset.copy);
       });
     }
     const batchSheet = document.getElementById("batchSentSheet");
@@ -610,8 +642,7 @@ const html = `<!doctype html>
           showToast("No sent rows selected");
           return;
         }
-        await navigator.clipboard.writeText(batchSheet.value);
-        showToast("Copied batch sent sheet");
+        await copyText(batchSheet.value, "Copied batch sent sheet");
       });
     }
     for (const button of document.querySelectorAll("button[data-row-for]")) {
@@ -623,8 +654,7 @@ const html = `<!doctype html>
           showToast("Check sent first");
           return;
         }
-        await navigator.clipboard.writeText(rowFor(select));
-        showToast("Copied sent row");
+        await copyText(rowFor(select), "Copied sent row");
       });
     }
     for (const button of document.querySelectorAll("button[data-stage-copy]")) {
@@ -636,8 +666,7 @@ const html = `<!doctype html>
           showToast("Check sent first");
           return;
         }
-        await navigator.clipboard.writeText(button.dataset.stageCopy);
-        showToast("Copied stage command");
+        await copyText(button.dataset.stageCopy, "Copied stage command");
       });
     }
   </script>

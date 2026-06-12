@@ -337,6 +337,27 @@ const proofRowsHtml = rows.length
         </tr>`).join("")
   : `<tr><td>-</td><td>No proof rows found.</td><td><span class="pill bad">record Loom</span></td><td>-</td><td>-</td><td>-</td><td>-</td><td><code>npm run market:proof-run</code></td></tr>`;
 
+const proofCardsHtml = rows.length
+  ? rows.map((row, index) => `
+        <article class="proof-card">
+          <div class="proof-card-head">
+            <div>
+              <span class="eyebrow">#${index + 1}</span>
+              <h3>${htmlEscape(row.name)}</h3>
+              <p>${htmlEscape(row.website || row.path)}</p>
+            </div>
+            <span class="pill ${htmlEscape(row.status.level)}">${htmlEscape(row.status.label)}</span>
+          </div>
+          <dl>
+            <div><dt>Before / Leak</dt><dd>${htmlEscape(row.before)}</dd></div>
+            <div><dt>After / First Fix</dt><dd>${htmlEscape(row.after)}</dd></div>
+            <div><dt>Client Value</dt><dd>${htmlEscape(row.value)}</dd></div>
+            <div><dt>Next Measurement</dt><dd>${htmlEscape(row.nextMeasurement)}</dd></div>
+            <div><dt>Command</dt><dd><code>${htmlEscape(row.status.command)}</code></dd></div>
+          </dl>
+        </article>`).join("")
+  : `<article class="proof-card"><div class="proof-card-head"><div><span class="eyebrow">Empty</span><h3>No proof rows found</h3></div><span class="pill bad">record Loom</span></div><dl><div><dt>Command</dt><dd><code>npm run market:proof-run</code></dd></div></dl></article>`;
+
 const missingRowsHtml = rows.length
   ? rows.map((row, index) => `
         <tr>
@@ -347,11 +368,24 @@ const missingRowsHtml = rows.length
         </tr>`).join("")
   : `<tr><td>-</td><td>-</td><td>No rows found.</td><td>-</td></tr>`;
 
+const missingCardsHtml = rows.length
+  ? rows.map((row, index) => `
+        <article class="route-card">
+          <span class="eyebrow">#${index + 1}</span>
+          <h3>${htmlEscape(row.name)}</h3>
+          <dl>
+            <div><dt>Missing</dt><dd>${htmlEscape(row.status.missing.join("; ") || "clean")}</dd></div>
+            <div><dt>Route</dt><dd>${htmlEscape(row.route)}</dd></div>
+          </dl>
+        </article>`).join("")
+  : `<article class="route-card"><span class="eyebrow">Empty</span><h3>No rows found</h3></article>`;
+
 const html = `<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
   <title>TinyStudio Market Proof Cockpit</title>
   <style>
     :root { color-scheme: light; --ink:#14161a; --muted:#667085; --line:#d9e1ea; --paper:#f7f9fc; --good:#0f7b45; --warn:#9a5b00; --bad:#b42318; }
@@ -377,11 +411,30 @@ const html = `<!doctype html>
     .good { background:var(--good); }
     .warn { background:var(--warn); }
     .bad { background:var(--bad); }
+    .mobile-list { display:none; }
+    .proof-card, .route-card { border:1px solid var(--line); border-radius:8px; background:#fff; padding:14px; }
+    .proof-card + .proof-card, .route-card + .route-card { margin-top:12px; }
+    .proof-card-head { display:flex; gap:12px; justify-content:space-between; align-items:flex-start; }
+    .proof-card h3, .route-card h3 { margin:3px 0 0; font-size:18px; letter-spacing:0; }
+    .proof-card p { margin:4px 0 0; max-width:none; overflow-wrap:anywhere; }
+    .eyebrow { color:var(--muted); font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; }
+    dl { margin:13px 0 0; display:grid; gap:11px; }
+    dt { color:#475467; font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; }
+    dd { margin:3px 0 0; color:var(--ink); overflow-wrap:anywhere; }
     @media (max-width:860px) {
       header { display:block; }
       .date { text-align:left; margin-top:10px; }
       .cards { grid-template-columns:repeat(2, minmax(0, 1fr)); }
-      table { display:block; overflow-x:auto; }
+      .desktop-table { display:none; }
+      .mobile-list { display:block; }
+    }
+    @media (max-width:460px) {
+      main { padding:28px 16px 40px; }
+      .cards { grid-template-columns:1fr 1fr; gap:10px; }
+      .card { padding:12px; min-height:84px; }
+      .card b { font-size:20px; }
+      .proof-card-head { display:block; }
+      .proof-card-head .pill { margin-top:10px; }
     }
   </style>
 </head>
@@ -403,12 +456,16 @@ const html = `<!doctype html>
     </section>
     <section>
       <h2>Tangible Improvement Queue</h2>
-      <table><thead><tr><th>#</th><th>Prospect</th><th>Status</th><th>Before / Leak</th><th>After / First Fix</th><th>Client Value</th><th>Next Measurement</th><th>Command</th></tr></thead><tbody>${proofRowsHtml}
+      <div class="mobile-list">${proofCardsHtml}
+      </div>
+      <table class="desktop-table"><thead><tr><th>#</th><th>Prospect</th><th>Status</th><th>Before / Leak</th><th>After / First Fix</th><th>Client Value</th><th>Next Measurement</th><th>Command</th></tr></thead><tbody>${proofRowsHtml}
       </tbody></table>
     </section>
     <section>
       <h2>Missing / Route Review</h2>
-      <table><thead><tr><th>#</th><th>Prospect</th><th>Missing</th><th>Route</th></tr></thead><tbody>${missingRowsHtml}
+      <div class="mobile-list">${missingCardsHtml}
+      </div>
+      <table class="desktop-table"><thead><tr><th>#</th><th>Prospect</th><th>Missing</th><th>Route</th></tr></thead><tbody>${missingRowsHtml}
       </tbody></table>
     </section>
   </main>

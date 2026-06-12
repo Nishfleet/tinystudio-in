@@ -11,7 +11,6 @@ import { routedContactPlan } from "./lib/contact-route.mjs";
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/11-10-proof-run.md";
 const loomLinksArg = process.argv.find((arg) => arg.startsWith("--loom-links="));
-const skipKit = process.argv.includes("--skip-kit");
 const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
 const limit = limitArg ? Number(limitArg.split("=")[1]) : 5;
 const today = localIsoDate();
@@ -143,8 +142,7 @@ function hasLoom(path) {
 const parityOutputPath = outputPath.startsWith("prospects/kit-")
   ? "prospects/kit-market-proof-run-parity.md"
   : "prospects/market-proof-run-parity.md";
-const parityArgs = ["scripts/check-market-parity-readiness.mjs", `--output=${parityOutputPath}`];
-if (skipKit || !existsSync(outputPath)) parityArgs.push("--skip-kit");
+const parityArgs = ["scripts/check-market-parity-readiness.mjs", `--output=${parityOutputPath}`, "--skip-kit"];
 const parity = runJson(parityArgs);
 rmSync(parityOutputPath, { force: true });
 

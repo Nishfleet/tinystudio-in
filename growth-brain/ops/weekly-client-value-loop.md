@@ -1,6 +1,6 @@
 # Weekly Client Value Loop
 
-Generated: 2026-05-29
+Generated: 2026-05-31
 
 This is the autonomous weekly workflow for every onboarded client. Each client gets its own isolated run log under `clients/client-slug/ops/weekly-runs/`.
 
@@ -16,9 +16,9 @@ This is the autonomous weekly workflow for every onboarded client. Each client g
 
 | Client | Weekly report | Channel readiness | Workflow proof | Ready channels | Delivery readiness | Client confirmed value | Acceptance | Risk | Next action | Run log |
 |---|---|---|---|---|---|---|---|---|---|---|
-| AI Converter | ready | full-stack-growth-desk-ready | ready | CRO / conversion, SEO / search trust, Content / authority, Social / distribution, Analytics / attribution, Creative / design, Marketing automation | draft | yes | ready-to-complete | watch | Fix delivery proof before handoff: Sprint acceptance checklist is not complete | `clients/ai-converter/ops/weekly-runs/2026-05-29.md` |
-| Five to Nine 0509 | ready | full-stack-growth-desk-ready | ready | CRO / conversion, SEO / search trust, Content / authority, Social / distribution, Analytics / attribution, Creative / design, Marketing automation | draft | yes | ready-to-complete | watch | Fix delivery proof before handoff: Sprint acceptance checklist is not complete | `clients/five-to-nine-0509/ops/weekly-runs/2026-05-29.md` |
-| SiteRep | ready | full-stack-growth-desk-ready | ready | CRO / conversion, SEO / search trust, Content / authority, Social / distribution, Analytics / attribution, Creative / design, Marketing automation | draft | yes | ready-to-complete | watch | Fix delivery proof before handoff: Sprint acceptance checklist is not complete | `clients/siterep/ops/weekly-runs/2026-05-29.md` |
+| AI Converter | ready | full-stack-growth-desk-ready | ready | CRO / conversion, SEO / search trust, Content / authority, Social / distribution, Analytics / attribution, Creative / design, Marketing automation | draft | yes | ready-to-complete | watch | Fix delivery proof before handoff: Sprint acceptance checklist is not complete | `clients/ai-converter/ops/weekly-runs/2026-05-31.md` |
+| Five to Nine 0509 | ready | full-stack-growth-desk-ready | ready | CRO / conversion, SEO / search trust, Content / authority, Social / distribution, Analytics / attribution, Creative / design, Marketing automation | draft | yes | ready-to-complete | watch | Fix delivery proof before handoff: Sprint acceptance checklist is not complete | `clients/five-to-nine-0509/ops/weekly-runs/2026-05-31.md` |
+| SiteRep | ready | full-stack-growth-desk-ready | ready | CRO / conversion, SEO / search trust, Content / authority, Social / distribution, Analytics / attribution, Creative / design, Marketing automation | draft | yes | ready-to-complete | watch | Fix delivery proof before handoff: Sprint acceptance checklist is not complete | `clients/siterep/ops/weekly-runs/2026-05-31.md` |
 
 ## Weekly Order
 

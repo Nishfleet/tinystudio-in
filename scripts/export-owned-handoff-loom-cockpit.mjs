@@ -2,6 +2,7 @@
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { localIsoDate } from "./date-utils.mjs";
+import { isValidLoomUrl } from "./lib/loom-url.mjs";
 
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const htmlArg = process.argv.find((arg) => arg.startsWith("--html="));
@@ -33,11 +34,13 @@ function write(path, content) {
 }
 
 function htmlEscape(value) {
-  return String(value || "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
+  const entities = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;"
+  };
+  return String(value || "").replace(/[&<>"]/g, (character) => entities[character]);
 }
 
 function tableRows(markdown) {
@@ -93,6 +96,12 @@ function evidenceFor(clientPath) {
     nextMeasurement: row[3] || "Next measurement needs review.",
     sourceCount: tableRows(markdownSection(evidence, "Evidence Sources")).filter((cells) => cells[0] && !/^Source$/i.test(cells[0])).length
   };
+}
+
+function handoffLoom(clientPath) {
+  const checklist = read(`${clientPath}/quality/sprint-acceptance-checklist.md`);
+  const line = checklist.split("\n").find((candidate) => candidate.trimStart().startsWith("- Handoff Loom:"));
+  return line ? line.split(":").slice(1).join(":").trim() : "";
 }
 
 function handoffScript(clientPath, acceptance, claims, evidence) {
@@ -154,14 +163,56 @@ function localLink(path) {
   return path.replaceAll(" ", "%20");
 }
 
+function failureReason(error) {
+  return String(error?.stderr || error?.message || "Acceptance dry run failed")
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .at(0) || "Acceptance dry run failed";
+}
+
+function blockedRow(clientPath, reason) {
+  return {
+    clientPath,
+    name: clientName(clientPath),
+    status: "blocked",
+    scriptPath: `${clientPath}/handoff-loom-script.md`,
+    dashboardPath: `${clientPath}/client-dashboard.md`,
+    deliveryCockpitPath: `${clientPath}/delivery-cockpit.html`,
+    completionCommand: `npm run client:acceptance -- ${clientPath} --handoff-loom=LOOM_URL --reviewer="Nish"`,
+    acceptanceDryRunCommand: `npm run client:acceptance -- ${clientPath} --dry-run`,
+    blockers: [reason],
+    claims: [],
+    evidence: {
+      scope: "Owned-startup proof folder is not ready yet.",
+      before: reason,
+      after: "Regenerate or restore the owned proof lane before recording handoff.",
+      value: "The cockpit stays usable instead of crashing when local proof state is missing.",
+      nextMeasurement: "Run the owned proof commands, then rerun this cockpit.",
+      sourceCount: 0
+    }
+  };
+}
+
 const rows = clients.map((clientPath) => {
-  const acceptance = runJson(["scripts/review-client-acceptance.mjs", clientPath, "--dry-run"]);
+  if (!existsSync(clientPath)) {
+    return blockedRow(clientPath, `Client folder not found: ${clientPath}`);
+  }
+
+  let acceptance;
+  try {
+    acceptance = runJson(["scripts/review-client-acceptance.mjs", clientPath, "--dry-run"]);
+  } catch (error) {
+    return blockedRow(clientPath, failureReason(error));
+  }
+
   const claims = approvedClaims(clientPath);
   const evidence = evidenceFor(clientPath);
   const scriptPath = `${clientPath}/handoff-loom-script.md`;
   const script = handoffScript(clientPath, acceptance, claims, evidence);
   write(scriptPath, script);
-  const status = acceptance.status === "ready-to-complete" ? "ready-to-record" : "blocked";
+  const accepted = acceptance.readiness?.status === "ready" && isValidLoomUrl(handoffLoom(clientPath));
+  const status = accepted ? "accepted" : acceptance.status === "ready-to-complete" ? "ready-to-record" : "blocked";
 
   return {
     clientPath,
@@ -179,8 +230,13 @@ const rows = clients.map((clientPath) => {
 });
 
 const readyToRecord = rows.filter((row) => row.status === "ready-to-record").length;
-const blocked = rows.length - readyToRecord;
+const completed = rows.filter((row) => row.status === "accepted").length;
+const blocked = rows.length - readyToRecord - completed;
 const approvedClaimCount = rows.reduce((sum, row) => sum + row.claims.length, 0);
+const batchRows = rows
+  .filter((row) => row.status === "ready-to-record")
+  .map((row) => `${row.clientPath}|LOOM_URL`)
+  .join("\n") || "All owned handoff Looms are already accepted.";
 
 const markdown = `# Owned Handoff Loom Cockpit
 
@@ -200,6 +256,7 @@ The moat is the proof delta: before, after, proof source, client-visible value, 
 |---|---:|
 | Owned startup clients | ${rows.length} |
 | Ready to record | ${readyToRecord} |
+| Accepted | ${completed} |
 | Blocked | ${blocked} |
 | Approved source-backed claims | ${approvedClaimCount} |
 
@@ -208,6 +265,18 @@ The moat is the proof delta: before, after, proof source, client-visible value, 
 | Client | Status | Handoff Script | Dashboard | Acceptance Dry Run | Complete After Loom |
 |---|---|---|---|---|---|
 ${rows.map((row) => `| ${row.clientPath} | ${row.status} | \`${row.scriptPath}\` | \`${row.dashboardPath}\` | \`${row.acceptanceDryRunCommand}\` | \`${row.completionCommand}\` |`).join("\n")}
+
+## Batch Completion Sheet
+
+After recording the real handoff Looms, replace \`LOOM_URL\` below and run the batch completion command. This still requires real Loom links and a reviewer.
+
+\`\`\`text
+${batchRows}
+\`\`\`
+
+\`\`\`bash
+npm run owned:handoff-complete -- --from-clipboard --reviewer="Nish"
+\`\`\`
 
 ## Client Scripts
 
@@ -234,7 +303,7 @@ const cards = rows.map((row) => `
       <article class="card">
         <div class="meta">
           <span>${htmlEscape(row.clientPath)}</span>
-          <span class="${row.status === "ready-to-record" ? "good" : "bad"}">${htmlEscape(row.status)}</span>
+          <span class="${row.status === "ready-to-record" || row.status === "accepted" ? "good" : "bad"}">${htmlEscape(row.status)}</span>
           <span>${row.claims.length} approved claim(s)</span>
         </div>
         <h2>${htmlEscape(row.name)}</h2>
@@ -296,6 +365,7 @@ const html = `<!doctype html>
     <section class="summary">
       <div class="stat"><b>${rows.length}</b><span>owned startup clients</span></div>
       <div class="stat"><b>${readyToRecord}</b><span>ready to record</span></div>
+      <div class="stat"><b>${completed}</b><span>accepted</span></div>
       <div class="stat"><b>${blocked}</b><span>blocked</span></div>
       <div class="stat"><b>${approvedClaimCount}</b><span>approved claims</span></div>
     </section>
@@ -310,15 +380,18 @@ const html = `<!doctype html>
 write(htmlPath, html);
 
 console.log(JSON.stringify({
-  status: blocked === 0 ? "ready-to-record" : "blocked",
+  status: completed === rows.length ? "accepted" : blocked === 0 ? "ready-to-record" : "blocked",
   path: outputPath,
   htmlPath,
   clients: rows.length,
   readyToRecord,
+  accepted: completed,
   blocked,
   approvedClaimCount,
   rows,
-  next: blocked === 0
-    ? "Record the three handoff Looms, then run client:acceptance with each real Loom URL."
+  next: completed === rows.length
+    ? "Owned-startup handoff acceptance is complete. External market proof is still separate."
+    : blocked === 0
+    ? "Record the handoff Looms, then run owned:handoff-complete with the batch sheet."
     : "Fix blocked client readiness items before recording handoff Looms."
 }, null, 2));

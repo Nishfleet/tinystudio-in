@@ -23,6 +23,12 @@ const knownClients = new Set([
   "clients/five-to-nine-0509"
 ]);
 
+const businessMetricSuggestions = [
+  "clients/ai-converter|Upload starts|LAST_REAL_VALUE|CURRENT_REAL_VALUE|Source: product analytics export after accounting wedge",
+  "clients/siterep|Widget installs|LAST_REAL_VALUE|CURRENT_REAL_VALUE|Source: product analytics or install log after source-backed positioning",
+  "clients/five-to-nine-0509|Fresh monitoring runs|LAST_REAL_VALUE|CURRENT_REAL_VALUE|Source: product analytics or run log after proof-loop positioning"
+];
+
 function read(path) {
   return existsSync(path) ? readFileSync(path, "utf8") : "";
 }
@@ -91,10 +97,7 @@ function parseMetricLine(line, index) {
 }
 
 function metricRowsFromMarkdown(markdown, heading, columns) {
-  const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const match = String(markdown || "").match(new RegExp(`## ${escaped}\\n+([\\s\\S]*?)(?:\\n## |$)`));
-  const section = match ? match[1] : "";
-  return section
+  return markdownSection(markdown, heading)
     .split("\n")
     .map((line) => line.trim())
     .filter((line) => line.startsWith("|") && line.endsWith("|"))
@@ -102,6 +105,18 @@ function metricRowsFromMarkdown(markdown, heading, columns) {
     .filter((cells) => cells.length >= columns)
     .filter((cells) => !cells.every((cell) => /^:?-+:?$/.test(cell)))
     .filter((cells) => cells[0] && !/^(Metric)$/i.test(cells[0]));
+}
+
+function markdownSection(markdown, heading) {
+  const lines = String(markdown || "").split("\n");
+  const start = lines.findIndex((line) => line.trim() === `## ${heading}`);
+  if (start === -1) return "";
+  const body = [];
+  for (let index = start + 1; index < lines.length; index += 1) {
+    if (/^##\s+/.test(lines[index])) break;
+    body.push(lines[index]);
+  }
+  return body.join("\n").trim();
 }
 
 function defaultReportMetrics() {
@@ -155,10 +170,18 @@ function upsertAnalyticsMetric(markdown, row) {
 }
 
 function replaceSection(markdown, heading, replacement) {
-  const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const pattern = new RegExp(`## ${escaped}\\n[\\s\\S]*?(?=\\n## |$)`);
-  if (pattern.test(markdown)) {
-    return markdown.replace(pattern, `## ${heading}\n\n${replacement.trim()}`);
+  const lines = String(markdown || "").split("\n");
+  const start = lines.findIndex((line) => line.trim() === `## ${heading}`);
+  if (start !== -1) {
+    let end = start + 1;
+    while (end < lines.length && !/^##\s+/.test(lines[end])) end += 1;
+    return [
+      ...lines.slice(0, start),
+      `## ${heading}`,
+      "",
+      replacement.trim(),
+      ...lines.slice(end)
+    ].join("\n").replace(/\n{3,}/g, "\n\n").trimEnd() + "\n";
   }
   return `${String(markdown || "").trimEnd()}\n\n## ${heading}\n\n${replacement.trim()}\n`;
 }
@@ -166,6 +189,9 @@ function replaceSection(markdown, heading, replacement) {
 function collectRows() {
   if (fromClipboard || inputArg) {
     return readInput().split("\n").map(parseMetricLine).filter(Boolean);
+  }
+  if (!clientPath && !metricArg && !lastArg && !currentArg && !notesArg) {
+    return [];
   }
   const row = {
     line: 1,
@@ -241,7 +267,9 @@ const skippedRows = skipped.length
 
 const nextCommand = skipped.length
   ? "Fix skipped metric rows, then rerun `npm run owned:metrics -- --from-clipboard`."
-  : "Run `npm run owned:case-studies` and use only packets that show case-study-ready.";
+  : updated.length
+    ? "Run `npm run owned:case-studies` and use only packets that show case-study-ready."
+    : "Paste real observed business metric rows, then run `npm run owned:metrics -- --from-clipboard`.";
 
 const report = `# Owned Product Metrics Update
 
@@ -269,10 +297,10 @@ ${nextCommand}
 
 ## Clipboard Format
 
+Replace LAST_REAL_VALUE and CURRENT_REAL_VALUE with observed analytics or sales values only. Public delivery checks are useful proof, but they do not make a full business case study.
+
 \`\`\`text
-clients/ai-converter|Upload starts|0|12|First read after accounting wedge
-clients/siterep|Widget installs|0|3|First read after source-backed positioning
-clients/five-to-nine-0509|Fresh monitoring runs|0|5|First read after proof-loop positioning
+${businessMetricSuggestions.join("\n")}
 \`\`\`
 
 ## Rule

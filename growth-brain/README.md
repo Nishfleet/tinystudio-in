@@ -314,6 +314,14 @@ npm run owned:handoff
 
 That command writes `growth-brain/ops/owned-handoff-loom-cockpit.md`, `growth-brain/ops/owned-handoff-loom-cockpit.html`, and one `handoff-loom-script.md` per owned startup. It does not approve work automatically; it makes the proof delta recordable and keeps final acceptance blocked until a real Loom URL exists.
 
+After recording the real Looms, paste the cockpit's batch completion sheet into:
+
+```bash
+npm run owned:handoff-complete -- --from-clipboard --reviewer="Nish"
+```
+
+This completes only rows with real Loom share/embed URLs and a reviewer. It refreshes the owned handoff cockpit, retention checkups, and value stress test, but it still does not create market proof or paid-client proof.
+
 Use retention checkups every week and at month end:
 
 ```bash
@@ -584,6 +592,7 @@ Complete final sprint acceptance only after proof and scorecard gates are clean:
 ```bash
 npm run client:acceptance -- clients/client-slug --dry-run
 npm run client:acceptance -- clients/client-slug --handoff-loom=https://www.loom.com/share/... --reviewer="Name"
+npm run owned:handoff-complete -- --from-clipboard --reviewer="Name"
 ```
 
 This refuses to complete while approved claims, scorecard approval, filled delivery artifacts, or other readiness blockers are missing. It requires a real handoff Loom and reviewer before final handoff.
@@ -625,7 +634,7 @@ clients/five-to-nine-0509|Fresh monitoring runs|0|5|First read after proof-loop 
 npm run owned:metrics -- --from-clipboard
 ```
 
-After claim review is clean, run `npm run owned:handoff` to record the before/after proof Loom and finish sprint acceptance with a real Loom URL.
+After claim review is clean, run `npm run owned:handoff` to record the before/after proof Looms, then run `npm run owned:handoff-complete -- --from-clipboard --reviewer="Nish"` with the real Loom URLs.
 
 Generate the guarded month-end renewal review:
 

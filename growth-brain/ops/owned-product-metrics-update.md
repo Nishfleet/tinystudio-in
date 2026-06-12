@@ -1,18 +1,16 @@
 # Owned Product Metrics Update
 
-Generated: 2026-05-29
+Generated: 2026-05-31
 
 ## Verdict
 
-Owned product metrics updated.
+No owned product metrics updated.
 
 ## Updated
 
 | Client | Metric | Last Period | This Period | Notes |
 |---|---|---:|---:|---|
-| clients/ai-converter | Owned public proof surfaces passing | not recorded | 3/3 | Public delivery metric from clients/ai-converter/research/owned-live-signals.md; not revenue proof or paid-client proof. |
-| clients/siterep | Owned public proof surfaces passing | not recorded | 2/2 | Public delivery metric from clients/siterep/research/owned-live-signals.md; not revenue proof or paid-client proof. |
-| clients/five-to-nine-0509 | Owned public proof surfaces passing | not recorded | 2/2 | Public delivery metric from clients/five-to-nine-0509/research/owned-live-signals.md; not revenue proof or paid-client proof. |
+| - | - | - | - | - |
 
 ## Skipped
 
@@ -22,14 +20,16 @@ Owned product metrics updated.
 
 ## Next
 
-Run `npm run owned:case-studies` and use only packets that show case-study-ready.
+Paste real observed business metric rows, then run `npm run owned:metrics -- --from-clipboard`.
 
 ## Clipboard Format
 
+Replace LAST_REAL_VALUE and CURRENT_REAL_VALUE with observed analytics or sales values only. Public delivery checks are useful proof, but they do not make a full business case study.
+
 ```text
-clients/ai-converter|Upload starts|0|12|First read after accounting wedge
-clients/siterep|Widget installs|0|3|First read after source-backed positioning
-clients/five-to-nine-0509|Fresh monitoring runs|0|5|First read after proof-loop positioning
+clients/ai-converter|Upload starts|LAST_REAL_VALUE|CURRENT_REAL_VALUE|Source: product analytics export after accounting wedge
+clients/siterep|Widget installs|LAST_REAL_VALUE|CURRENT_REAL_VALUE|Source: product analytics or install log after source-backed positioning
+clients/five-to-nine-0509|Fresh monitoring runs|LAST_REAL_VALUE|CURRENT_REAL_VALUE|Source: product analytics or run log after proof-loop positioning
 ```
 
 ## Rule

@@ -77,7 +77,7 @@ function resultStatus(proofAfter, recordings, batchSend) {
   if (proofAfter.status === "sent-proof-captured") return "sent-proof-captured";
   if (proofAfter.status === "ready-to-mark-sent") return "ready-to-send";
   if (proofAfter.status === "ready-for-send-prep") return batchSend ? "send-prep-attention-needed" : "send-prep-needed";
-  if (proofAfter.status === "needs-recording") return "needs-recording";
+  if (proofAfter.status === "needs-recording") return (recordings.updated || 0) > 0 ? "recording-progress-saved" : "needs-recording";
   return "attention-needed";
 }
 
@@ -85,6 +85,7 @@ function nextCommand(status, proofAfter) {
   if (status === "ready-to-send") return "npm run prospect:outbox";
   if (status === "sent-proof-captured") return "npm run market:parity";
   if (status === "dry-run") return "Run without --dry-run after recording real Looms.";
+  if (status === "recording-progress-saved") return "npm run growth:start -- --view=record";
   if (status === "partial-recording-update") return "Fix skipped Loom rows, then rerun npm run market:after-recording -- --from-clipboard";
   if (status === "send-prep-needed" || status === "send-prep-attention-needed") return "npm run prospect:batch-send-prep";
   return proofAfter.nextCommand || "npm run growth:start -- --view=record";
@@ -180,6 +181,8 @@ ${status}
 
 This command turns recorded Loom URLs into a proof-ready send queue. It does not mark anything sent, invent proof, approve claims, or move pipeline stages.
 
+\`recording-progress-saved\` means real Loom URLs were saved, but the market-proof batch is still blocked until every required approved row has tangible improvement proof.
+
 ## Counts
 
 | Step | Count / Status |
@@ -215,6 +218,7 @@ ${next}
 ## Operating Rule
 
 - If this says \`ready-to-send\`, send only from \`prospects/outbox.html\`, choose the real channel used, copy the batch sent sheet, then run \`npm run prospect:batch-sent -- --from-clipboard\`.
+- If this says \`recording-progress-saved\`, keep recording from the teleprompter. Do not run send prep until the proof check reaches \`ready-for-send-prep\`.
 - If this says \`needs-recording\` or \`partial-recording-update\`, record or fix the Loom rows before sending.
 - The moat is tangible improvement proof: before, after, proof source, client-visible value, and next measurement. This command only prepares that proof for manual sending.
 

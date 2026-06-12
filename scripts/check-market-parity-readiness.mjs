@@ -1,8 +1,9 @@
 #!/usr/bin/env node
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { execFileSync } from "node:child_process";
 import { localIsoDate } from "./date-utils.mjs";
+import { listClientFolders, listProspectFolders } from "./lib/list-operational-folders.mjs";
 
 const strict = process.argv.includes("--strict");
 const skipKit = process.argv.includes("--skip-kit");
@@ -23,14 +24,6 @@ function read(path) {
 
 function json(path) {
   return existsSync(path) ? JSON.parse(readFileSync(path, "utf8")) : {};
-}
-
-function listDirs(path) {
-  if (!existsSync(path)) return [];
-  return readdirSync(path, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => join(path, entry.name))
-    .sort();
 }
 
 function write(path, content) {
@@ -54,9 +47,15 @@ function tableRows(markdown) {
 }
 
 function section(markdown, heading) {
-  const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const match = String(markdown || "").match(new RegExp(`## ${escaped}\\n+([\\s\\S]*?)(?:\\n## |$)`));
-  return match ? match[1].trim() : "";
+  const lines = String(markdown || "").split("\n");
+  const start = lines.findIndex((line) => line.trim() === `## ${heading}`);
+  if (start === -1) return "";
+  const body = [];
+  for (let index = start + 1; index < lines.length; index += 1) {
+    if (/^##\s+/.test(lines[index])) break;
+    body.push(lines[index]);
+  }
+  return body.join("\n").trim();
 }
 
 function meaningful(value) {
@@ -65,8 +64,11 @@ function meaningful(value) {
 }
 
 function bulletValue(markdown, label) {
-  const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  return String(markdown || "").match(new RegExp(`^- ${escaped}:[ \\t]*([^\\n]*)$`, "m"))?.[1]?.trim() || "";
+  const prefix = `- ${label}:`;
+  const line = String(markdown || "")
+    .split("\n")
+    .find((candidate) => candidate.trimStart().startsWith(prefix));
+  return line ? line.trimStart().slice(prefix.length).trim() : "";
 }
 
 function hasFilledTableRow(markdown, heading, requiredIndexes) {
@@ -111,8 +113,8 @@ const send = runJson(["scripts/check-outbound-send-readiness.mjs"]);
 const claims = runJson(["scripts/check-outbound-claim-safety.mjs"]);
 const benchmark = runJson(["scripts/export-market-benchmark.mjs"]);
 const config = JSON.parse(read("growth-brain/ops/agency-config.json") || "{}");
-const clients = listDirs("clients");
-const prospects = listDirs("prospects");
+const clients = listClientFolders();
+const prospects = listProspectFolders();
 
 const clientProof = clients.map((clientPath) => ({
   clientPath,

@@ -1,6 +1,6 @@
 # Growth Doctor
 
-Generated: 2026-05-29
+Generated: 2026-06-01
 
 ## Status
 
@@ -26,10 +26,10 @@ npm run growth:start -- --view=record
 
 | Check | Status | Detail | Time |
 |---|---|---|---:|
-| Agency defaults | pass | passed | 151ms |
-| Sender setup | warn | warn: 2 warning(s) | 438ms |
-| Claim safety | pass | pass | 119ms |
-| Send readiness | pass | pass | 102ms |
+| Agency defaults | pass | passed | 750ms |
+| Sender setup | warn | warn: 2 warning(s) | 574ms |
+| Claim safety | pass | pass | 243ms |
+| Send readiness | pass | pass | 252ms |
 
 ## Warnings
 

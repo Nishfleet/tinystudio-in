@@ -1,8 +1,9 @@
 #!/usr/bin/env node
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { execFileSync } from "node:child_process";
 import { localIsoDate } from "./date-utils.mjs";
+import { listClientFolders } from "./lib/list-operational-folders.mjs";
 
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/value-retention-stress-test.md";
@@ -26,15 +27,6 @@ function runJson(args) {
   return JSON.parse(output);
 }
 
-function listDirs(path) {
-  if (!existsSync(path)) return [];
-  return readdirSync(path, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .filter((entry) => !/^(kit|import)-smoke/.test(entry.name))
-    .map((entry) => join(path, entry.name))
-    .sort();
-}
-
 function tableRows(markdown) {
   return String(markdown || "")
     .split("\n")
@@ -45,9 +37,15 @@ function tableRows(markdown) {
 }
 
 function section(markdown, heading) {
-  const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const match = String(markdown || "").match(new RegExp(`## ${escaped}\\n+([\\s\\S]*?)(?:\\n## |$)`));
-  return match ? match[1].trim() : "";
+  const lines = String(markdown || "").split("\n");
+  const start = lines.findIndex((line) => line.trim() === `## ${heading}`);
+  if (start === -1) return "";
+  const body = [];
+  for (let index = start + 1; index < lines.length; index += 1) {
+    if (/^##\s+/.test(lines[index])) break;
+    body.push(lines[index]);
+  }
+  return body.join("\n").trim();
 }
 
 function meaningful(value) {
@@ -72,8 +70,11 @@ function proofRows(path = "prospects/loom-links.txt") {
 }
 
 function bulletValue(markdown, label) {
-  const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  return String(markdown || "").match(new RegExp(`^- ${escaped}:[ \\t]*([^\\n]*)$`, "m"))?.[1]?.trim() || "";
+  const prefix = `- ${label}:`;
+  const line = String(markdown || "")
+    .split("\n")
+    .find((candidate) => candidate.trimStart().startsWith(prefix));
+  return line ? line.trimStart().slice(prefix.length).trim() : "";
 }
 
 function hasFilledTableRow(markdown, heading, requiredIndexes) {
@@ -123,7 +124,7 @@ const buyerValueCounts = currentProofRows.reduce((accumulator, proofRow) => {
 }, {});
 const duplicateBuyerValueRows = Object.values(buyerValueCounts).filter((count) => count > 1).reduce((sum, count) => sum + count, 0);
 const marketLearning = runJson(["scripts/export-market-learning-review.mjs"]);
-const clients = listDirs("clients").map((clientPath) => {
+const clients = listClientFolders().map((clientPath) => {
   const readiness = existsSync(join(clientPath, "intake.md"))
     ? runJson(["scripts/check-client-readiness.mjs", clientPath])
     : { status: "missing", warnings: ["missing intake"] };
@@ -165,6 +166,7 @@ const externalClients = clients.filter((client) => !client.ownedStartup);
 const ownedCaseStudyReady = (ownedCaseStudies.packets || []).filter((packet) => packet.status === "case-study-ready").length;
 const ownedCaseStudyDeliveryReady = (ownedCaseStudies.packets || []).filter((packet) => ["case-study-ready", "delivery-proof-ready"].includes(packet.status)).length;
 const ownedCaseStudyNeedsMetrics = (ownedCaseStudies.packets || []).filter((packet) => packet.status === "needs-current-metric").length;
+const ownedCaseStudyNeedsBusinessMetrics = (ownedCaseStudies.packets || []).filter((packet) => packet.needsBusinessMetric || (packet.businessMetrics || 0) === 0).length;
 const clientsWithTangibleProof = clients.filter((client) => client.tangibleImprovement);
 const clientsWithRevenueLeakLoop = clients.filter((client) => client.revenueLeakLoop);
 const clientsWithSearchTrustReview = clients.filter((client) => client.searchTrustReview);
@@ -285,7 +287,7 @@ const stressTests = [
   {
     area: "Owned product case-study packets",
     status: statusFrom(ownedCaseStudies.status === "ready", true),
-    evidence: `${ownedCaseStudyDeliveryReady}/${(ownedCaseStudies.packets || []).length} owned-product packet(s) delivery-proof ready; ${ownedCaseStudyReady}/${(ownedCaseStudies.packets || []).length} have business metrics; ${ownedCaseStudyNeedsMetrics} need current metric value.`,
+    evidence: `${ownedCaseStudyDeliveryReady}/${(ownedCaseStudies.packets || []).length} owned-product packet(s) delivery-proof ready; ${ownedCaseStudyReady}/${(ownedCaseStudies.packets || []).length} have business metrics; ${ownedCaseStudyNeedsMetrics} need current metric value; ${ownedCaseStudyNeedsBusinessMetrics} need business metric value.`,
     next: ownedCaseStudies.status === "delivery-proof-ready"
       ? "Public delivery signals are filled. Add analytics or sales metrics before calling these full business case studies."
       : "Add one real current metric to each owned-product proof packet before using it as delivery proof."
@@ -375,6 +377,7 @@ console.log(JSON.stringify({
   ownedCaseStudyReady,
   ownedCaseStudyDeliveryReady,
   ownedCaseStudyNeedsMetrics,
+  ownedCaseStudyNeedsBusinessMetrics,
   clientsWithStrongValueScore: clientsWithStrongValueScore.length,
   averageValueProofScore
 }, null, 2));

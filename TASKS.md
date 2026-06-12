@@ -4,7 +4,7 @@
 
 - [ ] **Record first 5 Loom audits** - LayerLogix, PROTBYTE, Sagiss, Scorpion Technology, and Stradiant now have recording scripts; run `prospect:rehearsal -- --limit=5`, use `market:proof-cockpit`, then run `market:after-recording -- --from-clipboard` with the Loom URLs.
 - [ ] **Fill owned-product business metrics** - live public delivery metrics are now filled; paste one product analytics or sales metric per owned product with `npm run owned:metrics -- --from-clipboard` before calling AI Converter, SiteRep, and 0509 full business case studies.
-- [ ] **Complete owned-startup handoff Loom acceptance** - AI Converter, SiteRep, and 0509 now have source-reviewed claims and scorecards; run `npm run owned:handoff`, record the real handoff Looms, then complete each acceptance command.
+- [ ] **Complete owned-startup handoff Loom acceptance** - AI Converter, SiteRep, and 0509 now have source-reviewed claims and scorecards; run `npm run owned:handoff`, record the real handoff Looms, then paste the batch sheet into `npm run owned:handoff-complete -- --from-clipboard --reviewer="Nish"`.
 - [ ] **Run market learning review after first send batch** - use `npm run market:learn` before changing lead fit, hook, first message, or channel.
 - [ ] **Close first paid sprint** - use the buyer room, proposal, and follow-up sequence.
 - [ ] **Deliver first sprint** - create a client folder, run the sprint, and update the client brain.

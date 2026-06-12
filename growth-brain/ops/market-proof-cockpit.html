@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
   <title>TinyStudio Market Proof Cockpit</title>
   <style>
     :root { color-scheme: light; --ink:#14161a; --muted:#667085; --line:#d9e1ea; --paper:#f7f9fc; --good:#0f7b45; --warn:#9a5b00; --bad:#b42318; }
@@ -28,11 +29,30 @@
     .good { background:var(--good); }
     .warn { background:var(--warn); }
     .bad { background:var(--bad); }
+    .mobile-list { display:none; }
+    .proof-card, .route-card { border:1px solid var(--line); border-radius:8px; background:#fff; padding:14px; }
+    .proof-card + .proof-card, .route-card + .route-card { margin-top:12px; }
+    .proof-card-head { display:flex; gap:12px; justify-content:space-between; align-items:flex-start; }
+    .proof-card h3, .route-card h3 { margin:3px 0 0; font-size:18px; letter-spacing:0; }
+    .proof-card p { margin:4px 0 0; max-width:none; overflow-wrap:anywhere; }
+    .eyebrow { color:var(--muted); font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; }
+    dl { margin:13px 0 0; display:grid; gap:11px; }
+    dt { color:#475467; font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; }
+    dd { margin:3px 0 0; color:var(--ink); overflow-wrap:anywhere; }
     @media (max-width:860px) {
       header { display:block; }
       .date { text-align:left; margin-top:10px; }
       .cards { grid-template-columns:repeat(2, minmax(0, 1fr)); }
-      table { display:block; overflow-x:auto; }
+      .desktop-table { display:none; }
+      .mobile-list { display:block; }
+    }
+    @media (max-width:460px) {
+      main { padding:28px 16px 40px; }
+      .cards { grid-template-columns:1fr 1fr; gap:10px; }
+      .card { padding:12px; min-height:84px; }
+      .card b { font-size:20px; }
+      .proof-card-head { display:block; }
+      .proof-card-head .pill { margin-top:10px; }
     }
   </style>
 </head>
@@ -43,7 +63,7 @@
         <h1>Market Proof Cockpit</h1>
         <p>The wedge is tangible improvement proof: before, after, proof, value, and the next measurement. This dashboard keeps the first external proof run honest.</p>
       </div>
-      <div class="date">Generated 2026-05-29</div>
+      <div class="date">Generated 2026-06-01</div>
     </header>
     <section class="cards">
       <div class="card"><b>needs-recording</b><span>Proof checker</span></div>
@@ -59,7 +79,94 @@
     </section>
     <section>
       <h2>Tangible Improvement Queue</h2>
-      <table><thead><tr><th>#</th><th>Prospect</th><th>Status</th><th>Before / Leak</th><th>After / First Fix</th><th>Client Value</th><th>Next Measurement</th><th>Command</th></tr></thead><tbody>
+      <div class="mobile-list">
+        <article class="proof-card">
+          <div class="proof-card-head">
+            <div>
+              <span class="eyebrow">#1</span>
+              <h3>LayerLogix</h3>
+              <p>https://layerlogix.com/</p>
+            </div>
+            <span class="pill bad">record Loom</span>
+          </div>
+          <dl>
+            <div><dt>Before / Leak</dt><dd>The homepage asks buyers to parse IT services, cybersecurity, PAM, web development, cabling, cloud, healthcare IT, and business IT before giving them one obvious first path.</dd></div>
+            <div><dt>After / First Fix</dt><dd>Add a &quot;Choose your path&quot; section near the first CTA: urgent IT support, compliance/security, healthcare/HIPAA, cloud/network modernization.</dd></div>
+            <div><dt>Client Value</dt><dd>Protect sales time by sending better-fit visitors toward Services, Contact, Get Started → with a clearer reason to act.</dd></div>
+            <div><dt>Next Measurement</dt><dd>Record a short Loom and capture leak, impact, fix, and ask</dd></div>
+            <div><dt>Command</dt><dd><code>npm run growth:start -- --view=record</code></dd></div>
+          </dl>
+        </article>
+        <article class="proof-card">
+          <div class="proof-card-head">
+            <div>
+              <span class="eyebrow">#2</span>
+              <h3>PROTBYTE</h3>
+              <p>https://protbyte.com/</p>
+            </div>
+            <span class="pill bad">record Loom</span>
+          </div>
+          <dl>
+            <div><dt>Before / Leak</dt><dd>The headline and sections describe a &quot;living security intelligence program&quot; before translating the offer into simple buyer choices like assessment, managed cybersecurity, or advisory.</dd></div>
+            <div><dt>After / First Fix</dt><dd>Add a buyer-path section above the platform depth: &quot;Need assessment&quot;, &quot;Need ongoing monitoring&quot;, &quot;Need board/compliance narrative.&quot;</dd></div>
+            <div><dt>Client Value</dt><dd>Protect sales time by sending better-fit visitors toward Services, Managed IT Day-to-day IT operations, endpoints, support, vCIO Services Strategic IT leadership &amp; roadmap with a clearer reason to act.</dd></div>
+            <div><dt>Next Measurement</dt><dd>Record a short Loom and capture leak, impact, fix, and ask</dd></div>
+            <div><dt>Command</dt><dd><code>npm run growth:start -- --view=record</code></dd></div>
+          </dl>
+        </article>
+        <article class="proof-card">
+          <div class="proof-card-head">
+            <div>
+              <span class="eyebrow">#3</span>
+              <h3>Sagiss</h3>
+              <p>https://www.sagiss.com/</p>
+            </div>
+            <span class="pill bad">record Loom</span>
+          </div>
+          <dl>
+            <div><dt>Before / Leak</dt><dd>The strongest buying proof, including operational capacity, ownership, contract structure, SOC II/MSP Cloud Verify, and pricing-context content, appears far below the first CTA.</dd></div>
+            <div><dt>After / First Fix</dt><dd>Move the strongest proof points into a compact &quot;Why Dallas teams choose Sagiss&quot; section near the top, then route buyers to IT support, cloud, or security.</dd></div>
+            <div><dt>Client Value</dt><dd>Protect sales time by sending better-fit visitors toward Contact Us, Get Support, IT Support with a clearer reason to act.</dd></div>
+            <div><dt>Next Measurement</dt><dd>Record a short Loom and capture leak, impact, fix, and ask</dd></div>
+            <div><dt>Command</dt><dd><code>npm run growth:start -- --view=record</code></dd></div>
+          </dl>
+        </article>
+        <article class="proof-card">
+          <div class="proof-card-head">
+            <div>
+              <span class="eyebrow">#4</span>
+              <h3>Scorpion Technology</h3>
+              <p>https://www.scorpionitsupport.com/</p>
+            </div>
+            <span class="pill bad">record Loom</span>
+          </div>
+          <dl>
+            <div><dt>Before / Leak</dt><dd>The page has strong industry proof for healthcare, CPA, property management, and professional services, but those paths could be more directly converted into dedicated buying flows from the first screen.</dd></div>
+            <div><dt>After / First Fix</dt><dd>Turn the strongest industry proof into a clearer route: &quot;Choose your industry&quot; plus one proof block and CTA per path.</dd></div>
+            <div><dt>Client Value</dt><dd>Protect sales time by sending better-fit visitors toward Services, Managed IT Services, VoIP Services with a clearer reason to act.</dd></div>
+            <div><dt>Next Measurement</dt><dd>Record a short Loom and capture leak, impact, fix, and ask</dd></div>
+            <div><dt>Command</dt><dd><code>npm run growth:start -- --view=record</code></dd></div>
+          </dl>
+        </article>
+        <article class="proof-card">
+          <div class="proof-card-head">
+            <div>
+              <span class="eyebrow">#5</span>
+              <h3>Stradiant</h3>
+              <p>https://www.stradiant.com/</p>
+            </div>
+            <span class="pill bad">record Loom</span>
+          </div>
+          <dl>
+            <div><dt>Before / Leak</dt><dd>The page opens with a broad cyber-disaster warning before making the core buying path clear: managed IT, cybersecurity, or assessment.</dd></div>
+            <div><dt>After / First Fix</dt><dd>Make the homepage own one primary intent, then route buyers into Managed IT, Cybersecurity, and Assessment paths with proof and FAQ support.</dd></div>
+            <div><dt>Client Value</dt><dd>Protect sales time by sending better-fit visitors toward Services, Contact, Call Us Now with a clearer reason to act.</dd></div>
+            <div><dt>Next Measurement</dt><dd>Record a short Loom and capture leak, impact, fix, and ask</dd></div>
+            <div><dt>Command</dt><dd><code>npm run growth:start -- --view=record</code></dd></div>
+          </dl>
+        </article>
+      </div>
+      <table class="desktop-table"><thead><tr><th>#</th><th>Prospect</th><th>Status</th><th>Before / Leak</th><th>After / First Fix</th><th>Client Value</th><th>Next Measurement</th><th>Command</th></tr></thead><tbody>
         <tr>
           <td>1</td>
           <td><b>LayerLogix</b><br><span>https://layerlogix.com/</span></td>
@@ -114,7 +221,49 @@
     </section>
     <section>
       <h2>Missing / Route Review</h2>
-      <table><thead><tr><th>#</th><th>Prospect</th><th>Missing</th><th>Route</th></tr></thead><tbody>
+      <div class="mobile-list">
+        <article class="route-card">
+          <span class="eyebrow">#1</span>
+          <h3>LayerLogix</h3>
+          <dl>
+            <div><dt>Missing</dt><dd>Loom URL must be a Loom share or embed link like https://www.loom.com/share/...</dd></div>
+            <div><dt>Route</dt><dd>Use contact form/page: https://layerlogix.com/contact?service=security-assessment. Email route after sender setup: Email support@layerlogix.com.</dd></div>
+          </dl>
+        </article>
+        <article class="route-card">
+          <span class="eyebrow">#2</span>
+          <h3>PROTBYTE</h3>
+          <dl>
+            <div><dt>Missing</dt><dd>Loom URL must be a Loom share or embed link like https://www.loom.com/share/...</dd></div>
+            <div><dt>Route</dt><dd>Use contact form/page: https://protbyte.com/contact.html. Email route after sender setup: Email contact@protbyte.com.</dd></div>
+          </dl>
+        </article>
+        <article class="route-card">
+          <span class="eyebrow">#3</span>
+          <h3>Sagiss</h3>
+          <dl>
+            <div><dt>Missing</dt><dd>Loom URL must be a Loom share or embed link like https://www.loom.com/share/...</dd></div>
+            <div><dt>Route</dt><dd>Use contact form/page: https://www.sagiss.com/contact-us-1. Email route after sender setup: Email support@sagiss.com.</dd></div>
+          </dl>
+        </article>
+        <article class="route-card">
+          <span class="eyebrow">#4</span>
+          <h3>Scorpion Technology</h3>
+          <dl>
+            <div><dt>Missing</dt><dd>Loom URL must be a Loom share or embed link like https://www.loom.com/share/...</dd></div>
+            <div><dt>Route</dt><dd>Use LinkedIn DM/profile: https://www.linkedin.com/company/scorpion-it-support/. Email route after sender setup: Email info@scorpionitsupport.com.</dd></div>
+          </dl>
+        </article>
+        <article class="route-card">
+          <span class="eyebrow">#5</span>
+          <h3>Stradiant</h3>
+          <dl>
+            <div><dt>Missing</dt><dd>Loom URL must be a Loom share or embed link like https://www.loom.com/share/...</dd></div>
+            <div><dt>Route</dt><dd>Use contact form/page: https://www.stradiant.com/contact/#wpcf7-f302-p37-o1. Email route after sender setup: Email info@stradiant.com.</dd></div>
+          </dl>
+        </article>
+      </div>
+      <table class="desktop-table"><thead><tr><th>#</th><th>Prospect</th><th>Missing</th><th>Route</th></tr></thead><tbody>
         <tr>
           <td>1</td>
           <td>LayerLogix</td>

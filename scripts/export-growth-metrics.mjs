@@ -1,24 +1,16 @@
 #!/usr/bin/env node
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { execFileSync } from "node:child_process";
 import { localIsoDate } from "./date-utils.mjs";
 import { checkProspectReadiness } from "./lib/prospect-readiness.mjs";
 import { isValidLoomUrl } from "./lib/loom-url.mjs";
+import { listClientFolders, listProspectFolders } from "./lib/list-operational-folders.mjs";
 
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/live-metrics.md";
 const plain = process.argv.includes("--plain");
 const today = localIsoDate();
-
-function listFolders(root) {
-  if (!existsSync(root)) return [];
-  return readdirSync(root, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .filter((entry) => !/^(kit|import)-smoke/.test(entry.name))
-    .map((entry) => join(root, entry.name))
-    .sort();
-}
 
 function read(path) {
   return existsSync(path) ? readFileSync(path, "utf8") : "";
@@ -66,7 +58,7 @@ function percent(numerator, denominator) {
   return `${Math.round((numerator / denominator) * 100)}%`;
 }
 
-const prospectRows = listFolders("prospects").map((path) => {
+const prospectRows = listProspectFolders().map((path) => {
   const metadata = json(join(path, "metadata.json"));
   const pipeline = json(join(path, "pipeline.json"));
   const readiness = checkProspectReadiness(path);
@@ -81,7 +73,7 @@ const prospectRows = listFolders("prospects").map((path) => {
   };
 });
 
-const clientRows = listFolders("clients").map((path) => {
+const clientRows = listClientFolders().map((path) => {
   const readiness = runJson("scripts/check-client-readiness.mjs", path);
   return {
     path,

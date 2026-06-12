@@ -1,8 +1,9 @@
 #!/usr/bin/env node
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { execFileSync } from "node:child_process";
 import { localIsoDate } from "./date-utils.mjs";
+import { listClientFolders } from "./lib/list-operational-folders.mjs";
 
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const htmlArg = process.argv.find((arg) => arg.startsWith("--html="));
@@ -14,29 +15,30 @@ const today = dateArg ? dateArg.split("=")[1] : localIsoDate();
 const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/retention-checkups.md";
 const dashboardPath = htmlArg ? htmlArg.split("=")[1] : "growth-brain/ops/retention-dashboard.html";
 
-function listFolders(root) {
-  if (!existsSync(root)) return [];
-  return readdirSync(root, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .filter((entry) => !/^(kit|import)-smoke/.test(entry.name))
-    .map((entry) => join(root, entry.name))
-    .sort();
-}
-
 function read(path) {
   return existsSync(path) ? readFileSync(path, "utf8") : "";
 }
 
 function lineValue(content, label, fallback = "") {
-  const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const match = String(content || "").match(new RegExp(`^- ${escaped}:[ \\t]*([^\\n]*)$`, "m"));
-  return match && match[1].trim() ? match[1].trim() : fallback;
+  const prefix = `- ${label}:`;
+  const line = String(content || "")
+    .split("\n")
+    .find((candidate) => candidate.trimStart().startsWith(prefix));
+  const value = line ? line.trimStart().slice(prefix.length).trim() : "";
+  return value || fallback;
 }
 
 function section(content, heading, fallback = "") {
-  const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const match = String(content || "").match(new RegExp(`## ${escaped}\\n+([\\s\\S]*?)(?:\\n## |$)`));
-  return match ? match[1].trim() : fallback;
+  const lines = String(content || "").split("\n");
+  const start = lines.findIndex((line) => line.trim() === `## ${heading}`);
+  if (start === -1) return fallback;
+  const body = [];
+  for (let index = start + 1; index < lines.length; index += 1) {
+    if (/^##\s+/.test(lines[index])) break;
+    body.push(lines[index]);
+  }
+  const value = body.join("\n").trim();
+  return value || fallback;
 }
 
 function compact(value, maxLength = 140) {
@@ -55,11 +57,13 @@ function runJson(args) {
 }
 
 function htmlEscape(value) {
-  return String(value || "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
+  const entities = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;"
+  };
+  return String(value || "").replace(/[&<>"]/g, (character) => entities[character]);
 }
 
 function monthReviewDue(isoDate) {
@@ -117,7 +121,7 @@ function confirmationStatus(report) {
     : "missing";
 }
 
-const clients = listFolders("clients").map((clientPath) => {
+const clients = listClientFolders().map((clientPath) => {
   const intake = read(join(clientPath, "intake.md"));
   const sprintPlan = read(join(clientPath, "sprint-plan.md"));
   const weeklyReport = read(join(clientPath, "reports/week-1-report.md"));

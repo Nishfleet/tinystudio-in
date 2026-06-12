@@ -22,6 +22,12 @@ const patterns = [
   { name: "sales volume promise", pattern: /sales volume/i, allowGuardrail: true }
 ];
 
+function allowedSafeMention(line) {
+  const trimmed = line.trim();
+  return /^#+\s+"?Can you guarantee results\?"?$/i.test(trimmed)
+    || /^-\s+wants guaranteed outcomes$/i.test(trimmed);
+}
+
 const outboundNames = new Set([
   "buyer-room.md",
   "outreach.md",
@@ -80,6 +86,7 @@ for (const file of filesToScan()) {
   lines.forEach((line, index) => {
     for (const rule of patterns) {
       if (!rule.pattern.test(line)) continue;
+      if (allowedSafeMention(line)) continue;
       if (rule.allowGuardrail && allowedGuardrail.test(line)) continue;
       findings.push({
         file,

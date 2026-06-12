@@ -9,6 +9,21 @@ const clients = [
   { path: "clients/five-to-nine-0509", name: "Five to Nine 0509" }
 ];
 
+const businessMetricSuggestions = {
+  "clients/ai-converter": {
+    metric: "Upload starts",
+    notes: "Source: product analytics export after accounting wedge"
+  },
+  "clients/siterep": {
+    metric: "Widget installs",
+    notes: "Source: product analytics or install log after source-backed positioning"
+  },
+  "clients/five-to-nine-0509": {
+    metric: "Fresh monitoring runs",
+    notes: "Source: product analytics or run log after proof-loop positioning"
+  }
+};
+
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const htmlArg = process.argv.find((arg) => arg.startsWith("--html="));
 const outputPath = outputArg ? outputArg.split("=").slice(1).join("=") : "growth-brain/ops/owned-product-case-studies.md";
@@ -26,11 +41,14 @@ function write(path, content) {
 }
 
 function htmlEscape(value) {
-  return String(value || "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
+  const entities = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  };
+  return String(value ?? "").replace(/[&<>"']/g, (character) => entities[character]);
 }
 
 function tableRows(markdown) {
@@ -43,9 +61,15 @@ function tableRows(markdown) {
 }
 
 function section(markdown, heading) {
-  const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const match = String(markdown || "").match(new RegExp(`## ${escaped}\\n+([\\s\\S]*?)(?:\\n## |$)`));
-  return match ? match[1].trim() : "";
+  const lines = String(markdown || "").split("\n");
+  const start = lines.findIndex((line) => line.trim() === `## ${heading}`);
+  if (start === -1) return "";
+  const body = [];
+  for (let index = start + 1; index < lines.length; index += 1) {
+    if (/^##\s+/.test(lines[index])) break;
+    body.push(lines[index]);
+  }
+  return body.join("\n").trim();
 }
 
 function meaningful(value, minLength = 8) {
@@ -105,6 +129,14 @@ function hasPublicDeliveryMetric(metrics) {
   return metrics.some((row) => isPublicDeliveryMetric(row.metric));
 }
 
+function suggestedBusinessMetricLine(clientPath) {
+  const suggestion = businessMetricSuggestions[clientPath] || {
+    metric: "Business metric",
+    notes: "Source: product analytics or sales record"
+  };
+  return `${clientPath}|${suggestion.metric}|LAST_REAL_VALUE|CURRENT_REAL_VALUE|${suggestion.notes}`;
+}
+
 function packetFor(client) {
   const evidence = read(join(client.path, "research/owned-proof-evidence.md"));
   const report = read(join(client.path, "reports/week-1-report.md"));
@@ -123,6 +155,8 @@ function packetFor(client) {
   const hasCurrentMetric = metrics.length > 0;
   const businessMetric = hasBusinessMetric(metrics);
   const publicDeliveryMetric = hasPublicDeliveryMetric(metrics);
+  const businessMetricCount = metrics.filter((row) => !isPublicDeliveryMetric(row.metric)).length;
+  const publicDeliveryMetricCount = metrics.filter((row) => isPublicDeliveryMetric(row.metric)).length;
   const status = tangibleComplete && hasScreenshot && contractComplete && businessMetric
     ? "case-study-ready"
     : tangibleComplete && hasScreenshot && contractComplete && publicDeliveryMetric
@@ -144,7 +178,7 @@ function packetFor(client) {
   const readinessRows = [
     ["Baseline screenshot/source", statusLabel(hasScreenshot), screenshots.map((row) => row.source).join("; ") || "Add baseline screenshot/source proof"],
     ["Current metric", statusLabel(hasCurrentMetric), metrics.map((row) => `${row.metric}: ${row.thisPeriod || row.lastPeriod}`).join("; ") || "Add current metric value"],
-    ["Business metric", statusLabel(businessMetric), businessMetric ? "At least one non-public-delivery metric is present." : "Still missing. Public proof checks are useful delivery proof, but business metrics are needed before calling this a full case study."],
+    ["Business metric", statusLabel(businessMetric), businessMetric ? "At least one non-public-delivery metric is present." : `Still missing. Public proof checks are useful delivery proof, but business metrics are needed before calling this a full case study. Capture row: ${suggestedBusinessMetricLine(client.path)}`],
     ["One improvement", statusLabel(tangibleComplete), after || "Add the improved state"],
     ["Next measurement", statusLabel(meaningful(nextMeasurement)), nextMeasurement || "Add the next signal"],
     ["Measurement contract", statusLabel(contractComplete), contractComplete ? `${contract.signal}; ${contract.owner}; ${contract.nextCheck}` : "Fill signal, source, owner, next check, baseline/current, and decision rule"],
@@ -219,8 +253,10 @@ ${sourceRows}
     nextMeasurement,
     screenshots: screenshots.length,
     currentMetrics: metrics.length,
-    businessMetrics: metrics.filter((row) => !isPublicDeliveryMetric(row.metric)).length,
-    publicDeliveryMetrics: metrics.filter((row) => isPublicDeliveryMetric(row.metric)).length,
+    businessMetrics: businessMetricCount,
+    publicDeliveryMetrics: publicDeliveryMetricCount,
+    needsBusinessMetric: businessMetricCount === 0,
+    suggestedBusinessMetricLine: suggestedBusinessMetricLine(client.path),
     measurementContractComplete: contractComplete
   };
 }
@@ -229,6 +265,11 @@ const packets = clients.map(packetFor);
 const readyCount = packets.filter((packet) => packet.status === "case-study-ready").length;
 const deliveryReadyCount = packets.filter((packet) => ["case-study-ready", "delivery-proof-ready"].includes(packet.status)).length;
 const needsMetricCount = packets.filter((packet) => packet.status === "needs-current-metric").length;
+const needsBusinessMetricCount = packets.filter((packet) => packet.needsBusinessMetric).length;
+const businessMetricSheet = packets
+  .filter((packet) => packet.needsBusinessMetric)
+  .map((packet) => packet.suggestedBusinessMetricLine)
+  .join("\n");
 
 const markdown = `# Owned-Product Case Studies
 
@@ -250,21 +291,36 @@ We do not sell vague marketing. We run measurable improvement loops on real prod
 | Delivery-proof ready | ${deliveryReadyCount} |
 | Business-metric case-study ready | ${readyCount} |
 | Need current metric | ${needsMetricCount} |
+| Need business metric | ${needsBusinessMetricCount} |
 
 ## Packets
 
-| Product | Status | Baseline Screenshot Sources | Current Metrics | Business Metrics | Public Delivery Metrics | Measurement Contract | Packet |
-|---|---|---:|---:|---:|---:|---|---|
-${packets.map((packet) => `| ${packet.name} | ${packet.status} | ${packet.screenshots} | ${packet.currentMetrics} | ${packet.businessMetrics} | ${packet.publicDeliveryMetrics} | ${packet.measurementContractComplete ? "complete" : "missing"} | \`${packet.packetPath}\` |`).join("\n")}
+| Product | Status | Baseline Screenshot Sources | Current Metrics | Business Metrics | Public Delivery Metrics | Measurement Contract | Metric Capture Row | Packet |
+|---|---|---:|---:|---:|---:|---|---|---|
+${packets.map((packet) => `| ${packet.name} | ${packet.status} | ${packet.screenshots} | ${packet.currentMetrics} | ${packet.businessMetrics} | ${packet.publicDeliveryMetrics} | ${packet.measurementContractComplete ? "complete" : "missing"} | \`${packet.needsBusinessMetric ? packet.suggestedBusinessMetricLine : "business metric present"}\` | \`${packet.packetPath}\` |`).join("\n")}
 
 ## Outbound-Safe Proof Lines
 
 ${packets.map((packet) => `- ${packet.safeLine}`).join("\n")}
 
+## Business Metric Capture Sheet
+
+${businessMetricSheet ? `Replace LAST_REAL_VALUE and CURRENT_REAL_VALUE with observed analytics or sales values only.
+
+\`\`\`text
+${businessMetricSheet}
+\`\`\`
+
+Then run:
+
+\`\`\`bash
+npm run owned:metrics -- --from-clipboard
+\`\`\`` : "All owned-product packets currently include at least one business metric. Keep them fresh weekly."}
+
 ## Next Actions
 
 ${needsMetricCount ? "- Add one real current metric value to each owned product packet before using it as delivery proof." : "- All owned-product packets have a current metric. Keep updating them weekly."}
-${readyCount < packets.length ? "- Add product analytics or sales metrics before calling these full business case studies." : "- All owned-product packets have business metrics. Keep the proof fresh."}
+${needsBusinessMetricCount ? "- Add product analytics or sales metrics before calling these full business case studies. Public delivery checks do not count as business metrics." : "- All owned-product packets have business metrics. Keep the proof fresh."}
 - Keep the owned-product label in every outbound Loom.
 - Keep external market proof separate: replies, sales calls, closes, and paid-client retention still need real external evidence.
 `;
@@ -320,7 +376,7 @@ const html = `<!doctype html>
     dt { color:#667085; font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; }
     dd { margin:0 0 8px; line-height:1.45; }
     p { color:#3f4752; line-height:1.5; }
-    code { display:block; background:#171717; color:#fff; padding:10px; border-radius:6px; overflow-wrap:anywhere; }
+    code { display:block; background:#171717; color:#fff; padding:10px; border-radius:6px; overflow-wrap:anywhere; white-space:pre-wrap; }
   </style>
 </head>
 <body>
@@ -333,7 +389,9 @@ const html = `<!doctype html>
       <div class="stat"><b>${deliveryReadyCount}</b><span>delivery-proof ready</span></div>
       <div class="stat"><b>${readyCount}</b><span>business-metric ready</span></div>
       <div class="stat"><b>${needsMetricCount}</b><span>need current metric</span></div>
+      <div class="stat"><b>${needsBusinessMetricCount}</b><span>need business metric</span></div>
     </section>
+    ${businessMetricSheet ? `<section class="capture"><h2>Business Metric Capture Sheet</h2><p>Replace placeholders with real observed analytics or sales values only. Public delivery checks are useful, but they are not business metrics.</p><code>${htmlEscape(businessMetricSheet)}</code></section>` : ""}
     <section class="grid">${cards}</section>
   </main>
 </body>
@@ -354,6 +412,8 @@ console.log(JSON.stringify({
     currentMetrics: packet.currentMetrics,
     businessMetrics: packet.businessMetrics,
     publicDeliveryMetrics: packet.publicDeliveryMetrics,
+    needsBusinessMetric: packet.needsBusinessMetric,
     measurementContractComplete: packet.measurementContractComplete
-  }))
+  })),
+  needsBusinessMetric: needsBusinessMetricCount
 }, null, 2));

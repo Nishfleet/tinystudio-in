@@ -233,7 +233,7 @@
 <body>
   <header>
     <h1>Daily Money Mission</h1>
-    <p class="sub">Generated 2026-05-29. Record the scored Looms. This is the current money bottleneck.</p>
+    <p class="sub">Generated 2026-05-31. Record the scored Looms. This is the current money bottleneck.</p>
   </header>
   <main>
     <section class="metrics">
@@ -620,6 +620,31 @@ prospects/stradiant|</textarea>
       const missingNote = prospectNoteFields(path).find((input) => cleanRowPart(input.value).length < 8);
       if (missingNote) missingNote.focus();
     }
+    async function copyText(text) {
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          return true;
+        }
+      } catch {}
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "fixed";
+      textarea.style.left = "-9999px";
+      document.body.appendChild(textarea);
+      textarea.select();
+      let copied = false;
+      try {
+        copied = document.execCommand("copy");
+      } catch {
+        copied = false;
+      }
+      textarea.remove();
+      if (copied) return true;
+      window.prompt("Copy this:", text);
+      return false;
+    }
     function saveQuality() {
       const next = {};
       for (const input of qualityChecks) {
@@ -711,7 +736,7 @@ prospects/stradiant|</textarea>
         return;
       }
       if (!sheet.value.trim()) return;
-      await navigator.clipboard.writeText(sheet.value);
+      await copyText(sheet.value);
     });
     buildSheet();
   </script>

@@ -1,6 +1,6 @@
 # Owned Handoff Loom Cockpit
 
-Generated: 2026-05-29
+Generated: 2026-06-01
 
 ## Rule
 
@@ -16,6 +16,7 @@ The moat is the proof delta: before, after, proof source, client-visible value, 
 |---|---:|
 | Owned startup clients | 3 |
 | Ready to record | 3 |
+| Accepted | 0 |
 | Blocked | 0 |
 | Approved source-backed claims | 6 |
 
@@ -26,6 +27,20 @@ The moat is the proof delta: before, after, proof source, client-visible value, 
 | clients/ai-converter | ready-to-record | `clients/ai-converter/handoff-loom-script.md` | `clients/ai-converter/client-dashboard.md` | `npm run client:acceptance -- clients/ai-converter --dry-run` | `npm run client:acceptance -- clients/ai-converter --handoff-loom=LOOM_URL --reviewer="Nish"` |
 | clients/siterep | ready-to-record | `clients/siterep/handoff-loom-script.md` | `clients/siterep/client-dashboard.md` | `npm run client:acceptance -- clients/siterep --dry-run` | `npm run client:acceptance -- clients/siterep --handoff-loom=LOOM_URL --reviewer="Nish"` |
 | clients/five-to-nine-0509 | ready-to-record | `clients/five-to-nine-0509/handoff-loom-script.md` | `clients/five-to-nine-0509/client-dashboard.md` | `npm run client:acceptance -- clients/five-to-nine-0509 --dry-run` | `npm run client:acceptance -- clients/five-to-nine-0509 --handoff-loom=LOOM_URL --reviewer="Nish"` |
+
+## Batch Completion Sheet
+
+After recording the real handoff Looms, replace `LOOM_URL` below and run the batch completion command. This still requires real Loom links and a reviewer.
+
+```text
+clients/ai-converter|LOOM_URL
+clients/siterep|LOOM_URL
+clients/five-to-nine-0509|LOOM_URL
+```
+
+```bash
+npm run owned:handoff-complete -- --from-clipboard --reviewer="Nish"
+```
 
 ## Client Scripts
 

@@ -27,6 +27,7 @@
     "owned:metrics": "node scripts/update-owned-product-metrics.mjs",
     "owned:live-signals": "node scripts/export-owned-product-live-signals.mjs",
     "owned:handoff": "node scripts/export-owned-handoff-loom-cockpit.mjs",
+    "owned:handoff-complete": "node scripts/complete-owned-handoff-looms.mjs",
     "retention:automation-check": "node scripts/check-retention-automation.mjs",
     "retention:checkups": "node scripts/export-retention-checkups.mjs",
     "claims:check": "node scripts/check-outbound-claim-safety.mjs",
@@ -80,6 +81,7 @@
     "growth:service-map": "node scripts/export-full-stack-growth-map.mjs",
     "value:stress": "node scripts/export-value-retention-stress-test.mjs",
     "growth-brain:check": "node scripts/check-growth-brain-kit.mjs",
+    "ui:check": "node scripts/check-generated-ui-surfaces.mjs",
     "market:benchmark": "node scripts/export-market-benchmark.mjs",
     "market:parity": "node scripts/check-market-parity-readiness.mjs",
     "market:proof-run": "node scripts/export-market-proof-run.mjs",
@@ -91,7 +93,7 @@
     "sales:one-pager": "node scripts/export-managed-it-one-pager.mjs",
     "mobbin:run": "node scripts/run-design-system-proving-lab.mjs",
     "mobbin:check": "node scripts/run-design-system-proving-lab.mjs --dry-run",
-    "test": "node scripts/test-design-system-proving-lab.mjs && node scripts/normalize-outbound-templates.mjs && node scripts/start-growth-mission.mjs --no-open && node scripts/export-growth-doctor.mjs --no-checks && node scripts/check-retention-automation.mjs && node scripts/run-weekly-client-value-loop.mjs && node scripts/export-retention-checkups.mjs && node scripts/export-market-proof-cockpit.mjs && node scripts/export-market-learning-review.mjs && node scripts/export-market-benchmark.mjs && node scripts/export-full-stack-growth-map.mjs && node scripts/export-owned-product-case-studies.mjs && node scripts/export-owned-product-workflow-proofs.mjs && node scripts/export-owned-handoff-loom-cockpit.mjs && node scripts/export-internal-dashboard.mjs && node scripts/export-value-retention-stress-test.mjs && node scripts/enrich-prospect-contact-plan-batch.mjs --limit=5 --dry-run && node scripts/batch-score-prospects.mjs --validate-template && node scripts/check-lead-score-integrity.mjs && node scripts/check-growth-brain-kit.mjs && node scripts/check-agency-defaults.mjs && node scripts/check-outbound-claim-safety.mjs && node scripts/check-outbound-send-readiness.mjs"
+    "test": "node scripts/test-design-system-proving-lab.mjs && node scripts/normalize-outbound-templates.mjs && node scripts/start-growth-mission.mjs --no-open && node scripts/export-growth-doctor.mjs --no-checks && node scripts/check-retention-automation.mjs && node scripts/run-weekly-client-value-loop.mjs && node scripts/export-retention-checkups.mjs && node scripts/export-market-proof-cockpit.mjs && node scripts/export-market-learning-review.mjs && node scripts/export-market-benchmark.mjs && node scripts/export-full-stack-growth-map.mjs && node scripts/export-owned-product-case-studies.mjs && node scripts/export-owned-product-workflow-proofs.mjs && node scripts/export-owned-handoff-loom-cockpit.mjs && node scripts/export-internal-dashboard.mjs && node scripts/export-value-retention-stress-test.mjs && node scripts/check-generated-ui-surfaces.mjs && node scripts/enrich-prospect-contact-plan-batch.mjs --limit=5 --dry-run && node scripts/batch-score-prospects.mjs --validate-template && node scripts/check-lead-score-integrity.mjs && node scripts/check-growth-brain-kit.mjs && node scripts/check-agency-defaults.mjs && node scripts/check-outbound-claim-safety.mjs && node scripts/check-outbound-send-readiness.mjs"
   },
   "engines": {
     "node": ">=20"

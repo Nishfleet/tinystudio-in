@@ -1,23 +1,15 @@
 #!/usr/bin/env node
-import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { execFileSync } from "node:child_process";
 import { localIsoDate } from "./date-utils.mjs";
 import { checkProspectReadiness, prospectWarningWeight } from "./lib/prospect-readiness.mjs";
+import { listClientFolders, listProspectFolders } from "./lib/list-operational-folders.mjs";
 
 const plain = process.argv.includes("--plain");
 const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
 const limit = limitArg ? Number(limitArg.split("=")[1]) : 7;
 const today = localIsoDate();
-
-function listFolders(root) {
-  if (!existsSync(root)) return [];
-  return readdirSync(root, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .filter((entry) => !/^(kit|import)-smoke/.test(entry.name))
-    .map((entry) => join(root, entry.name))
-    .sort();
-}
 
 function readJson(path) {
   if (!existsSync(path)) return {};
@@ -101,7 +93,7 @@ function pipelineWeight(pipeline) {
   return 3;
 }
 
-const prospects = listFolders("prospects").map((path) => {
+const prospects = listProspectFolders().map((path) => {
   const metadata = readJson(join(path, "metadata.json"));
   const pipeline = readJson(join(path, "pipeline.json"));
   const readiness = checkProspectReadiness(path);
@@ -120,7 +112,7 @@ const prospects = listFolders("prospects").map((path) => {
   };
 }).sort((a, b) => a.readinessWeight - b.readinessWeight || a.name.localeCompare(b.name));
 
-const clients = listFolders("clients").map((path) => {
+const clients = listClientFolders().map((path) => {
   const readiness = runJson("scripts/check-client-readiness.mjs", path);
   return {
     path,

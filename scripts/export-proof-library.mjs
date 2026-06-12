@@ -1,22 +1,14 @@
 #!/usr/bin/env node
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
 import { agencyConfig } from "./lib/agency-config.mjs";
+import { listClientFolders, listProspectFolders } from "./lib/list-operational-folders.mjs";
 
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/proof-library.md";
 const today = localIsoDate();
 const config = agencyConfig();
-
-function listFolders(root) {
-  if (!existsSync(root)) return [];
-  return readdirSync(root, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .filter((entry) => !/^(kit|import)-smoke/.test(entry.name))
-    .map((entry) => join(root, entry.name))
-    .sort();
-}
 
 function read(path) {
   return existsSync(path) ? readFileSync(path, "utf8") : "";
@@ -32,9 +24,16 @@ function lineValue(content, pattern, fallback = "") {
 }
 
 function section(content, heading, fallback = "") {
-  const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const match = content.match(new RegExp(`## ${escaped}\\n+([\\s\\S]*?)(?:\\n## |$)`));
-  return match ? match[1].trim() : fallback;
+  const lines = String(content || "").split("\n");
+  const start = lines.findIndex((line) => line.trim() === `## ${heading}`);
+  if (start === -1) return fallback;
+  const body = [];
+  for (let index = start + 1; index < lines.length; index += 1) {
+    if (/^##\s+/.test(lines[index])) break;
+    body.push(lines[index]);
+  }
+  const value = body.join("\n").trim();
+  return value || fallback;
 }
 
 function compact(value, maxLength = 220) {
@@ -61,7 +60,7 @@ function filledBuyerLeaks(content) {
     .join("\n");
 }
 
-const prospects = listFolders("prospects").map((path) => {
+const prospects = listProspectFolders().map((path) => {
   const metadata = json(join(path, "metadata.json"));
   const pipeline = json(join(path, "pipeline.json"));
   const leadScore = read(join(path, "lead-score.md"));
@@ -84,7 +83,7 @@ const prospects = listFolders("prospects").map((path) => {
   };
 });
 
-const clients = listFolders("clients").map((path) => {
+const clients = listClientFolders().map((path) => {
   const intake = read(join(path, "intake.md"));
   const sprintPlan = read(join(path, "sprint-plan.md"));
   const report = read(join(path, "reports/week-1-report.md"));

@@ -1,6 +1,6 @@
 # Value And Retention Stress Test
 
-Generated: 2026-05-29
+Generated: 2026-06-01
 
 ## North Star
 
@@ -26,7 +26,7 @@ Outsized value, customer retention, and customer delight. TinyStudio's wedge is 
 | Paid client value proof | watch | 0/0 external client folder(s) have tangible proof; 0/0 external weekly reports include retention pulse. | Do not treat owned-startup proof as paid-client value proof. |
 | Retention and delight signal | pass | 3/3 weekly report(s) include value feedback, unclear points, delight add-on, health score, and retention risk. | Ask the client what felt valuable and unclear before renewal. |
 | Owned startup proof lane | pass | 3 owned startup proof folder(s); 0 external client folder(s). | Use AI Converter, SiteRep, and 0509 to stress-test delivery, not to fake market proof. |
-| Owned product case-study packets | watch | 3/3 owned-product packet(s) delivery-proof ready; 0/3 have business metrics; 0 need current metric value. | Public delivery signals are filled. Add analytics or sales metrics before calling these full business case studies. |
+| Owned product case-study packets | watch | 3/3 owned-product packet(s) delivery-proof ready; 0/3 have business metrics; 0 need current metric value; 3 need business metric value. | Public delivery signals are filled. Add analytics or sales metrics before calling these full business case studies. |
 | External market proof | fail | 0/5 Looms, 0/5 sends, 0 replies | Record and send the first 5 Looms; owned-startup work cannot replace this. |
 | Claim and send safety | pass | claim safety pass; send readiness pass. | Run checks before anything client-facing leaves TinyStudio. |
 

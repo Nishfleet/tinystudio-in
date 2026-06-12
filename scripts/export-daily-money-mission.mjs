@@ -28,9 +28,12 @@ function read(path) {
 }
 
 function section(markdown, heading, fallback = "") {
-  const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const match = markdown.match(new RegExp(`## ${escaped}\\n+([\\s\\S]*?)(?:\\n## |$)`));
-  return match ? match[1].trim() : fallback;
+  const lines = String(markdown || "").split("\n");
+  const start = lines.findIndex((line) => line.trimEnd() === `## ${heading}`);
+  if (start < 0) return fallback;
+  const end = lines.findIndex((line, index) => index > start && line.startsWith("## "));
+  const body = lines.slice(start + 1, end < 0 ? undefined : end).join("\n").trim();
+  return body || fallback;
 }
 
 function escapeHtml(value) {
@@ -75,15 +78,17 @@ function cleanAsk(value, closeText) {
 }
 
 function sharpnessValue(content, label) {
-  const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  return String(content || "").match(new RegExp(`^- ${escaped}:[ \\t]*([^\\n]*)$`, "m"))?.[1]?.trim() || "";
+  const prefix = `- ${label}:`;
+  const line = String(content || "").split("\n").find((item) => item.startsWith(prefix));
+  return line ? line.slice(prefix.length).trim() : "";
 }
 
 function sharpnessSectionItems(content, heading, limit = 3) {
-  const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const match = String(content || "").match(new RegExp(`### ${escaped}\\n+([\\s\\S]*?)(?:\\n### |\\n## |$)`));
-  if (!match) return [];
-  return match[1]
+  const lines = String(content || "").split("\n");
+  const start = lines.findIndex((line) => line.trimEnd() === `### ${heading}`);
+  if (start < 0) return [];
+  const end = lines.findIndex((line, index) => index > start && (line.startsWith("### ") || line.startsWith("## ")));
+  return lines.slice(start + 1, end < 0 ? undefined : end).join("\n")
     .split("\n")
     .map((line) => line.replace(/^-\s*/, "").trim())
     .filter(Boolean)
@@ -711,6 +716,31 @@ const html = `<!doctype html>
       const missingNote = prospectNoteFields(path).find((input) => cleanRowPart(input.value).length < 8);
       if (missingNote) missingNote.focus();
     }
+    async function copyText(text) {
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          return true;
+        }
+      } catch {}
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "fixed";
+      textarea.style.left = "-9999px";
+      document.body.appendChild(textarea);
+      textarea.select();
+      let copied = false;
+      try {
+        copied = document.execCommand("copy");
+      } catch {
+        copied = false;
+      }
+      textarea.remove();
+      if (copied) return true;
+      window.prompt("Copy this:", text);
+      return false;
+    }
     function saveQuality() {
       const next = {};
       for (const input of qualityChecks) {
@@ -802,7 +832,7 @@ const html = `<!doctype html>
         return;
       }
       if (!sheet.value.trim()) return;
-      await navigator.clipboard.writeText(sheet.value);
+      await copyText(sheet.value);
     });
     buildSheet();
   </script>

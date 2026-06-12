@@ -1,6 +1,6 @@
 # Owned Startup Proof Review
 
-Generated: 2026-05-29
+Generated: 2026-05-31
 
 ## Rule
 
