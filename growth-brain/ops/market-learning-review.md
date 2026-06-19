@@ -1,6 +1,6 @@
 # Market Learning Review
 
-Generated: 2026-05-29
+Generated: 2026-06-19
 
 ## Verdict
 
@@ -45,7 +45,16 @@ npm run growth:start -- --view=record
 
 | Date | Prospect | Action | Note |
 |---|---|---|---|
-| - | - | - | No reply, loss, pause, or decision notes captured yet. |
+| 2026-06-04 | Able Mind Solutions | scored | Lead score 12/16; priority record; Local managed IT plus cabling offer with a clear above-the-fold path leak and no large-incumbent team-size signal in prep. |
+| 2026-06-04 | Able Mind Solutions | paused | First-batch ICP reset after live review: too mature, too enterprise-coded, or not founder-confidence fit for Nish's first solo proof recordings. |
+| 2026-06-04 | Borderland IT | scored | Founder-fit proof batch: small/local page leak with no visible 20-year, huge-team, or large-incumbent mismatch. |
+| 2026-06-04 | Borderland IT | paused | Removed from first batch after send-route review: direct email only while sender setup is dirty. |
+| 2026-06-04 | ByteMe Networks | scored | Founder-fit proof batch: small/local page leak with no visible 20-year, huge-team, or large-incumbent mismatch. |
+| 2026-06-04 | IT Umbrella Group | scored | Founder-fit proof batch: visible service-menu leak plus usable contact form route. |
+| 2026-06-04 | LayerLogix | paused | ICP mismatch for first solo-founder batch: live page says 500+ businesses served and 50+ IT experts, so this is a mature incumbent rather than a lean founder-l... |
+| 2026-06-04 | PROTBYTE | paused | First-batch ICP reset after live review: too mature, too enterprise-coded, or not founder-confidence fit for Nish's first solo proof recordings. |
+| 2026-06-04 | Sagiss | paused | First-batch ICP reset after live review: too mature, too enterprise-coded, or not founder-confidence fit for Nish's first solo proof recordings. |
+| 2026-06-04 | Scorpion Technology | paused | First-batch ICP reset after live review: too mature, too enterprise-coded, or not founder-confidence fit for Nish's first solo proof recordings. |
 
 ## Next Batch Experiment
 

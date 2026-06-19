@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { localIsoDate } from "./date-utils.mjs";
 import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
@@ -39,6 +39,15 @@ function write(path, content) {
   writeFileSync(path, content);
 }
 
+function readJson(path, fallback = {}) {
+  if (!existsSync(path)) return fallback;
+  try {
+    return JSON.parse(readFileSync(path, "utf8"));
+  } catch {
+    return fallback;
+  }
+}
+
 const doctor = runJson(["scripts/export-growth-doctor.mjs"]);
 const metrics = runJson(["scripts/export-growth-metrics.mjs"]);
 const retention = runJson(["scripts/export-retention-checkups.mjs"]);
@@ -54,6 +63,20 @@ const channelGuidance = sendChannelGuidance();
 const ownedDeliveryReadyCount = (ownedCaseStudies.packets || []).filter((packet) => ["case-study-ready", "delivery-proof-ready"].includes(packet.status)).length;
 const ownedBusinessReadyCount = (ownedCaseStudies.packets || []).filter((packet) => packet.status === "case-study-ready").length;
 const ownedNeedsMetricCount = (ownedCaseStudies.packets || []).filter((packet) => packet.status === "needs-current-metric").length;
+const pausedProspectNames = readdirSync("prospects", { withFileTypes: true })
+  .filter((entry) => entry.isDirectory())
+  .map((entry) => {
+    const basePath = `prospects/${entry.name}`;
+    const pipeline = readJson(`${basePath}/pipeline.json`);
+    if (!["lost", "paused", "won"].includes(pipeline.stage)) return "";
+    const metadata = readJson(`${basePath}/metadata.json`);
+    return metadata.name || "";
+  })
+  .filter(Boolean);
+
+function referencesInactiveProspect(value) {
+  return pausedProspectNames.some((name) => String(value || "").includes(name));
+}
 
 function officialParityScore(fallbackScore, fallbackTotal) {
   const fallback = `${fallbackScore}/${fallbackTotal} full-pass areas`;
@@ -157,7 +180,7 @@ const actionItems = [
     command: "npm run send:guide",
     why: "Sender trust blocker"
   }]),
-  ...(todayView.todayFocus || []).map((item) => ({
+  ...(todayView.todayFocus || []).filter((item) => !referencesInactiveProspect(item)).map((item) => ({
     priority: actionPriority(item),
     item,
     command: actionCommand(item),
@@ -218,6 +241,7 @@ function parseTaskSection(title) {
     .split("\n")
     .map((line) => line.trim())
     .filter((line) => line.startsWith("- [ ]"))
+    .filter((line) => !referencesInactiveProspect(line))
     .map((line) => line.replace(/^- \[ \]\s*/, ""));
 }
 

@@ -32,7 +32,11 @@ function runJson(script, targetPath) {
   return JSON.parse(output);
 }
 
-function activeTasks() {
+function referencesName(value, names) {
+  return names.some((name) => String(value || "").includes(name));
+}
+
+function activeTasks(excludedProspectNames = []) {
   if (!existsSync("TASKS.md")) return [];
   const content = readFileSync("TASKS.md", "utf8");
   const activeMatch = content.match(/## Active\n([\s\S]*?)(?:\n## |$)/);
@@ -41,6 +45,7 @@ function activeTasks() {
     .split("\n")
     .map((line) => line.trim())
     .filter((line) => line.startsWith("- [ ]"))
+    .filter((line) => !referencesName(line, excludedProspectNames))
     .map((line) => line.replace(/^- \[ \]\s*/, ""));
 }
 
@@ -133,12 +138,17 @@ const clients = listFolders("clients").map((path) => {
 }).sort((a, b) => a.readinessWeight - b.readinessWeight || a.name.localeCompare(b.name));
 
 const activeProspects = prospects.filter((prospect) => !["won", "lost", "paused"].includes(prospect.pipelineStage));
+const inactiveProspectNames = prospects
+  .filter((prospect) => ["won", "lost", "paused"].includes(prospect.pipelineStage))
+  .map((prospect) => prospect.name)
+  .filter(Boolean);
 const waitingProspects = activeProspects.filter((prospect) => /^sent|followup-/.test(prospect.pipelineStage) && prospect.nextFollowUpAt > today);
 const actionableProspects = activeProspects.filter((prospect) => !waitingProspects.includes(prospect));
 const readyProspects = actionableProspects.filter((prospect) => prospect.status === "ready");
 const draftProspects = actionableProspects.filter((prospect) => prospect.status !== "ready");
 const readyClients = clients.filter((client) => client.status === "ready");
 const draftClients = clients.filter((client) => client.status !== "ready");
+const filteredActiveTasks = activeTasks(inactiveProspectNames);
 
 const todayFocus = [];
 
@@ -166,7 +176,7 @@ if (clients.length === 0 && prospects.length > 0 && readyProspects.length === 0)
   todayFocus.push("Record and send the first Loom before researching more prospects.");
 }
 
-for (const task of activeTasks()) {
+for (const task of filteredActiveTasks) {
   if (todayFocus.length >= limit) break;
   todayFocus.push(`Task: ${task}`);
 }
@@ -186,7 +196,7 @@ const result = {
   },
   prospects,
   clients,
-  activeTasks: activeTasks()
+  activeTasks: filteredActiveTasks
 };
 
 if (plain) {

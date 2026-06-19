@@ -1,6 +1,6 @@
 # Internal Dashboard
 
-Generated: 2026-05-29
+Generated: 2026-06-19
 
 This is the concise owner view. It pulls together the sales bottleneck, current funnel, client retention risk, and 11/10 proof gate.
 
@@ -50,20 +50,19 @@ npm run growth:start -- --view=record
 | P1 | Client: ai-converter - Sprint acceptance checklist is not complete | `npm run owned:handoff` | Pending action |
 | P1 | Client: five-to-nine-0509 - Sprint acceptance checklist is not complete | `npm run owned:handoff` | Pending action |
 | P1 | Client: siterep - Sprint acceptance checklist is not complete | `npm run owned:handoff` | Pending action |
-| P0 | Prospect: LayerLogix - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox. | `npm run growth:start -- --view=record` | Pending action |
-| P0 | Prospect: PROTBYTE - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox. | `npm run growth:start -- --view=record` | Pending action |
-| P0 | Prospect: Sagiss - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox. | `npm run growth:start -- --view=record` | Pending action |
-| P0 | Prospect: Scorpion Technology - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox. | `npm run growth:start -- --view=record` | Pending action |
-| P0 | Prospect: Stradiant - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox. | `npm run growth:start -- --view=record` | Pending action |
-| P0 | Task: **Record first 5 Loom audits** - LayerLogix, PROTBYTE, Sagiss, Scorpion Technology, and Stradiant now have recording scripts; run `prospect:rehearsal -- --limit=5`, use `market:proof-cockpit`, then run `market:after-recording -- --from-clipboard` with the Loom URLs. | `npm run prospect:rehearsal -- --limit=5` | Open task |
+| P0 | Prospect: ByteMe Networks - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox. | `npm run growth:start -- --view=record` | Pending action |
+| P0 | Prospect: IT Umbrella Group - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox. | `npm run growth:start -- --view=record` | Pending action |
+| P0 | Prospect: Talos Cyber Solutions - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox. | `npm run growth:start -- --view=record` | Pending action |
+| P0 | Prospect: Xentz Technologies - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox. | `npm run growth:start -- --view=record` | Pending action |
+| P0 | Prospect: YPM IT Solutions - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox. | `npm run growth:start -- --view=record` | Pending action |
 | P0 | Task: **Fill owned-product business metrics** - live public delivery metrics are now filled; paste one product analytics or sales metric per owned product with `npm run owned:metrics -- --from-clipboard` before calling AI Converter, SiteRep, and 0509 full business case studies. | `npm run owned:metrics -- --from-clipboard` | Open task |
 | P0 | Task: **Complete owned-startup handoff Loom acceptance** - AI Converter, SiteRep, and 0509 now have source-reviewed claims and scorecards; run `npm run owned:handoff`, record the real handoff Looms, then complete each acceptance command. | `npm run owned:handoff` | Open task |
+| P0 | Task: **Run market learning review after first send batch** - use `npm run market:learn` before changing lead fit, hook, first message, or channel. | `npm run market:learn` | Open task |
 
 ## To-Do List
 
 | Bucket | Priority | Task | Command |
 |---|---|---|---|
-| Active | P0 | **Record first 5 Loom audits** - LayerLogix, PROTBYTE, Sagiss, Scorpion Technology, and Stradiant now have recording scripts; run `prospect:rehearsal -- --limit=5`, use `market:proof-cockpit`, then run `market:after-recording -- --from-clipboard` with the Loom URLs. | `npm run growth:start -- --view=record` |
 | Active | P0 | **Fill owned-product business metrics** - live public delivery metrics are now filled; paste one product analytics or sales metric per owned product with `npm run owned:metrics -- --from-clipboard` before calling AI Converter, SiteRep, and 0509 full business case studies. | `npm run owned:metrics -- --from-clipboard` |
 | Active | P0 | **Complete owned-startup handoff Loom acceptance** - AI Converter, SiteRep, and 0509 now have source-reviewed claims and scorecards; run `npm run owned:handoff`, record the real handoff Looms, then complete each acceptance command. | `npm run owned:handoff` |
 | Active | P0 | **Run market learning review after first send batch** - use `npm run market:learn` before changing lead fit, hook, first message, or channel. | `npm run market:learn` |

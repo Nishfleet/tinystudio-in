@@ -1,6 +1,6 @@
 # Growth Doctor
 
-Generated: 2026-05-29
+Generated: 2026-06-19
 
 ## Status
 
@@ -26,10 +26,10 @@ npm run growth:start -- --view=record
 
 | Check | Status | Detail | Time |
 |---|---|---|---:|
-| Agency defaults | pass | passed | 151ms |
-| Sender setup | warn | warn: 2 warning(s) | 438ms |
-| Claim safety | pass | pass | 119ms |
-| Send readiness | pass | pass | 102ms |
+| Agency defaults | pass | passed | 84ms |
+| Sender setup | warn | warn: 2 warning(s) | 365ms |
+| Claim safety | pass | pass | 104ms |
+| Send readiness | pass | pass | 73ms |
 
 ## Warnings
 
@@ -60,11 +60,11 @@ Sender setup warnings: run `npm run send:configure -- --physical-address="..." -
 - Client: ai-converter - Sprint acceptance checklist is not complete
 - Client: five-to-nine-0509 - Sprint acceptance checklist is not complete
 - Client: siterep - Sprint acceptance checklist is not complete
-- Prospect: LayerLogix - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.
-- Prospect: PROTBYTE - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.
-- Prospect: Sagiss - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.
-- Prospect: Scorpion Technology - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.
-- Prospect: Stradiant - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.
+- Prospect: ByteMe Networks - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.
+- Prospect: IT Umbrella Group - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.
+- Prospect: Talos Cyber Solutions - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.
+- Prospect: Xentz Technologies - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.
+- Prospect: YPM IT Solutions - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.
 
 ## Rule
 

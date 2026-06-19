@@ -11,6 +11,7 @@ const outputPath = outputArg ? outputArg.split("=").slice(1).join("=") : "docs/s
 const opsPath = opsArg ? opsArg.split("=").slice(1).join("=") : "growth-brain/ops/competitive-proof-matrix.md";
 const htmlPath = htmlArg ? htmlArg.split("=").slice(1).join("=") : "growth-brain/ops/competitive-proof-matrix.html";
 const today = localIsoDate();
+const MARKET_ANCHORS_LAST_CHECKED = "2026-05-29";
 
 function runJson(args) {
   const output = execFileSync("node", args, {
@@ -207,7 +208,8 @@ Use this benchmark as an owner dashboard for market claims. If a row says "do no
 
 ## Market Price Anchors
 
-Last checked: ${today}.
+Generated: ${today}.
+Market anchors last checked: ${MARKET_ANCHORS_LAST_CHECKED}.
 
 Current public market signals:
 
@@ -328,7 +330,7 @@ const html = `<!doctype html>
 <body>
   <main>
     <h1>Competitive Proof Matrix</h1>
-    <p>Generated ${htmlEscape(today)}. This shows where TinyStudio can credibly compete and where claims are still blocked by missing proof.</p>
+    <p>Generated ${htmlEscape(today)}. Market anchors last checked ${htmlEscape(MARKET_ANCHORS_LAST_CHECKED)}. This shows where TinyStudio can credibly compete and where claims are still blocked by missing proof.</p>
     <section>
       <h2>Market Alternatives</h2>
       <table><thead><tr><th>Alternative</th><th>Market Signal</th><th>They Are Strong At</th><th>TinyStudio Can Beat By</th><th>Status</th><th>Allowed Claim</th></tr></thead><tbody>${htmlRows}

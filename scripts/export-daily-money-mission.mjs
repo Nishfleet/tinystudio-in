@@ -180,7 +180,7 @@ function missionFromMetrics(counts) {
 function write(path, content) {
   const dir = path.split("/").slice(0, -1).join("/");
   if (dir) mkdirSync(dir, { recursive: true });
-  writeFileSync(path, content);
+  writeFileSync(path, `${String(content).replace(/[ \t]+$/gm, "").trimEnd()}\n`);
 }
 
 function ensureLoomLinksTemplate(prospects) {
