@@ -32,11 +32,11 @@ Sender warnings: missing physical postal address; DKIM selector not configured.
 
 | # | Prospect | Missing | Route |
 |---:|---|---|---|
-| 1 | ByteMe Networks | Loom URL must be a Loom share or embed link like https://www.loom.com/share/... | Use form https://bytemenetworks.com/. |
-| 2 | IT Umbrella Group | Loom URL must be a Loom share or embed link like https://www.loom.com/share/... | Use contact form/page: https://itumbrellagroup.com/contact-handler.php. Email route after sender setup: Email info@itumbrellagroup.com. |
-| 3 | Talos Cyber Solutions | Loom URL must be a Loom share or embed link like https://www.loom.com/share/... | Use contact form/page: https://taloscyber.com/contact-us/. Email route after sender setup: Email info@taloscyber.com. |
-| 4 | Xentz Technologies | Loom URL must be a Loom share or embed link like https://www.loom.com/share/... | Use contact form or DM; contact-plan needs a non-email route.. Email route after sender setup: Email info@xentztechnologies.com. |
-| 5 | YPM IT Solutions | Loom URL must be a Loom share or embed link like https://www.loom.com/share/... | Use contact form/page: https://ypmitsolutions.com/contact/#gf_1. Email route after sender setup: Email contact@ypmitsolutions.com. |
+| 1 | ByteMe Networks | Loom URL must be a Loom share or embed link like https://www.loom.com/share/... | Use contact form/page: https://bytemenetworks.com/contact-us/#gf_1 |
+| 2 | IT Umbrella Group | Loom URL must be a Loom share or embed link like https://www.loom.com/share/... | Use contact form/page: https://itumbrellagroup.com/contact.html |
+| 3 | Talos Cyber Solutions | Loom URL must be a Loom share or embed link like https://www.loom.com/share/... | Use contact form/page: https://taloscyber.com/contact-us/ |
+| 4 | Xentz Technologies | Loom URL must be a Loom share or embed link like https://www.loom.com/share/... | Use contact form/page: https://xentztechnologies.com/ |
+| 5 | YPM IT Solutions | Loom URL must be a Loom share or embed link like https://www.loom.com/share/... | Use contact form/page: https://ypmitsolutions.com/contact/#gf_1 |
 
 ## Operating Rule
 

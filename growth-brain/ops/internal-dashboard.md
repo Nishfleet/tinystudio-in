@@ -9,7 +9,7 @@ This is the concise owner view. It pulls together the sales bottleneck, current 
 Record the scored Looms. This is the current money bottleneck.
 
 ```bash
-npm run prospect:rehearsal -- --limit=5
+npm run growth:start -- --view=record
 ```
 
 ## Status
@@ -21,7 +21,7 @@ npm run prospect:rehearsal -- --limit=5
 | Retention | ready | 3/3 weekly reports ready; 0 high-risk client(s) |
 | Market proof cockpit | needs-recording | 0/5 sent proof rows; 5 tangible improvement rows |
 | Sender trust | warn | Email setup is not clean yet. Prefer contact forms or DMs until send:setup is clean. Warnings: missing physical postal address; DKIM selector not configured |
-| Recording rehearsal | needs-polish | 5 script(s); minimum 9/10 |
+| Recording rehearsal | ready | 5 script(s); minimum 10/10 |
 | Market learning | needs-first-proof-batch | next: npm run growth:start -- --view=record |
 | Owned handoff | ready-to-record | 3/3 owned proof handoff(s) ready to record |
 | Owned case studies | delivery-proof-ready | 3/3 delivery-proof ready; 0/3 business-metric ready; 0 need metric |
@@ -31,7 +31,7 @@ npm run prospect:rehearsal -- --limit=5
 
 | Metric | Count |
 |---|---:|
-| Scored | 12 |
+| Scored | 5 |
 | Looms | 0 |
 | Sends | 0 |
 | Replies | 0 |
@@ -44,9 +44,8 @@ npm run prospect:rehearsal -- --limit=5
 
 | Priority | Action | Command | Why |
 |---|---|---|---|
-| P0 | Record the scored Looms. This is the current money bottleneck. | `npm run prospect:rehearsal -- --limit=5` | Current bottleneck |
+| P0 | Record the scored Looms. This is the current money bottleneck. | `npm run growth:start -- --view=record` | Current bottleneck |
 | P2 | Owned product business metrics: 0/3 packet(s) have business metrics | `npm run owned:metrics -- --from-clipboard` | Full case-study blocker |
-| P0 | Recording rehearsal: 5 script(s), minimum 9/10 | `npm run prospect:rehearsal -- --limit=5` | Pre-recording quality gate |
 | P1 | Sender setup: missing physical postal address; DKIM selector not configured. Use contact form or DM for now. | `npm run send:guide` | Sender trust blocker |
 | P1 | Client: ai-converter - Sprint acceptance checklist is not complete | `npm run owned:handoff` | Pending action |
 | P1 | Client: five-to-nine-0509 - Sprint acceptance checklist is not complete | `npm run owned:handoff` | Pending action |
@@ -56,14 +55,14 @@ npm run prospect:rehearsal -- --limit=5
 | P0 | Prospect: Talos Cyber Solutions - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox. | `npm run growth:start -- --view=record` | Pending action |
 | P0 | Prospect: Xentz Technologies - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox. | `npm run growth:start -- --view=record` | Pending action |
 | P0 | Prospect: YPM IT Solutions - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox. | `npm run growth:start -- --view=record` | Pending action |
-| P0 | Task: **Record first 5 Loom audits** - LayerLogix, PROTBYTE, Sagiss, Scorpion Technology, and Stradiant now have recording scripts; run `prospect:rehearsal -- --limit=5`, use `market:proof-cockpit`, then run `market:after-recording -- --from-clipboard` with the Loom URLs. | `npm run prospect:rehearsal -- --limit=5` | Open task |
 | P0 | Task: **Fill owned-product business metrics** - live public delivery metrics are now filled; paste one product analytics or sales metric per owned product with `npm run owned:metrics -- --from-clipboard` before calling AI Converter, SiteRep, and 0509 full business case studies. | `npm run owned:metrics -- --from-clipboard` | Open task |
+| P0 | Task: **Complete owned-startup handoff Loom acceptance** - AI Converter, SiteRep, and 0509 now have source-reviewed claims and scorecards; run `npm run owned:handoff`, record the real handoff Looms, then complete each acceptance command. | `npm run owned:handoff` | Open task |
+| P0 | Task: **Run market learning review after first send batch** - use `npm run market:learn` before changing lead fit, hook, first message, or channel. | `npm run market:learn` | Open task |
 
 ## To-Do List
 
 | Bucket | Priority | Task | Command |
 |---|---|---|---|
-| Active | P0 | **Record first 5 Loom audits** - LayerLogix, PROTBYTE, Sagiss, Scorpion Technology, and Stradiant now have recording scripts; run `prospect:rehearsal -- --limit=5`, use `market:proof-cockpit`, then run `market:after-recording -- --from-clipboard` with the Loom URLs. | `npm run growth:start -- --view=record` |
 | Active | P0 | **Fill owned-product business metrics** - live public delivery metrics are now filled; paste one product analytics or sales metric per owned product with `npm run owned:metrics -- --from-clipboard` before calling AI Converter, SiteRep, and 0509 full business case studies. | `npm run owned:metrics -- --from-clipboard` |
 | Active | P0 | **Complete owned-startup handoff Loom acceptance** - AI Converter, SiteRep, and 0509 now have source-reviewed claims and scorecards; run `npm run owned:handoff`, record the real handoff Looms, then complete each acceptance command. | `npm run owned:handoff` |
 | Active | P0 | **Run market learning review after first send batch** - use `npm run market:learn` before changing lead fit, hook, first message, or channel. | `npm run market:learn` |

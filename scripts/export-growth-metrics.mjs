@@ -91,6 +91,7 @@ const clientRows = listFolders("clients").map((path) => {
 });
 
 const activeProspects = prospectRows.filter((prospect) => !["won", "lost", "paused"].includes(prospect.stage));
+const activeScoredProspects = activeProspects.filter((prospect) => prospect.scored);
 const sentStages = new Set(["sent", "followup-1", "followup-2", "followup-3", "replied", "call-booked", "won", "lost"]);
 const replyStages = new Set(["replied", "call-booked", "won"]);
 const callStages = new Set(["call-booked", "won"]);
@@ -98,8 +99,10 @@ const callStages = new Set(["call-booked", "won"]);
 const counts = {
   prospectsTotal: prospectRows.length,
   activeProspects: activeProspects.length,
-  scored: prospectRows.filter((prospect) => prospect.scored).length,
-  loomsRecorded: prospectRows.filter((prospect) => prospect.loomRecorded).length,
+  scored: activeScoredProspects.length,
+  scoredIncludingInactive: prospectRows.filter((prospect) => prospect.scored).length,
+  loomsRecorded: activeProspects.filter((prospect) => prospect.loomRecorded).length,
+  loomsRecordedIncludingInactive: prospectRows.filter((prospect) => prospect.loomRecorded).length,
   readyToSend: activeProspects.filter((prospect) => prospect.ready).length,
   sends: prospectRows.filter((prospect) => sentStages.has(prospect.stage)).length,
   replies: prospectRows.filter((prospect) => replyStages.has(prospect.stage)).length,
@@ -135,8 +138,10 @@ Generated: ${today}
 |---|---:|
 | Prospects total | ${counts.prospectsTotal} |
 | Active prospects | ${counts.activeProspects} |
-| Scored prospects | ${counts.scored} |
+| Active scored prospects | ${counts.scored} |
+| Scored including inactive | ${counts.scoredIncludingInactive} |
 | Looms recorded | ${counts.loomsRecorded} |
+| Looms recorded including inactive | ${counts.loomsRecordedIncludingInactive} |
 | Ready to send | ${counts.readyToSend} |
 | Sends | ${counts.sends} |
 | Replies | ${counts.replies} |
@@ -166,7 +171,7 @@ ${Object.entries(stageCounts).sort(([a], [b]) => a.localeCompare(b)).map(([stage
 
 ## Decision Rule
 
-- If scored is high and Looms recorded is low, record before researching.
+- If active scored prospects are high and Looms recorded is low, record before researching.
 - If Looms recorded is high and sends is low, run send-prep and send.
 - If sends are high and replies are low, improve lead fit, audit hook, or first message.
 - If replies are high and calls are low, improve the reply-to-call message.

@@ -2,6 +2,7 @@
 import { readFileSync, existsSync, mkdirSync, rmSync, writeFileSync, readdirSync, statSync, cpSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
+import { routedContactPlan } from "./lib/contact-route.mjs";
 
 const requiredFiles = [
   "PRODUCT.md",
@@ -294,8 +295,20 @@ for (const file of ["scripts/draft-prospect-message.mjs", "scripts/draft-loom-re
 
 {
   const route = readFileSync("scripts/lib/contact-route.mjs", "utf8");
-  for (const phrase of ["safeNonEmailRoute", "routedContactPlan", "routeToChannel", "Email route after sender setup", "Use contact form/page", "Use LinkedIn DM/profile"]) {
+  for (const phrase of ["safeNonEmailRoute", "routedContactPlan", "routeToChannel", "Email route after sender setup", "Use contact form/page", "Use LinkedIn DM/profile", "isHandlerEndpoint"]) {
     if (!route.includes(phrase)) failures.push(`contact route helper missing ${phrase}`);
+  }
+  const itUmbrellaRoute = routedContactPlan(readFileSync("prospects/it-umbrella-group/contact-plan.md", "utf8"), { emailReady: false });
+  if (!itUmbrellaRoute.includes("contact.html") || itUmbrellaRoute.includes("contact-handler.php")) {
+    failures.push("contact route helper must prefer IT Umbrella's contact page over its handler endpoint");
+  }
+  const byteMeRoute = routedContactPlan(readFileSync("prospects/byteme-networks/contact-plan.md", "utf8"), { emailReady: false });
+  if (!byteMeRoute.includes("/contact-us/#gf_1")) {
+    failures.push("contact route helper must prefer ByteMe's explicit safe route while email is blocked");
+  }
+  const formspreeRoute = routedContactPlan(readFileSync("prospects/simply-the-best-technologies/contact-plan.md", "utf8"), { emailReady: false });
+  if (formspreeRoute.includes("formspree.io") || formspreeRoute.includes("/submit")) {
+    failures.push("contact route helper must not expose handler-only form endpoints as usable send routes");
   }
   const replyProof = readFileSync("scripts/lib/reply-worthy-proof.mjs", "utf8");
   for (const phrase of ["replyWorthiness", "Reply-Worthy Proof Gate", "Recording notes complete", "Specific visible leak", "No unsupported outcome claim", "score >= 8"]) {
@@ -589,8 +602,8 @@ for (const file of ["scripts/prepare-prospect-send.mjs", "scripts/prepare-prospe
     failures.push("daily money mission must use specific proof impact, run rehearsal, and route recorded Loom URLs through market:after-recording");
   }
   const commandCenter = readFileSync("scripts/show-growth-command-center.mjs", "utf8");
-  if (!commandCenter.includes("market:after-recording")) {
-    failures.push("growth command center must route post-recording work through market:after-recording");
+  for (const phrase of ["market:after-recording", "inactiveProspectNames", "filteredActiveTasks"]) {
+    if (!commandCenter.includes(phrase)) failures.push(`growth command center missing ${phrase}`);
   }
   const outbox = readFileSync("scripts/export-prospect-outbox.mjs", "utf8");
   if (!outbox.includes("market:after-recording")) {
@@ -645,11 +658,11 @@ for (const file of ["scripts/prepare-prospect-send.mjs", "scripts/prepare-prospe
     if (!marketLearning.includes(phrase)) failures.push(`market learning review missing ${phrase}`);
   }
   const benchmark = readFileSync("docs/strategy/market-parity-benchmark-2026.md", "utf8");
-  for (const phrase of ["Market Price Anchors", "Competitive Proof Matrix", "11/10 Proof Bar", "Retention Thesis", "$2,500-$5,000", "CROAudits", "WebFX", "Speero", "Conversion", "OpenClaw"]) {
+  for (const phrase of ["Market Price Anchors", "Market anchors last checked", "Competitive Proof Matrix", "11/10 Proof Bar", "Retention Thesis", "$2,500-$5,000", "CROAudits", "WebFX", "Speero", "Conversion", "OpenClaw"]) {
     if (!benchmark.includes(phrase)) failures.push(`market parity benchmark missing ${phrase}`);
   }
   const benchmarkScript = readFileSync("scripts/export-market-benchmark.mjs", "utf8");
-  for (const phrase of ["Competitive Proof Matrix", "AI CRO audit tools", "Large CRO/digital agencies", "Enterprise experimentation programs", "Specialist CRO agencies", "AI automation audit offers", "TinyStudio Proof Bar", "market-proof-needed"]) {
+  for (const phrase of ["MARKET_ANCHORS_LAST_CHECKED", "Competitive Proof Matrix", "AI CRO audit tools", "Large CRO/digital agencies", "Enterprise experimentation programs", "Specialist CRO agencies", "AI automation audit offers", "TinyStudio Proof Bar", "market-proof-needed"]) {
     if (!benchmarkScript.includes(phrase)) failures.push(`market benchmark exporter missing ${phrase}`);
   }
 }
@@ -753,6 +766,10 @@ try {
   if (!result.counts || !Array.isArray(result.todayFocus)) {
     failures.push("growth command center did not report counts and today focus");
   }
+  const serialized = JSON.stringify([result.todayFocus, result.activeTasks]);
+  for (const pausedName of ["LayerLogix", "PROTBYTE", "Sagiss", "Scorpion Technology", "Stradiant"]) {
+    if (serialized.includes(pausedName)) failures.push(`growth command center surfaced paused prospect task for ${pausedName}`);
+  }
 } catch (error) {
   failures.push(`growth command center smoke test failed: ${error.message}`);
 }
@@ -765,6 +782,13 @@ try {
   const result = JSON.parse(output);
   if (result.status !== "created" || !existsSync("growth-brain/ops/live-metrics.md")) {
     failures.push("growth metrics export did not create live metrics");
+  }
+  const metricsReport = readFileSync("growth-brain/ops/live-metrics.md", "utf8");
+  if (!metricsReport.includes("Active scored prospects") || !metricsReport.includes("Scored including inactive")) {
+    failures.push("growth metrics must split active scored prospects from inactive historical scored prospects");
+  }
+  if (result.counts.scored > result.counts.activeProspects || result.counts.scoredIncludingInactive < result.counts.scored) {
+    failures.push("growth metrics active scored count is inconsistent with inactive split");
   }
 } catch (error) {
   failures.push(`growth metrics smoke test failed: ${error.message}`);

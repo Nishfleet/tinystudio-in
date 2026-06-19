@@ -27,6 +27,21 @@ function isEmailRoute(value) {
   return /^email\b/i.test(String(value || "").trim()) || /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/i.test(String(value || ""));
 }
 
+function cleanRoute(value) {
+  return String(value || "").trim().replace(/[.]+$/g, "");
+}
+
+function isHandlerEndpoint(value) {
+  const url = urlFromLine(value) || value;
+  try {
+    const parsed = new URL(url);
+    const target = `${parsed.hostname} ${parsed.pathname} ${parsed.search}`.toLowerCase();
+    return /(handler|submit|webhook|api\.web3forms|formsubmit|formspree)/i.test(target);
+  } catch {
+    return /(handler|submit|webhook|api\.web3forms|formsubmit|formspree)/i.test(String(value || ""));
+  }
+}
+
 function formScore(line) {
   const url = urlFromLine(line) || line;
   let score = 0;
@@ -39,6 +54,7 @@ function formScore(line) {
   } catch {
     score -= 4;
   }
+  if (isHandlerEndpoint(line)) score -= 20;
   if (/contact/i.test(routeText)) score += 10;
   if (/(book|schedule|consult|demo|sales|get-started|get%20started|assessment|support)/i.test(routeText)) score += 6;
   return score;
@@ -53,6 +69,11 @@ function socialScore(line) {
 }
 
 export function safeNonEmailRoute(contactPlanMarkdown) {
+  const explicitSafeRoute = firstLine(section(contactPlanMarkdown, "Safe Route While Email Blocked"));
+  if (explicitSafeRoute && !isEmailRoute(explicitSafeRoute) && !isHandlerEndpoint(explicitSafeRoute)) {
+    return cleanRoute(explicitSafeRoute);
+  }
+
   const forms = listLines(section(contactPlanMarkdown, "Forms And Contact Pages"))
     .filter((line) => !/^mailto:/i.test(line))
     .filter((line) => urlFromLine(line) || /^https?:\/\//i.test(line))
@@ -82,8 +103,14 @@ export function safeNonEmailRoute(contactPlanMarkdown) {
 
 export function routedContactPlan(contactPlanMarkdown, { emailReady = false } = {}) {
   const bestRoute = firstLine(section(contactPlanMarkdown, "Best Route")) || "Open contact plan";
-  if (emailReady || !isEmailRoute(bestRoute)) return bestRoute;
-  return `${safeNonEmailRoute(contactPlanMarkdown)}. Email route after sender setup: ${bestRoute}`;
+  if (emailReady) return bestRoute;
+  const safeRoute = safeNonEmailRoute(contactPlanMarkdown);
+  const hasConcreteSafeRoute = safeRoute && !/needs a non-email route/i.test(safeRoute) && !isHandlerEndpoint(safeRoute);
+  if (hasConcreteSafeRoute) return safeRoute;
+  if (!isEmailRoute(bestRoute)) {
+    return isHandlerEndpoint(bestRoute) ? safeRoute : cleanRoute(bestRoute);
+  }
+  return `${safeRoute}. Email route after sender setup: ${bestRoute}`;
 }
 
 export function routeToChannel(route, { emailReady = false } = {}) {

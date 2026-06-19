@@ -130,7 +130,7 @@ const clientCommandRows = results.map((result) => ({
 function write(path, content) {
   const dir = path.split("/").slice(0, -1).join("/");
   if (dir) mkdirSync(dir, { recursive: true });
-  writeFileSync(path, content);
+  writeFileSync(path, `${String(content).replace(/[ \t]+$/gm, "").trimEnd()}\n`);
 }
 
 const markdown = `# Owned Startup Proof Review

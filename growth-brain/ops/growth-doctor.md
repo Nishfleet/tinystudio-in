@@ -14,22 +14,22 @@ Target view: record
 
 Recording prep: fresh
 
-Recording rehearsal: needs-polish (minimum 9/10)
+Recording rehearsal: ready (minimum 10/10)
 
 Next command:
 
 ```bash
-npm run prospect:rehearsal -- --limit=5
+npm run growth:start -- --view=record
 ```
 
 ## Safety Checks
 
 | Check | Status | Detail | Time |
 |---|---|---|---:|
-| Agency defaults | pass | passed | 85ms |
-| Sender setup | warn | warn: 2 warning(s) | 378ms |
-| Claim safety | pass | pass | 92ms |
-| Send readiness | pass | pass | 72ms |
+| Agency defaults | pass | passed | 84ms |
+| Sender setup | warn | warn: 2 warning(s) | 365ms |
+| Claim safety | pass | pass | 104ms |
+| Send readiness | pass | pass | 73ms |
 
 ## Warnings
 
@@ -45,7 +45,7 @@ Sender setup warnings: run `npm run send:configure -- --physical-address="..." -
 | Metric | Count |
 |---|---:|
 | Prospects total | 50 |
-| Scored prospects | 12 |
+| Scored prospects | 5 |
 | Looms recorded | 0 |
 | Ready to send | 0 |
 | Sends | 0 |

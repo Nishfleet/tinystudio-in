@@ -18,7 +18,7 @@ npm run growth:start -- --view=record
 
 | Metric | Count |
 |---|---:|
-| Scored | 12 |
+| Scored | 5 |
 | Looms recorded | 0 |
 | Sends | 0 |
 | Replies | 0 |

@@ -13,7 +13,7 @@ Recommended send channel now: contact form or DM (missing physical postal addres
 | Metric | Count |
 |---|---:|
 | Prospects total | 50 |
-| Scored prospects | 12 |
+| Scored prospects | 5 |
 | Looms recorded | 0 |
 | Ready to send | 0 |
 | Sends | 0 |
@@ -45,8 +45,8 @@ Recommended send channel now: contact form or DM (missing physical postal addres
 
 ## Recording Rehearsal
 
-- Status: needs-polish
-- Minimum score: 9/10
+- Status: ready
+- Minimum score: 10/10
 - Check: `prospects/recording-rehearsal-check.html`
 
 ## Recording Queue
@@ -55,7 +55,7 @@ Recommended send channel now: contact form or DM (missing physical postal addres
 
 - Stage: scored
 - Website: https://bytemenetworks.com/
-- Best contact route: Use form https://bytemenetworks.com/.
+- Best contact route: Use contact form/page: https://bytemenetworks.com/contact-us/#gf_1
 - Next action: Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.
 - Sharpness brief: prospects/byteme-networks/recording-sharpness-brief.md
 - Recording script: prospects/byteme-networks/recording-script.md
@@ -68,7 +68,7 @@ Recommended send channel now: contact form or DM (missing physical postal addres
 
 - Stage: scored
 - Website: https://itumbrellagroup.com/
-- Best contact route: Use contact form/page: https://itumbrellagroup.com/contact-handler.php. Email route after sender setup: Email info@itumbrellagroup.com.
+- Best contact route: Use contact form/page: https://itumbrellagroup.com/contact.html
 - Next action: Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.
 - Sharpness brief: prospects/it-umbrella-group/recording-sharpness-brief.md
 - Recording script: prospects/it-umbrella-group/recording-script.md
@@ -81,7 +81,7 @@ Recommended send channel now: contact form or DM (missing physical postal addres
 
 - Stage: scored
 - Website: https://taloscyber.com/
-- Best contact route: Use contact form/page: https://taloscyber.com/contact-us/. Email route after sender setup: Email info@taloscyber.com.
+- Best contact route: Use contact form/page: https://taloscyber.com/contact-us/
 - Next action: Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.
 - Sharpness brief: prospects/talos-cyber-solutions/recording-sharpness-brief.md
 - Recording script: prospects/talos-cyber-solutions/recording-script.md
@@ -94,7 +94,7 @@ Recommended send channel now: contact form or DM (missing physical postal addres
 
 - Stage: scored
 - Website: https://xentztechnologies.com/
-- Best contact route: Use contact form or DM; contact-plan needs a non-email route.. Email route after sender setup: Email info@xentztechnologies.com.
+- Best contact route: Use contact form/page: https://xentztechnologies.com/
 - Next action: Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.
 - Sharpness brief: prospects/xentz-technologies/recording-sharpness-brief.md
 - Recording script: prospects/xentz-technologies/recording-script.md
@@ -107,7 +107,7 @@ Recommended send channel now: contact form or DM (missing physical postal addres
 
 - Stage: scored
 - Website: https://ypmitsolutions.com/
-- Best contact route: Use contact form/page: https://ypmitsolutions.com/contact/#gf_1. Email route after sender setup: Email contact@ypmitsolutions.com.
+- Best contact route: Use contact form/page: https://ypmitsolutions.com/contact/#gf_1
 - Next action: Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.
 - Sharpness brief: prospects/ypm-it-solutions/recording-sharpness-brief.md
 - Recording script: prospects/ypm-it-solutions/recording-script.md

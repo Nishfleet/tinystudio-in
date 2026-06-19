@@ -243,7 +243,7 @@ const html = `<!doctype html>
 
 const outputDir = outputPath.split("/").slice(0, -1).join("/");
 if (outputDir) mkdirSync(outputDir, { recursive: true });
-writeFileSync(outputPath, html);
+writeFileSync(outputPath, `${html.replace(/[ \t]+$/gm, "").trimEnd()}\n`);
 
 console.log(JSON.stringify({
   status: "created",

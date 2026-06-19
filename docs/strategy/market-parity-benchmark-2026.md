@@ -22,7 +22,8 @@ Use this benchmark as an owner dashboard for market claims. If a row says "do no
 
 ## Market Price Anchors
 
-Last checked: 2026-06-19.
+Generated: 2026-06-19.
+Market anchors last checked: 2026-05-29.
 
 Current public market signals:
 
