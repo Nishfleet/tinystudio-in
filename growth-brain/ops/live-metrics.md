@@ -1,14 +1,14 @@
 # Live Metrics
 
-Generated: 2026-05-29
+Generated: 2026-06-19
 
 ## Funnel
 
 | Metric | Count |
 |---|---:|
 | Prospects total | 50 |
-| Active prospects | 50 |
-| Scored prospects | 5 |
+| Active prospects | 43 |
+| Scored prospects | 12 |
 | Looms recorded | 0 |
 | Ready to send | 0 |
 | Sends | 0 |
@@ -35,7 +35,9 @@ Generated: 2026-05-29
 
 | Stage | Count |
 |---|---:|
-| new | 50 |
+| new | 38 |
+| paused | 7 |
+| scored | 5 |
 
 ## Decision Rule
 

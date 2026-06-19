@@ -1,6 +1,6 @@
 # Value And Retention Stress Test
 
-Generated: 2026-05-29
+Generated: 2026-06-19
 
 ## North Star
 
@@ -15,7 +15,7 @@ Outsized value, customer retention, and customer delight. TinyStudio's wedge is 
 | Market proof execution cockpit | pass | 5 tangible improvement proof row(s); proof status needs-recording; sent proof 0/5. | Use `npm run market:proof-cockpit` to record, prep, send, and verify the first external proof batch. |
 | Market learning loop | pass | market learning status needs-first-proof-batch; sends 0; replies 0; next npm run growth:start -- --view=record. | Run `npm run market:learn` after every send/follow-up batch before changing lead fit, hook, or message. |
 | Value specificity guard | pass | 0/5 market proof row(s) use generic buyer-impact language; 0 repeated buyer-value row(s); 0/5 recording script(s) still use generic impact language. | Replace generic or repeated impact with the actual functional, financial, or emotional value from the recording sharpness brief. |
-| Pre-recording rehearsal quality | pass | 5 script(s) checked; minimum score 10/10; status ready. | Do not record or send vague Looms; run `npm run prospect:rehearsal -- --limit=5` and fix weak spots first. |
+| Pre-recording rehearsal quality | watch | 5 script(s) checked; minimum score 9/10; status needs-polish. | Do not record or send vague Looms; run `npm run prospect:rehearsal -- --limit=5` and fix weak spots first. |
 | Client dashboard value proof | pass | 3/3 client dashboard(s) include value ledger, retention/delight pulse, and client confirmation. | Every client dashboard must show value, not just activity. |
 | Customer-perceived value proof | pass | 3/3 weekly report(s) confirm the customer saw the delta, understood value, approved next action, and gave a continue/retain signal; external 0/0. | Do not call retention proof real until the customer confirms the improvement was understood and worth continuing. |
 | Measurement contract | pass | 3/3 client folder(s) have a signal, source, owner, next check, baseline/current state, and decision rule; external 0/0. | Every improvement needs a measurement contract before it becomes retention proof. |
@@ -32,6 +32,7 @@ Outsized value, customer retention, and customer delight. TinyStudio's wedge is 
 
 ## Where Value Is Missing Now
 
+- Pre-recording rehearsal quality: Do not record or send vague Looms; run `npm run prospect:rehearsal -- --limit=5` and fix weak spots first.
 - Paid client value proof: Do not treat owned-startup proof as paid-client value proof.
 - Owned product case-study packets: Public delivery signals are filled. Add analytics or sales metrics before calling these full business case studies.
 - External market proof: Record and send the first 5 Looms; owned-startup work cannot replace this.

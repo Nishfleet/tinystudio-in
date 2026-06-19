@@ -1,6 +1,6 @@
 # Daily Money Mission
 
-Generated: 2026-05-29
+Generated: 2026-06-19
 
 ## Today's Constraint
 
@@ -13,7 +13,7 @@ Recommended send channel now: contact form or DM (missing physical postal addres
 | Metric | Count |
 |---|---:|
 | Prospects total | 50 |
-| Scored prospects | 5 |
+| Scored prospects | 12 |
 | Looms recorded | 0 |
 | Ready to send | 0 |
 | Sends | 0 |
@@ -38,83 +38,83 @@ Recommended send channel now: contact form or DM (missing physical postal addres
 - Client: ai-converter - Sprint acceptance checklist is not complete
 - Client: five-to-nine-0509 - Sprint acceptance checklist is not complete
 - Client: siterep - Sprint acceptance checklist is not complete
-- Prospect: LayerLogix - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.
-- Prospect: PROTBYTE - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.
-- Prospect: Sagiss - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.
-- Prospect: Scorpion Technology - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.
+- Prospect: ByteMe Networks - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.
+- Prospect: IT Umbrella Group - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.
+- Prospect: Talos Cyber Solutions - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.
+- Prospect: Xentz Technologies - Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.
 
 ## Recording Rehearsal
 
-- Status: ready
-- Minimum score: 10/10
+- Status: needs-polish
+- Minimum score: 9/10
 - Check: `prospects/recording-rehearsal-check.html`
 
 ## Recording Queue
 
-### 1. LayerLogix
+### 1. ByteMe Networks
 
-- Stage: new
-- Website: https://layerlogix.com/
-- Best contact route: Use contact form/page: https://layerlogix.com/contact?service=security-assessment. Email route after sender setup: Email support@layerlogix.com.
+- Stage: scored
+- Website: https://bytemenetworks.com/
+- Best contact route: Use form https://bytemenetworks.com/.
 - Next action: Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.
-- Sharpness brief: prospects/layerlogix/recording-sharpness-brief.md
-- Recording script: prospects/layerlogix/recording-script.md
-- Contact plan: prospects/layerlogix/contact-plan.md
-- Buyer room: prospects/layerlogix/buyer-room.md
-- After recording: `npm run prospect:send-prep -- prospects/layerlogix LOOM_URL --approved`
-- Batch line: `prospects/layerlogix|LOOM_URL|approved|The homepage asks buyers to parse IT services, cybersecurity, PAM, web development, cabling, cloud, healthcare IT, and business IT before giving them one obvious first path.|Protect sales time by sending better-fit visitors toward Services, Contact, Get Started → with a clearer reason to act.|Add a "Choose your path" section near the first CTA: urgent IT support, compliance/security, healthcare/HIPAA, cloud/network modernization.|If useful, I can run a 7-day sprint where I map this leak, rewrite the key sections, and give you a 30-day action plan.`
+- Sharpness brief: prospects/byteme-networks/recording-sharpness-brief.md
+- Recording script: prospects/byteme-networks/recording-script.md
+- Contact plan: prospects/byteme-networks/contact-plan.md
+- Buyer room: prospects/byteme-networks/buyer-room.md
+- After recording: `npm run prospect:send-prep -- prospects/byteme-networks LOOM_URL --approved`
+- Batch line: `prospects/byteme-networks|LOOM_URL|approved|The hero combines managed IT, security cameras, business networking, phone systems, technical support, and quotes before making the best first path obvious.|A Waco business owner needs to know whether to ask for IT support, security/cameras, phones, or cabling without decoding the whole service menu.|Add a "What do you need help with?" block above the service list: Managed IT, Cameras/Security, Phone Systems, Cabling/Networking, each with one proof cue and one CTA.|If useful, I can run a 7-day sprint where I map this leak, rewrite the key sections, and give you a 30-day action plan.`
 
-### 2. PROTBYTE
+### 2. IT Umbrella Group
 
-- Stage: new
-- Website: https://protbyte.com/
-- Best contact route: Use contact form/page: https://protbyte.com/contact.html. Email route after sender setup: Email contact@protbyte.com.
+- Stage: scored
+- Website: https://itumbrellagroup.com/
+- Best contact route: Use contact form/page: https://itumbrellagroup.com/contact-handler.php. Email route after sender setup: Email info@itumbrellagroup.com.
 - Next action: Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.
-- Sharpness brief: prospects/protbyte/recording-sharpness-brief.md
-- Recording script: prospects/protbyte/recording-script.md
-- Contact plan: prospects/protbyte/contact-plan.md
-- Buyer room: prospects/protbyte/buyer-room.md
-- After recording: `npm run prospect:send-prep -- prospects/protbyte LOOM_URL --approved`
-- Batch line: `prospects/protbyte|LOOM_URL|approved|The headline and sections describe a "living security intelligence program" before translating the offer into simple buyer choices like assessment, managed cybersecurity, or advisory.|Protect sales time by sending better-fit visitors toward Services, Managed IT Day-to-day IT operations, endpoints, support, vCIO Services Strategic IT leadership & roadmap with a clearer reason to act.|Add a buyer-path section above the platform depth: "Need assessment", "Need ongoing monitoring", "Need board/compliance narrative."|If useful, I can run a 7-day sprint where I map this leak, rewrite the key sections, and give you a 30-day action plan.`
+- Sharpness brief: prospects/it-umbrella-group/recording-sharpness-brief.md
+- Recording script: prospects/it-umbrella-group/recording-script.md
+- Contact plan: prospects/it-umbrella-group/contact-plan.md
+- Buyer room: prospects/it-umbrella-group/buyer-room.md
+- After recording: `npm run prospect:send-prep -- prospects/it-umbrella-group LOOM_URL --approved`
+- Batch line: `prospects/it-umbrella-group|LOOM_URL|approved|The homepage promises complete IT coverage, then immediately asks buyers to parse managed IT, cybersecurity, cabling, networks, phones, cameras, access control, and industry pages before one best path is clear.|An RGV business owner needs to know which first problem to choose before they book an assessment.|Add a "Start with your problem" block above the service grid: IT support, cybersecurity, cabling/network, phones/cameras, each with one proof cue and one assessment CTA.|If useful, I can run a 7-day sprint where I map this leak, rewrite the key sections, and give you a 30-day action plan.`
 
-### 3. Sagiss
+### 3. Talos Cyber Solutions
 
-- Stage: new
-- Website: https://www.sagiss.com/
-- Best contact route: Use contact form/page: https://www.sagiss.com/contact-us-1. Email route after sender setup: Email support@sagiss.com.
+- Stage: scored
+- Website: https://taloscyber.com/
+- Best contact route: Use contact form/page: https://taloscyber.com/contact-us/. Email route after sender setup: Email info@taloscyber.com.
 - Next action: Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.
-- Sharpness brief: prospects/sagiss/recording-sharpness-brief.md
-- Recording script: prospects/sagiss/recording-script.md
-- Contact plan: prospects/sagiss/contact-plan.md
-- Buyer room: prospects/sagiss/buyer-room.md
-- After recording: `npm run prospect:send-prep -- prospects/sagiss LOOM_URL --approved`
-- Batch line: `prospects/sagiss|LOOM_URL|approved|The strongest buying proof, including operational capacity, ownership, contract structure, SOC II/MSP Cloud Verify, and pricing-context content, appears far below the first CTA.|Protect sales time by sending better-fit visitors toward Contact Us, Get Support, IT Support with a clearer reason to act.|Move the strongest proof points into a compact "Why Dallas teams choose Sagiss" section near the top, then route buyers to IT support, cloud, or security.|If useful, I can run a 7-day sprint where I map this leak, rewrite the key sections, and give you a 30-day action plan.`
+- Sharpness brief: prospects/talos-cyber-solutions/recording-sharpness-brief.md
+- Recording script: prospects/talos-cyber-solutions/recording-script.md
+- Contact plan: prospects/talos-cyber-solutions/contact-plan.md
+- Buyer room: prospects/talos-cyber-solutions/buyer-room.md
+- After recording: `npm run prospect:send-prep -- prospects/talos-cyber-solutions LOOM_URL --approved`
+- Batch line: `prospects/talos-cyber-solutions|LOOM_URL|approved|The page has several competing promises, managed IT, cybersecurity, compliance, and cabling, plus a visible "Testamonials" typo before the buyer gets one clean path.|A small-business buyer needs to self-select the right service quickly, especially when the offer includes security and compliance.|Consolidate the hero around one promise, then add four path cards for Managed IT, Cybersecurity, Compliance, and Cabling with one proof cue and one CTA each.|If useful, I can run a 7-day sprint where I map this leak, rewrite the key sections, and give you a 30-day action plan.`
 
-### 4. Scorpion Technology
+### 4. Xentz Technologies
 
-- Stage: new
-- Website: https://www.scorpionitsupport.com/
-- Best contact route: Use LinkedIn DM/profile: https://www.linkedin.com/company/scorpion-it-support/. Email route after sender setup: Email info@scorpionitsupport.com.
+- Stage: scored
+- Website: https://xentztechnologies.com/
+- Best contact route: Use contact form or DM; contact-plan needs a non-email route.. Email route after sender setup: Email info@xentztechnologies.com.
 - Next action: Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.
-- Sharpness brief: prospects/scorpion-technology/recording-sharpness-brief.md
-- Recording script: prospects/scorpion-technology/recording-script.md
-- Contact plan: prospects/scorpion-technology/contact-plan.md
-- Buyer room: prospects/scorpion-technology/buyer-room.md
-- After recording: `npm run prospect:send-prep -- prospects/scorpion-technology LOOM_URL --approved`
-- Batch line: `prospects/scorpion-technology|LOOM_URL|approved|The page has strong industry proof for healthcare, CPA, property management, and professional services, but those paths could be more directly converted into dedicated buying flows from the first screen.|Protect sales time by sending better-fit visitors toward Services, Managed IT Services, VoIP Services with a clearer reason to act.|Turn the strongest industry proof into a clearer route: "Choose your industry" plus one proof block and CTA per path.|If useful, I can run a 7-day sprint where I map this leak, rewrite the key sections, and give you a 30-day action plan.`
+- Sharpness brief: prospects/xentz-technologies/recording-sharpness-brief.md
+- Recording script: prospects/xentz-technologies/recording-script.md
+- Contact plan: prospects/xentz-technologies/contact-plan.md
+- Buyer room: prospects/xentz-technologies/buyer-room.md
+- After recording: `npm run prospect:send-prep -- prospects/xentz-technologies LOOM_URL --approved`
+- Batch line: `prospects/xentz-technologies|LOOM_URL|approved|The page has a clear SMB managed IT promise, but several routes compete at once: schedule a consultation, view services, talk to a specialist, request an assessment, explore services, and request a consultation.|A small-business buyer should know whether the next step is an assessment, a service comparison, or a direct call.|Make "Request a Free IT Assessment" the primary CTA, keep "View Services" secondary, and group the service cards underneath with one proof cue per service.|If useful, I can run a 7-day sprint where I map this leak, rewrite the key sections, and give you a 30-day action plan.`
 
-### 5. Stradiant
+### 5. YPM IT Solutions
 
-- Stage: new
-- Website: https://www.stradiant.com/
-- Best contact route: Use contact form/page: https://www.stradiant.com/contact/#wpcf7-f302-p37-o1. Email route after sender setup: Email info@stradiant.com.
+- Stage: scored
+- Website: https://ypmitsolutions.com/
+- Best contact route: Use contact form/page: https://ypmitsolutions.com/contact/#gf_1. Email route after sender setup: Email contact@ypmitsolutions.com.
 - Next action: Record from the teleprompter, paste the Loom URL into market:after-recording, then send from the outbox.
-- Sharpness brief: prospects/stradiant/recording-sharpness-brief.md
-- Recording script: prospects/stradiant/recording-script.md
-- Contact plan: prospects/stradiant/contact-plan.md
-- Buyer room: prospects/stradiant/buyer-room.md
-- After recording: `npm run prospect:send-prep -- prospects/stradiant LOOM_URL --approved`
-- Batch line: `prospects/stradiant|LOOM_URL|approved|The page opens with a broad cyber-disaster warning before making the core buying path clear: managed IT, cybersecurity, or assessment.|Protect sales time by sending better-fit visitors toward Services, Contact, Call Us Now with a clearer reason to act.|Make the homepage own one primary intent, then route buyers into Managed IT, Cybersecurity, and Assessment paths with proof and FAQ support.|If useful, I can run a 7-day sprint where I map this leak, rewrite the key sections, and give you a 30-day action plan.`
+- Sharpness brief: prospects/ypm-it-solutions/recording-sharpness-brief.md
+- Recording script: prospects/ypm-it-solutions/recording-script.md
+- Contact plan: prospects/ypm-it-solutions/contact-plan.md
+- Buyer room: prospects/ypm-it-solutions/buyer-room.md
+- After recording: `npm run prospect:send-prep -- prospects/ypm-it-solutions LOOM_URL --approved`
+- Batch line: `prospects/ypm-it-solutions|LOOM_URL|approved|The homepage promise is broad, then services, portfolio, website, product store, and support paths appear before one managed IT buyer route is clear.|A Plano business buyer should be able to choose managed IT, helpdesk, cloud, or compliance without getting pulled into unrelated navigation.|Add a "Start here" decision block: Managed IT & Infrastructure, Helpdesk, Cloud, Compliance, each with one proof cue and one consultation CTA.|If useful, I can run a 7-day sprint where I map this leak, rewrite the key sections, and give you a 30-day action plan.`
 
 ## Workflow Rules
 
