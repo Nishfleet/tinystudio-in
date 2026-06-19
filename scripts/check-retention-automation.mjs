@@ -7,6 +7,7 @@ const automationId = "tinystudio-retention-checkups";
 const codexHome = process.env.CODEX_HOME || join(homedir(), ".codex");
 const automationPath = join(codexHome, "automations", automationId, "automation.toml");
 const expectedCwd = "/Users/nish/Documents/TINY STUDIO";
+const isGithubActions = process.env.GITHUB_ACTIONS === "true";
 
 function value(content, key) {
   const match = String(content || "").match(new RegExp(`^${key}\\s*=\\s*"([^"]*)"`, "m"));
@@ -18,6 +19,19 @@ function missingPhrases(content, phrases) {
 }
 
 if (!existsSync(automationPath)) {
+  if (isGithubActions) {
+    console.log(JSON.stringify({
+      status: "warn",
+      automationId,
+      path: automationPath,
+      weeklyCadence: "Friday retention prep",
+      repo: expectedCwd,
+      failures: [],
+      warnings: ["Local Codex automation file is unavailable in GitHub Actions; verify this check on Nish's machine"]
+    }, null, 2));
+    process.exit(0);
+  }
+
   console.log(JSON.stringify({
     status: "fail",
     automationId,
