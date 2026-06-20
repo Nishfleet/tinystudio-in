@@ -1,6 +1,6 @@
 # Market Proof Cockpit
 
-Generated: 2026-06-19
+Generated: 2026-06-20
 
 ## Moat Verdict
 
