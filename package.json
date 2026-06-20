@@ -29,6 +29,7 @@
     "owned:handoff": "node scripts/export-owned-handoff-loom-cockpit.mjs",
     "retention:automation-check": "node scripts/check-retention-automation.mjs",
     "retention:checkups": "node scripts/export-retention-checkups.mjs",
+    "site:prepare": "node scripts/prepare-static-site-bundle.mjs",
     "claims:check": "node scripts/check-outbound-claim-safety.mjs",
     "config:check": "node scripts/check-agency-defaults.mjs",
     "send:configure": "node scripts/configure-sender-setup.mjs",
