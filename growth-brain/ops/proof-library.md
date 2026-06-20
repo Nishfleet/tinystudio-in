@@ -1,6 +1,6 @@
 # TinyStudio Proof And Learning Library
 
-Generated: 2026-06-19
+Generated: 2026-06-20
 
 This is the compounding layer. It should collect real patterns from prospects and clients, not invented proof.
 

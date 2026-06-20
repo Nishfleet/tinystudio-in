@@ -1,6 +1,6 @@
 # Daily Money Mission
 
-Generated: 2026-06-19
+Generated: 2026-06-20
 
 ## Today's Constraint
 

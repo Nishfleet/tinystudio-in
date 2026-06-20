@@ -1,6 +1,6 @@
 # Internal Dashboard
 
-Generated: 2026-06-19
+Generated: 2026-06-20
 
 This is the concise owner view. It pulls together the sales bottleneck, current funnel, client retention risk, and 11/10 proof gate.
 
