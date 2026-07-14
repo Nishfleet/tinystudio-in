@@ -1,40 +1,61 @@
 import { existsSync, readFileSync } from "node:fs";
+import { join } from "node:path";
+import { NO_GUARANTEE_OUTCOMES } from "./service-contract.mjs";
+import { codeRoot, serviceRoot } from "./runtime-roots.mjs";
 
 const configPath = "growth-brain/ops/agency-config.json";
 
 const defaults = {
   founderName: "Nish",
-  offerName: "Tangible Revenue Leak Sprint + Search Trust Layer",
-  founderSprintPrice: "$1,000 founder sprint",
-  standardSprintPriceRange: "$2,500-$5,000",
-  monthlyContinuationRange: "$2,000-$5,000/month",
-  fullStackRetainerRange: "$5,000-$12,000/month",
-  operatorPodRange: "$12,000+/month",
+  offerName: "7-Day Website Revenue Leak Fix Sprint",
+  buyer: "founder-led Managed IT/MSP/cybersecurity companies with a live site and high-value offer",
+  founderSprintPrice: "$1,000 founder pilot",
+  firstClientCount: 3,
+  scope: "one highest-leverage page",
+  includedDeliverables: [
+    "leak map",
+    "rewrite or redesign",
+    "one implementation pass or dev-ready handoff",
+    "search-trust basics",
+    "before/after proof",
+    "Loom",
+    "measurement plan",
+    "one revision",
+    "14-day implementation tracking"
+  ],
+  dayZeroRule: "Day 0 starts only after payment, required context, approval owner, and implementation owner; client delay pauses the clock.",
+  noGuarantees: [...NO_GUARANTEE_OUTCOMES],
+  humanReviewGates: ["fit", "claims", "client-facing work", "delivery/acceptance", "renewal"],
+  automationBoundary: "prepares research, drafts, QA, packages, and routing; never autonomously sends, publishes, spends, approves, accepts, or renews",
+  saasGraduationEvidence: [
+    "at least 10 paid sprints",
+    "same problem in at least 7",
+    "at least 70% workflow repeatability",
+    "usefulness at least 8/10",
+    "approval at least 70%",
+    "recurring need",
+    "at least 3 deposits or preorders"
+  ],
   optOutLine: "If this is not useful, reply no and I will not follow up.",
   senderEmail: "hello@tinystudio.io",
   senderPhysicalAddress: "",
   dkimSelector: "",
   manualDailySendCap: 20,
+  humanDailyReviewCap: 20,
   meetingPlaceholder: "add meeting link",
   paymentPlaceholder: "add payment link",
-  legacyFounderSprintPrices: [
-    "$750 founder sprint"
-  ],
-  legacyPriceRanges: [
-    "$750-$1,000",
-    "$1,500-$2,500",
-    "$1,500+/month"
-  ],
-  legacyOfferNames: [
-    "7-day Site Revenue Leak Sprint"
-  ]
+  legacyFounderSprintPrices: [],
+  legacyPriceRanges: [],
+  legacyOfferNames: []
 };
 
-export function agencyConfig() {
-  if (!existsSync(configPath)) return defaults;
+export function agencyConfig(repoRoot = serviceRoot) {
+  const canonicalPath = join(codeRoot, configPath);
+  const resolvedConfigPath = join(repoRoot, configPath);
   return {
     ...defaults,
-    ...JSON.parse(readFileSync(configPath, "utf8"))
+    ...(existsSync(canonicalPath) ? JSON.parse(readFileSync(canonicalPath, "utf8")) : {}),
+    ...(existsSync(resolvedConfigPath) ? JSON.parse(readFileSync(resolvedConfigPath, "utf8")) : {})
   };
 }
 

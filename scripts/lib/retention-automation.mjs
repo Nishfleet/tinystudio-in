@@ -1,0 +1,2 @@
+export const RETENTION_AUTOMATION_PROMPT =
+	"Run the TinyStudio retention automation check. Inspect the service:queue and service:evidence records for active clients. Summarize client-delay pauses, 14-day implementation tracking due or overdue, implementation evidence gaps, usefulness and recurring-need signals, proof/claim blockers, and every item awaiting human renewal or continuation review. Automation may prepare research, drafts, QA, packages, and routing only. Do not send client messages. Do not approve claims automatically. Do not accept delivery. Do not renew."

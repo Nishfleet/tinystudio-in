@@ -2,7 +2,7 @@
 
 ## Goal
 
-Create enough high-quality conversations to close the first 1-3 paid sprints.
+Create enough high-quality conversations to close the first 1-3 paid human-reviewed **7-Day Website Revenue Leak Fix Sprints** with founder-led Managed IT/MSP/cybersecurity companies. Every invitation is for one highest-leverage page.
 
 ## Daily Minimum
 
@@ -29,11 +29,10 @@ Before the first client, the default daily minimum is:
 
 ## Prospect Sources
 
-- Google Maps for local service businesses.
-- LinkedIn for B2B service companies.
-- Shopify stores with weak product pages.
-- X/LinkedIn founders discussing SEO, ads, email, or conversion problems.
-- Warm referrals from Nish's existing network.
+- LinkedIn searches for founder-led managed IT providers, MSPs, MSSPs, and cybersecurity consultancies.
+- Public MSP, Microsoft partner, cybersecurity, and compliance-provider directories.
+- X/LinkedIn founders discussing a visible website, trust, positioning, or lead-path problem.
+- Warm referrals to founder-led Managed IT/MSP/cybersecurity companies.
 
 ## Daily Board
 
@@ -53,5 +52,5 @@ Stop researching and start selling when:
 - the current scored batch has not been recorded and sent
 - the prospect has a clear money page problem
 - there is a visible decision-maker
-- the business likely sells a high-ticket or repeat-purchase offer
+- the company sells a high-value managed IT, MSP, or cybersecurity offer
 - the Loom can show the leak in under 2 minutes

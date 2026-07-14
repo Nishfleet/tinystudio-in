@@ -1,5 +1,7 @@
 # Follow-Up Sequences
 
+Active product: **7-Day Website Revenue Leak Fix Sprint** for one highest-leverage page. The first 3 clients are exactly **$1,000 founder pilots**. Do not guarantee revenue, rankings, ROAS, conversion, booked-call, or sales-volume outcomes. Automation may prepare follow-ups, but a human must review before any send, continuation, or renewal decision.
+
 ## After Sending Loom
 
 Use `npm run prospect:message -- prospects/prospect-slug` to generate the next message. Use `npm run prospect:stage -- prospects/prospect-slug sent --channel contact-form` after the first send, swapping `contact-form` for the actual route: `dm`, `linkedin`, `x`, `phone`, `mixed`, `other`, or `email`. Use `followup-1`, `followup-2`, and `followup-3` after each follow-up so `npm run growth:today` stays accurate.
@@ -43,14 +45,17 @@ Replace `add call time` before running call-booked prep. Placeholder call times 
 After the call, run:
 
 ```bash
-npm run prospect:close-prep -- prospects/prospect-slug --price "$1,000" --payment "add payment link"
+npm run prospect:close-prep -- prospects/prospect-slug --payment "add payment link"
 ```
 
-If the sprint closes, run:
+If the sprint closes, use the reviewed service path:
 
 ```bash
 npm run prospect:stage -- prospects/prospect-slug won --note "Approved sprint"
-npm run prospect:convert -- prospects/prospect-slug
+npm run service:import -- /path/to/consented-sprint-application.json
+npm run service:decide -- APPLICATION_ID --decision approve --reviewer "Human reviewer" --note "Fit reviewed"
+npm run service:queue -- --mode=apply --application APPLICATION_ID
+npm run service:day0 -- APPLICATION_ID --payment-evidence "paid: invoice INV-123" --required-context "approved context" --approval-owner "Client owner" --implementation-owner "Implementation owner"
 ```
 
 ## After Delivery
@@ -61,4 +66,6 @@ Day 1 after handoff:
 
 Day 5 after handoff:
 
-"If you want me to keep this moving weekly, the Growth Desk would be the right next step."
+"If another page or a continuation would be useful, I can review the need and send a separate paid scope. Nothing renews or continues automatically."
+
+Any continuation, renewal, or new page requires a fresh human review of fit, scope, claims, price, and acceptance. There is no active recurring or alternate offer.

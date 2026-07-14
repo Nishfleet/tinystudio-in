@@ -4,11 +4,12 @@ import { join } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
 import { isValidLoomUrl, loomUrlError } from "./lib/loom-url.mjs";
 import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
+import { classifyOutboundProspect } from "./lib/outbound-prospects.mjs";
 
 const args = process.argv.slice(2);
 const inputPath = args.find((arg) => !arg.startsWith("--")) || "prospects/loom-links.txt";
 const outputArg = args.find((arg) => arg.startsWith("--output="));
-const outputPath = outputArg ? outputArg.split("=").slice(1).join("=") : "growth-brain/ops/market-proof-run-check.md";
+const outputPath = outputArg ? outputArg.split("=").slice(1).join("=") : "runs/market-proof-run-check.md";
 const limitArg = args.find((arg) => arg.startsWith("--limit="));
 const limit = limitArg ? Number(limitArg.split("=").slice(1).join("=")) : 5;
 const strict = args.includes("--strict");
@@ -69,6 +70,10 @@ function rowCheck(row) {
   if (!row.path || !row.loomUrl) reasons.push("missing prospect path or Loom URL");
   if (row.loomUrl && !isValidLoomUrl(row.loomUrl)) reasons.push(loomUrlError());
   if (row.path && !existsSync(row.path)) reasons.push("prospect folder not found");
+  if (row.path && existsSync(row.path)) {
+    const classification = classifyOutboundProspect(row.path);
+    if (!classification.ok) reasons.push(`not an outbound prospect: ${classification.reason}`);
+  }
   if (!isApproved(row.approval)) reasons.push("missing approved marker from the Loom quality gate");
   if (!hasRequiredNotes(row.notes)) reasons.push("missing leak, impact, fix, or ask notes");
   return { ok: reasons.length === 0, reasons };

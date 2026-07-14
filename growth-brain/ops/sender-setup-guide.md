@@ -1,6 +1,6 @@
 # Sender Setup Guide
 
-Generated: 2026-06-20
+Generated: 2026-07-14
 
 Use this before cold email. Until this guide is clean, use contact forms or DMs first.
 

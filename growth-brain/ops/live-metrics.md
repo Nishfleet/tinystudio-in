@@ -1,15 +1,15 @@
 # Live Metrics
 
-Generated: 2026-06-20
+Generated: 2026-07-14
 
 ## Funnel
 
 | Metric | Count |
 |---|---:|
-| Prospects total | 50 |
-| Active prospects | 43 |
-| Active scored prospects | 5 |
-| Scored including inactive | 12 |
+| Prospects total | 0 |
+| Active prospects | 0 |
+| Active scored prospects | 0 |
+| Scored including inactive | 0 |
 | Looms recorded | 0 |
 | Looms recorded including inactive | 0 |
 | Ready to send | 0 |
@@ -20,8 +20,9 @@ Generated: 2026-06-20
 | Lost | 0 |
 | Waiting follow-up | 0 |
 | Due follow-up | 0 |
-| Clients | 3 |
+| Clients | 0 |
 | Clients ready | 0 |
+| Client records blocked | 0 |
 
 ## Conversion Rates
 
@@ -37,9 +38,7 @@ Generated: 2026-06-20
 
 | Stage | Count |
 |---|---:|
-| new | 38 |
-| paused | 7 |
-| scored | 5 |
+
 
 ## Decision Rule
 

@@ -10,7 +10,7 @@ Create the minimum complete agency operating kit inside this repo.
 - `growth-brain/` contains the operating kit.
 - `docs/strategy/` contains the full plan and 14-day sales path.
 - `specs/001-growth-brain-agency/` contains the Spec Kit control surface.
-- `scripts/check-growth-brain-kit.mjs` verifies the kit shape and claim safety.
+- `scripts/retired/check-growth-brain-kit.mjs` is the archived broad-agency checker; it is not an active gate.
 - `scripts/check-prospect-readiness.mjs` and `scripts/check-client-readiness.mjs` prevent draft work from being sent.
 - `scripts/check-outbound-claim-safety.mjs` prevents unprovable outbound claims from leaving the system.
 - `scripts/enrich-prospect-contact-plan.mjs` creates a prospect send-route file from listed website contact surfaces.
@@ -33,13 +33,13 @@ Create the minimum complete agency operating kit inside this repo.
 - `scripts/convert-prospect-to-client.mjs` creates a client sprint folder from a won prospect.
 - `scripts/draft-client-kickoff.mjs` creates the first client kickoff message and context checklist.
 - `scripts/export-client-delivery-cockpit.mjs` creates one delivery board for running a paid sprint.
-- `scripts/export-client-facing-dashboard.mjs` creates one proof-aware client dashboard with shipped work, learnings, next action, approved proof, and missing proof warnings.
-- `scripts/export-client-renewal-review.mjs` creates one guarded month-end renewal review that blocks continuation asks until proof is clean.
+- `scripts/retired/export-client-facing-dashboard.mjs` preserves the historical broad-agency dashboard generator outside the active command surface.
+- `scripts/retired/export-client-renewal-review.mjs` preserves the historical automated renewal packager outside the active command surface; continuation now requires the human service review gate.
 - `scripts/show-growth-command-center.mjs` turns current prospect/client state into today's action list.
 - `scripts/export-growth-cockpit.mjs` exports one browser start screen for the daily workflow.
 - `scripts/export-growth-metrics.mjs` exports the current funnel scoreboard.
 - `scripts/export-proof-library.mjs` exports the current proof and learning library.
-- `scripts/export-retention-checkups.mjs` exports weekly/monthly client checkups and a retention dashboard.
+- `scripts/retired/export-retention-checkups.mjs` preserves the historical broad-agency retention exporter outside the active service surface.
 - `scripts/export-internal-dashboard.mjs` exports the concise owner dashboard with next/pending actions, a TASKS-backed to-do list, funnel counts, retention risk, and 11/10 blockers.
 - `scripts/export-managed-it-one-pager.mjs` exports the first niche-specific sales sheet to printable HTML.
 

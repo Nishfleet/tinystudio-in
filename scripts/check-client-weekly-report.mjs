@@ -8,7 +8,7 @@ const strict = args.includes("--strict");
 const reportArg = args.find((arg) => arg.startsWith("--report="));
 
 if (!clientPath) {
-  console.error("Usage: npm run client:weekly-check -- clients/client-slug [-- --strict] [--report=path]");
+  console.error("Usage: node scripts/check-client-weekly-report.mjs clients/client-slug [--strict] [--report=path]");
   process.exit(1);
 }
 

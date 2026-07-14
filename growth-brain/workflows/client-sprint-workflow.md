@@ -1,62 +1,35 @@
-# Client Sprint Workflow
+# Client sprint workflow
 
 ## Goal
 
-Deliver the paid sprint with no ambiguity.
+Deliver one human-reviewed **7-Day Website Revenue Leak Fix Sprint** for a founder-led Managed IT/MSP/cybersecurity company with a live site and high-value offer.
 
-## Before Starting
+## Fit gate
 
-- Payment or written approval is complete.
-- Client folder exists.
-- Client brain template is copied.
-- Intake material is collected.
-- Sprint dates are confirmed.
-- `intake.md` records payment or written approval explicitly.
+- Confirm the buyer and live site.
+- Name one highest-leverage page and the evidence for its leak.
+- Decline work that needs more than one page or a different buyer.
 
-## Client Folder Shape
+## Day 0 gate
 
-```text
-clients/{client-slug}/
-  brain/
-  deliverables/
-  quality/
-  research/
-  reports/
-  intake.md
-  sprint-plan.md
-```
+Record payment, required context, approval owner, implementation owner, and the Day 0 start. The clock starts only when all five are present. Client delay can pause any active stage and resumes to the prior stage. The seven-working-day deadline moves only by completed paused weekday time; a weekend-only pause does not extend it.
 
-## Intake Checklist
+## Seven-day path
 
-- Website URLs
-- Main offer
-- Target buyer
-- Top competitors
-- Analytics screenshots
-- Reviews/testimonials
-- Existing ads/emails
-- Current pain or goal
-- Approval contact
+1. Day 1: research and leak map.
+2. Day 2: page rewrite or redesign and search-trust basics.
+3. Day 3: one implementation pass or dev-ready handoff.
+4. Day 4: before/after proof, measurement plan, and QA.
+5. Day 5: fit, claims, and client-facing work review.
+6. Day 6: Loom walkthrough and the single included revision.
+7. Day 7: delivery/acceptance record and 14-day implementation tracking.
 
-## Delivery Rhythm
+## Review and automation
 
-- Day 1: context and leak map
-- Day 2: page or site architecture fix plus conversion scorecard
-- Day 3: landing/offer fix plus critical conversion checks
-- Day 4: ads and email/SMS
-- Day 5: competitor watch
-- Day 6: handoff Loom
-- Day 7: report and continuation pitch
+Human gates cover fit, claims, client-facing work, delivery/acceptance, and renewal. Automation prepares research, drafts, QA, packages, and routing; it never autonomously sends, publishes, spends, approves, accepts, or renews.
 
-## Quality Gate
+Each client-approval, implementation/acceptance, usefulness, and 14-day tracking signal is recorded as immutable evidence for the current revision. A declined draft or resolved information request creates a fresh revision rather than reusing old evidence.
 
-Before sending:
+## Fixed boundary
 
-- no invented claims
-- no copied competitor language
-- every recommendation ties to client context
-- conversion scorecard is filled for the priority page
-- every approval-needed item is marked
-- next action is clear
-
-The delivery cockpit requires review before copying client updates and blocks handoff copy until `client:check` is clean.
+The first 3 clients are exactly **$1,000 founder pilots**. There are no revenue, ranking, ROAS, conversion, booked-call, or sales-volume guarantees.

@@ -1,4 +1,6 @@
-# Weekly Growth Desk Workflow
+# Retired: Weekly Growth Desk Workflow
+
+> **Status: Retired historical reference.** This recurring-retainer workflow is not an active TinyStudio offer or delivery path. Use `human-review-service-engine.md` and `client-sprint-workflow.md` instead.
 
 ## Goal
 

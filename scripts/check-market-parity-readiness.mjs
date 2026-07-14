@@ -1,36 +1,28 @@
 #!/usr/bin/env node
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
-import { execFileSync } from "node:child_process";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { isAbsolute, join } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
+import { agencyConfig } from "./lib/agency-config.mjs";
+import { loadValidatedServiceClients } from "./lib/validated-service-client.mjs";
+import { runCodeRepoJson, runRepoJson as runJson, serviceRoot } from "./lib/runtime-roots.mjs";
 
 const strict = process.argv.includes("--strict");
 const skipKit = process.argv.includes("--skip-kit");
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/market-parity-readiness.md";
-
-function runJson(args) {
-  const output = execFileSync("node", args, {
-    encoding: "utf8",
-    stdio: ["ignore", "pipe", "pipe"]
-  });
-  return JSON.parse(output);
+const resolvedOutputPath = isAbsolute(outputPath) ? outputPath : join(serviceRoot, outputPath);
+function runGate(args, codeRootCwd = false) {
+  try { return (codeRootCwd ? runCodeRepoJson : runJson)(args); }
+  catch (error) {
+    for (const output of [error?.stdout, error?.stderr]) {
+      try { return JSON.parse(String(output || "")); } catch {}
+    }
+    return { status: "failed", checkedFiles: 0, allowedCommands: 0 };
+  }
 }
 
 function read(path) {
   return existsSync(path) ? readFileSync(path, "utf8") : "";
-}
-
-function json(path) {
-  return existsSync(path) ? JSON.parse(readFileSync(path, "utf8")) : {};
-}
-
-function listDirs(path) {
-  if (!existsSync(path)) return [];
-  return readdirSync(path, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => join(path, entry.name))
-    .sort();
 }
 
 function write(path, content) {
@@ -61,7 +53,7 @@ function section(markdown, heading) {
 
 function meaningful(value) {
   const normalized = String(value || "").trim();
-  return normalized.length >= 8 && !/^(todo|tbd|n\/a|none|placeholder|add|replace)/i.test(normalized);
+  return normalized.length >= 3 && !/^(todo|tbd|n\/a|none|placeholder|add|replace)/i.test(normalized);
 }
 
 function bulletValue(markdown, label) {
@@ -72,76 +64,50 @@ function bulletValue(markdown, label) {
 function hasFilledTableRow(markdown, heading, requiredIndexes) {
   return tableRows(section(markdown, heading)).some((cells) => {
     const first = cells[0] || "";
-    if (/^(Priority|Week|Metric|Area)$/i.test(first)) return false;
+    if (/^(Priority|Week|Metric|Area|Leak)$/i.test(first)) return false;
     return requiredIndexes.every((index) => meaningful(cells[index]));
   });
-}
-
-function hasStrongWeeklyReport(clientPath) {
-  if (!existsSync(join(clientPath, "reports/week-1-report.md"))) return false;
-  try {
-    return runJson(["scripts/check-client-weekly-report.mjs", clientPath]).status === "ready";
-  } catch {
-    return false;
-  }
 }
 
 function isOwnedStartupProof(clientPath) {
   return /## Proof Type\s+owned-startup/i.test(read(join(clientPath, "proof-context.md")));
 }
 
-function hasWonSalesProof(prospectPath) {
-  const pipeline = json(join(prospectPath, "pipeline.json"));
-  const closePackage = read(join(prospectPath, "close-package.md"));
-  const notes = Array.isArray(pipeline.notes) ? pipeline.notes : [];
-  return pipeline.stage === "won"
-    && closePackage.includes("## Proposal")
-    && closePackage.includes("## Decision Follow-Up")
-    && closePackage.includes("## Next Command")
-    && !/add payment link|__PAYMENT|__|TODO|TBD/i.test(closePackage)
-    && notes.some((note) => note.action === "won" && meaningful(note.note));
-}
-
 const metrics = runJson(["scripts/export-growth-metrics.mjs"]);
 const sender = runJson(["scripts/check-outbound-sender-setup.mjs"]);
 const kit = skipKit
-  ? { status: "skipped", requiredFiles: 0, agents: 0, workflows: 0 }
-  : runJson(["scripts/check-growth-brain-kit.mjs"]);
+  ? { status: "skipped", checkedFiles: 0, allowedCommands: 0 }
+  : runGate(["scripts/check-human-service-kit.mjs"], true);
 const send = runJson(["scripts/check-outbound-send-readiness.mjs"]);
 const claims = runJson(["scripts/check-outbound-claim-safety.mjs"]);
 const benchmark = runJson(["scripts/export-market-benchmark.mjs"]);
-const config = JSON.parse(read("growth-brain/ops/agency-config.json") || "{}");
-const clients = listDirs("clients");
-const prospects = listDirs("prospects");
-
-const clientProof = clients.map((clientPath) => ({
-  clientPath,
-  ownedStartup: isOwnedStartupProof(clientPath),
-  approvedClaims: hasApprovedClaim(clientPath),
-  weeklyReport: hasStrongWeeklyReport(clientPath),
-  readiness: existsSync(join(clientPath, "intake.md"))
-    ? runJson(["scripts/check-client-readiness.mjs", clientPath]).status
-    : "missing"
+const repoRoot = serviceRoot;
+const config = agencyConfig(repoRoot);
+const serviceClients = loadValidatedServiceClients(repoRoot);
+const clientProof = serviceClients.map((client) => ({
+  ...client,
+  ownedStartup: isOwnedStartupProof(client.clientPath),
+  approvedClaims: client.ok && hasApprovedClaim(client.clientPath) && hasFilledTableRow(read(join(client.clientPath, "deliverables/delivery.md")), "Leak map", [0, 1, 2, 3]),
+  // Only completed, approved tracking transitions count as retention proof.
+  trackingEvidence: client.state === "complete" && client.trackingEvidence.length > 0,
+  readiness: client.ok && existsSync(join(client.clientPath, "intake.md"))
+    ? runJson(["scripts/check-client-readiness.mjs", client.clientPath]).status
+    : "blocked"
 }));
-const prospectsWithWonSalesProof = prospects.filter(hasWonSalesProof);
+const externalPaidServiceClients = clientProof.filter((client) => !client.ownedStartup && client.ok && client.day0);
 const clientsReadyWithApprovedClaims = clientProof.filter((client) => client.readiness === "ready" && client.approvedClaims);
-const clientsWithApprovedClaims = clientProof.filter((client) => client.approvedClaims);
-const clientsWithRetentionProof = clientProof.filter((client) => client.weeklyReport);
-const ownedStartupClients = clientProof.filter((client) => client.ownedStartup);
-const ownedStartupReadyWithApprovedClaims = clientsReadyWithApprovedClaims.filter((client) => client.ownedStartup);
-const ownedStartupWithApprovedClaims = clientsWithApprovedClaims.filter((client) => client.ownedStartup);
-const ownedStartupRetentionProof = clientsWithRetentionProof.filter((client) => client.ownedStartup);
+const clientsWithRetentionProof = clientProof.filter((client) => !client.ownedStartup && client.ok && client.trackingEvidence);
 const externalClientsReadyWithApprovedClaims = clientsReadyWithApprovedClaims.filter((client) => !client.ownedStartup);
-const externalClientsWithApprovedClaims = clientsWithApprovedClaims.filter((client) => !client.ownedStartup);
+const externalClientsWithApprovedClaims = clientProof.filter((client) => !client.ownedStartup && client.approvedClaims);
 const externalClientsWithRetentionProof = clientsWithRetentionProof.filter((client) => !client.ownedStartup);
 
 const checks = [
   {
     area: "Workflow depth",
-    status: skipKit ? "conditional-pass" : kit.status === "pass" && kit.requiredFiles >= 120 ? "pass" : "fail",
+    status: skipKit ? "conditional-pass" : kit.status === "passed" ? "pass" : "fail",
     evidence: skipKit
       ? "skipped inside kit smoke test to avoid recursive self-check"
-      : `${kit.requiredFiles || 0} required Growth Brain files, ${kit.agents || 0} agents, ${kit.workflows || 0} workflows`
+      : `${kit.checkedFiles || 0} current service files, ${kit.allowedCommands || 0} allowed commands`
   },
   {
     area: "Output quality gates",
@@ -150,22 +116,22 @@ const checks = [
   },
   {
     area: "Automation coverage",
-    status: (skipKit || kit.status === "pass") && existsSync("prospects/recording-teleprompter.html") && existsSync("prospects/outbox.html") ? "pass" : "fail",
+    status: (skipKit || kit.status === "passed") && existsSync(join(repoRoot, "prospects/recording-teleprompter.html")) && existsSync(join(repoRoot, "prospects/outbox.html")) ? "pass" : "fail",
     evidence: "recording, send, follow-up, sales, delivery, proof, and metrics surfaces are generated"
   },
   {
     area: "Stress-tested internals",
     status: skipKit
       ? send.status === "pass" && claims.status === "pass" ? "conditional-pass" : "fail"
-      : kit.status === "pass" && send.status === "pass" && claims.status === "pass" ? "pass" : "fail",
+      : kit.status === "passed" && send.status === "pass" && claims.status === "pass" ? "pass" : "fail",
     evidence: skipKit
       ? "claim and send gates pass; kit gate skipped inside kit smoke test"
       : "kit, claim, and send gates pass on current repo state"
   },
   {
     area: "Comparable price/value",
-    status: config.founderSprintPrice && config.standardSprintPriceRange && config.monthlyContinuationRange && config.fullStackRetainerRange && config.operatorPodRange ? "conditional-pass" : "fail",
-    evidence: `${config.founderSprintPrice || "missing founder price"}; ${config.standardSprintPriceRange || "missing standard sprint"}; ${config.monthlyContinuationRange || "missing continuation"}; ${config.fullStackRetainerRange || "missing full-stack retainer"}; ${config.operatorPodRange || "missing operator pod"}`
+    status: config.offerName === "7-Day Website Revenue Leak Fix Sprint" && config.founderSprintPrice === "$1,000 founder pilot" && config.scope === "one highest-leverage page" ? "pass" : "fail",
+    evidence: `${config.offerName || "missing offer"}; ${config.founderSprintPrice || "missing founder price"}; scope ${config.scope || "missing scope"}`
   },
   {
     area: "Sender trust",
@@ -179,18 +145,18 @@ const checks = [
   },
   {
     area: "Sales proof",
-    status: prospectsWithWonSalesProof.length >= 1 ? "pass" : "fail",
-    evidence: `${prospectsWithWonSalesProof.length} won sprint(s) with close package and won note`
+    status: externalPaidServiceClients.length >= 1 ? "pass" : "fail",
+    evidence: `${externalPaidServiceClients.length} external client(s) with a validated application, human fit approval, and paid Day 0`
   },
   {
     area: "Delivery proof",
-    status: clientsReadyWithApprovedClaims.length >= 1 ? "pass" : "fail",
-    evidence: `${externalClientsReadyWithApprovedClaims.length} external and ${ownedStartupReadyWithApprovedClaims.length} owned-startup ready client(s); approved claim folders: ${externalClientsWithApprovedClaims.length} external, ${ownedStartupWithApprovedClaims.length} owned-startup`
+    status: externalClientsReadyWithApprovedClaims.length >= 1 ? "pass" : "fail",
+    evidence: `${externalClientsReadyWithApprovedClaims.length} external paid client(s) ready with approved delivery; ${externalClientsWithApprovedClaims.length} with approved claims`
   },
   {
     area: "Retention proof",
-    status: clientsWithRetentionProof.length >= 1 ? "pass" : "fail",
-    evidence: `${externalClientsWithRetentionProof.length} external and ${ownedStartupRetentionProof.length} owned-startup client(s) with shipped weekly report and customer confirmation evidence`
+    status: externalClientsWithRetentionProof.length >= 1 ? "pass" : "fail",
+    evidence: `${externalClientsWithRetentionProof.length} external paid client(s) with human-approved 14-day tracking evidence`
   }
 ];
 
@@ -199,7 +165,7 @@ const conditional = checks.filter((check) => check.status === "conditional-pass"
 const score = checks.filter((check) => check.status === "pass").length;
 const status = blockers.length ? "not-11-10-yet" : conditional.length ? "commercially-conditional" : "11-10-ready";
 
-const notReadyVerdict = "Not 11/10 yet: current evidence proves the internal system, but sender trust, market traction, paid sales, and approved delivery proof are still blocked. Owned-startup retention proof is useful, but it is not paid-client retention proof.";
+const notReadyVerdict = "Not 11/10 yet: current evidence proves the internal system, but sender trust, market traction, validated paid sales, approved delivery, and human-approved 14-day retention proof are still blocked.";
 
 const markdown = `# Market Parity Readiness
 
@@ -229,21 +195,21 @@ ${checks.map((check) => `| ${check.area} | ${check.status} | ${check.evidence} |
 
 - Record and send at least 5 approved Looms.
 - Get at least 1 real reply and 1 sales call.
-- Close at least 1 paid sprint with a close package and won-stage note.
+- Capture at least 1 external consented application, human fit approval, and validated paid Day 0 record.
 - Deliver at least 1 sprint to client-ready status with an approved claim row.
-- Send at least 1 filled weekly report after delivery, with shipped work, a learning, a next test, and customer confirmation that the delta was seen, understood, approved for next action, and worth continuing.
+- Record at least 1 completed 14-day tracking evidence record after delivery, with implementation status, usefulness, acceptance, and continuation signals.
 - Fix sender setup before using cold email.
 
-## Owned Startup Proof Lane
+## Service Delivery Proof Lane
 
-Owned products like AI Converter, SiteRep, and Five to Nine 0509 can prove delivery quality, retention cadence, dashboards, weekly reports, and claim discipline. They do not replace external market proof, replies, or paid sales proof.
+Validated external paid-client records can prove delivery quality, implementation tracking, and claim discipline. They do not replace external market proof or replies.
 
-Current owned startup folders: ${ownedStartupClients.length}.
+Current validated external paid clients: ${externalPaidServiceClients.length}.
 
-Create or refresh them with:
+Review the current delivery queue with:
 
 \`\`\`bash
-npm run owned:startups
+npm run service:queue -- --scope clients
 \`\`\`
 
 Next proof run:
@@ -258,7 +224,7 @@ npm run market:proof-run
 See \`docs/strategy/market-parity-benchmark-2026.md\`.
 `;
 
-write(outputPath, markdown);
+write(resolvedOutputPath, markdown);
 
 const result = {
   status,

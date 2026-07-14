@@ -4,6 +4,7 @@ import { join } from "node:path";
 import { addIsoBusinessDays, localIsoDate } from "./date-utils.mjs";
 import { isValidLoomUrl } from "./lib/loom-url.mjs";
 import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
+import { guardOutboundProspectPath } from "./lib/outbound-prospects.mjs";
 
 const args = process.argv.slice(2);
 const prospectPath = args[0];
@@ -57,6 +58,8 @@ if (!existsSync(prospectPath)) {
   console.error(`Prospect folder not found: ${prospectPath}`);
   process.exit(1);
 }
+
+guardOutboundProspectPath(prospectPath);
 
 function read(relativePath) {
   const path = join(prospectPath, relativePath);

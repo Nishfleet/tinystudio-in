@@ -1,24 +1,20 @@
 #!/usr/bin/env node
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { execFileSync } from "node:child_process";
 import { localIsoDate } from "./date-utils.mjs";
+import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
+import { runRepoJson as runJson } from "./lib/runtime-roots.mjs";
 
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const htmlArg = process.argv.find((arg) => arg.startsWith("--html="));
 const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
-const outputPath = outputArg ? outputArg.split("=").slice(1).join("=") : "growth-brain/ops/market-learning-review.md";
-const htmlPath = htmlArg ? htmlArg.split("=").slice(1).join("=") : "growth-brain/ops/market-learning-review.html";
+const outputPath = outputArg ? outputArg.split("=").slice(1).join("=") : "runs/market-learning-review.md";
+const htmlPath = htmlArg ? htmlArg.split("=").slice(1).join("=") : "runs/market-learning-review.html";
 const limit = limitArg ? Number(limitArg.split("=").slice(1).join("=")) : 10;
 const today = localIsoDate();
 
 function listFolders(root) {
-  if (!existsSync(root)) return [];
-  return readdirSync(root, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .filter((entry) => !/^(kit|import)-smoke/.test(entry.name))
-    .map((entry) => join(root, entry.name))
-    .sort();
+  return listOutboundProspectFolders(root).filter((path) => !/(^|\/)(?:kit|import)-smoke/.test(path));
 }
 
 function read(path) {
@@ -33,14 +29,6 @@ function write(path, content) {
   const dir = path.split("/").slice(0, -1).join("/");
   if (dir) mkdirSync(dir, { recursive: true });
   writeFileSync(path, content);
-}
-
-function runJson(args) {
-  const output = execFileSync("node", args, {
-    encoding: "utf8",
-    stdio: ["ignore", "pipe", "pipe"]
-  });
-  return JSON.parse(output);
 }
 
 function lineValue(content, pattern, fallback = "") {
@@ -246,7 +234,7 @@ ${experimentMarkdown}
 
 - No reply-rate conclusion before at least 5 real sent touches and due follow-ups are complete.
 - No market-proof claim until \`npm run market:proof-check\` reaches \`sent-proof-captured\`.
-- No sales-proof claim until a reply becomes a call, close package, and won sprint.
+- No sales-proof claim until a consented application passes human fit review and reaches paid Day 0.
 - Use \`prospects/followup-cockpit.html\` for due follow-ups before judging a batch.
 - Every lost or paused prospect needs a note so the next batch learns something.
 `;
@@ -277,6 +265,7 @@ const html = `<!doctype html>
   <header>
     <p class="status">${htmlEscape(review.status)}</p>
     <h1>Market Learning Review</h1>
+    <p>Generated ${htmlEscape(today)}</p>
     <p>${htmlEscape(review.summary)}</p>
     <pre>${htmlEscape(review.nextCommand)}</pre>
   </header>

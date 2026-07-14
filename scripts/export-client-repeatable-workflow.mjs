@@ -10,7 +10,7 @@ const htmlArg = args.find((arg) => arg.startsWith("--html="));
 const today = localIsoDate();
 
 if (!clientPath) {
-  console.error("Usage: npm run client:workflow -- clients/client-slug");
+  console.error("Usage: node scripts/export-client-repeatable-workflow.mjs clients/client-slug");
   process.exit(1);
 }
 

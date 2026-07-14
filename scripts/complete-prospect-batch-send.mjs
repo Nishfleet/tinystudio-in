@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
+import { assertOutboundProspectPath } from "./lib/outbound-prospects.mjs";
 import { localIsoDate } from "./date-utils.mjs";
 import { isValidLoomUrl, loomUrlError } from "./lib/loom-url.mjs";
 import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
@@ -114,6 +115,12 @@ for (const row of rows) {
   }
   if (!existsSync(row.path)) {
     skipped.push({ ...row, reason: "prospect folder not found" });
+    continue;
+  }
+  try {
+    assertOutboundProspectPath(row.path);
+  } catch (error) {
+    skipped.push({ ...row, reason: error.message });
     continue;
   }
   const rowChannel = row.channel || defaultChannel;

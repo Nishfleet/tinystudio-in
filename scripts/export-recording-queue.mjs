@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 import { checkProspectReadiness, prospectWarningWeight } from "./lib/prospect-readiness.mjs";
 
 const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
@@ -9,11 +10,7 @@ const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const outputPath = outputArg ? outputArg.split("=")[1] : "prospects/recording-queue.md";
 
 function listFolders(root) {
-  if (!existsSync(root)) return [];
-  return readdirSync(root, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => join(root, entry.name))
-    .sort();
+  return listOutboundProspectFolders(root);
 }
 
 function read(relativePath) {

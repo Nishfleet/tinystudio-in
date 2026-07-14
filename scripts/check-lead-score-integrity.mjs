@@ -1,13 +1,10 @@
 #!/usr/bin/env node
-import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
+import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 
 function listFolders(root) {
-  if (!existsSync(root)) return [];
-  return readdirSync(root, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => join(root, entry.name))
-    .sort();
+  return listOutboundProspectFolders(root);
 }
 
 function read(path) {

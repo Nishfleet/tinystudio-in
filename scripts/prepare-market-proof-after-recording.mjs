@@ -19,13 +19,13 @@ const inputPath = argValue("input");
 const fromClipboard = args.includes("--from-clipboard");
 const dryRun = args.includes("--dry-run");
 const limit = Number(argValue("limit", "5"));
-const reportPath = argValue("report", "growth-brain/ops/market-after-recording.md");
-const recordingsReportPath = argValue("recordings-report", "growth-brain/ops/market-recordings-update.md");
+const reportPath = argValue("report", "runs/market-after-recording.md");
+const recordingsReportPath = argValue("recordings-report", "runs/market-recordings-update.md");
 const packagePath = argValue("package", "prospects/batch-send-package.md");
 const outboxPath = argValue("outbox", "prospects/outbox.html");
-const proofOutputPath = argValue("proof-output", "growth-brain/ops/market-proof-cockpit.md");
-const proofHtmlPath = argValue("proof-html", "growth-brain/ops/market-proof-cockpit.html");
-const checkOutputPath = argValue("check-output", "growth-brain/ops/market-proof-run-check.md");
+const proofOutputPath = argValue("proof-output", "runs/market-proof-cockpit.md");
+const proofHtmlPath = argValue("proof-html", "runs/market-proof-cockpit.html");
+const checkOutputPath = argValue("check-output", "runs/market-proof-run-check.md");
 const today = localIsoDate();
 
 function write(path, content) {

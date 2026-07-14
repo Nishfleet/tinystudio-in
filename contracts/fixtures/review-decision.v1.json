@@ -1,0 +1,15 @@
+{
+  "contract": "tinystudio.review-decision",
+  "schemaVersion": 1,
+  "schemaDigest": "e12f83e8bb24f180209634e89143d6b27606397f2d241516d65cb8ab45aa9a24",
+  "applicationId": "018f5a54-84aa-7ae0-a1fd-4da350490770",
+  "sourceHash": "6e94e889ad81b3bb160d5be87f7791f7b976857a086ad29d0941a46ff347522f",
+  "packetHash": "01c6d23806f6d6ebefc92c5703b0678786b702090d18f2859b8d1e1328f06a50",
+  "queueInputHash": "410ec74140b8ac899126252a698cd2f4a361b0bf6884814f7e7679a6f3e1c5d2",
+  "reviewerLabel": "Fixture Reviewer",
+  "decision": "approve",
+  "note": "Fit and evidence reviewed for the sanitized end-to-end fixture",
+  "decidedAt": "2026-07-13T10:00:00.000Z",
+  "decisionNonce": "028f5a54-84aa-7ae0-a1fd-4da350490771",
+  "decisionHash": "e012cd3cfcc2d25d8d2cd8861ed44187523dc864cc13f1e58ae4bac440eda0f5"
+}

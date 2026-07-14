@@ -16,7 +16,7 @@ For the concise owner dashboard with next actions, pending work, to-dos, retenti
 npm run growth:dashboard
 ```
 
-The generated dashboard is `growth-brain/ops/internal-dashboard.html`.
+The private generated dashboard is `runs/internal-dashboard.html`.
 
 ## Sales Funnel
 

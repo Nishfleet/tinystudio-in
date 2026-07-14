@@ -2,6 +2,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
+import { guardOutboundProspectPath } from "./lib/outbound-prospects.mjs";
 
 const args = process.argv.slice(2);
 const prospectPath = args.find((arg) => !arg.startsWith("--"));
@@ -19,6 +20,8 @@ if (!existsSync(prospectPath)) {
   console.error(`Prospect folder not found: ${prospectPath}`);
   process.exit(1);
 }
+
+guardOutboundProspectPath(prospectPath);
 
 function json(path) {
   return existsSync(path) ? JSON.parse(readFileSync(path, "utf8")) : {};

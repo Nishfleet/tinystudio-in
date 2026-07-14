@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tinystudio.io/contracts/review-decision.v1.schema.json",
+  "title": "TinyStudio Review Decision v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract", "schemaVersion", "schemaDigest", "applicationId", "sourceHash", "packetHash", "queueInputHash", "reviewerLabel", "decision", "note", "decidedAt", "decisionNonce", "decisionHash"],
+  "properties": {
+    "contract": { "const": "tinystudio.review-decision" },
+    "schemaVersion": { "const": 1 },
+    "schemaDigest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "applicationId": { "type": "string", "format": "uuid" },
+    "sourceHash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "packetHash": { "type": "string", "pattern": "^$|^[a-f0-9]{64}$" },
+    "queueInputHash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "reviewerLabel": { "type": "string", "minLength": 2, "maxLength": 120 },
+    "decision": { "enum": ["approve", "decline", "needs-info"] },
+    "note": { "type": "string", "minLength": 3, "maxLength": 1200 },
+    "decidedAt": { "type": "string", "format": "date-time" },
+    "decisionNonce": { "type": "string", "format": "uuid" },
+    "decisionHash": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  }
+}

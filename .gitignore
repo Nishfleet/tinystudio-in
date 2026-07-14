@@ -12,9 +12,34 @@ previews/
 private-previews/
 runs/
 runtime/backups/
+# Legacy tracked locations for private operator detail. Live versions belong in
+# ignored runs/ so prospect and client identifiers cannot enter git snapshots.
+growth-brain/ops/daily-money-mission.md
+growth-brain/ops/daily-money-mission.html
+growth-brain/ops/growth-cockpit.html
+growth-brain/ops/growth-doctor.md
+growth-brain/ops/internal-dashboard.md
+growth-brain/ops/internal-dashboard.html
+growth-brain/ops/market-proof-run-check.md
+growth-brain/ops/market-proof-cockpit.md
+growth-brain/ops/market-proof-cockpit.html
+growth-brain/ops/market-learning-review.md
+growth-brain/ops/market-learning-review.html
+# Superseded SaaS, retainer, and owned-product reports are historical only.
+# Ignore their former active paths so retired generators cannot restore them.
+growth-brain/ops/full-stack-growth-map.*
+growth-brain/ops/metrics-dashboard.md
+growth-brain/ops/owned-*.md
+growth-brain/ops/owned-*.html
+growth-brain/ops/retention-*
+growth-brain/ops/value-retention-stress-test.md
+growth-brain/ops/weekly-client-value-loop.md
+# Canonical private service state is intentionally untracked; export it outside
+# this repository with `npm run service:backup` after every state mutation.
 clients/
 prospects/
 prospect-imports/
+service-decisions/
 
 # Local logs and temporary files.
 *.log

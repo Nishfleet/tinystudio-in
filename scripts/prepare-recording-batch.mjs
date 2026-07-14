@@ -1,8 +1,9 @@
 #!/usr/bin/env node
-import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { join } from "node:path";
 import { checkProspectReadiness, prospectWarningWeight } from "./lib/prospect-readiness.mjs";
+import { guardOutboundProspectPath, listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 
 const args = process.argv.slice(2);
 const limitArg = args.find((arg) => arg.startsWith("--limit="));
@@ -31,17 +32,12 @@ const paths = {
   teleprompter: outputPath("prospects/recording-teleprompter.html", "teleprompter.html"),
   rehearsal: outputPath("prospects/recording-rehearsal-check.md", "rehearsal-check.md"),
   rehearsalHtml: outputPath("prospects/recording-rehearsal-check.html", "rehearsal-check.html"),
-  mission: outputPath("growth-brain/ops/daily-money-mission.md", "mission.md"),
-  missionHtml: outputPath("growth-brain/ops/daily-money-mission.html", "mission.html")
+  mission: outputPath("runs/daily-money-mission.md", "mission.md"),
+  missionHtml: outputPath("runs/daily-money-mission.html", "mission.html")
 };
 
 function listFolders(root) {
-  if (!existsSync(root)) return [];
-  return readdirSync(root, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .filter((entry) => includeSmoke || !/^(kit|import)-smoke/.test(entry.name))
-    .map((entry) => join(root, entry.name))
-    .sort();
+  return listOutboundProspectFolders(root).filter((path) => includeSmoke || !/(^|\/)(?:kit|import)-smoke/.test(path));
 }
 
 function json(path) {
@@ -56,7 +52,12 @@ function runJson(commandArgs) {
   return JSON.parse(output);
 }
 
-const prospectFolders = onlyPaths.length ? onlyPaths : listFolders("prospects");
+const prospectFolders = onlyPaths.length
+  ? onlyPaths.map((path) => {
+      guardOutboundProspectPath(path);
+      return path;
+    })
+  : listFolders("prospects");
 
 const prospects = prospectFolders
   .map((path) => {

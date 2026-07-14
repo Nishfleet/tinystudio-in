@@ -2,6 +2,8 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { agencyConfig } from "./lib/agency-config.mjs";
+import { guardOutboundProspectPath } from "./lib/outbound-prospects.mjs";
+import { NO_GUARANTEE_CLIENT_SENTENCE } from "./lib/service-contract.mjs";
 
 const prospectPath = process.argv[2];
 
@@ -14,6 +16,8 @@ if (!existsSync(prospectPath)) {
   console.error(`Prospect folder not found: ${prospectPath}`);
   process.exit(1);
 }
+
+guardOutboundProspectPath(prospectPath);
 
 function read(relativePath) {
   const path = join(prospectPath, relativePath);
@@ -249,7 +253,7 @@ ${compactList(proof, 8)}
 - Keep the rhythm short: short sentence, breathe, land it.
 - Use specific page details instead of broad claims.
 - Ask for one next step.
-- Do not mention guaranteed revenue, rankings, ROAS, traffic, or conversion lift.
+- ${NO_GUARANTEE_CLIENT_SENTENCE}
 
 ## 20-Second Cold Open
 

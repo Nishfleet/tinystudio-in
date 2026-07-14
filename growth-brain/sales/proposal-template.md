@@ -1,69 +1,58 @@
-# Proposal Template
+# Proposal template
 
 ## Client
 
-- Name:
+- Company:
 - Website:
 - Main contact:
+- Approval owner:
+- Implementation owner:
 - Sprint dates:
 
-## Problem We Saw
+## Fit decision
 
-Write 3-5 bullets from the Loom audit:
+- Buyer is a founder-led Managed IT/MSP/cybersecurity company: [ ]
+- Live site and high-value offer: [ ]
+- One highest-leverage page named: [ ]
+- Required context received: [ ]
+
+## Problem we saw
+
+Describe the page leak and cite the evidence:
 
 -
 
-## Sprint Outcome
+## Sprint outcome
 
-By the end of 7 days, the client receives:
+The **7-Day Website Revenue Leak Fix Sprint** includes:
 
 - leak map
-- page or architecture fix
-- copy blocks
-- FAQ/trust recommendations
-- competitor notes
-- 30-day action plan
-- optional Weekly Growth Desk plan
+- rewrite or redesign of one highest-leverage page
+- one implementation pass or dev-ready handoff
+- search-trust basics
+- before/after proof
+- Loom walkthrough
+- measurement plan
+- one revision
+- 14-day implementation tracking
 
-## Scope
+## Timing
 
-Included:
+Day 0 starts only after payment, required context, approval owner, and implementation owner are confirmed. Client delay pauses the clock. Delivery runs for seven working days after Day 0.
 
-- Up to 3 priority pages reviewed.
-- Up to 5 competitor/reference pages reviewed.
-- One final Loom walkthrough.
-- One revision pass on client-facing copy.
+## Price and approval
 
-Not included:
+The first 3 clients are exactly **$1,000 founder pilots**.
 
-- Full website rebuild.
-- Direct publishing without approval.
-- Ad account management.
-- SEO ranking promises.
-- Unlimited revisions.
+- Payment link:
+- Payment received:
+- Approval owner:
+- Implementation owner:
 
-## Timeline
+## Boundaries
 
-| Day | Work |
-|---|---|
-| Day 1 | Intake and leak map |
-| Day 2 | Page or architecture fix |
-| Day 3 | Landing/offer refinement |
-| Day 4 | Ad/email starter assets |
-| Day 5 | Competitor watch |
-| Day 6 | Handoff package |
-| Day 7 | Report and next 30 days |
+We do not guarantee revenue, ranking, ROAS, conversion, booked-call, or sales-volume outcomes. Human review gates fit, claims, client-facing work, delivery/acceptance, and renewal. Automation prepares research, drafts, QA, packages, and routing; it never autonomously sends, publishes, spends, approves, accepts, or renews.
 
-## Price
+## Next step
 
-- Sprint price:
-- Payment due:
-- Payment method:
-
-## Approval Rules
-
-The client must approve all claims, proof, pricing, legal-sensitive content, and final publish-ready copy.
-
-## Next Step
-
-Reply with approval and payment confirmation. TinyStudio will create the client sprint folder and start intake.
+Approve the scope and payment. Work does not start until every Day-0 prerequisite is recorded.

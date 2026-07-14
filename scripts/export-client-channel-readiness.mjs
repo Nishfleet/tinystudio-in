@@ -8,7 +8,7 @@ const args = process.argv.slice(2);
 const clientPath = args.find((arg) => !arg.startsWith("--"));
 
 if (!clientPath) {
-  console.error("Usage: npm run client:channels -- clients/client-slug");
+  console.error("Usage: node scripts/export-client-channel-readiness.mjs clients/client-slug");
   process.exit(1);
 }
 

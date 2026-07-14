@@ -1,53 +1,36 @@
-# Message House
+# Message house
 
-## External Offer Name
+## External offer
 
-Tangible Revenue Leak Sprint + Search Trust Layer
+**7-Day Website Revenue Leak Fix Sprint**
 
-## Internal System Name
+## Buyer
 
-TinyStudio Growth Brain
+Founder-led Managed IT/MSP/cybersecurity companies with a live site and high-value offer.
 
-## Why
+## One-liner
 
-Prospects do not wake up wanting a "growth brain". They understand site leaks, lost leads, unclear service pages, low-trust search presence, and wasted content/ads. Growth Brain is the operating system behind the scenes.
+TinyStudio fixes the one highest-leverage page where a managed IT or cybersecurity buyer is getting stuck, then leaves a proof-backed implementation path.
 
-## One-Liner
+## What to say
 
-TinyStudio finds where your website is leaking qualified action, fixes buyer clarity first, then adds the on-site search trust layer in one week.
+“We map the leak, rewrite or redesign one page, complete one implementation pass or give your developer a ready handoff, add search-trust basics, and track implementation for 14 days.”
 
-## Short Pitch
+## Pilot price
 
-"I run a Tangible Revenue Leak Sprint + Search Trust Layer. I fix the money-page clarity first, then tighten title/meta, headings, internal links, FAQs, proof, schema where useful, and crawl basics so buyers and search systems understand the offer."
+The first 3 clients are exactly **$1,000 founder pilots**.
 
-## Retainer Name
+## Review boundary
 
-Weekly Growth Desk
+Human review gates fit, claims, client-facing work, delivery/acceptance, and renewal. Automation prepares research, drafts, QA, packages, and routing; it never autonomously sends, publishes, spends, approves, accepts, or renews.
 
-## Retainer Pitch
+## Never say
 
-"After the sprint, I can keep the weekly growth loop moving: review performance, pick the next best action, ship one improvement, update the client brain, and keep competitor/search visibility notes current."
+- revenue, ranking, ROAS, conversion, booked-call, or sales-volume guarantees
+- software or additional-service availability
+- more than one page in this sprint
+- out-of-scope channel deliverables
 
-## Forbidden Front-Facing Phrases
+## Proof language
 
-- AI marketing agency
-- full-service agency
-- growth hacking
-- guaranteed rankings
-- guaranteed revenue
-- 10x results
-- done-for-you everything
-
-## Approved Front-Facing Phrases
-
-- site revenue leak
-- tangible revenue leak
-- search trust layer
-- money page
-- service-page hierarchy
-- buyer clarity
-- conversion first
-- implementation-ready fixes
-- real trust/distribution
-- weekly growth desk
-- client brain
+Use the leak map, before/after proof, Loom, measurement plan, and 14-day tracking record. Name what is known, what is proposed, and what still needs client approval.

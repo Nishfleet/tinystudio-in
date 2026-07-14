@@ -1,44 +1,37 @@
-# Managed IT One-Page Offer
+# Managed IT one-page offer
 
-## Audience
+## Who this is for
 
-Texas managed IT, cybersecurity, and compliance providers whose websites already have service depth but make buyers work too hard to choose the right path.
+Founder-led Managed IT/MSP/cybersecurity companies with a live site and high-value offer. We choose the one highest-leverage page where buyer clarity, proof, or implementation is blocked.
 
-## Problem
+## The offer
 
-Most MSP sites try to sell managed IT, cybersecurity, cloud, compliance, helpdesk, and industries at the same level. That can make the site harder for buyers, search engines, and AI answer engines to understand.
+**7-Day Website Revenue Leak Fix Sprint**
 
-## Offer
+One human-reviewed page fix, delivered as a rewrite or redesign plus one implementation pass or a dev-ready handoff.
 
-Tangible Revenue Leak Sprint + Search Trust Layer for Managed IT and Cybersecurity Providers
+## Included
 
-## What TinyStudio Fixes
+- leak map
+- rewrite or redesign of one highest-leverage page
+- one implementation pass or dev-ready handoff
+- search-trust basics
+- before/after proof
+- Loom walkthrough
+- measurement plan
+- one revision
+- 14-day implementation tracking
 
-- Homepage hierarchy around the primary buying intent.
-- Service-page paths for managed IT, cybersecurity, compliance, and cloud.
-- Above-the-fold copy, proof blocks, CTAs, FAQ, and trust sections.
-- Search trust cleanup: title/meta, headings, internal links, useful schema, crawl basics, and service-area relevance.
-- Real off-site trust/distribution plan: citations, Google Business Profile, partner/vendor listings, reviews, proof assets, useful citeable pages, and real PR/community mentions.
-- Competitor and AI/search visibility phrase notes.
-- Implementation-ready copy blocks and a 30-day action plan.
+## Pilot price
 
-## Scope
+The first 3 clients are exactly **$1,000 founder pilots**.
 
-- Up to 3 priority pages reviewed.
-- Up to 5 competitor/reference pages reviewed.
-- One final Loom walkthrough.
-- One revision pass on client-facing copy.
+## Day 0 and review
 
-## Price
+Day 0 starts only after payment, required context, approval owner, and implementation owner are confirmed. Client delay pauses the clock. Human review gates fit, claims, client-facing work, delivery/acceptance, and renewal.
 
-- First proof sprint: `$1,000`.
-- Standard sprint: `$2,500-$5,000`.
-- Weekly Growth Desk after the sprint: `$2,000-$5,000/month`.
+Automation prepares research, drafts, QA, packages, and routing; it never autonomously sends, publishes, spends, approves, accepts, or renews.
 
-## Not Promised
+## Honest boundary
 
-TinyStudio does not promise revenue, rankings, ROAS, conversion lift, or sales volume, and does not buy backlinks or create fake mentions. The promise is a clearer site structure, sharper buyer-facing copy, implementation-ready assets, real search trust improvements, and a practical next action plan.
-
-## Call To Action
-
-Send the website and 2-3 competitors. TinyStudio will say whether the sprint is worth doing before asking for payment.
+We do not guarantee revenue, ranking, ROAS, conversion, booked-call, or sales-volume outcomes. Send the website and identify the page that feels most expensive to leave unclear; TinyStudio will confirm fit before payment.

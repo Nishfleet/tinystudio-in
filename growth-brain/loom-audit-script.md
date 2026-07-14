@@ -1,46 +1,32 @@
-# Loom Audit Script
+# Loom audit script
 
-Target length: 2-3 minutes for cold outreach. Save longer walkthroughs for warm replies or paid delivery.
-
-Before recording, use `recording-sharpness-brief.md` for the angle, direct-response slide, So-What chain, and proof guardrails. If it is missing or stale, run:
-
-```bash
-npm run prospect:brief -- prospects/prospect-slug
-npm run prospect:script -- prospects/prospect-slug
-```
+Target length: 2-3 minutes. Use only public, attributable evidence.
 
 ## Structure
 
-1. Open with the business name and the reason you picked them.
-2. Show the first conversion leak on their website.
-3. Show one proof or trust issue.
-4. Show one offer or CTA issue.
-5. Show one competitor doing something worth learning from.
-6. Show the exact asset you would improve first.
-7. Close with the Tangible Revenue Leak Sprint + Search Trust Layer offer.
-
-## Opening
-
-"Hey [Name], I recorded this because I think your product is already interesting, but your marketing is probably leaving easy clarity on the table. I am going to keep this practical and show you the first few things I would fix."
+1. Name the founder-led Managed IT/MSP/cybersecurity company and the one page reviewed.
+2. Show one observed buyer-clarity or trust leak.
+3. Explain its likely buyer impact as a hypothesis, not a measured fact.
+4. Show the first page fix.
+5. Explain what evidence would validate it.
+6. Invite the founder to the **7-Day Website Revenue Leak Fix Sprint**.
 
 ## Close
 
-"If useful, I can run a Tangible Revenue Leak Sprint + Search Trust Layer for you. I would build a working marketing brain from your site, reviews, ads, emails, competitors, and analytics, then deliver buyer-clarity fixes, search trust cleanup, ad angles, email drafts, and a 30-day plan. I am taking the first 3 clients at founder pricing."
+"If this is useful, TinyStudio can fix this one highest-leverage page through a human-reviewed 7-Day Website Revenue Leak Fix Sprint. The first 3 clients receive the $1,000 founder pilot. It includes the leak map, rewrite or redesign, one implementation pass or dev-ready handoff, search-trust basics, before/after proof, Loom, measurement plan, one revision, and 14-day implementation tracking. Day 0 starts after payment, context, an approval owner, and an implementation owner are ready. Client delay pauses the clock. There are no revenue, ranking, ROAS, conversion, booked-call, or sales-volume guarantees."
 
-## Short Email
+## Message
 
-Subject: Quick audit for [Brand]
+Subject: One page I would fix on [Company]
 
 Hey [Name],
 
-I recorded a short audit for [Brand]. The main thing I noticed is [specific leak].
+I recorded a short review of [page]. The main observed leak is [specific leak], and the first fix I would test is [specific fix].
 
-Here is the Loom: [link]
+Loom: [link]
 
-If this is useful, I can run a Tangible Revenue Leak Sprint + Search Trust Layer where I build your marketing brain and turn it into page fixes, search trust cleanup, ad angles, email drafts, and a 30-day action plan.
+If it is useful, I can send the exact scope for TinyStudio's human-reviewed 7-Day Website Revenue Leak Fix Sprint. A person reviews fit and every client-facing claim.
 
 Nish
 
-## DM Version
-
-Hey [Name], I made a quick audit for [Brand]. Not a generic pitch. I found [specific leak] and showed the first fix I would make. Want me to send it?
+Automation may prepare this draft, but a human must review it and send it.

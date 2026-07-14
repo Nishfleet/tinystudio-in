@@ -2,9 +2,73 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { agencyConfig } from "./lib/agency-config.mjs";
+import { FOUNDER_PILOT } from "./lib/client-scaffold.mjs";
+import { serviceRecordPaths } from "./lib/review-queue.mjs";
+import { NO_GUARANTEE_CLIENT_SENTENCE } from "./lib/service-contract.mjs";
+import { resolveRepoPath } from "./lib/service-contract.mjs";
+import { guardOutboundProspectPath } from "./lib/outbound-prospects.mjs";
 
 const args = process.argv.slice(2);
-const prospectPath = args[0];
+const prospectArg = args[0];
+const repoRoot = process.env.SERVICE_REPO_ROOT || process.cwd();
+
+function founderPilotPrice() {
+  return `$${FOUNDER_PILOT.offerPriceUsd.toLocaleString("en-US")} founder pilot`;
+}
+
+function canonicalScope() {
+  return `- Sprint: ${FOUNDER_PILOT.offerName}
+- Scope: one highest-leverage page
+- Timeline: 7 working days from Day 0
+- Price: ${founderPilotPrice()}`;
+}
+
+function assertCanonicalSalesContract(config) {
+  if (
+    config.offerName !== FOUNDER_PILOT.offerName ||
+    config.founderSprintPrice !== founderPilotPrice() ||
+    config.firstClientCount !== FOUNDER_PILOT.capacity ||
+    config.scope !== "one highest-leverage page"
+  ) {
+    throw new Error("active sales configuration must match the immutable first-three $1,000 founder-pilot contract");
+  }
+}
+
+function assertFounderPilotSlot() {
+  const paidPilotCount = serviceRecordPaths(repoRoot, "clients").length;
+  if (paidPilotCount >= FOUNDER_PILOT.capacity) {
+    throw new Error(`founder pilot capacity is complete after ${FOUNDER_PILOT.capacity} paid clients; a human-reviewed post-pilot offer is required before close prep or payment`);
+  }
+  return FOUNDER_PILOT.capacity - paidPilotCount;
+}
+
+function runSalesGuard(action) {
+  try {
+    return action();
+  } catch (error) {
+    console.error(`prospect:close-prep failed: ${error instanceof Error ? error.message : String(error)}`);
+    process.exit(1);
+  }
+}
+
+function assertNoAlternatePrice(value, name) {
+  for (const match of value.matchAll(/\$\s*(\d[\d,]*(?:\.\d{1,2})?)/g)) {
+    const amount = Number(match[1].replace(/,/g, ""));
+    if (amount !== FOUNDER_PILOT.offerPriceUsd) {
+      throw new Error(`${name} contains a noncanonical founder-pilot price`);
+    }
+  }
+}
+
+function validatePaymentLink(value) {
+  if (!value) return "";
+  let parsed;
+  try { parsed = new URL(value); } catch { throw new Error("payment must be an HTTP(S) URL"); }
+  if (!["http:", "https:"].includes(parsed.protocol) || parsed.username || parsed.password) {
+    throw new Error("payment must be an HTTP(S) URL without credentials");
+  }
+  return value;
+}
 
 function option(name) {
   const index = args.indexOf(`--${name}`);
@@ -17,15 +81,19 @@ const rawPaymentLink = option("payment");
 const rawNextStepOverride = option("next-step");
 const force = args.includes("--force");
 
-if (!prospectPath) {
-  console.error("Usage: npm run prospect:close-prep -- prospects/prospect-slug [--price \"$1,000\"] [--payment \"https://...\"] [--note \"...\"] [--next-step \"...\"] [--force]");
+if (!prospectArg) {
+  console.error("Usage: npm run prospect:close-prep -- prospects/prospect-slug [--payment \"https://...\"] [--note \"...\"] [--next-step \"...\"] [--force]");
   process.exit(1);
 }
+
+const prospectPath = runSalesGuard(() => resolveRepoPath(repoRoot, prospectArg));
 
 if (!existsSync(prospectPath)) {
   console.error(`Prospect folder not found: ${prospectPath}`);
   process.exit(1);
 }
+
+runSalesGuard(() => guardOutboundProspectPath(prospectPath));
 
 function read(relativePath) {
   const path = join(prospectPath, relativePath);
@@ -54,32 +122,43 @@ function trimPunctuation(value) {
 
 const metadata = json("metadata.json");
 const pipeline = json("pipeline.json");
-const config = agencyConfig();
+const config = runSalesGuard(() => {
+  const activeConfig = agencyConfig(repoRoot);
+  assertCanonicalSalesContract(activeConfig);
+  return activeConfig;
+});
 
 if (!force && !["call-booked", "won"].includes(pipeline.stage || "")) {
   console.error("Close prep requires a call-booked or won prospect. Use --force only for explicit recovery.");
   process.exit(1);
 }
 
-const priceOverride = rawPriceOverride;
-const paymentLink = rawPaymentLink.trim() === config.paymentPlaceholder || /^add payment link$/i.test(rawPaymentLink.trim()) ? "" : rawPaymentLink;
+const price = founderPilotPrice();
+if (rawPriceOverride && rawPriceOverride !== price) {
+  console.error(`Close prep price is immutable during the founder pilot: ${price}.`);
+  process.exit(1);
+}
+const pilotSlotsRemaining = runSalesGuard(assertFounderPilotSlot);
+const requestedPaymentLink = rawPaymentLink.trim() === config.paymentPlaceholder || /^add payment link$/i.test(rawPaymentLink.trim()) ? "" : rawPaymentLink;
+const paymentLink = runSalesGuard(() => {
+  assertNoAlternatePrice(requestedPaymentLink, "payment");
+  return validatePaymentLink(requestedPaymentLink);
+});
 const nextStepOverride = /^add next step$/i.test(rawNextStepOverride.trim()) ? "" : rawNextStepOverride;
+runSalesGuard(() => assertNoAlternatePrice(nextStepOverride, "next-step"));
 const name = metadata.name || prospectPath.split("/").at(-1);
 const website = metadata.website || "";
 const contact = metadata.contact || "";
 const loomOutline = read("loom-outline.md");
 const buyerRoom = read("buyer-room.md");
 const valueCalculator = read("value-calculator.md");
-const salesCallPrep = read("sales-call-prep.md");
 
 const mainPage = lineValue(loomOutline, /^2\. [^\n:]+:[ \t]*([^\n]*)$/m, "the main money page");
 const specificLeak = lineValue(loomOutline, /^3\. [^\n:]+:[ \t]*([^\n]*)$/m, "the page is making the buyer work too hard");
 const firstFix = lineValue(loomOutline, /^6\. [^\n:]+:[ \t]*([^\n]*)$/m, "the first implementation-ready fix");
-const priceFromBuyerRoom = lineValue(buyerRoom, /^- Price:[ \t]*([^\n]*)$/m, "");
-const price = priceOverride || priceFromBuyerRoom || config.founderSprintPrice;
 const payback = section(valueCalculator, "Payback", "- Payback customers needed:");
 const leakBullets = section(buyerRoom, "What I Saw", `- Leak 1: ${specificLeak}`);
-const scope = section(buyerRoom, "Scope", `- Sprint: ${config.offerName}\n- Timeline: 7 days\n- Price: ${price}`);
+const scope = canonicalScope();
 const nextStep = nextStepOverride || (paymentLink ? `Complete payment here: ${paymentLink}` : "Reply approved and I will send the payment link.");
 const leakFragment = trimPunctuation(specificLeak);
 
@@ -95,14 +174,14 @@ ${scope}
 What I will send by the end of the sprint:
 
 - leak map for ${mainPage}
-- implementation-ready page or site-architecture fixes
-- proof, FAQ, and trust-section recommendations
-- competitor/search visibility notes
-- 30-day action plan
+- rewrite or redesign of the one highest-leverage page
+- one implementation pass or dev-ready handoff
+- search-trust basics, before/after proof, and Loom
+- measurement plan, one client revision, and 14-day implementation tracking
 
 Next step: ${nextStep}
 
-One guardrail: I am not promising revenue, rankings, ROAS, or conversion lift. The sprint gives you sharper diagnosis, cleaner assets, and a clear action plan.
+One guardrail: ${NO_GUARANTEE_CLIENT_SENTENCE} The sprint gives you sharper diagnosis, cleaner assets, and a clear action plan.
 
 ${config.founderName}`;
 
@@ -143,12 +222,11 @@ ${leakBullets}
 By the end of 7 days, ${name} receives:
 
 - leak map
-- page or architecture fix
-- copy blocks
-- FAQ/trust recommendations
-- competitor notes
-- 30-day action plan
-- optional Weekly Growth Desk plan
+- rewrite or redesign of the one highest-leverage page
+- one implementation pass or dev-ready handoff
+- search-trust basics
+- before/after proof and Loom
+- measurement plan, one client revision, and 14-day implementation tracking
 
 ### Scope
 
@@ -174,8 +252,8 @@ The client must approve all claims, proof, pricing, legal-sensitive content, and
 
 \`\`\`bash
 npm run prospect:stage -- ${prospectPath} won --note "Approved sprint"
-npm run prospect:convert -- ${prospectPath}
-npm run client:kickoff -- clients/${name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 80)}
+npm run service:import -- /path/to/consented-sprint-application.json
+npm run service:queue -- --mode=prepare
 \`\`\`
 
 ## If They Need More Time
@@ -184,9 +262,11 @@ npm run client:kickoff -- clients/${name.toLowerCase().replace(/[^a-z0-9]+/g, "-
 npm run prospect:stage -- ${prospectPath} call-booked --note "Decision follow-up sent"
 \`\`\`
 
-## Sales Call Context
+## Sales Contract
 
-${salesCallPrep ? salesCallPrep.replace(/^# .+\n+/, "").trim() : "Run prospect:call-prep before the call if this section is blank."}
+${scope}
+
+This close package is valid only while a founder-pilot slot remains. After the first three paid clients, payment and close preparation stop until a human-reviewed post-pilot offer is implemented.
 `;
 
 const outputPath = join(prospectPath, "close-package.md");
@@ -197,5 +277,6 @@ console.log(JSON.stringify({
   prospectPath,
   path: outputPath,
   price,
-  paymentLink: paymentLink || ""
+  paymentLink: paymentLink || "",
+  pilotSlotsRemaining
 }, null, 2));

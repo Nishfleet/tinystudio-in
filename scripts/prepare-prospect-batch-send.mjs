@@ -1,10 +1,12 @@
 #!/usr/bin/env node
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { execFileSync } from "node:child_process";
 import { localIsoDate } from "./date-utils.mjs";
 import { checkProspectReadiness, prospectWarningWeight } from "./lib/prospect-readiness.mjs";
 import { isValidLoomUrl, loomUrlError } from "./lib/loom-url.mjs";
+import { canonicalProspectAsk } from "./lib/canonical-service-copy.mjs";
+import { assertOutboundProspectPath, listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 
 const args = process.argv.slice(2);
 const inputPath = args.find((arg) => !arg.startsWith("--")) || "prospects/loom-links.txt";
@@ -17,11 +19,7 @@ const strict = args.includes("--strict");
 const requireApproved = args.includes("--require-approved") || fromClipboard;
 
 function listFolders(root) {
-  if (!existsSync(root)) return [];
-  return readdirSync(root, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => join(root, entry.name))
-    .sort();
+  return listOutboundProspectFolders(root);
 }
 
 function json(path) {
@@ -87,7 +85,7 @@ function parseLine(line, index) {
       leak: cleanNote(leakNote),
       impact: cleanNote(impactNote),
       fix: cleanNote(fixNote),
-      ask: cleanNote(askNote)
+      ask: canonicalProspectAsk()
     }
   };
 }
@@ -197,6 +195,12 @@ for (const row of rows) {
   }
   if (!existsSync(row.path)) {
     skipped.push({ ...row, reason: "prospect folder not found" });
+    continue;
+  }
+  try {
+    assertOutboundProspectPath(row.path);
+  } catch (error) {
+    skipped.push({ ...row, reason: error.message });
     continue;
   }
   if (hasRequiredNotes(row.notes)) writeRecordingNotes(row);

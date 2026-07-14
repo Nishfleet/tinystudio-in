@@ -1,22 +1,28 @@
 #!/usr/bin/env node
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
+import { isServiceApplicationFolder } from "./lib/outbound-prospects.mjs";
+import { codeRoot, serviceRoot } from "./lib/runtime-roots.mjs";
+import { agentWorkClaimRiskFlags } from "./lib/service-artifacts.mjs";
 
-const roots = ["prospects", "clients", "growth-brain/sales", "growth-brain/offer.md"];
-const allowedGuardrail = /\b(do not|does not|not promise|not guarantee|no\.|without|guardrail|not included|no pressure)\b/i;
-const fileAllowlist = new Set([
-  "growth-brain/sales/objection-handling.md",
-  "growth-brain/sales/pricing-rules.md",
-  "growth-brain/sales/sales-call-script.md",
-  "growth-brain/sales/send-checklist.md"
+const prospectRoot = join(serviceRoot, "prospects");
+const roots = [prospectRoot, join(serviceRoot, "clients"), join(codeRoot, "growth-brain/sales"), join(codeRoot, "growth-brain/offer.md")];
+const allowedGuardrail = /\b(do not|does not|not promise|not guarantee|no [^.!?;\n]{0,160}guarantees?|without|guardrail|not included|no pressure)\b/i;
+const guaranteeGuardrail = /\b(?:(?:do(?:es)? not|not (?:a |an )?)(?:promise|guarantee)|not guaranteed|neither [^,:.!?;\n]{1,80}\bnor\b[^,:.!?;\n]{1,80}\b(?:is|are|was|were)\s+guaranteed|no (?:(?:[\w-]+(?:,\s*(?:(?:and|or)\s+)?|\s+(?:and|or)\s+))*[\w-]+\s+)?guarantees?|without (?:any )?(?:outcomes?\s+)?guarantees?)\b/gi;
+const genericGuarantee = /\bguarantee(?:d|s)?\b/i;
+const clauseBoundary = /[:.!?;]|\b(?:and|but|however|yet|although|though|while|whereas|still|nevertheless|nonetheless)\b/i;
+const allowlistNames = new Set([
+  "objection-handling.md",
+  "pricing-rules.md",
+  "sales-call-script.md",
+  "send-checklist.md"
 ]);
+const fileAllowlist = new Set([...allowlistNames].map((name) => join(codeRoot, "growth-brain/sales", name)));
 
 const patterns = [
   { name: "specific multiplier", pattern: /\b(?:5x|10x)\b/i, allowGuardrail: false },
-  { name: "guarantee", pattern: /\bguarantee(?:d|s)?\b/i, allowGuardrail: true },
   { name: "risk free", pattern: /\brisk[- ]free\b/i, allowGuardrail: true },
   { name: "specific revenue promise", pattern: /increase revenue by/i, allowGuardrail: false },
-  { name: "guaranteed ROAS", pattern: /guaranteed ROAS/i, allowGuardrail: false },
   { name: "rank number one", pattern: /rank #1/i, allowGuardrail: false },
   { name: "conversion lift promise", pattern: /conversion lift/i, allowGuardrail: true },
   { name: "sales volume promise", pattern: /sales volume/i, allowGuardrail: true }
@@ -45,13 +51,14 @@ const outboundNames = new Set([
   "follow-up-sequences.md"
 ]);
 
-function walk(path) {
+function walk(path, excludeServiceApplications = false) {
   if (!existsSync(path)) return [];
+  if (excludeServiceApplications && isServiceApplicationFolder(path)) return [];
   const statEntries = readdirSync(path, { withFileTypes: true });
   const files = [];
   for (const entry of statEntries) {
     const child = join(path, entry.name);
-    if (entry.isDirectory()) files.push(...walk(child));
+    if (entry.isDirectory()) files.push(...walk(child, excludeServiceApplications));
     if (entry.isFile()) files.push(child);
   }
   return files;
@@ -65,11 +72,11 @@ function filesToScan() {
       files.push(root);
       continue;
     }
-    files.push(...walk(root));
+    files.push(...walk(root, root === prospectRoot));
   }
   return files
     .filter((file) => /\.(md|html)$/.test(file))
-    .filter((file) => fileAllowlist.has(file) || outboundNames.has(file.split("/").at(-1)));
+    .filter((file) => roots.includes(file) || allowlistNames.has(file.split("/").at(-1)) || outboundNames.has(file.split("/").at(-1)));
 }
 
 const findings = [];
@@ -78,9 +85,15 @@ for (const file of filesToScan()) {
   if (fileAllowlist.has(file)) continue;
   const lines = readFileSync(file, "utf8").split("\n");
   lines.forEach((line, index) => {
+    for (const flag of agentWorkClaimRiskFlags({ deliverables: line, claims: [] })) {
+      findings.push({ file, line: index + 1, rule: flag.reason, text: line.trim() });
+    }
+    const clauses = line.split(clauseBoundary);
+    if (clauses.some((clause) => genericGuarantee.test(clause.replace(guaranteeGuardrail, "")))) {
+      findings.push({ file, line: index + 1, rule: "generic guarantee", text: line.trim() });
+    }
     for (const rule of patterns) {
-      if (!rule.pattern.test(line)) continue;
-      if (rule.allowGuardrail && allowedGuardrail.test(line)) continue;
+      if (!clauses.some((clause) => rule.pattern.test(clause) && !(rule.allowGuardrail && allowedGuardrail.test(clause)))) continue;
       findings.push({
         file,
         line: index + 1,

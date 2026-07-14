@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { execFileSync } from "node:child_process";
 import { localIsoDate } from "./date-utils.mjs";
 import { isValidLoomUrl, loomUrlError } from "./lib/loom-url.mjs";
 import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
 import { routedContactPlan } from "./lib/contact-route.mjs";
+import { classifyOutboundProspect } from "./lib/outbound-prospects.mjs";
+import { runRepoJson as runJson } from "./lib/runtime-roots.mjs";
 
 const args = process.argv.slice(2);
 const inputPath = args.find((arg) => !arg.startsWith("--")) || "prospects/loom-links.txt";
@@ -13,8 +14,8 @@ const outputArg = args.find((arg) => arg.startsWith("--output="));
 const htmlArg = args.find((arg) => arg.startsWith("--html="));
 const limitArg = args.find((arg) => arg.startsWith("--limit="));
 const plain = args.includes("--plain");
-const outputPath = outputArg ? outputArg.split("=").slice(1).join("=") : "growth-brain/ops/market-proof-cockpit.md";
-const htmlPath = htmlArg ? htmlArg.split("=").slice(1).join("=") : "growth-brain/ops/market-proof-cockpit.html";
+const outputPath = outputArg ? outputArg.split("=").slice(1).join("=") : "runs/market-proof-cockpit.md";
+const htmlPath = htmlArg ? htmlArg.split("=").slice(1).join("=") : "runs/market-proof-cockpit.html";
 const limit = limitArg ? Number(limitArg.split("=").slice(1).join("=")) : 5;
 const today = localIsoDate();
 
@@ -112,14 +113,6 @@ function hasRequiredNotes(notes) {
   return ["leak", "impact", "fix", "ask"].every((key) => meaningful(notes?.[key]));
 }
 
-function runJson(commandArgs) {
-  const output = execFileSync("node", commandArgs, {
-    encoding: "utf8",
-    stdio: ["ignore", "pipe", "pipe"]
-  });
-  return JSON.parse(output);
-}
-
 function sendPackageStatus(row) {
   const packagePath = join(row.path || "", "send-package.md");
   const content = read(packagePath);
@@ -161,6 +154,10 @@ function bestRoute(path) {
 
 function rowStatus(row) {
   const missing = [];
+  if (row.path && existsSync(row.path)) {
+    const classification = classifyOutboundProspect(row.path);
+    if (!classification.ok) missing.push(`not an outbound prospect: ${classification.reason}`);
+  }
   if (!row.path || !existsSync(row.path)) missing.push("prospect folder missing");
   if (!row.loomUrl || !isValidLoomUrl(row.loomUrl)) missing.push(row.loomUrl ? loomUrlError() : "record Loom URL");
   if (!approved(row.approval)) missing.push("approve Loom quality");
@@ -212,7 +209,7 @@ if (!existsSync(inputPath)) {
 
 const checkOutputPath = outputPath.startsWith("prospects/kit-")
   ? "prospects/kit-market-proof-run-check.md"
-  : "growth-brain/ops/market-proof-run-check.md";
+  : "runs/market-proof-run-check.md";
 const check = runJson(["scripts/check-market-proof-run.mjs", inputPath, `--output=${checkOutputPath}`, `--limit=${limit}`]);
 const channel = sendChannelGuidance();
 
@@ -222,10 +219,11 @@ const rows = read(inputPath)
   .filter(Boolean)
   .slice(0, limit)
   .map((row) => {
-    const metadata = json(join(row.path || "", "metadata.json"));
+    const classification = row.path ? classifyOutboundProspect(row.path) : { ok: false };
+    const metadata = classification.ok ? classification.metadata : {};
     const status = rowStatus(row);
-    const sendRoute = bestRoute(row.path);
-    const sharpness = read(join(row.path || "", "recording-sharpness-brief.md"));
+    const sendRoute = classification.ok ? bestRoute(row.path) : "";
+    const sharpness = classification.ok ? read(join(row.path, "recording-sharpness-brief.md")) : "";
     return {
       ...row,
       name: metadata.name || row.path?.split("/").at(-1) || `row-${row.line}`,
@@ -241,7 +239,7 @@ const rows = read(inputPath)
         route: sendRoute
       }) || "Client-visible value pending",
       nextMeasurement: status.label === "sent proof captured"
-        ? "Watch for reply, call booking, close, then delivery proof"
+        ? "Watch for a consented application, human fit approval, and paid Day 0"
         : status.label === "send from outbox"
           ? "Send touch with channel and mark sent from the outbox"
           : "Record a short Loom and capture leak, impact, fix, and ask"
@@ -298,9 +296,9 @@ ${missingMarkdown}
 ## Operating Rule
 
 - Do not claim market proof until this reaches \`sent-proof-captured\`.
-- Do not claim sales proof until at least one real reply becomes a call, close package, and won sprint.
-- Do not claim delivery proof until a client or owned-startup folder has approved proof claims.
-- Do not pitch renewal until weekly/monthly retention checkups show shipped work, learnings, next actions, and client pulse.
+- Do not claim sales proof until a consented application passes human fit review and reaches paid Day 0.
+- Do not claim delivery proof until a canonical paid client has human-approved delivery and implementation acceptance.
+- Do not discuss continuation or renewal until 14-day implementation tracking is complete and a human reviews usefulness and acceptance.
 - The moat is not the dashboard. The moat is the discipline of showing what changed, why it mattered, what proves it, and what gets measured next.
 
 ## Dashboard Rule

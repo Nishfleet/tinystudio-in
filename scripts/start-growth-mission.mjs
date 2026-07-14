@@ -8,26 +8,28 @@ const args = process.argv.slice(2);
 const noOpen = args.includes("--no-open") || args.includes("--dry-run");
 const viewArg = args.find((arg) => arg.startsWith("--view="));
 let view = viewArg ? viewArg.split("=")[1] : "auto";
+const missionMarkdownPath = "runs/daily-money-mission.md";
+const missionHtmlPath = "runs/daily-money-mission.html";
 
 const views = {
   auto: [],
-  mission: ["growth-brain/ops/daily-money-mission.html"],
-  cockpit: ["growth-brain/ops/growth-cockpit.html"],
-  score: ["growth-brain/ops/daily-money-mission.html", "prospects/lead-scoring-cockpit.html"],
+  mission: [missionHtmlPath],
+  cockpit: ["runs/growth-cockpit.html"],
+  score: [missionHtmlPath, "prospects/lead-scoring-cockpit.html"],
   record: [
-    "growth-brain/ops/daily-money-mission.html",
+    missionHtmlPath,
     "prospects/recording-rehearsal-check.html",
     "prospects/recording-teleprompter.html",
-    "growth-brain/ops/market-proof-cockpit.html"
+    "runs/market-proof-cockpit.html"
   ],
-  send: ["growth-brain/ops/daily-money-mission.html", "prospects/outbox.html"],
-  followup: ["growth-brain/ops/daily-money-mission.html", "prospects/followup-cockpit.html"],
-  sales: ["growth-brain/ops/daily-money-mission.html", "prospects/sales-cockpit.html"],
+  send: [missionHtmlPath, "prospects/outbox.html"],
+  followup: [missionHtmlPath, "prospects/followup-cockpit.html"],
+  sales: [missionHtmlPath, "prospects/sales-cockpit.html"],
   all: [
-    "growth-brain/ops/daily-money-mission.html",
+    missionHtmlPath,
     "prospects/recording-rehearsal-check.html",
     "prospects/recording-teleprompter.html",
-    "growth-brain/ops/market-proof-cockpit.html",
+    "runs/market-proof-cockpit.html",
     "prospects/outbox.html",
     "prospects/followup-cockpit.html",
     "prospects/sales-cockpit.html"
@@ -60,7 +62,7 @@ function viewForMission(value) {
 
 if (view === "cockpit") {
   runJson(["scripts/export-growth-cockpit.mjs"]);
-  const missionMarkdown = readFileSync("growth-brain/ops/daily-money-mission.md", "utf8");
+  const missionMarkdown = readFileSync(missionMarkdownPath, "utf8");
   mission = missionMarkdown.match(/## Today's Constraint\n+([\s\S]*?)(?:\n## |$)/)?.[1]?.trim() || "";
 } else {
   const missionResult = runJson(["scripts/export-daily-money-mission.mjs", "--limit=5"]);

@@ -1,17 +1,21 @@
 #!/usr/bin/env node
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { execFileSync } from "node:child_process";
 import { localIsoDate } from "./date-utils.mjs";
 import { checkProspectReadiness } from "./lib/prospect-readiness.mjs";
 import { isValidLoomUrl } from "./lib/loom-url.mjs";
+import { loadValidatedServiceClients } from "./lib/validated-service-client.mjs";
+import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
+import { runRepoJson } from "./lib/runtime-roots.mjs";
 
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/live-metrics.md";
 const plain = process.argv.includes("--plain");
 const today = localIsoDate();
+const repoRoot = process.env.SERVICE_REPO_ROOT || process.cwd();
 
 function listFolders(root) {
+  if (root === "prospects" || root.endsWith("/prospects")) return listOutboundProspectFolders(root).filter((path) => !/(^|\/)(?:kit|import)-smoke/.test(path));
   if (!existsSync(root)) return [];
   return readdirSync(root, { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
@@ -28,17 +32,9 @@ function json(path) {
   return existsSync(path) ? JSON.parse(readFileSync(path, "utf8")) : {};
 }
 
-function runJson(script, targetPath) {
-  const output = execFileSync("node", [script, targetPath], {
-    encoding: "utf8",
-    stdio: ["ignore", "pipe", "pipe"]
-  });
-  return JSON.parse(output);
-}
-
 function hasLeadScore(path) {
   const content = read(join(path, "lead-score.md"));
-  return !/Score:\s*$/m.test(content) && !/Priority:\s*record \/ research-more \/ skip/m.test(content);
+  return Boolean(content.trim()) && !/Score:\s*$/m.test(content) && !/Priority:\s*record \/ research-more \/ skip/m.test(content);
 }
 
 function hasLoom(path) {
@@ -66,7 +62,7 @@ function percent(numerator, denominator) {
   return `${Math.round((numerator / denominator) * 100)}%`;
 }
 
-const prospectRows = listFolders("prospects").map((path) => {
+const prospectRows = listFolders(join(repoRoot, "prospects")).map((path) => {
   const metadata = json(join(path, "metadata.json"));
   const pipeline = json(join(path, "pipeline.json"));
   const readiness = checkProspectReadiness(path);
@@ -81,8 +77,14 @@ const prospectRows = listFolders("prospects").map((path) => {
   };
 });
 
-const clientRows = listFolders("clients").map((path) => {
-  const readiness = runJson("scripts/check-client-readiness.mjs", path);
+const clientFolders = listFolders(join(repoRoot, "clients"));
+const validatedClientRecords = loadValidatedServiceClients(repoRoot);
+const canonicalClientPaths = new Set(validatedClientRecords.map((client) => client.clientPath));
+const unregisteredClientFolders = clientFolders.filter((path) => !canonicalClientPaths.has(path));
+const blockedClientRecords = validatedClientRecords.filter((client) => !client.ok || !client.day0);
+const clientRows = validatedClientRecords.filter((client) => client.ok && client.day0).map((client) => {
+  const path = client.clientPath;
+  const readiness = runRepoJson(["scripts/check-client-readiness.mjs", path]);
   return {
     path,
     name: path.split("/").at(-1),
@@ -112,7 +114,8 @@ const counts = {
   waitingFollowUp: activeProspects.filter((prospect) => /^sent|followup-/.test(prospect.stage) && prospect.nextFollowUpAt > today).length,
   dueFollowUp: activeProspects.filter((prospect) => prospect.nextFollowUpAt && prospect.nextFollowUpAt <= today).length,
   clients: clientRows.length,
-  clientsReady: clientRows.filter((client) => client.ready).length
+  clientsReady: clientRows.filter((client) => client.ready).length,
+  clientsBlocked: blockedClientRecords.length + unregisteredClientFolders.length
 };
 
 const rates = {
@@ -152,6 +155,7 @@ Generated: ${today}
 | Due follow-up | ${counts.dueFollowUp} |
 | Clients | ${counts.clients} |
 | Clients ready | ${counts.clientsReady} |
+| Client records blocked | ${counts.clientsBlocked} |
 
 ## Conversion Rates
 

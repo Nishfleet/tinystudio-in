@@ -6,6 +6,7 @@ import { checkProspectReadiness } from "./lib/prospect-readiness.mjs";
 import { isValidLoomUrl, loomUrlError } from "./lib/loom-url.mjs";
 import { formatChannelGuidanceMarkdown } from "./lib/send-channel-guidance.mjs";
 import { formatReplyWorthinessMarkdown, replyWorthiness } from "./lib/reply-worthy-proof.mjs";
+import { guardOutboundProspectPath } from "./lib/outbound-prospects.mjs";
 
 const args = process.argv.slice(2);
 const prospectPath = args[0];
@@ -30,6 +31,8 @@ if (!existsSync(prospectPath)) {
   console.error(`Prospect folder not found: ${prospectPath}`);
   process.exit(1);
 }
+
+guardOutboundProspectPath(prospectPath);
 
 if (!approved && !force) {
   console.error("Send prep requires --approved after the Loom quality checks. Use --force only for explicit recovery.");

@@ -2,6 +2,8 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { agencyConfig, appendEmailComplianceFooter, appendOptOut } from "./lib/agency-config.mjs";
+import { canonicalProspectAsk } from "./lib/canonical-service-copy.mjs";
+import { guardOutboundProspectPath } from "./lib/outbound-prospects.mjs";
 
 const prospectPath = process.argv[2];
 
@@ -14,6 +16,8 @@ if (!existsSync(prospectPath)) {
   console.error(`Prospect folder not found: ${prospectPath}`);
   process.exit(1);
 }
+
+guardOutboundProspectPath(prospectPath);
 
 function read(relativePath) {
   const path = join(prospectPath, relativePath);
@@ -57,9 +61,9 @@ function compact(value, maxLength) {
   return `${normalized.slice(0, maxLength - 1).trim()}...`;
 }
 
-function formVersion({ name, specificLeak, loomUrl, price }) {
+function formVersion({ name, specificLeak, loomUrl }) {
   const config = agencyConfig();
-  return `Hi ${name} team - I recorded a short audit. Main note: ${specificLeak}. Loom: ${loomUrl || "[add Loom link]"}. If useful, I can run a ${config.offerName} (${price}) to map the issue, rewrite the key sections, and send a 30-day action plan. - ${config.founderName}`;
+  return `Hi ${name} team - I recorded a short audit. Main note: ${specificLeak}. Loom: ${loomUrl || "[add Loom link]"}. ${canonicalProspectAsk()} - ${config.founderName}`;
 }
 
 function dmVersion({ name, specificLeak, loomUrl }) {
@@ -73,7 +77,6 @@ function trimPunctuation(value) {
 const metadata = json("metadata.json");
 const config = agencyConfig();
 const pipeline = json("pipeline.json");
-const outreach = read("outreach.md");
 const buyerRoom = read("buyer-room.md");
 const loomOutline = read("loom-outline.md");
 
@@ -84,14 +87,12 @@ const leakFragment = trimPunctuation(specificLeak);
 const mainPage = lineValue(loomOutline, /^2\. [^\n:]+:[ \t]*([^\n]*)$/m, "the main money page");
 const firstFix = lineValue(loomOutline, /^6\. [^\n:]+:[ \t]*([^\n]*)$/m, "the first page structure I would use");
 const loomUrl = lineValue(buyerRoom, /^- Link:[ \t]*([^\n]*)$/m, "");
-const price = lineValue(buyerRoom, /^- Price:[ \t]*([^\n]*)$/m, config.founderSprintPrice);
-const firstMessage = section(outreach, "First Message", "");
 const pending = firstPendingFollowUp(pipeline);
 const warnings = [];
 
 let messageType = "first-send";
 let subject = `Quick audit for ${name}`;
-let body = firstMessage || `Subject: ${subject}
+let body = `Subject: ${subject}
 
 Hey ${name} team,
 
@@ -99,7 +100,7 @@ I recorded a short audit for ${name}. The main thing I noticed is ${leakFragment
 
 Here is the Loom: ${loomUrl}
 
-If useful, I can run a ${config.offerName} where I map the leak, rewrite the key page sections, and give you a 30-day action plan.
+${canonicalProspectAsk()}
 
 ${config.founderName}`;
 
@@ -117,7 +118,7 @@ if (stage === "sent" || stage.startsWith("followup-")) {
     body = appendEmailComplianceFooter(`Worth sending the exact ${mainPage} structure I would use for this?`);
   } else if (pending?.step === "day-5") {
     subject = `Re: Quick audit for ${name}`;
-    body = appendEmailComplianceFooter(`Quick bump. The main thing I would fix first is ${leakFragment}. If useful, I can send the 7-day sprint scope.`);
+    body = appendEmailComplianceFooter(`Quick bump. The main thing I would fix first is ${leakFragment}. If useful, I can send the exact one-page ${config.offerName} scope.`);
   } else if (pending?.step === "day-10") {
     subject = `Re: Quick audit for ${name}`;
     body = appendEmailComplianceFooter(`Closing the loop here. I still think ${mainPage} is leaving clarity on the table. Happy to revisit if this becomes a priority.`);
@@ -134,7 +135,7 @@ The fastest way to decide if this is worth doing is a short call where we confir
 1. whether ${leakFragment} is actually a priority
 2. who approves changes
 3. what context you already have
-4. whether the 7-day sprint at ${price} is worth doing now
+4. whether the human-reviewed one-page sprint is worth doing now
 
 If helpful, send me a couple times that work and I will keep it focused.`;
 }
@@ -149,7 +150,7 @@ ${firstFix}
 I will keep the call focused on fit, scope, approval, and next step.`;
 }
 
-const contactFormBody = compact(appendOptOut(formVersion({ name, specificLeak: leakFragment, loomUrl, price })), 850);
+const contactFormBody = compact(appendOptOut(formVersion({ name, specificLeak: leakFragment, loomUrl })), 850);
 const dmBody = compact(dmVersion({ name, specificLeak: leakFragment, loomUrl }), 280);
 const stageAction = messageType === "day-2" ? "followup-1" : messageType === "day-5" ? "followup-2" : messageType === "day-10" ? "followup-3" : messageType === "first-send" ? "sent" : "";
 const afterSending = messageType === "first-send" ? `After this message is actually sent, use the outbox checkbox and channel selector to mark the real sent route:

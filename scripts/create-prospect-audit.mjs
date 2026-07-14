@@ -1,8 +1,10 @@
 #!/usr/bin/env node
-import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
 import { agencyConfig } from "./lib/agency-config.mjs";
+import { serviceRoot } from "./lib/runtime-roots.mjs";
+import { atomicWrite, ensureDir, resolveRepoPath } from "./lib/service-contract.mjs";
 
 const rawArgs = process.argv.slice(2);
 const fields = {};
@@ -31,7 +33,9 @@ function slugify(value) {
 }
 
 if (!name) {
-  console.error("Usage: npm run prospect:new -- \"Prospect Name\" -- --website https://example.com --vertical managed-it-cybersecurity --city Austin --contact Jane");
+  console.error(
+    'Usage: npm run prospect:new -- "Prospect Name" -- --website https://example.com --vertical managed-it-cybersecurity --city Austin --contact Jane'
+  );
   process.exit(1);
 }
 
@@ -41,13 +45,13 @@ if (!slug) {
   process.exit(1);
 }
 
-const root = join("prospects", slug);
+const root = resolveRepoPath(serviceRoot, join("prospects", slug));
 if (existsSync(root)) {
   console.error(`Prospect audit already exists: ${root}`);
   process.exit(1);
 }
 
-mkdirSync(root, { recursive: true });
+ensureDir(root);
 
 const vertical = fields.vertical || "";
 const website = fields.website || "";
@@ -56,41 +60,45 @@ const contact = fields.contact || "";
 const notes = fields.notes || "";
 const config = agencyConfig();
 const verticalHooks = {
-  "managed-it-cybersecurity": "Buyers should reach the right managed IT, cybersecurity, compliance, or assessment path faster, with proof beside the decision point instead of a broad service menu.",
+  "managed-it-cybersecurity":
+    "Buyers should reach the right managed IT, cybersecurity, compliance, or assessment path faster, with proof beside the decision point instead of a broad service menu.",
   "accounting-bookkeeping": "Your site lists services, but it does not make it obvious which buyer should choose you and what problem you solve first.",
-  "dental-medspa-clinics": "Patients are trying to decide whether they trust you before they contact you. The page needs to answer fear, proof, cost, timing, and next-step questions faster.",
+  "dental-medspa-clinics":
+    "Patients are trying to decide whether they trust you before they contact you. The page needs to answer fear, proof, cost, timing, and next-step questions faster.",
   "home-services": "A homeowner needs to know three things fast: do you handle my problem, do you serve my area, and can I trust you?"
 };
-const hook = verticalHooks[vertical] || "Your site is probably making the buyer work too hard before they understand what you sell, why it matters, and what to do next.";
+const hook =
+  verticalHooks[vertical] || "Your site is probably making the buyer work too hard before they understand what you sell, why it matters, and what to do next.";
 
-writeFileSync(join(root, "metadata.json"), `${JSON.stringify({
-  name,
-  slug,
-  website,
-  vertical,
-  city,
-  contact,
-  notes
-}, null, 2)}\n`);
+atomicWrite(join(root, "metadata.json"), `${JSON.stringify({ name, slug, website, vertical, city, contact, notes }, null, 2)}\n`);
 
-writeFileSync(join(root, "pipeline.json"), `${JSON.stringify({
-  stage: "new",
-  createdAt: localIsoDate(),
-  sentAt: "",
-  sentChannel: "",
-  lastChannel: "",
-  lastTouchAt: "",
-  nextFollowUpAt: "",
-  followUps: [
-    { step: "day-2", dueAt: "", sentAt: "", status: "pending" },
-    { step: "day-5", dueAt: "", sentAt: "", status: "pending" },
-    { step: "day-10", dueAt: "", sentAt: "", status: "pending" }
-  ],
-  touches: [],
-  notes: []
-}, null, 2)}\n`);
+atomicWrite(
+  join(root, "pipeline.json"),
+  `${JSON.stringify(
+    {
+      stage: "new",
+      createdAt: localIsoDate(),
+      sentAt: "",
+      sentChannel: "",
+      lastChannel: "",
+      lastTouchAt: "",
+      nextFollowUpAt: "",
+      followUps: [
+        { step: "day-2", dueAt: "", sentAt: "", status: "pending" },
+        { step: "day-5", dueAt: "", sentAt: "", status: "pending" },
+        { step: "day-10", dueAt: "", sentAt: "", status: "pending" }
+      ],
+      touches: [],
+      notes: []
+    },
+    null,
+    2
+  )}\n`
+);
 
-writeFileSync(join(root, "lead-score.md"), `# ${name} Lead Score
+atomicWrite(
+  join(root, "lead-score.md"),
+  `# ${name} Lead Score
 
 ## Prospect
 
@@ -117,20 +125,22 @@ writeFileSync(join(root, "lead-score.md"), `# ${name} Lead Score
 
 - Score:
 - Priority: record / research-more / skip
-`);
+`
+);
 
-writeFileSync(join(root, "loom-outline.md"), `# ${name} Loom Outline
+atomicWrite(
+  join(root, "loom-outline.md"),
+  `# ${name} Loom Outline
 
 ## Wedge
 
 Pick one:
 
-- Site architecture
-- Product page
+- Homepage
+- Service page
 - Landing page
-- Offer
-- Email/SMS
-- Ads
+- Offer page
+- Contact or demo page
 
 ## Recording Flow
 
@@ -144,10 +154,13 @@ Pick one:
 
 ## Close
 
-"If useful, I can run a 7-day sprint where I map this leak, rewrite the key sections, and give you a 30-day action plan."
-`);
+"If useful, I can fix this one highest-leverage page in a human-reviewed 7-day sprint with a leak map, rewrite or redesign, implementation pass or dev-ready handoff, proof, measurement plan, and 14-day implementation tracking."
+`
+);
 
-writeFileSync(join(root, "outreach.md"), `# ${name} Outreach
+atomicWrite(
+  join(root, "outreach.md"),
+  `# ${name} Outreach
 
 ## Contact
 
@@ -166,7 +179,7 @@ I recorded a short audit for ${name}. The main thing I noticed is [specific leak
 
 Here is the Loom: [link]
 
-If useful, I can run a ${config.offerName} where I map the leak, rewrite the key page sections, and give you a 30-day action plan.
+If useful, I can run a ${config.offerName} for this one highest-leverage page, with human review, a rewrite or redesign, implementation handoff, proof, measurement plan, and 14-day implementation tracking.
 
 ${config.optOutLine}
 
@@ -177,9 +190,12 @@ ${config.founderName}
 - Day 2:
 - Day 5:
 - Day 10:
-`);
+`
+);
 
-writeFileSync(join(root, "buyer-room.md"), `# ${name} Buyer Room
+atomicWrite(
+  join(root, "buyer-room.md"),
+  `# ${name} Buyer Room
 
 ## Loom
 
@@ -202,9 +218,12 @@ writeFileSync(join(root, "buyer-room.md"), `# ${name} Buyer Room
 - Approve:
 - Pay:
 - Complete intake:
-`);
+`
+);
 
-writeFileSync(join(root, "value-calculator.md"), `# ${name} Value Calculator
+atomicWrite(
+  join(root, "value-calculator.md"),
+  `# ${name} Value Calculator
 
 ## Inputs
 
@@ -221,9 +240,12 @@ writeFileSync(join(root, "value-calculator.md"), `# ${name} Value Calculator
 
 - Good fit / weak fit:
 - Why:
-`);
+`
+);
 
-writeFileSync(join(root, "audit-brief.md"), `# ${name} Audit Brief
+atomicWrite(
+  join(root, "audit-brief.md"),
+  `# ${name} Audit Brief
 
 ## Prospect Snapshot
 
@@ -258,10 +280,7 @@ Pick one after inspection:
 ## Loom Target
 
 Show one visible leak in under 2 minutes, then explain the 7-day sprint in one clear ask.
-`);
+`
+);
 
-console.log(JSON.stringify({
-  status: "created",
-  prospect: name,
-  path: root
-}, null, 2));
+console.log(JSON.stringify({ status: "created", prospect: name, path: root }, null, 2));

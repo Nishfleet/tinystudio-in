@@ -1,14 +1,14 @@
 # Market Parity Readiness
 
-Generated: 2026-05-29
+Generated: 2026-07-14
 
 ## Verdict
 
-Not 11/10 yet: current evidence proves the internal system, but sender trust, market traction, paid sales, and approved delivery proof are still blocked. Owned-startup retention proof is useful, but it is not paid-client retention proof.
+Not 11/10 yet: current evidence proves the internal system, but sender trust, market traction, validated paid sales, approved delivery, and human-approved 14-day retention proof are still blocked.
 
 ## Score
 
-3/10 full-pass areas.
+5/10 full-pass areas.
 
 ## Competitive Benchmark
 
@@ -20,36 +20,36 @@ Not 11/10 yet: current evidence proves the internal system, but sender trust, ma
 
 | Area | Status | Evidence |
 |---|---|---|
-| Workflow depth | conditional-pass | skipped inside kit smoke test to avoid recursive self-check |
+| Workflow depth | pass | 38 current service files, 9 allowed commands |
 | Output quality gates | pass | claim safety pass; send readiness pass |
 | Automation coverage | pass | recording, send, follow-up, sales, delivery, proof, and metrics surfaces are generated |
-| Stress-tested internals | conditional-pass | claim and send gates pass; kit gate skipped inside kit smoke test |
-| Comparable price/value | conditional-pass | $1,000 founder sprint; $2,500-$5,000; $2,000-$5,000/month; $5,000-$12,000/month; $12,000+/month |
+| Stress-tested internals | pass | kit, claim, and send gates pass on current repo state |
+| Comparable price/value | pass | 7-Day Website Revenue Leak Fix Sprint; $1,000 founder pilot; scope one highest-leverage page |
 | Sender trust | fail | missing physical postal address; DKIM selector not configured |
 | Market proof | fail | 0/5 Looms, 0/5 sends, 0 replies |
-| Sales proof | fail | 0 won sprint(s) with close package and won note |
-| Delivery proof | fail | 0 external and 0 owned-startup ready client(s); approved claim folders: 0 external, 3 owned-startup |
-| Retention proof | pass | 0 external and 3 owned-startup client(s) with shipped weekly report and customer confirmation evidence |
+| Sales proof | fail | 0 external client(s) with a validated application, human fit approval, and paid Day 0 |
+| Delivery proof | fail | 0 external paid client(s) ready with approved delivery; 0 with approved claims |
+| Retention proof | fail | 0 external paid client(s) with human-approved 14-day tracking evidence |
 
 ## Required To Claim Better/Comparable
 
 - Record and send at least 5 approved Looms.
 - Get at least 1 real reply and 1 sales call.
-- Close at least 1 paid sprint with a close package and won-stage note.
+- Capture at least 1 external consented application, human fit approval, and validated paid Day 0 record.
 - Deliver at least 1 sprint to client-ready status with an approved claim row.
-- Send at least 1 filled weekly report after delivery, with shipped work, a learning, a next test, and customer confirmation that the delta was seen, understood, approved for next action, and worth continuing.
+- Record at least 1 completed 14-day tracking evidence record after delivery, with implementation status, usefulness, acceptance, and continuation signals.
 - Fix sender setup before using cold email.
 
-## Owned Startup Proof Lane
+## Service Delivery Proof Lane
 
-Owned products like AI Converter, SiteRep, and Five to Nine 0509 can prove delivery quality, retention cadence, dashboards, weekly reports, and claim discipline. They do not replace external market proof, replies, or paid sales proof.
+Validated external paid-client records can prove delivery quality, implementation tracking, and claim discipline. They do not replace external market proof or replies.
 
-Current owned startup folders: 3.
+Current validated external paid clients: 0.
 
-Create or refresh them with:
+Review the current delivery queue with:
 
 ```bash
-npm run owned:startups
+npm run service:queue -- --scope clients
 ```
 
 Next proof run:

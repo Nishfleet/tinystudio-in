@@ -1,30 +1,28 @@
 #!/usr/bin/env node
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
-import { execFileSync } from "node:child_process";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { join, resolve } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
 import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
+import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
+import { codeRoot, runRepoJson as runJson, serviceRoot } from "./lib/runtime-roots.mjs";
 
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const htmlArg = process.argv.find((arg) => arg.startsWith("--html="));
 const plain = process.argv.includes("--plain");
 const today = localIsoDate();
-const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/internal-dashboard.md";
-const htmlPath = htmlArg ? htmlArg.split("=")[1] : "growth-brain/ops/internal-dashboard.html";
-
-function runJson(args) {
-  const output = execFileSync("node", args, {
-    encoding: "utf8",
-    stdio: ["ignore", "pipe", "pipe"]
-  });
-  return JSON.parse(output);
-}
+const outputPath = outputArg ? outputArg.split("=")[1] : "runs/internal-dashboard.md";
+const htmlPath = htmlArg ? htmlArg.split("=")[1] : "runs/internal-dashboard.html";
 
 function htmlEscape(value) {
-  return String(value || "")
+  return String(value ?? "")
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;");
+}
+
+function displayText(value) {
+  return String(value ?? "").replace(/\*\*/g, "");
 }
 
 function pill(status) {
@@ -50,23 +48,31 @@ function readJson(path, fallback = {}) {
 
 const doctor = runJson(["scripts/export-growth-doctor.mjs"]);
 const metrics = runJson(["scripts/export-growth-metrics.mjs"]);
-const retention = runJson(["scripts/export-retention-checkups.mjs"]);
+let serviceQueue;
+try { serviceQueue = runJson(["scripts/run-review-queue.mjs", "--dry-run", "--scope", "all"]); }
+catch (error) {
+  const output = String(error.stderr || error.message || "");
+  serviceQueue = { items: [], counts: { blocked: 1 }, error: output.match(/service:queue failed:[^\n]*/)?.[0] || "service queue validation failed" };
+}
 const parity = runJson(["scripts/check-market-parity-readiness.mjs", "--skip-kit", "--output=/tmp/tinystudio-internal-dashboard-parity.md"]);
 const todayView = runJson(["scripts/show-growth-command-center.mjs", "--limit=12"]);
-const marketProof = runJson(["scripts/export-market-proof-cockpit.mjs"]);
+const marketProof = existsSync(join(serviceRoot, "prospects/loom-links.txt"))
+  ? runJson(["scripts/export-market-proof-cockpit.mjs"])
+  : {
+      checkStatus: "awaiting-proof-run",
+      sentProofRows: 0,
+      rows: 0,
+      htmlPath: "runs/market-proof-cockpit.html"
+    };
 const marketLearning = runJson(["scripts/export-market-learning-review.mjs"]);
-const ownedHandoff = runJson(["scripts/export-owned-handoff-loom-cockpit.mjs"]);
-const ownedCaseStudies = runJson(["scripts/export-owned-product-case-studies.mjs"]);
 const rehearsal = runJson(["scripts/export-recording-rehearsal-check.mjs"]);
 const senderGuide = runJson(["scripts/export-sender-setup-guide.mjs"]);
 const channelGuidance = sendChannelGuidance();
-const ownedDeliveryReadyCount = (ownedCaseStudies.packets || []).filter((packet) => ["case-study-ready", "delivery-proof-ready"].includes(packet.status)).length;
-const ownedBusinessReadyCount = (ownedCaseStudies.packets || []).filter((packet) => packet.status === "case-study-ready").length;
-const ownedNeedsMetricCount = (ownedCaseStudies.packets || []).filter((packet) => packet.status === "needs-current-metric").length;
-const pausedProspectNames = readdirSync("prospects", { withFileTypes: true })
-  .filter((entry) => entry.isDirectory())
-  .map((entry) => {
-    const basePath = `prospects/${entry.name}`;
+const serviceQueueAttention = (serviceQueue.items || []).filter((item) => !["complete", "declined"].includes(item.state)).length;
+const serviceQueueBlocked = serviceQueue.counts?.blocked || 0;
+const clientIntegrityBlocked = metrics.counts.clientsBlocked || 0;
+const pausedProspectNames = listOutboundProspectFolders(join(serviceRoot, "prospects"))
+  .map((basePath) => {
     const pipeline = readJson(`${basePath}/pipeline.json`);
     if (!["lost", "paused", "won"].includes(pipeline.stage)) return "";
     const metadata = readJson(`${basePath}/metadata.json`);
@@ -78,12 +84,31 @@ function referencesInactiveProspect(value) {
   return pausedProspectNames.some((name) => String(value || "").includes(name));
 }
 
+function referencesRetiredOwnedWorkflow(value) {
+  return /owned[- ](?:product|startup)/i.test(String(value || ""));
+}
+
+function canonicalTaskText(value) {
+  const text = String(value || "");
+  if (referencesRetiredOwnedWorkflow(text) || /build intake form|weekly report automation/i.test(text)) return "";
+  return text
+    .replace(
+      /create a client folder, run the sprint, and update the client brain/i,
+      "import the consented application, complete human fit approval and paid Day 0, then run the human-review service queue"
+    )
+    .replace(
+      /use the buyer room, proposal, and follow-up sequence/i,
+      "move a consented application through human fit review and canonical founder-pilot close prep"
+    );
+}
+
 function officialParityScore(fallbackScore, fallbackTotal) {
   const fallback = `${fallbackScore}/${fallbackTotal} full-pass areas`;
-  if (!existsSync("growth-brain/ops/market-parity-readiness.md")) {
+  const path = join(serviceRoot, "growth-brain/ops/market-parity-readiness.md");
+  if (!existsSync(path)) {
     return { score: fallbackScore, total: fallbackTotal, label: fallback };
   }
-  const content = readFileSync("growth-brain/ops/market-parity-readiness.md", "utf8");
+  const content = readFileSync(path, "utf8");
   const match = content.match(/(\d+)\/(\d+) full-pass areas/);
   return match
     ? { score: Number(match[1]), total: Number(match[2]), label: `${match[1]}/${match[2]} full-pass areas` }
@@ -96,13 +121,11 @@ const parityScoreLabel = parityScore.label;
 const checks = [
   ["Workflow", doctor.status, doctor.status === "ready" ? "Core checks are clean" : doctor.checks?.find((check) => check.status !== "pass")?.detail || "Needs attention"],
   ["Money bottleneck", doctor.view, doctor.mission],
-  ["Retention", retention.status, `${retention.weeklyReady}/${retention.clients} weekly reports ready; ${retention.highRisk} high-risk client(s)`],
+  ["Service delivery", serviceQueueBlocked || metrics.counts.clientsBlocked ? "attention-needed" : "ready", `${serviceQueueAttention} active item(s); ${serviceQueueBlocked} queue blocked; ${metrics.counts.clientsBlocked} client record(s) blocked by canonical validation`],
   ["Market proof cockpit", marketProof.checkStatus, `${marketProof.sentProofRows}/5 sent proof rows; ${marketProof.rows} tangible improvement rows`],
   ["Sender trust", senderGuide.senderStatus, channelGuidance.emailReady ? channelGuidance.rule : `${channelGuidance.rule} Warnings: ${channelGuidance.warnings.join("; ")}`],
   ["Recording rehearsal", rehearsal.status, `${rehearsal.count} script(s); minimum ${rehearsal.minimumScore}/10`],
   ["Market learning", marketLearning.status, `next: ${marketLearning.nextCommand}`],
-  ["Owned handoff", ownedHandoff.status, `${ownedHandoff.readyToRecord}/${ownedHandoff.clients} owned proof handoff(s) ready to record`],
-  ["Owned case studies", ownedCaseStudies.status, `${ownedDeliveryReadyCount}/${(ownedCaseStudies.packets || []).length} delivery-proof ready; ${ownedBusinessReadyCount}/${(ownedCaseStudies.packets || []).length} business-metric ready; ${ownedNeedsMetricCount} need metric`],
   ["11/10 proof", parity.status, parityScoreLabel]
 ];
 
@@ -115,6 +138,7 @@ const cards = [
   ["Calls", counts.calls],
   ["Closed", counts.closed],
   ["Clients", counts.clients],
+  ["Client records blocked", counts.clientsBlocked],
   ["Due follow-up", counts.dueFollowUp]
 ];
 
@@ -132,27 +156,31 @@ function actionPriority(item) {
 
 function actionCommand(item) {
   const clientMatch = item.match(/Client:\s*([a-z0-9-]+)/i);
-  if (/owned-product live signals|live signal/i.test(item)) return "npm run owned:live-signals";
-  if (/owned-product business metrics|business metrics/i.test(item)) return "npm run owned:metrics -- --from-clipboard";
-  if (/owned-product current metrics|current metrics|owned:case-studies|case stud/i.test(item)) return "npm run owned:live-signals";
+  if (/owned-product live signals|live signal/i.test(item)) return "npm run service:queue -- --scope all";
+  if (/owned-product business metrics|business metrics/i.test(item)) return "npm run service:queue -- --scope all";
+  if (/owned-product current metrics|current metrics|owned:case-studies|case stud/i.test(item)) return "npm run service:queue -- --scope all";
   if (/market learning|market:learn|learning review/i.test(item)) return "npm run market:learn";
   if (/recording rehearsal|rehearsal/i.test(item)) return "npm run prospect:rehearsal -- --limit=5";
-  if (/Task:/i.test(item) && /handoff Loom acceptance|sprint acceptance/i.test(item)) return "npm run owned:handoff";
+  if (/handoff Loom acceptance|sprint acceptance/i.test(item)) {
+    return clientMatch
+      ? `npm run client:acceptance -- clients/${clientMatch[1]} --dry-run`
+      : "npm run service:queue -- --scope all";
+  }
   if (/Client:/i.test(item) && /Sprint acceptance checklist/i.test(item) && clientMatch) {
     const clientPath = `clients/${clientMatch[1]}`;
-    const proofContext = existsSync(`${clientPath}/proof-context.md`) ? readFileSync(`${clientPath}/proof-context.md`, "utf8") : "";
-    if (/## Proof Type\s+owned-startup/i.test(proofContext) || existsSync(`${clientPath}/handoff-loom-script.md`)) return "npm run owned:handoff";
     return `npm run client:acceptance -- ${clientPath} --dry-run`;
   }
-  if (/Client:/i.test(item) && /Claim-proof ledger/i.test(item) && clientMatch) return `npm run client:proof-review -- clients/${clientMatch[1]} --dry-run`;
-  if (/owned-startup proof|proof claims/i.test(item)) return "npm run owned:proof-review";
+  if (clientMatch && /claim[- ]proof|proof claims|claim-proof ledger/i.test(item)) return `npm run client:proof-review -- clients/${clientMatch[1]} --dry-run`;
+  if (/owned-startup proof|proof claims/i.test(item)) return "npm run service:queue -- --scope all";
   if (/reply-prep/i.test(item)) return "npm run prospect:reply-prep -- prospects/prospect-slug";
   if (/close-prep/i.test(item)) return "npm run prospect:close-prep -- prospects/prospect-slug";
+  if (/Close first paid sprint/i.test(item)) return "npm run growth:start -- --view=sales";
+  if (/consented application|paid Day 0|human-review service queue/i.test(item)) return "npm run service:queue -- --scope all";
   if (/follow-up|followup/i.test(item)) return "npm run prospect:followups";
   if (/send-package|mark the prospect sent|ready/i.test(item) && /Prospect:/i.test(item)) return "npm run prospect:outbox";
   if (/Record|Loom|teleprompter/i.test(item)) return "npm run growth:start -- --view=record";
   if (/prep-recording/i.test(item)) return "npm run prospect:prep-recording -- --limit=5";
-  if (/Client:/i.test(item) && /weekly|Growth Desk/i.test(item)) return "npm run retention:checkups";
+  if (/Client:/i.test(item) && /weekly|Growth Desk/i.test(item)) return "npm run service:queue -- --scope all";
   if (/Client:/i.test(item)) return "npm run client:cockpit -- clients/client-slug";
   if (/Task:/i.test(item)) return "See TASKS.md";
   return doctor.nextCommand;
@@ -160,10 +188,10 @@ function actionCommand(item) {
 
 function parityBlockerCommand(area) {
   if (area === "Sender trust") return "npm run send:configure -- --physical-address=\"...\" --dkim-selector=... --dry-run";
-  if (area === "Market proof") return "npm run market:proof-cockpit";
+  if (area === "Market proof") return "npm run growth:start -- --view=record";
   if (area === "Sales proof") return "npm run growth:start -- --view=sales";
-  if (area === "Delivery proof") return "npm run owned:handoff";
-  if (area === "Retention proof") return "npm run retention:checkups";
+  if (area === "Delivery proof") return "npm run service:queue -- --scope all";
+  if (area === "Retention proof") return "npm run service:queue -- --scope all";
   return "npm run market:parity";
 }
 
@@ -180,7 +208,7 @@ const actionItems = [
     command: "npm run send:guide",
     why: "Sender trust blocker"
   }]),
-  ...(todayView.todayFocus || []).filter((item) => !referencesInactiveProspect(item)).map((item) => ({
+  ...(todayView.todayFocus || []).map(canonicalTaskText).filter((item) => item && !referencesInactiveProspect(item)).map((item) => ({
     priority: actionPriority(item),
     item,
     command: actionCommand(item),
@@ -203,19 +231,12 @@ if (rehearsal.status !== "ready") {
   });
 }
 
-if (ownedCaseStudies.status === "needs-current-metrics") {
+if (serviceQueueAttention > 0) {
   actionItems.splice(1, 0, {
-    priority: "P1",
-    item: `Owned product live signals: ${ownedNeedsMetricCount} packet(s) need a real current delivery metric`,
-    command: "npm run owned:live-signals",
-    why: "Owned proof case-study blocker"
-  });
-} else if (ownedBusinessReadyCount < (ownedCaseStudies.packets || []).length) {
-  actionItems.splice(1, 0, {
-    priority: "P2",
-    item: `Owned product business metrics: ${ownedBusinessReadyCount}/${(ownedCaseStudies.packets || []).length} packet(s) have business metrics`,
-    command: "npm run owned:metrics -- --from-clipboard",
-    why: "Full case-study blocker"
+    priority: serviceQueueBlocked ? "P1" : "P2",
+    item: `Service delivery queue: ${serviceQueueAttention} active item(s), ${serviceQueueBlocked} blocked`,
+    command: "npm run service:queue -- --scope all",
+    why: "Human-reviewed service delivery"
   });
 }
 
@@ -232,8 +253,9 @@ const actionRows = dedupedActions.length
   : "| - | No pending actions. | - | - |";
 
 function parseTaskSection(title) {
-  if (!existsSync("TASKS.md")) return [];
-  const content = readFileSync("TASKS.md", "utf8");
+  const path = join(existsSync(join(serviceRoot, "TASKS.md")) ? serviceRoot : codeRoot, "TASKS.md");
+  if (!existsSync(path)) return [];
+  const content = readFileSync(path, "utf8");
   const escaped = title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const match = content.match(new RegExp(`## ${escaped}\\n([\\s\\S]*?)(?:\\n## |$)`));
   if (!match) return [];
@@ -242,20 +264,29 @@ function parseTaskSection(title) {
     .map((line) => line.trim())
     .filter((line) => line.startsWith("- [ ]"))
     .filter((line) => !referencesInactiveProspect(line))
-    .map((line) => line.replace(/^- \[ \]\s*/, ""));
+    .map((line) => canonicalTaskText(line.replace(/^- \[ \]\s*/, "")))
+    .filter(Boolean);
 }
 
 function taskCommand(task, bucket) {
-  if (/owned-product live signals|live signal/i.test(task)) return "npm run owned:live-signals";
-  if (/owned-product business metrics|business metrics/i.test(task)) return "npm run owned:metrics -- --from-clipboard";
-  if (/owned-product current metrics|current metrics|owned:case-studies|case stud/i.test(task)) return "npm run owned:metrics -- --from-clipboard";
+  const clientMatch = task.match(/Client:\s*([a-z0-9-]+)/i);
+  if (/owned-product live signals|live signal/i.test(task)) return "npm run service:queue -- --scope all";
+  if (/owned-product business metrics|business metrics/i.test(task)) return "npm run service:queue -- --scope all";
+  if (/owned-product current metrics|current metrics|owned:case-studies|case stud/i.test(task)) return "npm run service:queue -- --scope all";
   if (/market learning|market:learn|learning review/i.test(task)) return "npm run market:learn";
-  if (/handoff Loom acceptance|sprint acceptance/i.test(task)) return "npm run owned:handoff";
-  if (/owned-startup proof|proof claims/i.test(task)) return "npm run owned:proof-review";
+  if (/handoff Loom acceptance|sprint acceptance/i.test(task)) {
+    return clientMatch
+      ? `npm run client:acceptance -- clients/${clientMatch[1]} --dry-run`
+      : "npm run service:queue -- --scope all";
+  }
+  if (clientMatch && /claim[- ]proof|proof claims|claim-proof ledger/i.test(task)) return `npm run client:proof-review -- clients/${clientMatch[1]} --dry-run`;
+  if (/owned-startup proof|proof claims/i.test(task)) return "npm run service:queue -- --scope all";
+  if (/Close first paid sprint/i.test(task)) return "npm run growth:start -- --view=sales";
+  if (/consented application|paid Day 0|human-review service queue/i.test(task)) return "npm run service:queue -- --scope all";
   if (/loom|record/i.test(task)) return "npm run growth:start -- --view=record";
   if (/close|paid sprint|buyer room|proposal/i.test(task)) return "npm run growth:start -- --view=sales";
-  if (/deliver|client folder|client brain|client data|retention|weekly/i.test(task)) return "npm run retention:checkups";
-  if (/intake|client/i.test(task)) return "npm run client:new -- client-slug";
+  if (/deliver|client folder|client brain|client data|retention|weekly/i.test(task)) return "npm run service:queue -- --scope all";
+  if (/intake|client/i.test(task)) return "npm run service:queue -- --scope all";
   if (/buyer room|pdf|\bsite\b/i.test(task)) return "npm run prospect:close-prep -- prospects/prospect-slug";
   return bucket === "Backlog" ? "See TASKS.md" : doctor.nextCommand;
 }
@@ -326,14 +357,10 @@ ${blockerRows}
 ## Dashboards
 
 - Internal dashboard: \`${htmlPath}\`
-- Retention dashboard: \`${retention.dashboardPath}\`
 - Recording rehearsal: \`${rehearsal.htmlPath}\`
 - Sender setup: \`${senderGuide.htmlPath}\`
 - Market proof cockpit: \`${marketProof.htmlPath}\`
 - Market learning review: \`${marketLearning.htmlPath}\`
-- Owned handoff cockpit: \`${ownedHandoff.htmlPath}\`
-- Owned case studies: \`${ownedCaseStudies.htmlPath}\`
-- Owned live signals: \`growth-brain/ops/owned-product-live-signals.html\`
 - Growth doctor: \`${doctor.path}\`
 - Live metrics: \`${metrics.path}\`
 - Market parity: \`growth-brain/ops/market-parity-readiness.md\`
@@ -358,7 +385,7 @@ const actionHtml = dedupedActions.length
   ? dedupedActions.map((action) => `
         <tr>
           <td><span class="pill ${action.priority === "P0" ? "bad" : action.priority === "P1" ? "warn" : "good"}">${htmlEscape(action.priority)}</span></td>
-          <td>${htmlEscape(action.item)}</td>
+          <td>${htmlEscape(displayText(action.item))}</td>
           <td><code>${htmlEscape(action.command)}</code></td>
           <td>${htmlEscape(action.why)}</td>
         </tr>`).join("")
@@ -369,7 +396,7 @@ const todoHtml = taskList.length
         <tr>
           <td>${htmlEscape(task.bucket)}</td>
           <td><span class="pill ${task.priority === "P0" ? "bad" : task.priority === "P1" ? "warn" : "good"}">${htmlEscape(task.priority)}</span></td>
-          <td>${htmlEscape(task.task)}</td>
+          <td>${htmlEscape(displayText(task.task))}</td>
           <td><code>${htmlEscape(task.command)}</code></td>
         </tr>`).join("")
   : `<tr><td>Clear</td><td>-</td><td>No open tasks in TASKS.md.</td><td>-</td></tr>`;
@@ -449,17 +476,17 @@ const html = `<!doctype html>
       <table><thead><tr><th>Area</th><th>Evidence</th><th>Command</th></tr></thead><tbody>${blockerHtml}
       </tbody></table>
     </section>
-    <p class="links">Retention dashboard: ${htmlEscape(retention.dashboardPath)} · Sender setup: ${htmlEscape(senderGuide.htmlPath)} · Market proof cockpit: ${htmlEscape(marketProof.htmlPath)} · Owned handoff cockpit: ${htmlEscape(ownedHandoff.htmlPath)} · Growth doctor: ${htmlEscape(doctor.path)} · Market parity: growth-brain/ops/market-parity-readiness.md</p>
+    <p class="links">Sender setup: ${htmlEscape(senderGuide.htmlPath)} · Market proof cockpit: ${htmlEscape(marketProof.htmlPath)} · Growth doctor: ${htmlEscape(doctor.path)} · Market parity: growth-brain/ops/market-parity-readiness.md</p>
   </main>
 </body>
 </html>
 `;
 
-write(outputPath, markdown);
-write(htmlPath, html);
+write(resolve(serviceRoot, outputPath), markdown);
+write(resolve(serviceRoot, htmlPath), html);
 
 const result = {
-  status: doctor.status === "blocked" || parity.status === "not-11-10-yet" || retention.status === "attention-needed" ? "attention-needed" : "ready",
+  status: doctor.status === "blocked" || parity.status === "not-11-10-yet" || serviceQueueBlocked > 0 || clientIntegrityBlocked > 0 ? "attention-needed" : "ready",
   path: outputPath,
   htmlPath,
   date: today,
@@ -468,11 +495,13 @@ const result = {
   counts,
   actions: dedupedActions,
   tasks: taskList,
-  retention: {
-    status: retention.status,
-    weeklyReady: retention.weeklyReady,
-    clients: retention.clients,
-    highRisk: retention.highRisk
+  serviceQueue: {
+    status: serviceQueueBlocked > 0 || clientIntegrityBlocked > 0 ? "attention-needed" : "ready",
+    active: serviceQueueAttention,
+    blocked: serviceQueueBlocked,
+    clientsBlocked: clientIntegrityBlocked,
+    error: serviceQueue.error || "",
+    counts: serviceQueue.counts || {}
   },
   marketProof: {
     status: marketProof.checkStatus,
@@ -487,13 +516,6 @@ const result = {
     guidePath: senderGuide.path,
     guideHtmlPath: senderGuide.htmlPath,
     warnings: channelGuidance.warnings
-  },
-  ownedHandoff: {
-    status: ownedHandoff.status,
-    path: ownedHandoff.path,
-    htmlPath: ownedHandoff.htmlPath,
-    readyToRecord: ownedHandoff.readyToRecord,
-    clients: ownedHandoff.clients
   },
   parity: {
     status: parity.status,

@@ -710,14 +710,6 @@ for (const startup of startups) {
     encoding: "utf8",
     stdio: ["ignore", "pipe", "pipe"]
   });
-  execFileSync("node", ["scripts/export-client-facing-dashboard.mjs", startup.clientPath], {
-    encoding: "utf8",
-    stdio: ["ignore", "pipe", "pipe"]
-  });
-  execFileSync("node", ["scripts/export-client-renewal-review.mjs", startup.clientPath], {
-    encoding: "utf8",
-    stdio: ["ignore", "pipe", "pipe"]
-  });
 
   results.push({
     clientPath: startup.clientPath,

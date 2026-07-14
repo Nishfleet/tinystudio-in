@@ -8,7 +8,7 @@ const clientPath = args.find((arg) => !arg.startsWith("--"));
 const strict = args.includes("--strict");
 
 if (!clientPath) {
-  console.error("Usage: npm run client:channels-check -- clients/client-slug [-- --strict] (node scripts/check-client-channel-readiness.mjs)");
+  console.error("Usage: node scripts/check-client-channel-readiness.mjs clients/client-slug [--strict]");
   process.exit(1);
 }
 

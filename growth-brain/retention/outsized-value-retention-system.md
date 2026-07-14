@@ -1,4 +1,6 @@
-# Outsized Value Retention System
+# Retired: Outsized Value Retention System
+
+> **Status: Retired historical reference.** This monthly retention product is not an active TinyStudio offer. The current service ends with human-reviewed 14-day implementation tracking and a separate human continuation decision.
 
 This is the monthly retention product.
 

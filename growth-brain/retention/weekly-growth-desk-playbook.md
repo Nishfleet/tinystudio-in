@@ -1,4 +1,6 @@
-# Weekly Growth Desk Playbook
+# Retired: Weekly Growth Desk Playbook
+
+> **Status: Retired historical reference.** Do not run commands or use the retainer lifecycle in this file. Current customer follow-through is the sprint's human-reviewed 14-day implementation tracking; any renewal is a separate human decision.
 
 ## Positioning
 

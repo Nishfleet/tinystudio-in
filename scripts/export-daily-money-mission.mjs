@@ -6,13 +6,15 @@ import { localIsoDate } from "./date-utils.mjs";
 import { isValidLoomUrl } from "./lib/loom-url.mjs";
 import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
 import { routedContactPlan } from "./lib/contact-route.mjs";
+import { canonicalProspectAsk } from "./lib/canonical-service-copy.mjs";
+import { NO_GUARANTEE_CLIENT_SENTENCE } from "./lib/service-contract.mjs";
 
 const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
 const limit = limitArg ? Number(limitArg.split("=")[1]) : 5;
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
-const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/daily-money-mission.md";
+const outputPath = outputArg ? outputArg.split("=")[1] : "runs/daily-money-mission.md";
 const htmlArg = process.argv.find((arg) => arg.startsWith("--html="));
-const htmlPath = htmlArg ? htmlArg.split("=")[1] : "growth-brain/ops/daily-money-mission.html";
+const htmlPath = htmlArg ? htmlArg.split("=")[1] : "runs/daily-money-mission.html";
 const today = localIsoDate();
 
 function runJson(args) {
@@ -25,12 +27,6 @@ function runJson(args) {
 
 function read(path) {
   return existsSync(path) ? readFileSync(path, "utf8") : "";
-}
-
-function section(markdown, heading, fallback = "") {
-  const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const match = markdown.match(new RegExp(`## ${escaped}\\n+([\\s\\S]*?)(?:\\n## |$)`));
-  return match ? match[1].trim() : fallback;
 }
 
 function escapeHtml(value) {
@@ -63,15 +59,6 @@ function cleanSheetNote(value, fallback) {
     .replace(/\|/g, "/")
     .trim();
   return normalized.length >= 8 ? normalized : fallback;
-}
-
-function cleanAsk(value, closeText) {
-  const normalized = String(value || "").replace(/\s+/g, " ").replace(/\|/g, "/").trim();
-  const close = String(closeText || "").replace(/\s+/g, " ").replace(/\|/g, "/").replace(/^"|"$/g, "").trim();
-  if (!normalized || /^7-?day site revenue leak sprint$/i.test(normalized)) {
-    return close || "If useful, I can run a 7-day sprint where I map this leak, rewrite the key sections, and give you a 30-day action plan.";
-  }
-  return normalized;
 }
 
 function sharpnessValue(content, label) {
@@ -126,7 +113,6 @@ function proofRunImpact({ outlineImpact, sharpness, firstFix, route }) {
 function prospectProofNotes(prospectPath) {
   const loomOutline = read(join(prospectPath, "loom-outline.md"));
   const sharpness = read(join(prospectPath, "recording-sharpness-brief.md"));
-  const closeText = section(loomOutline, "Close", "");
   const route = contactRoute(prospectPath);
   const firstFix = lineValue(loomOutline, /^6\. [^\n:]+:[ \t]*([^\n]*)$/m, "");
   return {
@@ -147,11 +133,7 @@ function prospectProofNotes(prospectPath) {
       firstFix,
       "first fix shown in the recording"
     ),
-    ask: cleanAsk(
-      lineValue(loomOutline, /^7\. [^\n:]+:[ \t]*([^\n]*)$/m, "")
-        || lineValue(sharpness, /^7\. CTA:[ \t]*([^\n]*)$/m, ""),
-      closeText
-    )
+    ask: canonicalProspectAsk()
   };
 }
 
@@ -190,8 +172,8 @@ function ensureLoomLinksTemplate(prospects) {
     .split("\n")
     .some((line) => {
       const trimmed = line.trim();
-      if (!trimmed.startsWith("prospects/")) return false;
-      return isValidLoomUrl(trimmed.split("|")[1]);
+      const [prospectPath, loomUrl] = trimmed.split("|");
+      return Boolean(prospectPath) && isValidLoomUrl(loomUrl);
     });
 
   if (hasFilledLinks) return { path, status: "kept-filled-links" };
@@ -308,11 +290,11 @@ ${queueRows || "No active prospects found."}
 ## Workflow Rules
 
 - Do not add more prospects until the current scored batch is recorded and sent.
-- Do not make revenue, ranking, ROAS, or traffic promises.
+- ${NO_GUARANTEE_CLIENT_SENTENCE}
 - Every prospect must have a specific visible leak, a Loom, a contact route, a sent stage, and a scheduled follow-up.
 - Every reply becomes a call-prep package.
 - Every call becomes a close package.
-- Every closed deal becomes a client sprint folder and delivery cockpit.
+- A close proceeds only from a consented application through fresh human fit approval, payment, and recorded Day 0; automation never creates or accepts a client on its own.
 `;
 
 const cards = activeProspects.map((prospect, index) => `

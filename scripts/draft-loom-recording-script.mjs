@@ -2,6 +2,9 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { agencyConfig } from "./lib/agency-config.mjs";
+import { FOUNDER_PILOT } from "./lib/client-scaffold.mjs";
+import { guardOutboundProspectPath } from "./lib/outbound-prospects.mjs";
+import { NO_GUARANTEE_CLIENT_SENTENCE } from "./lib/service-contract.mjs";
 
 const prospectPath = process.argv[2];
 
@@ -14,6 +17,8 @@ if (!existsSync(prospectPath)) {
   console.error(`Prospect folder not found: ${prospectPath}`);
   process.exit(1);
 }
+
+guardOutboundProspectPath(prospectPath);
 
 function read(relativePath) {
   const path = join(prospectPath, relativePath);
@@ -161,7 +166,6 @@ const metadata = existsSync(metadataPath)
   : { name: prospectPath.split("/").pop(), website: "" };
 
 const outline = read("loom-outline.md");
-const buyerRoom = read("buyer-room.md");
 const pageSnapshot = read("page-snapshot.md");
 const sharpnessBrief = read("recording-sharpness-brief.md");
 const config = agencyConfig();
@@ -180,8 +184,7 @@ const whyItMatters = scriptImpact({
 const contrast = cleanFragment(lineValue(outline, 5, "a clearer competitor or reference pattern"));
 const firstFix = cleanFragment(lineValue(outline, 6, "clarify the page hierarchy, proof, and CTA path"));
 const firstFixRationale = fixRationale(cues);
-const priceMatch = buyerRoom.match(/- Price:\s*(.+)/);
-const price = priceMatch ? priceMatch[1].trim() : config.founderSprintPrice;
+const price = `$${FOUNDER_PILOT.offerPriceUsd.toLocaleString("en-US")} founder pilot`;
 const spokenPagePromise = cleanFragment(cues.visiblePromise || "what the homepage is promising above the fold");
 
 const script = `# ${metadata.name} Loom Recording Script
@@ -193,9 +196,9 @@ Record a 2-3 minute cold audit that shows one clear leak and makes the ${config.
 ## Before Recording
 
 - Open ${metadata.website || "the prospect website"}.
-- Open this file, \`recording-sharpness-brief.md\`, \`page-snapshot.md\`, and \`buyer-room.md\`.
+- Open this file, \`recording-sharpness-brief.md\`, and \`page-snapshot.md\`.
 - Keep the screen on ${mainPage}.
-- Do not mention guaranteed revenue, rankings, ROAS, or specific lift.
+- ${NO_GUARANTEE_CLIENT_SENTENCE}
 - If the live page differs from \`page-snapshot.md\`, trust the live page.
 
 ## Live Page Cues
@@ -244,7 +247,7 @@ ${coldOpen ? `### Optional Cold Open\n\n${coldOpen}\n` : ""}
 
 ### 2:20-3:00 Close
 
-"If useful, I can run this as a ${config.offerName}. I would map the leak, rewrite the key sections, build the proof and FAQ plan, and send a 30-day action plan. For the first few founder sprints I am pricing this at ${price}."
+"If useful, I can run this as a human-reviewed ${config.offerName} for this one highest-leverage page. It includes the leak map, rewrite or redesign, implementation pass or dev-ready handoff, proof, Loom, measurement plan, one client revision, and 14-day implementation tracking. The first 3 founder pilots are exactly ${price}."
 
 "Either way, I hope this was useful."
 
