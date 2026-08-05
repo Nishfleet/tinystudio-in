@@ -1,6 +1,6 @@
 # Retention Checkups
 
-Generated: 2026-06-20
+Generated: 2026-07-17
 
 This is the retention control surface. It should make weekly and monthly client checkups automatic to prepare, but it does not send anything automatically and never fakes proof.
 
