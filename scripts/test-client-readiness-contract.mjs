@@ -85,15 +85,16 @@ try {
 	const imported = run(script("import-sprint-application.mjs", "contracts/fixtures/sprint-application.v1.json"))
 	eq(imported.status, 0)
 	const fixedClockImport = pathToFileURL(sp("lib/test-fixed-clock.mjs")).href
-	const decided = run(script("record-service-decision.mjs", applicationId, "--decision", "approve", "--reviewer", "Canonical reviewer", "--note", "Fit and application evidence reviewed for the readiness fixture", "--decided-at", "2026-07-13T10:00:00.000Z", "--nonce", "118f5a54-84aa-7ae0-a1fd-4da350490771"), {
+	const clockEnv = {
 		NODE_OPTIONS: [process.env.NODE_OPTIONS, `--import=${fixedClockImport}`].filter(Boolean).join(" "),
-		SERVICE_TEST_NOW: "2026-07-13T12:00:00.000+05:30",
+		SERVICE_TEST_NOW: "2026-07-13T23:59:00.000+05:30",
 		TZ: "Asia/Kolkata"
-	})
+	}
+	const decided = run(script("record-service-decision.mjs", applicationId, "--decision", "approve", "--reviewer", "Canonical reviewer", "--note", "Fit and application evidence reviewed for the readiness fixture", "--decided-at", "2026-07-13T10:00:00.000Z", "--nonce", "118f5a54-84aa-7ae0-a1fd-4da350490771"), clockEnv)
 	eq(decided.status, 0)
 	const applied = run(script("run-review-queue.mjs", "--mode=apply", `--application=${applicationId}`, "--as-of=2026-07-13"))
 	eq(applied.status, 0)
-	const day0 = run(script("record-service-day0.mjs", applicationId, "--payment-evidence", "paid: invoice CANONICAL-1", "--required-context", "Approved website and business context", "--approval-owner", "Canonical Owner", "--implementation-owner", "Canonical Implementer", "--recorded-at", "2026-07-13T11:00:00.000Z"))
+	const day0 = run(script("record-service-day0.mjs", applicationId, "--payment-evidence", "paid: invoice CANONICAL-1", "--required-context", "Approved website and business context", "--approval-owner", "Canonical Owner", "--implementation-owner", "Canonical Implementer", "--recorded-at", "2026-07-13T11:00:00.000Z"), clockEnv)
 	eq(day0.status, 0)
 	const arbitraryClientBefore = treeSnapshot(join(F, "clients"))
 	const arbitraryClient = run(script("create-client-sprint.mjs", name))

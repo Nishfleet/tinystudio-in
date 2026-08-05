@@ -55,6 +55,17 @@ export function serviceNowTimestamp(date = new Date()) {
   return formatOffsetTimestamp(instantOf(date), SERVICE_OFFSET_MINUTES);
 }
 
+/** Return the trusted current instant; deterministic callers may pass an explicit date. */
+export function trustedNow(date = null) {
+  return date === null ? new Date() : new Date(instantOf(date));
+}
+
+/** Return whether a valid timestamp is no later than the trusted current instant. */
+export function timestampIsOnOrBeforeTrustedNow(timestamp, now = trustedNow()) {
+  const instant = Date.parse(timestamp);
+  return !Number.isNaN(instant) && instant <= instantOf(now);
+}
+
 /** Return the service-timezone calendar date (not the host machine's date). */
 export function localIsoDate(date = new Date()) {
   const value = serviceParts(date);

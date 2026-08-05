@@ -8,7 +8,7 @@ import {createPromotionJournal, promotionMarkerPath, repairPromotionJournal} fro
 import {agencyConfig} from "./lib/agency-config.mjs"
 import {assertFounderPilotRecord, FOUNDER_PILOT} from "./lib/client-scaffold.mjs"
 import {PAUSABLE_STATES} from "./lib/service-artifacts.mjs"
-import {localIsoDate, serviceNowTimestamp, timestampIsOnOrBeforeLocalDate} from "./date-utils.mjs"
+import {localIsoDate, serviceNowTimestamp, timestampIsOnOrBeforeLocalDate, timestampIsOnOrBeforeTrustedNow, trustedNow} from "./date-utils.mjs"
 
 const args = process.argv.slice(2)
 const [id] = assertCliArguments(args, {options: ["payment-evidence", "required-context", "approval-owner", "implementation-owner", "recorded-at", "pause-reason", "pause-started-at", "pause-ended-at"], positionalCount: 1})
@@ -31,6 +31,8 @@ function iso(value, name) {
 try {
 	const release = acquireLock(queuePaths(repoRoot).lockDir)
 	try {
+		const trustedInstant = trustedNow()
+		const trustedDate = localIsoDate(trustedInstant)
 		day0Operation: {
 			if (existsSync(promotionMarkerPath(repoRoot, id))) {
 				if (args.some(argument => argument.startsWith("--"))) {
@@ -39,7 +41,7 @@ try {
 				console.log(JSON.stringify(repairPromotionJournal({repoRoot, applicationId: id}), null, 2))
 				break day0Operation
 			}
-			const item = buildQueue({repoRoot}).items.find(candidate => candidate.applicationId === id)
+			const item = buildQueue({repoRoot, asOfDate: trustedDate, trustedDate}).items.find(candidate => candidate.applicationId === id)
 			if (!item) throw new Error(`application not found: ${id}`)
 			if (item.status === "blocked") throw new Error(`application is blocked: ${item.blocked.join("; ")}`)
 			if (item.decisionHash) throw new Error("cannot pause while a human decision is pending; apply the decision first")
@@ -62,8 +64,9 @@ try {
 				if (paidClientCount >= FOUNDER_PILOT.capacity) throw new Error(`founder pilot capacity is complete after ${FOUNDER_PILOT.capacity} paid clients; a human-reviewed post-pilot offer is required before another Day 0`)
 				pilotSequence = paidClientCount + 1
 			}
-			const recordedAt = iso(value("recorded-at", serviceNowTimestamp()), "recorded-at")
-			if (!timestampIsOnOrBeforeLocalDate(recordedAt, localIsoDate())) throw new Error("recorded-at is after the trusted as-of date")
+			const recordedAt = iso(value("recorded-at", serviceNowTimestamp(trustedInstant)), "recorded-at")
+			if (!timestampIsOnOrBeforeLocalDate(recordedAt, trustedDate)) throw new Error("recorded-at is after the trusted as-of date")
+			if (!timestampIsOnOrBeforeTrustedNow(recordedAt, trustedInstant)) throw new Error("recorded-at is after the trusted current instant")
 			if (state.updatedAt && Date.parse(recordedAt) < Date.parse(state.updatedAt)) throw new Error("recorded-at predates the current service state")
 			const currentState = state.state
 			if (currentState === "paused-with-reason") throw new Error("application is already paused; use service:resume")
@@ -84,6 +87,8 @@ try {
 			const pauseStartedAt = value("pause-started-at", recordedAt)
 			const pauseEndedAt = value("pause-ended-at", "")
 			if (pauseEndedAt) throw new Error("pause-ended-at is handled by service:resume; provide --note there")
+			const normalizedPauseStartedAt = iso(pauseStartedAt, "pause-started-at")
+			if (args.includes("--pause-started-at") && !timestampIsOnOrBeforeTrustedNow(normalizedPauseStartedAt, trustedInstant)) throw new Error("pause-started-at is after the trusted current instant")
 			if (prior) {
 				for (const [field, nextValue] of [
 					["paymentEvidence", paymentEvidence],
@@ -102,7 +107,8 @@ try {
 			if (pauseReason) {
 				if (paused || activePause) throw new Error("an active pause already exists; use service:resume")
 				if (currentState === "paused-with-reason") throw new Error("application is already paused")
-				activePause = {reason: pauseReason, startedAt: iso(pauseStartedAt, "pause-started-at")}
+				if (!timestampIsOnOrBeforeTrustedNow(normalizedPauseStartedAt, trustedInstant)) throw new Error("pause-started-at is after the trusted current instant")
+				activePause = {reason: pauseReason, startedAt: normalizedPauseStartedAt}
 				if (activePause.startedAt !== recordedAt) throw new Error("pause-started-at must equal recorded-at so paused time cannot be backdated")
 				resumeState = currentState
 				paused = true

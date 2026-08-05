@@ -3,6 +3,7 @@ import {existsSync} from "node:fs"
 import {join} from "node:path"
 import {acquireLock, assertCliArguments, atomicWriteJson, ensureDir, isRfc3339Timestamp, readJson, resolveRepoPath} from "./lib/service-contract.mjs"
 import {buildQueue, queuePaths, readServiceState, validateDay0Record, validateStageEvidence} from "./lib/review-queue.mjs"
+import {localIsoDate, timestampIsOnOrBeforeLocalDate, timestampIsOnOrBeforeTrustedNow, trustedNow} from "./date-utils.mjs"
 
 const args = process.argv.slice(2)
 const [id] = assertCliArguments(args, {
@@ -62,7 +63,9 @@ if (!id) {
 try {
 	const release = acquireLock(queuePaths(repoRoot).lockDir)
 	try {
-		const queue = buildQueue({repoRoot, ...(asOfDate ? {asOfDate} : {})})
+		const trustedInstant = trustedNow()
+		const trustedDate = localIsoDate(trustedInstant)
+		const queue = buildQueue({repoRoot, asOfDate: asOfDate || trustedDate, trustedDate})
 		const item = queue.items.find(candidate => candidate.applicationId === id)
 		if (!item) throw new Error(`application not found: ${id}`)
 		if (item.status === "blocked") throw new Error(`application is blocked: ${item.blocked.join("; ")}`)
@@ -72,8 +75,10 @@ try {
 		const folder = resolveRepoPath(repoRoot, item.sourcePath)
 		const path = resolveRepoPath(repoRoot, `${item.sourcePath}/service-evidence/${stage}/${item.contextRevision}.json`)
 		if (existsSync(path)) throw new Error(`stage evidence already exists: ${path}`)
-		const recordedAt = value("recorded-at", new Date().toISOString())
+		const recordedAt = value("recorded-at", trustedInstant.toISOString())
 		if (!isRfc3339Timestamp(recordedAt)) throw new Error("recorded-at must be an RFC 3339 timestamp")
+		if (!timestampIsOnOrBeforeLocalDate(recordedAt, queue.asOfDate)) throw new Error("recordedAt is after queue as-of date")
+		if (!timestampIsOnOrBeforeTrustedNow(recordedAt, trustedInstant)) throw new Error("recorded-at is after the trusted current instant")
 		const recordedBy = value("recorded-by", "TinyStudio reviewer")
 		const state = readServiceState(folder)
 		const day0Path = resolveRepoPath(repoRoot, `${item.sourcePath}/service-day0.json`)

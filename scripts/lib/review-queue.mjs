@@ -99,6 +99,71 @@ function decisionFor(repoRoot, id, state, queueInputHash) {
 	return {path, value: stat ? readJson(path) : null}
 }
 
+function verifiedRevisionRecord(repoRoot, path, hash, name) {
+	checkString(path, `${name} path`, 1, 1200)
+	assert(isHash(hash), `${name} hash is invalid`)
+	const absolutePath = resolveRepoPath(repoRoot, path)
+	assertRegularFile(absolutePath, name)
+	const value = readJson(absolutePath)
+	assert(sha256(minifiedJson(value)) === hash, `${name} hash mismatch`)
+	return value
+}
+
+function revisionFeedbackFromHistory(state, application, repoRoot) {
+	const feedback = []
+	let priorDeliveryRevision = 0
+	let latestApprovedArtifact = null
+	for (const entry of state.transitionHistory) {
+		if (entry.kind === "decision") {
+			const decisionPath = decisionPathFor(repoRoot, application.applicationId, entry.from, entry.queueInputHash)
+			assertRegularFile(decisionPath, "revision decision record")
+			const decision = validateDecision(readJson(decisionPath), {
+				repoRoot,
+				expected: {
+					applicationId: application.applicationId,
+					sourceHash: application.sourceHash,
+					packetHash: application.qualification.packetHash || "",
+					queueInputHash: entry.queueInputHash
+				}
+			})
+			assert(decision.decisionHash === entry.decisionHash, "revision decision history hash mismatch")
+			const transition = transitionFor(entry.from, decision.decision, priorDeliveryRevision)
+			const requiresRevision = decision.decision === "decline" && (AGENT_WORK_STATES.has(entry.from) || entry.from === "client-approved" || entry.from === "implementation")
+			if (requiresRevision) {
+				assert(["delivery-draft", "scope-review"].includes(transition.state), "revision feedback has an invalid target state")
+				let evidencePath = ""
+				let evidenceHash = ""
+				let clientFeedback = ""
+				if (entry.evidencePath) {
+					evidencePath = entry.evidencePath
+					evidenceHash = entry.evidenceHash
+					const evidence = verifiedRevisionRecord(repoRoot, evidencePath, evidenceHash, "revision evidence record")
+					clientFeedback = evidence.signals?.clientFeedback || evidence.signals?.usefulnessNote || ""
+				}
+				checkString(clientFeedback, "revision client feedback", REVIEW_STATES.has(entry.from) ? 3 : 0, 1200)
+				const artifact = AGENT_WORK_STATES.has(entry.from) ? {path: entry.artifactPath, hash: entry.artifactHash} : latestApprovedArtifact
+				assert(artifact?.path && artifact?.hash, "revision feedback is missing the exact artifact being revised")
+				verifiedRevisionRecord(repoRoot, artifact.path, artifact.hash, "revision artifact record")
+				feedback.push({
+					decisionHash: decision.decisionHash,
+					decisionNote: decision.note,
+					clientFeedback,
+					sourceState: entry.from,
+					at: entry.at,
+					revision: entry.contextRevision,
+					evidencePath,
+					evidenceHash,
+					artifactPath: artifact.path,
+					artifactHash: artifact.hash
+				})
+			}
+		}
+		if (entry.to === "client-approved" && entry.artifactPath && entry.artifactHash) latestApprovedArtifact = {path: entry.artifactPath, hash: entry.artifactHash}
+		priorDeliveryRevision = entry.deliveryRevision
+	}
+	return feedback
+}
+
 export function reviewCapLedgerPath(repoRoot) {
 	return resolveRepoPath(repoRoot, relative(repoRoot, join(reviewDecisionRoot(repoRoot), "review-cap-ledger.json")))
 }
@@ -583,6 +648,7 @@ function canonicalItem(application, folder, state, repoRoot, staleArtifacts, asO
 	let day0Hash = ""
 	const contextHistory = state.contextHistory || []
 	const contextNote = contextHistory.map(entry => `${entry.kind}: ${entry.note}`).join("\n")
+	const revisionFeedback = revisionFeedbackFromHistory(state, application, repoRoot)
 	const implementationBaseline = acceptedImplementationBaselineFromHistory(state, repoRoot)
 
 	if (application.qualification.state !== "ready") {
@@ -606,6 +672,10 @@ function canonicalItem(application, folder, state, repoRoot, staleArtifacts, asO
 
 	if (AGENT_WORK_STATES.has(state.state) && day0Hash) {
 		agentWork = buildAgentWorkPacket(application, state.state, folder, repoRoot, day0Hash, state.contextRevision, contextNote)
+		const revisionInputs = revisionFeedback.flatMap(entry => [entry.evidencePath, entry.artifactPath]).filter(Boolean)
+		const packetWithoutHash = {...agentWork, inputs: [...new Set([...agentWork.inputs, ...revisionInputs])], revisionFeedback}
+		delete packetWithoutHash.workPacketHash
+		agentWork = {...packetWithoutHash, workPacketHash: sha256(minifiedJson(packetWithoutHash))}
 		const outputPath = resolveRepoPath(repoRoot, agentWork.targetIgnoredPath)
 		if (existsSync(outputPath)) {
 			try {
@@ -720,13 +790,14 @@ function canonicalItem(application, folder, state, repoRoot, staleArtifacts, asO
 					recordedAt: stageEvidence.recordedAt,
 					recordedBy: stageEvidence.recordedBy,
 					clientOutcome: stageEvidence.signals.clientOutcome || "",
-					clientFeedback: stageEvidence.signals.clientFeedback || "",
+					clientFeedback: stageEvidence.signals.clientFeedback || stageEvidence.signals.usefulnessNote || "",
 					acceptanceStatus: stageEvidence.signals.acceptanceStatus || "",
 					evidenceHash
 				}
 			: null,
 		implementationBaseline,
 		contextNote,
+		revisionFeedback,
 		withinHumanDailyReviewCap: true,
 		humanReviewSlot: null
 	}
@@ -782,6 +853,7 @@ export function buildQueue({repoRoot = process.cwd(), scope = "all", asOfDate = 
 				agentWorkOutput: null,
 				stageEvidence: null,
 				implementationBaseline: null,
+				revisionFeedback: [],
 				withinHumanDailyReviewCap: true,
 				humanReviewSlot: null
 			})

@@ -4,7 +4,7 @@ import {join} from "node:path"
 import {acquireLock, assertCliArguments, isRfc3339Timestamp, minifiedJson, readJson, sha256} from "./lib/service-contract.mjs"
 import {appendStateTransition, buildQueue, contextHistoryHash, queuePaths, readServiceState, serviceContextEntry, serviceDeadlineAt, validateDay0Record} from "./lib/review-queue.mjs"
 import {commitJournaledTransition} from "./lib/service-transition-journal.mjs"
-import {localIsoDate, serviceNowTimestamp, timestampIsOnOrBeforeLocalDate} from "./date-utils.mjs"
+import {localIsoDate, serviceNowTimestamp, timestampIsOnOrBeforeLocalDate, timestampIsOnOrBeforeTrustedNow, trustedNow} from "./date-utils.mjs"
 
 const args = process.argv.slice(2)
 const [id] = assertCliArguments(args, {options: ["resumed-at", "note", "authorized-by", "scope-authorization", "fee-authorization"], positionalCount: 1})
@@ -22,19 +22,22 @@ if (!id) {
 try {
 	const release = acquireLock(queuePaths(repoRoot).lockDir)
 	try {
-		const item = buildQueue({repoRoot}).items.find(candidate => candidate.applicationId === id)
+		const trustedInstant = trustedNow()
+		const trustedDate = localIsoDate(trustedInstant)
+		const item = buildQueue({repoRoot, asOfDate: trustedDate, trustedDate}).items.find(candidate => candidate.applicationId === id)
 		if (!item) throw new Error(`application not found: ${id}`)
 		if (item.status === "blocked") throw new Error(`application is blocked: ${item.blocked.join("; ")}`)
 		const folder = join(repoRoot, item.sourcePath)
 		const state = readServiceState(folder)
-		const resumedAt = value("resumed-at", serviceNowTimestamp())
+		const resumedAt = value("resumed-at", serviceNowTimestamp(trustedInstant))
 		const note = value("note", "").trim()
 		const authorizationValue = name => value(name, "").trim().replace(/\s+/g, " ")
 		const authorizedBy = authorizationValue("authorized-by")
 		const scopeAuthorization = authorizationValue("scope-authorization")
 		const feeAuthorization = authorizationValue("fee-authorization")
 		if (!isRfc3339Timestamp(resumedAt)) throw new Error("resumed-at must be an RFC 3339 timestamp")
-		if (!timestampIsOnOrBeforeLocalDate(resumedAt, localIsoDate())) throw new Error("resumed-at is after the trusted as-of date")
+		if (!timestampIsOnOrBeforeLocalDate(resumedAt, trustedDate)) throw new Error("resumed-at is after the trusted as-of date")
+		if (!timestampIsOnOrBeforeTrustedNow(resumedAt, trustedInstant)) throw new Error("resumed-at is after the trusted current instant")
 		if (state.updatedAt && Date.parse(resumedAt) < Date.parse(state.updatedAt)) throw new Error("resumed-at predates the current service state")
 		if (state.state !== "scope-review" && (authorizedBy || scopeAuthorization || feeAuthorization)) throw new Error("scope authorization options require the scope-review state")
 		if (state.state === "scope-review" && note) throw new Error("scope-review requires the explicit authorization options instead of --note")

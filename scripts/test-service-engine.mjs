@@ -29,10 +29,10 @@ import {
 import {assertCanonicalFounderPilotCohort, assertClientScaffold, FOUNDER_PILOT} from "./lib/client-scaffold.mjs"
 import {createPromotionJournal, promotionMarkerPath, validatePromotionJournal} from "./lib/service-promotion-journal.mjs"
 import {commitJournaledTransition, transitionJournalRecord} from "./lib/service-transition-journal.mjs"
-import {addBusinessDaysToTimestamp, businessMillisecondsBetween, localEndOfIsoDate, localIsoDate, timestampIsOnOrBeforeLocalDate} from "./date-utils.mjs"
+import {addBusinessDaysToTimestamp, businessMillisecondsBetween, localEndOfIsoDate, localIsoDate, timestampIsOnOrBeforeLocalDate, timestampIsOnOrBeforeTrustedNow, trustedNow} from "./date-utils.mjs"
 
 const AS_OF_DATE = "2026-07-29"
-const DECISION_TEST_NOW = "2026-07-13T12:00:00.000+05:30"
+const DECISION_TEST_NOW = "2026-07-13T23:59:00.000+05:30"
 const QUEUE_TEST_NOW = "2026-07-29T12:00:00.000+05:30"
 const T10 = "2026-07-13T10:00:00.000Z"
 const T11 = "2026-07-13T11:00:00.000Z"
@@ -120,7 +120,7 @@ function snap(root) {
 	return result
 }
 
-function dv(item, decision, suffix) {
+function dv(item, decision, suffix, note = `Human reviewed ${item.state} fixture`) {
 	const decidedAt = new Date(Date.parse(item.reviewNotBefore) + 60_000).toISOString()
 	const value = {
 		contract: "tinystudio.review-decision",
@@ -132,7 +132,7 @@ function dv(item, decision, suffix) {
 		queueInputHash: item.queueInputHash,
 		reviewerLabel: "Test reviewer",
 		decision,
-		note: `Human reviewed ${item.state} fixture`,
+		note,
 		decidedAt,
 		decisionNonce: `028f5a54-84aa-7ae0-a1fd-4da35049${String(700 + suffix).padStart(4, "0")}`
 	}
@@ -141,8 +141,8 @@ function dv(item, decision, suffix) {
 	return value
 }
 
-function rd(item, decision, suffix) {
-	const value = dv(item, decision, suffix)
+function rd(item, decision, suffix, note) {
+	const value = dv(item, decision, suffix, note)
 	const path = decisionPathFor(R, item.applicationId, item.state, item.queueInputHash)
 	appendReviewCapLedgerEntry(R, value, item.state)
 	aw(path, value)
@@ -403,6 +403,13 @@ try {
 	invalidLoomEvidence.signals.afterEvidenceUrl = `${EVIDENCE}/proof/page-after.png`
 	invalidLoomEvidence.signals.loomUrl = "https://www.loom.com/"
 	thr(() => validateStageEvidence(invalidLoomEvidence, implementationEvidenceContext), /share or embed recording/)
+	const credentialBaselineEvidence = structuredClone(invalidLoomEvidence)
+	credentialBaselineEvidence.signals.loomUrl = LOOM
+	credentialBaselineEvidence.signals.measurementBaseline.sourceUrl = "https://user:secret@example.invalid/baseline.json"
+	thr(() => validateStageEvidence(credentialBaselineEvidence, implementationEvidenceContext), /must not contain URL credentials/)
+	const credentialLoomEvidence = structuredClone(invalidLoomEvidence)
+	credentialLoomEvidence.signals.loomUrl = "https://user:secret@www.loom.com/share/1234567890abcdef1234567890abcdef"
+	thr(() => validateStageEvidence(credentialLoomEvidence, implementationEvidenceContext), /Loom share or embed recording/)
 	for (const [field, invalid, expected] of [
 		["approvedArtifactHash", "0".repeat(64), /implementation approved artifact hash mismatch/],
 		["implementationArtifactUrl", "https://www.example.com/other-page", /approved selected page/]
@@ -422,6 +429,16 @@ try {
 	const currentLocalDate = localIsoDate()
 	const nextLocalMidnight = new Date(localEndOfIsoDate(currentLocalDate) + 1).toISOString()
 	eq(timestampIsOnOrBeforeLocalDate(nextLocalMidnight, currentLocalDate), false)
+	const timestampTestNow = "2026-07-13T12:00:00.000+05:30"
+	eq(timestampIsOnOrBeforeTrustedNow(timestampTestNow, new Date(timestampTestNow)), true)
+	eq(timestampIsOnOrBeforeTrustedNow("2026-07-13T11:59:59.999+05:30", new Date(timestampTestNow)), true)
+	eq(timestampIsOnOrBeforeTrustedNow("2026-07-13T12:00:00.001+05:30", new Date(timestampTestNow)), false)
+	const originalServiceTestNow = process.env.SERVICE_TEST_NOW
+	process.env.SERVICE_TEST_NOW = "2099-01-01T00:00:00.000Z"
+	const trustedWallClock = trustedNow()
+	if (originalServiceTestNow === undefined) delete process.env.SERVICE_TEST_NOW
+	else process.env.SERVICE_TEST_NOW = originalServiceTestNow
+	assert(Math.abs(Date.now() - trustedWallClock.getTime()) < 1000, "trustedNow must ignore caller-controlled SERVICE_TEST_NOW")
 	eq(addBusinessDaysToTimestamp("2026-07-17T10:00:00.000Z", 7), "2026-07-28T10:00:00.000Z")
 	eq(businessMillisecondsBetween("2026-07-11T10:00:00.000Z", "2026-07-12T10:00:00.000Z"), 0)
 	eq(serviceDeadlineAt("2026-07-10T10:00:00.000+05:30", [{reason: "Weekend client delay", startedAt: "2026-07-11T10:00:00.000+05:30", endedAt: "2026-07-12T10:00:00.000+05:30", durationMs: 86400000}]), "2026-07-21T10:00:00.000+05:30")
@@ -818,6 +835,39 @@ try {
 	deq(rf(fitDecision.path), fitDecisionBytes)
 	aq()
 	eq(rs(folder).state, "approved-awaiting-day0")
+	const clockNow = "2026-07-14T13:00:00.000+05:30"
+	const clockId = "0a8f5a54-84aa-7ae0-a1fd-4da350490785"
+	clone(application, clockId)
+	const clockDecision = run(
+		DECIDE,
+		[clockId, "--decision", "approve", "--reviewer", "Clock reviewer", "--note", "Clock fixture approval.", "--decided-at", "2026-07-14T11:00:00.000+05:30", "--nonce", "0a8f5a54-84aa-7ae0-a1fd-4da350490785"],
+		E(clockNow)
+	)
+	eq(clockDecision.status, 0, clockDecision.stderr)
+	aq({applicationId: clockId, asOfDate: "2026-07-14", trustedDate: "2026-07-14"})
+	const clockFutureDay0Before = snap(R)
+	const clockFutureDay0 = run(
+		DAY0,
+		[clockId, "--payment-evidence", "paid: invoice CLOCK-14", "--required-context", "Clock-approved context", "--approval-owner", "Clock founder", "--implementation-owner", "TinyStudio", "--recorded-at", "2026-07-14T14:00:00.000+05:30"],
+		E(clockNow)
+	)
+	neq(clockFutureDay0.status, 0)
+	mat(clockFutureDay0.stderr, /trusted current instant/)
+	deq(snap(R), clockFutureDay0Before)
+	const clockExactDay0 = run(
+		DAY0,
+		[clockId, "--payment-evidence", "paid: invoice CLOCK-14", "--required-context", "Clock-approved context", "--approval-owner", "Clock founder", "--implementation-owner", "TinyStudio", "--pause-reason", "Clock pause", "--pause-started-at", "2026-07-14T12:00:00.000+05:30", "--recorded-at", "2026-07-14T12:00:00.000+05:30"],
+		E(clockNow)
+	)
+	eq(clockExactDay0.status, 0, clockExactDay0.stderr)
+	const clockFutureResumeBefore = snap(rp("clients", clockId))
+	const clockFutureResume = run(RESUME, [clockId, "--resumed-at", "2026-07-14T14:00:00.000+05:30", "--note", "Clock pause resolved."], E(clockNow))
+	neq(clockFutureResume.status, 0)
+	mat(clockFutureResume.stderr, /trusted current instant/)
+	deq(snap(rp("clients", clockId)), clockFutureResumeBefore)
+	const clockExactResume = run(RESUME, [clockId, "--resumed-at", clockNow, "--note", "Clock pause resolved exactly now."], E(clockNow))
+	eq(clockExactResume.status, 0, clockExactResume.stderr)
+	rm(rp("clients", clockId), {recursive: true, force: true})
 
 	const replayPath = decisionPathFor(R, appId, "approved-awaiting-day0", bq().items[0].queueInputHash)
 	md(dirname(replayPath), {recursive: true})
@@ -922,22 +972,58 @@ try {
 		candidate.deliverables.implementation.route = "dev-ready-handoff"
 		candidate.deliverables.implementation.artifact.kind = "developer-ready-handoff"
 	})
+	const credentialUrl = "https://user:secret@example.invalid/restricted"
+	abo(candidate => {
+		candidate.evidence[0].sourceUrl = credentialUrl
+	}, /must not contain URL credentials/)
+	abo(candidate => {
+		candidate.deliverables.pageFix.artifact.sections[0].ctaTarget = credentialUrl
+	}, /must not contain URL credentials/)
+	abo(candidate => {
+		const redesignArtifact = {
+			kind: "implementation-ready-redesign",
+			designSystemReference: "Reviewed design system reference for this page.",
+			responsiveStates: ["desktop", "mobile", "tablet", "wide"],
+			sections: candidate.deliverables.pageFix.artifact.sections.map(section => ({
+				sectionId: section.sectionId,
+				layout: "Use the reviewed layout with one clear hierarchy and action.",
+				finalCopy: section.body,
+				assetReferences: [credentialUrl],
+				interaction: "Keep interaction predictable and keyboard accessible."
+			})),
+			implementationNotes: "Apply the reviewed responsive layout and verify each section before handoff."
+		}
+		candidate.deliverables.pageFix.mode = "redesign"
+		candidate.deliverables.pageFix.artifact = redesignArtifact
+		candidate.deliverables.implementation.artifact.pageFixHash = sha256(minifiedJson(redesignArtifact))
+	}, /must not contain URL credentials/)
 
-	const humanReviewOnlyClaims = ["We promise to preserve conversion tracking through deployment.", "We do not guarantee revenue or promise rankings.", "Neither revenue nor rankings are guaranteed.", "We promise to report conversions accurately."]
+	const humanReviewOnlyClaims = [
+		"We promise to preserve conversion tracking through deployment.",
+		"We do not guarantee revenue or promise rankings.",
+		"Neither revenue nor rankings are guaranteed.",
+		"We promise to report conversions accurately.",
+		"This work does not boost conversions.",
+		"Conversions do not increase because of this work."
+	]
 	for (const text of humanReviewOnlyClaims) {
 		checkOutputMutation(
-			candidate => {
-				candidate.claims[0].text = text
-			},
-			(ci, candidate) => {
-				eq(ci.status, "needs-review")
-				deq(ci.blocked, [])
-				eq(ci.decision, null)
-				deq(ci.agentWorkOutput.claimsPolicy, candidate.claimsPolicy)
-				assert(Array.isArray(ci.agentWorkOutput.claimRiskFlags))
-			}
-		)
-	}
+				candidate => {
+					candidate.claims[0].text = text
+				},
+				(ci, candidate) => {
+					eq(ci.status, "needs-review")
+					deq(ci.blocked, [])
+					eq(ci.decision, null)
+					deq(ci.agentWorkOutput.claimsPolicy, candidate.claimsPolicy)
+					assert(Array.isArray(ci.agentWorkOutput.claimRiskFlags))
+					if (text === "We promise to report conversions accurately.") {
+						const operationalFlag = ci.agentWorkOutput.claimRiskFlags.find(flag => flag.path === "claims[0].text")
+						assert(operationalFlag && operationalFlag.blocking === false)
+					}
+				}
+			)
+		}
 
 	const flaggedOutcomeClaims = [
 		"This rewrite will increase conversion lift for the selected page.",
@@ -946,9 +1032,14 @@ try {
 		"This rewrite will boost conversions.",
 		"No revenue guarantee is made while conversions will rise.",
 		"This rewrite will lead directly to more revenue.",
-		"No pressure we guarantee booked calls.",
-		"Without hesitation we guarantee revenue."
-	]
+			"No pressure we guarantee booked calls.",
+			"Without hesitation we guarantee revenue.",
+			"We promise to report conversions accurately and guarantee revenue.",
+			"These changes boost conversions.",
+			"These changes boosted conversions.",
+			"These changes are boosting conversions.",
+			"We guarantee the audit increases revenue."
+		]
 	for (const [index, text] of flaggedOutcomeClaims.entries()) {
 		checkOutputMutation(
 			candidate => {
@@ -956,8 +1047,8 @@ try {
 				candidate.claims[0].risk = "high"
 			},
 			ci => {
-				eq(ci.status, "needs-review")
-				assert(ci.agentWorkOutput.claimRiskFlags.some(flag => flag.path === "claims[0].text"))
+				eq(ci.status, "blocked")
+				mat(ci.blocked.join("\n"), /unresolved guarantee\/claim risk flags/)
 				if (index === 0) {
 					const stateBeforeHumanReview = rf(sf(folder))
 					thr(() => aq({applicationId: appId}), /no decision is ready/)
@@ -1219,7 +1310,7 @@ try {
 	const it = id => bq().items.find(candidate => candidate.applicationId === id)
 	const I2 = "028f5a54-84aa-7ae0-a1fd-4da350490772"
 	clone(application, I2)
-	dc(I2, "needs-info", "Please provide the implementation context.")
+	dc(I2, "needs-info", "revision-feedback:not-json Please provide the implementation context.")
 	aq({applicationId: I2})
 	const secondFolder = rp("prospects", I2)
 	eq(rs(secondFolder).state, "needs-info")
@@ -1416,14 +1507,53 @@ try {
 	aq({applicationId: I5})
 	i5 = it(I5)
 	eq(i5.state, "client-approved")
-	ec(I5, ["--stage", "client-approved", "--client-outcome", "revision-requested", "--client-feedback", "Please make the included consolidated revision.", "--reviewed-artifact-hash", rs(f5).approvedArtifactHash, "--recorded-at", "2026-07-13T15:00:00.000Z"])
+	const maxClientFeedback = "Please make the included consolidated revision. revision-feedback:not-json ".padEnd(1200, "F")
+	const maxDecisionNote = "Human reviewed client-approved fixture with the full revision boundary. ".padEnd(1200, "D")
+	ec(I5, ["--stage", "client-approved", "--client-outcome", "revision-requested", "--client-feedback", maxClientFeedback, "--reviewed-artifact-hash", rs(f5).approvedArtifactHash, "--recorded-at", "2026-07-13T15:00:00.000Z"])
 	i5 = it(I5)
 	rdc(I5, "approve", "This contradicts the recorded client revision request.", /client outcome revision-requested does not support decision approve/)
-	rd(i5, "decline", 11)
+	rd(i5, "decline", 11, maxDecisionNote)
 	aq({applicationId: I5})
 	eq(rs(f5).deliveryRevision, 1)
 	prepQ()
 	i5 = it(I5)
+	assert(i5.agentWork.revisionFeedback.length >= 1)
+	const firstRevisionFeedback = i5.agentWork.revisionFeedback.at(-1)
+	eq(firstRevisionFeedback.sourceState, "client-approved")
+	eq(firstRevisionFeedback.decisionNote, maxDecisionNote)
+	eq(firstRevisionFeedback.clientFeedback, maxClientFeedback)
+	eq(firstRevisionFeedback.evidenceHash, i5.revisionFeedback.at(-1).evidenceHash)
+	neq(firstRevisionFeedback.decisionHash, "")
+	const revisionState = rs(f5)
+	const revisionTransition = revisionState.transitionHistory.findLast(entry => entry.from === "client-approved" && entry.to === "delivery-draft")
+	const revisedArtifactTransition = revisionState.transitionHistory.findLast(entry => entry.to === "client-approved" && entry.artifactPath)
+	eq(revisionTransition.contextEntry, null)
+	eq(firstRevisionFeedback.evidencePath, revisionTransition.evidencePath)
+	eq(firstRevisionFeedback.evidenceHash, revisionTransition.evidenceHash)
+	eq(firstRevisionFeedback.artifactPath, revisedArtifactTransition.artifactPath)
+	eq(firstRevisionFeedback.artifactHash, revisedArtifactTransition.artifactHash)
+	eq(sha256(minifiedJson(rj(rp(firstRevisionFeedback.evidencePath)))), firstRevisionFeedback.evidenceHash)
+	eq(sha256(minifiedJson(rj(rp(firstRevisionFeedback.artifactPath)))), firstRevisionFeedback.artifactHash)
+	const revisedPacket = rj(rp(i5.agentWork.packetPath))
+	eq(revisedPacket.inputs.filter(path => path === firstRevisionFeedback.evidencePath).length, 1)
+	eq(revisedPacket.inputs.filter(path => path === firstRevisionFeedback.artifactPath).length, 1)
+	const revisedPacketHashInput = {...revisedPacket}
+	delete revisedPacketHashInput.workPacketHash
+	eq(revisedPacket.workPacketHash, sha256(minifiedJson(revisedPacketHashInput)))
+	eq(ex(rp(i5.agentWork.targetIgnoredPath)), false)
+	const revisionStateBytes = rf(sf(f5))
+	const tamperedRevisionState = JSON.parse(revisionStateBytes)
+	const tamperedRevisionTransition = tamperedRevisionState.transitionHistory.findLast(entry => entry.from === "client-approved" && entry.to === "delivery-draft")
+	tamperedRevisionTransition.evidenceHash = "0".repeat(64)
+	aw(sf(f5), tamperedRevisionState)
+	eq(it(I5).status, "blocked")
+	wf(sf(f5), revisionStateBytes)
+	const revisionPacketBytes = rf(rp(i5.agentWork.packetPath))
+	const tamperedRevisionPacket = JSON.parse(revisionPacketBytes)
+	tamperedRevisionPacket.revisionFeedback.at(-1).decisionNote = "replayed feedback"
+	aw(rp(i5.agentWork.packetPath), tamperedRevisionPacket)
+	mat(checkQueue().failures.join("\n"), /agent work packet is stale or altered/)
+	wf(rp(i5.agentWork.packetPath), revisionPacketBytes)
 	const revisedOutputPath = rp(i5.agentWork.targetIgnoredPath)
 	neq(revisedOutputPath, firstRevisionOutputPath)
 	aw(revisedOutputPath, vao(i5))
@@ -1445,6 +1575,15 @@ try {
 	wf(firstRevisionOutputPath, firstRevisionOutputBytes)
 	i5 = it(I5)
 	eq(i5.state, "client-approved")
+	const futureEvidenceBefore = snap(f5)
+	const futureEvidence = run(
+		"scripts/record-service-evidence.mjs",
+		[I5, "--stage", "client-approved", "--client-outcome", "approved", "--client-feedback", "Client approved the revised artifact.", "--reviewed-artifact-hash", rs(f5).approvedArtifactHash, "--recorded-at", "2026-07-13T18:00:00.000Z"],
+		E("2026-07-13T17:00:00.000Z")
+	)
+	neq(futureEvidence.status, 0)
+	mat(futureEvidence.stderr, /trusted current instant/)
+	deq(snap(f5), futureEvidenceBefore)
 	const ownerFallbackEvidence = ec(I5, ["--stage", "client-approved", "--client-outcome", "approved", "--client-feedback", "Client approved the revised artifact.", "--reviewed-artifact-hash", rs(f5).approvedArtifactHash, "--recorded-at", "2026-07-13T16:00:00.000Z"])
 	const ownerFallbackEvidenceRecord = JSON.parse(ownerFallbackEvidence.stdout)
 	eq(rj(ownerFallbackEvidenceRecord.evidencePath).signals.implementationOwner, rj(df(f5)).implementationOwner)
@@ -1481,6 +1620,12 @@ try {
 	matureTrackingEvidence.signals.trackedThrough = matureTrackingEvidence.recordedAt
 	matureTrackingEvidence.signals.trackingRecordUrl = `${EVIDENCE}/tracking/managed-services-day-14.json`
 	matureTrackingEvidence.signals.measurementResult.sourceUrl = `${EVIDENCE}/results/managed-services-day-14.json`
+	for (const field of ["trackingRecordUrl", "measurementResult.sourceUrl"]) {
+		const candidate = structuredClone(matureTrackingEvidence)
+		if (field === "trackingRecordUrl") candidate.signals.trackingRecordUrl = "https://user:secret@example.invalid/tracking.json"
+		else candidate.signals.measurementResult.sourceUrl = "https://user:secret@example.invalid/result.json"
+		thr(() => validateStageEvidence(candidate, {...trackingContext, asOfDate: AS_OF_DATE, notBefore: fifthState.updatedAt}), /must not contain URL credentials/)
+	}
 	const fullTrackingPause = [{reason: "Client access blocked implementation tracking", startedAt: fifthState.implementationAcceptedAt, endedAt: "2026-07-27T17:00:00.000Z", durationMs: Date.parse("2026-07-27T17:00:00.000Z") - Date.parse(fifthState.implementationAcceptedAt)}]
 	thr(() => validateStageEvidence(matureTrackingEvidence, {...trackingContext, pauseHistory: fullTrackingPause}), /at least 14 active days/)
 	for (const [field, invalid, expected] of [
@@ -1823,6 +1968,24 @@ try {
 	neq(july14Historical.status, 0)
 	mat(july14Historical.stderr, /trusted recording date 2026-07-14/)
 	deq(snap(R), july14Before)
+	const july14FutureId = "0e8f5a54-84aa-7ae0-a1fd-4da350490783"
+	clone(application, july14FutureId)
+	const july14FutureBefore = snap(R)
+	eq(timestampIsOnOrBeforeTrustedNow("2026-07-14T14:00:00.000+05:30", new Date(clockNow)), false)
+	const july14Future = run(
+		DECIDE,
+		[july14FutureId, "--decision", "approve", "--reviewer", "Clock reviewer", "--note", "Same-local-day future decision must not be persisted.", "--decided-at", "2026-07-14T14:00:00.000+05:30", "--nonce", "0e8f5a54-84aa-7ae0-a1fd-4da350490783"],
+		E(clockNow)
+	)
+	neq(july14Future.status, 0)
+	mat(july14Future.stderr, /trusted current instant/)
+	deq(snap(R), july14FutureBefore)
+	const july14Exact = run(
+		DECIDE,
+		[july14FutureId, "--decision", "approve", "--reviewer", "Clock reviewer", "--note", "Exact trusted instant decision remains valid.", "--decided-at", clockNow, "--nonce", "0f8f5a54-84aa-7ae0-a1fd-4da350490784"],
+		E(clockNow)
+	)
+	eq(july14Exact.status, 0, july14Exact.stderr)
 	const july14Current = run(DECIDE, [july14Id, "--decision", "approve", "--reviewer", "Clock reviewer", "--note", "Current simulated local-day decision must remain valid.", "--decided-at", "2026-07-14T10:00:00.000+05:30", "--nonce", "0d8f5a54-84aa-7ae0-a1fd-4da350490783"], E("2026-07-14T12:00:00.000+05:30"))
 	eq(july14Current.status, 0)
 

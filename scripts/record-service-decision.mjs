@@ -2,7 +2,7 @@
 import {existsSync} from "node:fs"
 import {acquireLock, assertCliArguments, decisionHashFor, isRfc3339Timestamp, newNonce, schemaDigest, validateDecision} from "./lib/service-contract.mjs"
 import {buildQueue, createReviewCapJournal, decisionPathFor, queuePaths, repairReviewCapJournal, validateDecisionStageAlignment} from "./lib/review-queue.mjs"
-import {localIsoDate, timestampIsOnOrBeforeLocalDate} from "./date-utils.mjs"
+import {localIsoDate, timestampIsOnOrBeforeLocalDate, timestampIsOnOrBeforeTrustedNow, trustedNow} from "./date-utils.mjs"
 
 const args = process.argv.slice(2)
 const positional = assertCliArguments(args, {options: ["application", "decision", "reviewer", "note", "decided-at", "nonce"], positionalCount: 1})
@@ -19,9 +19,10 @@ if (!id) {
 try {
 	const release = acquireLock(queuePaths(repoRoot).lockDir)
 	try {
-		const decidedAt = value("decided-at", new Date().toISOString())
+		const trustedInstant = trustedNow()
+		const trustedDate = localIsoDate(trustedInstant)
+		const decidedAt = value("decided-at", trustedInstant.toISOString())
 		if (!isRfc3339Timestamp(decidedAt)) throw new Error("decided-at must be an RFC 3339 timestamp")
-		const trustedDate = localIsoDate()
 		const decisionDate = localIsoDate(new Date(decidedAt))
 		if (decisionDate !== trustedDate) throw new Error(`decided-at must use the trusted recording date ${trustedDate}`)
 		const queue = buildQueue({repoRoot, asOfDate: trustedDate, trustedDate})
@@ -29,6 +30,7 @@ try {
 		if (!item || !item.sourceHash) throw new Error(`application not found: ${id}`)
 		if (item.status !== "needs-review") throw new Error(`application is not awaiting a human decision: ${item.status}`)
 		if (!item.withinHumanDailyReviewCap) throw new Error(`application is deferred beyond today's human review cap: slot ${item.humanReviewSlot}`)
+		if (!timestampIsOnOrBeforeTrustedNow(decidedAt, trustedInstant)) throw new Error("decided-at is after the trusted current instant")
 		const decision = {
 			contract: "tinystudio.review-decision",
 			schemaVersion: 1,

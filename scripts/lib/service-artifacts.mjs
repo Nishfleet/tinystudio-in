@@ -21,12 +21,29 @@ const CHANGE_LINK_ADVERB = "(?:directly|definitely|certainly|surely|reliably|mea
 const OUTCOME_CHANGE_VERB = `(?:increase|improve|raise|rise|grow|deliver|generate|double|triple|boost|lift|drive|produce|bring|give|yield|get|see|achieve|receive|secure|earn|make|create|result(?:\\s+${CHANGE_LINK_ADVERB})?\\s+in|lead(?:\\s+${CHANGE_LINK_ADVERB})?\\s+to)`
 const CERTAINTY_ADVERB = "(?:(?:directly|definitely|certainly|surely|reliably|measurably|materially|significantly|consistently|inevitably)\\s+)?"
 const CONTRAST_BOUNDARY = "(?:and|but|however|yet|although|though|while|whereas|still|nevertheless|nonetheless)"
-const FORBIDDEN_GUARANTEE_PATTERNS = [
+const EXPLICIT_OUTCOME_GUARANTEE_PATTERNS = [
 	new RegExp(`\\b(?:guarantee(?:d|s)?|promise(?:d|s)?|assur(?:e[ds]?|ance)|ensure(?:d|s)?)\\b[^.!?\\n]{0,80}\\b${FORBIDDEN_OUTCOME_TERM}\\b`, "i"),
-	new RegExp(`\\b${FORBIDDEN_OUTCOME_TERM}\\b[^.!?\\n]{0,80}\\b(?:guaranteed|promised|assured|certain)\\b`, "i"),
+	new RegExp(`\\b${FORBIDDEN_OUTCOME_TERM}\\b[^.!?\\n]{0,80}\\b(?:guaranteed|promised|assured|certain)\\b`, "i")
+]
+const OUTCOME_CHANGE_GUARANTEE_PATTERNS = [
 	new RegExp(`\\bwill\\s+${CERTAINTY_ADVERB}${OUTCOME_CHANGE_VERB}\\b[^.!?\\n]{0,80}\\b${FORBIDDEN_OUTCOME_TERM}\\b`, "i"),
 	new RegExp(`\\b${FORBIDDEN_OUTCOME_TERM}\\b[^.!?\\n]{0,80}\\bwill\\s+${CERTAINTY_ADVERB}${OUTCOME_CHANGE_VERB}\\b`, "i"),
 	new RegExp(`\\b(?:is|are|was|were|be)\\s+(?:certain|sure|guaranteed|promised|assured)\\s+to\\s+${OUTCOME_CHANGE_VERB}\\b[^.!?\\n]{0,80}\\b${FORBIDDEN_OUTCOME_TERM}\\b`, "i")
+]
+const FORBIDDEN_GUARANTEE_PATTERNS = [...EXPLICIT_OUTCOME_GUARANTEE_PATTERNS, ...OUTCOME_CHANGE_GUARANTEE_PATTERNS]
+const OPERATIONAL_OUTCOME_PROMISE_PATTERN = new RegExp(
+	`\\b(?:guarantee(?:d|s)?|promise(?:d|s)?|assur(?:e[ds]?|ance)|ensure(?:d|s)?)\\b\\s+(?:(?:to\\s+)|(?:(?:that\\s+)?(?:we|you|they|(?:our|the)\\s+team)\\s+(?:will\\s+)?))?(?:report|track|measure|monitor|record|attribute|instrument|analy[sz]e)\\b(?:(?!\\b(?:guarantee(?:d|s)?|promise(?:d|s)?|assur(?:e[ds]?|ance)|ensure(?:d|s)?)\\b)[^.!?\\n]){0,40}?\\b${FORBIDDEN_OUTCOME_TERM}\\b`,
+	"gi"
+)
+const CATEGORICAL_OUTCOME_CHANGE_VERB = `(?:increas(?:e|es|ed|ing)|improv(?:e|es|ed|ing)|rais(?:e|es|ed|ing)|ris(?:e|es|en|ing)|grow(?:s|n|ing)?|deliver(?:s|ed|ing)?|generat(?:e|es|ed|ing)|double(?:s|d)?|doubling|triple(?:s|d)?|tripling|boost(?:s|ed|ing)?|lift(?:s|ed|ing)?|driv(?:e|es|en|ing)|produc(?:e|es|ed|ing)|yield(?:s|ed|ing)?|mak(?:e|es|ing)|made|creat(?:e|es|ed|ing)|result(?:s|ed|ing)?(?:\\s+${CHANGE_LINK_ADVERB})?\\s+in|(?:lead(?:s|ing)?|led)(?:\\s+${CHANGE_LINK_ADVERB})?\\s+to)`
+const CATEGORICAL_NEGATION = "(?:(?:do(?:es)?|did|will|can|could|would|should|is|are|was|were|has|have|had)\\s+(?:not|never)|do(?:es)?n't|didn't|won't|can't|couldn't|wouldn't|shouldn't|isn't|aren't|wasn't|weren't|hasn't|haven't|hadn't|cannot|not|never)"
+const NEGATED_CATEGORICAL_OUTCOME_PATTERNS = [
+	new RegExp(`\\b${CATEGORICAL_NEGATION}\\s+${CATEGORICAL_OUTCOME_CHANGE_VERB}\\b(?:(?!\\b${CONTRAST_BOUNDARY}\\b)[^.!?;\\n]){0,80}?\\b${FORBIDDEN_OUTCOME_TERM}\\b`, "gi"),
+	new RegExp(`\\b${FORBIDDEN_OUTCOME_TERM}\\b(?:(?!\\b${CONTRAST_BOUNDARY}\\b)[^.!?;\\n]){0,80}?\\b${CATEGORICAL_NEGATION}\\s+${CATEGORICAL_OUTCOME_CHANGE_VERB}\\b`, "gi")
+]
+const NON_MODAL_OUTCOME_CHANGE_PATTERNS = [
+	new RegExp(`\\b${CATEGORICAL_OUTCOME_CHANGE_VERB}\\b[^.!?\\n]{0,80}\\b${FORBIDDEN_OUTCOME_TERM}\\b`, "i"),
+	new RegExp(`\\b${FORBIDDEN_OUTCOME_TERM}\\b[^.!?\\n]{0,80}\\b${CATEGORICAL_OUTCOME_CHANGE_VERB}\\b`, "i")
 ]
 const NEGATED_GUARANTEE_CLAUSE_PATTERN = new RegExp(`\\b(?:(?:do(?:es)?|did|will|can)\\s+not|do(?:es)?n't|didn't|can't|won't|cannot|never)\\s+(?:guarantee|promise|assure)\\b(?:(?!\\b${CONTRAST_BOUNDARY}\\b)[^,:.!?;\\n])*`, "gi")
 const NEITHER_GUARANTEE_CLAUSE_PATTERN = /\bneither [^,:.!?;\n]{1,80}\bnor\b[^,:.!?;\n]{1,80}\b(?:is|are|was|were)\s+guaranteed\b/gi
@@ -99,6 +116,7 @@ function checkHttpUrl(value, name) {
 		throw new Error(`${name} must be an HTTP(S) URL`)
 	}
 	assert(["http:", "https:"].includes(parsed.protocol), `${name} must be an HTTP(S) URL`)
+	assert(!parsed.username && !parsed.password, `${name} must not contain URL credentials`)
 	return parsed
 }
 function canonicalPageIdentity(value, name) {
@@ -264,10 +282,19 @@ function collectGuaranteeRiskFlags(value, name = "agent work output", flags = []
 				.replace(NEITHER_GUARANTEE_CLAUSE_PATTERN, "")
 				.replace(NO_GUARANTEE_CLAUSE_PATTERN, "")
 				.replace(NEGATED_OUTCOME_IMPLICATION_PATTERN, "")
+				.replace(NEGATED_CATEGORICAL_OUTCOME_PATTERNS[0], "")
+				.replace(NEGATED_CATEGORICAL_OUTCOME_PATTERNS[1], "")
 				.replace(NEGATED_OUTCOME_COMPLEMENT_PATTERN, "excluded outcome")
 				.replace(OPERATIONAL_METRIC_PATTERN, "operational metric")
-			if (FORBIDDEN_GUARANTEE_PATTERNS.some(pattern => pattern.test(claimText))) {
-				flags.push({path: name, reason: "possible-outcome-guarantee", excerpt: statement.trim().slice(0, 240)})
+			const matchesGuaranteeHeuristic = FORBIDDEN_GUARANTEE_PATTERNS.some(pattern => pattern.test(claimText))
+			const matchesCategoricalOutcomeChange = NON_MODAL_OUTCOME_CHANGE_PATTERNS.some(pattern => pattern.test(claimText))
+			if (matchesGuaranteeHeuristic || matchesCategoricalOutcomeChange) {
+				const nonOperationalClaimText = claimText.replace(OPERATIONAL_OUTCOME_PROMISE_PATTERN, "operational promise")
+				const blocking =
+					OUTCOME_CHANGE_GUARANTEE_PATTERNS.some(pattern => pattern.test(claimText)) ||
+					matchesCategoricalOutcomeChange ||
+					EXPLICIT_OUTCOME_GUARANTEE_PATTERNS.some(pattern => pattern.test(nonOperationalClaimText))
+				flags.push({path: name, reason: "possible-outcome-guarantee", blocking, excerpt: statement.trim().slice(0, 240)})
 			}
 		}
 		return flags
@@ -593,6 +620,8 @@ export function validateAgentWorkOutput(output, {application, packet, asOfDate =
 		checkEvidenceIds(entry.evidenceIds, `agent work claims[${index}].evidenceIds`, {observed: true})
 		assert(["low", "medium", "high"].includes(entry.risk), `agent work claims[${index}].risk is invalid`)
 	})
+	const unresolvedClaimRiskFlags = agentWorkClaimRiskFlags(output).filter(flag => flag.blocking)
+	assert(unresolvedClaimRiskFlags.length === 0, `agent work output contains unresolved guarantee/claim risk flags: ${unresolvedClaimRiskFlags.map(flag => flag.path).join(", ")}`)
 	return output
 }
 
