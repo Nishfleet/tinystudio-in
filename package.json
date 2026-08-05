@@ -80,6 +80,7 @@
     "service:evidence": "node scripts/record-service-evidence.mjs",
     "service:queue": "node scripts/run-review-queue.mjs",
     "service:queue-check": "node scripts/check-review-queue.mjs",
+    "service:deadlines": "node scripts/check-service-deadlines.mjs",
     "service:cross-repo-test": "node scripts/test-cross-repo-service.mjs",
     "product:truth": "node scripts/check-product-truth.mjs",
     "mobbin:run": "node scripts/run-design-system-proving-lab.mjs",
