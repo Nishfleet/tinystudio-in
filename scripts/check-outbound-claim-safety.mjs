@@ -15,6 +15,31 @@ const genericGuarantee = /\bguarantee(?:d|s)?\b/i;
 // wrong here: it also matches "We guarantee 20 leads, with no guarantees beyond
 // that", which must stay flagged.
 const forbidsMention = /\b(?:do(?:es)? not|will not|shall not|won't|never|avoid)\s+(?:mention|say|write|use|claim|state|imply|suggest|reference|promise|guarantee)\b/i;
+// "No revenue, ranking, or sales-volume guarantees" splits on commas, so the tail
+// clauses lose the negation that governs them. A trailing clause inherits an opening
+// prohibition only when it is a bare list continuation; a clause carrying its own
+// subject and verb ("placement is guaranteed") never inherits and stays flagged.
+const opensProhibition = /^[\s\-*|]*(?:no|never|neither|nor|do(?:es)? not|will not|shall not|won't)\b/i;
+const hasOwnPredicate = /\b(?:is|are|was|were|be|we|i|you|they|it)\b/i;
+// Two sets, because the two rules need different things. The risk-flag rule reads a
+// clause as a whole, so a clause that opens with a prohibition must be dropped. The
+// generic-guarantee rule strips guaranteeGuardrail first, which already removes
+// "No ... guarantees" from inside a clause, so that clause is kept: it may still
+// hide a promise after the disclaimer ("Neither results are guaranteed, placement
+// is guaranteed").
+function effectiveClauses(clauses, {dropProhibitionOpeners} = {}) {
+  let governed = false;
+  const kept = [];
+  for (const clause of clauses) {
+    const opens = opensProhibition.test(clause);
+    if (opens) governed = true;
+    const inherits = governed && !opens && !hasOwnPredicate.test(clause);
+    const skip = forbidsMention.test(clause) || inherits || (opens && dropProhibitionOpeners);
+    if (!skip) kept.push(clause);
+    if (/[.!?]\s*$/.test(clause)) governed = false;
+  }
+  return kept;
+}
 const clauseBoundary = /[:.!?;]|\b(?:and|but|however|yet|although|though|while|whereas|still|nevertheless|nonetheless)\b/i;
 const allowlistNames = new Set([
   "objection-handling.md",
@@ -99,8 +124,10 @@ for (const file of filesToScan()) {
       // sales-volume guarantees" would lose the leading "No" and read as a
       // promise. The generic-guarantee rule below stays per-clause, and that is
       // what still catches "We guarantee 20 leads, with no guarantees beyond that".
-      if (!forbidsMention.test(line)) {
-        for (const flag of agentWorkClaimRiskFlags({ deliverables: line, claims: [] })) {
+      const effective = effectiveClauses(clauses, {dropProhibitionOpeners: true});
+        const genericClauses = effectiveClauses(clauses);
+      for (const clause of effective) {
+        for (const flag of agentWorkClaimRiskFlags({ deliverables: clause, claims: [] })) {
           findings.push({ file, line: index + 1, rule: flag.reason, text: line.trim() });
         }
       }
@@ -108,7 +135,7 @@ for (const file of filesToScan()) {
       // that forbids *mentioning* a guarantee ("Do not mention guaranteed revenue")
       // keeps the bare word and was flagged as making the promise it forbids.
       // allowedGuardrail is the broader prohibition test the rule path already uses.
-      if (clauses.some((clause) => genericGuarantee.test(clause.replace(guaranteeGuardrail, "")) && !forbidsMention.test(clause))) {
+      if (genericClauses.some((clause) => genericGuarantee.test(clause.replace(guaranteeGuardrail, "")))) {
       findings.push({ file, line: index + 1, rule: "generic guarantee", text: line.trim() });
     }
     for (const rule of patterns) {
