@@ -1,8 +1,9 @@
 #!/usr/bin/env node
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { execFileSync } from "node:child_process";
 import { localIsoDate } from "./date-utils.mjs";
+import { assertOutboundProspectPath, listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 
 const args = process.argv.slice(2);
 const inputPath = args.find((arg) => !arg.startsWith("--")) || "prospects/lead-scores.txt";
@@ -16,11 +17,7 @@ const strict = args.includes("--strict");
 const allowedPriorities = new Set(["record", "research-more", "skip"]);
 
 function listFolders(root) {
-  if (!existsSync(root)) return [];
-  return readdirSync(root, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => join(root, entry.name))
-    .sort();
+  return listOutboundProspectFolders(root);
 }
 
 function read(path) {
@@ -33,7 +30,7 @@ function json(path) {
 
 function hasLeadScore(path) {
   const content = read(join(path, "lead-score.md"));
-  return !/Score:\s*$/m.test(content) && !/Priority:\s*record \/ research-more \/ skip/m.test(content);
+  return Boolean(content.trim()) && !/Score:\s*$/m.test(content) && !/Priority:\s*record \/ research-more \/ skip/m.test(content);
 }
 
 function templateProspects() {
@@ -199,6 +196,12 @@ for (const row of rows) {
   }
   if (!existsSync(row.path)) {
     skipped.push({ ...row, reason: "prospect folder not found" });
+    continue;
+  }
+  try {
+    assertOutboundProspectPath(row.path);
+  } catch (error) {
+    skipped.push({ ...row, reason: error.message });
     continue;
   }
 

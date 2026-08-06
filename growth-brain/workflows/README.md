@@ -1,21 +1,23 @@
 # Growth Brain Workflows
 
-This folder turns the strategy into operating rhythm.
+This folder runs one offer: the human-reviewed 7-Day Website Revenue Leak Fix Sprint for founder-led Managed IT/MSP/cybersecurity companies. Every active workflow stays inside one highest-leverage page.
 
 ## Order Of Operations
 
-1. Use `repeatable-workflow-operating-system.md` as the default method for building or improving any service line.
-2. Run `npm run growth:mission` and follow the current bottleneck.
-3. Run `daily-sales-workflow.md` until a client pays.
-4. Use `lead-scoring-workflow.md` to avoid wasting Looms on bad-fit prospects.
-5. Use `loom-audit-workflow.md` to create sharp personalized audits.
-6. Use `conversion-audit-workflow.md` before any page, form, ad, or email recommendation leaves the system.
-7. After payment, use `client-sprint-workflow.md` to deliver the 7-day sprint.
-8. After delivery, use `weekly-growth-desk-workflow.md` and `weekly-client-value-loop.md` to retain the client.
+1. Run `npm run growth:mission` and follow the current outbound bottleneck without sending automatically.
+2. Use `lead-scoring-workflow.md`, `loom-audit-workflow.md`, and `conversion-audit-workflow.md` to prepare reviewed outreach and page recommendations.
+3. Import only a consented application, then run `npm run service:queue -- --scope all`.
+4. A human decides fit. Automation may prepare the buyer room and proposal only after approval.
+5. Paid Day 0 starts only after payment, required context, approval owner, and implementation owner are recorded.
+6. Use `human-review-service-engine.md` and `client-sprint-workflow.md` for the seven-working-day delivery.
+7. Humans review claims, client-facing work, delivery, acceptance, and the included revision. Automation only prepares artifacts and evidence.
+8. Complete human-reviewed 14-day implementation tracking. Treat any renewal as a separate human decision, never an automatic continuation.
 
 ## Rule
 
-Do not add a new service line until the current workflow has:
+Do not add another service line or SaaS surface until this sprint has the graduation evidence in `PRODUCT.md`.
+
+Every live workflow must keep:
 
 - clear inputs
 - repeatable steps
@@ -34,17 +36,11 @@ Every workflow should follow the same sequence:
 4. Extract the principle.
 5. Design the flow.
 6. Build the smallest system.
-7. Delegate execution deliberately.
+7. Let automation prepare the work; route decisions to the named human reviewer.
 8. Test against real output.
 9. Feed results back.
 10. Iterate toward the winner.
 
-## Owned Product Proof
+## Retired Workflows
 
-Use AI Converter, SiteRep, and 0509 to stress-test the loop before overpromising it to clients:
-
-```bash
-npm run owned:workflow-proof
-```
-
-This writes one `ops/repeatable-workflow.md` file inside each owned-product folder and a rollup at `growth-brain/ops/owned-product-workflow-proofs.md`.
+Former service lines and recurring-retainer routines are historical only. They are not part of the current offer, delivery path, tracking promise, or renewal decision.

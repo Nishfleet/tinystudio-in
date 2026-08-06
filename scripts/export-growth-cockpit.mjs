@@ -4,7 +4,7 @@ import { execFileSync } from "node:child_process";
 import { localIsoDate } from "./date-utils.mjs";
 
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
-const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/growth-cockpit.html";
+const outputPath = outputArg ? outputArg.split("=")[1] : "runs/growth-cockpit.html";
 const today = localIsoDate();
 
 function runJson(args) {
@@ -51,7 +51,7 @@ const topProspects = (todayResult.prospects || [])
       <td>${escapeHtml(prospect.pipelineStage)}</td>
       <td>${escapeHtml(prospect.status)}</td>
       <td>${escapeHtml(prospect.nextAction)}</td>
-      <td><a href="../../${escapeHtml(prospect.path)}/buyer-room.md">Buyer Room</a></td>
+      <td><a href="../${escapeHtml(prospect.path)}/buyer-room.md">Buyer Room</a></td>
     </tr>
   `).join("\n");
 
@@ -197,18 +197,18 @@ const html = `<!doctype html>
     <section class="panel">
       <h2>Open</h2>
       <div class="linkGrid">
-        <a class="button" href="../../prospects/recording-cockpit.html">Recording Cockpit</a>
+        <a class="button" href="../prospects/recording-cockpit.html">Recording Cockpit</a>
         <a class="button" href="daily-money-mission.html">Daily Money Mission</a>
-        <a class="button" href="../../prospects/lead-scoring-cockpit.html">Scoring Cockpit</a>
-        <a class="button" href="../../prospects/recording-teleprompter.html">Teleprompter</a>
-        <a class="button" href="../../prospects/outbox.html">Outbox</a>
-        <a class="button" href="../../prospects/followup-cockpit.html">Follow-Ups</a>
-        <a class="button" href="../../prospects/sales-cockpit.html">Sales Cockpit</a>
-        <a class="button" href="live-metrics.md">Live Metrics</a>
+        <a class="button" href="../prospects/lead-scoring-cockpit.html">Scoring Cockpit</a>
+        <a class="button" href="../prospects/recording-teleprompter.html">Teleprompter</a>
+        <a class="button" href="../prospects/outbox.html">Outbox</a>
+        <a class="button" href="../prospects/followup-cockpit.html">Follow-Ups</a>
+        <a class="button" href="../prospects/sales-cockpit.html">Sales Cockpit</a>
+        <a class="button" href="../growth-brain/ops/live-metrics.md">Live Metrics</a>
         <a class="button" href="growth-doctor.md">Growth Doctor</a>
-        <a class="button" href="sender-setup-guide.html">Sender Setup</a>
-        <a class="button" href="proof-library.md">Proof Library</a>
-        <a class="button" href="../sales/managed-it-one-page-offer.html">Managed IT Sales Sheet</a>
+        <a class="button" href="../growth-brain/ops/sender-setup-guide.html">Sender Setup</a>
+        <a class="button" href="../growth-brain/ops/proof-library.md">Proof Library</a>
+        <a class="button" href="../growth-brain/sales/managed-it-one-page-offer.html">Managed IT Sales Sheet</a>
       </div>
     </section>
 
@@ -251,14 +251,14 @@ console.log(JSON.stringify({
   date: today,
   links: [
     "prospects/recording-cockpit.html",
-    "growth-brain/ops/daily-money-mission.html",
+    "runs/daily-money-mission.html",
     "prospects/lead-scoring-cockpit.html",
     "prospects/recording-teleprompter.html",
     "prospects/outbox.html",
     "prospects/followup-cockpit.html",
     "prospects/sales-cockpit.html",
     "growth-brain/ops/live-metrics.md",
-    "growth-brain/ops/growth-doctor.md",
+    "runs/growth-doctor.md",
     "growth-brain/ops/sender-setup-guide.html",
     "growth-brain/ops/proof-library.md",
     "growth-brain/sales/managed-it-one-page-offer.html"

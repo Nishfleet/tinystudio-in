@@ -2,24 +2,25 @@
 
 ## Active
 
-- [ ] **Record first 5 Loom audits** - LayerLogix, PROTBYTE, Sagiss, Scorpion Technology, and Stradiant now have recording scripts; run `prospect:rehearsal -- --limit=5`, use `market:proof-cockpit`, then run `market:after-recording -- --from-clipboard` with the Loom URLs.
-- [ ] **Fill owned-product business metrics** - live public delivery metrics are now filled; paste one product analytics or sales metric per owned product with `npm run owned:metrics -- --from-clipboard` before calling AI Converter, SiteRep, and 0509 full business case studies.
-- [ ] **Complete owned-startup handoff Loom acceptance** - AI Converter, SiteRep, and 0509 now have source-reviewed claims and scorecards; run `npm run owned:handoff`, record the real handoff Looms, then complete each acceptance command.
+- [ ] **Prepare and record the first five approved Loom audits** - run `prospect:rehearsal -- --limit=5`, use `market:proof-cockpit`, then run `market:after-recording -- --from-clipboard` with the Loom URLs.
 - [ ] **Run market learning review after first send batch** - use `npm run market:learn` before changing lead fit, hook, first message, or channel.
-- [ ] **Close first paid sprint** - use the buyer room, proposal, and follow-up sequence.
-- [ ] **Deliver first sprint** - create a client folder, run the sprint, and update the client brain.
+- [ ] **Review consented applications** - run `npm run service:queue -- --scope all`; a human decides fit before any close or delivery work.
+- [ ] **Close first paid sprint** - use the buyer room, proposal, and follow-up sequence only after human fit approval.
+- [ ] **Deliver first sprint** - record paid Day 0, then work the human-review service queue through approved delivery and acceptance.
+- [ ] **Complete 14-day implementation tracking** - prepare evidence automatically, then require human approval before acceptance, proof reuse, or renewal.
 
 ## Waiting On
 
-- [ ] **First client data** - waiting on paid client intake before measuring actual delivery friction.
+- [ ] **First consented applicant and paid Day 0** - the seven-working-day clock starts only after payment, required context, approval owner, and implementation owner.
 
 ## Someday
 
-- [ ] **Build intake form** - only after first client friction is visible.
 - [ ] **Export buyer room to PDF/site** - only after one buyer room has helped close or nearly close.
-- [ ] **Deepen weekly report automation** - add analytics ingestion after retained clients expose the real reporting pattern.
+- [ ] **Deepen tracking automation** - add analytics ingestion only after paid sprints expose a repeatable 14-day measurement pattern.
 
-## Done
+## Done (historical build log)
+
+Entries below preserve implementation history. They are not current operator instructions; use the Active list and the human-review service engine.
 
 - [x] ~~Open full proof stack in record mode~~ (2026-05-29) - `growth:start -- --view=record` now opens the mission, rehearsal gate, teleprompter, and market proof cockpit so recording starts from the proof workflow.
 - [x] ~~Add one-command post-recording proof prep~~ (2026-05-29) - `market:after-recording` now updates Loom URLs, preserves tangible proof notes, prepares send packages, refreshes the outbox, and refreshes the proof cockpit without marking anything sent.

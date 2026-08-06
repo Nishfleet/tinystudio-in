@@ -1,183 +1,43 @@
 #!/usr/bin/env node
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync, copyFileSync } from "node:fs";
-import { join } from "node:path";
-import { execFileSync } from "node:child_process";
+import { relative } from "node:path";
+import { acquireLock, assertCliArguments } from "./lib/service-contract.mjs";
+import { createClientScaffold } from "./lib/client-scaffold.mjs";
+import { buildQueue, findApplicationFolder, queuePaths } from "./lib/review-queue.mjs";
 
-const name = process.argv.slice(2).join(" ").trim();
+const args = process.argv.slice(2);
+assertCliArguments(args, { positionalCount: 1 });
+const applicationId = args.find((arg) => !arg.startsWith("--")) || "";
+const repoRoot = process.env.SERVICE_REPO_ROOT || process.cwd();
 
-function slugify(value) {
-  return value
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .slice(0, 80);
-}
-
-if (!name) {
-  console.error("Usage: npm run client:new -- \"Client Name\"");
+if (!applicationId) {
+  console.error("Usage: npm run client:new -- APPLICATION_ID");
   process.exit(1);
 }
 
-const slug = slugify(name);
-if (!slug) {
-  console.error("Client name must contain letters or numbers.");
-  process.exit(1);
-}
-
-const clientRoot = join("clients", slug);
-if (existsSync(clientRoot)) {
-  console.error(`Client sprint already exists: ${clientRoot}`);
-  process.exit(1);
-}
-
-for (const dir of ["brain", "deliverables", "ops/weekly-runs", "research", "reports"]) {
-  mkdirSync(join(clientRoot, dir), { recursive: true });
-}
-
-mkdirSync(join(clientRoot, "quality"), { recursive: true });
-
-const brainTemplateRoot = "growth-brain/client-brain-template";
-for (const file of readdirSync(brainTemplateRoot)) {
-  if (file.endsWith(".md")) {
-    copyFileSync(join(brainTemplateRoot, file), join(clientRoot, "brain", file));
+try {
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(applicationId)) {
+    throw new Error("client scaffold requires a canonical application ID");
   }
+  const preflightFolder = findApplicationFolder(repoRoot, applicationId);
+  if (relative(repoRoot, preflightFolder) !== `clients/${applicationId}`) {
+    throw new Error("client scaffold requires a paid canonical Day 0 record under clients/");
+  }
+  const release = acquireLock(queuePaths(repoRoot).lockDir);
+  try {
+    const clientFolder = findApplicationFolder(repoRoot, applicationId);
+    if (relative(repoRoot, clientFolder) !== `clients/${applicationId}`) {
+      throw new Error("client scaffold requires a paid canonical Day 0 record under clients/");
+    }
+    const item = buildQueue({ repoRoot, scope: "clients" }).items.find((candidate) => candidate.applicationId === applicationId);
+    if (!item || item.status === "blocked") {
+      throw new Error(`client scaffold requires a valid paid canonical service record${item?.blocked?.length ? `: ${item.blocked.join("; ")}` : ""}`);
+    }
+    const result = createClientScaffold({ repoRoot, clientFolder });
+    console.log(JSON.stringify({ status: result.created.length ? "created" : "ready", ...result }, null, 2));
+  } finally {
+    release();
+  }
+} catch (error) {
+  console.error(`client:new failed: ${error.message}`);
+  process.exit(1);
 }
-
-writeFileSync(join(clientRoot, "intake.md"), `# ${name} Intake
-
-## Client
-
-- Name: ${name}
-- Website:
-- Main offer:
-- Target buyer:
-- Approval contact:
-- Payment / written approval:
-- Sprint dates:
-
-## Required Context
-
-- Website URLs:
-- Competitors:
-- Reviews/testimonials:
-- Analytics screenshots:
-- Ads/emails:
-- Founder notes:
-
-## Access Notes
-
-- Analytics:
-- CMS:
-- Email/SMS:
-- Ads:
-
-## Open Questions
-
--
-`);
-
-writeFileSync(join(clientRoot, "sprint-plan.md"), `# ${name} Sprint Plan
-
-## Wedge
-
-Pick one:
-
-- Site architecture
-- Product page
-- Landing page
-- Offer
-- Email/SMS
-- Ads
-
-## Sprint Checklist
-
-Use \`growth-brain/sprint-checklist.md\`.
-
-## Deliverables
-
-- Leak map:
-- Page/site fix:
-- Ad angles:
-- Email/SMS drafts:
-- Competitor watch:
-- Weekly report:
-- 30-day plan:
-
-## Approval Gates
-
-- Claims:
-- Pricing:
-- Proof:
-- Competitor-inspired ideas:
-- Final client-facing copy:
-
-## Status
-
-- Intake:
-- Brain filled:
-- Drafted:
-- Approved:
-- Delivered:
-- Follow-up:
-`);
-
-const deliveryTemplate = readFileSync("growth-brain/delivery-template.md", "utf8");
-writeFileSync(join(clientRoot, "deliverables", "delivery.md"), deliveryTemplate.replace("# Client Delivery Template", `# ${name} Delivery`));
-
-const handoffTemplate = readFileSync("growth-brain/delivery/implementation-handoff-template.md", "utf8");
-writeFileSync(join(clientRoot, "deliverables", "implementation-handoff.md"), handoffTemplate);
-
-const reportTemplate = readFileSync("growth-brain/weekly-report-template.md", "utf8");
-writeFileSync(join(clientRoot, "reports", "week-1-report.md"), reportTemplate.replace("# Weekly Growth Brain Report", `# ${name} Week 1 Report`));
-
-for (const file of [
-  "claim-proof-ledger.md",
-  "channel-readiness-scorecard.md",
-  "conversion-optimization-scorecard.md",
-  "delivery-scorecard.md",
-  "sprint-acceptance-checklist.md"
-]) {
-  copyFileSync(join("growth-brain/quality", file), join(clientRoot, "quality", file));
-}
-
-const buyerRoom = readFileSync("growth-brain/sales/buyer-room-template.md", "utf8");
-writeFileSync(join(clientRoot, "buyer-room.md"), buyerRoom.replace("# Buyer Room Template", `# ${name} Buyer Room`));
-
-const aiWorkflow = readFileSync("growth-brain/ai-visibility/ai-search-audit-workflow.md", "utf8");
-writeFileSync(join(clientRoot, "research", "ai-search-audit.md"), aiWorkflow);
-
-execFileSync("node", ["scripts/draft-client-kickoff.mjs", clientRoot], {
-  encoding: "utf8",
-  stdio: ["ignore", "pipe", "pipe"]
-});
-
-execFileSync("node", ["scripts/export-client-delivery-cockpit.mjs", clientRoot], {
-  encoding: "utf8",
-  stdio: ["ignore", "pipe", "pipe"]
-});
-
-execFileSync("node", ["scripts/export-client-channel-readiness.mjs", clientRoot], {
-  encoding: "utf8",
-  stdio: ["ignore", "pipe", "pipe"]
-});
-
-execFileSync("node", ["scripts/export-client-repeatable-workflow.mjs", clientRoot], {
-  encoding: "utf8",
-  stdio: ["ignore", "pipe", "pipe"]
-});
-
-execFileSync("node", ["scripts/export-client-facing-dashboard.mjs", clientRoot], {
-  encoding: "utf8",
-  stdio: ["ignore", "pipe", "pipe"]
-});
-
-execFileSync("node", ["scripts/export-client-renewal-review.mjs", clientRoot], {
-  encoding: "utf8",
-  stdio: ["ignore", "pipe", "pipe"]
-});
-
-console.log(JSON.stringify({
-  status: "created",
-  client: name,
-  path: clientRoot
-}, null, 2));

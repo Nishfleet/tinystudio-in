@@ -11,7 +11,7 @@ const weekArg = args.find((arg) => arg.startsWith("--week="));
 const datesArg = args.find((arg) => arg.startsWith("--dates="));
 
 if (!clientPath) {
-  console.error("Usage: npm run client:weekly-report -- clients/client-slug [--week=1] [--dates=\"May 1-7\"]");
+  console.error("Usage: node scripts/export-client-weekly-report.mjs clients/client-slug [--week=1] [--dates=\"May 1-7\"]");
   process.exit(1);
 }
 

@@ -1,0 +1,28 @@
+# Sanitized aggregate previews and duplicate renderings are reviewed through
+# their text-diffable generators. Live private operator detail stays under runs/.
+# Legacy private paths are ignored and kept out of textual diffs while their
+# tracked snapshots are removed.
+growth-brain/ops/daily-money-mission.md -diff
+growth-brain/ops/daily-money-mission.html -diff
+growth-brain/ops/growth-cockpit.html -diff
+growth-brain/ops/growth-doctor.md -diff
+growth-brain/ops/internal-dashboard.md -diff
+growth-brain/ops/internal-dashboard.html -diff
+growth-brain/ops/market-proof-run-check.md -diff
+growth-brain/ops/market-proof-cockpit.md -diff
+growth-brain/ops/market-proof-cockpit.html -diff
+growth-brain/ops/market-learning-review.md -diff
+growth-brain/ops/market-learning-review.html -diff
+growth-brain/ops/competitive-proof-matrix.html -diff
+growth-brain/ops/sender-setup-guide.html -diff
+
+# Broad-agency and SaaS-era generators moved out of the active command surface.
+# Their source removals stay out of textual review bundles.
+scripts/check-growth-brain-kit.mjs -diff
+scripts/export-client-facing-dashboard.mjs -diff
+scripts/export-client-renewal-review.mjs -diff
+scripts/export-owned-product-live-signals.mjs -diff
+scripts/export-retention-checkups.mjs -diff
+scripts/export-value-retention-stress-test.mjs -diff
+scripts/run-weekly-client-value-loop.mjs -diff
+scripts/update-owned-product-metrics.mjs -diff

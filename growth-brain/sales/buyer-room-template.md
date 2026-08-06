@@ -1,49 +1,40 @@
-# Buyer Room Template
+# Buyer room template
 
-Use this as a self-serve decision page after a Loom audit.
+Use this page after the fit review so a founder can decide without a sales call.
 
 ## Business
 
-- Name:
+- Company:
 - Website:
-- Main contact:
+- Approval owner:
+- Implementation owner:
 - Loom:
 
-## What I Saw
+## Fit and page
 
-- Leak 1:
-- Leak 2:
-- Leak 3:
+- Founder-led Managed IT/MSP/cybersecurity company: [ ]
+- Live site and high-value offer: [ ]
+- Highest-leverage page:
+- Evidence for the leak:
 
-## Why It Matters
+## The sprint
 
-Explain in plain English how the leak affects buyers, search/AI visibility, conversion, or trust.
+**7-Day Website Revenue Leak Fix Sprint**
 
-## What The Sprint Fixes
+Included: leak map, rewrite or redesign of one highest-leverage page, one implementation pass or dev-ready handoff, search-trust basics, before/after proof, Loom, measurement plan, one revision, and 14-day implementation tracking.
 
-- Page or architecture map:
-- Copy rewrite:
-- Trust/FAQ recommendations:
-- Competitor notes:
-- 30-day plan:
+## Timing and price
 
-## Timeline
+Day 0 starts only after payment, required context, approval owner, and implementation owner. Client delay pauses the clock. The first 3 clients are exactly **$1,000 founder pilots** for one highest-leverage page.
 
-7 days from payment and completed intake.
+If all three paid pilot slots are used, do not request or accept another payment. Close preparation stays blocked until a human-reviewed post-pilot offer is implemented.
 
-## Price
+## Review boundary
 
-- Sprint:
-- Optional continuation:
+Human review gates fit, claims, client-facing work, delivery/acceptance, and renewal. Automation prepares research, drafts, QA, packages, and routing; it never autonomously sends, publishes, spends, approves, accepts, or renews.
 
-## What I Need From You
-
-- Website access or CMS notes if implementation is requested.
-- Analytics screenshots.
-- Reviews/testimonials.
-- Competitor URLs.
-- Approval contact.
+We do not guarantee revenue, ranking, ROAS, conversion, booked-call, or sales-volume outcomes.
 
 ## Decision
 
-If this is worth fixing now, approve the sprint and complete payment. If the timing is wrong, keep the audit and revisit when the page becomes a priority.
+Approve the sprint and payment when the page is a priority. Work begins only after every Day-0 prerequisite is recorded.

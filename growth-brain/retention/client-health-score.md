@@ -1,4 +1,6 @@
-# Client Health Score
+# Retired: Client Health Score
+
+> **Status: Retired historical reference.** This retained-client scoring routine is not part of the 7-Day Website Revenue Leak Fix Sprint. Use human-reviewed 14-day implementation tracking and a separate human continuation decision instead.
 
 Use this weekly for retained clients.
 

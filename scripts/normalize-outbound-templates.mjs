@@ -1,7 +1,8 @@
 #!/usr/bin/env node
-import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { agencyConfig } from "./lib/agency-config.mjs";
+import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 
 const config = agencyConfig();
 const optOut = config.optOutLine;
@@ -12,11 +13,7 @@ function escapeRegex(value) {
 }
 
 function listFolders(root) {
-  if (!existsSync(root)) return [];
-  return readdirSync(root, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => join(root, entry.name))
-    .sort();
+  return listOutboundProspectFolders(root);
 }
 
 function normalizeOutreach(path) {

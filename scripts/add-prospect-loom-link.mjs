@@ -2,6 +2,7 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { isValidLoomUrl, loomUrlError } from "./lib/loom-url.mjs";
+import { guardOutboundProspectPath } from "./lib/outbound-prospects.mjs";
 
 const [prospectPath, loomUrl] = process.argv.slice(2);
 
@@ -19,6 +20,8 @@ if (!existsSync(prospectPath)) {
   console.error(`Prospect folder not found: ${prospectPath}`);
   process.exit(1);
 }
+
+guardOutboundProspectPath(prospectPath);
 
 function updateFile(relativePath, updater) {
   const path = join(prospectPath, relativePath);

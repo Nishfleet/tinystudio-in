@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 import { mkdirSync, writeFileSync } from "node:fs";
-import { execFileSync } from "node:child_process";
 import { agencyConfig } from "./lib/agency-config.mjs";
 import { localIsoDate } from "./date-utils.mjs";
+import { runRepoJson as runJson } from "./lib/runtime-roots.mjs";
 
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/sender-setup-guide.md";
@@ -10,14 +10,6 @@ const htmlArg = process.argv.find((arg) => arg.startsWith("--html="));
 const htmlPath = htmlArg ? htmlArg.split("=")[1] : "growth-brain/ops/sender-setup-guide.html";
 const today = localIsoDate();
 const config = agencyConfig();
-
-function runJson(commandArgs) {
-  const output = execFileSync("node", commandArgs, {
-    encoding: "utf8",
-    stdio: ["ignore", "pipe", "pipe"]
-  });
-  return JSON.parse(output);
-}
 
 function write(path, content) {
   const dir = path.split("/").slice(0, -1).join("/");

@@ -1,59 +1,61 @@
-# 7-Day Sprint Checklist
+# 7-Day sprint checklist
 
-## Before Payment
+Product: **7-Day Website Revenue Leak Fix Sprint**. Scope is one highest-leverage page.
 
-- Confirm the client already has a live offer, website, and real customer or campaign context.
-- Send the sprint scope and price.
-- Collect payment or written approval before delivery work starts.
-- Create a copy of `growth-brain/client-brain-template/` for the client.
+## Fit and Day 0 gate
 
-## Day 1: Context And Leak Map
+- [ ] Buyer is a founder-led Managed IT/MSP/cybersecurity company with a live site and high-value offer.
+- [ ] One highest-leverage page is named with evidence.
+- [ ] Payment is recorded.
+- [ ] Required context is complete.
+- [ ] Approval owner is named.
+- [ ] Implementation owner is named.
+- [ ] Day 0 start is recorded.
+- [ ] Client-delay pause rule is explained.
 
-- Collect website URLs, analytics screenshots, product list, reviews, ads, emails, competitors, and founder notes.
-- Fill the client brain.
-- Identify the top 3 likely leaks.
-- Deliverable: "Leak Map v1".
+## Day 1 — leak map
 
-## Day 2: Product Page Or Site Architecture Fix
+- [ ] Review the selected page, offer, proof, and available measurement context.
+- [ ] Record the leak map with evidence and priority.
 
-- Run Product Page Fixer for ecommerce.
-- Run Site Architecture Fixer for B2B, local service, and SEO-heavy clients.
-- Fill `quality/conversion-optimization-scorecard.md` for the page being fixed.
-- Rewrite hero, proof, objections, offer stack, FAQ, and CTA notes.
-- Add the on-site search trust layer after the conversion fix: title/meta, headings, internal links, service-page structure, FAQs, useful schema, sitemap/canonical/crawl basics, and local/service-area relevance.
-- Deliverable: product page fix doc or site architecture fix doc.
+## Day 2 — rewrite or redesign
 
-## Day 3: Landing Page Or Offer Fix
+- [ ] Produce the page rewrite or redesign.
+- [ ] Add search-trust basics that support the same page.
+- [ ] Record before/after proof.
 
-- Run Landing Page Fixer.
-- Re-check headline clarity, above-fold value proposition, CTA ownership, form friction, and message match.
-- Use Mobbin/reference research only if the page needs visual or structural direction.
-- Deliverable: revised landing page structure and section copy.
+## Day 3 — implementation
 
-## Day 4: Ads And Email/SMS
+- [ ] Complete one implementation pass, or produce a dev-ready handoff.
+- [ ] Tie every change to a buyer problem and evidence.
 
-- Run Ad Angle Generator.
-- Run Email/SMS Generator.
-- Use the angle and email sequence layers from `growth-brain/quality/conversion-optimization-playbook.md`.
-- Deliverable: ad angle bank plus 3-5 email/SMS drafts.
+## Day 4 — measurement and QA
 
-## Day 5: Competitor Watch
+- [ ] Write the measurement plan and check dates.
+- [ ] Run QA; mark claims, proof, and client-facing review status.
 
-- Run Competitor Watcher.
-- Compare positioning, offers, proof, landing pages, hooks, and objections.
-- Capture real off-site trust/distribution opportunities only: citations, Google Business Profile, partner/vendor listings, reviews/testimonials, proof assets, useful citeable pages, and real PR/community mentions.
-- Reject buying backlinks, link schemes, fake mentions, and spam directory work.
-- Deliverable: competitor summary with 5 useful moves and 5 moves to avoid.
+## Day 5 — human review
 
-## Day 6: Client Handoff
+- [ ] Fit gate passed.
+- [ ] Claims gate passed.
+- [ ] Client-facing work gate passed.
+- [ ] Delivery/acceptance gate prepared.
 
-- Package page fixes, ad angles, emails, competitor summary, and the client brain.
-- Record a Loom walkthrough.
-- Deliverable: final sprint folder and Loom.
+## Day 6 — walkthrough and revision
 
-## Day 7: Report And Continuation
+- [ ] Record the Loom walkthrough.
+- [ ] Send the approved package for the single included revision.
 
-- Run Weekly Performance Analyst with available numbers.
-- Write the 30-day action plan.
-- Offer the monthly continuation if the client wants weekly execution.
-- Deliverable: weekly report and next 30-day plan.
+## Day 7 — delivery and tracking
+
+- [ ] Record delivery/acceptance.
+- [ ] Start 14-day implementation tracking.
+- [ ] Schedule the separate renewal review; do not imply renewal is automatic.
+
+## Automation boundary
+
+Automation prepares research, drafts, QA, packages, and routing. It never autonomously sends, publishes, spends, approves, accepts, or renews.
+
+## Promise boundary
+
+The first 3 clients are exactly **$1,000 founder pilots**. No revenue, ranking, ROAS, conversion, booked-call, or sales-volume guarantees are made.

@@ -1,4 +1,6 @@
-# Weekly Client Value Loop
+# Retired: Weekly Client Value Loop
+
+> **Status: Retired historical reference.** Do not run commands or use the lifecycle in this file. The current service ends with human-reviewed 14-day implementation tracking in `human-review-service-engine.md`; any continuation or renewal is a separate human decision.
 
 Run this every week for every onboarded client.
 

@@ -1,8 +1,9 @@
 #!/usr/bin/env node
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
 import { agencyConfig } from "./lib/agency-config.mjs";
+import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 
 const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
 const limit = limitArg ? Number(limitArg.split("=")[1]) : 20;
@@ -12,11 +13,7 @@ const today = localIsoDate();
 const config = agencyConfig();
 
 function listFolders(root) {
-  if (!existsSync(root)) return [];
-  return readdirSync(root, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => join(root, entry.name))
-    .sort();
+  return listOutboundProspectFolders(root);
 }
 
 function read(path) {
@@ -90,8 +87,8 @@ function packageSummary(prospectPath, stage) {
 
   return {
     title: "Approved Sprint",
-    subject: "Convert to client",
-    body: "Run prospect:convert to create the client sprint folder, kickoff message, and delivery cockpit.",
+    subject: "Import consented application",
+    body: "Use the client's consented sprint application. The human fit decision and paid Day 0 create the canonical client record and scaffold.",
     packagePath: join(prospectPath, "close-package.md")
   };
 }
@@ -121,7 +118,7 @@ const cards = prospects.map((prospect, index) => {
   const replyPrep = `npm run prospect:reply-prep -- ${prospect.path}`;
   const callBooked = `npm run prospect:call-booked-prep -- ${prospect.path} --time "add call time" --meeting "${config.meetingPlaceholder}"`;
   const closePrep = `npm run prospect:close-prep -- ${prospect.path} --price "${config.founderSprintPrice}"`;
-  const convert = `npm run prospect:convert -- ${prospect.path}`;
+  const importApplication = "npm run service:import -- /path/to/consented-sprint-application.json";
   const lossReasonId = `loss-reason-${index}`;
   const lastNote = prospect.notes.at(-1);
   const needsLossReason = ["replied", "call-booked"].includes(prospect.stage);
@@ -145,7 +142,7 @@ const cards = prospects.map((prospect, index) => {
     actionButtons.push(copyButton("Close Prep", closePrep));
     actionButtons.push(lostCopyButton(prospect.path, confirmId, lossReasonId));
   } else if (prospect.stage === "won") {
-    actionButtons.push(confirmedCopyButton("Convert", convert, confirmId));
+    actionButtons.push(confirmedCopyButton("Import Application", importApplication, confirmId));
   }
 
   return `
@@ -379,7 +376,7 @@ const html = `<!doctype html>
         <li>Reply with the smallest next step: book the sprint call.</li>
         <li>After a booked call, send confirmation and keep the call scoped.</li>
         <li>After the call, send the close package or mark lost.</li>
-        <li>After approval, convert the prospect into a client sprint folder.</li>
+        <li>After a close, import the consented application; fresh human fit approval, payment, and recorded Day 0 create the client record.</li>
       </ol>
     </section>
     ${prospects.length ? cards : emptyState}

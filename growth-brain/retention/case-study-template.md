@@ -1,6 +1,6 @@
 # Case Study Template
 
-Use only with client approval and sanitized data.
+Use only after a canonical paid client completes human-approved delivery/acceptance and 14-day implementation tracking, and only with client approval and sanitized data. The case study must describe the human-reviewed **7-Day Website Revenue Leak Fix Sprint** for one highest-leverage page at a founder-led Managed IT/MSP/cybersecurity company.
 
 ## Client
 
@@ -10,7 +10,7 @@ Use only with client approval and sanitized data.
 
 ## Before
 
-- Page or workflow problem:
+- Selected page problem:
 - Buyer confusion:
 - Evidence:
 
@@ -19,7 +19,7 @@ Use only with client approval and sanitized data.
 - Leak map:
 - Page or architecture fix:
 - Copy/FAQ/trust changes:
-- Follow-up action:
+- 14-day implementation tracking:
 
 ## After
 

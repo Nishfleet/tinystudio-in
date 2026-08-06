@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 import { execFileSync } from "node:child_process";
 import { localIsoDate } from "./date-utils.mjs";
 
@@ -16,11 +17,7 @@ const includeExisting = args.includes("--all");
 const strict = args.includes("--strict");
 
 function listFolders(root) {
-  if (!existsSync(root)) return [];
-  return readdirSync(root, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => join(root, entry.name))
-    .sort();
+  return listOutboundProspectFolders(root);
 }
 
 function json(path) {
@@ -33,7 +30,7 @@ function read(path) {
 
 function hasLeadScore(path) {
   const content = read(join(path, "lead-score.md"));
-  return !/Score:\s*$/m.test(content) && !/Priority:\s*record \/ research-more \/ skip/m.test(content);
+  return Boolean(content.trim()) && !/Score:\s*$/m.test(content) && !/Priority:\s*record \/ research-more \/ skip/m.test(content);
 }
 
 function hasLoomPackage(path) {

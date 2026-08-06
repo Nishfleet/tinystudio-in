@@ -1,14 +1,25 @@
-# Implementation Handoff Template
+# Implementation handoff template
 
-Use this when the client or their developer will implement the changes.
+Use this for the one highest-leverage page when the client’s implementation owner will ship the change.
+
+Product: **7-Day Website Revenue Leak Fix Sprint**. The first 3 clients are exactly **$1,000 founder pilots**.
+
+## Day 0 record
+
+- Payment:
+- Required context complete:
+- Approval owner:
+- Implementation owner:
+- Day 0 start:
+- Client-delay pauses:
 
 ## Page
 
 - URL:
-- Owner:
-- Priority:
+- Page role:
+- Evidence of the leak:
 
-## Replace This
+## Rewrite or redesign
 
 Current section:
 
@@ -16,40 +27,45 @@ Current section:
 
 ```
 
-## With This
-
 Recommended section:
 
 ```text
 
 ```
 
-## Why
+## Search-trust basics
 
-- Buyer issue:
-- Search/AI clarity issue:
-- Trust/proof issue:
-- Conversion issue:
-- Message-match issue:
+- Title/meta:
+- Heading structure:
+- Internal links:
+- FAQ/proof:
+- Crawl essentials:
 
-## Assets Needed
+## Implementation steps
 
--
+1.
 
-## Conversion Checks
+## Before/after proof
 
-- Headline clarity:
-- Above-fold value proposition:
-- CTA ownership:
-- Form friction:
-- Message match:
+- Before source:
+- After source:
+- What changed:
+- Client-visible value:
 
-## Approval Needed
+## Measurement plan
 
--
+- Baseline:
+- Primary signal:
+- Secondary signal:
+- Owner:
+- Check dates:
 
-## Measurement
+## Approval and acceptance
 
-- Primary metric:
-- Secondary metric:
-- Check date:
+- Claims approved by:
+- Client-facing work approved by:
+- One revision status:
+- Delivery/acceptance decision:
+- 14-day tracking start:
+
+No revenue, ranking, ROAS, conversion, booked-call, or sales-volume guarantees are permitted. Automation may prepare this handoff but cannot autonomously send, publish, spend, approve, accept, or renew it.

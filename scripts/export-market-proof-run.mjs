@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { execFileSync } from "node:child_process";
 import { localIsoDate } from "./date-utils.mjs";
@@ -7,6 +7,8 @@ import { checkProspectReadiness, prospectWarningWeight } from "./lib/prospect-re
 import { isValidLoomUrl } from "./lib/loom-url.mjs";
 import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
 import { routedContactPlan } from "./lib/contact-route.mjs";
+import { canonicalProspectAsk } from "./lib/canonical-service-copy.mjs";
+import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/11-10-proof-run.md";
@@ -30,12 +32,7 @@ function runJson(args) {
 }
 
 function listFolders(root) {
-  if (!existsSync(root)) return [];
-  return readdirSync(root, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .filter((entry) => !/^(kit|import)-smoke/.test(entry.name))
-    .map((entry) => join(root, entry.name))
-    .sort();
+  return listOutboundProspectFolders(root).filter((path) => !/(^|\/)(?:kit|import)-smoke/.test(path));
 }
 
 function read(path) {
@@ -51,12 +48,6 @@ function lineValue(content, pattern, fallback = "") {
   return match && match[1].trim() ? match[1].trim() : fallback;
 }
 
-function section(content, heading, fallback = "") {
-  const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const match = content.match(new RegExp(`## ${escaped}\\n+([\\s\\S]*?)(?:\\n## |$)`));
-  return match ? match[1].trim() : fallback;
-}
-
 function compact(value, maxLength = 140) {
   const normalized = String(value || "").replace(/\s+/g, " ").trim();
   if (!normalized) return "";
@@ -69,15 +60,6 @@ function cleanSheetNote(value, fallback) {
     .replace(/\|/g, "/")
     .trim();
   return normalized.length >= 8 ? normalized : fallback;
-}
-
-function cleanAsk(value, closeText) {
-  const normalized = String(value || "").replace(/\s+/g, " ").replace(/\|/g, "/").trim();
-  const close = String(closeText || "").replace(/\s+/g, " ").replace(/\|/g, "/").replace(/^"|"$/g, "").trim();
-  if (!normalized || /^7-?day site revenue leak sprint$/i.test(normalized)) {
-    return close || "Ask if they want the 7-day sprint plan.";
-  }
-  return normalized;
 }
 
 function sharpnessValue(content, label) {
@@ -131,7 +113,7 @@ function proofRunImpact({ outlineImpact, sharpness, firstFix, route }) {
 
 function hasLeadScore(path) {
   const content = read(join(path, "lead-score.md"));
-  return !/Score:\s*$/m.test(content) && !/Priority:\s*record \/ research-more \/ skip/m.test(content);
+  return Boolean(content.trim()) && !/Score:\s*$/m.test(content) && !/Priority:\s*record \/ research-more \/ skip/m.test(content);
 }
 
 function hasLoom(path) {
@@ -158,7 +140,6 @@ const prospects = listFolders("prospects").map((path) => {
   const leadScore = read(join(path, "lead-score.md"));
   const loomOutline = read(join(path, "loom-outline.md"));
   const sharpness = read(join(path, "recording-sharpness-brief.md"));
-  const closeText = section(loomOutline, "Close", "");
   const route = routedContactPlan(read(join(path, "contact-plan.md")), { emailReady: channelGuidance.emailReady });
   const firstFix = lineValue(loomOutline, /^6\. [^\n:]+:[ \t]*([^\n]*)$/m, "");
   return {
@@ -175,11 +156,7 @@ const prospects = listFolders("prospects").map((path) => {
       route
     }),
     fix: firstFix,
-    ask: cleanAsk(
-      lineValue(loomOutline, /^7\. [^\n:]+:[ \t]*([^\n]*)$/m, "")
-        || lineValue(sharpness, /^7\. CTA:[ \t]*([^\n]*)$/m, ""),
-      closeText
-    ),
+    ask: canonicalProspectAsk(),
     route,
     scored: hasLeadScore(path),
     loomRecorded: hasLoom(path),
@@ -198,18 +175,14 @@ const recordingBatch = prospects
 const requirementByArea = {
   "Sender trust": "Run `npm run send:configure -- --physical-address=\"...\" --dkim-selector=... --dry-run` with the real values, then apply it without `--dry-run`. Until then, use contact forms or DMs.",
   "Market proof": "Record and send 5 approved Looms with leak, impact, fix, and ask notes.",
-  "Sales proof": "Turn at least 1 reply into a booked call, close package, and won sprint with a won-stage note.",
-  "Delivery proof": "Convert a won prospect, complete the sprint readiness gates, and add an approved claim row in the same client folder.",
-  "Retention proof": "Send a filled weekly report that shows shipped work, a learning, a next test, and customer confirmation."
+  "Sales proof": "Capture at least 1 external consented application, human fit approval, and validated paid Day 0 record.",
+  "Delivery proof": "Complete hash-bound human approval, implementation acceptance, approved claims, scorecard, and client readiness for that paid client.",
+  "Retention proof": "Complete the 14-day tracking gate with hash-bound evidence and human-approved customer usefulness and acceptance."
 };
 
 const blockerRows = parity.blockers.length
   ? parity.blockers.map((blocker) => `| ${blocker.area} | ${blocker.evidence} | ${requirementByArea[blocker.area] || "Capture stronger proof before claiming this area."} |`).join("\n")
   : "| - | - | No blockers. |";
-
-const batchRows = recordingBatch.length
-  ? recordingBatch.map((prospect, index) => `| ${index + 1} | ${prospect.name} | ${prospect.path} | ${prospect.score} | ${compact(prospect.leak || "Use recording script")} | ${compact(prospect.fix || "Use recording script")} | ${compact(prospect.route)} |`).join("\n")
-  : "| - | - | - | - | No scored prospects waiting for Looms. | - | - |";
 
 const loomSheetRows = recordingBatch.length
   ? recordingBatch.map((prospect) => `${prospect.path}|LOOM_URL|approved|${cleanSheetNote(prospect.leak, "specific visible leak")}|${cleanSheetNote(prospect.impact, "buyer impact from the recording")}|${cleanSheetNote(prospect.fix, "first fix shown in the recording")}|${cleanSheetNote(prospect.ask, "ask if they want the sprint plan")}`).join("\n")
@@ -239,19 +212,11 @@ ${blockerRows}
 npm run growth:start -- --view=record
 \`\`\`
 
-2. Record this batch. Each Loom must make one leak obvious, quantify the buyer impact where possible, show the first fix, and end with one clean ask.
-
-| # | Prospect | Folder | Score | Leak | First Fix | Send Route |
-|---:|---|---|---|---|---|---|
-${batchRows}
+2. Record the five-item batch in the recording view. The folders and approved notes are in \`${loomLinksPath}\`. Each Loom shows one leak, its buyer impact, the first fix, and one ask.
 
 3. Paste the recorded Loom URLs into the post-recording prep command:
 
-This proof run also wrote the same prefilled sheet to \`${loomLinksPath}\`. After recording, copy either five Loom URLs in the same order or rows like \`prospects/prospect-slug|https://www.loom.com/share/...\`. The post-recording prep preserves the existing approved leak, impact, fix, and ask notes, prepares send packages, refreshes the outbox, and refreshes the proof cockpit without marking anything sent.
-
-\`\`\`text
-${loomSheetRows}
-\`\`\`
+The prefilled sheet is in \`${loomLinksPath}\`; it is the single source for approved leak, impact, fix, and ask notes. After recording, copy five Loom URLs in the same order, then run:
 
 \`\`\`bash
 npm run market:after-recording -- --from-clipboard
@@ -279,9 +244,9 @@ npm run prospect:batch-sent -- --from-clipboard
 
 - Market proof is real only after 5 Looms are recorded, send packages are ready, messages are sent, and stages are marked sent.
 - Email sent proof does not count while \`npm run send:setup\` still warns. Use contact forms, DMs, LinkedIn, X, phone, mixed, or other until sender trust is clean.
-- Sales proof is real only after a prospect reply, call-booked package, close package, and won-stage note exist.
-- Delivery proof is real only after the same client folder passes readiness with approved claims, filled scorecards, completed acceptance checks, and filled delivery artifacts.
-- Retention proof is real only after a filled weekly report shows shipped work, a learning, a next test, and customer confirmation that the delta was seen, understood, approved for next action, and worth continuing.
+- Sales proof is real only after an external consented application, human fit approval, and validated paid Day 0 record exist.
+- Delivery proof is real only after that paid client has a hash-bound human-approved delivery, implementation acceptance, approved claims, filled scorecard, completed acceptance checks, and clean readiness.
+- Retention proof is real only after the 14-day tracking gate has hash-bound evidence and human-approved customer usefulness and acceptance.
 - Do not claim better, comparable, 11/10, retained, or proven until \`npm run market:parity\` passes.
 
 ## Current Counts
@@ -303,7 +268,11 @@ writeFileSync(outputPath, markdown);
 
 const loomLinksDir = loomLinksPath.split("/").slice(0, -1).join("/");
 if (loomLinksDir) mkdirSync(loomLinksDir, { recursive: true });
-writeFileSync(loomLinksPath, `# Replace LOOM_URL with each real Loom share link, or run: npm run market:after-recording -- --from-clipboard\n# Fast format after recording: paste either URL-only lines in this exact order, or prospects/prospect-slug|https://www.loom.com/share/...\n# Full format still works: prospects/prospect-slug|https://www.loom.com/share/...|approved|leak note|impact note|fix note|ask note\n\n${loomSheetRows}\n`);
+const existingLoomRows = read(loomLinksPath).split("\n").map((line) => line.trim()).filter((line) => line && !line.startsWith("#"));
+const existingLoomPaths = new Set(existingLoomRows.map((line) => line.split("|")[0].trim()));
+const generatedLoomRows = recordingBatch.length ? loomSheetRows.split("\n").filter((line) => !existingLoomPaths.has(line.split("|")[0].trim())) : existingLoomRows.length ? [] : [loomSheetRows];
+const mergedLoomRows = [...existingLoomRows, ...generatedLoomRows];
+writeFileSync(loomLinksPath, `# Replace LOOM_URL with each real Loom share link, or run: npm run market:after-recording -- --from-clipboard\n# Fast format after recording: paste either URL-only lines in this exact order, or prospects/prospect-slug|https://www.loom.com/share/...\n# Full format still works: prospects/prospect-slug|https://www.loom.com/share/...|approved|leak note|impact note|fix note|ask note\n\n${mergedLoomRows.join("\n")}\n`);
 
 console.log(JSON.stringify({
   status: "created",

@@ -1,4 +1,6 @@
-# Full-Stack Growth Desk Workflow
+# Retired: Full-Stack Growth Desk Workflow
+
+> **Status: Retired historical reference.** This broad recurring-service workflow is not an active TinyStudio offer or delivery path. Use `human-review-service-engine.md` and `client-sprint-workflow.md` instead.
 
 Use this when a client wants help across SEO, paid ads, email, content, social, analytics, CRO, reputation, or automation.
 

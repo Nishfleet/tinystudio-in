@@ -1,86 +1,21 @@
-# Agency Operating Model
+# Service operating model
 
-## Core Thesis
+TinyStudio currently operates one human-reviewed managed service: the **7-Day Website Revenue Leak Fix Sprint** for one highest-leverage page.
 
-TinyStudio should not stay a single-service vendor.
+The buyer is a founder-led Managed IT/MSP/cybersecurity company with a live site and high-value offer. The first 3 clients receive exactly the **$1,000 founder pilot**.
 
-The cash-now entry point is a focused sprint. The long-term value is becoming a lightweight outsourced growth desk for clients who do not want to manage separate SEO, ads, email, landing page, analytics, and competitor research vendors.
+## Division of work
 
-## What The Video Adds
+Automation prepares public research, leak hypotheses, page drafts, search-trust checks, proof plans, measurement plans, packages, QA, and routing. Humans review fit, claims, client-facing work, delivery/acceptance, usefulness, and renewal.
 
-The useful point from the video is not hype. It is an operating model:
+Automation has no authority to send, publish, spend, approve, accept, access authenticated systems, take payment, or renew work.
 
-- AI agents can raise service margins by turning repeated expert work into systems.
-- The bigger opportunity is using those systems to offer more service lines without adding matching headcount.
-- The client gets one relationship and one invoice for a core business function.
-- The agency gets stickier because it owns more of the weekly growth loop.
+## Delivery contract
 
-## TinyStudio Translation
+The sprint includes a leak map, rewrite or redesign, one implementation pass or dev-ready handoff, search-trust basics, before/after proof, Loom, measurement plan, one revision, and 14-day implementation tracking. Day 0 begins only after payment, required context, approval owner, and implementation owner; client delay pauses the clock.
 
-Start narrow:
+No revenue, ranking, ROAS, conversion, booked-call, or sales-volume guarantees.
 
-- Site architecture and page fixes
-- Product/landing page conversion fixes
-- Ad angle and email/SMS drafts
-- Competitor and AI/search visibility monitoring
-- Weekly performance analysis
+## Expansion rule
 
-Then expand only when the first lane is repeatable.
-
-## Human Layer
-
-Agents do the repeatable work. Humans keep judgment.
-
-The human layer must approve:
-
-- positioning
-- claims
-- final client-facing copy
-- competitor-inspired ideas
-- performance interpretation
-- what to ship next
-
-## Service-Line Expansion Roadmap
-
-| Stage | Service Line | Trigger To Add |
-|---|---|---|
-| 1 | Site Revenue Leak Sprint | Sell immediately |
-| 2 | Weekly Growth Desk | After the first sprint proves useful |
-| 3 | Site Architecture + AI Visibility | When the client has search intent and messy pages |
-| 4 | Email/SMS Ops | When the client has a list or repeat purchases |
-| 5 | Ad Creative/Angle Ops | When the client is running or ready to run paid acquisition |
-| 6 | Competitor Watch | When the client needs ongoing market awareness |
-| 7 | Analytics + Weekly Decision Room | When the client needs recurring prioritization |
-
-## Margin Rule
-
-Do not scale headcount before the workflow is systemized.
-
-For each service line:
-
-1. Deliver manually once.
-2. Turn the steps into an agent workflow.
-3. Add an approval gate.
-4. Add a measurement rule.
-5. Reuse it across clients.
-
-## Retention Rule
-
-Retention comes from owning the weekly loop:
-
-- What changed?
-- What did the numbers say?
-- What did customers say?
-- What did competitors change?
-- What should we ship next?
-- What did we learn for the client brain?
-
-If TinyStudio only delivers a one-off asset, it is replaceable. If it runs the learning loop, it becomes harder to replace.
-
-## What Not To Do
-
-- Do not sell "AI agents" as the product.
-- Do not add five service lines before one is profitable.
-- Do not replace client communication with automation.
-- Do not publish or launch without human review.
-- Do not use margin goals as an excuse for low-quality work.
+Do not activate another service line or software product because a template exists. The software graduation evidence gate requires at least 10 paid sprints, the same problem in at least 7, at least 70% workflow repeatability, usefulness at least 8/10, approval at least 70%, recurring need, and at least 3 deposits or preorders.

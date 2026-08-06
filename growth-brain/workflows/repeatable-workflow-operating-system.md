@@ -1,4 +1,6 @@
-# Repeatable Workflow Operating System
+# Retired: Repeatable Workflow Operating System
+
+> **Status: Retired historical reference.** This former multi-service operating model is not an active TinyStudio offer or client lifecycle. Use `human-review-service-engine.md` for the bounded sprint.
 
 ## Goal
 

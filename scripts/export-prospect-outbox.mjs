@@ -1,11 +1,12 @@
 #!/usr/bin/env node
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { execFileSync } from "node:child_process";
 import { checkProspectReadiness } from "./lib/prospect-readiness.mjs";
 import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
 import { isValidLoomUrl } from "./lib/loom-url.mjs";
 import { routedContactPlan, routeToChannel } from "./lib/contact-route.mjs";
+import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 
 const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
 const limit = limitArg ? Number(limitArg.split("=")[1]) : 20;
@@ -13,11 +14,7 @@ const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const outputPath = outputArg ? outputArg.split("=")[1] : "prospects/outbox.html";
 
 function listFolders(root) {
-  if (!existsSync(root)) return [];
-  return readdirSync(root, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => join(root, entry.name))
-    .sort();
+  return listOutboundProspectFolders(root);
 }
 
 function read(path) {

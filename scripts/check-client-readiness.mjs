@@ -1,19 +1,49 @@
 #!/usr/bin/env node
 import { existsSync, readFileSync } from "node:fs";
-import { join } from "node:path";
-import { parseChannelReadiness } from "./lib/channel-readiness.mjs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { loadValidatedServiceClient } from "./lib/validated-service-client.mjs";
+import { resolveRepoPath } from "./lib/service-contract.mjs";
 
-const clientPath = process.argv[2];
+const clientArg = process.argv[2];
 const strict = process.argv.includes("--strict");
+const repoRoot = process.env.SERVICE_REPO_ROOT || process.cwd();
 
-if (!clientPath) {
+if (!clientArg) {
   console.error("Usage: npm run client:check -- clients/client-slug [-- --strict]");
   process.exit(1);
 }
 
+const clientPath = resolveRepoPath(repoRoot, clientArg);
+
 if (!existsSync(clientPath)) {
   console.error(`Client folder not found: ${clientPath}`);
   process.exit(1);
+}
+
+// Templates come from the code checkout, not a data-only SERVICE_REPO_ROOT.
+const sourceRoot = dirname(dirname(fileURLToPath(import.meta.url)));
+let serviceClient;
+try {
+  serviceClient = loadValidatedServiceClient(repoRoot, clientPath);
+} catch (error) {
+  serviceClient = {
+    ok: false,
+    blocked: [error instanceof Error ? error.message : String(error)]
+  };
+}
+
+if (!serviceClient.ok) {
+  const warnings = (serviceClient.blocked || []).map((reason) => `Canonical service validation blocked readiness: ${reason}`);
+  const result = {
+    status: "draft",
+    clientPath,
+    missing: [],
+    warnings
+  };
+  console.log(JSON.stringify(result, null, 2));
+  if (strict) process.exit(1);
+  process.exit(0);
 }
 
 function readIfExists(path) {
@@ -50,26 +80,29 @@ function scorecardStatus(markdown) {
   return { ok: true, reason: "" };
 }
 
-function checklistComplete(markdown) {
-  const checkboxLines = markdown
-    .split("\n")
-    .map((line) => line.trim())
-    .filter((line) => /^- \[[ xX]\]/.test(line));
-  return checkboxLines.length > 0 && checkboxLines.every((line) => /^- \[[xX]\]/.test(line));
-}
+function checklistStatus(markdown, canonicalMarkdown) {
+  function structure(value) {
+    return String(value || "")
+      .split("\n")
+      .flatMap((line, index) => {
+        const trimmed = line.trim();
+        const heading = trimmed.match(/^##\s+(.+)$/);
+        if (heading) return [{ type: "heading", label: heading[1].trim(), line: index + 1, checked: true }];
+        const item = trimmed.match(/^- \[([ xX])\]\s*(.*)$/);
+        if (!item) return [];
+        return [{ type: "item", label: item[2].trim(), line: index + 1, checked: item[1].toLowerCase() === "x" }];
+      });
+  }
 
-function section(markdown, heading) {
-  const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const match = markdown.match(new RegExp(`## ${escaped}\\n+([\\s\\S]*?)(?:\\n## |$)`));
-  return match ? match[1].trim() : "";
-}
-
-function hasFilledTableRow(markdown, heading, requiredIndexes) {
-  return tableRows(section(markdown, heading)).some((cells) => {
-    const first = cells[0] || "";
-    if (/^(Priority|Week|Metric|Area)$/i.test(first)) return false;
-    return requiredIndexes.every((index) => String(cells[index] || "").trim());
-  });
+  const expected = structure(canonicalMarkdown);
+  const actual = structure(markdown);
+  const exactStructure = expected.length > 0 && actual.length === expected.length && actual.every((entry, index) =>
+    entry.type === expected[index].type && entry.label === expected[index].label
+  );
+  return {
+    exactStructure,
+    complete: exactStructure && actual.filter((entry) => entry.type === "item").every((entry) => entry.checked)
+  };
 }
 
 function bulletValueFilled(markdown, label) {
@@ -78,77 +111,21 @@ function bulletValueFilled(markdown, label) {
   return Boolean(match && match[1].trim());
 }
 
-function codeBlockFilled(markdown, heading) {
-  const content = section(markdown, heading);
-  const match = content.match(/```(?:\w+)?\n([\s\S]*?)\n```/);
-  return Boolean(match && match[1].trim());
-}
-
-function deliveryContentWarnings(markdown) {
+function approvedDeliveryWarnings(delivery) {
   const warnings = [];
-  if (!hasFilledTableRow(markdown, "Top Leaks", [1, 2, 3])) {
-    warnings.push("Delivery has no filled top leak rows");
+  if (!delivery || typeof delivery !== "object" || Array.isArray(delivery)) {
+    return ["Hash-bound human-approved delivery artifact is unavailable"];
   }
-  if (!hasFilledTableRow(markdown, "Tangible Improvements", [1, 2, 3, 4, 5])) {
-    warnings.push("Delivery has no filled tangible improvement rows");
-  }
-  if (!hasFilledTableRow(markdown, "30-Day Action Plan", [1, 2, 3])) {
-    warnings.push("Delivery has no filled 30-day action rows");
-  }
+  if (!delivery.leakMap?.selectedPageUrl || !delivery.leakMap?.items?.length) warnings.push("Approved delivery has no evidence-linked leak map");
+  if (!delivery.pageFix?.artifact) warnings.push("Approved delivery has no complete page fix artifact");
+  if (!delivery.searchTrust?.changes?.length) warnings.push("Approved delivery has no search-trust changes");
+  if (!delivery.proof?.beforeEvidenceIds?.length || !delivery.proof?.afterCapturePlan) warnings.push("Approved delivery has no before/after proof plan");
+  if (!delivery.loom?.outline?.length) warnings.push("Approved delivery has no Loom outline");
+  if (!delivery.measurement?.metric || !delivery.measurement?.baselineValue) warnings.push("Approved delivery has no measurement baseline");
+  if (!delivery.implementation?.artifact) warnings.push("Approved delivery has no implementation pass or developer-ready handoff artifact");
+  if (delivery.revisionBoundary?.includedRevisions !== 1) warnings.push("Approved delivery does not preserve the one-revision boundary");
+  if (delivery.tracking?.days !== 14) warnings.push("Approved delivery does not preserve 14-day tracking");
   return warnings;
-}
-
-function handoffContentStatus(markdown) {
-  const requiredBullets = ["URL", "Owner", "Priority", "Buyer issue", "Primary metric", "Check date"];
-  if (!codeBlockFilled(markdown, "Replace This") || !codeBlockFilled(markdown, "With This")) {
-    return { ok: false, reason: "Implementation handoff is missing replace/with copy" };
-  }
-  if (requiredBullets.some((label) => !bulletValueFilled(markdown, label))) {
-    return { ok: false, reason: "Implementation handoff has blank owner, page, reason, or measurement fields" };
-  }
-  return { ok: true, reason: "" };
-}
-
-function reportContentStatus(markdown) {
-  if (!hasFilledTableRow(markdown, "Next Tests", [1, 2, 3, 4])) {
-    return { ok: false, reason: "Week 1 report has no filled next-test rows" };
-  }
-  return { ok: true, reason: "" };
-}
-
-function conversionScorecardStatus(markdown) {
-  const criticalRows = tableRows(section(markdown, "Critical Checks"))
-    .filter((cells) => cells[0] && cells[0] !== "Check" && !/^Check$/i.test(cells[0]));
-  if (criticalRows.length < 5 || criticalRows.some((cells) => !cells[1] || !cells[2] || !cells[3])) {
-    return { ok: false, reason: "Conversion scorecard critical checks are not filled" };
-  }
-  if (!hasFilledTableRow(markdown, "Top 5 Conversion Failures", [1, 2, 3, 4])) {
-    return { ok: false, reason: "Conversion scorecard has no filled top failure rows" };
-  }
-  const requiredBullets = ["Direct response flow", "So-What chain", "Angle chosen", "Weekly test", "Reviewer", "Date"];
-  if (requiredBullets.some((label) => !bulletValueFilled(markdown, label))) {
-    return { ok: false, reason: "Conversion scorecard is missing copy, angle, weekly test, or approval fields" };
-  }
-  const searchTrustRows = tableRows(section(markdown, "Search Trust Layer"))
-    .filter((cells) => /^(On-site search trust|Off-site trust\/distribution)$/i.test(cells[0] || ""));
-  if (searchTrustRows.length < 2 || searchTrustRows.some((cells) => !cells[1] || !cells[2] || !cells[3] || !cells[4])) {
-    return { ok: false, reason: "Conversion scorecard search trust layer is not filled" };
-  }
-  const searchTrustBullets = [
-    "Conversion first",
-    "Title/meta/headings/internal links",
-    "FAQ/schema/crawl basics",
-    "Local/service-area relevance",
-    "Real off-site trust/distribution",
-    "Blocked backlink or spam tactic"
-  ];
-  if (searchTrustBullets.some((label) => !bulletValueFilled(markdown, label))) {
-    return { ok: false, reason: "Conversion scorecard search trust guardrails are not filled" };
-  }
-  if (!/^- Approved:[ \t]*(yes|approved)$/im.test(markdown)) {
-    return { ok: false, reason: "Conversion scorecard is not approved" };
-  }
-  return { ok: true, reason: "" };
 }
 
 const requiredFiles = [
@@ -157,18 +134,12 @@ const requiredFiles = [
   "kickoff-message.md",
   "buyer-room.md",
   "brain/brand-voice.md",
-  "brain/products.md",
   "brain/reviews.md",
   "brain/competitors.md",
   "brain/website-notes.md",
-  "brain/site-architecture.md",
   "deliverables/delivery.md",
   "deliverables/implementation-handoff.md",
-  "reports/week-1-report.md",
-  "research/ai-search-audit.md",
   "quality/claim-proof-ledger.md",
-  "quality/channel-readiness-scorecard.md",
-  "quality/conversion-optimization-scorecard.md",
   "quality/delivery-scorecard.md",
   "quality/sprint-acceptance-checklist.md"
 ];
@@ -176,19 +147,20 @@ const requiredFiles = [
 const missing = [];
 const warnings = [];
 
+if (!serviceClient.readyForHandoff) {
+  warnings.push(...(serviceClient.readinessBlocked || []).map((reason) => `Canonical service state is not handoff-ready: ${reason}`));
+}
+
 for (const file of requiredFiles) {
   if (!existsSync(join(clientPath, file))) missing.push(`Missing ${file}`);
 }
 
 const intake = readIfExists(join(clientPath, "intake.md"));
-for (const label of ["Website:", "Main offer:", "Target buyer:", "Approval contact:", "Payment / written approval:"]) {
-  const pattern = new RegExp(`- ${label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s*$`, "m");
-  if (pattern.test(intake)) warnings.push(`Intake missing ${label}`);
+for (const label of ["Website", "Main offer", "Target buyer", "Approval owner", "Implementation owner", "Payment", "Day 0 start", "Client-delay pauses"]) {
+  if (!bulletValueFilled(intake, label)) warnings.push(`Intake missing ${label}`);
 }
 
-const sprintPlan = readIfExists(join(clientPath, "sprint-plan.md"));
-if (/Pick one:/m.test(sprintPlan)) warnings.push("Sprint wedge is not chosen");
-if (/Intake:\s*$/m.test(sprintPlan)) warnings.push("Sprint status is blank");
+warnings.push(...approvedDeliveryWarnings(serviceClient.approvedDelivery));
 
 const claimLedger = readIfExists(join(clientPath, "quality/claim-proof-ledger.md"));
 if (!hasApprovedClaimRow(claimLedger)) warnings.push("Claim-proof ledger has no approved claim rows yet");
@@ -197,32 +169,13 @@ const scorecard = readIfExists(join(clientPath, "quality/delivery-scorecard.md")
 const scorecardCheck = scorecardStatus(scorecard);
 if (!scorecardCheck.ok) warnings.push(scorecardCheck.reason);
 
-const conversionScorecard = readIfExists(join(clientPath, "quality/conversion-optimization-scorecard.md"));
-const conversionScorecardCheck = conversionScorecardStatus(conversionScorecard);
-if (!conversionScorecardCheck.ok) warnings.push(conversionScorecardCheck.reason);
-
-const channelScorecard = readIfExists(join(clientPath, "quality/channel-readiness-scorecard.md"));
-const channelReadiness = parseChannelReadiness(channelScorecard);
-if (!channelReadiness.proofSprintReady) {
-  warnings.push("Channel readiness is not proof-sprint ready");
-}
-
 const acceptanceChecklist = readIfExists(join(clientPath, "quality/sprint-acceptance-checklist.md"));
-if (!checklistComplete(acceptanceChecklist)) warnings.push("Sprint acceptance checklist is not complete");
+const canonicalChecklist = readIfExists(join(sourceRoot, "growth-brain/quality/sprint-acceptance-checklist.md"));
+const checklist = checklistStatus(acceptanceChecklist, canonicalChecklist);
+if (!checklist.exactStructure) warnings.push("Sprint acceptance checklist does not match canonical labels and structure");
+else if (!checklist.complete) warnings.push("Sprint acceptance checklist is not complete");
 
-const delivery = readIfExists(join(clientPath, "deliverables/delivery.md"));
-if (/Name:\s*$/m.test(delivery) || /Website:\s*$/m.test(delivery)) warnings.push("Delivery template still has blank client fields");
-warnings.push(...deliveryContentWarnings(delivery));
-
-const implementationHandoff = readIfExists(join(clientPath, "deliverables/implementation-handoff.md"));
-const handoffContent = handoffContentStatus(implementationHandoff);
-if (!handoffContent.ok) warnings.push(handoffContent.reason);
-
-const weekOneReport = readIfExists(join(clientPath, "reports/week-1-report.md"));
-const reportContent = reportContentStatus(weekOneReport);
-if (!reportContent.ok) warnings.push(reportContent.reason);
-
-const status = missing.length === 0 && warnings.length === 0 ? "ready" : "draft";
+const status = serviceClient.readyForHandoff && missing.length === 0 && warnings.length === 0 ? "ready" : "draft";
 
 const result = {
   status,

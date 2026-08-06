@@ -1,18 +1,68 @@
 #!/usr/bin/env node
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { agencyConfig } from "./lib/agency-config.mjs";
+import { FOUNDER_PILOT } from "./lib/client-scaffold.mjs";
+import { serviceRecordPaths } from "./lib/review-queue.mjs";
+import { NO_GUARANTEE_CLIENT_SENTENCE, resolveRepoPath } from "./lib/service-contract.mjs";
+import { guardOutboundProspectPath } from "./lib/outbound-prospects.mjs";
+import { codeRoot } from "./lib/runtime-roots.mjs";
 
-const prospectPath = process.argv[2];
+const prospectArg = process.argv[2];
+const repoRoot = process.env.SERVICE_REPO_ROOT || process.cwd();
 
-if (!prospectPath) {
+function founderPilotPrice() {
+  return `$${FOUNDER_PILOT.offerPriceUsd.toLocaleString("en-US")} founder pilot`;
+}
+
+function canonicalScope() {
+  return `- Sprint: ${FOUNDER_PILOT.offerName}
+- Scope: one highest-leverage page
+- Timeline: 7 working days from Day 0
+- Price: ${founderPilotPrice()}`;
+}
+
+function assertCanonicalSalesContract(config) {
+  if (
+    config.offerName !== FOUNDER_PILOT.offerName ||
+    config.founderSprintPrice !== founderPilotPrice() ||
+    config.firstClientCount !== FOUNDER_PILOT.capacity ||
+    config.scope !== "one highest-leverage page"
+  ) {
+    throw new Error("active sales configuration must match the immutable first-three $1,000 founder-pilot contract");
+  }
+}
+
+function assertFounderPilotSlot() {
+  const paidPilotCount = serviceRecordPaths(repoRoot, "clients").length;
+  if (paidPilotCount >= FOUNDER_PILOT.capacity) {
+    throw new Error(`founder pilot capacity is complete after ${FOUNDER_PILOT.capacity} paid clients; a human-reviewed post-pilot offer is required before another sales call close`);
+  }
+  return FOUNDER_PILOT.capacity - paidPilotCount;
+}
+
+function runSalesGuard(action) {
+  try {
+    return action();
+  } catch (error) {
+    console.error(`prospect:call-prep failed: ${error instanceof Error ? error.message : String(error)}`);
+    process.exit(1);
+  }
+}
+
+if (!prospectArg) {
   console.error("Usage: npm run prospect:call-prep -- prospects/prospect-slug");
   process.exit(1);
 }
+
+const prospectPath = runSalesGuard(() => resolveRepoPath(repoRoot, prospectArg));
 
 if (!existsSync(prospectPath)) {
   console.error(`Prospect folder not found: ${prospectPath}`);
   process.exit(1);
 }
+
+runSalesGuard(() => guardOutboundProspectPath(prospectPath));
 
 function read(relativePath) {
   const path = join(prospectPath, relativePath);
@@ -38,12 +88,18 @@ function section(content, heading, fallback = "") {
 
 const metadata = json("metadata.json");
 const pipeline = json("pipeline.json");
+const config = runSalesGuard(() => {
+  const activeConfig = agencyConfig(repoRoot);
+  assertCanonicalSalesContract(activeConfig);
+  return activeConfig;
+});
+const pilotSlotsRemaining = runSalesGuard(assertFounderPilotSlot);
 const leadScore = read("lead-score.md");
 const loomOutline = read("loom-outline.md");
 const buyerRoom = read("buyer-room.md");
 const valueCalculator = read("value-calculator.md");
-const salesScript = readFileSync("growth-brain/sales/sales-call-script.md", "utf8");
-const objections = readFileSync("growth-brain/sales/objection-handling.md", "utf8");
+const salesScript = readFileSync(join(codeRoot, "growth-brain/sales/sales-call-script.md"), "utf8");
+const objections = readFileSync(join(codeRoot, "growth-brain/sales/objection-handling.md"), "utf8");
 
 const name = metadata.name || prospectPath.split("/").at(-1);
 const website = metadata.website || "";
@@ -55,7 +111,7 @@ const mainPage = lineValue(loomOutline, 2, "main money page");
 const leak = lineValue(loomOutline, 3, "the clearest leak from the Loom");
 const firstFix = lineValue(loomOutline, 6, "the first implementation-ready fix");
 const leaks = section(buyerRoom, "What I Saw", "- Leak 1:\n- Leak 2:\n- Leak 3:");
-const scope = section(buyerRoom, "Scope", "- Sprint:\n- Timeline:\n- Price:");
+const scope = canonicalScope();
 const payback = section(valueCalculator, "Payback", "- Payback customers needed:");
 const stage = pipeline.stage || "new";
 
@@ -72,7 +128,7 @@ const prep = `# ${name} Sales Call Prep
 
 ## Call Goal
 
-Confirm whether the leak is worth fixing now, then close the Tangible Revenue Leak Sprint + Search Trust Layer. Do not turn the call into free consulting.
+Confirm whether the one highest-leverage page is worth fixing now, then close the human-reviewed ${config.offerName}. Do not turn the call into free consulting.
 
 ## Audit Recap
 
@@ -93,16 +149,16 @@ ${payback}
 1. What made the audit worth replying to?
 2. Is this page supposed to generate calls, demos, audits, or another action?
 3. Who approves page, copy, or site structure changes?
-4. What context can you share: analytics, reviews, competitors, ad/email history, or customer objections?
+4. What context can you share: analytics, reviews, competitors, customer objections, and implementation access?
 5. If the sprint gives you implementation-ready fixes in 7 days, is this worth doing now?
 
 ## Close
 
-"The sprint is 7 days. I will build the client brain, map the leak, rewrite the priority sections, give you competitor/search visibility notes, and hand you a 30-day action plan. The first step is payment and intake."
+"The ${FOUNDER_PILOT.offerName} is exactly a ${founderPilotPrice()} for one highest-leverage page. Human reviewers gate the claims and client-facing work. You receive the leak map, rewrite or redesign, one implementation pass or dev-ready handoff, search-trust basics, before/after proof, Loom, measurement plan, one client revision, and 14-day implementation tracking. Day 0 starts after payment, context, and named approval and implementation owners."
 
 ## Guardrails
 
-- Do not guarantee revenue, rankings, ROAS, conversion lift, or sales volume.
+- ${NO_GUARANTEE_CLIENT_SENTENCE}
 - Do not diagnose every page on the call.
 - Do not promise implementation until the platform and access are known.
 - If the prospect wants a full rebuild, scope that separately after the sprint.
@@ -121,7 +177,8 @@ If won:
 
 \`\`\`bash
 npm run prospect:stage -- ${prospectPath} won --note "Approved sprint"
-npm run prospect:convert -- ${prospectPath}
+npm run service:import -- /path/to/consented-sprint-application.json
+npm run service:queue -- --mode=prepare
 \`\`\`
 
 If follow-up needed:
@@ -136,5 +193,6 @@ writeFileSync(outputPath, prep);
 
 console.log(JSON.stringify({
   status: "created",
-  path: outputPath
+  path: outputPath,
+  pilotSlotsRemaining
 }, null, 2));

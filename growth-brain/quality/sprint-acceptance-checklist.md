@@ -1,41 +1,45 @@
-# Sprint Acceptance Checklist
+# Sprint acceptance checklist
 
-Run this before sending a client delivery.
+Run this before delivery/acceptance. Every item needs evidence or an explicit human decision.
 
-## Must Pass
+Product: **7-Day Website Revenue Leak Fix Sprint**. The first 3 clients are exactly **$1,000 founder pilots**. Scope is one highest-leverage page.
 
-- [ ] The top 3 leaks are named plainly.
-- [ ] Every recommendation ties to client context or visible evidence.
-- [ ] No claim is invented.
-- [ ] Competitor ideas are adapted, not copied.
-- [ ] The client can see what to change first.
-- [ ] The output includes implementation-ready copy or page structure.
-- [ ] The conversion optimization scorecard is filled for the priority page.
-- [ ] The first five critical conversion checks are passing or have exact fixes.
-- [ ] Approval-needed claims are marked.
-- [ ] The next 30 days are clear.
+## Fit and Day 0
 
-## Site Architecture Checks
+- [ ] Buyer is a founder-led Managed IT/MSP/cybersecurity company with a live site and high-value offer.
+- [ ] One highest-leverage page is named.
+- [ ] Payment, required context, approval owner, and implementation owner are recorded.
+- [ ] Day 0 start is recorded; client-delay pauses are recorded.
 
-- [ ] Homepage has one primary buying intent.
-- [ ] Core services/products have clear dedicated pages or recommended pages.
-- [ ] Internal links point to the priority money pages.
-- [ ] Anchor text is descriptive.
-- [ ] Important content is available as text.
-- [ ] FAQ topics match real buyer questions.
-- [ ] Trust sections use real proof.
+## Required output
 
-## Customer Delight Checks
+- [ ] Leak map is tied to evidence.
+- [ ] Page rewrite or redesign is complete.
+- [ ] One implementation pass or dev-ready handoff is complete.
+- [ ] Search-trust basics are included.
+- [ ] Before/after proof is attached.
+- [ ] Loom walkthrough is attached.
+- [ ] Measurement plan has owner, baseline, and check dates.
+- [ ] One revision is tracked.
+- [ ] 14-day implementation tracking is scheduled.
 
-- [ ] Include one "quick win" the client can implement today.
-- [ ] Include one competitor insight they probably had not noticed.
-- [ ] Include one plain-English explanation they can share internally.
-- [ ] Include a short Loom walkthrough.
+## Human gates
 
-## Fail Conditions
+- [ ] Fit review passed.
+- [ ] Claims review passed.
+- [ ] Client-facing work review passed.
+- [ ] Delivery/acceptance review passed.
+- [ ] Renewal review is separate and not pre-approved.
 
-- Generic advice.
-- Long strategy doc with no exact fixes.
-- Unsupported claims.
-- Too many priorities.
-- No measurement plan.
+## Prohibited promises and actions
+
+- [ ] No revenue, ranking, ROAS, conversion, booked-call, or sales-volume guarantees.
+- [ ] Automation only prepared research, drafts, QA, packages, or routing.
+- [ ] No autonomous send, publish, spend, approval, acceptance, or renewal occurred.
+
+## Handoff Proof
+
+- Handoff Loom:
+- Reviewer:
+- Date:
+- Rule: Acceptance completes only after client readiness has no blockers except this checklist.

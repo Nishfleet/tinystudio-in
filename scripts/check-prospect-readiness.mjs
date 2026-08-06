@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { existsSync } from "node:fs";
 import { checkProspectReadiness } from "./lib/prospect-readiness.mjs";
+import { guardOutboundProspectPath } from "./lib/outbound-prospects.mjs";
 
 const prospectPath = process.argv[2];
 const strict = process.argv.includes("--strict");
@@ -14,6 +15,8 @@ if (!existsSync(prospectPath)) {
   console.error(`Prospect folder not found: ${prospectPath}`);
   process.exit(1);
 }
+
+guardOutboundProspectPath(prospectPath);
 
 const result = checkProspectReadiness(prospectPath);
 

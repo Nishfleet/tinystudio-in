@@ -2,6 +2,7 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { safeNonEmailRoute } from "./lib/contact-route.mjs";
+import { guardOutboundProspectPath } from "./lib/outbound-prospects.mjs";
 
 const args = process.argv.slice(2);
 const prospectPath = args[0];
@@ -19,6 +20,8 @@ if (!existsSync(prospectPath)) {
   console.error(`Prospect folder not found: ${prospectPath}`);
   process.exit(1);
 }
+
+guardOutboundProspectPath(prospectPath);
 
 function read(relativePath) {
   const path = join(prospectPath, relativePath);

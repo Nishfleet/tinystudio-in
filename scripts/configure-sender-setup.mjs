@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
+import { join } from "node:path";
 
 const args = process.argv.slice(2);
-const configPath = "growth-brain/ops/agency-config.json";
+const configPath = join(process.env.SERVICE_REPO_ROOT || process.cwd(), "growth-brain/ops/agency-config.json");
 const dryRun = args.includes("--dry-run");
 const help = args.includes("--help") || args.includes("-h");
 

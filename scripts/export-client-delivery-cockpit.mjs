@@ -1,33 +1,48 @@
 #!/usr/bin/env node
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { join, relative } from "node:path";
 import { execFileSync } from "node:child_process";
 import { localIsoDate } from "./date-utils.mjs";
+import { codeRoot, serviceRoot } from "./lib/runtime-roots.mjs";
+import { resolveRepoPath } from "./lib/service-contract.mjs";
+import { loadValidatedServiceClient } from "./lib/validated-service-client.mjs";
 
 const args = process.argv.slice(2);
 const clientPath = args[0];
 const outputArg = args.find((arg) => arg.startsWith("--output="));
+const repoRoot = serviceRoot;
 
 if (!clientPath) {
   console.error("Usage: npm run client:cockpit -- clients/client-slug [--output=clients/client-slug/delivery-cockpit.html]");
   process.exit(1);
 }
 
-if (!existsSync(clientPath)) {
+let resolvedClientPath;
+try {
+  resolvedClientPath = resolveRepoPath(repoRoot, clientPath);
+} catch (error) {
+  console.error(`Client folder is outside the service root: ${clientPath}`);
+  process.exit(1);
+}
+
+if (!existsSync(resolvedClientPath)) {
   console.error(`Client folder not found: ${clientPath}`);
   process.exit(1);
 }
 
-const outputPath = outputArg ? outputArg.split("=")[1] : join(clientPath, "delivery-cockpit.html");
+const outputPath = outputArg ? resolveRepoPath(repoRoot, outputArg.split("=")[1]) : join(resolvedClientPath, "delivery-cockpit.html");
 
 function read(relativePath) {
-  const path = join(clientPath, relativePath);
+  const path = resolveRepoPath(repoRoot, join(resolvedClientPath, relativePath));
   return existsSync(path) ? readFileSync(path, "utf8") : "";
 }
 
 function runJson(commandArgs) {
-  const output = execFileSync("node", commandArgs, {
+  const [script, ...scriptArgs] = commandArgs;
+  const output = execFileSync(process.execPath, [join(codeRoot, script), ...scriptArgs], {
+    cwd: codeRoot,
     encoding: "utf8",
+    env: { ...process.env, SERVICE_REPO_ROOT: repoRoot },
     stdio: ["ignore", "pipe", "pipe"]
   });
   return JSON.parse(output);
@@ -72,27 +87,63 @@ const intake = read("intake.md");
 const sprintPlan = read("sprint-plan.md");
 const kickoff = read("kickoff-message.md");
 const delivery = read("deliverables/delivery.md");
-const report = read("reports/week-1-report.md");
-const readiness = runJson(["scripts/check-client-readiness.mjs", clientPath]);
+let serviceClient;
+try {
+  serviceClient = loadValidatedServiceClient(repoRoot, resolvedClientPath);
+} catch (error) {
+  // Render a blocked cockpit when the repository queue cannot be validated.
+  serviceClient = {
+    ok: false,
+    status: "blocked",
+    blocked: [error instanceof Error ? error.message : String(error)],
+    trackingEvidence: [],
+    approvedArtifactProvenance: null,
+    approvedDelivery: null,
+    readyForHandoff: false
+  };
+}
+const approvedDelivery = serviceClient.approvedDelivery;
+const approvedArtifactPath = serviceClient.approvedArtifactProvenance?.path
+  ? relative(resolvedClientPath, resolveRepoPath(repoRoot, serviceClient.approvedArtifactProvenance.path))
+  : "deliverables/approved/pending.json";
+const trackingEvidence = serviceClient.trackingEvidence[0]
+  ? {
+      path: relative(resolvedClientPath, resolveRepoPath(repoRoot, serviceClient.trackingEvidence[0].path)),
+      value: serviceClient.trackingEvidence[0].value
+    }
+  : null;
+const readiness = runJson(["scripts/check-client-readiness.mjs", resolvedClientPath]);
 
 const name = field(intake, "Name:", clientPath.split("/").at(-1));
 const website = field(intake, "Website:", "add website");
-const approvalContact = field(intake, "Approval contact:", "add approval owner");
-const wedge = cleanMarkdown(section(sprintPlan, "Wedge", "choose wedge")).split("\n").find((line) => line.trim()) || "choose wedge";
-const deliverables = cleanMarkdown(section(sprintPlan, "Deliverables", "- fill deliverables"));
+const approvalOwner = field(intake, "Approval owner:", "add approval owner");
+const highestLeveragePage = approvedDelivery?.leakMap?.selectedPageUrl || field(sprintPlan, "Highest-leverage page:", "choose highest-leverage page");
+const deliverables = approvedDelivery
+  ? ["leak map", approvedDelivery.pageFix?.mode || "page fix", "search-trust basics", approvedDelivery.implementation?.route || "implementation", "before/after proof", "Loom", "measurement plan", "one revision", "14-day tracking"].join("\n")
+  : cleanMarkdown(section(sprintPlan, "Deliverables", "- fill deliverables"));
 const currentStatus = cleanMarkdown(section(sprintPlan, "Status", "- fill status"));
 const kickoffBody = cleanMarkdown(section(kickoff, "Message", "Run client:kickoff to generate the kickoff message."));
-const finalReportSummary = cleanMarkdown(section(report, "Summary", "Fill the final report before handoff."));
-const deliverySummary = cleanMarkdown(section(delivery, "Executive Summary", "Fill the delivery doc as the sprint progresses."));
+const deliverySummary = approvedDelivery
+  ? [
+      `Selected page: ${approvedDelivery.leakMap?.selectedPageUrl || ""}`,
+      `Reviewed fix: ${approvedDelivery.pageFix?.mode || ""} — ${approvedDelivery.pageFix?.rationale || ""}`,
+      `Implementation: ${approvedDelivery.implementation?.route || ""}`,
+      `Measurement: ${approvedDelivery.measurement?.metric || ""} from ${approvedDelivery.measurement?.baselineValue || ""}`,
+      `Approved artifact: ${approvedArtifactPath}`
+    ].join("\n")
+  : cleanMarkdown(section(delivery, "Executive Summary", "No human-approved delivery artifact is available yet."));
+const trackingSummary = trackingEvidence
+  ? cleanMarkdown(JSON.stringify(trackingEvidence.value.signals || trackingEvidence.value, null, 2))
+  : "Record service:evidence --stage tracking-14-day after implementation acceptance.";
 
 const dayPlan = [
-  ["Day 1", "Context and leak map", "Fill intake, client brain, and top 3 leak hypotheses."],
-  ["Day 2", "Page or architecture fix", "Draft the priority page or site-architecture fix."],
-  ["Day 3", "Landing or offer fix", "Tighten offer, section order, proof, FAQ, and CTA notes."],
-  ["Day 4", "Ads and email/SMS", "Draft starter angles and messages where relevant."],
-  ["Day 5", "Competitor watch", "Summarize useful moves and moves to avoid."],
-  ["Day 6", "Client handoff", "Package the work and record the handoff Loom."],
-  ["Day 7", "Report and continuation", "Send report, 30-day plan, and optional Growth Desk next step."]
+  ["Day 1", "Context and leak map", "Confirm the one page, evidence, baseline, and highest-priority leak."],
+  ["Day 2", "Rewrite or redesign", "Prepare the highest-leverage page fix and search-trust basics."],
+  ["Day 3", "Human claims review", "Review every claim, proof source, risk, and open question."],
+  ["Day 4", "Implementation", "Complete one implementation pass or package the dev-ready handoff."],
+  ["Day 5", "Before/after proof", "Capture the visible change and measurement baseline."],
+  ["Day 6", "Client-facing review", "Package the work, Loom, measurement plan, and consolidated revision boundary."],
+  ["Day 7", "Delivery", "Human-review the delivery and start 14-day implementation tracking."]
 ];
 
 const files = [
@@ -101,7 +152,9 @@ const files = [
   ["Kickoff", "kickoff-message.md"],
   ["Delivery", "deliverables/delivery.md"],
   ["Implementation Handoff", "deliverables/implementation-handoff.md"],
-  ["Week 1 Report", "reports/week-1-report.md"],
+  ["Human-Approved Delivery", approvedArtifactPath],
+  ["Day 0 Record", "service-day0.json"],
+  ["14-Day Tracking Evidence", trackingEvidence ? trackingEvidence.path : "service-evidence/tracking-14-day/0.json"],
   ["Claim Ledger", "quality/claim-proof-ledger.md"],
   ["Delivery Scorecard", "quality/delivery-scorecard.md"],
   ["Acceptance Checklist", "quality/sprint-acceptance-checklist.md"],
@@ -126,8 +179,12 @@ const dayCards = dayPlan.map(([day, title, action]) => `
       </section>
 `).join("");
 
-const warnings = [...(readiness.missing || []), ...(readiness.warnings || [])];
-const handoffReady = readiness.status === "ready";
+const warnings = [
+  ...(readiness.missing || []),
+  ...(readiness.warnings || []),
+  ...(!serviceClient.ok ? [`Service evidence blocked: ${serviceClient.blocked.join("; ") || "canonical paid service record is unavailable"}`] : [])
+];
+const handoffReady = readiness.status === "ready" && serviceClient.ok && serviceClient.readyForHandoff;
 const warningList = warnings.length
   ? warnings.map((warning) => `<li>${escapeHtml(warning)}</li>`).join("\n")
   : "<li>Ready enough for the next internal pass.</li>";
@@ -138,16 +195,17 @@ npm run claims:check`;
 
 const updateCopy = `Quick sprint update for ${name}:
 
-- Focus: ${wedge}
+- Highest-leverage page: ${highestLeveragePage}
 - Status: [what changed today]
 - Need from you: [approval/context/blocker]
 - Next: [next sprint step]`;
 
+const reviewedHandoffAction = approvedDelivery?.implementation?.artifact?.applyInstructions || "[specific action]";
 const handoffCopy = `If you only do one thing this week, do this:
 
-[specific action]
+${reviewedHandoffAction}
 
-It is the simplest fix from the sprint with the clearest next step.`;
+This is the human-approved implementation or handoff for ${highestLeveragePage}.`;
 
 const html = `<!doctype html>
 <html lang="en">
@@ -366,7 +424,7 @@ const html = `<!doctype html>
     <section class="grid">
       <div class="panel metric"><strong>${escapeHtml(readiness.status)}</strong><span>readiness</span></div>
       <div class="panel metric"><strong>${escapeHtml(website)}</strong><span>website</span></div>
-      <div class="panel metric"><strong>${escapeHtml(approvalContact)}</strong><span>approval owner</span></div>
+      <div class="panel metric"><strong>${escapeHtml(approvalOwner)}</strong><span>approval owner</span></div>
     </section>
 
     <section class="panel warn">
@@ -415,8 +473,8 @@ const html = `<!doctype html>
 
     <section class="grid">
       <div class="panel">
-        <h2>Current Wedge</h2>
-        <pre>${escapeHtml(wedge)}</pre>
+        <h2>Highest-Leverage Page</h2>
+        <pre>${escapeHtml(highestLeveragePage)}</pre>
       </div>
       <div class="panel">
         <h2>Deliverables</h2>
@@ -438,8 +496,8 @@ const html = `<!doctype html>
         <pre>${escapeHtml(deliverySummary)}</pre>
       </div>
       <div class="panel">
-        <h2>Final Report</h2>
-        <pre>${escapeHtml(finalReportSummary)}</pre>
+        <h2>14-Day Tracking</h2>
+        <pre>${escapeHtml(trackingSummary)}</pre>
       </div>
     </section>
   </main>

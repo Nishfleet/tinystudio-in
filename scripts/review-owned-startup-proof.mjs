@@ -121,10 +121,10 @@ const clientCommandRows = results.map((result) => ({
   pendingCount: result.pendingCount,
   sourceReadyCount: result.sourceReadyCount,
   readinessStatus: result.readiness.status,
-  bulkDryRunCommand: `npm run client:proof-review -- ${result.clientPath} --approve=all --approve-scorecard --reviewer="Nish" --dry-run`,
-  bulkApplyCommand: `npm run client:proof-review -- ${result.clientPath} --approve=all --approve-scorecard --reviewer="Nish"`,
+  bulkDryRunCommand: `npm run client:proof-review -- ${result.clientPath} --approve=all --reviewer="Nish" --dry-run`,
+  bulkApplyCommand: `npm run client:proof-review -- ${result.clientPath} --approve=all --reviewer="Nish"`,
   acceptanceDryRunCommand: `npm run client:acceptance -- ${result.clientPath} --dry-run`,
-  handoffCockpitCommand: "npm run owned:handoff"
+  handoffCockpitCommand: "node scripts/export-owned-handoff-loom-cockpit.mjs"
 }));
 
 function write(path, content) {
@@ -181,7 +181,7 @@ ${clientCommandRows.map((row) => `| ${row.clientPath} | ${row.sourceReadyCount} 
 2. Remove or rewrite any claim that feels too broad.
 3. Apply approvals without \`--dry-run\` only after reviewing the evidence.
 4. Run \`npm run client:acceptance -- clients/client-slug --dry-run\` before final handoff.
-5. Run \`npm run owned:handoff\` to record the tangible-improvement handoff Looms.
+5. Run \`node scripts/export-owned-handoff-loom-cockpit.mjs\` to record the tangible-improvement handoff Looms.
 `;
 
 write(outputPath, markdown);

@@ -1,23 +1,16 @@
 #!/usr/bin/env node
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
-import { execFileSync } from "node:child_process";
 import { join } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
 import { checkProspectReadiness, prospectWarningWeight } from "./lib/prospect-readiness.mjs";
+import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
+import { runRepoJson as runJson } from "./lib/runtime-roots.mjs";
 
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
-const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/growth-doctor.md";
+const outputPath = outputArg ? outputArg.split("=")[1] : "runs/growth-doctor.md";
 const skipChecks = process.argv.includes("--no-checks");
 const plain = process.argv.includes("--plain");
 const today = localIsoDate();
-
-function runJson(args) {
-  const output = execFileSync("node", args, {
-    encoding: "utf8",
-    stdio: ["ignore", "pipe", "pipe"]
-  });
-  return JSON.parse(output);
-}
 
 function runCheck(name, args) {
   const start = Date.now();
@@ -45,6 +38,7 @@ function runCheck(name, args) {
 }
 
 function listFolders(root) {
+  if (root === "prospects" || root.endsWith("/prospects")) return listOutboundProspectFolders(root).filter((path) => !/(^|\/)(?:kit|import)-smoke/.test(path));
   if (!existsSync(root)) return [];
   return readdirSync(root, { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
@@ -146,6 +140,7 @@ function bottleneck(counts, recordingPrep, rehearsal) {
 }
 
 function statusFor(checks) {
+  if (skipChecks) return "not-verified";
   if (checks.some((check) => check.status === "fail")) return "blocked";
   if (checks.some((check) => check.status === "warn" || check.status === "warning")) return "warning";
   return "ready";
@@ -165,8 +160,8 @@ const checks = skipChecks ? [] : [
 const status = statusFor(checks);
 
 const checkRows = checks.length
-  ? checks.map((check) => `| ${check.name} | ${check.status} | ${check.detail} | ${check.durationMs}ms |`).join("\n")
-  : "| skipped | skipped | Run without `--no-checks` before sending. | - |";
+  ? checks.map((check) => `| ${check.name} | ${check.status} | ${check.detail} |`).join("\n")
+  : "| skipped | skipped | Run without `--no-checks` before sending. |";
 
 const warningRows = checks
   .flatMap((check) => (check.warnings || []).map((warning) => ({ check: check.name, ...warning })))
@@ -181,7 +176,7 @@ Generated: ${today}
 
 ## Status
 
-${status === "ready" ? "Ready. The workflow checks passed." : status === "warning" ? "Warning. The workflow can run, but sender setup needs attention before cold email." : "Blocked. Fix the failed check before sending client-facing copy."}
+${status === "ready" ? "Ready. The workflow checks passed." : status === "warning" ? "Warning. The workflow can run, but sender setup needs attention before cold email." : status === "not-verified" ? "Not verified. Checks were skipped; run without `--no-checks` before sending client-facing copy." : "Blocked. Fix the failed check before sending client-facing copy."}
 
 ## Current Bottleneck
 
@@ -201,15 +196,15 @@ ${next.command}
 
 ## Safety Checks
 
-| Check | Status | Detail | Time |
-|---|---|---|---:|
+| Check | Status | Detail |
+|---|---|---|
 ${checkRows}
 
 ## Warnings
 
 | Check | Rule | Detail |
 |---|---|---|
-${warningRows || "| - | - | No warnings. |"}
+${warningRows || (skipChecks ? "| - | - | Checks were skipped; no warnings were collected. |" : "| - | - | No warnings. |")}
 
 ${warningRows ? "Sender setup warnings: run `npm run send:configure -- --physical-address=\"...\" --dkim-selector=... --dry-run` with real values before using cold email." : ""}
 
@@ -227,6 +222,7 @@ ${warningRows ? "Sender setup warnings: run `npm run send:configure -- --physica
 | Closed | ${metrics.counts.closed} |
 | Due follow-up | ${metrics.counts.dueFollowUp} |
 | Clients | ${metrics.counts.clients} |
+| Client records blocked | ${metrics.counts.clientsBlocked} |
 
 ## Today's Focus
 

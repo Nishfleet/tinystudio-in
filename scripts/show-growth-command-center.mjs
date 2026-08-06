@@ -1,16 +1,22 @@
 #!/usr/bin/env node
 import { existsSync, readdirSync, readFileSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { execFileSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 import { localIsoDate } from "./date-utils.mjs";
 import { checkProspectReadiness, prospectWarningWeight } from "./lib/prospect-readiness.mjs";
+import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
+import { loadValidatedServiceClients } from "./lib/validated-service-client.mjs";
 
 const plain = process.argv.includes("--plain");
 const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
 const limit = limitArg ? Number(limitArg.split("=")[1]) : 7;
 const today = localIsoDate();
+const repoRoot = resolve(process.env.SERVICE_REPO_ROOT || process.cwd());
+const sourceRoot = dirname(dirname(fileURLToPath(import.meta.url)));
 
 function listFolders(root) {
+  if (root === "prospects" || root.endsWith("/prospects")) return listOutboundProspectFolders(root).filter((path) => !/(^|\/)(?:kit|import)-smoke/.test(path));
   if (!existsSync(root)) return [];
   return readdirSync(root, { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
@@ -25,7 +31,8 @@ function readJson(path) {
 }
 
 function runJson(script, targetPath) {
-  const output = execFileSync("node", [script, targetPath], {
+  const output = execFileSync("node", [resolve(sourceRoot, script), targetPath], {
+    cwd: repoRoot,
     encoding: "utf8",
     stdio: ["ignore", "pipe", "pipe"]
   });
@@ -37,8 +44,9 @@ function referencesName(value, names) {
 }
 
 function activeTasks(excludedProspectNames = []) {
-  if (!existsSync("TASKS.md")) return [];
-  const content = readFileSync("TASKS.md", "utf8");
+  const path = join(existsSync(join(repoRoot, "TASKS.md")) ? repoRoot : sourceRoot, "TASKS.md");
+  if (!existsSync(path)) return [];
+  const content = readFileSync(path, "utf8");
   const activeMatch = content.match(/## Active\n([\s\S]*?)(?:\n## |$)/);
   if (!activeMatch) return [];
   return activeMatch[1]
@@ -88,10 +96,8 @@ function pipelineAction(pipeline) {
 function clientAction(result) {
   const warnings = result.warnings || [];
   if ((result.missing || []).length > 0) return "Regenerate or repair the client folder; required files are missing.";
-  if (!warnings.length) return "Send final delivery, then move to Weekly Growth Desk follow-up.";
+  if (!warnings.length) return "Human-review the final delivery, then begin 14-day implementation tracking.";
   if (warnings.some((warning) => warning.startsWith("Intake missing"))) return "Complete intake before doing delivery work.";
-  if (warnings.includes("Sprint wedge is not chosen")) return "Pick the one sprint wedge before running agents.";
-  if (warnings.includes("Sprint status is blank")) return "Update sprint status so the next delivery step is clear.";
   if (warnings.includes("Claim-proof ledger has no approved claims yet")) return "Fill claim-proof ledger before client-facing copy goes out.";
   if (warnings.includes("Delivery scorecard is not filled")) return "Fill delivery scorecard before handoff.";
   if (warnings.includes("Delivery template still has blank client fields")) return "Finish the delivery document client fields.";
@@ -106,7 +112,7 @@ function pipelineWeight(pipeline) {
   return 3;
 }
 
-const prospects = listFolders("prospects").map((path) => {
+const prospects = listFolders(join(repoRoot, "prospects")).map((path) => {
   const metadata = readJson(join(path, "metadata.json"));
   const pipeline = readJson(join(path, "pipeline.json"));
   const readiness = checkProspectReadiness(path);
@@ -125,7 +131,23 @@ const prospects = listFolders("prospects").map((path) => {
   };
 }).sort((a, b) => a.readinessWeight - b.readinessWeight || a.name.localeCompare(b.name));
 
-const clients = listFolders("clients").map((path) => {
+const clientFolders = listFolders(join(repoRoot, "clients"));
+const validatedClients = loadValidatedServiceClients(repoRoot);
+const canonicalClientPaths = new Set(validatedClients.map((client) => client.clientPath));
+const clientIntegrity = [
+  ...validatedClients.filter((client) => !client.ok || !client.day0).map((client) => ({
+    path: client.clientPath,
+    name: client.clientPath.split("/").at(-1),
+    blocked: client.blocked
+  })),
+  ...clientFolders.filter((path) => !canonicalClientPaths.has(path)).map((path) => ({
+    path,
+    name: path.split("/").at(-1),
+    blocked: ["unregistered or unpaid client directory"]
+  }))
+];
+const clients = validatedClients.filter((client) => client.ok && client.day0).map((client) => {
+  const path = client.clientPath;
   const readiness = runJson("scripts/check-client-readiness.mjs", path);
   return {
     path,
@@ -192,10 +214,12 @@ const result = {
     prospectsWaitingFollowUp: waitingProspects.length,
     clients: clients.length,
     clientsReadyToDeliver: readyClients.length,
-    clientsDraft: draftClients.length
+    clientsDraft: draftClients.length,
+    clientsBlocked: clientIntegrity.length
   },
   prospects,
   clients,
+  clientIntegrity,
   activeTasks: filteredActiveTasks
 };
 

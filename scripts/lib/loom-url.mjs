@@ -3,6 +3,7 @@ export function isValidLoomUrl(value) {
     const url = new URL(String(value || "").trim());
     const host = url.hostname.toLowerCase();
     if (url.protocol !== "https:" && url.protocol !== "http:") return false;
+    if (url.username || url.password) return false;
     if (host !== "loom.com" && !host.endsWith(".loom.com")) return false;
     return /^\/(share|embed)\/[^/?#]+/.test(url.pathname);
   } catch {

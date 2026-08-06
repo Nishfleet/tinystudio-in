@@ -2,11 +2,11 @@
 
 ## Goal
 
-Turn the external conversion heuristics into a repeatable TinyStudio delivery gate.
+Turn conversion heuristics into a repeatable delivery gate for the human-reviewed **7-Day Website Revenue Leak Fix Sprint**: one highest-leverage page for a founder-led Managed IT/MSP/cybersecurity company.
 
 ## Order Of Operations
 
-1. Pick the exact page, form, offer, ad, or email sequence being improved.
+1. Confirm the exact highest-leverage website page selected in the approved leak map.
 2. Fill `quality/conversion-optimization-scorecard.md` in the client folder.
 3. Check the first five critical items before writing copy.
 4. Rank the top 5 failures by buyer impact.
@@ -15,9 +15,8 @@ Turn the external conversion heuristics into a repeatable TinyStudio delivery ga
 7. Run the So-What chain so features become buyer outcomes.
 8. Pick one positioning angle and confirm it is specific, differentiated, and believable.
 9. Add the search trust layer after the conversion fix: title/meta, headings, internal links, FAQs, useful schema, sitemap/canonical/crawl basics, and local/service-area relevance.
-10. Add off-site trust/distribution only when it is real: citations, Google Business Profile, partner/vendor listings, reviews, proof assets, useful citeable pages, and real PR/community mentions.
-11. Add the measurement plan and weekly test.
-12. Mark approval-needed claims before anything goes to the client.
+10. Add a measurement plan for the selected page with a baseline, source, next check, and decision rule.
+11. Mark approval-needed claims before anything goes to the client.
 
 ## Rule
 
@@ -26,7 +25,7 @@ Do not ship a new page build, page rewrite, or lead form recommendation that fai
 ## Inputs
 
 - Page URL or draft
-- Traffic source or campaign
+- Relevant traffic source or buyer path
 - Buyer intent
 - Offer
 - Current proof
@@ -40,10 +39,9 @@ Do not ship a new page build, page rewrite, or lead form recommendation that fai
 - Exact fixes
 - Copy rewrite
 - Angle decision
-- Distribution/follow-up recommendation
 - Search trust layer
 - Measurement plan
 
 ## Measurement
 
-Track the primary conversion event, CTA clicks, form starts, form completions, booked calls, qualified replies, scroll depth, and customer objections. Then track search trust signals: indexed pages, Search Console impressions/clicks/queries, local profile actions, referral traffic, branded search, citations/listings completed, reviews collected, and organic assisted conversions. Use one-variable tests whenever possible.
+Track only the agreed signals for the selected page: the primary conversion event, CTA clicks, form starts, form completions, booked calls, qualified replies, scroll depth, and customer objections. Add page-level search-trust signals when available: indexing, Search Console impressions/clicks/queries, and branded or organic assisted conversions. This is a measurement plan, not a promised outcome.

@@ -1,85 +1,32 @@
-# Project Memory
+# TinyStudio service memory
 
-## Current Shape
+## Current truth
 
-- This folder is the new TinyStudio Growth Brain agency repo at `/Users/nish/Documents/TINY STUDIO`.
-- Legacy TinyStudio local repos, worktrees, static backups, and the old GitHub remote were removed after explicit confirmation.
-- The preserved Mobbin proving lab now lives inside this repo as a support system for design reference and page direction.
-- Spec Kit is installed so meaningful changes should have specs, checks, and clear acceptance criteria.
+TinyStudio is a human-reviewed managed service, not active software. The only active offer is the **7-Day Website Revenue Leak Fix Sprint** for **founder-led Managed IT/MSP/cybersecurity companies with a live site and high-value offer**.
 
-## Business Direction
+The first 3 clients are exactly **$1,000 founder pilots**. Scope is one highest-leverage page. The sprint includes a leak map, page rewrite or redesign, one implementation pass or dev-ready handoff, search-trust basics, before/after proof, Loom, measurement plan, one revision, and 14-day implementation tracking.
 
-TinyStudio is now a cash-now AI marketing ops agency.
+## Clock and gates
 
-Sell the 7-Day Site Revenue Leak Sprint first. Treat TinyStudio Growth Brain as the internal operating system. Do not wait for SaaS, ads, or a large website. The sprint gives a client:
+Day 0 starts only after payment, required context, an approval owner, and an implementation owner. Client delay pauses the clock. Human review gates are fit, claims, client-facing work, delivery/acceptance, and renewal.
 
-- a client brain built from real context
-- page and offer fixes
-- ad angle ideas
-- email/SMS drafts
-- competitor notes
-- a weekly measurement/reporting loop
+Automation prepares research, drafts, QA, packages, and routing. It never autonomously sends, publishes, spends, approves, accepts, or renews.
 
-## Operating Rules
+The operator loop is offline and hash-bound. Human decisions are immutable for one exact queue input. Day 0, client-delay pauses, prepared output, client approval, implementation/acceptance, usefulness, and the 14-day check are evidence-bound. Declines and resolved information requests create fresh revisions; applying more than one pending decision at once is refused.
 
-- Start with founder-led ecommerce or small businesses that already have sales, traffic, reviews, or past campaigns.
-- Keep founder name, offer name, price defaults, placeholders, and opt-out language in `growth-brain/ops/agency-config.json`.
-- Do not promise specific revenue, ROAS, SEO ranking, or sales-multiple outcomes.
-- Treat tangible improvement proof as the no-trust startup wedge: every client-facing artifact should show what changed, why it matters, what proves it, the measurement contract, and what gets checked next.
-- Treat AI Converter, SiteRep, and 0509 as owned-product delivery proof, not market proof. They can be used in outbound only with the owned-product label intact until real external clients reply, pay, retain, and confirm value.
-- Use `npm run owned:metrics -- --from-clipboard` to turn owned-product proof packets into full case studies only after one real current metric is available for each owned product.
-- Treat each agent as a repeatable workflow first: inputs, checklist, output, human approval, measurement.
-- Save reusable learnings back into the client brain after every delivery.
-- Use Mobbin only for reference-backed design direction, never for copying.
+No scheduled TinyStudio retention automation is required before a client exists. The repo gate must fail once a client directory exists and the Friday retention-prep automation is still absent.
 
-## Commands
+No revenue, ranking, ROAS, conversion, booked-call, or sales-volume guarantees are allowed.
 
-```bash
-npm test
-npm run claims:check
-npm run send:setup
-npm run send:guide
-npm run send:normalize
-npm run send:check
-npm run growth:start
-npm run growth:mission
-npm run growth:today
-npm run growth:cockpit
-npm run growth:metrics
-npm run growth:proof
-npm run growth-brain:check
-npm run prospect:contact-plan -- prospects/prospect-slug
-npm run prospect:batch-contact-plan -- --limit=10
-npm run prospect:score-cockpit
-npm run prospect:batch-score -- --from-clipboard
-npm run prospect:score-check
-npm run prospect:brief -- prospects/prospect-slug
-npm run prospect:prep-recording -- --limit=5
-npm run prospect:queue -- --limit=5
-npm run prospect:cockpit -- --limit=5
-npm run prospect:teleprompter -- --limit=5
-npm run prospect:rehearsal -- --limit=5
-npm run prospect:outbox
-npm run prospect:followups
-npm run prospect:sales-cockpit
-npm run mobbin:check
-npm run prospect:check -- prospects/prospect-slug
-npm run prospect:script -- prospects/prospect-slug
-npm run prospect:loom -- prospects/prospect-slug https://www.loom.com/share/...
-npm run prospect:send-prep -- prospects/prospect-slug https://www.loom.com/share/... --approved
-npm run market:after-recording -- --from-clipboard
-npm run prospect:batch-send-prep
-npm run prospect:batch-sent -- --from-clipboard
-npm run prospect:message -- prospects/prospect-slug
-npm run prospect:stage -- prospects/prospect-slug sent --channel contact-form
-npm run prospect:reply-prep -- prospects/prospect-slug
-npm run prospect:call-booked-prep -- prospects/prospect-slug
-npm run prospect:call-prep -- prospects/prospect-slug
-npm run prospect:close-prep -- prospects/prospect-slug
-npm run prospect:stage -- prospects/prospect-slug won --note "Approved sprint"
-npm run prospect:convert -- prospects/prospect-slug
-npm run client:cockpit -- clients/client-slug
-npm run client:kickoff -- clients/client-slug
-npm run client:check -- clients/client-slug
-npm run sales:one-pager
-```
+## Graduation evidence
+
+Any future SaaS graduation requires: at least 10 paid sprints; the same problem in at least 7; at least 70% workflow repeatability; usefulness at least 8/10; approval at least 70%; a recurring need; and at least 3 deposits or preorders. Until then, keep the managed-service boundary.
+
+Gate notation: >=10 paid sprints, same problem >=7, >=70% workflow repeatability, usefulness >=8/10, approval >=70%, recurring need, and >=3 deposits/preorders.
+
+## Working rules
+
+- Keep the buyer, offer, price, page scope, and gate language consistent across active documents and generated packets.
+- Use the approved one-page offer and proposal templates; do not add out-of-scope channel deliverables.
+- Preserve `public/` as the separate tinystudio.in portfolio. It is not service truth and is excluded from `product:truth`.
+- Treat every client-facing artifact as draft material until the relevant human gate records approval.

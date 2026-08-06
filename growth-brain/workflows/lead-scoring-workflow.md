@@ -2,7 +2,7 @@
 
 ## Goal
 
-Spend Loom time only on prospects with enough pain, proof, and budget to buy the sprint.
+Spend Loom time only on founder-led Managed IT/MSP/cybersecurity companies with enough pain, proof, and budget to buy the human-reviewed **7-Day Website Revenue Leak Fix Sprint** for one highest-leverage page.
 
 ## Fast Workflow
 
@@ -24,13 +24,13 @@ Score each prospect from 0-16.
 
 | Signal | Points |
 |---|---:|
-| Live service/product offer | 0-2 |
+| Live managed IT, MSP, or cybersecurity offer | 0-2 |
 | Clear decision-maker or founder | 0-2 |
-| High-ticket or repeat-purchase economics | 2 |
+| High-value contract economics | 2 |
 | Website has obvious architecture, copy, trust, or CTA leak | 2 |
 | Reviews, case studies, or customer proof exist | 0-2 |
 | Competitors are clearer than them | 0-2 |
-| They are already spending on SEO, ads, email, or content | 0-2 |
+| They can implement one page fix within the sprint or use a dev-ready handoff | 0-2 |
 | The fix can be explained in a 2-3 minute Loom | 0-2 |
 
 The batch scorer only accepts strict `N/16` rows. It rejects impossible scores, missing reasons, and priorities that do not match the score band.
@@ -43,17 +43,15 @@ The batch scorer only accepts strict `N/16` rows. It rejects impossible scores, 
 
 ## Best Early Prospects
 
-- Managed IT and cybersecurity/compliance firms.
-- Accountants, bookkeepers, tax advisors.
-- Dental, med spa, clinic, and specialist health practices.
-- Home service companies with high-value jobs.
-- Legal and financial service firms with service-page confusion.
-- Ecommerce stores with real reviews and weak product pages.
+- Founder-led managed IT providers and regional MSPs.
+- Founder-led MSSPs and cybersecurity consultancies.
+- Founder-led compliance, vCISO, cloud-security, and incident-response providers with a live high-value offer.
 
 ## Disqualifiers
 
 - No live offer.
 - No reachable owner/operator.
+- Not a founder-led Managed IT/MSP/cybersecurity company.
 - No reviews, proof, pages, or existing context.
 - Low-ticket business that cannot justify the sprint price.
 - Prospect needs full brand strategy before performance fixes.

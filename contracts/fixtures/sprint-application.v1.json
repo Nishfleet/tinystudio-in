@@ -1,0 +1,41 @@
+{
+  "contract": "tinystudio.sprint-application",
+  "schemaVersion": 1,
+  "schemaDigest": "d4fadcb1d82628ffd7f1aaee55b23163b56583ff5a2da6762487fc0e6ab18da2",
+  "applicationId": "018f5a54-84aa-7ae0-a1fd-4da350490770",
+  "sourceHash": "6e94e889ad81b3bb160d5be87f7791f7b976857a086ad29d0941a46ff347522f",
+  "submittedAt": "2026-07-13T09:30:00.000Z",
+  "applicant": {
+    "name": "Nora Shah",
+    "workEmail": "nora@example.invalid",
+    "company": "Signal Ridge IT",
+    "website": "https://example.invalid/",
+    "companyType": "msp",
+    "targetBuyer": "Operations leaders at 20 to 100 person professional-services firms",
+    "primaryOffer": "Managed IT and cybersecurity support on a fixed monthly plan",
+    "mainLeadSource": "Referrals and organic search",
+    "suspectedLeak": "The homepage lists every service equally and gives buyers no clear first path",
+    "desiredOutcome": "A clearer homepage that helps the right buyer choose the next step",
+    "implementationAbility": "Can implement approved changes within 14 days",
+    "consent": true
+  },
+  "qualification": {
+    "state": "ready",
+    "packetHash": "01c6d23806f6d6ebefc92c5703b0678786b702090d18f2859b8d1e1328f06a50",
+    "promptVersion": "managed-it-fit-v1",
+    "packet": {
+      "fitStatus": "strong",
+      "fitReasons": [
+        "Live managed-services website",
+        "High-value recurring offer",
+        "Named implementation owner is available"
+      ],
+      "leakHypothesis": "The homepage hierarchy may hide the primary managed-services buying path",
+      "missingInformation": [
+        "Current homepage conversion baseline"
+      ],
+      "riskFlags": [],
+      "recommendedNextStep": "Human reviews fit and the evidence before offering a sprint"
+    }
+  }
+}

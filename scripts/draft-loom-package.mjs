@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { execFileSync } from "node:child_process";
+import { guardOutboundProspectPath } from "./lib/outbound-prospects.mjs";
 
 const prospectPath = process.argv[2];
 
@@ -14,23 +16,22 @@ if (!existsSync(prospectPath)) {
   process.exit(1);
 }
 
+guardOutboundProspectPath(prospectPath);
+
 const metadataPath = join(prospectPath, "metadata.json");
 const metadata = existsSync(metadataPath)
   ? JSON.parse(readFileSync(metadataPath, "utf8"))
   : { name: prospectPath.split("/").pop(), website: "", vertical: "", city: "", contact: "" };
 
-const auditBrief = existsSync(join(prospectPath, "audit-brief.md"))
-  ? readFileSync(join(prospectPath, "audit-brief.md"), "utf8")
-  : "";
-const loomOutline = existsSync(join(prospectPath, "loom-outline.md"))
-  ? readFileSync(join(prospectPath, "loom-outline.md"), "utf8")
-  : "";
-const outreach = existsSync(join(prospectPath, "outreach.md"))
-  ? readFileSync(join(prospectPath, "outreach.md"), "utf8")
-  : "";
-const buyerRoom = existsSync(join(prospectPath, "buyer-room.md"))
-  ? readFileSync(join(prospectPath, "buyer-room.md"), "utf8")
-  : "";
+for (const script of ["scripts/draft-loom-recording-script.mjs", "scripts/draft-prospect-message.mjs"]) {
+  execFileSync(process.execPath, [script, prospectPath], {
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "pipe"]
+  });
+}
+
+const recordingScript = readFileSync(join(prospectPath, "recording-script.md"), "utf8");
+const nextMessage = readFileSync(join(prospectPath, "next-message.md"), "utf8");
 
 const packageText = `# ${metadata.name} Loom Package
 
@@ -41,21 +42,13 @@ const packageText = `# ${metadata.name} Loom Package
 - City: ${metadata.city || ""}
 - Contact: ${metadata.contact || ""}
 
-## Recording Outline
+## Recording Script
 
-${loomOutline || "Fill loom-outline.md before recording."}
+${recordingScript}
 
 ## Message To Send
 
-${outreach || "Fill outreach.md before sending."}
-
-## Buyer Room
-
-${buyerRoom || "Fill buyer-room.md before sending."}
-
-## Audit Brief Source
-
-${auditBrief}
+${nextMessage}
 `;
 
 const outputPath = join(prospectPath, "loom-package.md");

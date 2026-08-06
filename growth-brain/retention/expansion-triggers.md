@@ -1,4 +1,6 @@
-# Expansion Triggers
+# Retired: Expansion Triggers
+
+> **Status: Retired historical reference.** This multi-service expansion routine is not part of the one-page sprint. Do not use it as an active offer, delivery, or continuation path.
 
 Do not add services randomly. Expand only when a trigger appears.
 
