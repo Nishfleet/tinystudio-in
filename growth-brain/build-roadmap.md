@@ -2,7 +2,7 @@
 
 ## Build and improve now
 
-Only work that helps sell, deliver, prove, or retain the **7-Day Website Revenue Leak Fix Sprint** for one highest-leverage page:
+Only work that helps sell, deliver, prove, or retain the **The 7-Day Website Correction** for one highest-leverage page:
 
 - exact-fit intake and private qualification
 - deterministic review queue and bounded agent-work packets

@@ -2,7 +2,7 @@
 
 ## Goal
 
-Confirm fit for the **7-Day Website Revenue Leak Fix Sprint**, agree on the one highest-leverage page, and avoid free consulting.
+Confirm fit for the **The 7-Day Website Correction**, agree on the one highest-leverage page, and avoid free consulting.
 
 The first 3 clients are exactly **$1,000 founder pilots**. The call does not approve claims, client-facing work, delivery, acceptance, or renewal.
 
@@ -52,7 +52,7 @@ Human review gates cover fit, claims, client-facing work, delivery and acceptanc
 
 ## Close
 
-"The 7-Day Website Revenue Leak Fix Sprint is a $1,000 founder pilot for one highest-leverage page. You receive the reviewed page fix, implementation or handoff, proof, measurement plan, and 14-day tracking. Day 0 starts only after payment, required context, an approval owner, and an implementation owner. Client delay pauses the clock."
+"The The 7-Day Website Correction is a $1,000 founder pilot for one highest-leverage page. You receive the reviewed page fix, implementation or handoff, proof, measurement plan, and 14-day tracking. Day 0 starts only after payment, required context, an approval owner, and an implementation owner. Client delay pauses the clock."
 
 Do not guarantee revenue, rankings, ROAS, conversion lift, booked calls, or sales volume.
 

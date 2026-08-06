@@ -2,7 +2,7 @@
 
 ## External offer
 
-**7-Day Website Revenue Leak Fix Sprint**
+**The 7-Day Website Correction**
 
 ## Buyer
 

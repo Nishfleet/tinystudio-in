@@ -2,7 +2,7 @@
 
 TinyStudio is a human-reviewed delivery system for one narrow offer:
 
-**7-Day Website Revenue Leak Fix Sprint**
+**The 7-Day Website Correction**
 
 The buyer is a founder-led Managed IT/MSP/cybersecurity company with a live site and a high-value offer. The first 3 clients are exactly **$1,000 founder pilots**. Each sprint fixes one highest-leverage page and leaves the client with a usable, measurable implementation package.
 

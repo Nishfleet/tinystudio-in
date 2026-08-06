@@ -2,7 +2,7 @@
 
 Use this for the one highest-leverage page when the client’s implementation owner will ship the change.
 
-Product: **7-Day Website Revenue Leak Fix Sprint**. The first 3 clients are exactly **$1,000 founder pilots**.
+Product: **The 7-Day Website Correction**. The first 3 clients are exactly **$1,000 founder pilots**.
 
 ## Day 0 record
 

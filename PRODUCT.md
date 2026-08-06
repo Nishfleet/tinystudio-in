@@ -1,6 +1,6 @@
 # Product context
 
-TinyStudio currently sells one human-reviewed managed service: the **7-Day Website Revenue Leak Fix Sprint**.
+TinyStudio currently sells one human-reviewed managed service: the **The 7-Day Website Correction**.
 
 ## Buyer
 

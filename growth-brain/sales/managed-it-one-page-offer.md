@@ -6,7 +6,7 @@ Founder-led Managed IT/MSP/cybersecurity companies with a live site and high-val
 
 ## The offer
 
-**7-Day Website Revenue Leak Fix Sprint**
+**The 7-Day Website Correction**
 
 One human-reviewed page fix, delivered as a rewrite or redesign plus one implementation pass or a dev-ready handoff.
 

@@ -1733,7 +1733,7 @@ try {
 	const eighthProspectFolder = rp("prospects", I8)
 	const reservedBeforeState = rs(eighthProspectFolder)
 	const reservedItem = it(I8)
-	const reservedDay0 = {applicationId: I8, paymentEvidence: "paid: invoice RESERVED-8", requiredContext: "approved context", approvalOwner: "Founder", implementationOwner: "TinyStudio", offerName: "7-Day Website Revenue Leak Fix Sprint", offerPriceUsd: 1000, pricingCohort: "founder-pilot", pilotSequence: 3, ready: true, day0StartedAt: reservedAt, updatedAt: reservedAt, paused: false, activePause: null, pauseHistory: [], totalPausedMs: 0, deadlineAt: addBusinessDaysToTimestamp(reservedAt, 7), resumeState: ""}
+	const reservedDay0 = {applicationId: I8, paymentEvidence: "paid: invoice RESERVED-8", requiredContext: "approved context", approvalOwner: "Founder", implementationOwner: "TinyStudio", offerName: "The 7-Day Website Correction", offerPriceUsd: 1000, pricingCohort: "founder-pilot", pilotSequence: 3, ready: true, day0StartedAt: reservedAt, updatedAt: reservedAt, paused: false, activePause: null, pauseHistory: [], totalPausedMs: 0, deadlineAt: addBusinessDaysToTimestamp(reservedAt, 7), resumeState: ""}
 	const reservedAfterState = appendStateTransition(
 		{...reservedBeforeState, state: "day0-ready", updatedAt: reservedAt, day0ReadyAt: reservedAt, sourceHash: reservedItem.sourceHash, packetHash: reservedItem.packetHash},
 		{from: reservedBeforeState.state, to: "day0-ready", kind: "day0", at: reservedAt, contextRevision: reservedBeforeState.contextRevision, queueInputHash: "", day0Hash: sha256(minifiedJson(reservedDay0)), contextHash: contextHistoryHash(reservedBeforeState.contextHistory || [])}

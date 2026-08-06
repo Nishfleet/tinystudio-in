@@ -2,7 +2,7 @@
 
 ## Goal
 
-Spend Loom time only on founder-led Managed IT/MSP/cybersecurity companies with enough pain, proof, and budget to buy the human-reviewed **7-Day Website Revenue Leak Fix Sprint** for one highest-leverage page.
+Spend Loom time only on founder-led Managed IT/MSP/cybersecurity companies with enough pain, proof, and budget to buy the human-reviewed **The 7-Day Website Correction** for one highest-leverage page.
 
 ## Fast Workflow
 

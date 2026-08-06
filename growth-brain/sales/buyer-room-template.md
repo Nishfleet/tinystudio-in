@@ -19,7 +19,7 @@ Use this page after the fit review so a founder can decide without a sales call.
 
 ## The sprint
 
-**7-Day Website Revenue Leak Fix Sprint**
+**The 7-Day Website Correction**
 
 Included: leak map, rewrite or redesign of one highest-leverage page, one implementation pass or dev-ready handoff, search-trust basics, before/after proof, Loom, measurement plan, one revision, and 14-day implementation tracking.
 

@@ -2,7 +2,7 @@
 
 ## Goal
 
-Deliver one human-reviewed **7-Day Website Revenue Leak Fix Sprint** for a founder-led Managed IT/MSP/cybersecurity company with a live site and high-value offer.
+Deliver one human-reviewed **The 7-Day Website Correction** for a founder-led Managed IT/MSP/cybersecurity company with a live site and high-value offer.
 
 ## Fit gate
 

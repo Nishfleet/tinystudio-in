@@ -1,6 +1,6 @@
 # Growth Brain Workflows
 
-This folder runs one offer: the human-reviewed 7-Day Website Revenue Leak Fix Sprint for founder-led Managed IT/MSP/cybersecurity companies. Every active workflow stays inside one highest-leverage page.
+This folder runs one offer: the human-reviewed The 7-Day Website Correction for founder-led Managed IT/MSP/cybersecurity companies. Every active workflow stays inside one highest-leverage page.
 
 ## Order Of Operations
 

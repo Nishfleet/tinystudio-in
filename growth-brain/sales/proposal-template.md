@@ -24,7 +24,7 @@ Describe the page leak and cite the evidence:
 
 ## Sprint outcome
 
-The **7-Day Website Revenue Leak Fix Sprint** includes:
+The **The 7-Day Website Correction** includes:
 
 - leak map
 - rewrite or redesign of one highest-leverage page

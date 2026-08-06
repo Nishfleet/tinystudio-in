@@ -1,6 +1,6 @@
 # 7-Day sprint checklist
 
-Product: **7-Day Website Revenue Leak Fix Sprint**. Scope is one highest-leverage page.
+Product: **The 7-Day Website Correction**. Scope is one highest-leverage page.
 
 ## Fit and Day 0 gate
 

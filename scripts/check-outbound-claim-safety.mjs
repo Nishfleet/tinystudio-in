@@ -10,6 +10,11 @@ const roots = [prospectRoot, join(serviceRoot, "clients"), join(codeRoot, "growt
 const allowedGuardrail = /\b(do not|does not|not promise|not guarantee|no [^.!?;\n]{0,160}guarantees?|without|guardrail|not included|no pressure)\b/i;
 const guaranteeGuardrail = /\b(?:(?:do(?:es)? not|not (?:a |an )?)(?:promise|guarantee)|not guaranteed|neither [^,:.!?;\n]{1,80}\bnor\b[^,:.!?;\n]{1,80}\b(?:is|are|was|were)\s+guaranteed|no (?:(?:[\w-]+(?:,\s*(?:(?:and|or)\s+)?|\s+(?:and|or)\s+))*[\w-]+\s+)?guarantees?|without (?:any )?(?:outcomes?\s+)?guarantees?)\b/gi;
 const genericGuarantee = /\bguarantee(?:d|s)?\b/i;
+// Narrow on purpose. Only an instruction that forbids *mentioning* a claim is
+// exempt ("Do not mention guaranteed revenue"). The broad allowedGuardrail is
+// wrong here: it also matches "We guarantee 20 leads, with no guarantees beyond
+// that", which must stay flagged.
+const forbidsMention = /\b(?:do(?:es)? not|will not|shall not|won't|never|avoid)\s+(?:mention|say|write|use|claim|state|imply|suggest|reference|promise|guarantee)\b/i;
 const clauseBoundary = /[:.!?;]|\b(?:and|but|however|yet|although|though|while|whereas|still|nevertheless|nonetheless)\b/i;
 const allowlistNames = new Set([
   "objection-handling.md",
@@ -89,17 +94,21 @@ for (const file of filesToScan()) {
       // revenue, rankings or ROAS" is the guardrail itself, and flagging it made the
       // suite fail on content that was obeying the rule. The rule path below already
       // consults allowedGuardrail; this one did not.
-      if (!allowedGuardrail.test(line)) {
-      for (const flag of agentWorkClaimRiskFlags({ deliverables: line, claims: [] })) {
-        findings.push({ file, line: index + 1, rule: flag.reason, text: line.trim() });
+      const clauses = line.split(clauseBoundary);
+      // Whole-line here: clauses split on commas, so "No revenue, ranking, or
+      // sales-volume guarantees" would lose the leading "No" and read as a
+      // promise. The generic-guarantee rule below stays per-clause, and that is
+      // what still catches "We guarantee 20 leads, with no guarantees beyond that".
+      if (!forbidsMention.test(line)) {
+        for (const flag of agentWorkClaimRiskFlags({ deliverables: line, claims: [] })) {
+          findings.push({ file, line: index + 1, rule: flag.reason, text: line.trim() });
+        }
       }
-      }
-    const clauses = line.split(clauseBoundary);
     // guaranteeGuardrail only recognises "do not promise/guarantee". An instruction
       // that forbids *mentioning* a guarantee ("Do not mention guaranteed revenue")
       // keeps the bare word and was flagged as making the promise it forbids.
       // allowedGuardrail is the broader prohibition test the rule path already uses.
-      if (clauses.some((clause) => genericGuarantee.test(clause.replace(guaranteeGuardrail, "")) && !allowedGuardrail.test(clause))) {
+      if (clauses.some((clause) => genericGuarantee.test(clause.replace(guaranteeGuardrail, "")) && !forbidsMention.test(clause))) {
       findings.push({ file, line: index + 1, rule: "generic guarantee", text: line.trim() });
     }
     for (const rule of patterns) {

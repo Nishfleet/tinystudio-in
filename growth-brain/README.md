@@ -1,6 +1,6 @@
 # TinyStudio service operating kit
 
-This folder powers one human-reviewed managed service: the **7-Day Website Revenue Leak Fix Sprint**.
+This folder powers one human-reviewed managed service: the **The 7-Day Website Correction**.
 
 ## Exact offer
 
