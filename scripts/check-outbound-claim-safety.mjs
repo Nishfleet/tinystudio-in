@@ -85,11 +85,21 @@ for (const file of filesToScan()) {
   if (fileAllowlist.has(file)) continue;
   const lines = readFileSync(file, "utf8").split("\n");
   lines.forEach((line, index) => {
-    for (const flag of agentWorkClaimRiskFlags({ deliverables: line, claims: [] })) {
-      findings.push({ file, line: index + 1, rule: flag.reason, text: line.trim() });
-    }
+      // A line that forbids a claim is not the claim. "Do not mention guaranteed
+      // revenue, rankings or ROAS" is the guardrail itself, and flagging it made the
+      // suite fail on content that was obeying the rule. The rule path below already
+      // consults allowedGuardrail; this one did not.
+      if (!allowedGuardrail.test(line)) {
+      for (const flag of agentWorkClaimRiskFlags({ deliverables: line, claims: [] })) {
+        findings.push({ file, line: index + 1, rule: flag.reason, text: line.trim() });
+      }
+      }
     const clauses = line.split(clauseBoundary);
-    if (clauses.some((clause) => genericGuarantee.test(clause.replace(guaranteeGuardrail, "")))) {
+    // guaranteeGuardrail only recognises "do not promise/guarantee". An instruction
+      // that forbids *mentioning* a guarantee ("Do not mention guaranteed revenue")
+      // keeps the bare word and was flagged as making the promise it forbids.
+      // allowedGuardrail is the broader prohibition test the rule path already uses.
+      if (clauses.some((clause) => genericGuarantee.test(clause.replace(guaranteeGuardrail, "")) && !allowedGuardrail.test(clause))) {
       findings.push({ file, line: index + 1, rule: "generic guarantee", text: line.trim() });
     }
     for (const rule of patterns) {
