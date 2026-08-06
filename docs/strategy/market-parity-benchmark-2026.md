@@ -1,6 +1,6 @@
 # Market Parity Benchmark 2026
 
-Generated: 2026-07-14
+Generated: 2026-08-06
 
 ## Purpose
 
@@ -22,7 +22,7 @@ Use this benchmark as an owner dashboard for market claims. If a row says "do no
 
 ## Market Price Anchors
 
-Generated: 2026-07-14.
+Generated: 2026-08-06.
 Market anchors last checked: 2026-05-29.
 
 Current public market signals:

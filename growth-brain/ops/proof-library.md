@@ -1,6 +1,6 @@
 # TinyStudio Proof And Learning Library
 
-Generated: 2026-07-14
+Generated: 2026-08-06
 
 This tracked file contains operating rules and approved product facts only. It never reads private prospect or client folders.
 
