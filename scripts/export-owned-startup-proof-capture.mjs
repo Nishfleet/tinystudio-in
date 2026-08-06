@@ -36,10 +36,10 @@ const startups = [
         proofType: "public source"
       }
     ],
-    topLeak: "The product had a useful preview-first mechanic, but the buyer promise could read as generic file conversion before the accounting wedge became obvious.",
+    topLeak: "The product had a useful preview-first mechanic, but its buyer-facing positioning could read as generic file conversion before the accounting wedge was obvious.",
     exactFix: "Lead with the bank-statement/accounting workflow and keep broader conversion routes as secondary support.",
     shipped: "Drafted the owned proof packet and tangible improvement ledger for the accounting conversion wedge.",
-    learning: "Specific buyer paths make the preview-first mechanic easier to value than a broad file-conversion promise.",
+    learning: "Specific buyer paths let the preview-first mechanic show its worth more clearly than broad file-conversion positioning.",
     unclear: "Need live conversion data to prove whether accounting traffic starts more uploads."
   },
   {
