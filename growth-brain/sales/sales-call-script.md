@@ -38,7 +38,7 @@ Bad fit:
 
 The sprint covers one highest-leverage page and includes:
 
-- leak map
+- fault map
 - rewrite or redesign
 - one implementation pass or dev-ready handoff
 - search-trust basics

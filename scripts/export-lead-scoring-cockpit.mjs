@@ -71,12 +71,12 @@ const rows = prospects.map((prospect, index) => `
         </div>
         <a class="siteLink" href="${escapeHtml(prospect.website)}" target="_blank" rel="noreferrer">Open Site</a>
       </div>
-      <p>${escapeHtml(prospect.notes || prospect.auditHook || "Review site, offer, proof, and one visible leak.")}</p>
+      <p>${escapeHtml(prospect.notes || prospect.auditHook || "Review site, offer, proof, and one visible fault.")}</p>
       <div class="scoreGrid">
         <label>Offer <input type="number" min="0" max="2" value="0" data-points></label>
         <label>Owner <input type="number" min="0" max="2" value="0" data-points></label>
         <label>Economics <input type="number" min="0" max="2" value="0" data-points></label>
-        <label>Visible leak <input type="number" min="0" max="2" value="0" data-points></label>
+        <label>Visible fault <input type="number" min="0" max="2" value="0" data-points></label>
         <label>Proof <input type="number" min="0" max="2" value="0" data-points></label>
         <label>Competitors <input type="number" min="0" max="2" value="0" data-points></label>
         <label>Marketing spend <input type="number" min="0" max="2" value="0" data-points></label>

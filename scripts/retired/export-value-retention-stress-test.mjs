@@ -66,8 +66,8 @@ function proofRows(path = "prospects/loom-links.txt") {
     .filter((line) => line.startsWith("prospects/"))
     .map((line) => {
       const separator = line.includes("|") ? "|" : ",";
-      const [prospectPath, loomUrl, approval, leak, impact, fix, ask] = line.split(separator).map((part) => part.trim());
-      return { prospectPath, loomUrl, approval, leak, impact, fix, ask };
+      const [prospectPath, loomUrl, approval, fault, impact, fix, ask] = line.split(separator).map((part) => part.trim());
+      return { prospectPath, loomUrl, approval, fault, impact, fix, ask };
     });
 }
 
@@ -145,7 +145,7 @@ const clients = listDirs("clients").map((clientPath) => {
     readiness: readiness.status,
     weekly: weekly.status,
     tangibleImprovement: hasFilledTableRow(delivery, "Tangible Improvements", [1, 2, 3, 4, 5]),
-    revenueLeakLoop: hasFilledTableRow(report, "Revenue Leak Loop", [1, 2, 3, 4]),
+    revenueLeakLoop: hasFilledTableRow(report, "Revenue Fault Loop", [1, 2, 3, 4]),
     searchTrustReview: hasFilledTableRow(report, "Search Trust Review", [1, 2, 3]),
     measurementContract: hasFilledTableRow(report, "Measurement Contract", [0, 1, 2, 3, 4, 5])
       && hasFilledTableRow(dashboard, "Measurement Contract", [0, 1]),
@@ -255,7 +255,7 @@ const stressTests = [
   {
     area: "Comprehensive weekly value stack",
     status: statusFrom(clientsWithRevenueLeakLoop.length === clients.length && clientsWithSearchTrustReview.length === clients.length && clients.length > 0, clients.length > 0),
-    evidence: `${clientsWithRevenueLeakLoop.length}/${clients.length} weekly report(s) include a revenue leak loop; ${clientsWithSearchTrustReview.length}/${clients.length} include search trust review; external leak loop ${externalWithRevenueLeakLoop.length}/${externalClients.length}; external search trust ${externalWithSearchTrustReview.length}/${externalClients.length}.`,
+    evidence: `${clientsWithRevenueLeakLoop.length}/${clients.length} weekly report(s) include a revenue fault loop; ${clientsWithSearchTrustReview.length}/${clients.length} include search trust review; external fault loop ${externalWithRevenueLeakLoop.length}/${externalClients.length}; external search trust ${externalWithSearchTrustReview.length}/${externalClients.length}.`,
     next: "Every retained client update must show conversion fix, search trust, client-visible value, and next measurement."
   },
   {

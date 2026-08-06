@@ -192,7 +192,7 @@ TinyStudio is not trying to beat full-service enterprise CRO agencies on long st
 - boutique SEO/site-architecture audits
 - paid search/social and lifecycle/email retainers
 - AI-assisted marketing operations retainers
-- human-reviewed website revenue leak sprints for founder-led Managed IT, MSP, and cybersecurity companies
+- human-reviewed website revenue fault sprints for founder-led Managed IT, MSP, and cybersecurity companies
 
 ## Decision Rule
 
@@ -239,7 +239,7 @@ TinyStudio must prove these advantages:
 |---|---|---|
 | Speed | 2-6 week audit/report | 7-day sprint with implementation-ready assets |
 | Specificity | Generic best-practice checklist | Approved application context, real page evidence, and claim-safe customer language |
-| Output | PDF recommendations | Leak map, page fix, implementation handoff, proof, and measurement plan |
+| Output | PDF recommendations | Fault map, page fix, implementation handoff, proof, and measurement plan |
 | Channel breadth | Sell every channel by default | Add only ready channels with access, economics, measurement, and approval |
 | Trust | Loose claims | Claim-proof ledger and approval gates |
 | Automation | Manual agency ops | Repeatable scripts, generated cockpits, batch prep, readiness checks |

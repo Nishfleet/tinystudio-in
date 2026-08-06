@@ -115,7 +115,7 @@ atomicWrite(
 | Live service/product offer |  |  |
 | Clear decision-maker or founder |  |  |
 | High-ticket or repeat-purchase economics |  |  |
-| Obvious architecture, copy, trust, or CTA leak |  |  |
+| Obvious architecture, copy, trust, or CTA fault |  |  |
 | Reviews, case studies, or customer proof exist |  |  |
 | Competitors are clearer than them |  |  |
 | Already spending on SEO, ads, email, or content |  |  |
@@ -146,7 +146,7 @@ Pick one:
 
 1. Why I picked the business: ${website ? `I reviewed ${website}.` : ""}
 2. Main money page:
-3. Specific leak:
+3. Specific fault:
 4. Why it matters: ${hook}
 5. Competitor/reference contrast:
 6. First fix:
@@ -154,7 +154,7 @@ Pick one:
 
 ## Close
 
-"If useful, I can fix this one highest-leverage page in a human-reviewed 7-day sprint with a leak map, rewrite or redesign, implementation pass or dev-ready handoff, proof, measurement plan, and 14-day implementation tracking."
+"If useful, I can fix this one highest-leverage page in a human-reviewed 7-day sprint with a fault map, rewrite or redesign, implementation pass or dev-ready handoff, proof, measurement plan, and 14-day implementation tracking."
 `
 );
 
@@ -175,7 +175,7 @@ Subject: Quick audit for ${name}
 
 Hey [Name],
 
-I recorded a short audit for ${name}. The main thing I noticed is [specific leak].
+I recorded a short audit for ${name}. The main thing I noticed is [specific fault].
 
 Here is the Loom: [link]
 
@@ -203,9 +203,9 @@ atomicWrite(
 
 ## What I Saw
 
-- Leak 1:
-- Leak 2:
-- Leak 3:
+- Fault 1:
+- Fault 2:
+- Fault 3:
 
 ## Scope
 
@@ -279,7 +279,7 @@ Pick one after inspection:
 
 ## Loom Target
 
-Show one visible leak in under 2 minutes, then explain the 7-day sprint in one clear ask.
+Show one visible fault in under 2 minutes, then explain the 7-day sprint in one clear ask.
 `
 );
 

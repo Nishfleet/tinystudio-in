@@ -55,7 +55,7 @@ function templateProspects() {
 function createTemplate() {
   const lines = [
     "# Paste Loom links after batch recording.",
-    "# Format: prospects/prospect-slug|https://www.loom.com/share/...|approved|leak note|impact note|fix note|ask note",
+    "# Format: prospects/prospect-slug|https://www.loom.com/share/...|approved|fault note|impact note|fix note|ask note",
     ""
   ];
   for (const prospect of templateProspects()) {
@@ -82,7 +82,7 @@ function parseLine(line, index) {
     loomUrl,
     approval: normalizeApproval(approval),
     notes: {
-      leak: cleanNote(leakNote),
+      fault: cleanNote(leakNote),
       impact: cleanNote(impactNote),
       fix: cleanNote(fixNote),
       ask: canonicalProspectAsk()
@@ -106,7 +106,7 @@ function isApproved(value) {
 }
 
 function hasRequiredNotes(notes) {
-  return ["leak", "impact", "fix", "ask"].every((key) => notes?.[key] && notes[key].length >= 8);
+  return ["fault", "impact", "fix", "ask"].every((key) => notes?.[key] && notes[key].length >= 8);
 }
 
 function writeRecordingNotes(row) {
@@ -122,7 +122,7 @@ Generated: ${localIsoDate()}
 
 ## Quality Notes
 
-- Visible leak: ${row.notes.leak}
+- Visible fault: ${row.notes.fault}
 - Buyer impact: ${row.notes.impact}
 - First fix: ${row.notes.fix}
 - Clean ask: ${row.notes.ask}
@@ -190,7 +190,7 @@ for (const row of rows) {
     continue;
   }
   if (requireApproved && !hasRequiredNotes(row.notes)) {
-    skipped.push({ ...row, reason: "missing recording notes; approved rows need leak, impact, fix, and ask notes" });
+    skipped.push({ ...row, reason: "missing recording notes; approved rows need fault, impact, fix, and ask notes" });
     continue;
   }
   if (!existsSync(row.path)) {

@@ -108,9 +108,9 @@ const contact = metadata.contact || "";
 const score = leadScore.match(/- Score:[ \t]*([^\n]*)/)?.[1]?.trim() || "not scored";
 const priority = leadScore.match(/- Priority:[ \t]*([^\n]*)/)?.[1]?.trim() || "not chosen";
 const mainPage = lineValue(loomOutline, 2, "main money page");
-const leak = lineValue(loomOutline, 3, "the clearest leak from the Loom");
+const fault = lineValue(loomOutline, 3, "the clearest fault from the Loom");
 const firstFix = lineValue(loomOutline, 6, "the first implementation-ready fix");
-const leaks = section(buyerRoom, "What I Saw", "- Leak 1:\n- Leak 2:\n- Leak 3:");
+const faults = section(buyerRoom, "What I Saw", "- Fault 1:\n- Fault 2:\n- Fault 3:");
 const scope = canonicalScope();
 const payback = section(valueCalculator, "Payback", "- Payback customers needed:");
 const stage = pipeline.stage || "new";
@@ -133,12 +133,12 @@ Confirm whether the one highest-leverage page is worth fixing now, then close th
 ## Audit Recap
 
 - Main page: ${mainPage}
-- Specific leak: ${leak}
+- Specific fault: ${fault}
 - First fix: ${firstFix}
 
 ## Buyer Room Summary
 
-${leaks}
+${faults}
 
 ${scope}
 
@@ -154,7 +154,7 @@ ${payback}
 
 ## Close
 
-"The ${FOUNDER_PILOT.offerName} is exactly a ${founderPilotPrice()} for one highest-leverage page. Human reviewers gate the claims and client-facing work. You receive the leak map, rewrite or redesign, one implementation pass or dev-ready handoff, search-trust basics, before/after proof, Loom, measurement plan, one client revision, and 14-day implementation tracking. Day 0 starts after payment, context, and named approval and implementation owners."
+"The ${FOUNDER_PILOT.offerName} is exactly a ${founderPilotPrice()} for one highest-leverage page. Human reviewers gate the claims and client-facing work. You receive the fault map, rewrite or redesign, one implementation pass or dev-ready handoff, search-trust basics, before/after proof, Loom, measurement plan, one client revision, and 14-day implementation tracking. Day 0 starts after payment, context, and named approval and implementation owners."
 
 ## Guardrails
 

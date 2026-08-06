@@ -110,7 +110,7 @@ function intake(application, day0) {
 
 ## Application Context
 
-- Suspected leak: ${applicant.suspectedLeak}
+- Suspected fault: ${applicant.suspectedLeak}
 - Desired outcome: ${applicant.desiredOutcome}
 - Implementation ability: ${applicant.implementationAbility}
 
@@ -134,7 +134,7 @@ function sprintPlan(application) {
 - Buyer: founder-led Managed IT/MSP/cybersecurity company with a live site and high-value offer.
 - Product: The Website Correction.
 - Highest-leverage page:
-- Starting leak hypothesis: ${application.applicant.suspectedLeak}
+- Starting fault hypothesis: ${application.applicant.suspectedLeak}
 
 ## Sprint Checklist
 
@@ -142,7 +142,7 @@ Use \`growth-brain/sprint-checklist.md\`.
 
 ## Deliverables
 
-- Leak map:
+- Fault map:
 - Rewrite or redesign:
 - One implementation pass or dev-ready handoff:
 - Search-trust basics:
@@ -188,7 +188,7 @@ Thanks for approving the The Website Correction and completing the Day 0 prerequ
 - Day 0: ${day0.day0StartedAt}
 - Working-day deadline: ${day0.deadlineAt}
 
-The sprint includes a prioritized leak map, rewrite or redesign, one implementation pass or dev-ready handoff, search-trust basics, before/after proof, a Loom, a measurement plan, one revision, and 14-day implementation tracking.
+The sprint includes a prioritized fault map, rewrite or redesign, one implementation pass or dev-ready handoff, search-trust basics, before/after proof, a Loom, a measurement plan, one revision, and 14-day implementation tracking.
 
 ${NO_GUARANTEE_CLIENT_SENTENCE} This draft must pass the human client-facing review gate before it is sent.
 `

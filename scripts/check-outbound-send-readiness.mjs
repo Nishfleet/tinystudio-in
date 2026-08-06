@@ -78,7 +78,7 @@ try {
 const { roots, strict } = config;
 const outboundFiles = new Set(["next-message.md", "send-package.md", "outreach.md", "reply-package.md", "call-booked-package.md", "close-package.md"]);
 const optOutPattern = /\b(reply no|do not follow up|unsubscribe|opt out|ignore me)\b/i;
-const placeholderPattern = /\[(?:add Loom link|link|specific leak|Name)\]|Here is the Loom:\s*$/i;
+const placeholderPattern = /\[(?:add Loom link|link|specific fault|Name)\]|Here is the Loom:\s*$/i;
 const salesPlaceholderPattern = /\badd (?:meeting link|payment link|call time)\b/i;
 
 function walk(path) {

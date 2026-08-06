@@ -14,7 +14,7 @@ TinyStudio fixes the one highest-leverage page where a managed IT or cybersecuri
 
 ## What to say
 
-“We map the leak, rewrite or redesign one page, complete one implementation pass or give your developer a ready handoff, add search-trust basics, and track implementation for 14 days.”
+“We map the fault, rewrite or redesign one page, complete one implementation pass or give your developer a ready handoff, add search-trust basics, and track implementation for 14 days.”
 
 ## Pilot price
 
@@ -33,4 +33,4 @@ Human review gates fit, claims, client-facing work, delivery/acceptance, and ren
 
 ## Proof language
 
-Use the leak map, before/after proof, Loom, measurement plan, and 14-day tracking record. Name what is known, what is proposed, and what still needs client approval.
+Use the fault map, before/after proof, Loom, measurement plan, and 14-day tracking record. Name what is known, what is proposed, and what still needs client approval.

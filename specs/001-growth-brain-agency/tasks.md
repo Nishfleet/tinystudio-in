@@ -2,7 +2,7 @@
 
 - [x] Rename root docs from Mobbin-only to TinyStudio Growth Brain.
 - [x] Preserve Mobbin as the design-reference subsystem.
-- [x] Add the 7-Day Site Revenue Leak Sprint offer.
+- [x] Add the 7-Day Site Revenue Fault Sprint offer.
 - [x] Add the 7-day delivery checklist.
 - [x] Add client delivery and weekly report templates.
 - [x] Add Loom audit script and outreach tracker.

@@ -13,7 +13,7 @@ const defaults = {
   firstClientCount: 3,
   scope: "one highest-leverage page",
   includedDeliverables: [
-    "leak map",
+    "fault map",
     "rewrite or redesign",
     "one implementation pass or dev-ready handoff",
     "search-trust basics",

@@ -10,7 +10,7 @@ We are not a vague "do everything" agency.
 
 We run a weekly proof loop across the channels that are actually ready:
 
-1. find the highest-value leak
+1. find the highest-value fault
 2. choose the right channel
 3. ship one improvement
 4. show proof

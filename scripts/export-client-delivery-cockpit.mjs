@@ -119,7 +119,7 @@ const website = field(intake, "Website:", "add website");
 const approvalOwner = field(intake, "Approval owner:", "add approval owner");
 const highestLeveragePage = approvedDelivery?.leakMap?.selectedPageUrl || field(sprintPlan, "Highest-leverage page:", "choose highest-leverage page");
 const deliverables = approvedDelivery
-  ? ["leak map", approvedDelivery.pageFix?.mode || "page fix", "search-trust basics", approvedDelivery.implementation?.route || "implementation", "before/after proof", "Loom", "measurement plan", "one revision", "14-day tracking"].join("\n")
+  ? ["fault map", approvedDelivery.pageFix?.mode || "page fix", "search-trust basics", approvedDelivery.implementation?.route || "implementation", "before/after proof", "Loom", "measurement plan", "one revision", "14-day tracking"].join("\n")
   : cleanMarkdown(section(sprintPlan, "Deliverables", "- fill deliverables"));
 const currentStatus = cleanMarkdown(section(sprintPlan, "Status", "- fill status"));
 const kickoffBody = cleanMarkdown(section(kickoff, "Message", "Run client:kickoff to generate the kickoff message."));
@@ -137,7 +137,7 @@ const trackingSummary = trackingEvidence
   : "Record service:evidence --stage tracking-14-day after implementation acceptance.";
 
 const dayPlan = [
-  ["Day 1", "Context and leak map", "Confirm the one page, evidence, baseline, and highest-priority leak."],
+  ["Day 1", "Context and fault map", "Confirm the one page, evidence, baseline, and highest-priority fault."],
   ["Day 2", "Rewrite or redesign", "Prepare the highest-leverage page fix and search-trust basics."],
   ["Day 3", "Human claims review", "Review every claim, proof source, risk, and open question."],
   ["Day 4", "Implementation", "Complete one implementation pass or package the dev-ready handoff."],

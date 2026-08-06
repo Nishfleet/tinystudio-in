@@ -39,7 +39,7 @@ export function checkProspectReadiness(prospectPath) {
   if (/Priority:\s*record \/ research-more \/ skip/m.test(leadScore)) warnings.push("Priority is not chosen");
 
   const loomOutline = readIfExists(join(prospectPath, "loom-outline.md"));
-  if (/\[specific leak\]|Specific leak:\s*$/m.test(loomOutline)) warnings.push("Loom specific leak is not filled");
+  if (/\[specific fault\]|Specific fault:\s*$/m.test(loomOutline)) warnings.push("Loom specific fault is not filled");
   if (!existsSync(join(prospectPath, "loom-package.md"))) warnings.push("Loom package has not been generated");
   const hasPageSnapshot = existsSync(join(prospectPath, "page-snapshot.md"));
   const hasSharpnessBrief = existsSync(join(prospectPath, "recording-sharpness-brief.md"));
@@ -56,7 +56,7 @@ export function checkProspectReadiness(prospectPath) {
   }
 
   const outreach = readIfExists(join(prospectPath, "outreach.md"));
-  if (/\[specific leak\]|\[link\]/.test(outreach)) warnings.push("Outreach still has placeholders");
+  if (/\[specific fault\]|\[link\]/.test(outreach)) warnings.push("Outreach still has placeholders");
 
   const buyerRoom = readIfExists(join(prospectPath, "buyer-room.md"));
   if (/Loom\s*\n\s*-\s*Link:\s*$/m.test(buyerRoom)) warnings.push("Buyer room Loom link is blank");

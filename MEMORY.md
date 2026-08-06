@@ -4,7 +4,7 @@
 
 TinyStudio is a human-reviewed managed service, not active software. The only active offer is the **The Website Correction** for **founder-led Managed IT/MSP/cybersecurity companies with a live site and high-value offer**.
 
-The first 3 clients are exactly **$1,000 founder pilots**. Scope is one highest-leverage page. The sprint includes a leak map, page rewrite or redesign, one implementation pass or dev-ready handoff, search-trust basics, before/after proof, Loom, measurement plan, one revision, and 14-day implementation tracking.
+The first 3 clients are exactly **$1,000 founder pilots**. Scope is one highest-leverage page. The sprint includes a fault map, page rewrite or redesign, one implementation pass or dev-ready handoff, search-trust basics, before/after proof, Loom, measurement plan, one revision, and 14-day implementation tracking.
 
 ## Clock and gates
 

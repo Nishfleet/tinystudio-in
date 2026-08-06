@@ -10,7 +10,7 @@ The buyer is a founder-led Managed IT/MSP/cybersecurity company with a live site
 
 Included in every paid sprint:
 
-- leak map for the selected page
+- fault map for the selected page
 - rewrite or redesign of that page
 - one implementation pass **or** a dev-ready handoff
 - search-trust basics (titles, headings, internal links, FAQs, proof, and crawl essentials)

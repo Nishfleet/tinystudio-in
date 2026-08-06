@@ -22,7 +22,7 @@ Every week includes:
 
 Every weekly update should make the client feel four things:
 
-1. "They found a real leak I can see."
+1. "They found a real fault I can see."
 2. "They shipped or handed off the highest-leverage next fix."
 3. "They showed me proof and a measurement plan."
 4. "I know exactly why continuing next week is useful."

@@ -6,7 +6,7 @@ Only work that helps sell, deliver, prove, or retain the **The Website Correctio
 
 - exact-fit intake and private qualification
 - deterministic review queue and bounded agent-work packets
-- evidence-backed leak map and one-page rewrite or redesign
+- evidence-backed fault map and one-page rewrite or redesign
 - one implementation pass or dev-ready handoff
 - search-trust, before/after proof, Loom, and measurement checks
 - one-revision acceptance boundary

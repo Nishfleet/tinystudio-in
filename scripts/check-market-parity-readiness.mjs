@@ -64,7 +64,7 @@ function bulletValue(markdown, label) {
 function hasFilledTableRow(markdown, heading, requiredIndexes) {
   return tableRows(section(markdown, heading)).some((cells) => {
     const first = cells[0] || "";
-    if (/^(Priority|Week|Metric|Area|Leak)$/i.test(first)) return false;
+    if (/^(Priority|Week|Metric|Area|Fault)$/i.test(first)) return false;
     return requiredIndexes.every((index) => meaningful(cells[index]));
   });
 }
@@ -87,7 +87,7 @@ const serviceClients = loadValidatedServiceClients(repoRoot);
 const clientProof = serviceClients.map((client) => ({
   ...client,
   ownedStartup: isOwnedStartupProof(client.clientPath),
-  approvedClaims: client.ok && hasApprovedClaim(client.clientPath) && hasFilledTableRow(read(join(client.clientPath, "deliverables/delivery.md")), "Leak map", [0, 1, 2, 3]),
+  approvedClaims: client.ok && hasApprovedClaim(client.clientPath) && hasFilledTableRow(read(join(client.clientPath, "deliverables/delivery.md")), "Fault map", [0, 1, 2, 3]),
   // Only completed, approved tracking transitions count as retention proof.
   trackingEvidence: client.state === "complete" && client.trackingEvidence.length > 0,
   readiness: client.ok && existsSync(join(client.clientPath, "intake.md"))

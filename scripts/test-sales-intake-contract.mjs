@@ -90,7 +90,7 @@ try {
 	writeJson(join(salesProspect, "metadata.json"), {name: "Sales Contract Fixture", website: "https://example.com/managed-services", vertical: "Managed IT", contact: "Founder"})
 	writeJson(join(salesProspect, "pipeline.json"), {stage: "call-booked"})
 	writeFileSync(join(salesProspect, "lead-score.md"), "- Score: 14/16\n- Priority: record\n")
-	writeFileSync(join(salesProspect, "loom-outline.md"), "1. Company: Sales Contract Fixture\n2. Main page: https://example.com/managed-services\n3. Revenue leak: unclear action\n4. Evidence: competing actions\n5. Why it matters: unclear path\n6. First fix: one reviewed action\n")
+	writeFileSync(join(salesProspect, "loom-outline.md"), "1. Company: Sales Contract Fixture\n2. Main page: https://example.com/managed-services\n3. Revenue fault: unclear action\n4. Evidence: competing actions\n5. Why it matters: unclear path\n6. First fix: one reviewed action\n")
 	writeFileSync(join(salesProspect, "buyer-room.md"), "## Scope\n- Sprint: Full-Stack Growth Desk\n- Scope: three pages\n- Timeline: 30 days\n- Price: $500\n")
 	writeFileSync(join(salesProspect, "value-calculator.md"), "## Payback\n- Payback customers needed: one\n")
 

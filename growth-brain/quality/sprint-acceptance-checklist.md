@@ -13,7 +13,7 @@ Product: **The Website Correction**. The first 3 clients are exactly **$1,000 fo
 
 ## Required output
 
-- [ ] Leak map is tied to evidence.
+- [ ] Fault map is tied to evidence.
 - [ ] Page rewrite or redesign is complete.
 - [ ] One implementation pass or dev-ready handoff is complete.
 - [ ] Search-trust basics are included.

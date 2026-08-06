@@ -17,7 +17,7 @@ Product: **The Website Correction**. The first 3 clients are exactly **$1,000 fo
 
 - URL:
 - Page role:
-- Evidence of the leak:
+- Evidence of the fault:
 
 ## Rewrite or redesign
 

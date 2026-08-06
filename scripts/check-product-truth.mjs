@@ -228,7 +228,7 @@ for (const path of activeGeneratorSources) {
 		continue
 	}
 	const content = readFileSync(path, "utf8")
-	for (const pattern of [/Tangible Revenue Leak Sprint/i, /30[- ]day (?:action )?plan/i, /Weekly Growth Desk|Full-Stack Growth Desk|Operator[- ]Led Growth Pod|operator pod/i, /rewrite\/redesign|rewritten and redesigned/i, /ad angles? and email\/sms|ads and email\/sms/i]) {
+	for (const pattern of [/Tangible Revenue Fault Sprint/i, /30[- ]day (?:action )?plan/i, /Weekly Growth Desk|Full-Stack Growth Desk|Operator[- ]Led Growth Pod|operator pod/i, /rewrite\/redesign|rewritten and redesigned/i, /ad angles? and email\/sms|ads and email\/sms/i]) {
 		const match = content.match(pattern)
 		if (match) failures.push(`${path}: stale active generator truth '${match[0]}'`)
 	}
@@ -347,7 +347,7 @@ const required = [
 	["product", /the website correction/],
 	["first-3 price", /first 3 clients[\s\S]{0,100}\$1,000 founder pilot/],
 	["scope", /one highest-leverage page/],
-	["leak map", /leak map/],
+	["fault map", /fault map/],
 	["rewrite or redesign", /rewrite or redesign/],
 	["implementation pass or dev-ready handoff", /one implementation pass (?:or|\*\*or\*\*) a? ?dev-ready handoff|one implementation pass or dev-ready handoff/],
 	["search-trust basics", /search-trust basics/],

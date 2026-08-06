@@ -67,8 +67,8 @@ function prospectAction(result) {
   if (warnings.includes("Loom package has not been generated")) {
     return "Fill the Loom outline and generate the Loom package.";
   }
-  if (warnings.includes("Loom specific leak is not filled")) {
-    return "Pick one specific visible leak for the Loom.";
+  if (warnings.includes("Loom specific fault is not filled")) {
+    return "Pick one specific visible fault for the Loom.";
   }
   if (warnings.includes("Page snapshot has not been generated") || warnings.includes("Recording script is not snapshot-aware") || warnings.includes("Recording script has not been generated")) {
     return "Run prospect:prep-recording before recording this prospect.";

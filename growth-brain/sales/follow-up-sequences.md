@@ -14,7 +14,7 @@ Day 2:
 
 Day 5:
 
-"Quick bump. The main thing I would fix first is [specific leak]. If useful, I can send the 7-day sprint scope."
+"Quick bump. The main thing I would fix first is [specific fault]. If useful, I can send the 7-day sprint scope."
 
 Day 10:
 

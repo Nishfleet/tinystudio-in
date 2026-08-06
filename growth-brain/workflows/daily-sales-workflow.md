@@ -53,4 +53,4 @@ Stop researching and start selling when:
 - the prospect has a clear money page problem
 - there is a visible decision-maker
 - the company sells a high-value managed IT, MSP, or cybersecurity offer
-- the Loom can show the leak in under 2 minutes
+- the Loom can show the fault in under 2 minutes

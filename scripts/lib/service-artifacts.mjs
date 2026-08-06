@@ -556,10 +556,10 @@ export function validateAgentWorkOutput(output, {application, packet, asOfDate =
 	const {leakMap, pageFix, searchTrust, proof, loom, measurement, implementation, revisionBoundary, tracking} = output.deliverables
 	assertExactKeys(leakMap, ["selectedPageUrl", "items"], "agent work deliverables.leakMap")
 	checkHttpUrl(leakMap.selectedPageUrl, "agent work deliverables.leakMap.selectedPageUrl")
-	assert(Array.isArray(leakMap.items) && leakMap.items.length >= 1 && leakMap.items.length <= 12, "agent work leak map must contain 1-12 items")
+	assert(Array.isArray(leakMap.items) && leakMap.items.length >= 1 && leakMap.items.length <= 12, "agent work fault map must contain 1-12 items")
 	leakMap.items.forEach((entry, index) => {
-		assertExactKeys(entry, ["leak", "impact", "priority", "evidenceIds"], `agent work leakMap.items[${index}]`)
-		checkNonPlaceholderFields(entry, `agent work leakMap.items[${index}]`, ["leak", 10, 1200, "impact", 10, 1200])
+		assertExactKeys(entry, ["fault", "impact", "priority", "evidenceIds"], `agent work leakMap.items[${index}]`)
+		checkNonPlaceholderFields(entry, `agent work leakMap.items[${index}]`, ["fault", 10, 1200, "impact", 10, 1200])
 		assert(["high", "medium", "low"].includes(entry.priority), `agent work leakMap.items[${index}].priority is invalid`)
 		checkEvidenceIds(entry.evidenceIds, `agent work leakMap.items[${index}].evidenceIds`, {observed: true})
 	})
@@ -568,7 +568,7 @@ export function validateAgentWorkOutput(output, {application, packet, asOfDate =
 	assert(["rewrite", "redesign"].includes(pageFix.mode), "agent work pageFix.mode is invalid")
 	const selectedPageIdentity = canonicalPageIdentity(leakMap.selectedPageUrl, "agent work deliverables.leakMap.selectedPageUrl")
 	const fixedPageIdentity = canonicalPageIdentity(pageFix.pageUrl, "agent work deliverables.pageFix.pageUrl")
-	assert(fixedPageIdentity === selectedPageIdentity, "agent work page fix must target the same selected page as the leak map")
+	assert(fixedPageIdentity === selectedPageIdentity, "agent work page fix must target the same selected page as the fault map")
 	checkNonPlaceholderFields(pageFix, "agent work deliverables.pageFix", ["beforeSummary", 20, 4000, "rationale", 20, 4000])
 	validatePageFixArtifact(pageFix.mode, pageFix.artifact)
 

@@ -18,7 +18,7 @@
 
 ## Problem we saw
 
-Describe the page leak and cite the evidence:
+Describe the page fault and cite the evidence:
 
 -
 
@@ -26,7 +26,7 @@ Describe the page leak and cite the evidence:
 
 The **The Website Correction** includes:
 
-- leak map
+- fault map
 - rewrite or redesign of one highest-leverage page
 - one implementation pass or dev-ready handoff
 - search-trust basics

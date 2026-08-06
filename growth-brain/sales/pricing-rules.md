@@ -8,7 +8,7 @@ Do not quote a standard tier, monthly package, recurring package, or custom bund
 
 ## What the price includes
 
-Leak map, rewrite or redesign, one implementation pass or dev-ready handoff, search-trust basics, before/after proof, Loom, measurement plan, one revision, and 14-day implementation tracking.
+Fault map, rewrite or redesign, one implementation pass or dev-ready handoff, search-trust basics, before/after proof, Loom, measurement plan, one revision, and 14-day implementation tracking.
 
 Day 0 starts only after payment, required context, an approval owner, and an implementation owner. Client delay pauses the clock.
 

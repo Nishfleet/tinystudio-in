@@ -68,8 +68,8 @@ function firstFilled(values, fallback) {
   return values.find((value) => clean(value)) || fallback;
 }
 
-function inferMarketStage({ vertical, snapshot, leak, proof }) {
-  const combined = `${vertical} ${snapshot} ${leak} ${proof}`.toLowerCase();
+function inferMarketStage({ vertical, snapshot, fault, proof }) {
+  const combined = `${vertical} ${snapshot} ${fault} ${proof}`.toLowerCase();
   if (/managed it|msp|cyber|security|compliance|it support/.test(combined)) {
     return "crowded";
   }
@@ -93,8 +93,8 @@ function stageFrame(stage) {
   return frames[stage] || frames.crowded;
 }
 
-function inferAngle({ leak, firstFix, proof, ctas }) {
-  const combined = `${leak} ${firstFix} ${proof} ${ctas}`.toLowerCase();
+function inferAngle({ fault, firstFix, proof, ctas }) {
+  const combined = `${fault} ${firstFix} ${proof} ${ctas}`.toLowerCase();
   if (/proof|trust|review|testimonial|case stud|certif|partner|years|clients/.test(combined)) {
     return "specificity";
   }
@@ -127,7 +127,7 @@ function mechanismName(wedge, firstFix) {
   if (/proof|trust|reviews?|case/.test(text)) return "Proof-at-decision pass";
   if (/cta|contact|route|form/.test(text)) return "Next-step friction pass";
   if (/compliance|security|cyber/.test(text)) return "Compliance buyer confidence pass";
-  return "Revenue leak pass";
+  return "Revenue fault pass";
 }
 
 function outcomeChain({ firstFix, visiblePromise, ctas, proof }) {
@@ -167,7 +167,7 @@ const priority = leadScore.match(/Priority:\s*([^\n]+)/)?.[1]?.trim() || "unknow
 const wedgeMatch = outline.match(/## Wedge\n+([\s\S]*?)(?:\n## |$)/);
 const wedge = clean(wedgeMatch?.[1]?.split("\n").find((line) => line.trim() && !line.includes("Pick one")) || "Site architecture");
 const mainPage = lineValue(outline, 2, "the main money page");
-const leak = lineValue(outline, 3, "the page is making the buyer work too hard before the next step is obvious");
+const fault = lineValue(outline, 3, "the page is making the buyer work too hard before the next step is obvious");
 const impact = lineValue(outline, 4, "this creates friction for buyers and makes the offer harder to understand");
 const contrast = lineValue(outline, 5, "a clearer competitor or reference pattern");
 const firstFix = lineValue(outline, 6, "clarify the page hierarchy, proof, and CTA path");
@@ -175,11 +175,11 @@ const price = buyerRoom.match(/- Price:\s*(.+)/)?.[1]?.trim() || config.founderS
 const stage = inferMarketStage({
   vertical,
   snapshot: `${visiblePromise} ${description} ${h2.join(" ")}`,
-  leak,
+  fault,
   proof: proof.join(" ")
 });
 const angle = inferAngle({
-  leak,
+  fault,
   firstFix,
   proof: proof.join(" "),
   ctas: ctas.join(" ")
@@ -189,7 +189,7 @@ const chain = outcomeChain({ firstFix, visiblePromise, ctas, proof });
 
 const markdown = `# ${name} Recording Sharpness Brief
 
-Use this before recording. The job is not to sound clever. The job is to make one visible leak feel obvious, specific, and useful.
+Use this before recording. The job is not to sound clever. The job is to make one visible fault feel obvious, specific, and useful.
 
 ## Snapshot
 
@@ -214,7 +214,7 @@ Use this before recording. The job is not to sound clever. The job is to make on
 ## Direct Response Slide
 
 1. Headline: ${visiblePromise}
-2. Problem: ${leak}
+2. Problem: ${fault}
 3. Agitate: ${impact}
 4. Credibility: ${proof[0] || "use only visible proof from the live page"}
 5. Solution: ${firstFix}
@@ -247,7 +247,7 @@ ${compactList(proof, 8)}
 ## Recording Rules
 
 - Start with the page promise.
-- Show exactly one leak.
+- Show exactly one fault.
 - Say why the buyer cares in plain language.
 - Show the first fix, not a full rebuild.
 - Keep the rhythm short: short sentence, breathe, land it.
@@ -257,7 +257,7 @@ ${compactList(proof, 8)}
 
 ## 20-Second Cold Open
 
-"Hey ${name} team, ${config.founderName} here. I recorded this because your site has a clear ${wedge.toLowerCase()} opportunity. I am going to show one specific leak I noticed on ${mainPage}, why it could make buyers hesitate, and the first fix I would make."
+"Hey ${name} team, ${config.founderName} here. I recorded this because your site has a clear ${wedge.toLowerCase()} opportunity. I am going to show one specific fault I noticed on ${mainPage}, why it could make buyers hesitate, and the first fix I would make."
 `;
 
 const outputPath = join(prospectPath, "recording-sharpness-brief.md");

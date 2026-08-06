@@ -81,8 +81,8 @@ if (report) {
     warnings.push("Weekly report has no shipped work");
   }
 
-  if (!hasFilledTableRow(report, "Revenue Leak Loop", [1, 2, 3, 4])) {
-    warnings.push("Weekly report has no filled revenue leak loop row");
+  if (!hasFilledTableRow(report, "Revenue Fault Loop", [1, 2, 3, 4])) {
+    warnings.push("Weekly report has no filled revenue fault loop row");
   }
 
   if (!hasFilledTableRow(report, "Search Trust Review", [1, 2, 3])) {

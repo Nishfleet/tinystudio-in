@@ -14,7 +14,7 @@ The first 3 clients pay exactly **$1,000 founder pilot**. No alternate price or 
 
 One highest-leverage page receives:
 
-- a leak map
+- a fault map
 - a rewrite or redesign
 - one implementation pass **or** a dev-ready handoff
 - search-trust basics

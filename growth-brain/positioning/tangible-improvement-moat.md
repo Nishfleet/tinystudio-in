@@ -10,7 +10,7 @@ Show the client what changed, why it matters, what proof backs it, and what gets
 
 Most agency work asks the client to trust taste, strategy, activity, or vague "growth" claims. TinyStudio should earn trust by showing a weekly proof delta the client can inspect:
 
-- the leak before
+- the fault before
 - the improvement after
 - the source that proves it
 - the business value in plain English
@@ -37,7 +37,7 @@ Every meaningful delivery needs one tangible improvement row:
 
 Do not sell "marketing strategy" as the product. Sell a visible improvement loop:
 
-1. Find one high-value leak.
+1. Find one high-value fault.
 2. Ship or hand off one exact improvement.
 3. Show the before and after.
 4. State the evidence.

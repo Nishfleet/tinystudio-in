@@ -16,11 +16,11 @@ Product: **The Website Correction**. Scope is one highest-leverage page.
 
 ## Executive summary
 
-State the page leak, the evidence, the change, and the next measurement in plain English.
+State the page fault, the evidence, the change, and the next measurement in plain English.
 
-## Leak map
+## Fault map
 
-| Leak | Evidence | Priority | Fix |
+| Fault | Evidence | Priority | Fix |
 |---|---|---|---|
 |  |  |  |  |
 
@@ -32,7 +32,7 @@ State the page leak, the evidence, the change, and the next measurement in plain
 
 ## Included delivery
 
-- Leak map:
+- Fault map:
 - Rewrite or redesign:
 - One implementation pass or dev-ready handoff:
 - Search-trust basics:

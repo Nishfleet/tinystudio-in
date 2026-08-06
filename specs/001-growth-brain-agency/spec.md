@@ -2,7 +2,7 @@
 
 ## User Outcome
 
-Nish can sell and deliver the first 7-Day Site Revenue Leak Sprint without waiting for SaaS, a redesigned website, or a large team.
+Nish can sell and deliver the first 7-Day Site Revenue Fault Sprint without waiting for SaaS, a redesigned website, or a large team.
 
 ## Non-Goals
 

@@ -185,7 +185,7 @@ const onePagerPath = join(codeRoot, "growth-brain/sales/managed-it-one-page-offe
 if (existsSync(onePagerPath)) {
 	const onePager = readFileSync(onePagerPath, "utf8")
 	if (!onePager.includes("The Website Correction")) failures.push("Managed IT one-pager has stale product name")
-	if (/\*\*[^*]+\*\*/.test(onePager)) failures.push("Managed IT one-pager leaks raw Markdown emphasis")
+	if (/\*\*[^*]+\*\*/.test(onePager)) failures.push("Managed IT one-pager faults raw Markdown emphasis")
 }
 
 if (failures.length) {

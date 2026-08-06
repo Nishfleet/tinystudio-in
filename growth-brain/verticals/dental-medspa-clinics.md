@@ -7,7 +7,7 @@
 - Service pages often lack patient decision support.
 - One new patient can justify the sprint for high-value services.
 
-## Common Site Leaks
+## Common Site Faults
 
 - Services are listed without explaining who each is for.
 - Before/after proof is missing, weak, or not approved for use.

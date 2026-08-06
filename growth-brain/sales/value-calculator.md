@@ -35,7 +35,7 @@ If the math supports the sprint, send the buyer room and proposal. If the math i
 Good fit:
 
 - One extra customer can pay back the sprint.
-- The site has obvious clarity or trust leaks.
+- The site has obvious clarity or trust faults.
 - The client can approve changes.
 
 Bad fit:

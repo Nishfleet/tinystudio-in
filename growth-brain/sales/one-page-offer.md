@@ -10,7 +10,7 @@ Founder-led Managed IT/MSP/cybersecurity companies with a live site and high-val
 
 ## Deliverables
 
-- leak map
+- fault map
 - page rewrite or redesign
 - one implementation pass or dev-ready handoff
 - search-trust basics

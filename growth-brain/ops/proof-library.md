@@ -22,7 +22,7 @@ This tracked file contains operating rules and approved product facts only. It n
 
 ## Audit Patterns
 
-| Prospect | Vertical | Score | Priority | Leak | First Fix |
+| Prospect | Vertical | Score | Priority | Fault | First Fix |
 |---|---|---|---|---|---|
 | - | - | - | - | Private prospect-derived proof is intentionally excluded. | - |
 
@@ -42,7 +42,7 @@ This tracked file contains operating rules and approved product facts only. It n
 
 | Claim | Source | Approved For Use |
 |---|---|---|
-| TinyStudio runs a human-reviewed The Website Correction for one highest-leverage page with a leak map, rewrite or redesign, implementation pass or handoff, proof, measurement plan, one client revision, and 14-day implementation tracking. | growth-brain/offer.md | yes |
+| TinyStudio runs a human-reviewed The Website Correction for one highest-leverage page with a fault map, rewrite or redesign, implementation pass or handoff, proof, measurement plan, one client revision, and 14-day implementation tracking. | growth-brain/offer.md | yes |
 | No revenue, ranking, ROAS, conversion-lift, booked-call, or sales-volume outcome is guaranteed. | growth-brain/offer.md and sales assets | yes |
 
 ## Next Learning To Capture

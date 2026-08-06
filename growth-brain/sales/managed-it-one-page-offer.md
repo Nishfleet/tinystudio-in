@@ -12,7 +12,7 @@ One human-reviewed page fix, delivered as a rewrite or redesign plus one impleme
 
 ## Included
 
-- leak map
+- fault map
 - rewrite or redesign of one highest-leverage page
 - one implementation pass or dev-ready handoff
 - search-trust basics

@@ -259,7 +259,7 @@ function vao(item) {
 		status: "ready-for-review",
 		missingContext: null,
 		deliverables: {
-			leakMap: {selectedPageUrl: PAGE, items: [{leak: "Offer and next step conflict.", impact: "Buyers cannot see one action.", priority: "high", evidenceIds: ["page-capture"]}]},
+			leakMap: {selectedPageUrl: PAGE, items: [{fault: "Offer and next step conflict.", impact: "Buyers cannot see one action.", priority: "high", evidenceIds: ["page-capture"]}]},
 			pageFix,
 			searchTrust: {changes: [{change: "Align title and heading intent.", implementation: "Use one reviewed evidence phrase.", evidenceIds: ["page-capture"]}]},
 			proof: {beforeEvidenceIds: ["page-capture"], afterCapturePlan: "Recapture the selected page regions.", comparisonCriteria: "Compare clarity, proof, action, and scope."},

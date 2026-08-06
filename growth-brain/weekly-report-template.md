@@ -13,9 +13,9 @@
 - Waiting on client:
 - Blocked:
 
-## Revenue Leak Loop
+## Revenue Fault Loop
 
-| Lane | Before Leak | Fix Shipped / Handed Off | Client-Visible Value | Next Action |
+| Lane | Before Fault | Fix Shipped / Handed Off | Client-Visible Value | Next Action |
 |---|---|---|---|---|
 | Conversion |  |  |  |  |
 | Search trust |  |  |  |  |

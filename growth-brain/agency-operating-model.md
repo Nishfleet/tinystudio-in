@@ -6,13 +6,13 @@ The buyer is a founder-led Managed IT/MSP/cybersecurity company with a live site
 
 ## Division of work
 
-Automation prepares public research, leak hypotheses, page drafts, search-trust checks, proof plans, measurement plans, packages, QA, and routing. Humans review fit, claims, client-facing work, delivery/acceptance, usefulness, and renewal.
+Automation prepares public research, fault hypotheses, page drafts, search-trust checks, proof plans, measurement plans, packages, QA, and routing. Humans review fit, claims, client-facing work, delivery/acceptance, usefulness, and renewal.
 
 Automation has no authority to send, publish, spend, approve, accept, access authenticated systems, take payment, or renew work.
 
 ## Delivery contract
 
-The sprint includes a leak map, rewrite or redesign, one implementation pass or dev-ready handoff, search-trust basics, before/after proof, Loom, measurement plan, one revision, and 14-day implementation tracking. Day 0 begins only after payment, required context, approval owner, and implementation owner; client delay pauses the clock.
+The sprint includes a fault map, rewrite or redesign, one implementation pass or dev-ready handoff, search-trust basics, before/after proof, Loom, measurement plan, one revision, and 14-day implementation tracking. Day 0 begins only after payment, required context, approval owner, and implementation owner; client delay pauses the clock.
 
 No revenue, ranking, ROAS, conversion, booked-call, or sales-volume guarantees.
 

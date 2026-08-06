@@ -224,8 +224,8 @@ function fillDelivery(startup, statuses) {
     "- Proof status: owned-startup draft proof only; not external market proof."
   ].join("\n"));
 
-  markdown = replaceSection(markdown, "Top Leaks", [
-    "| Priority | Leak | Evidence | Fix |",
+  markdown = replaceSection(markdown, "Top Faults", [
+    "| Priority | Fault | Evidence | Fix |",
     "|---|---|---|---|",
     `| 1 | ${startup.topLeak} | ${proofSource} | ${startup.exactFix} |`,
     "| 2 | External demand is still unproven. | No paid external client proof yet. | Record and send the first five Looms. |",

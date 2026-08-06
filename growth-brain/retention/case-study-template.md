@@ -16,7 +16,7 @@ Use only after a canonical paid client completes human-approved delivery/accepta
 
 ## Work Done
 
-- Leak map:
+- Fault map:
 - Page or architecture fix:
 - Copy/FAQ/trust changes:
 - 14-day implementation tracking:

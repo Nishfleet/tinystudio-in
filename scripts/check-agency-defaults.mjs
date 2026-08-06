@@ -20,7 +20,7 @@ const failures = []
 const scanned = []
 
 const requiredArrayValues = [
-	["includedDeliverables", ["leak map", "rewrite or redesign", "one implementation pass or dev-ready handoff", "search-trust basics", "before/after proof", "Loom", "measurement plan", "one revision", "14-day implementation tracking"]],
+	["includedDeliverables", ["fault map", "rewrite or redesign", "one implementation pass or dev-ready handoff", "search-trust basics", "before/after proof", "Loom", "measurement plan", "one revision", "14-day implementation tracking"]],
 	["humanReviewGates", ["fit", "claims", "client-facing work", "delivery/acceptance", "renewal"]],
 	["noGuarantees", NO_GUARANTEE_OUTCOMES]
 ]
