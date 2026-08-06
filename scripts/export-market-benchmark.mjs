@@ -227,7 +227,7 @@ ${proofRows}
 
 ## TinyStudio Pricing Interpretation
 
-- The first three clients receive exactly the $1,000 founder pilot for one The 7-Day Website Correction.
+- The first three clients receive exactly the $1,000 founder pilot for one The Website Correction.
 - No alternate package, recurring retainer, software product, or channel-spend service is active in this benchmark.
 - Day 0 starts only after payment, required context, an approval owner, and an implementation owner; client delay pauses the clock.
 

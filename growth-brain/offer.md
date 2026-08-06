@@ -1,4 +1,4 @@
-# The 7-Day Website Correction
+# The Website Correction
 
 ## Buyer
 

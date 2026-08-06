@@ -2,7 +2,7 @@
 
 ## Goal
 
-Deliver one human-reviewed **The 7-Day Website Correction** for a founder-led Managed IT/MSP/cybersecurity company with a live site and high-value offer.
+Deliver one human-reviewed **The Website Correction** for a founder-led Managed IT/MSP/cybersecurity company with a live site and high-value offer.
 
 ## Fit gate
 

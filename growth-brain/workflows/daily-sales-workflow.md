@@ -2,7 +2,7 @@
 
 ## Goal
 
-Create enough high-quality conversations to close the first 1-3 paid human-reviewed **The 7-Day Website Corrections** with founder-led Managed IT/MSP/cybersecurity companies. Every invitation is for one highest-leverage page.
+Create enough high-quality conversations to close the first 1-3 paid human-reviewed **The Website Corrections** with founder-led Managed IT/MSP/cybersecurity companies. Every invitation is for one highest-leverage page.
 
 ## Daily Minimum
 

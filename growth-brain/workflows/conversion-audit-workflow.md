@@ -2,7 +2,7 @@
 
 ## Goal
 
-Turn conversion heuristics into a repeatable delivery gate for the human-reviewed **The 7-Day Website Correction**: one highest-leverage page for a founder-led Managed IT/MSP/cybersecurity company.
+Turn conversion heuristics into a repeatable delivery gate for the human-reviewed **The Website Correction**: one highest-leverage page for a founder-led Managed IT/MSP/cybersecurity company.
 
 ## Order Of Operations
 

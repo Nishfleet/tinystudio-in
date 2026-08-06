@@ -2,7 +2,7 @@
 
 ## Active price
 
-The first 3 clients receive exactly the **$1,000 founder pilot** for the **The 7-Day Website Correction**. The scope is one highest-leverage page.
+The first 3 clients receive exactly the **$1,000 founder pilot** for the **The Website Correction**. The scope is one highest-leverage page.
 
 Do not quote a standard tier, monthly package, recurring package, or custom bundle during this pilot. Extra pages and extra revisions require a separate reviewed product decision; they are not silent scope additions.
 

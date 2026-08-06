@@ -106,7 +106,7 @@ try {
 	eq(callPrep.status, 0)
 	eq(JSON.parse(callPrep.stdout).pilotSlotsRemaining, 3)
 	const callPrepOutput = readFileSync(join(salesProspect, "sales-call-prep.md"), "utf8")
-	for (const expected of ["- Sprint: The 7-Day Website Correction", "- Scope: one highest-leverage page", "- Timeline: 7 working days from Day 0", "- Price: $1,000 founder pilot"]) mat(callPrepOutput, new RegExp(expected.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")))
+	for (const expected of ["- Sprint: The Website Correction", "- Scope: one highest-leverage page", "- Timeline: 7 working days from Day 0", "- Price: $1,000 founder pilot"]) mat(callPrepOutput, new RegExp(expected.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")))
 	dnm(callPrepOutput, /Full-Stack Growth Desk|three pages|30 days|\$500/)
 
 	expectZeroWriteFailure("scripts/prepare-prospect-close-package.mjs", [salesProspectArg, "--price", "$500", "--payment", "https://pay.example.com/founder-pilot"], /price is immutable during the founder pilot: \$1,000 founder pilot/)

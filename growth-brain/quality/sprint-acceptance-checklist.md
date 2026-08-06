@@ -2,7 +2,7 @@
 
 Run this before delivery/acceptance. Every item needs evidence or an explicit human decision.
 
-Product: **The 7-Day Website Correction**. The first 3 clients are exactly **$1,000 founder pilots**. Scope is one highest-leverage page.
+Product: **The Website Correction**. The first 3 clients are exactly **$1,000 founder pilots**. Scope is one highest-leverage page.
 
 ## Fit and Day 0
 

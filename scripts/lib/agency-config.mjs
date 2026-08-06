@@ -7,7 +7,7 @@ const configPath = "growth-brain/ops/agency-config.json";
 
 const defaults = {
   founderName: "Nish",
-  offerName: "The 7-Day Website Correction",
+  offerName: "The Website Correction",
   buyer: "founder-led Managed IT/MSP/cybersecurity companies with a live site and high-value offer",
   founderSprintPrice: "$1,000 founder pilot",
   firstClientCount: 3,

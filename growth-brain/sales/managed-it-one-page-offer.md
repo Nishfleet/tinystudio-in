@@ -6,7 +6,7 @@ Founder-led Managed IT/MSP/cybersecurity companies with a live site and high-val
 
 ## The offer
 
-**The 7-Day Website Correction**
+**The Website Correction**
 
 One human-reviewed page fix, delivered as a rewrite or redesign plus one implementation pass or a dev-ready handoff.
 

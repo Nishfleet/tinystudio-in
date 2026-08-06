@@ -1,6 +1,6 @@
 # Client Delivery Template
 
-Product: **The 7-Day Website Correction**. Scope is one highest-leverage page.
+Product: **The Website Correction**. Scope is one highest-leverage page.
 
 ## Client and gate record
 

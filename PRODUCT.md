@@ -1,6 +1,6 @@
 # Product context
 
-TinyStudio currently sells one human-reviewed managed service: the **The 7-Day Website Correction**.
+TinyStudio currently sells one human-reviewed managed service: the **The Website Correction**.
 
 ## Buyer
 

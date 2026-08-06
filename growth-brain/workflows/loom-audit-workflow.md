@@ -2,7 +2,7 @@
 
 ## Goal
 
-Show one founder-led Managed IT/MSP/cybersecurity company one useful, evidence-backed page fix. The Loom supports the human-reviewed **The 7-Day Website Correction**; it is not an automated diagnosis or outcome promise.
+Show one founder-led Managed IT/MSP/cybersecurity company one useful, evidence-backed page fix. The Loom supports the human-reviewed **The Website Correction**; it is not an automated diagnosis or outcome promise.
 
 ## Prepare
 

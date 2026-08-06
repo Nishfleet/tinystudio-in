@@ -72,7 +72,7 @@ If useful, I can run a 7-Day Site Revenue Leak Sprint with a 30-day action plan,
 	const messageResult = spawnSync(process.execPath, [sp("draft-prospect-message.mjs"), legacyProspectPath], {cwd: repositoryRoot, encoding: "utf8"})
 	eq(messageResult.status, 0)
 	const nextMessage = readFileSync(join(legacyProspectPath, "next-message.md"), "utf8")
-	mat(nextMessage, /The 7-Day Website Correction/)
+	mat(nextMessage, /The Website Correction/)
 	mat(nextMessage, /one highest-leverage page/)
 	mat(nextMessage, /search-trust basics/)
 	mat(nextMessage, /one revision/)
@@ -85,7 +85,7 @@ If useful, I can run a 7-Day Site Revenue Leak Sprint with a 30-day action plan,
 	const loomResult = spawnSync(process.execPath, [sp("draft-loom-package.mjs"), legacyProspectPath], {cwd: repositoryRoot, encoding: "utf8"})
 	eq(loomResult.status, 0)
 	const loomPackage = readFileSync(join(legacyProspectPath, "loom-package.md"), "utf8")
-	mat(loomPackage, /The 7-Day Website Correction/)
+	mat(loomPackage, /The Website Correction/)
 	mat(loomPackage, /one highest-leverage page/)
 	for (const forbiddenOutcome of NO_GUARANTEE_OUTCOMES) {
 		mat(loomPackage, new RegExp(forbiddenOutcome.replace("-", "[- ]"), "i"))

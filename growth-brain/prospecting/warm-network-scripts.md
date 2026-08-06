@@ -6,7 +6,7 @@ Every draft requires human review and human sending.
 
 Hey [Name],
 
-I am opening the first 3 slots for TinyStudio's **$1,000 founder pilot**: a human-reviewed The 7-Day Website Correction.
+I am opening the first 3 slots for TinyStudio's **$1,000 founder pilot**: a human-reviewed The Website Correction.
 
 The best fit is a founder-led Managed IT/MSP/cybersecurity company with a live site, a high-value offer, and one page that may be losing good leads.
 

@@ -73,7 +73,7 @@ const activeWorkflowEntries = new Set([
 ])
 
 const activeWorkflowRequirements = [
-	["canonical product", /human-reviewed[\s\S]{0,120}The 7-Day Website Correction/i],
+	["canonical product", /human-reviewed[\s\S]{0,120}The Website Correction/i],
 	["canonical buyer", /founder-led Managed IT\/MSP\/cybersecurity/i],
 	["canonical one-page scope", /one highest-leverage page/i]
 ]
@@ -344,7 +344,7 @@ for (const retiredCommand of ["client:dashboard", "client:weekly-report", "clien
 const corpus = [...contents.values()].join("\n").toLowerCase()
 const required = [
 	["buyer", /founder-led managed it\/msp\/cybersecurity companies with a live site and high-value offer/],
-	["product", /the 7-day website correction/],
+	["product", /the website correction/],
 	["first-3 price", /first 3 clients[\s\S]{0,100}\$1,000 founder pilot/],
 	["scope", /one highest-leverage page/],
 	["leak map", /leak map/],
@@ -392,7 +392,7 @@ for (const [label, pattern] of required) {
 for (const [path, content] of contents) {
 	const lower = content.toLowerCase()
 	for (const [label, pattern] of [
-		["product", /the 7-day website correction/],
+		["product", /the website correction/],
 		["scope", /one highest-leverage page/],
 		["pilot price", /\$1,000 founder pilot/],
 		["no-guarantee boundary", /(?:no|does not|do not guarantee)[\s\S]{0,180}(?:revenue|ranking|roas|conversion|booked-call)/],

@@ -130,7 +130,7 @@ const checks = [
   },
   {
     area: "Comparable price/value",
-    status: config.offerName === "The 7-Day Website Correction" && config.founderSprintPrice === "$1,000 founder pilot" && config.scope === "one highest-leverage page" ? "pass" : "fail",
+    status: config.offerName === "The Website Correction" && config.founderSprintPrice === "$1,000 founder pilot" && config.scope === "one highest-leverage page" ? "pass" : "fail",
     evidence: `${config.offerName || "missing offer"}; ${config.founderSprintPrice || "missing founder price"}; scope ${config.scope || "missing scope"}`
   },
   {

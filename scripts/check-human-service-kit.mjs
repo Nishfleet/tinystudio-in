@@ -85,7 +85,7 @@ for (const path of requiredFiles) {
 }
 
 const product = existsSync(join(codeRoot, "PRODUCT.md")) ? readFileSync(join(codeRoot, "PRODUCT.md"), "utf8") : ""
-for (const phrase of ["The 7-Day Website Correction", "$1,000 founder pilot", "one highest-leverage page", "rewrite or redesign", "14-day implementation tracking", "Human review gates", "Client delay pauses the clock"]) {
+for (const phrase of ["The Website Correction", "$1,000 founder pilot", "one highest-leverage page", "rewrite or redesign", "14-day implementation tracking", "Human review gates", "Client delay pauses the clock"]) {
 	if (!product.toLowerCase().includes(phrase.toLowerCase())) failures.push(`PRODUCT.md missing '${phrase}'`)
 }
 
@@ -184,7 +184,7 @@ for (const denied of ["send", "publish", "spend", "renewal", "provider CLI"]) {
 const onePagerPath = join(codeRoot, "growth-brain/sales/managed-it-one-page-offer.html")
 if (existsSync(onePagerPath)) {
 	const onePager = readFileSync(onePagerPath, "utf8")
-	if (!onePager.includes("The 7-Day Website Correction")) failures.push("Managed IT one-pager has stale product name")
+	if (!onePager.includes("The Website Correction")) failures.push("Managed IT one-pager has stale product name")
 	if (/\*\*[^*]+\*\*/.test(onePager)) failures.push("Managed IT one-pager leaks raw Markdown emphasis")
 }
 

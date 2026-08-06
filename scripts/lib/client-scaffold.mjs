@@ -4,7 +4,7 @@ import {fileURLToPath} from "node:url"
 import {atomicWrite, ensureDir, NO_GUARANTEE_CLIENT_SENTENCE, readJson, resolveRepoPath, validateAffirmativePaymentEvidence, validateApplication} from "./service-contract.mjs"
 
 export const CLIENT_SCAFFOLD_VERSION = 1
-export const FOUNDER_PILOT = Object.freeze({offerName: "The 7-Day Website Correction", offerPriceUsd: 1000, pricingCohort: "founder-pilot", capacity: 3})
+export const FOUNDER_PILOT = Object.freeze({offerName: "The Website Correction", offerPriceUsd: 1000, pricingCohort: "founder-pilot", capacity: 3})
 export const CLIENT_SCAFFOLD_FILES = Object.freeze([
 	"intake.md",
 	"sprint-plan.md",
@@ -68,7 +68,7 @@ function createIfMissing(repoRoot, clientFolder, relativePath, content, created)
 
 function populatedDelivery(application, day0) {
 	return source("growth-brain/delivery-template.md")
-		.replace("The 7-Day Website Correction", day0.offerName)
+		.replace("The Website Correction", day0.offerName)
 		.replace(/\$1,000 founder pilot(s?)/g, (_match, plural) => `${founderPilotPrice(day0)}${plural}`)
 		.replace("# Client Delivery Template", `# ${application.applicant.company} Delivery`)
 		.replace("- Company:", `- Company: ${application.applicant.company}`)
@@ -132,7 +132,7 @@ function sprintPlan(application) {
 ## Sprint scope
 
 - Buyer: founder-led Managed IT/MSP/cybersecurity company with a live site and high-value offer.
-- Product: The 7-Day Website Correction.
+- Product: The Website Correction.
 - Highest-leverage page:
 - Starting leak hypothesis: ${application.applicant.suspectedLeak}
 
@@ -180,7 +180,7 @@ Subject: ${application.applicant.company} sprint kickoff
 
 Hey ${day0.approvalOwner},
 
-Thanks for approving the The 7-Day Website Correction and completing the Day 0 prerequisites.
+Thanks for approving the The Website Correction and completing the Day 0 prerequisites.
 
 - Scope: one highest-leverage page
 - Website: ${application.applicant.website}

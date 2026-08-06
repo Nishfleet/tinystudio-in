@@ -1,6 +1,6 @@
 # Follow-Up Sequences
 
-Active product: **The 7-Day Website Correction** for one highest-leverage page. The first 3 clients are exactly **$1,000 founder pilots**. Do not guarantee revenue, rankings, ROAS, conversion, booked-call, or sales-volume outcomes. Automation may prepare follow-ups, but a human must review before any send, continuation, or renewal decision.
+Active product: **The Website Correction** for one highest-leverage page. The first 3 clients are exactly **$1,000 founder pilots**. Do not guarantee revenue, rankings, ROAS, conversion, booked-call, or sales-volume outcomes. Automation may prepare follow-ups, but a human must review before any send, continuation, or renewal decision.
 
 ## After Sending Loom
 

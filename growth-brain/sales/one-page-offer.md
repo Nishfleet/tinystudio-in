@@ -6,7 +6,7 @@ Founder-led Managed IT/MSP/cybersecurity companies with a live site and high-val
 
 ## Product
 
-**The 7-Day Website Correction** — one highest-leverage page, handled as a managed service with human review.
+**The Website Correction** — one highest-leverage page, handled as a managed service with human review.
 
 ## Deliverables
 
