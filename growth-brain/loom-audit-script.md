@@ -9,7 +9,7 @@ Target length: 2-3 minutes. Use only public, attributable evidence.
 3. Explain its likely buyer impact as a hypothesis, not a measured fact.
 4. Show the first page fix.
 5. Explain what evidence would validate it.
-6. Invite the founder to the **The Website Correction**.
+6. Invite the founder to **The Website Correction**.
 
 ## Close
 

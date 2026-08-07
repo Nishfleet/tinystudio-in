@@ -2,7 +2,7 @@
 
 ## Build and improve now
 
-Only work that helps sell, deliver, prove, or retain the **The Website Correction** for one highest-leverage page:
+Only work that helps sell, deliver, prove, or retain **The Website Correction** for one highest-leverage page:
 
 - exact-fit intake and private qualification
 - deterministic review queue and bounded agent-work packets

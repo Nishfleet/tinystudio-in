@@ -1,6 +1,6 @@
 # TinyStudio service operating kit
 
-This folder powers one human-reviewed managed service: the **The Website Correction**.
+This folder powers one human-reviewed managed service: **The Website Correction**.
 
 ## Exact offer
 

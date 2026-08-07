@@ -180,7 +180,7 @@ Subject: ${application.applicant.company} sprint kickoff
 
 Hey ${day0.approvalOwner},
 
-Thanks for approving the The Website Correction and completing the Day 0 prerequisites.
+Thanks for approving The Website Correction and completing the Day 0 prerequisites.
 
 - Scope: one highest-leverage page
 - Website: ${application.applicant.website}

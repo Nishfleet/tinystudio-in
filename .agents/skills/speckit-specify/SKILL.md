@@ -168,7 +168,7 @@ Given that feature description, do this:
       - [ ] All functional requirements have clear acceptance criteria
       - [ ] User scenarios cover primary flows
       - [ ] Feature meets measurable outcomes defined in Success Criteria
-      - [ ] No implementation details fault into specification
+      - [ ] No implementation details leak into specification
 
       ## Notes
 
