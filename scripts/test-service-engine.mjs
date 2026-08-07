@@ -1002,6 +1002,7 @@ try {
 		"We promise to preserve conversion tracking through deployment.",
 		"We do not guarantee revenue or promise rankings.",
 		"Neither revenue nor rankings are guaranteed.",
+		"No revenue, ranking, ROAS, conversion, booked-call, or sales-volume guarantees are made.",
 		"We promise to report conversions accurately.",
 		"This work does not boost conversions.",
 		"Conversions do not increase because of this work."
