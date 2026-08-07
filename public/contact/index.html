@@ -93,10 +93,52 @@
               before any work starts.
             </p>
             <div class="action-row">
-              <a class="button" href="mailto:support@tinystudio.in?subject=Website%20Correction">Apply for The Website Correction</a>
+              <a class="button" href="#website-correction-application">Apply for The Website Correction</a>
               <a class="ghost-button" href="mailto:support@tinystudio.in">Plain email to the studio inbox</a>
             </div>
           </div>
+        </section>
+
+        <section class="app-strip reveal delay-1" id="website-correction-application" aria-labelledby="website-correction-title">
+          <div class="app-strip-grid">
+            <article>
+              <p class="eyebrow">The Website Correction</p>
+              <h3 id="website-correction-title">Apply by email, with a visible measurement marker.</h3>
+              <p class="section-copy">
+                If you arrived from a Tiny Studio page, the link may have
+                carried an internal measurement marker (for example
+                <code>?source=homepage-hero</code>) so the studio can learn
+                which page pointed you here. The marker is for internal
+                measurement only: there is no analytics provider, no cookie,
+                and nothing is sent until you press send in your own email
+                app. You can remove the marker before sending.
+              </p>
+              <div class="action-row">
+                <a class="button" id="website-correction-apply" href="mailto:support@tinystudio.in?subject=The%20Website%20Correction%20application">Apply to The Website Correction</a>
+              </div>
+            </article>
+            <article>
+              <p class="eyebrow">What the marker contains</p>
+              <p class="section-copy">
+                Only a stable page name from the measurement contract, never
+                any text you type and never anything from your device. When a
+                marker is present it appears in the email subject line, so it
+                stays visible to you before you send. Without a marker the
+                email opens with a plain subject and the application works
+                the same.
+              </p>
+            </article>
+          </div>
+          <script>
+            (function () {
+              var REGISTRY = ["homepage-hero", "homepage-service", "homepage-footer"];
+              var link = document.getElementById("website-correction-apply");
+              var source = new URLSearchParams(window.location.search).get("source");
+              if (link && source && REGISTRY.indexOf(source) !== -1) {
+                link.href = "mailto:support@tinystudio.in?subject=" + encodeURIComponent("The Website Correction application — from " + source + " (internal measurement marker)");
+              }
+            })();
+          </script>
         </section>
 
         <section class="card-grid">
