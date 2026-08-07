@@ -154,7 +154,7 @@ Pick one:
 
 ## Close
 
-"If useful, I can fix this one highest-leverage page in a human-reviewed 7-day sprint with a fault map, rewrite or redesign, implementation pass or dev-ready handoff, proof, measurement plan, and 14-day implementation tracking."
+"If useful, I can fix this one highest-leverage page through The Website Correction, a human-reviewed fixed-scope engagement, with a fault map, rewrite or redesign, implementation pass or dev-ready handoff, proof, measurement plan, and 14-day implementation tracking."
 `
 );
 
@@ -279,7 +279,7 @@ Pick one after inspection:
 
 ## Loom Target
 
-Show one visible fault in under 2 minutes, then explain the 7-day sprint in one clear ask.
+Show one visible fault in under 2 minutes, then explain The Website Correction in one clear ask.
 `
 );
 

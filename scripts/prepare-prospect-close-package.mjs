@@ -19,7 +19,7 @@ function founderPilotPrice() {
 function canonicalScope() {
   return `- Sprint: ${FOUNDER_PILOT.offerName}
 - Scope: one highest-leverage page
-- Timeline: 7 working days from Day 0
+- Timeline: Day 0 after payment, context, and named approval and implementation owners; 14-day implementation tracking
 - Price: ${founderPilotPrice()}`;
 }
 
@@ -162,7 +162,7 @@ const scope = canonicalScope();
 const nextStep = nextStepOverride || (paymentLink ? `Complete payment here: ${paymentLink}` : "Reply approved and I will send the payment link.");
 const leakFragment = trimPunctuation(specificLeak);
 
-const followUpSubject = `${name} 7-day sprint next step`;
+const followUpSubject = `${name} sprint next step`;
 const followUpBody = `Thanks for the call.
 
 My read: the first useful fix is still ${firstFix}.
@@ -171,7 +171,7 @@ Sprint scope:
 
 ${scope}
 
-What I will send by the end of the sprint:
+What the sprint includes:
 
 - fault map for ${mainPage}
 - rewrite or redesign of the one highest-leverage page
@@ -219,7 +219,7 @@ ${leakBullets}
 
 ### Sprint Outcome
 
-By the end of 7 days, ${name} receives:
+Within the fixed sprint scope, ${name} receives:
 
 - fault map
 - rewrite or redesign of the one highest-leverage page
