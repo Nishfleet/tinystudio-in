@@ -80,6 +80,19 @@ function bannedClaims(content) {
   ].filter((pattern) => pattern.test(text)).map((pattern) => pattern.source);
 }
 
+const RETIRED_ASK_PATTERNS = [
+  /7[-\s]day (?:site|website) revenue (?:leak|fault) (?:fix )?sprint/i,
+  /tangible revenue (?:leak|fault) sprint/i,
+  /30[-\s]day action plan/i,
+  /growth desk/i,
+  /three pages/i,
+  /\$\s?500\b/i
+];
+
+function retiredOfferAsk(value) {
+  return RETIRED_ASK_PATTERNS.some((pattern) => pattern.test(String(value || "")));
+}
+
 function containsAny(haystack, values) {
   const normalize = (value) => String(value || "")
     .toLowerCase()
@@ -171,8 +184,12 @@ function scoreProspect(prospectPath, channelGuidance) {
     {
       area: "Clean ask",
       points: 1,
-      passed: meaningful(ask) && /if useful|sprint|next step|reply|send|worth/i.test(ask) && unsupportedClaims.length === 0,
-      evidence: unsupportedClaims.length ? `blocked claim patterns: ${unsupportedClaims.join(", ")}` : ask || "missing ask"
+      passed: meaningful(ask) && /if useful|sprint|next step|reply|send|worth/i.test(ask) && unsupportedClaims.length === 0 && !retiredOfferAsk(ask),
+      evidence: unsupportedClaims.length
+        ? `blocked claim patterns: ${unsupportedClaims.join(", ")}`
+        : retiredOfferAsk(ask)
+          ? "ask names a retired offer; refresh the loom outline ask before recording"
+          : ask || "missing ask"
     },
     {
       area: "2-3 minute shape",
