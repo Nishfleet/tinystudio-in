@@ -31,14 +31,14 @@ try {
 	assert.equal(output(result).filesScanned, 0)
 	mkdirSync(prospect, {recursive: true})
 	mkdirSync(alternateProspect, {recursive: true})
-	writeFileSync(join(prospect, "send-package.md"), `${packageHeader}Specific website leak. ${optOut}`)
+	writeFileSync(join(prospect, "send-package.md"), `${packageHeader}Specific website fault. ${optOut}`)
 	writeFileSync(join(alternateProspect, "send-package.md"), `${packageHeader}Alternate safe package. ${optOut}`)
 
 	result = run()
 	assert.equal(result.status, 0)
 	assert.equal(output(result).filesScanned, 1)
 
-	writeFileSync(join(prospect, "send-package.md"), `${packageHeader}Specific website leak.\n`)
+	writeFileSync(join(prospect, "send-package.md"), `${packageHeader}Specific website fault.\n`)
 	result = run()
 	assert.notEqual(result.status, 0)
 	assert(output(result).findings.some(finding => finding.rule === "missing opt-out language"))

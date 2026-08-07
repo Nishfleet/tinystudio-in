@@ -15,7 +15,7 @@ Use this every day until the first 3 clients are closed.
 
 ## Tracker
 
-| Date | Business | Niche | Website | Contact | Why Fit | Specific Leak | Status | Next Step |
+| Date | Business | Niche | Website | Contact | Why Fit | Specific Fault | Status | Next Step |
 |---|---|---|---|---|---|---|---|---|
 |  |  |  |  |  |  |  | identified |  |
 
@@ -36,5 +36,5 @@ Only record a Loom if the business has at least three of these:
 - Real reviews
 - Clear product catalog or service page
 - Founder or operator contact
-- Obvious page, offer, email, or ad leak
+- Obvious page, offer, email, or ad fault
 - Confusing homepage/service-page hierarchy

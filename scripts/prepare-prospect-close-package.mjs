@@ -157,7 +157,7 @@ const mainPage = lineValue(loomOutline, /^2\. [^\n:]+:[ \t]*([^\n]*)$/m, "the ma
 const specificLeak = lineValue(loomOutline, /^3\. [^\n:]+:[ \t]*([^\n]*)$/m, "the page is making the buyer work too hard");
 const firstFix = lineValue(loomOutline, /^6\. [^\n:]+:[ \t]*([^\n]*)$/m, "the first implementation-ready fix");
 const payback = section(valueCalculator, "Payback", "- Payback customers needed:");
-const leakBullets = section(buyerRoom, "What I Saw", `- Leak 1: ${specificLeak}`);
+const leakBullets = section(buyerRoom, "What I Saw", `- Fault 1: ${specificLeak}`);
 const scope = canonicalScope();
 const nextStep = nextStepOverride || (paymentLink ? `Complete payment here: ${paymentLink}` : "Reply approved and I will send the payment link.");
 const leakFragment = trimPunctuation(specificLeak);
@@ -173,7 +173,7 @@ ${scope}
 
 What I will send by the end of the sprint:
 
-- leak map for ${mainPage}
+- fault map for ${mainPage}
 - rewrite or redesign of the one highest-leverage page
 - one implementation pass or dev-ready handoff
 - search-trust basics, before/after proof, and Loom
@@ -198,7 +198,7 @@ const packageContent = `# ${name} Close Package
 ## Decision Summary
 
 - Main page: ${mainPage}
-- Specific leak: ${leakFragment}
+- Specific fault: ${leakFragment}
 - First fix: ${firstFix}
 - Price: ${price}
 - Payment: ${paymentLink || "send after approval"}
@@ -221,7 +221,7 @@ ${leakBullets}
 
 By the end of 7 days, ${name} receives:
 
-- leak map
+- fault map
 - rewrite or redesign of the one highest-leverage page
 - one implementation pass or dev-ready handoff
 - search-trust basics

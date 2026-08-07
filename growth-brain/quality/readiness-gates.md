@@ -42,7 +42,7 @@ Do not send a Loom until:
 - contact is known
 - lead score is filled
 - priority is chosen
-- specific leak is identified
+- specific fault is identified
 - Loom package is generated
 - recording script is generated
 - buyer room has price and Loom link

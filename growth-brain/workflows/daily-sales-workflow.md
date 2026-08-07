@@ -2,7 +2,7 @@
 
 ## Goal
 
-Create enough high-quality conversations to close the first 1-3 paid human-reviewed **7-Day Website Revenue Leak Fix Sprints** with founder-led Managed IT/MSP/cybersecurity companies. Every invitation is for one highest-leverage page.
+Create enough high-quality conversations to close the first 1-3 paid human-reviewed **The Website Corrections** with founder-led Managed IT/MSP/cybersecurity companies. Every invitation is for one highest-leverage page.
 
 ## Daily Minimum
 
@@ -53,4 +53,4 @@ Stop researching and start selling when:
 - the prospect has a clear money page problem
 - there is a visible decision-maker
 - the company sells a high-value managed IT, MSP, or cybersecurity offer
-- the Loom can show the leak in under 2 minutes
+- the Loom can show the fault in under 2 minutes

@@ -7,7 +7,7 @@
 - Many firms have generic pages that do not explain fit.
 - Clients can justify the sprint if one new recurring client is valuable.
 
-## Common Site Leaks
+## Common Site Faults
 
 - Homepage says "accounting services" without buyer specificity.
 - Bookkeeping, tax, payroll, CFO, and advisory services are mixed together.

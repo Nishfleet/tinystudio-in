@@ -53,7 +53,7 @@ function parseLine(line, index) {
     loomUrl,
     approval,
     notes: {
-      leak: clean(leakNote),
+      fault: clean(leakNote),
       impact: clean(impactNote),
       fix: clean(fixNote),
       ask: clean(askNote)
@@ -62,7 +62,7 @@ function parseLine(line, index) {
 }
 
 function hasRequiredNotes(notes) {
-  return ["leak", "impact", "fix", "ask"].every((key) => notes?.[key] && notes[key].length >= 8);
+  return ["fault", "impact", "fix", "ask"].every((key) => notes?.[key] && notes[key].length >= 8);
 }
 
 function rowCheck(row) {
@@ -75,7 +75,7 @@ function rowCheck(row) {
     if (!classification.ok) reasons.push(`not an outbound prospect: ${classification.reason}`);
   }
   if (!isApproved(row.approval)) reasons.push("missing approved marker from the Loom quality gate");
-  if (!hasRequiredNotes(row.notes)) reasons.push("missing leak, impact, fix, or ask notes");
+  if (!hasRequiredNotes(row.notes)) reasons.push("missing fault, impact, fix, or ask notes");
   return { ok: reasons.length === 0, reasons };
 }
 
@@ -100,7 +100,7 @@ function recordingNotesCheck(row) {
   if (!existsSync(notesPath)) return { ok: false, path: notesPath, reasons: ["recording-notes.md missing"] };
   const content = read(notesPath);
   const reasons = [];
-  for (const phrase of ["Visible leak:", "Buyer impact:", "First fix:", "Clean ask:"]) {
+  for (const phrase of ["Visible fault:", "Buyer impact:", "First fix:", "Clean ask:"]) {
     if (!content.includes(phrase)) reasons.push(`missing ${phrase}`);
   }
   return { ok: reasons.length === 0, path: notesPath, reasons };
@@ -222,7 +222,7 @@ ${rowsMarkdown}
 
 ## Rules
 
-- A proof-run row is valid only with a real Loom URL, approved marker, and leak/impact/fix/ask notes.
+- A proof-run row is valid only with a real Loom URL, approved marker, and fault/impact/fix/ask notes.
 - A send package counts only when it is readiness-ready, Loom-approved, and includes captured recording notes.
 - Sent proof counts only after the outbox sent sheet or stage command records a real sent touch with channel and Loom URL.
 - Email sent proof does not count while \`npm run send:setup\` still warns. Use contact forms, DMs, LinkedIn, X, phone, mixed, or other until sender trust is clean.

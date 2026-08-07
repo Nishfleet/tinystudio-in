@@ -1,6 +1,6 @@
 # Search Trust Layer
 
-Use this after the revenue leak is understood and the conversion fix is clear.
+Use this after the revenue fault is understood and the conversion fix is clear.
 
 ## Rule
 

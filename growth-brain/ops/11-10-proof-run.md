@@ -1,6 +1,6 @@
 # 11/10 Proof Run
 
-Generated: 2026-07-14
+Generated: 2026-08-06
 
 ## Current Verdict
 
@@ -13,7 +13,7 @@ Parity score: 5/10.
 | Area | Current Evidence | Required Proof |
 |---|---|---|
 | Sender trust | missing physical postal address; DKIM selector not configured | Run `npm run send:configure -- --physical-address="..." --dkim-selector=... --dry-run` with the real values, then apply it without `--dry-run`. Until then, use contact forms or DMs. |
-| Market proof | 0/5 Looms, 0/5 sends, 0 replies | Record and send 5 approved Looms with leak, impact, fix, and ask notes. |
+| Market proof | 0/5 Looms, 0/5 sends, 0 replies | Record and send 5 approved Looms with fault, impact, fix, and ask notes. |
 | Sales proof | 0 external client(s) with a validated application, human fit approval, and paid Day 0 | Capture at least 1 external consented application, human fit approval, and validated paid Day 0 record. |
 | Delivery proof | 0 external paid client(s) ready with approved delivery; 0 with approved claims | Complete hash-bound human approval, implementation acceptance, approved claims, scorecard, and client readiness for that paid client. |
 | Retention proof | 0 external paid client(s) with human-approved 14-day tracking evidence | Complete the 14-day tracking gate with hash-bound evidence and human-approved customer usefulness and acceptance. |
@@ -26,11 +26,11 @@ Parity score: 5/10.
 npm run growth:start -- --view=record
 ```
 
-2. Record the five-item batch in the recording view. The folders and approved notes are in `prospects/loom-links.txt`. Each Loom shows one leak, its buyer impact, the first fix, and one ask.
+2. Record the five-item batch in the recording view. The folders and approved notes are in `prospects/loom-links.txt`. Each Loom shows one fault, its buyer impact, the first fix, and one ask.
 
 3. Paste the recorded Loom URLs into the post-recording prep command:
 
-The prefilled sheet is in `prospects/loom-links.txt`; it is the single source for approved leak, impact, fix, and ask notes. After recording, copy five Loom URLs in the same order, then run:
+The prefilled sheet is in `prospects/loom-links.txt`; it is the single source for approved fault, impact, fix, and ask notes. After recording, copy five Loom URLs in the same order, then run:
 
 ```bash
 npm run market:after-recording -- --from-clipboard

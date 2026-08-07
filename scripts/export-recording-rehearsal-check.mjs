@@ -131,7 +131,7 @@ function scoreProspect(prospectPath, channelGuidance) {
   const cues = snapshotCues(snapshot);
   const talkTrack = section(script, "Talk Track");
   const route = routedContactPlan(contactPlan, { emailReady: channelGuidance.emailReady });
-  const leak = lineValue(outline, 3);
+  const fault = lineValue(outline, 3);
   const outlineImpact = lineValue(outline, 4);
   const fix = lineValue(outline, 6);
   const ask = lineValue(outline, 7) || section(outline, "Close");
@@ -151,10 +151,10 @@ function scoreProspect(prospectPath, channelGuidance) {
       evidence: `${words} spoken words`
     },
     {
-      area: "Specific leak",
+      area: "Specific fault",
       points: 2,
-      passed: meaningful(leak) && !genericValue(leak) && containsAny(talkTrack, [leak]),
-      evidence: leak || "missing leak"
+      passed: meaningful(fault) && !genericValue(fault) && containsAny(talkTrack, [fault]),
+      evidence: fault || "missing fault"
     },
     {
       area: "Buyer impact",
@@ -258,7 +258,7 @@ Status: ${status}
 ## Batch Verdict
 
 ${ready
-  ? "Ready to record. The selected Loom scripts show a specific leak, buyer-visible value, first fix, and clean next step."
+  ? "Ready to record. The selected Loom scripts show a specific fault, buyer-visible value, first fix, and clean next step."
   : "Needs polish before recording. Do not record or send a Loom that cannot show the improvement delta in plain language."}
 
 Minimum score: ${minimumScore}/10
@@ -272,7 +272,7 @@ ${summaryRows}
 ## Recording Rules
 
 - Record only after every selected prospect is ready.
-- The Loom must show one visible leak, one first fix, and one buyer-visible improvement.
+- The Loom must show one visible fault, one first fix, and one buyer-visible improvement.
 - The value line must reference the prospect's actual promise, route, proof, or decision moment.
 - Do not claim revenue, ranking, ROAS, traffic, or conversion lift.
 - Do not count this as market proof until the Loom is sent and the send is logged.
@@ -351,7 +351,7 @@ const html = `<!doctype html>
   <main>
     <header>
       <h1>Recording Rehearsal Check</h1>
-      <p>Generated ${htmlEscape(today)}. Record only after each Loom script shows a visible leak, buyer value, first fix, and clean ask.</p>
+      <p>Generated ${htmlEscape(today)}. Record only after each Loom script shows a visible fault, buyer value, first fix, and clean ask.</p>
     </header>
     <div class="verdict">
       <p><strong>Status:</strong> <span class="pill ${ready ? "good" : status === "empty" ? "warn" : "bad"}">${htmlEscape(status)}</span></p>

@@ -8,7 +8,7 @@ This is the monthly retention product.
 
 Every week, the client should be able to say:
 
-"TinyStudio found a tangible leak, shipped or handed off a fix, showed proof, and made the next decision easier."
+"TinyStudio found a tangible fault, shipped or handed off a fix, showed proof, and made the next decision easier."
 
 ## Weekly Value Stack
 

@@ -116,7 +116,7 @@ function approvedDeliveryWarnings(delivery) {
   if (!delivery || typeof delivery !== "object" || Array.isArray(delivery)) {
     return ["Hash-bound human-approved delivery artifact is unavailable"];
   }
-  if (!delivery.leakMap?.selectedPageUrl || !delivery.leakMap?.items?.length) warnings.push("Approved delivery has no evidence-linked leak map");
+  if (!delivery.leakMap?.selectedPageUrl || !delivery.leakMap?.items?.length) warnings.push("Approved delivery has no evidence-linked fault map");
   if (!delivery.pageFix?.artifact) warnings.push("Approved delivery has no complete page fix artifact");
   if (!delivery.searchTrust?.changes?.length) warnings.push("Approved delivery has no search-trust changes");
   if (!delivery.proof?.beforeEvidenceIds?.length || !delivery.proof?.afterCapturePlan) warnings.push("Approved delivery has no before/after proof plan");

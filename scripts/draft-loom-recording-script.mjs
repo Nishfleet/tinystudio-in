@@ -191,7 +191,7 @@ const script = `# ${metadata.name} Loom Recording Script
 
 ## Goal
 
-Record a 2-3 minute cold audit that shows one clear leak and makes the ${config.offerName} feel like the obvious next step.
+Record a 2-3 minute cold audit that names one clear fault and positions the ${config.offerName} as the obvious next step.
 
 ## Before Recording
 
@@ -225,13 +225,13 @@ ${coldOpen ? `### Optional Cold Open\n\n${coldOpen}\n` : ""}
 
 ### 0:00-0:20 Open
 
-"Hey ${metadata.name} team, ${config.founderName} here. I recorded this because your business looks like a fit for a quick ${wedge.toLowerCase()} audit. I am not going to pitch a full rebuild. I want to show one specific page leak that looks fixable."
+"Hey ${metadata.name} team, ${config.founderName} here. I recorded this because your business looks like a fit for a quick ${wedge.toLowerCase()} audit. I am not going to pitch a full rebuild. I want to show one specific page fault that looks fixable."
 
-### 0:20-1:05 Show The Leak
+### 0:20-1:05 Show The Fault
 
 "The page promise I would start from is: ${spokenPagePromise}."
 
-"The main page I would look at first is ${mainPage}. The leak I noticed is this: ${specificLeak}."
+"The main page I would look at first is ${mainPage}. The fault I noticed is this: ${specificLeak}."
 
 "That matters because ${whyItMatters}."
 
@@ -247,7 +247,7 @@ ${coldOpen ? `### Optional Cold Open\n\n${coldOpen}\n` : ""}
 
 ### 2:20-3:00 Close
 
-"If useful, I can run this as a human-reviewed ${config.offerName} for this one highest-leverage page. It includes the leak map, rewrite or redesign, implementation pass or dev-ready handoff, proof, Loom, measurement plan, one client revision, and 14-day implementation tracking. The first 3 founder pilots are exactly ${price}."
+"If useful, I can run this as a human-reviewed ${config.offerName} for this one highest-leverage page. It includes the fault map, rewrite or redesign, implementation pass or dev-ready handoff, proof, Loom, measurement plan, one client revision, and 14-day implementation tracking. The first 3 founder pilots are exactly ${price}."
 
 "Either way, I hope this was useful."
 

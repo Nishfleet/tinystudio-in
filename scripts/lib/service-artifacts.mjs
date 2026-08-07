@@ -50,6 +50,12 @@ const NEITHER_GUARANTEE_CLAUSE_PATTERN = /\bneither [^,:.!?;\n]{1,80}\bnor\b[^,:
 const GUARANTEE_NOUN = "(?:guarantees?|promises?|assurances?)"
 const GUARANTEE_SCOPE = `(?:${FORBIDDEN_OUTCOME_TERM}|outcomes?)`
 const NO_GUARANTEE_CLAUSE_PATTERN = new RegExp(`\\b(?:no\\s+(?:${GUARANTEE_SCOPE}\\s+)?${GUARANTEE_NOUN}|without\\s+(?:any\\s+)?(?:${GUARANTEE_SCOPE}\\s+)?${GUARANTEE_NOUN})\\b(?:\\s+(?:of|for)\\s+${GUARANTEE_SCOPE})?(?:\\s+(?:is|are|was|were)\\s+made)?`, "gi")
+// "No revenue, ranking, ROAS, conversion, booked-call, or sales-volume guarantees are made." — comma-separated denial lists with hyphenated scope terms.
+const LISTED_GUARANTEE_SCOPE_ITEM = "(?:revenue|rankings?|roas|conversions?|conversion[- ](?:rate|lift)|booked[- ]calls?|sales[- ]volume)"
+const LISTED_NO_GUARANTEE_CLAUSE_PATTERN = new RegExp(
+	`\\b(?:there\\s+are\\s+)?no\\s+${LISTED_GUARANTEE_SCOPE_ITEM}(?:\\s*,\\s*(?:(?:and|or)\\s+)?${LISTED_GUARANTEE_SCOPE_ITEM})*(?:\\s+(?:and|or)\\s+${LISTED_GUARANTEE_SCOPE_ITEM})?\\s+${GUARANTEE_NOUN}\\b(?:\\s+(?:is|are|was|were)\\s+made)?`,
+	"gi"
+)
 const NEGATED_OUTCOME_IMPLICATION_PATTERN = new RegExp(
 	`\\b(?:do(?:es)?|did|will|can|could|would|should|is|are|was|were)\\s+(?:not|never)\\s+(?:imply|mean|represent|constitute|signal|cause|create|deliver|generate|produce|drive|bring|give|yield|increase|improve|raise|grow|boost|lift|affect|alter|change|hurt|reduce|promise|guarantee|assure|ensure|result(?:\\s+${CHANGE_LINK_ADVERB})?\\s+in|lead(?:\\s+${CHANGE_LINK_ADVERB})?\\s+to)\\b(?:(?!\\b${CONTRAST_BOUNDARY}\\b)[^.!?;\\n]){0,80}?\\b${FORBIDDEN_OUTCOME_TERM}\\b(?:\\s+(?:results?|outcomes?|performance))?`,
 	"gi"
@@ -281,6 +287,7 @@ function collectGuaranteeRiskFlags(value, name = "agent work output", flags = []
 				.replace(NEGATED_GUARANTEE_CLAUSE_PATTERN, "")
 				.replace(NEITHER_GUARANTEE_CLAUSE_PATTERN, "")
 				.replace(NO_GUARANTEE_CLAUSE_PATTERN, "")
+				.replace(LISTED_NO_GUARANTEE_CLAUSE_PATTERN, "")
 				.replace(NEGATED_OUTCOME_IMPLICATION_PATTERN, "")
 				.replace(NEGATED_CATEGORICAL_OUTCOME_PATTERNS[0], "")
 				.replace(NEGATED_CATEGORICAL_OUTCOME_PATTERNS[1], "")
@@ -556,10 +563,10 @@ export function validateAgentWorkOutput(output, {application, packet, asOfDate =
 	const {leakMap, pageFix, searchTrust, proof, loom, measurement, implementation, revisionBoundary, tracking} = output.deliverables
 	assertExactKeys(leakMap, ["selectedPageUrl", "items"], "agent work deliverables.leakMap")
 	checkHttpUrl(leakMap.selectedPageUrl, "agent work deliverables.leakMap.selectedPageUrl")
-	assert(Array.isArray(leakMap.items) && leakMap.items.length >= 1 && leakMap.items.length <= 12, "agent work leak map must contain 1-12 items")
+	assert(Array.isArray(leakMap.items) && leakMap.items.length >= 1 && leakMap.items.length <= 12, "agent work fault map must contain 1-12 items")
 	leakMap.items.forEach((entry, index) => {
-		assertExactKeys(entry, ["leak", "impact", "priority", "evidenceIds"], `agent work leakMap.items[${index}]`)
-		checkNonPlaceholderFields(entry, `agent work leakMap.items[${index}]`, ["leak", 10, 1200, "impact", 10, 1200])
+		assertExactKeys(entry, ["fault", "impact", "priority", "evidenceIds"], `agent work leakMap.items[${index}]`)
+		checkNonPlaceholderFields(entry, `agent work leakMap.items[${index}]`, ["fault", 10, 1200, "impact", 10, 1200])
 		assert(["high", "medium", "low"].includes(entry.priority), `agent work leakMap.items[${index}].priority is invalid`)
 		checkEvidenceIds(entry.evidenceIds, `agent work leakMap.items[${index}].evidenceIds`, {observed: true})
 	})
@@ -568,7 +575,7 @@ export function validateAgentWorkOutput(output, {application, packet, asOfDate =
 	assert(["rewrite", "redesign"].includes(pageFix.mode), "agent work pageFix.mode is invalid")
 	const selectedPageIdentity = canonicalPageIdentity(leakMap.selectedPageUrl, "agent work deliverables.leakMap.selectedPageUrl")
 	const fixedPageIdentity = canonicalPageIdentity(pageFix.pageUrl, "agent work deliverables.pageFix.pageUrl")
-	assert(fixedPageIdentity === selectedPageIdentity, "agent work page fix must target the same selected page as the leak map")
+	assert(fixedPageIdentity === selectedPageIdentity, "agent work page fix must target the same selected page as the fault map")
 	checkNonPlaceholderFields(pageFix, "agent work deliverables.pageFix", ["beforeSummary", 20, 4000, "rationale", 20, 4000])
 	validatePageFixArtifact(pageFix.mode, pageFix.artifact)
 

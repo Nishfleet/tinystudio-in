@@ -2,7 +2,7 @@
 
 ## Goal
 
-Spend Loom time only on founder-led Managed IT/MSP/cybersecurity companies with enough pain, proof, and budget to buy the human-reviewed **7-Day Website Revenue Leak Fix Sprint** for one highest-leverage page.
+Spend Loom time only on founder-led Managed IT/MSP/cybersecurity companies with enough pain, proof, and budget to buy the human-reviewed **The Website Correction** for one highest-leverage page.
 
 ## Fast Workflow
 
@@ -27,7 +27,7 @@ Score each prospect from 0-16.
 | Live managed IT, MSP, or cybersecurity offer | 0-2 |
 | Clear decision-maker or founder | 0-2 |
 | High-value contract economics | 2 |
-| Website has obvious architecture, copy, trust, or CTA leak | 2 |
+| Website has obvious architecture, copy, trust, or CTA fault | 2 |
 | Reviews, case studies, or customer proof exist | 0-2 |
 | Competitors are clearer than them | 0-2 |
 | They can implement one page fix within the sprint or use a dev-ready handoff | 0-2 |

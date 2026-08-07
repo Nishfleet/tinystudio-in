@@ -1,4 +1,4 @@
-# 7-Day Website Revenue Leak Fix Sprint
+# The Website Correction
 
 ## Buyer
 
@@ -10,7 +10,7 @@ In seven working days, TinyStudio fixes one highest-leverage page and gives the 
 
 ## Included
 
-- leak map for the selected page
+- fault map for the selected page
 - rewrite or redesign of that page
 - one implementation pass or a dev-ready handoff
 - search-trust basics

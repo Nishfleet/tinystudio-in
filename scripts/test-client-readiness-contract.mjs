@@ -67,7 +67,7 @@ function treeSnapshot(root) {
 
 function assertNarrowGeneratedClient(root) {
 	for (const path of retiredPaths) eq(existsSync(join(root, path)), false)
-	const retiredTruth = /Tangible Revenue Leak Sprint|30[- ]day (?:action )?plan|Weekly Growth Desk|Full-Stack Growth Desk|rewrite\/redesign|rewritten and redesigned|ad angles? and email\/sms|ads and email\/sms/i
+	const retiredTruth = /Tangible Revenue Fault Sprint|30[- ]day (?:action )?plan|Weekly Growth Desk|Full-Stack Growth Desk|rewrite\/redesign|rewritten and redesigned|ad angles? and email\/sms|ads and email\/sms/i
 	for (const path of filesUnder(root)) {
 		const content = readFileSync(path, "utf8")
 		eq(retiredTruth.test(content), false)
@@ -208,13 +208,13 @@ try {
 
 	const deliveryPath = join(F, folder, "deliverables/delivery.md")
 	const populatedDelivery = readFileSync(deliveryPath, "utf8")
-		.replace(/(## Leak map[\s\S]*?\|---\|---\|---\|---\|\n)\|  \|  \|  \|  \|/, "$1| CTA path is unclear | Primary CTA evidence | High | Clarify CTA |")
+		.replace(/(## Fault map[\s\S]*?\|---\|---\|---\|---\|\n)\|  \|  \|  \|  \|/, "$1| CTA path is unclear | Primary CTA evidence | High | Clarify CTA |")
 		.replace(/(## Before\/after proof[\s\S]*?\|---\|---\|---\|---\|\n)\|  \|  \|  \|  \|/, "$1| Generic CTA | Specific managed IT CTA | Published page | Buyer can choose next step |")
 	writeFileSync(deliveryPath, populatedDelivery)
 	const populatedCheck = run(script("check-client-readiness.mjs", folder))
 	eq(populatedCheck.status, 0)
 	const populatedReport = JSON.parse(populatedCheck.stdout)
-	dnm(populatedReport.warnings.join("\n"), /Approved delivery has no evidence-linked leak map|Approved delivery has no before\/after proof plan/)
+	dnm(populatedReport.warnings.join("\n"), /Approved delivery has no evidence-linked fault map|Approved delivery has no before\/after proof plan/)
 	assert(populatedReport.warnings.includes("Hash-bound human-approved delivery artifact is unavailable"))
 
 	const forgedFolder = join(F, "clients/forged-ready-client")

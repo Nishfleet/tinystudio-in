@@ -77,7 +77,7 @@ const prospects = listFolders("prospects").map((path) => {
     sentChannel: pipeline.sentChannel || pipeline.lastChannel || touches.at(-1)?.channel || "",
     score: lineValue(leadScore, /^- Score:[ \t]*([^\n]*)$/m, "-"),
     priority: lineValue(leadScore, /^- Priority:[ \t]*([^\n]*)$/m, "-"),
-    leak: lineValue(outline, /^3\. [^\n:]+:[ \t]*([^\n]*)$/m, ""),
+    fault: lineValue(outline, /^3\. [^\n:]+:[ \t]*([^\n]*)$/m, ""),
     fix: lineValue(outline, /^6\. [^\n:]+:[ \t]*([^\n]*)$/m, ""),
     notes,
     touches
@@ -152,13 +152,13 @@ const review = statusAndNext();
 
 const experimentRows = [
   ["Lead fit", sent.length >= 5 && replies.length === 0 ? "watch" : "hold", "Only change the prospect type after the first completed send/follow-up loop shows low reply quality."],
-  ["Audit hook", sent.length >= 5 && replies.length === 0 ? "test next" : "hold", "Keep one visible leak, but make the first 10 seconds more specific to the buyer's category and pain."],
+  ["Audit hook", sent.length >= 5 && replies.length === 0 ? "test next" : "hold", "Keep one visible fault, but make the first 10 seconds more specific to the buyer's category and pain."],
   ["First message", sent.length >= 5 && replies.length === 0 ? "test next" : "hold", "Keep the Loom useful, shorten the ask, and ask whether they want the exact page structure rather than a broad sprint."],
   ["Send channel", Object.keys(channelCounts).length > 1 ? "compare" : "watch", "Compare reply quality by contact form, DM, LinkedIn, X, phone, mixed, other, or email only after sender setup is clean."]
 ];
 
 const prospectRows = sent.length
-  ? sent.slice(0, limit).map((prospect) => `| ${prospect.name} | ${prospect.stage} | ${prospect.sentChannel || "-"} | ${prospect.nextFollowUpAt || "-"} | ${compact(prospect.leak, 120) || "-"} | ${compact(prospect.fix, 100) || "-"} |`).join("\n")
+  ? sent.slice(0, limit).map((prospect) => `| ${prospect.name} | ${prospect.stage} | ${prospect.sentChannel || "-"} | ${prospect.nextFollowUpAt || "-"} | ${compact(prospect.fault, 120) || "-"} | ${compact(prospect.fix, 100) || "-"} |`).join("\n")
   : "| - | - | - | - | No sent prospects yet. | - |";
 
 const noteRows = allNotes.length
@@ -212,7 +212,7 @@ ${channelRows}
 
 ## Sent Batch Review
 
-| Prospect | Stage | Channel | Next Follow-Up | Leak | First Fix |
+| Prospect | Stage | Channel | Next Follow-Up | Fault | First Fix |
 |---|---|---|---|---|---|
 ${prospectRows}
 
@@ -286,8 +286,8 @@ const html = `<!doctype html>
     <section>
       <h2>Sent Batch</h2>
       <table>
-        <thead><tr><th>Prospect</th><th>Stage</th><th>Channel</th><th>Next Follow-Up</th><th>Leak</th><th>First Fix</th></tr></thead>
-        <tbody>${sent.length ? sent.slice(0, limit).map((prospect) => `<tr><td>${htmlEscape(prospect.name)}</td><td>${htmlEscape(prospect.stage)}</td><td>${htmlEscape(prospect.sentChannel || "-")}</td><td>${htmlEscape(prospect.nextFollowUpAt || "-")}</td><td>${htmlEscape(compact(prospect.leak, 120) || "-")}</td><td>${htmlEscape(compact(prospect.fix, 100) || "-")}</td></tr>`).join("") : `<tr><td colspan="6">No sent prospects yet.</td></tr>`}</tbody>
+        <thead><tr><th>Prospect</th><th>Stage</th><th>Channel</th><th>Next Follow-Up</th><th>Fault</th><th>First Fix</th></tr></thead>
+        <tbody>${sent.length ? sent.slice(0, limit).map((prospect) => `<tr><td>${htmlEscape(prospect.name)}</td><td>${htmlEscape(prospect.stage)}</td><td>${htmlEscape(prospect.sentChannel || "-")}</td><td>${htmlEscape(prospect.nextFollowUpAt || "-")}</td><td>${htmlEscape(compact(prospect.fault, 120) || "-")}</td><td>${htmlEscape(compact(prospect.fix, 100) || "-")}</td></tr>`).join("") : `<tr><td colspan="6">No sent prospects yet.</td></tr>`}</tbody>
       </table>
     </section>
   </main>

@@ -15,13 +15,13 @@ Use this page after the fit review so a founder can decide without a sales call.
 - Founder-led Managed IT/MSP/cybersecurity company: [ ]
 - Live site and high-value offer: [ ]
 - Highest-leverage page:
-- Evidence for the leak:
+- Evidence for the fault:
 
 ## The sprint
 
-**7-Day Website Revenue Leak Fix Sprint**
+**The Website Correction**
 
-Included: leak map, rewrite or redesign of one highest-leverage page, one implementation pass or dev-ready handoff, search-trust basics, before/after proof, Loom, measurement plan, one revision, and 14-day implementation tracking.
+Included: fault map, rewrite or redesign of one highest-leverage page, one implementation pass or dev-ready handoff, search-trust basics, before/after proof, Loom, measurement plan, one revision, and 14-day implementation tracking.
 
 ## Timing and price
 

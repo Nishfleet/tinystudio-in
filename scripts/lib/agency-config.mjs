@@ -7,13 +7,13 @@ const configPath = "growth-brain/ops/agency-config.json";
 
 const defaults = {
   founderName: "Nish",
-  offerName: "7-Day Website Revenue Leak Fix Sprint",
+  offerName: "The Website Correction",
   buyer: "founder-led Managed IT/MSP/cybersecurity companies with a live site and high-value offer",
   founderSprintPrice: "$1,000 founder pilot",
   firstClientCount: 3,
   scope: "one highest-leverage page",
   includedDeliverables: [
-    "leak map",
+    "fault map",
     "rewrite or redesign",
     "one implementation pass or dev-ready handoff",
     "search-trust basics",

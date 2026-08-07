@@ -259,7 +259,7 @@ function vao(item) {
 		status: "ready-for-review",
 		missingContext: null,
 		deliverables: {
-			leakMap: {selectedPageUrl: PAGE, items: [{leak: "Offer and next step conflict.", impact: "Buyers cannot see one action.", priority: "high", evidenceIds: ["page-capture"]}]},
+			leakMap: {selectedPageUrl: PAGE, items: [{fault: "Offer and next step conflict.", impact: "Buyers cannot see one action.", priority: "high", evidenceIds: ["page-capture"]}]},
 			pageFix,
 			searchTrust: {changes: [{change: "Align title and heading intent.", implementation: "Use one reviewed evidence phrase.", evidenceIds: ["page-capture"]}]},
 			proof: {beforeEvidenceIds: ["page-capture"], afterCapturePlan: "Recapture the selected page regions.", comparisonCriteria: "Compare clarity, proof, action, and scope."},
@@ -1002,6 +1002,7 @@ try {
 		"We promise to preserve conversion tracking through deployment.",
 		"We do not guarantee revenue or promise rankings.",
 		"Neither revenue nor rankings are guaranteed.",
+		"No revenue, ranking, ROAS, conversion, booked-call, or sales-volume guarantees are made.",
 		"We promise to report conversions accurately.",
 		"This work does not boost conversions.",
 		"Conversions do not increase because of this work."
@@ -1733,7 +1734,7 @@ try {
 	const eighthProspectFolder = rp("prospects", I8)
 	const reservedBeforeState = rs(eighthProspectFolder)
 	const reservedItem = it(I8)
-	const reservedDay0 = {applicationId: I8, paymentEvidence: "paid: invoice RESERVED-8", requiredContext: "approved context", approvalOwner: "Founder", implementationOwner: "TinyStudio", offerName: "7-Day Website Revenue Leak Fix Sprint", offerPriceUsd: 1000, pricingCohort: "founder-pilot", pilotSequence: 3, ready: true, day0StartedAt: reservedAt, updatedAt: reservedAt, paused: false, activePause: null, pauseHistory: [], totalPausedMs: 0, deadlineAt: addBusinessDaysToTimestamp(reservedAt, 7), resumeState: ""}
+	const reservedDay0 = {applicationId: I8, paymentEvidence: "paid: invoice RESERVED-8", requiredContext: "approved context", approvalOwner: "Founder", implementationOwner: "TinyStudio", offerName: "The Website Correction", offerPriceUsd: 1000, pricingCohort: "founder-pilot", pilotSequence: 3, ready: true, day0StartedAt: reservedAt, updatedAt: reservedAt, paused: false, activePause: null, pauseHistory: [], totalPausedMs: 0, deadlineAt: addBusinessDaysToTimestamp(reservedAt, 7), resumeState: ""}
 	const reservedAfterState = appendStateTransition(
 		{...reservedBeforeState, state: "day0-ready", updatedAt: reservedAt, day0ReadyAt: reservedAt, sourceHash: reservedItem.sourceHash, packetHash: reservedItem.packetHash},
 		{from: reservedBeforeState.state, to: "day0-ready", kind: "day0", at: reservedAt, contextRevision: reservedBeforeState.contextRevision, queueInputHash: "", day0Hash: sha256(minifiedJson(reservedDay0)), contextHash: contextHistoryHash(reservedBeforeState.contextHistory || [])}

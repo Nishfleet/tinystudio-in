@@ -103,7 +103,7 @@ What I need from you today:
 
 What you will get:
 
-- Leak map.
+- Fault map.
 - Rewrite or redesign of the one highest-leverage page.
 - One implementation pass or dev-ready handoff.
 - Search-trust basics.
@@ -112,7 +112,7 @@ What you will get:
 
 One guardrail: ${NO_GUARANTEE_CLIENT_SENTENCE} I will not use backlink schemes. The sprint is built to give you sharper diagnosis, cleaner assets, real search trust improvements, and a measurement plan.
 
-Once I have the context, I will send the first leak map.
+Once I have the context, I will send the first fault map.
 
 Nish
 
@@ -122,7 +122,7 @@ Nish
 - [ ] Confirm approval owner.
 - [ ] Save client context into \`brain/\`.
 - [ ] Fill claim-proof ledger before client-facing copy.
-- [ ] Send Day 1 leak hypotheses.
+- [ ] Send Day 1 fault hypotheses.
 `;
 
 const outputPath = join(clientPath, "kickoff-message.md");

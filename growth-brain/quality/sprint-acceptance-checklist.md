@@ -2,7 +2,7 @@
 
 Run this before delivery/acceptance. Every item needs evidence or an explicit human decision.
 
-Product: **7-Day Website Revenue Leak Fix Sprint**. The first 3 clients are exactly **$1,000 founder pilots**. Scope is one highest-leverage page.
+Product: **The Website Correction**. The first 3 clients are exactly **$1,000 founder pilots**. Scope is one highest-leverage page.
 
 ## Fit and Day 0
 
@@ -13,7 +13,7 @@ Product: **7-Day Website Revenue Leak Fix Sprint**. The first 3 clients are exac
 
 ## Required output
 
-- [ ] Leak map is tied to evidence.
+- [ ] Fault map is tied to evidence.
 - [ ] Page rewrite or redesign is complete.
 - [ ] One implementation pass or dev-ready handoff is complete.
 - [ ] Search-trust basics are included.

@@ -11,7 +11,7 @@ Home services force the design system to handle quote urgency, trust gaps, safet
 
 ## Visitor Decision
 
-Should a homeowner request a quote for gutter clearing, roof moss treatment, or a leak-check visit?
+Should a homeowner request a quote for gutter clearing, roof moss treatment, or a fault-check visit?
 
 ## Required Next Evidence
 

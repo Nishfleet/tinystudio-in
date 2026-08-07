@@ -111,7 +111,7 @@ function measurementContract(report) {
 }
 
 function revenueLeak(report) {
-  const row = firstDataRow(report, "Revenue Leak Loop", /^Lane$/i);
+  const row = firstDataRow(report, "Revenue Fault Loop", /^Lane$/i);
   return {
     lane: row[0] || "",
     before: row[1] || "",
@@ -182,17 +182,17 @@ const workflowOs = readRoot("growth-brain/workflows/repeatable-workflow-operatin
 const name = bulletValue(intake, "Name", basename(clientPath));
 const proofType = bulletValue(proofContext, "Proof Type", proofContext.includes("owned-startup") ? "owned-startup" : "client");
 const tangible = tangibleImprovement(evidence, delivery);
-const leak = revenueLeak(report);
+const fault = revenueLeak(report);
 const contract = measurementContract(report);
 const sources = evidenceSources(evidence, claimLedger);
 const metric = currentMetric(report, productPacket);
 const learning = firstFilledLine(section(weeklyLearnings, "Durable Rules"), firstFilledLine(section(weeklyLearnings, "Log")));
 const readyChannels = bulletValue(channelReadiness, "Ready channels", "none");
-const workflowPrinciple = principleFor(slug, tangible.value || leak.value);
-const bottleneck = tangible.before || leak.before || "Bottleneck not captured yet.";
+const workflowPrinciple = principleFor(slug, tangible.value || fault.value);
+const bottleneck = tangible.before || fault.before || "Bottleneck not captured yet.";
 const gap = tangible.before
   ? `${tangible.before} The gap is that the current path does not make the strongest buyer decision obvious enough.`
-  : leak.before || "Gap not captured yet.";
+  : fault.before || "Gap not captured yet.";
 const flow = [
   "Trigger: weekly client or owned-product value loop",
   "Step 1: read client brain, proof packet, delivery, weekly report, and channel readiness",
@@ -210,7 +210,7 @@ const systemArtifacts = [
   `${clientPath}/brain/weekly-learnings.md`
 ];
 const systemArtifactsForCheck = systemArtifacts.filter((path) => path !== outputPath && path !== htmlPath);
-const nextIteration = tangible.nextMeasurement || leak.nextAction || contract.decisionRule || "Pick one next measurement after the current fix is reviewed.";
+const nextIteration = tangible.nextMeasurement || fault.nextAction || contract.decisionRule || "Pick one next measurement after the current fix is reviewed.";
 
 const rows = [
   {

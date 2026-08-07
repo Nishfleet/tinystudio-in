@@ -159,7 +159,7 @@ Status: ${status}
 
 ## Guardrail
 
-This is owned-product delivery proof. It can show that TinyStudio can find leaks, ship improvements, explain value, and set a measurement loop on real products. It does not prove external demand, paid-client results, paid retention, reply rate, or close rate.
+This is owned-product delivery proof. It can show that TinyStudio can find faults, ship improvements, explain value, and set a measurement loop on real products. It does not prove external demand, paid-client results, paid retention, reply rate, or close rate.
 
 ## Sales-Safe Outbound Line
 

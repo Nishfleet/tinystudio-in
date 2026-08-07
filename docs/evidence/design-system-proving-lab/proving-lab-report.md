@@ -93,7 +93,7 @@ External use allowed: no
   - Raw pool: 32 returned / 32 unique
   - maple-row-maths-tutoring-toronto: missing visual-territory exploration and Mobbin-backed finalist concepts at docs/evidence/design-system-proving-lab/business-packets/maple-row-maths-tutoring-toronto/direction-packet.json
   - maple-row-maths-tutoring-toronto: missing rendered preview proof at docs/evidence/design-system-proving-lab/business-packets/maple-row-maths-tutoring-toronto/preview-proof.json
-- PASS ridge-gutter-roofcare-auckland: Ridge & Gutter Roofcare (service, roof cleaning, gutter clearing, leak checks, and seasonal maintenance)
+- PASS ridge-gutter-roofcare-auckland: Ridge & Gutter Roofcare (service, roof cleaning, gutter clearing, fault checks, and seasonal maintenance)
   - Reference packet: pass
   - Direction packet: missing
   - Territories explored: 0

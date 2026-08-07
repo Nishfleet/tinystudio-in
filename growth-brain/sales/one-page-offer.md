@@ -6,11 +6,11 @@ Founder-led Managed IT/MSP/cybersecurity companies with a live site and high-val
 
 ## Product
 
-**7-Day Website Revenue Leak Fix Sprint** — one highest-leverage page, handled as a managed service with human review.
+**The Website Correction** — one highest-leverage page, handled as a managed service with human review.
 
 ## Deliverables
 
-- leak map
+- fault map
 - page rewrite or redesign
 - one implementation pass or dev-ready handoff
 - search-trust basics

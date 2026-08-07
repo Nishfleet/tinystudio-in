@@ -57,7 +57,7 @@ function parseSheetLine(line, index) {
     loomUrl: clean(loomUrl),
     approval: clean(approval) || "approved",
     notes: {
-      leak: clean(leakNote),
+      fault: clean(leakNote),
       impact: clean(impactNote),
       fix: clean(fixNote),
       ask: clean(askNote)
@@ -71,7 +71,7 @@ function formatSheetLine(entry) {
     entry.path,
     entry.loomUrl,
     entry.approval || "approved",
-    entry.notes.leak,
+    entry.notes.fault,
     entry.notes.impact,
     entry.notes.fix,
     entry.notes.ask
@@ -171,7 +171,7 @@ for (const update of updateRows) {
     prospect: row.path,
     previous,
     loomUrl: row.loomUrl,
-    notesPreserved: ["leak", "impact", "fix", "ask"].every((key) => row.notes[key])
+    notesPreserved: ["fault", "impact", "fix", "ask"].every((key) => row.notes[key])
   });
 }
 
@@ -217,7 +217,7 @@ ${nextCommand}
 
 - This command only updates real Loom URLs. It does not mark a send, create fake proof, or change pipeline stage.
 - URL-only lines are assigned to the next pending \`LOOM_URL\` row in order.
-- Rows like \`prospects/prospect-slug|https://www.loom.com/share/...\` update the named prospect and preserve existing leak, impact, fix, and ask notes.
+- Rows like \`prospects/prospect-slug|https://www.loom.com/share/...\` update the named prospect and preserve existing fault, impact, fix, and ask notes.
 `;
 
 if (!dryRun && updated.length) {

@@ -2,12 +2,12 @@
 
 ## Goal
 
-Deliver one human-reviewed **7-Day Website Revenue Leak Fix Sprint** for a founder-led Managed IT/MSP/cybersecurity company with a live site and high-value offer.
+Deliver one human-reviewed **The Website Correction** for a founder-led Managed IT/MSP/cybersecurity company with a live site and high-value offer.
 
 ## Fit gate
 
 - Confirm the buyer and live site.
-- Name one highest-leverage page and the evidence for its leak.
+- Name one highest-leverage page and the evidence for its fault.
 - Decline work that needs more than one page or a different buyer.
 
 ## Day 0 gate
@@ -16,7 +16,7 @@ Record payment, required context, approval owner, implementation owner, and the 
 
 ## Seven-day path
 
-1. Day 1: research and leak map.
+1. Day 1: research and fault map.
 2. Day 2: page rewrite or redesign and search-trust basics.
 3. Day 3: one implementation pass or dev-ready handoff.
 4. Day 4: before/after proof, measurement plan, and QA.

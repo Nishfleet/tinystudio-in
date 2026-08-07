@@ -125,8 +125,8 @@ const cards = prospects.map((prospect, index) => {
       <p class="inputStatus" id="status-loom-${escapeHtml(slug)}">Needs a Loom share or embed URL.</p>
       <div class="qualityBar" aria-label="Loom quality gate">
         <label class="qualityCheck">
-          <input type="checkbox" data-quality="leak" data-slug="${escapeHtml(slug)}" />
-          <span>Visible leak</span>
+          <input type="checkbox" data-quality="fault" data-slug="${escapeHtml(slug)}" />
+          <span>Visible fault</span>
         </label>
         <label class="qualityCheck">
           <input type="checkbox" data-quality="impact" data-slug="${escapeHtml(slug)}" />

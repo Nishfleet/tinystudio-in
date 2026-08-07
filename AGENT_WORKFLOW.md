@@ -7,7 +7,7 @@
 3. At `needs-review`, a human uses `service:decide`.
 4. Apply one: `npm run service:queue -- --mode=apply --application APPLICATION_ID`.
 
-Required: leak map, same-page fix, search trust, proof, Loom, baseline, implementation/handoff, revision boundary, and tracking. Cite evidence; reject partial work; keep human-only claims and no guarantees.
+Required: fault map, same-page fix, search trust, proof, Loom, baseline, implementation/handoff, revision boundary, and tracking. Cite evidence; reject partial work; keep human-only claims and no guarantees.
 
 Missing context returns `needs-input`, null deliverables, and `missingContext`; human `needs-info` resumes it.
 

@@ -1,13 +1,13 @@
 # TinyStudio service operating kit
 
-This folder powers one human-reviewed managed service: the **7-Day Website Revenue Leak Fix Sprint**.
+This folder powers one human-reviewed managed service: **The Website Correction**.
 
 ## Exact offer
 
 - Buyer: founder-led Managed IT/MSP/cybersecurity companies with a live site and high-value offer.
 - Pilot: first 3 clients at exactly **$1,000 founder pilot**.
 - Scope: one highest-leverage page.
-- Delivery: leak map, rewrite or redesign, one implementation pass or dev-ready handoff, search-trust basics, before/after proof, Loom, measurement plan, one revision, and 14-day implementation tracking.
+- Delivery: fault map, rewrite or redesign, one implementation pass or dev-ready handoff, search-trust basics, before/after proof, Loom, measurement plan, one revision, and 14-day implementation tracking.
 - Day 0: payment, required context, approval owner, and implementation owner must all be recorded. Client delay pauses the clock.
 - Promise boundary: no revenue, ranking, ROAS, conversion, booked-call, or sales-volume guarantees.
 

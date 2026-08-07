@@ -129,7 +129,7 @@ const weeklyLearnings = read("brain/weekly-learnings.md");
 const name = bulletValue(intake, "Name") || clientPath.split("/").at(-1);
 const dates = datesArg ? datesArg.split("=")[1] : bulletValue(existingReport, "Dates") || bulletValue(intake, "Sprint dates");
 const mainGoal = bulletValue(existingReport, "Main goal") || bulletValue(intake, "Main goal") || bulletValue(intake, "Main offer");
-const topLeak = firstFilledTableRow(delivery, "Top Leaks", [1, 2, 3]);
+const topLeak = firstFilledTableRow(delivery, "Top Faults", [1, 2, 3]);
 const actionPlan = firstFilledTableRow(delivery, "30-Day Action Plan", [1, 2, 3]);
 const tangibleImprovement = firstFilledTableRow(delivery, "Tangible Improvements", [1, 2, 3, 4, 5]);
 const hasHandoffCopy = hasFilledHandoffSection(handoff);
@@ -141,7 +141,7 @@ const drafted = firstFilledBullet(existingReport, ["Drafted"])
 const waiting = firstFilledBullet(existingReport, ["Waiting on client"]);
 const blocked = firstFilledBullet(existingReport, ["Blocked"]) || "None";
 const improved = firstFilledBullet(existingReport, ["What improved"])
-  || (topLeak.length ? `The main buyer leak is clearer: ${topLeak[1]}` : "");
+  || (topLeak.length ? `The main buyer fault is clearer: ${topLeak[1]}` : "");
 const gotWorse = firstFilledBullet(existingReport, ["What got worse"]);
 const stayedFlat = firstFilledBullet(existingReport, ["What stayed flat"]);
 const surprised = firstFilledBullet(existingReport, ["What surprised us"])
@@ -160,7 +160,7 @@ const nextTest = firstFilledTableRow(existingReport, "Next Tests", [1, 2, 3, 4])
   : actionPlan.length
     ? ["1", actionPlan[1], `Measures ${actionPlan[3]}`, actionPlan[2], localIsoDate()]
     : ["1", "", "", "", ""];
-const existingRevenueLeakRows = filledTableRows(existingReport, "Revenue Leak Loop", [1, 2, 3, 4]);
+const existingRevenueLeakRows = filledTableRows(existingReport, "Revenue Fault Loop", [1, 2, 3, 4]);
 const revenueLeakRows = existingRevenueLeakRows.length
   ? existingRevenueLeakRows
   : [
@@ -230,9 +230,9 @@ const report = `# ${name} Week ${week} Report
 - Waiting on client: ${waiting || ""}
 - Blocked: ${blocked || ""}
 
-## Revenue Leak Loop
+## Revenue Fault Loop
 
-| Lane | Before Leak | Fix Shipped / Handed Off | Client-Visible Value | Next Action |
+| Lane | Before Fault | Fix Shipped / Handed Off | Client-Visible Value | Next Action |
 |---|---|---|---|---|
 ${revenueLeakRows.map((cells) => `| ${cells[0] || ""} | ${cells[1] || ""} | ${cells[2] || ""} | ${cells[3] || ""} | ${cells[4] || ""} |`).join("\n")}
 

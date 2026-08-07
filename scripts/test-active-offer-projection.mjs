@@ -12,7 +12,7 @@ const testRoot = mkdtempSync(join(tmpdir(), "tinystudio-active-offer-projection-
 const sp = name => join(repositoryRoot, "scripts", name)
 const {equal: eq, match: mat, doesNotMatch: dnm} = assert
 const legacyProspectPath = join(testRoot, "prospects", "legacy-offer-fixture")
-const retiredOfferPattern = /7-Day Site Revenue Leak Sprint|Tangible Revenue Leak Sprint|30[- ]day action plan|Growth Desk|three pages|\$500/i
+const retiredOfferPattern = /7-Day Site Revenue Fault Sprint|Tangible Revenue Fault Sprint|30[- ]day action plan|Growth Desk|three pages|\$500/i
 
 function writeJson(path, value) {
 	mkdirSync(dirname(path), {recursive: true})
@@ -41,14 +41,14 @@ try {
 		`# Legacy Outline
 
 2. Main page: https://example.com/managed-it
-3. Revenue leak: The primary buyer path is unclear
+3. Revenue fault: The primary buyer path is unclear
 4. Evidence: Competing calls to action split attention
 6. First fix: Make one managed-service action primary
-7. Sprint pitch: 7-Day Site Revenue Leak Sprint with a 30-day action plan
+7. Sprint pitch: 7-Day Site Revenue Fault Sprint with a 30-day action plan
 
 ## Close
 
-If useful, I can run a Tangible Revenue Leak Sprint and Growth Desk across three pages for $500.
+If useful, I can run a Tangible Revenue Fault Sprint and Growth Desk across three pages for $500.
 `
 	)
 	writeFileSync(
@@ -59,7 +59,7 @@ If useful, I can run a Tangible Revenue Leak Sprint and Growth Desk across three
 
 Subject: Old offer
 
-If useful, I can run a 7-Day Site Revenue Leak Sprint with a 30-day action plan, then continue through the Growth Desk for $500.
+If useful, I can run a 7-Day Site Revenue Fault Sprint with a 30-day action plan, then continue through the Growth Desk for $500.
 `
 	)
 
@@ -72,7 +72,7 @@ If useful, I can run a 7-Day Site Revenue Leak Sprint with a 30-day action plan,
 	const messageResult = spawnSync(process.execPath, [sp("draft-prospect-message.mjs"), legacyProspectPath], {cwd: repositoryRoot, encoding: "utf8"})
 	eq(messageResult.status, 0)
 	const nextMessage = readFileSync(join(legacyProspectPath, "next-message.md"), "utf8")
-	mat(nextMessage, /7-Day Website Revenue Leak Fix Sprint/)
+	mat(nextMessage, /The Website Correction/)
 	mat(nextMessage, /one highest-leverage page/)
 	mat(nextMessage, /search-trust basics/)
 	mat(nextMessage, /one revision/)
@@ -85,7 +85,7 @@ If useful, I can run a 7-Day Site Revenue Leak Sprint with a 30-day action plan,
 	const loomResult = spawnSync(process.execPath, [sp("draft-loom-package.mjs"), legacyProspectPath], {cwd: repositoryRoot, encoding: "utf8"})
 	eq(loomResult.status, 0)
 	const loomPackage = readFileSync(join(legacyProspectPath, "loom-package.md"), "utf8")
-	mat(loomPackage, /7-Day Website Revenue Leak Fix Sprint/)
+	mat(loomPackage, /The Website Correction/)
 	mat(loomPackage, /one highest-leverage page/)
 	for (const forbiddenOutcome of NO_GUARANTEE_OUTCOMES) {
 		mat(loomPackage, new RegExp(forbiddenOutcome.replace("-", "[- ]"), "i"))

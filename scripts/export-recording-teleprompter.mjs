@@ -111,8 +111,8 @@ const pages = prospects.map((prospect, index) => {
       <p class="${channelGuidance.emailReady ? "channelReady" : "channelWarning"}">Channel rule: ${escapeHtml(channelGuidance.rule)}</p>
       <div class="qualityBar">
         <label class="qualityCheck">
-          <input type="checkbox" data-quality="leak" data-path="${escapeHtml(prospect.path)}" />
-          <span>Visible leak</span>
+          <input type="checkbox" data-quality="fault" data-path="${escapeHtml(prospect.path)}" />
+          <span>Visible fault</span>
         </label>
         <label class="qualityCheck">
           <input type="checkbox" data-quality="impact" data-path="${escapeHtml(prospect.path)}" />
@@ -129,8 +129,8 @@ const pages = prospects.map((prospect, index) => {
       </div>
       <div class="qualityNotes">
         <label>
-          <span>Leak note</span>
-          <textarea data-note="leak" data-path="${escapeHtml(prospect.path)}" placeholder="What exact visible leak did the Loom show?"></textarea>
+          <span>Fault note</span>
+          <textarea data-note="fault" data-path="${escapeHtml(prospect.path)}" placeholder="What exact visible fault did the Loom show?"></textarea>
         </label>
         <label>
           <span>Impact note</span>
@@ -623,7 +623,7 @@ const html = `<!doctype html>
 
     function hasQualityNotes(path) {
       const notes = notesFor(path);
-      return ["leak", "impact", "fix", "ask"].every((key) => notes[key] && notes[key].length >= 8);
+      return ["fault", "impact", "fix", "ask"].every((key) => notes[key] && notes[key].length >= 8);
     }
 
     function isQualityApproved(path) {
@@ -651,7 +651,7 @@ const html = `<!doctype html>
                 input.dataset.path,
                 value,
                 "approved",
-                notes.leak,
+                notes.fault,
                 notes.impact,
                 notes.fix,
                 notes.ask
@@ -740,8 +740,8 @@ const html = `<!doctype html>
             ? "Ready for batch prep."
             : ok
               ? notesOk
-                ? "Check leak, impact, fix, and ask before batch prep."
-                : "Add leak, impact, fix, and ask notes before batch prep."
+                ? "Check fault, impact, fix, and ask before batch prep."
+                : "Add fault, impact, fix, and ask notes before batch prep."
               : "Needs a Loom share or embed URL.";
           status.classList.toggle("valid", ok && qualityOk);
           status.classList.toggle("invalid", Boolean(value) && (!ok || !qualityOk));
@@ -814,7 +814,7 @@ const html = `<!doctype html>
           input.dataset.path,
           value,
           "approved",
-          notes.leak,
+          notes.fault,
           notes.impact,
           notes.fix,
           notes.ask
