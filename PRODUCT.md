@@ -1,6 +1,6 @@
 # Product context
 
-TinyStudio currently sells one human-reviewed managed service: the **7-Day Website Revenue Leak Fix Sprint**.
+TinyStudio currently sells one human-reviewed managed service: **The Website Correction**.
 
 ## Buyer
 
@@ -14,7 +14,7 @@ The first 3 clients pay exactly **$1,000 founder pilot**. No alternate price or 
 
 One highest-leverage page receives:
 
-- a leak map
+- a fault map
 - a rewrite or redesign
 - one implementation pass **or** a dev-ready handoff
 - search-trust basics

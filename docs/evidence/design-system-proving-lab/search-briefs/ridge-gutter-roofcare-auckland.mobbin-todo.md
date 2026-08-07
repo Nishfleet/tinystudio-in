@@ -2,13 +2,13 @@
 
 Business: Ridge & Gutter Roofcare
 Business model: service
-Target decision: Should a homeowner request a quote for gutter clearing, roof moss treatment, or a leak-check visit?
+Target decision: Should a homeowner request a quote for gutter clearing, roof moss treatment, or a fault-check visit?
 Raw pull log path: `docs/evidence/design-system-proving-lab/reference-runs/latest/ridge-gutter-roofcare-auckland/raw-pull-log.json`
 Reference packet path: `docs/evidence/design-system-proving-lab/reference-runs/latest/ridge-gutter-roofcare-auckland/reference-packet.json`
 
 ## Run These Fresh In Mobbin Pro MCP
 
-- niche: home-service roof cleaning, gutter clearing, leak checks, and seasonal maintenance service marketing website homepage quote CTA landing page website inspiration
+- niche: home-service roof cleaning, gutter clearing, fault checks, and seasonal maintenance service marketing website homepage quote CTA landing page website inspiration
 - page-job: quote CTA homepage with trust proof, service or product menu, and local customer decision path website
 - tone: premium credible owner-led service business landing page website
 - constraint: quote-first CTA homeowner problem routing safety/legal wording risk responsive mobile-first homepage website not dashboard not app

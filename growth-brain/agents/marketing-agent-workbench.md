@@ -33,7 +33,7 @@ Use Codex, browser automation, scraping, model routing, or other agent tools as 
 | Daily market research | Search current category news, buyer questions, competitor posts, and regulatory changes. | Brief with 5 useful signals, why they matter, and one action. |
 | Content creation | Research one topic, choose an angle, draft channel-native assets, and mark proof gaps. | Post, email, or page-section draft with source notes. |
 | Competitor website monitoring | Check competitor pricing, pages, offers, case studies, and launches. | Change log with useful moves and moves to avoid. |
-| Lead research | Extract company facts, page leaks, proof gaps, contact routes, and wedge fit. | Prospect folder notes and Loom prep context. |
+| Lead research | Extract company facts, page faults, proof gaps, contact routes, and wedge fit. | Prospect folder notes and Loom prep context. |
 | Podcast or voice briefing | Turn the best weekly findings into a short briefing script. | 3-5 minute voice/readout brief for Nish or the client. |
 | Paid ads ops | Pull recent performance, find winning audiences and weak creatives, generate approved test ideas. | Morning brief with what to test, pause, or watch. |
 

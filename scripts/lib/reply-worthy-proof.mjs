@@ -57,7 +57,7 @@ export function replyWorthiness(prospectPath) {
   const outline = readIfExists(join(prospectPath, "loom-outline.md"));
 
   const noteValues = {
-    leak: lineValue(notes, "Visible leak"),
+    fault: lineValue(notes, "Visible fault"),
     impact: lineValue(notes, "Buyer impact"),
     fix: lineValue(notes, "First fix"),
     ask: lineValue(notes, "Clean ask")
@@ -69,7 +69,7 @@ export function replyWorthiness(prospectPath) {
   const currentLoomUrl = loomUrl(buyerRoom) || loomUrl(message);
   const allBannedClaims = bannedClaims([notes, brief, script, message].join("\n\n"));
   const contactRoute = section(contactPlan, "Best Route");
-  const messageLeakEvidence = [noteValues.leak, fallbackLeak]
+  const messageLeakEvidence = [noteValues.fault, fallbackLeak]
     .filter((value) => meaningful(value))
     .some((value) => message.includes(value));
 
@@ -81,10 +81,10 @@ export function replyWorthiness(prospectPath) {
       evidence: Object.entries(noteValues).filter(([, value]) => meaningful(value)).map(([key]) => key).join(", ") || "recording notes missing"
     },
     {
-      area: "Specific visible leak",
+      area: "Specific visible fault",
       points: 1,
-      passed: hasSpecificity(noteValues.leak || fallbackLeak),
-      evidence: noteValues.leak || fallbackLeak || "no specific leak"
+      passed: hasSpecificity(noteValues.fault || fallbackLeak),
+      evidence: noteValues.fault || fallbackLeak || "no specific fault"
     },
     {
       area: "Buyer impact",
@@ -111,7 +111,7 @@ export function replyWorthiness(prospectPath) {
       evidence: brief ? "positioning, direct response, and so-what chain present" : "sharpness brief missing"
     },
     {
-      area: "Message includes Loom and leak",
+      area: "Message includes Loom and fault",
       points: 1,
       passed: isValidLoomUrl(currentLoomUrl) && messageLeakEvidence,
       evidence: currentLoomUrl || "Loom URL missing from buyer room/message"

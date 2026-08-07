@@ -56,7 +56,7 @@ That global summary is only a command center. It is not the source of truth for 
 ## Weekly Order
 
 1. Export the weekly report from that client's folder.
-2. Check that the report has shipped work, a learning, next test, measurement, revenue leak loop, search trust review, and retention signal.
+2. Check that the report has shipped work, a learning, next test, measurement, revenue fault loop, search trust review, and retention signal.
 3. Refresh and check the channel-readiness scorecard so SEO, paid, lifecycle, content, social, reputation, analytics, creative, and automation only expand when ready.
 4. Refresh the client dashboard.
 5. Refresh the monthly renewal review.
@@ -72,7 +72,7 @@ Do not consider a client retention-ready unless the weekly loop shows:
 
 - a concrete conversion or trust improvement
 - a channel-readiness decision before any expanded scope
-- a filled revenue leak loop
+- a filled revenue fault loop
 - a filled search trust review
 - proof-backed claims
 - a next test or next action

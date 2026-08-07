@@ -1,6 +1,6 @@
 # Autonomous Human-Review Service Engine
 
-Sell one `$1,000` founder-pilot sprint to founder-led MSP/cybersecurity teams: one page, leak map, fix, implementation/handoff, proof, Loom, measurement, one revision, and 14-day tracking. Day 0 needs payment, context, and both owners; client delay pauses the clock. No outcome guarantees.
+Sell one `$1,000` founder-pilot sprint to founder-led MSP/cybersecurity teams: one page, fault map, fix, implementation/handoff, proof, Loom, measurement, one revision, and 14-day tracking. Day 0 needs payment, context, and both owners; client delay pauses the clock. No outcome guarantees.
 
 ## Invariants
 

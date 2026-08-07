@@ -116,9 +116,9 @@ function prospectProofNotes(prospectPath) {
   const route = contactRoute(prospectPath);
   const firstFix = lineValue(loomOutline, /^6\. [^\n:]+:[ \t]*([^\n]*)$/m, "");
   return {
-    leak: cleanSheetNote(
+    fault: cleanSheetNote(
       lineValue(loomOutline, /^3\. [^\n:]+:[ \t]*([^\n]*)$/m, ""),
-      "specific visible leak"
+      "specific visible fault"
     ),
     impact: cleanSheetNote(
       proofRunImpact({
@@ -142,7 +142,7 @@ function batchLine(prospect, loomUrl = "LOOM_URL") {
     prospect.path,
     loomUrl,
     "approved",
-    prospect.leak,
+    prospect.fault,
     prospect.impact,
     prospect.fix,
     prospect.ask
@@ -181,7 +181,7 @@ function ensureLoomLinksTemplate(prospects) {
   const lines = [
     "# Replace LOOM_URL with each real Loom share link, or run: npm run market:after-recording -- --from-clipboard",
     "# Fast format after recording: paste URL-only lines in this exact order, or prospects/prospect-slug|https://www.loom.com/share/...",
-    "# Format: prospects/prospect-slug|https://www.loom.com/share/...|approved|leak note|impact note|fix note|ask note",
+    "# Format: prospects/prospect-slug|https://www.loom.com/share/...|approved|fault note|impact note|fix note|ask note",
     ""
   ];
 
@@ -291,7 +291,7 @@ ${queueRows || "No active prospects found."}
 
 - Do not add more prospects until the current scored batch is recorded and sent.
 - ${NO_GUARANTEE_CLIENT_SENTENCE}
-- Every prospect must have a specific visible leak, a Loom, a contact route, a sent stage, and a scheduled follow-up.
+- Every prospect must have a specific visible fault, a Loom, a contact route, a sent stage, and a scheduled follow-up.
 - Every reply becomes a call-prep package.
 - Every call becomes a close package.
 - A close proceeds only from a consented application through fresh human fit approval, payment, and recorded Day 0; automation never creates or accepts a client on its own.
@@ -310,8 +310,8 @@ const cards = activeProspects.map((prospect, index) => `
           <p class="inputStatus" id="status-loom-${index}">Needs a Loom share or embed URL.</p>
           <div class="qualityBar" aria-label="Loom quality gate">
             <label class="qualityCheck">
-              <input type="checkbox" data-quality="leak" data-path="${escapeHtml(prospect.path)}" />
-              <span>Visible leak</span>
+              <input type="checkbox" data-quality="fault" data-path="${escapeHtml(prospect.path)}" />
+              <span>Visible fault</span>
             </label>
             <label class="qualityCheck">
               <input type="checkbox" data-quality="impact" data-path="${escapeHtml(prospect.path)}" />
@@ -328,8 +328,8 @@ const cards = activeProspects.map((prospect, index) => `
           </div>
           <div class="qualityNotes">
             <label>
-              <span>Leak note</span>
-              <textarea data-note="leak" data-path="${escapeHtml(prospect.path)}" placeholder="What exact visible leak did the Loom show?">${escapeHtml(prospect.leak)}</textarea>
+              <span>Fault note</span>
+              <textarea data-note="fault" data-path="${escapeHtml(prospect.path)}" placeholder="What exact visible fault did the Loom show?">${escapeHtml(prospect.fault)}</textarea>
             </label>
             <label>
               <span>Impact note</span>
@@ -678,7 +678,7 @@ const html = `<!doctype html>
     }
     function hasQualityNotes(path) {
       const notes = notesFor(path);
-      return ["leak", "impact", "fix", "ask"].every((key) => notes[key] && notes[key].length >= 8);
+      return ["fault", "impact", "fix", "ask"].every((key) => notes[key] && notes[key].length >= 8);
     }
     function isQualityApproved(path) {
       const checks = prospectQualityChecks(path);
@@ -732,8 +732,8 @@ const html = `<!doctype html>
               ? "Ready for batch prep."
               : ok
                 ? notesOk
-                  ? "Check leak, impact, fix, and ask before batch prep."
-                  : "Add leak, impact, fix, and ask notes before batch prep."
+                  ? "Check fault, impact, fix, and ask before batch prep."
+                  : "Add fault, impact, fix, and ask notes before batch prep."
                 : "Needs a Loom share or embed URL.";
             status.classList.toggle("valid", ok && qualityOk);
             status.classList.toggle("invalid", Boolean(value) && (!ok || !qualityOk));
@@ -743,7 +743,7 @@ const html = `<!doctype html>
                 input.dataset.path,
                 value,
                 "approved",
-                notes.leak,
+                notes.fault,
                 notes.impact,
                 notes.fix,
                 notes.ask

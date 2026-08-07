@@ -75,7 +75,7 @@ Generated: ${today}
 
 TinyStudio can cover the major marketing requirements a company asks for, but only through a proof-led ladder.
 
-We should not sell "everything" on day one. We should start with a visible revenue leak sprint, then expand into the channels that are actually ready.
+We should not sell "everything" on day one. We should start with a visible revenue fault sprint, then expand into the channels that are actually ready.
 
 ## Offer Ladder
 
@@ -159,7 +159,7 @@ const html = `<!doctype html>
 <body>
   <main>
     <h1>Full-Stack Growth Map</h1>
-    <p class="lead">TinyStudio can cover the major marketing requirements companies ask for, but only through a proof-led ladder. Start with a visible revenue leak sprint, then expand into ready channels.</p>
+    <p class="lead">TinyStudio can cover the major marketing requirements companies ask for, but only through a proof-led ladder. Start with a visible revenue fault sprint, then expand into ready channels.</p>
     <h2>Offer Ladder</h2>
     <div class="grid">${tierCards}
     </div>

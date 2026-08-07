@@ -33,7 +33,7 @@ Read these repo files first:
 2. Score the rest of the page only after the critical checks are understood.
 3. Rank the top 5 failures by likely buyer impact.
 4. Give one exact fix per failure.
-5. Rewrite only the sections needed to fix the leaks.
+5. Rewrite only the sections needed to fix the faults.
 6. Run the direct-response copy sequence.
 7. Run the So-What chain.
 8. Pick one positioning angle.

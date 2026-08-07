@@ -88,7 +88,7 @@ function parseLine(line, index) {
   const trimmed = line.trim();
   if (!trimmed || trimmed.startsWith("#")) return null;
   const separator = trimmed.includes("|") ? "|" : ",";
-  const [path, loomUrl, approval, leak, impact, fix, ask] = trimmed
+  const [path, loomUrl, approval, fault, impact, fix, ask] = trimmed
     .split(separator)
     .map((part) => part.trim());
   return {
@@ -97,7 +97,7 @@ function parseLine(line, index) {
     loomUrl,
     approval,
     notes: {
-      leak: clean(leak),
+      fault: clean(fault),
       impact: clean(impact),
       fix: clean(fix),
       ask: clean(ask)
@@ -110,7 +110,7 @@ function approved(value) {
 }
 
 function hasRequiredNotes(notes) {
-  return ["leak", "impact", "fix", "ask"].every((key) => meaningful(notes?.[key]));
+  return ["fault", "impact", "fix", "ask"].every((key) => meaningful(notes?.[key]));
 }
 
 function sendPackageStatus(row) {
@@ -130,7 +130,7 @@ function sendPackageStatus(row) {
 function recordingNotesStatus(row) {
   const content = read(join(row.path || "", "recording-notes.md"));
   if (!content) return { ok: false, missing: "recording notes missing" };
-  const missing = ["Visible leak:", "Buyer impact:", "First fix:", "Clean ask:"]
+  const missing = ["Visible fault:", "Buyer impact:", "First fix:", "Clean ask:"]
     .filter((phrase) => !content.includes(phrase));
   return { ok: missing.length === 0, missing: missing.join("; ") };
 }
@@ -161,7 +161,7 @@ function rowStatus(row) {
   if (!row.path || !existsSync(row.path)) missing.push("prospect folder missing");
   if (!row.loomUrl || !isValidLoomUrl(row.loomUrl)) missing.push(row.loomUrl ? loomUrlError() : "record Loom URL");
   if (!approved(row.approval)) missing.push("approve Loom quality");
-  if (!hasRequiredNotes(row.notes)) missing.push("complete leak, impact, fix, and ask notes");
+  if (!hasRequiredNotes(row.notes)) missing.push("complete fault, impact, fix, and ask notes");
 
   if (missing.length) {
     return { label: "record Loom", level: "bad", missing, command: "npm run growth:start -- --view=record" };
@@ -230,7 +230,7 @@ const rows = read(inputPath)
       website: metadata.website || "",
       status,
       route: sendRoute,
-      before: row.notes.leak || "Visible leak pending",
+      before: row.notes.fault || "Visible fault pending",
       after: row.notes.fix || "First fix pending",
       value: proofRunImpact({
         outlineImpact: row.notes.impact,
@@ -242,7 +242,7 @@ const rows = read(inputPath)
         ? "Watch for a consented application, human fit approval, and paid Day 0"
         : status.label === "send from outbox"
           ? "Send touch with channel and mark sent from the outbox"
-          : "Record a short Loom and capture leak, impact, fix, and ask"
+          : "Record a short Loom and capture fault, impact, fix, and ask"
     };
   });
 
@@ -283,7 +283,7 @@ ${channel.warnings.length ? `Sender warnings: ${channel.warnings.join("; ")}.` :
 
 ## Tangible Improvement Queue
 
-| # | Prospect | Status | Before / Leak | After / First Fix | Client-Visible Value | Next Measurement | Command |
+| # | Prospect | Status | Before / Fault | After / First Fix | Client-Visible Value | Next Measurement | Command |
 |---:|---|---|---|---|---|---|---|
 ${rowMarkdown}
 
@@ -401,7 +401,7 @@ const html = `<!doctype html>
     </section>
     <section>
       <h2>Tangible Improvement Queue</h2>
-      <table><thead><tr><th>#</th><th>Prospect</th><th>Status</th><th>Before / Leak</th><th>After / First Fix</th><th>Client Value</th><th>Next Measurement</th><th>Command</th></tr></thead><tbody>${proofRowsHtml}
+      <table><thead><tr><th>#</th><th>Prospect</th><th>Status</th><th>Before / Fault</th><th>After / First Fix</th><th>Client Value</th><th>Next Measurement</th><th>Command</th></tr></thead><tbody>${proofRowsHtml}
       </tbody></table>
     </section>
     <section>

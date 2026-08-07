@@ -142,7 +142,7 @@ try {
 		eq(run(args).status, 0)
 	}
 	const loomLinksPath = join(T, "prospects/loom-links.txt")
-	const preservedLoomRow = `${O}|${LOOM}|approved|Reviewed leak|Reviewed impact|Reviewed fix|Reviewed ask`
+	const preservedLoomRow = `${O}|${LOOM}|approved|Reviewed fault|Reviewed impact|Reviewed fix|Reviewed ask`
 	writeFileSync(loomLinksPath, `${preservedLoomRow}\n`)
 	eq(run(["scripts/export-market-proof-run.mjs", "--skip-kit"]).status, 0)
 	eq(run(["scripts/check-market-proof-run.mjs"]).status, 0)
@@ -192,7 +192,7 @@ try {
 	dnm(IH, /Client: Unpaid Fixture/)
 	mat(readFileSync(join(T, "runs/growth-cockpit.html"), "utf8"), /Outbound Fixture/)
 	mat(readFileSync(join(T, "runs/market-proof-run-check.md"), "utf8"), /1234567890abcdef1234567890abcdef/)
-	const privateSentinels = ["Outbound Fixture", "outbound-fixture", "Unpaid Fixture", "1234567890abcdef1234567890abcdef", "Reviewed leak"]
+	const privateSentinels = ["Outbound Fixture", "outbound-fixture", "Unpaid Fixture", "1234567890abcdef1234567890abcdef", "Reviewed fault"]
 	for (const artifact of ACTIVE_OPERATOR_ARTIFACTS) {
 		const content = readFileSync(join(T, artifact), "utf8")
 		for (const sentinel of privateSentinels) eq(content.includes(sentinel), false, `${artifact} contains private sentinel ${sentinel}`)
@@ -208,7 +208,7 @@ try {
 	eq(statSync(join(T, "prospects/rooted-prospect/metadata.json")).mode & 0o777, 0o600)
 	rmSync(join(T, "prospects/rooted-prospect"), {recursive: true})
 	writeFileSync(join(DC, "TASKS.md"), "## Active\n\n- [ ] CWD-only dashboard poison\n")
-	writeFileSync(join(DC, "prospects/loom-links.txt"), "prospects/cwd-only|${LOOM}|approved|CWD leak|CWD impact detail|CWD fix detail|CWD ask detail\n")
+	writeFileSync(join(DC, "prospects/loom-links.txt"), "prospects/cwd-only|${LOOM}|approved|CWD fault|CWD impact detail|CWD fix detail|CWD ask detail\n")
 	writeFileSync(join(T, "prospects/loom-links.txt"), "# Service-root proof rows are intentionally empty\n")
 	const tasksPath = join(T, "TASKS.md")
 	writeFileSync(tasksPath, readFileSync(tasksPath, "utf8").replace("## Active\n", "## Active\n\n- [ ] Service-root dashboard sentinel\n"))

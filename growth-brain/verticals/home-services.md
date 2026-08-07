@@ -7,7 +7,7 @@
 - Many sites hide service areas, proof, and emergency details.
 - One job can be high value.
 
-## Common Site Leaks
+## Common Site Faults
 
 - Homepage does not clearly state service area or core job type.
 - Service pages are generic.

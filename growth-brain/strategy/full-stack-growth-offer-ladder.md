@@ -6,7 +6,7 @@ Generated from competitor and pricing research on 2026-05-29.
 
 TinyStudio should not sell "any and all marketing" as an undifferentiated agency promise.
 
-TinyStudio should sell a proof-led growth system that can expand into every major marketing channel after the first visible revenue leak is found, fixed, measured, and explained.
+TinyStudio should sell a proof-led growth system that can expand into every major marketing channel after the first visible revenue fault is found, fixed, measured, and explained.
 
 The wedge stays:
 
@@ -49,7 +49,7 @@ Best for: first engagement, skeptical buyer, no trust yet.
 
 Includes:
 
-- revenue leak map
+- revenue fault map
 - conversion fix
 - search trust layer
 - proof-backed implementation handoff

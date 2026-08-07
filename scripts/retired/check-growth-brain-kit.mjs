@@ -311,7 +311,7 @@ for (const file of ["scripts/draft-prospect-message.mjs", "scripts/draft-loom-re
     failures.push("contact route helper must not expose handler-only form endpoints as usable send routes");
   }
   const replyProof = readFileSync("scripts/lib/reply-worthy-proof.mjs", "utf8");
-  for (const phrase of ["replyWorthiness", "Reply-Worthy Proof Gate", "Recording notes complete", "Specific visible leak", "No unsupported outcome claim", "score >= 8"]) {
+  for (const phrase of ["replyWorthiness", "Reply-Worthy Proof Gate", "Recording notes complete", "Specific visible fault", "No unsupported outcome claim", "score >= 8"]) {
     if (!replyProof.includes(phrase)) failures.push(`reply-worthy proof gate missing ${phrase}`);
   }
   const contactPlan = readFileSync("scripts/enrich-prospect-contact-plan.mjs", "utf8");
@@ -391,11 +391,11 @@ for (const file of ["scripts/prepare-prospect-send.mjs", "scripts/prepare-prospe
     failures.push("scripts/check-client-readiness.mjs must require real proof, passing scorecards, completed acceptance checklists, conversion scorecards, search trust layers, channel readiness, and filled delivery artifacts");
   }
   const weeklyCheck = readFileSync("scripts/check-client-weekly-report.mjs", "utf8");
-  for (const phrase of ["Weekly report has no shipped work", "Weekly report has no filled revenue leak loop row", "Weekly report has no filled search trust review row", "Weekly report has no learning", "Weekly report missing ${label}", "Weekly report has no filled measurement contract", "What felt valuable", "Why retain next month", "Client saw delta", "Continue / retain signal", "Client brain weekly learnings log", "--strict"]) {
+  for (const phrase of ["Weekly report has no shipped work", "Weekly report has no filled revenue fault loop row", "Weekly report has no filled search trust review row", "Weekly report has no learning", "Weekly report missing ${label}", "Weekly report has no filled measurement contract", "What felt valuable", "Why retain next month", "Client saw delta", "Continue / retain signal", "Client brain weekly learnings log", "--strict"]) {
     if (!weeklyCheck.includes(phrase)) failures.push(`weekly report checker missing ${phrase}`);
   }
   const weeklyExport = readFileSync("scripts/export-client-weekly-report.mjs", "utf8");
-  for (const phrase of ["check-client-weekly-report.mjs", "Client Brain Update", "Revenue Leak Loop", "Search Trust Review", "Retention Value Stack", "Client Pulse", "Client Confirmation", "Measurement Contract", "Continue / retain signal", "30-Day Action Plan", "numbersToReviewTable", "reports/week-"]) {
+  for (const phrase of ["check-client-weekly-report.mjs", "Client Brain Update", "Revenue Fault Loop", "Search Trust Review", "Retention Value Stack", "Client Pulse", "Client Confirmation", "Measurement Contract", "Continue / retain signal", "30-Day Action Plan", "numbersToReviewTable", "reports/week-"]) {
     if (!weeklyExport.includes(phrase)) failures.push(`weekly report exporter missing ${phrase}`);
   }
   const fullStackLadder = readFileSync("growth-brain/strategy/full-stack-growth-offer-ladder.md", "utf8");
@@ -439,7 +439,7 @@ for (const file of ["scripts/prepare-prospect-send.mjs", "scripts/prepare-prospe
     failures.push("workflow README must expose the repeatable workflow operating system and canonical loop");
   }
   const clientDashboard = readFileSync("scripts/export-client-facing-dashboard.mjs", "utf8");
-  for (const phrase of ["Client Dashboard", "What Changed", "What We Learned", "Value Ledger", "Value Proof Score", "valueProofScore", "Measurement Contract", "Revenue Leak Loop", "Search Trust Review", "Channel Readiness", "channelReadiness", "readyChannels", "measurementContractComplete", "Retention / Delight Pulse", "Client Confirmation", "clientConfirmed", "Tangible Improvement", "Next Action", "Approved Proof", "Missing Before Client-Ready", "check-client-readiness.mjs", "check-client-weekly-report.mjs", "check-client-channel-readiness.mjs", "client-dashboard.html"]) {
+  for (const phrase of ["Client Dashboard", "What Changed", "What We Learned", "Value Ledger", "Value Proof Score", "valueProofScore", "Measurement Contract", "Revenue Fault Loop", "Search Trust Review", "Channel Readiness", "channelReadiness", "readyChannels", "measurementContractComplete", "Retention / Delight Pulse", "Client Confirmation", "clientConfirmed", "Tangible Improvement", "Next Action", "Approved Proof", "Missing Before Client-Ready", "check-client-readiness.mjs", "check-client-weekly-report.mjs", "check-client-channel-readiness.mjs", "client-dashboard.html"]) {
     if (!clientDashboard.includes(phrase)) failures.push(`client-facing dashboard exporter missing ${phrase}`);
   }
   const renewalReview = readFileSync("scripts/export-client-renewal-review.mjs", "utf8");
@@ -583,8 +583,8 @@ for (const file of ["scripts/prepare-prospect-send.mjs", "scripts/prepare-prospe
   const mission = readFileSync("scripts/export-daily-money-mission.mjs", "utf8");
   const batchSend = readFileSync("scripts/prepare-prospect-batch-send.mjs", "utf8");
   const sendPrep = readFileSync("scripts/prepare-prospect-send.mjs", "utf8");
-  if (!teleprompter.includes("qualityNotes") || !teleprompter.includes("notes.leak") || !mission.includes("qualityNotes") || !mission.includes("notes.ask")) {
-    failures.push("recording teleprompter and mission page must require leak, impact, fix, and ask notes");
+  if (!teleprompter.includes("qualityNotes") || !teleprompter.includes("notes.fault") || !mission.includes("qualityNotes") || !mission.includes("notes.ask")) {
+    failures.push("recording teleprompter and mission page must require fault, impact, fix, and ask notes");
   }
   for (const [fileName, content] of [
     ["scripts/export-daily-money-mission.mjs", mission],
@@ -595,7 +595,7 @@ for (const file of ["scripts/prepare-prospect-send.mjs", "scripts/prepare-prospe
       failures.push(`${fileName} must show sender-aware non-email routes while email setup is dirty`);
     }
   }
-  if (!mission.includes("cleanAsk") || !mission.includes("7-day sprint where I map this leak")) {
+  if (!mission.includes("cleanAsk") || !mission.includes("7-day sprint where I map this fault")) {
     failures.push("daily money mission must clean weak offer-name asks before writing batch lines");
   }
   if (!mission.includes("proofRunImpact") || !mission.includes("market:after-recording") || !mission.includes("export-recording-rehearsal-check.mjs")) {
@@ -638,7 +638,7 @@ for (const file of ["scripts/prepare-prospect-send.mjs", "scripts/prepare-prospe
     if (!proofRun.includes(phrase)) failures.push(`market proof run script missing ${phrase}`);
   }
   const recordings = readFileSync("scripts/update-market-proof-looms.mjs", "utf8");
-  for (const phrase of ["URL-only", "--from-clipboard", "Existing Notes Preserved", "isValidLoomUrl", "prospects/loom-links.txt", "market-recordings-update.md", "preserve existing leak, impact, fix, and ask notes"]) {
+  for (const phrase of ["URL-only", "--from-clipboard", "Existing Notes Preserved", "isValidLoomUrl", "prospects/loom-links.txt", "market-recordings-update.md", "preserve existing fault, impact, fix, and ask notes"]) {
     if (!recordings.includes(phrase)) failures.push(`market recordings updater missing ${phrase}`);
   }
   const proofRunCheck = readFileSync("scripts/check-market-proof-run.mjs", "utf8");
@@ -734,7 +734,7 @@ for (const file of retentionFiles) {
 
 for (const file of verticalFiles) {
   const content = readFileSync(file, "utf8");
-  if (!/(Why This Vertical|Common Site Leaks|Loom Hook|Rule|Default Order)/.test(content)) failures.push(`${file} missing vertical audit structure`);
+  if (!/(Why This Vertical|Common Site Faults|Loom Hook|Rule|Default Order)/.test(content)) failures.push(`${file} missing vertical audit structure`);
 }
 
 for (const file of aiVisibilityFiles) {
@@ -956,7 +956,7 @@ try {
   const input = "prospects/kit-market-recordings-input.txt";
   const reportPath = "prospects/kit-market-recordings-update.md";
   const loomLink = "https://www.loom.com/share/abcdef1234567890";
-  writeFileSync(sheet, "prospects/layerlogix|LOOM_URL|approved|specific visible leak|buyer impact from the recording|first fix shown in the recording|ask if they want the sprint plan\n");
+  writeFileSync(sheet, "prospects/layerlogix|LOOM_URL|approved|specific visible fault|buyer impact from the recording|first fix shown in the recording|ask if they want the sprint plan\n");
   writeFileSync(input, `${loomLink}\n`);
   const output = execFileSync("node", [
     "scripts/update-market-proof-looms.mjs",
@@ -970,7 +970,7 @@ try {
   const result = JSON.parse(output);
   const updatedSheet = readFileSync(sheet, "utf8");
   const report = readFileSync(reportPath, "utf8");
-  if (result.status !== "updated" || result.updated !== 1 || !updatedSheet.includes(loomLink) || !updatedSheet.includes("specific visible leak") || !report.includes("Existing Notes Preserved")) {
+  if (result.status !== "updated" || result.updated !== 1 || !updatedSheet.includes(loomLink) || !updatedSheet.includes("specific visible fault") || !report.includes("Existing Notes Preserved")) {
     failures.push("market recordings updater did not preserve proof notes while adding Loom URLs");
   }
   rmSync(sheet, { force: true });
@@ -994,7 +994,7 @@ try {
   const packagePath = "prospects/kit-after-recording-package.md";
   const outboxPath = "prospects/kit-after-recording-outbox.html";
   const loomLink = "https://www.loom.com/share/abcdef1234567890";
-  writeFileSync(sheet, "prospects/layerlogix|LOOM_URL|approved|specific visible leak|buyer impact from the recording|first fix shown in the recording|ask if they want the sprint plan\n");
+  writeFileSync(sheet, "prospects/layerlogix|LOOM_URL|approved|specific visible fault|buyer impact from the recording|first fix shown in the recording|ask if they want the sprint plan\n");
   writeFileSync(input, `${loomLink}\n`);
   const output = execFileSync("node", [
     "scripts/prepare-market-proof-after-recording.mjs",
@@ -1042,7 +1042,7 @@ try {
 try {
   const input = "prospects/kit-market-proof-run-links.txt";
   const outputPath = "prospects/kit-market-proof-run-check.md";
-  writeFileSync(input, "prospects/layerlogix|LOOM_URL|approved|specific leak|buyer impact|first fix|clean ask\n");
+  writeFileSync(input, "prospects/layerlogix|LOOM_URL|approved|specific fault|buyer impact|first fix|clean ask\n");
   const output = execFileSync("node", [
     "scripts/check-market-proof-run.mjs",
     input,
@@ -1068,7 +1068,7 @@ try {
   const input = "prospects/kit-market-proof-cockpit-links.txt";
   const outputPath = "prospects/kit-market-proof-cockpit.md";
   const htmlPath = "prospects/kit-market-proof-cockpit.html";
-  writeFileSync(input, "prospects/layerlogix|LOOM_URL|approved|Visible leak for buyer|Buyer impact is clear|First fix to show|Clean ask to send\n");
+  writeFileSync(input, "prospects/layerlogix|LOOM_URL|approved|Visible fault for buyer|Buyer impact is clear|First fix to show|Clean ask to send\n");
   const output = execFileSync("node", [
     "scripts/export-market-proof-cockpit.mjs",
     input,
@@ -1456,7 +1456,7 @@ try {
   if (!mission.includes("approved Loom links") || !mission.includes("data-quality=\"ask\"") || !mission.includes("qualityNotes") || !mission.includes("notes.ask") || !mission.includes("isValidLoomUrl") || !mission.includes("recording-rehearsal-check.html") || !mission.includes("market:after-recording")) {
     failures.push("daily money mission missing Loom link validation, rehearsal link, quality gate, or post-recording prep command");
   }
-  if (/^prospects\/[^|\n]+\|$/m.test(loomLinks) || /^prospects\/[^|\n]+\|LOOM_URL\|approved\|leak note\|impact note\|fix note\|ask note$/m.test(loomLinks)) {
+  if (/^prospects\/[^|\n]+\|$/m.test(loomLinks) || /^prospects\/[^|\n]+\|LOOM_URL\|approved\|fault note\|impact note\|fix note\|ask note$/m.test(loomLinks)) {
     failures.push("daily money mission rewrote the Loom sheet without prefilled proof notes");
   }
 } catch (error) {
@@ -1486,7 +1486,7 @@ try {
   });
   const result = JSON.parse(output);
   const onePager = readFileSync("growth-brain/sales/managed-it-one-page-offer.html", "utf8");
-  if (result.status !== "created" || !onePager.includes("Tangible Revenue Leak Sprint + Search Trust Layer")) {
+  if (result.status !== "created" || !onePager.includes("Tangible Revenue Fault Sprint + Search Trust Layer")) {
     failures.push("managed IT one-page offer export failed");
   }
 } catch (error) {
@@ -1546,7 +1546,7 @@ try {
   if (readinessResult.status !== "draft" || readinessResult.missing.length !== 0) {
     failures.push("client readiness check did not report a complete draft scaffold");
   }
-  if (!readinessResult.warnings.includes("Claim-proof ledger has no approved claim rows yet") || !readinessResult.warnings.includes("Delivery scorecard is not filled") || !readinessResult.warnings.includes("Conversion scorecard critical checks are not filled") || !readinessResult.warnings.includes("Sprint acceptance checklist is not complete") || !readinessResult.warnings.includes("Delivery has no filled top leak rows") || !readinessResult.warnings.includes("Delivery has no filled tangible improvement rows") || !readinessResult.warnings.includes("Implementation handoff is missing replace/with copy") || !readinessResult.warnings.includes("Week 1 report has no filled next-test rows")) {
+  if (!readinessResult.warnings.includes("Claim-proof ledger has no approved claim rows yet") || !readinessResult.warnings.includes("Delivery scorecard is not filled") || !readinessResult.warnings.includes("Conversion scorecard critical checks are not filled") || !readinessResult.warnings.includes("Sprint acceptance checklist is not complete") || !readinessResult.warnings.includes("Delivery has no filled top fault rows") || !readinessResult.warnings.includes("Delivery has no filled tangible improvement rows") || !readinessResult.warnings.includes("Implementation handoff is missing replace/with copy") || !readinessResult.warnings.includes("Week 1 report has no filled next-test rows")) {
     failures.push("client readiness check did not reject blank proof ledger, scorecard, conversion scorecard, acceptance checklist, and delivery artifacts");
   }
   const weeklyDraftOutput = execFileSync("node", ["scripts/export-client-weekly-report.mjs", "clients/kit-smoke-test", "--output=clients/kit-smoke-test/reports/week-1-report.md"], {
@@ -1586,9 +1586,9 @@ Each week, add what happened and what the next loop should learn from.
 - Waiting on client: CMS approval
 - Blocked: None
 
-## Revenue Leak Loop
+## Revenue Fault Loop
 
-| Lane | Before Leak | Fix Shipped / Handed Off | Client-Visible Value | Next Action |
+| Lane | Before Fault | Fix Shipped / Handed Off | Client-Visible Value | Next Action |
 |---|---|---|---|---|
 | Conversion | Homepage made buyers choose between too many service paths before the managed IT offer was clear | Homepage decision path handoff completed for the first managed IT CTA | The client can route higher-fit managed IT buyers to one clear next step | Test the homepage managed IT path CTA next week |
 | Search trust | Headings and FAQ support were not tied tightly to managed IT buyer questions | Drafted title/meta, heading, FAQ, and internal-link cleanup for the same page | The fixed page is easier for searchers and AI-assisted search to understand | Check Search Console query and click changes after implementation |
@@ -1785,7 +1785,7 @@ try {
   if (!badLeadScoreBlocked || !badLeadScoreReport.includes("score must use N/16 format") || !badLeadScoreReport.includes("does not match score band") || !badLeadScoreReport.includes("scoring reason must be at least 12 characters")) {
     failures.push("batch lead scoring did not block bad scores, mismatched priority, and weak reasons");
   }
-  writeFileSync("prospects/kit-good-lead-scores.txt", "prospects/kit-smoke-test|14/16|record|High-ticket MSP with a visible homepage decision leak\n");
+  writeFileSync("prospects/kit-good-lead-scores.txt", "prospects/kit-smoke-test|14/16|record|High-ticket MSP with a visible homepage decision fault\n");
   const goodLeadScoreOutput = execFileSync("node", ["scripts/batch-score-prospects.mjs", "prospects/kit-good-lead-scores.txt", "--dry-run", "--strict", "--report=prospects/kit-good-lead-score-report.md"], {
     encoding: "utf8",
     stdio: ["ignore", "pipe", "pipe"]
@@ -1814,7 +1814,7 @@ try {
 | Live service/product offer | 2 | yes |
 | Clear decision-maker or founder | 2 | yes |
 | High-ticket or repeat-purchase economics | 2 | yes |
-| Obvious architecture, copy, trust, or CTA leak | 2 | yes |
+| Obvious architecture, copy, trust, or CTA fault | 2 | yes |
 | Reviews, case studies, or customer proof exist | 2 | yes |
 | Competitors are clearer than them | 2 | yes |
 | Already spending on SEO, ads, email, or content | 1 | maybe |
@@ -1835,11 +1835,11 @@ Site architecture
 
 1. Why I picked the business: I reviewed https://kit.example.
 2. Main money page: homepage
-3. Specific leak: the homepage makes buyers choose between too many service paths before the primary managed IT offer is clear
+3. Specific fault: the homepage makes buyers choose between too many service paths before the primary managed IT offer is clear
 4. Why it matters: buyers need the first decision to be obvious before they book a call
 5. Competitor/reference contrast: clearer MSP pages route buyers by problem first, then service detail
 6. First fix: add a choose-your-path section near the first CTA
-7. Sprint pitch: Tangible Revenue Leak Sprint + Search Trust Layer
+7. Sprint pitch: Tangible Revenue Fault Sprint + Search Trust Layer
 `);
   writeFileSync("prospects/kit-smoke-test/outreach.md", `# Kit Smoke Test Outreach
 
@@ -1860,7 +1860,7 @@ I recorded a short audit for Kit Smoke Test. The main thing I noticed is the hom
 
 Here is the Loom: [link]
 
-If useful, I can run a Tangible Revenue Leak Sprint + Search Trust Layer where I map the leak, rewrite the key page sections, tighten the search trust layer, and give you a 30-day action plan.
+If useful, I can run a Tangible Revenue Fault Sprint + Search Trust Layer where I map the fault, rewrite the key page sections, tighten the search trust layer, and give you a 30-day action plan.
 
 If this is not useful, reply no and I will not follow up.
 
@@ -1874,13 +1874,13 @@ Nish
 
 ## What I Saw
 
-- Leak 1: the homepage makes buyers choose between too many service paths before the primary managed IT offer is clear
-- Leak 2: proof is not close enough to the first decision point
-- Leak 3: the next step could be more specific
+- Fault 1: the homepage makes buyers choose between too many service paths before the primary managed IT offer is clear
+- Fault 2: proof is not close enough to the first decision point
+- Fault 3: the next step could be more specific
 
 ## Scope
 
-- Sprint: Tangible Revenue Leak Sprint + Search Trust Layer
+- Sprint: Tangible Revenue Fault Sprint + Search Trust Layer
 - Timeline: 7 days
 - Price: $1,000 founder sprint
 
@@ -2009,10 +2009,10 @@ Generated: 2026-05-29
 
 ## Quality Notes
 
-- Visible leak: the homepage makes buyers choose between too many service paths before the primary managed IT offer is clear
+- Visible fault: the homepage makes buyers choose between too many service paths before the primary managed IT offer is clear
 - Buyer impact: buyers need the first decision to be obvious before they book a call
 - First fix: add a choose-your-path section near the first CTA
-- Clean ask: If useful, I can run a 7-day sprint where I map this leak and send the exact page structure
+- Clean ask: If useful, I can run a 7-day sprint where I map this fault and send the exact page structure
 
 ## Rule
 
@@ -2038,7 +2038,7 @@ Use these notes as the truth from the recorded Loom. Do not invent stronger clai
   if (!readFileSync("prospects/kit-smoke-test/send-package.md", "utf8").includes("Reply-Worthy Proof Gate")) {
     failures.push("prospect send prep did not include the reply-worthy proof gate");
   }
-  writeFileSync("prospects/kit-loom-links.txt", `prospects/kit-smoke-test|${loomLink}|approved|the homepage makes buyers choose between too many service paths before the primary managed IT offer is clear|buyers need the first decision to be obvious before they book a call|add a choose-your-path section near the first CTA|If useful, I can run a 7-day sprint where I map this leak and send the exact page structure\n`);
+  writeFileSync("prospects/kit-loom-links.txt", `prospects/kit-smoke-test|${loomLink}|approved|the homepage makes buyers choose between too many service paths before the primary managed IT offer is clear|buyers need the first decision to be obvious before they book a call|add a choose-your-path section near the first CTA|If useful, I can run a 7-day sprint where I map this fault and send the exact page structure\n`);
   const batchOutput = execFileSync("node", ["scripts/prepare-prospect-batch-send.mjs", "prospects/kit-loom-links.txt", "--package=prospects/kit-batch-send-package.md", "--outbox=prospects/kit-batch-outbox.html"], {
     encoding: "utf8",
     stdio: ["ignore", "pipe", "pipe"]
@@ -2051,7 +2051,7 @@ Use these notes as the truth from the recorded Loom. Do not invent stronger clai
   if (!batchPackage.includes("Do not reuse the approved Loom-link sheet as the sent sheet")) {
     failures.push("prospect batch send package missing outbox sent-sheet guard");
   }
-  const noteRow = `prospects/kit-smoke-test|${loomLink}|approved|Leak is visible on the homepage|Buyer impact is clear enough|First fix is the homepage hero|Clean ask is a short reply\n`;
+  const noteRow = `prospects/kit-smoke-test|${loomLink}|approved|Fault is visible on the homepage|Buyer impact is clear enough|First fix is the homepage hero|Clean ask is a short reply\n`;
   execFileSync("pbcopy", {
     input: noteRow,
     stdio: ["pipe", "ignore", "pipe"]
@@ -2188,7 +2188,7 @@ Use these notes as the truth from the recorded Loom. Do not invent stronger clai
     failures.push("recording teleprompter smoke test failed");
   }
   const teleprompter = readFileSync("prospects/kit-recording-teleprompter.html", "utf8");
-  if (!teleprompter.includes("approved Looms") || !teleprompter.includes("data-quality=\"ask\"") || !teleprompter.includes("qualityNotes") || !teleprompter.includes("notes.leak") || !teleprompter.includes("Complete Loom checks and notes") || !teleprompter.includes("Start 3:00") || !teleprompter.includes("Send route:") || !teleprompter.includes("Channel rule:") || !teleprompter.includes("Recommended channel now:") || !teleprompter.includes("Contact Plan")) {
+  if (!teleprompter.includes("approved Looms") || !teleprompter.includes("data-quality=\"ask\"") || !teleprompter.includes("qualityNotes") || !teleprompter.includes("notes.fault") || !teleprompter.includes("Complete Loom checks and notes") || !teleprompter.includes("Start 3:00") || !teleprompter.includes("Send route:") || !teleprompter.includes("Channel rule:") || !teleprompter.includes("Recommended channel now:") || !teleprompter.includes("Contact Plan")) {
     failures.push("recording teleprompter missing Loom validation, quality gate, timer, send route, or channel guidance");
   }
   rmSync("prospects/kit-recording-teleprompter.html", { force: true });

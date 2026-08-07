@@ -2,13 +2,13 @@
 
 ## Active price
 
-The first 3 clients receive exactly the **$1,000 founder pilot** for the **7-Day Website Revenue Leak Fix Sprint**. The scope is one highest-leverage page.
+The first 3 clients receive exactly the **$1,000 founder pilot** for **The Website Correction**. The scope is one highest-leverage page.
 
 Do not quote a standard tier, monthly package, recurring package, or custom bundle during this pilot. Extra pages and extra revisions require a separate reviewed product decision; they are not silent scope additions.
 
 ## What the price includes
 
-Leak map, rewrite or redesign, one implementation pass or dev-ready handoff, search-trust basics, before/after proof, Loom, measurement plan, one revision, and 14-day implementation tracking.
+Fault map, rewrite or redesign, one implementation pass or dev-ready handoff, search-trust basics, before/after proof, Loom, measurement plan, one revision, and 14-day implementation tracking.
 
 Day 0 starts only after payment, required context, an approval owner, and an implementation owner. Client delay pauses the clock.
 

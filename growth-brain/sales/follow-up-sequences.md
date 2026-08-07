@@ -1,6 +1,6 @@
 # Follow-Up Sequences
 
-Active product: **7-Day Website Revenue Leak Fix Sprint** for one highest-leverage page. The first 3 clients are exactly **$1,000 founder pilots**. Do not guarantee revenue, rankings, ROAS, conversion, booked-call, or sales-volume outcomes. Automation may prepare follow-ups, but a human must review before any send, continuation, or renewal decision.
+Active product: **The Website Correction** for one highest-leverage page. The first 3 clients are exactly **$1,000 founder pilots**. Do not guarantee revenue, rankings, ROAS, conversion, booked-call, or sales-volume outcomes. Automation may prepare follow-ups, but a human must review before any send, continuation, or renewal decision.
 
 ## After Sending Loom
 
@@ -14,7 +14,7 @@ Day 2:
 
 Day 5:
 
-"Quick bump. The main thing I would fix first is [specific leak]. If useful, I can send the 7-day sprint scope."
+"Quick bump. The main thing I would fix first is [specific fault]. If useful, I can send the 7-day sprint scope."
 
 Day 10:
 

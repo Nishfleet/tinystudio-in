@@ -8,7 +8,7 @@ Make money quickly by selling a useful, productized marketing ops service that c
 
 TinyStudio is not a generic AI agency. It is a Growth Brain operator.
 
-The client does not buy "AI". They buy a 7-Day Site Revenue Leak Sprint that turns their scattered business context into better page copy, ad ideas, email drafts, competitor awareness, and a weekly learning loop.
+The client does not buy "AI". They buy a 7-Day Site Revenue Fault Sprint that turns their scattered business context into better page copy, ad ideas, email drafts, competitor awareness, and a weekly learning loop.
 
 ## Why This Can Work Now
 
@@ -32,7 +32,7 @@ The client does not buy "AI". They buy a 7-Day Site Revenue Leak Sprint that tur
 | Stage | Offer | Price |
 |---|---|---:|
 | Entry | Loom audit | Free |
-| First sale | 7-Day Site Revenue Leak Sprint | `$750-$2,500` |
+| First sale | 7-Day Site Revenue Fault Sprint | `$750-$2,500` |
 | Continuation | Weekly Growth Desk | `$1,500+/month` |
 | Later | Software-assisted dashboard | Not now |
 
@@ -71,7 +71,7 @@ For B2B and local-service clients, the fastest useful audit is often not "write 
 - add FAQ coverage for branded and unbranded questions
 - capture phrases customers and AI/search surfaces already associate with the category
 
-This becomes a strong Loom audit because the prospect can see the leak immediately.
+This becomes a strong Loom audit because the prospect can see the fault immediately.
 
 ## Sales Math
 

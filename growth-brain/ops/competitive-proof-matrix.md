@@ -1,6 +1,6 @@
 # Market Parity Benchmark 2026
 
-Generated: 2026-07-14
+Generated: 2026-08-06
 
 ## Purpose
 
@@ -14,7 +14,7 @@ TinyStudio is not trying to beat full-service enterprise CRO agencies on long st
 - boutique SEO/site-architecture audits
 - paid search/social and lifecycle/email retainers
 - AI-assisted marketing operations retainers
-- human-reviewed website revenue leak sprints for founder-led Managed IT, MSP, and cybersecurity companies
+- human-reviewed website revenue fault sprints for founder-led Managed IT, MSP, and cybersecurity companies
 
 ## Decision Rule
 
@@ -22,7 +22,7 @@ Use this benchmark as an owner dashboard for market claims. If a row says "do no
 
 ## Market Price Anchors
 
-Generated: 2026-07-14.
+Generated: 2026-08-06.
 Market anchors last checked: 2026-05-29.
 
 Current public market signals:
@@ -61,7 +61,7 @@ Current public market signals:
 
 ## TinyStudio Pricing Interpretation
 
-- The first three clients receive exactly the $1,000 founder pilot for one 7-Day Website Revenue Leak Fix Sprint.
+- The first three clients receive exactly the $1,000 founder pilot for one The Website Correction.
 - No alternate package, recurring retainer, software product, or channel-spend service is active in this benchmark.
 - Day 0 starts only after payment, required context, an approval owner, and an implementation owner; client delay pauses the clock.
 
@@ -73,7 +73,7 @@ TinyStudio must prove these advantages:
 |---|---|---|
 | Speed | 2-6 week audit/report | 7-day sprint with implementation-ready assets |
 | Specificity | Generic best-practice checklist | Approved application context, real page evidence, and claim-safe customer language |
-| Output | PDF recommendations | Leak map, page fix, implementation handoff, proof, and measurement plan |
+| Output | PDF recommendations | Fault map, page fix, implementation handoff, proof, and measurement plan |
 | Channel breadth | Sell every channel by default | Add only ready channels with access, economics, measurement, and approval |
 | Trust | Loose claims | Claim-proof ledger and approval gates |
 | Automation | Manual agency ops | Repeatable scripts, generated cockpits, batch prep, readiness checks |

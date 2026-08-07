@@ -4,7 +4,7 @@ import {fileURLToPath} from "node:url"
 import {atomicWrite, ensureDir, NO_GUARANTEE_CLIENT_SENTENCE, readJson, resolveRepoPath, validateAffirmativePaymentEvidence, validateApplication} from "./service-contract.mjs"
 
 export const CLIENT_SCAFFOLD_VERSION = 1
-export const FOUNDER_PILOT = Object.freeze({offerName: "7-Day Website Revenue Leak Fix Sprint", offerPriceUsd: 1000, pricingCohort: "founder-pilot", capacity: 3})
+export const FOUNDER_PILOT = Object.freeze({offerName: "The Website Correction", offerPriceUsd: 1000, pricingCohort: "founder-pilot", capacity: 3})
 export const CLIENT_SCAFFOLD_FILES = Object.freeze([
 	"intake.md",
 	"sprint-plan.md",
@@ -68,7 +68,7 @@ function createIfMissing(repoRoot, clientFolder, relativePath, content, created)
 
 function populatedDelivery(application, day0) {
 	return source("growth-brain/delivery-template.md")
-		.replace("7-Day Website Revenue Leak Fix Sprint", day0.offerName)
+		.replace("The Website Correction", day0.offerName)
 		.replace(/\$1,000 founder pilot(s?)/g, (_match, plural) => `${founderPilotPrice(day0)}${plural}`)
 		.replace("# Client Delivery Template", `# ${application.applicant.company} Delivery`)
 		.replace("- Company:", `- Company: ${application.applicant.company}`)
@@ -110,7 +110,7 @@ function intake(application, day0) {
 
 ## Application Context
 
-- Suspected leak: ${applicant.suspectedLeak}
+- Suspected fault: ${applicant.suspectedLeak}
 - Desired outcome: ${applicant.desiredOutcome}
 - Implementation ability: ${applicant.implementationAbility}
 
@@ -132,9 +132,9 @@ function sprintPlan(application) {
 ## Sprint scope
 
 - Buyer: founder-led Managed IT/MSP/cybersecurity company with a live site and high-value offer.
-- Product: 7-Day Website Revenue Leak Fix Sprint.
+- Product: The Website Correction.
 - Highest-leverage page:
-- Starting leak hypothesis: ${application.applicant.suspectedLeak}
+- Starting fault hypothesis: ${application.applicant.suspectedLeak}
 
 ## Sprint Checklist
 
@@ -142,7 +142,7 @@ Use \`growth-brain/sprint-checklist.md\`.
 
 ## Deliverables
 
-- Leak map:
+- Fault map:
 - Rewrite or redesign:
 - One implementation pass or dev-ready handoff:
 - Search-trust basics:
@@ -180,7 +180,7 @@ Subject: ${application.applicant.company} sprint kickoff
 
 Hey ${day0.approvalOwner},
 
-Thanks for approving the 7-Day Website Revenue Leak Fix Sprint and completing the Day 0 prerequisites.
+Thanks for approving The Website Correction and completing the Day 0 prerequisites.
 
 - Scope: one highest-leverage page
 - Website: ${application.applicant.website}
@@ -188,7 +188,7 @@ Thanks for approving the 7-Day Website Revenue Leak Fix Sprint and completing th
 - Day 0: ${day0.day0StartedAt}
 - Working-day deadline: ${day0.deadlineAt}
 
-The sprint includes a prioritized leak map, rewrite or redesign, one implementation pass or dev-ready handoff, search-trust basics, before/after proof, a Loom, a measurement plan, one revision, and 14-day implementation tracking.
+The sprint includes a prioritized fault map, rewrite or redesign, one implementation pass or dev-ready handoff, search-trust basics, before/after proof, a Loom, a measurement plan, one revision, and 14-day implementation tracking.
 
 ${NO_GUARANTEE_CLIENT_SENTENCE} This draft must pass the human client-facing review gate before it is sent.
 `

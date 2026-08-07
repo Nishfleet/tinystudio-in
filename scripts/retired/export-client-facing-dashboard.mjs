@@ -151,11 +151,11 @@ const clientSawDelta = bulletValue(report, "Client saw delta") || "";
 const clientUnderstoodValue = bulletValue(report, "Client understood value") || "";
 const clientApprovedNextAction = bulletValue(report, "Client approved next action") || "";
 const continueRetainSignal = bulletValue(report, "Continue / retain signal") || "";
-const topLeak = firstFilledTableRow(delivery, "Top Leaks", [1, 2, 3]);
+const topLeak = firstFilledTableRow(delivery, "Top Faults", [1, 2, 3]);
 const tangibleImprovement = firstFilledTableRow(delivery, "Tangible Improvements", [1, 2, 3, 4, 5]);
 const nextTest = firstFilledTableRow(report, "Next Tests", [1, 2, 3, 4]);
 const reportMeasurementContract = firstFilledMeasurementRow(report);
-const revenueLeakRows = filledTableRows(report, "Revenue Leak Loop", [1, 2, 3, 4]);
+const revenueLeakRows = filledTableRows(report, "Revenue Fault Loop", [1, 2, 3, 4]);
 const searchTrustRows = filledTableRows(report, "Search Trust Review", [1, 2, 3]);
 const actionPlan = firstFilledTableRow(delivery, "30-Day Action Plan", [1, 2, 3]);
 const brainLearning = firstFilledTableRow(weeklyLearnings, "Log", [1, 3, 4]);
@@ -215,9 +215,9 @@ const valueLedger = [
     next: tangibleImprovement[5] || nextAction
   },
   {
-    area: "Leak clarity",
-    proof: tangibleImprovement[3] || (topLeak.length ? topLeak[2] : "Top leak pending"),
-    clientValue: topLeak.length ? topLeak[3] : "Fill the delivery leak table",
+    area: "Fault clarity",
+    proof: tangibleImprovement[3] || (topLeak.length ? topLeak[2] : "Top fault pending"),
+    clientValue: topLeak.length ? topLeak[3] : "Fill the delivery fault table",
     next: actionPlan[1] || nextAction
   },
   {
@@ -337,7 +337,7 @@ const measurementContractRows = [
 
 const revenueLeakMarkdownRows = revenueLeakRows.length
   ? revenueLeakRows.map((cells) => `| ${cells[0]} | ${cells[1]} | ${cells[2]} | ${cells[3]} | ${cells[4]} |`).join("\n")
-  : "| Pending | Add the before leak | Add the fix shipped or handed off | Add client-visible value | Add next action |";
+  : "| Pending | Add the before fault | Add the fix shipped or handed off | Add client-visible value | Add next action |";
 
 const searchTrustMarkdownRows = searchTrustRows.length
   ? searchTrustRows.map((cells) => `| ${cells[0]} | ${cells[1]} | ${cells[2]} | ${cells[3]} |`).join("\n")
@@ -397,9 +397,9 @@ ${tangibleImprovementRows}
 |---|---|
 ${measurementContractRows}
 
-## Revenue Leak Loop
+## Revenue Fault Loop
 
-| Lane | Before Leak | Fix Shipped / Handed Off | Client-Visible Value | Next Action |
+| Lane | Before Fault | Fix Shipped / Handed Off | Client-Visible Value | Next Action |
 |---|---|---|---|---|
 ${revenueLeakMarkdownRows}
 
@@ -453,9 +453,9 @@ ${valueProofScoreRows}
 - Client approved next action: ${clientApprovedNextAction || "Pending. Confirm the next action or test."}
 - Continue / retain signal: ${continueRetainSignal || "Pending. Ask whether this lane is worth continuing."}
 
-## Top Leak
+## Top Fault
 
-${topLeak.length ? `- Leak: ${topLeak[1]}\n- Evidence: ${topLeak[2]}\n- Fix: ${topLeak[3]}` : "- Pending. Fill the delivery top-leaks table first."}
+${topLeak.length ? `- Fault: ${topLeak[1]}\n- Evidence: ${topLeak[2]}\n- Fix: ${topLeak[3]}` : "- Pending. Fill the delivery top-faults table first."}
 
 ## Tangible Improvement
 
@@ -544,7 +544,7 @@ const revenueLeakHtml = revenueLeakRows.length
           <td>${htmlEscape(cells[3])}</td>
           <td>${htmlEscape(cells[4])}</td>
         </tr>`).join("")
-  : `<tr><td>Pending</td><td>Add the before leak.</td><td>Add the fix shipped or handed off.</td><td>Add client-visible value.</td><td>Add next action.</td></tr>`;
+  : `<tr><td>Pending</td><td>Add the before fault.</td><td>Add the fix shipped or handed off.</td><td>Add client-visible value.</td><td>Add next action.</td></tr>`;
 
 const searchTrustHtml = searchTrustRows.length
   ? searchTrustRows.map((cells) => `
@@ -630,8 +630,8 @@ const html = `<!doctype html>
       </tbody></table>
     </section>
     <section>
-      <h2>Revenue Leak Loop</h2>
-      <table><thead><tr><th>Lane</th><th>Before Leak</th><th>Fix</th><th>Client Value</th><th>Next Action</th></tr></thead><tbody>${revenueLeakHtml}
+      <h2>Revenue Fault Loop</h2>
+      <table><thead><tr><th>Lane</th><th>Before Fault</th><th>Fix</th><th>Client Value</th><th>Next Action</th></tr></thead><tbody>${revenueLeakHtml}
       </tbody></table>
     </section>
     <section>
@@ -687,8 +687,8 @@ const html = `<!doctype html>
       </ul>
     </section>
     <section>
-      <h2>Top Leak</h2>
-      ${topLeak.length ? `<p><b>${htmlEscape(topLeak[1])}</b></p><p>${htmlEscape(topLeak[2])}</p><p><b>Fix:</b> ${htmlEscape(topLeak[3])}</p>` : "<p>Pending. Fill the delivery top-leaks table first.</p>"}
+      <h2>Top Fault</h2>
+      ${topLeak.length ? `<p><b>${htmlEscape(topLeak[1])}</b></p><p>${htmlEscape(topLeak[2])}</p><p><b>Fix:</b> ${htmlEscape(topLeak[3])}</p>` : "<p>Pending. Fill the delivery top-faults table first.</p>"}
     </section>
     <section>
       <h2>Tangible Improvement</h2>

@@ -73,7 +73,7 @@ const activeWorkflowEntries = new Set([
 ])
 
 const activeWorkflowRequirements = [
-	["canonical product", /human-reviewed[\s\S]{0,120}7-Day Website Revenue Leak Fix Sprint/i],
+	["canonical product", /human-reviewed[\s\S]{0,120}The Website Correction/i],
 	["canonical buyer", /founder-led Managed IT\/MSP\/cybersecurity/i],
 	["canonical one-page scope", /one highest-leverage page/i]
 ]
@@ -228,7 +228,7 @@ for (const path of activeGeneratorSources) {
 		continue
 	}
 	const content = readFileSync(path, "utf8")
-	for (const pattern of [/Tangible Revenue Leak Sprint/i, /30[- ]day (?:action )?plan/i, /Weekly Growth Desk|Full-Stack Growth Desk|Operator[- ]Led Growth Pod|operator pod/i, /rewrite\/redesign|rewritten and redesigned/i, /ad angles? and email\/sms|ads and email\/sms/i]) {
+	for (const pattern of [/Tangible Revenue Fault Sprint/i, /30[- ]day (?:action )?plan/i, /Weekly Growth Desk|Full-Stack Growth Desk|Operator[- ]Led Growth Pod|operator pod/i, /rewrite\/redesign|rewritten and redesigned/i, /ad angles? and email\/sms|ads and email\/sms/i]) {
 		const match = content.match(pattern)
 		if (match) failures.push(`${path}: stale active generator truth '${match[0]}'`)
 	}
@@ -344,10 +344,10 @@ for (const retiredCommand of ["client:dashboard", "client:weekly-report", "clien
 const corpus = [...contents.values()].join("\n").toLowerCase()
 const required = [
 	["buyer", /founder-led managed it\/msp\/cybersecurity companies with a live site and high-value offer/],
-	["product", /7-day website revenue leak fix sprint/],
+	["product", /the website correction/],
 	["first-3 price", /first 3 clients[\s\S]{0,100}\$1,000 founder pilot/],
 	["scope", /one highest-leverage page/],
-	["leak map", /leak map/],
+	["fault map", /fault map/],
 	["rewrite or redesign", /rewrite or redesign/],
 	["implementation pass or dev-ready handoff", /one implementation pass (?:or|\*\*or\*\*) a? ?dev-ready handoff|one implementation pass or dev-ready handoff/],
 	["search-trust basics", /search-trust basics/],
@@ -392,7 +392,7 @@ for (const [label, pattern] of required) {
 for (const [path, content] of contents) {
 	const lower = content.toLowerCase()
 	for (const [label, pattern] of [
-		["product", /7-day website revenue leak fix sprint/],
+		["product", /the website correction/],
 		["scope", /one highest-leverage page/],
 		["pilot price", /\$1,000 founder pilot/],
 		["no-guarantee boundary", /(?:no|does not|do not guarantee)[\s\S]{0,180}(?:revenue|ranking|roas|conversion|booked-call)/],

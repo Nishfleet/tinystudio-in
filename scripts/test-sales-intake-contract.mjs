@@ -90,7 +90,7 @@ try {
 	writeJson(join(salesProspect, "metadata.json"), {name: "Sales Contract Fixture", website: "https://example.com/managed-services", vertical: "Managed IT", contact: "Founder"})
 	writeJson(join(salesProspect, "pipeline.json"), {stage: "call-booked"})
 	writeFileSync(join(salesProspect, "lead-score.md"), "- Score: 14/16\n- Priority: record\n")
-	writeFileSync(join(salesProspect, "loom-outline.md"), "1. Company: Sales Contract Fixture\n2. Main page: https://example.com/managed-services\n3. Revenue leak: unclear action\n4. Evidence: competing actions\n5. Why it matters: unclear path\n6. First fix: one reviewed action\n")
+	writeFileSync(join(salesProspect, "loom-outline.md"), "1. Company: Sales Contract Fixture\n2. Main page: https://example.com/managed-services\n3. Revenue fault: unclear action\n4. Evidence: competing actions\n5. Why it matters: unclear path\n6. First fix: one reviewed action\n")
 	writeFileSync(join(salesProspect, "buyer-room.md"), "## Scope\n- Sprint: Full-Stack Growth Desk\n- Scope: three pages\n- Timeline: 30 days\n- Price: $500\n")
 	writeFileSync(join(salesProspect, "value-calculator.md"), "## Payback\n- Payback customers needed: one\n")
 
@@ -106,7 +106,7 @@ try {
 	eq(callPrep.status, 0)
 	eq(JSON.parse(callPrep.stdout).pilotSlotsRemaining, 3)
 	const callPrepOutput = readFileSync(join(salesProspect, "sales-call-prep.md"), "utf8")
-	for (const expected of ["- Sprint: 7-Day Website Revenue Leak Fix Sprint", "- Scope: one highest-leverage page", "- Timeline: 7 working days from Day 0", "- Price: $1,000 founder pilot"]) mat(callPrepOutput, new RegExp(expected.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")))
+	for (const expected of ["- Sprint: The Website Correction", "- Scope: one highest-leverage page", "- Timeline: 7 working days from Day 0", "- Price: $1,000 founder pilot"]) mat(callPrepOutput, new RegExp(expected.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")))
 	dnm(callPrepOutput, /Full-Stack Growth Desk|three pages|30 days|\$500/)
 
 	expectZeroWriteFailure("scripts/prepare-prospect-close-package.mjs", [salesProspectArg, "--price", "$500", "--payment", "https://pay.example.com/founder-pilot"], /price is immutable during the founder pilot: \$1,000 founder pilot/)

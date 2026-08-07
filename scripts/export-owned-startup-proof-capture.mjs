@@ -36,10 +36,10 @@ const startups = [
         proofType: "public source"
       }
     ],
-    topLeak: "The product had a useful preview-first mechanic, but the buyer promise could read as generic file conversion before the accounting wedge became obvious.",
+    topLeak: "The product had a useful preview-first mechanic, but its buyer-facing positioning could read as generic file conversion before the accounting wedge was obvious.",
     exactFix: "Lead with the bank-statement/accounting workflow and keep broader conversion routes as secondary support.",
     shipped: "Drafted the owned proof packet and tangible improvement ledger for the accounting conversion wedge.",
-    learning: "Specific buyer paths make the preview-first mechanic easier to value than a broad file-conversion promise.",
+    learning: "Specific buyer paths let the preview-first mechanic show its worth more clearly than broad file-conversion positioning.",
     unclear: "Need live conversion data to prove whether accounting traffic starts more uploads."
   },
   {
@@ -224,8 +224,8 @@ function fillDelivery(startup, statuses) {
     "- Proof status: owned-startup draft proof only; not external market proof."
   ].join("\n"));
 
-  markdown = replaceSection(markdown, "Top Leaks", [
-    "| Priority | Leak | Evidence | Fix |",
+  markdown = replaceSection(markdown, "Top Faults", [
+    "| Priority | Fault | Evidence | Fix |",
     "|---|---|---|---|",
     `| 1 | ${startup.topLeak} | ${proofSource} | ${startup.exactFix} |`,
     "| 2 | External demand is still unproven. | No paid external client proof yet. | Record and send the first five Looms. |",

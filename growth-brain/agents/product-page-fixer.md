@@ -30,7 +30,7 @@ Turn a weak product page into a clearer buying page using the client brain.
 
 ## Output
 
-- Top 5 leaks
+- Top 5 faults
 - Rewritten hero
 - Rewritten product promise
 - Proof section notes
@@ -50,4 +50,4 @@ Track product page conversion rate, add-to-cart rate, checkout starts, revenue, 
 
 ## Prompt
 
-"Using the client brain and the conversion optimization playbook, audit this product page. Score the critical checks, give me the top conversion leaks, then rewrite the hero, promise, proof, FAQ, and CTA. Use only facts from the provided context. Mark anything that needs client confirmation."
+"Using the client brain and the conversion optimization playbook, audit this product page. Score the critical checks, give me the top conversion faults, then rewrite the hero, promise, proof, FAQ, and CTA. Use only facts from the provided context. Mark anything that needs client confirmation."

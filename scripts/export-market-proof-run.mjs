@@ -148,7 +148,7 @@ const prospects = listFolders("prospects").map((path) => {
     stage: pipeline.stage || "new",
     score: lineValue(leadScore, /^- Score:[ \t]*([^\n]*)$/m, "-"),
     priority: lineValue(leadScore, /^- Priority:[ \t]*([^\n]*)$/m, "-"),
-    leak: lineValue(loomOutline, /^3\. [^\n:]+:[ \t]*([^\n]*)$/m, ""),
+    fault: lineValue(loomOutline, /^3\. [^\n:]+:[ \t]*([^\n]*)$/m, ""),
     impact: proofRunImpact({
       outlineImpact: lineValue(loomOutline, /^4\. [^\n:]+:[ \t]*([^\n]*)$/m, ""),
       sharpness,
@@ -174,7 +174,7 @@ const recordingBatch = prospects
 
 const requirementByArea = {
   "Sender trust": "Run `npm run send:configure -- --physical-address=\"...\" --dkim-selector=... --dry-run` with the real values, then apply it without `--dry-run`. Until then, use contact forms or DMs.",
-  "Market proof": "Record and send 5 approved Looms with leak, impact, fix, and ask notes.",
+  "Market proof": "Record and send 5 approved Looms with fault, impact, fix, and ask notes.",
   "Sales proof": "Capture at least 1 external consented application, human fit approval, and validated paid Day 0 record.",
   "Delivery proof": "Complete hash-bound human approval, implementation acceptance, approved claims, scorecard, and client readiness for that paid client.",
   "Retention proof": "Complete the 14-day tracking gate with hash-bound evidence and human-approved customer usefulness and acceptance."
@@ -185,8 +185,8 @@ const blockerRows = parity.blockers.length
   : "| - | - | No blockers. |";
 
 const loomSheetRows = recordingBatch.length
-  ? recordingBatch.map((prospect) => `${prospect.path}|LOOM_URL|approved|${cleanSheetNote(prospect.leak, "specific visible leak")}|${cleanSheetNote(prospect.impact, "buyer impact from the recording")}|${cleanSheetNote(prospect.fix, "first fix shown in the recording")}|${cleanSheetNote(prospect.ask, "ask if they want the sprint plan")}`).join("\n")
-  : "prospects/prospect-slug|https://www.loom.com/share/...|approved|specific leak|buyer impact|first fix|clean ask";
+  ? recordingBatch.map((prospect) => `${prospect.path}|LOOM_URL|approved|${cleanSheetNote(prospect.fault, "specific visible fault")}|${cleanSheetNote(prospect.impact, "buyer impact from the recording")}|${cleanSheetNote(prospect.fix, "first fix shown in the recording")}|${cleanSheetNote(prospect.ask, "ask if they want the sprint plan")}`).join("\n")
+  : "prospects/prospect-slug|https://www.loom.com/share/...|approved|specific fault|buyer impact|first fix|clean ask";
 
 const markdown = `# 11/10 Proof Run
 
@@ -212,11 +212,11 @@ ${blockerRows}
 npm run growth:start -- --view=record
 \`\`\`
 
-2. Record the five-item batch in the recording view. The folders and approved notes are in \`${loomLinksPath}\`. Each Loom shows one leak, its buyer impact, the first fix, and one ask.
+2. Record the five-item batch in the recording view. The folders and approved notes are in \`${loomLinksPath}\`. Each Loom shows one fault, its buyer impact, the first fix, and one ask.
 
 3. Paste the recorded Loom URLs into the post-recording prep command:
 
-The prefilled sheet is in \`${loomLinksPath}\`; it is the single source for approved leak, impact, fix, and ask notes. After recording, copy five Loom URLs in the same order, then run:
+The prefilled sheet is in \`${loomLinksPath}\`; it is the single source for approved fault, impact, fix, and ask notes. After recording, copy five Loom URLs in the same order, then run:
 
 \`\`\`bash
 npm run market:after-recording -- --from-clipboard
@@ -272,7 +272,7 @@ const existingLoomRows = read(loomLinksPath).split("\n").map((line) => line.trim
 const existingLoomPaths = new Set(existingLoomRows.map((line) => line.split("|")[0].trim()));
 const generatedLoomRows = recordingBatch.length ? loomSheetRows.split("\n").filter((line) => !existingLoomPaths.has(line.split("|")[0].trim())) : existingLoomRows.length ? [] : [loomSheetRows];
 const mergedLoomRows = [...existingLoomRows, ...generatedLoomRows];
-writeFileSync(loomLinksPath, `# Replace LOOM_URL with each real Loom share link, or run: npm run market:after-recording -- --from-clipboard\n# Fast format after recording: paste either URL-only lines in this exact order, or prospects/prospect-slug|https://www.loom.com/share/...\n# Full format still works: prospects/prospect-slug|https://www.loom.com/share/...|approved|leak note|impact note|fix note|ask note\n\n${mergedLoomRows.join("\n")}\n`);
+writeFileSync(loomLinksPath, `# Replace LOOM_URL with each real Loom share link, or run: npm run market:after-recording -- --from-clipboard\n# Fast format after recording: paste either URL-only lines in this exact order, or prospects/prospect-slug|https://www.loom.com/share/...\n# Full format still works: prospects/prospect-slug|https://www.loom.com/share/...|approved|fault note|impact note|fix note|ask note\n\n${mergedLoomRows.join("\n")}\n`);
 
 console.log(JSON.stringify({
   status: "created",

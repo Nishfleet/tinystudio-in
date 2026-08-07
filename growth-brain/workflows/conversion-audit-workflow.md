@@ -2,11 +2,11 @@
 
 ## Goal
 
-Turn conversion heuristics into a repeatable delivery gate for the human-reviewed **7-Day Website Revenue Leak Fix Sprint**: one highest-leverage page for a founder-led Managed IT/MSP/cybersecurity company.
+Turn conversion heuristics into a repeatable delivery gate for the human-reviewed **The Website Correction**: one highest-leverage page for a founder-led Managed IT/MSP/cybersecurity company.
 
 ## Order Of Operations
 
-1. Confirm the exact highest-leverage website page selected in the approved leak map.
+1. Confirm the exact highest-leverage website page selected in the approved fault map.
 2. Fill `quality/conversion-optimization-scorecard.md` in the client folder.
 3. Check the first five critical items before writing copy.
 4. Rank the top 5 failures by buyer impact.

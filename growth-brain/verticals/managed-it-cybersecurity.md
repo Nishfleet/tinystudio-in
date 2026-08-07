@@ -7,7 +7,7 @@
 - Buyers need trust before contacting sales.
 - Search intent is usually valuable and specific.
 
-## Common Site Leaks
+## Common Site Faults
 
 - Homepage tries to sell managed IT, cybersecurity, compliance, cloud, and helpdesk equally.
 - Service pages are thin or duplicated.

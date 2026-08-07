@@ -62,7 +62,7 @@ const weeklyLearnings = read("brain/weekly-learnings.md");
 const approvedClaims = approvedClaimCount(claimLedger);
 const conversionApproved = /^- Approved:[ \t]*(yes|approved)$/im.test(conversion);
 const tangibleImprovementReady = hasFilledTableRow(delivery, "Tangible Improvements", [1, 2, 3, 4, 5]);
-const topLeakReady = hasFilledTableRow(delivery, "Top Leaks", [1, 2, 3]);
+const topLeakReady = hasFilledTableRow(delivery, "Top Faults", [1, 2, 3]);
 const searchTrustScorecardReady = tableRows(section(conversion, "Search Trust Layer"))
   .filter((cells) => /^(On-site search trust|Off-site trust\/distribution)$/i.test(cells[0] || ""))
   .length >= 2 && tableRows(section(conversion, "Search Trust Layer"))
@@ -70,7 +70,7 @@ const searchTrustScorecardReady = tableRows(section(conversion, "Search Trust La
   .every((cells) => [1, 2, 3, 4].every((index) => meaningful(cells[index], 8)));
 const weeklySearchTrustReady = hasFilledTableRow(report, "Search Trust Review", [1, 2, 3]);
 const measurementReady = hasFilledTableRow(report, "Measurement Contract", [0, 1, 2, 3, 4, 5]);
-const revenueLeakReady = hasFilledTableRow(report, "Revenue Leak Loop", [1, 2, 3, 4]);
+const revenueLeakReady = hasFilledTableRow(report, "Revenue Fault Loop", [1, 2, 3, 4]);
 const weeklyLearningReady = hasFilledTableRow(weeklyLearnings, "Log", [1, 3, 4]);
 const clientConfirmationReady = ["Client saw delta", "Client understood value", "Client approved next action", "Continue / retain signal"]
   .every((label) => meaningful(bulletValue(report, label), 8));
@@ -89,13 +89,13 @@ const socialReady = hasBrandVoice && approvedClaims > 0 && clientConfirmationRea
 const rows = [
   row("CRO / conversion", croReady, [
     "ready - priority page/funnel and buyer action documented",
-    "ready - top leak and client-visible value are filled",
+    "ready - top fault and client-visible value are filled",
     "ready - tangible improvement has next measurement",
     "ready - conversion scorecard and proof are approved",
     "ready - run weekly conversion loop"
   ], [
     "pending - page/funnel or buyer action needs proof",
-    "pending - top leak and value are not complete",
+    "pending - top fault and value are not complete",
     "pending - next measurement is missing",
     "pending - conversion approval incomplete",
     "blocked - finish conversion scorecard before selling this channel"

@@ -2,7 +2,7 @@
 
 ## Goal
 
-Close the first 1-3 paid Site Revenue Leak Sprints.
+Close the first 1-3 paid Site Revenue Fault Sprints.
 
 ## Day 1
 
@@ -58,7 +58,7 @@ Close the first 1-3 paid Site Revenue Leak Sprints.
 
 ## Retainer Script
 
-"The sprint found the leaks and gave you the first fixes. The monthly version is where I run the weekly growth loop for you: review performance, pick the next best action, ship one improvement, update the brain, and keep competitor/search visibility notes current."
+"The sprint found the faults and gave you the first fixes. The monthly version is where I run the weekly growth loop for you: review performance, pick the next best action, ship one improvement, update the brain, and keep competitor/search visibility notes current."
 
 ## Daily Scoreboard
 

@@ -10,7 +10,7 @@ Before Day 1:
 Day 1:
 
 - Confirm intake received.
-- Send top 3 leak hypotheses.
+- Send top 3 fault hypotheses.
 
 Day 3:
 

@@ -62,7 +62,7 @@ Use this as the running list of optimization opportunities. Each item must impro
 | P0 | Full-channel outbox stage buttons | Lets individual Mark Sent commands use contact form, DM, LinkedIn, X, phone, mixed, other, or email without falling back to the wrong route | Built |
 | P0 | Recording script generator | Turns a filled Loom outline into a 2-3 minute talk track | Built |
 | P0 | Channel-aware recording scripts | Keeps after-recording commands aligned with channel memory so recorded Looms are not marked sent without route data | Built |
-| P0 | 2-3 minute cold Loom default | Cuts recording time while keeping each audit focused on one leak, one impact, one fix, and one ask | Built |
+| P0 | 2-3 minute cold Loom default | Cuts recording time while keeping each audit focused on one fault, one impact, one fix, and one ask | Built |
 | P0 | Recording site preflight | Checks the queued prospect sites before a recording block so dead pages do not waste time | Built |
 | P0 | Live page snapshot | Pulls title, headings, CTA labels, and proof cues into each prospect folder before recording | Built |
 | P0 | One-command recording prep | Checks sites, snapshots pages, refreshes scripts, and rebuilds the recording surfaces before a Loom block | Built |
@@ -77,11 +77,11 @@ Use this as the running list of optimization opportunities. Each item must impro
 | P0 | Recording cockpit quality gate | Blocks one-off send-prep and send copy until Loom quality checks are complete | Built |
 | P0 | Recording-to-outbox handoff guard | Removes direct sent-stage shortcuts from recording surfaces so only the outbox confirmation flow marks messages sent | Built |
 | P0 | Recording teleprompter | Gives the current recording batch a focused large-text Loom view | Built |
-| P0 | Recording teleprompter Loom validation | Blocks bad Loom links at the recording screen and keeps each video focused on leak, impact, fix, and ask | Built |
+| P0 | Recording teleprompter Loom validation | Blocks bad Loom links at the recording screen and keeps each video focused on fault, impact, fix, and ask | Built |
 | P0 | Recording teleprompter timer | Keeps cold Looms inside the 2-3 minute promise during batch recording | Built |
 | P0 | Send route in teleprompter | Shows the contact path while recording so every Loom has a clear send destination | Built |
 | P0 | Sender guidance in teleprompter | Prevents recording sessions from assuming email is clean when sender setup still warns | Built |
-| P0 | Recording quality gate | Keeps sloppy Looms out of batch send prep unless leak, impact, fix, and ask are confirmed | Built |
+| P0 | Recording quality gate | Keeps sloppy Looms out of batch send prep unless fault, impact, fix, and ask are confirmed | Built |
 | P0 | Approved-row batch prep guard | Makes clipboard batch send prep reject Loom rows that bypass the quality gate | Built |
 | P0 | Next-message generator | Produces email, contact-form, DM, follow-up, and reply messages from current stage | Built |
 | P0 | Prospect outbox | Turns recorded Looms into one send page with channel copy and stage commands | Built |
@@ -116,7 +116,7 @@ Use this as the running list of optimization opportunities. Each item must impro
 | P0 | Conversion optimization playbook | Saves the 25-point page audit, direct-response copy, angle, email, distribution, and ads heuristics as internal delivery rules | Built |
 | P0 | Conversion scorecard client gate | Copies a conversion scorecard into every client sprint and blocks final readiness until it is filled and approved | Built |
 | P0 | Revenue page conversion skill | Adds a reusable local skill for page, form, copy, angle, and message-match audits | Built |
-| P0 | Recording quality notes | Preserves the exact Loom leak, impact, fix, and ask notes into every send package | Built |
+| P0 | Recording quality notes | Preserves the exact Loom fault, impact, fix, and ask notes into every send package | Built |
 | P0 | Outbox recording-note surface | Shows the exact Loom notes during send review so personalization does not get lost | Built |
 | P0 | Marketing-agent workbench | Saves daily research, content, competitor monitoring, lead research, briefing, and paid-ads agent loops without tool lock-in | Built |
 | P0 | AI/search no-hack rules | Keeps AEO/GEO recommendations grounded in useful SEO and blocks fake AI-only shortcuts | Built |
@@ -124,7 +124,7 @@ Use this as the running list of optimization opportunities. Each item must impro
 | P0 | Competitive proof matrix | Compares TinyStudio against current market alternatives and shows which better/comparable claims are allowed, careful, or blocked | Built |
 | P0 | 11/10 proof run | Converts parity blockers into the exact Loom, send, sales, delivery, and retention proof-capture run | Built |
 | P0 | Market proof-run checker | Verifies the 5-Loom proof session from approved rows through send packages and actual sent proof | Built |
-| P0 | Market proof cockpit | Turns the first external proof run into before/leak, after/fix, client-visible value, next measurement, route, and next-command rows | Built |
+| P0 | Market proof cockpit | Turns the first external proof run into before/fault, after/fix, client-visible value, next measurement, route, and next-command rows | Built |
 | P0 | Post-recording proof prep | Turns real Loom URLs into send packages, outbox, and refreshed proof cockpit in one command without marking sent | Built |
 | P0 | Weekly/monthly retention checkups | Generates the retention dashboard and next client checkups without auto-sending | Built |
 | P0 | Retention automation verifier | Proves the scheduled retention loop is active, repo-scoped, and cannot auto-send or auto-approve claims | Built |

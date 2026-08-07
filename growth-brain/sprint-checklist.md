@@ -1,6 +1,6 @@
 # 7-Day sprint checklist
 
-Product: **7-Day Website Revenue Leak Fix Sprint**. Scope is one highest-leverage page.
+Product: **The Website Correction**. Scope is one highest-leverage page.
 
 ## Fit and Day 0 gate
 
@@ -13,10 +13,10 @@ Product: **7-Day Website Revenue Leak Fix Sprint**. Scope is one highest-leverag
 - [ ] Day 0 start is recorded.
 - [ ] Client-delay pause rule is explained.
 
-## Day 1 — leak map
+## Day 1 — fault map
 
 - [ ] Review the selected page, offer, proof, and available measurement context.
-- [ ] Record the leak map with evidence and priority.
+- [ ] Record the fault map with evidence and priority.
 
 ## Day 2 — rewrite or redesign
 

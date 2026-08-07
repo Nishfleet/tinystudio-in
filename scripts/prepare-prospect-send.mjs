@@ -64,7 +64,7 @@ const replyProof = replyWorthiness(prospectPath);
 if (replyProof.score < 8 && !force) {
   console.error(JSON.stringify({
     status: "blocked",
-    reason: "Reply-worthy proof score is below 8/10. Use the teleprompter or batch Loom sheet to capture leak, impact, first fix, and clean ask notes before send prep.",
+    reason: "Reply-worthy proof score is below 8/10. Use the teleprompter or batch Loom sheet to capture fault, impact, first fix, and clean ask notes before send prep.",
     prospectPath,
     loomUrl,
     replyWorthiness: replyProof

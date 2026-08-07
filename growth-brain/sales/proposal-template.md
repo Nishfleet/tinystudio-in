@@ -18,15 +18,15 @@
 
 ## Problem we saw
 
-Describe the page leak and cite the evidence:
+Describe the page fault and cite the evidence:
 
 -
 
 ## Sprint outcome
 
-The **7-Day Website Revenue Leak Fix Sprint** includes:
+The **The Website Correction** includes:
 
-- leak map
+- fault map
 - rewrite or redesign of one highest-leverage page
 - one implementation pass or dev-ready handoff
 - search-trust basics

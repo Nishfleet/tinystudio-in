@@ -218,7 +218,7 @@ ${trustSignals.length ? trustSignals.map((item) => `- ${item}`).join("\n") : "- 
 
 - Start with the visible promise.
 - Show the clearest mismatch between promise, buyer route, proof, and next step.
-- Keep the Loom to one leak, one buyer impact, one fix, and one ask.
+- Keep the Loom to one fault, one buyer impact, one fix, and one ask.
 
 ## Text Sample
 
