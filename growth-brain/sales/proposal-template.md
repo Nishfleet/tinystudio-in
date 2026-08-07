@@ -24,7 +24,7 @@ Describe the page fault and cite the evidence:
 
 ## Sprint outcome
 
-The **The Website Correction** includes:
+**The Website Correction** includes:
 
 - fault map
 - rewrite or redesign of one highest-leverage page
@@ -38,7 +38,7 @@ The **The Website Correction** includes:
 
 ## Timing
 
-Day 0 starts only after payment, required context, approval owner, and implementation owner are confirmed. Client delay pauses the clock. Delivery runs for seven working days after Day 0.
+Day 0 starts only after payment, required context, approval owner, and implementation owner are confirmed. Client delay pauses the clock. Work runs against the fixed scope with 14-day implementation tracking.
 
 ## Price and approval
 

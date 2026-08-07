@@ -105,7 +105,7 @@ ${body}${time ? `\n\nTime I have down: ${time}` : ""}${meeting ? `\n\nMeeting li
 1. Confirm the fault from the Loom is a real priority.
 2. Confirm the approval owner and what context they can share.
 3. Confirm the sprint scope, price, and timeline.
-4. Ask whether the 7-day sprint is worth starting now.
+4. Ask whether ${config.offerName} is worth starting now.
 
 ## Close Guardrail
 

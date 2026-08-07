@@ -6,7 +6,7 @@ Founder-led Managed IT/MSP/cybersecurity companies with a live site and high-val
 
 ## Promise
 
-In seven working days, TinyStudio fixes one highest-leverage page and gives the team an implementation-ready, proof-backed next step. This is a managed service with human review, not autonomous software.
+TinyStudio fixes one highest-leverage page within a fixed scope and gives the team an implementation-ready, proof-backed next step with 14-day implementation tracking. This is a managed service with human review, not autonomous software.
 
 ## Included
 

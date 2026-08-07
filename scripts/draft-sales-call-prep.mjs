@@ -18,7 +18,7 @@ function founderPilotPrice() {
 function canonicalScope() {
   return `- Sprint: ${FOUNDER_PILOT.offerName}
 - Scope: one highest-leverage page
-- Timeline: 7 working days from Day 0
+- Timeline: Day 0 after payment, context, and named approval and implementation owners; 14-day implementation tracking
 - Price: ${founderPilotPrice()}`;
 }
 
@@ -128,7 +128,7 @@ const prep = `# ${name} Sales Call Prep
 
 ## Call Goal
 
-Confirm whether the one highest-leverage page is worth fixing now, then close the human-reviewed ${config.offerName}. Do not turn the call into free consulting.
+Confirm whether the one highest-leverage page is worth fixing now, then close ${config.offerName}, a human-reviewed fixed-scope engagement. Do not turn the call into free consulting.
 
 ## Audit Recap
 
@@ -150,7 +150,7 @@ ${payback}
 2. Is this page supposed to generate calls, demos, audits, or another action?
 3. Who approves page, copy, or site structure changes?
 4. What context can you share: analytics, reviews, competitors, customer objections, and implementation access?
-5. If the sprint gives you implementation-ready fixes in 7 days, is this worth doing now?
+5. If the sprint gives you implementation-ready fixes plus 14-day implementation tracking, is this worth doing now?
 
 ## Close
 
