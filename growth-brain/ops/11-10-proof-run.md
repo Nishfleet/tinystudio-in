@@ -74,3 +74,18 @@ npm run prospect:batch-sent -- --from-clipboard
 | Calls | 0 |
 | Closed | 0 |
 | Clients ready | 0 |
+
+## Direction Proof Gate
+
+Source: the direction dossier gates this proof run on 5 approved Looms (recorded, then sent) and 40 qualified personalized touches. Counters read only existing repository state: approval rows and recorded Loom URLs in `prospects/loom-links.txt`, and pipeline `touches`/`sentAt`/notes under `prospects/<slug>/`. Drafts, raw LOOM_URL placeholders, unapproved rows, and prospects without touch evidence never count.
+
+| Gate | Progress | Counted Evidence |
+|---|---:|---|
+| Approved Looms | 0/5 | `prospects/loom-links.txt` rows marked approved for an existing prospect folder |
+| Recorded Looms | 0/5 | approved rows carrying a real recorded Loom share URL |
+| Sent Looms | 0/5 | recorded Looms whose pipeline has `sentAt` plus a sent touch or note naming that exact Loom URL |
+| Qualified touches | 0/40 | recorded `touches` entries with channel or note evidence in lead-scored prospect pipelines |
+
+- Pending: 0 approved row(s) still carry a raw Loom placeholder and do not count as recorded.
+- Unknown: 0 recorded Loom(s) have no pipeline sent proof tied to that Loom URL yet.
+- Missing: 40 qualified touch(es) are still absent; 0 qualified prospect(s) currently carry touch evidence.

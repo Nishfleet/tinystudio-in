@@ -122,6 +122,59 @@ function hasLoom(path) {
   return Boolean(loomMatch && isValidLoomUrl(loomMatch[1].trim()));
 }
 
+function parseLoomSheetLine(line) {
+  const trimmed = String(line || "").trim();
+  if (!trimmed || trimmed.startsWith("#")) return null;
+  const separator = trimmed.includes("|") ? "|" : ",";
+  const [path, loomUrl, approval] = trimmed.split(separator).map((part) => part.trim());
+  return { path, loomUrl, approval };
+}
+
+function approved(value) {
+  return ["approved", "quality-approved", "loom-approved"].includes(String(value || "").toLowerCase().replace(/\s+/g, "-"));
+}
+
+function sentProofFor(row) {
+  const pipeline = json(join(row.path, "pipeline.json"));
+  const notes = Array.isArray(pipeline.notes) ? pipeline.notes : [];
+  const touches = Array.isArray(pipeline.touches) ? pipeline.touches : [];
+  const referencesLoom = notes.some((note) => note?.action === "sent" && String(note.note || "").includes(row.loomUrl))
+    || touches.some((touch) => touch?.action === "sent" && String(touch.note || "").includes(row.loomUrl));
+  return Boolean(pipeline.sentAt) && referencesLoom && Boolean(pipeline.sentChannel || pipeline.lastChannel);
+}
+
+function isRecordedTouch(touch) {
+  return Boolean(
+    touch
+    && typeof touch === "object"
+    && /^(sent|followup-[1-3])$/.test(String(touch.action || ""))
+    && (String(touch.channel || "").trim() || String(touch.note || "").trim())
+  );
+}
+
+function directionGateCounts(loomRows, prospectRows) {
+  const approvedRows = loomRows.filter((row) => row.path && existsSync(row.path) && approved(row.approval));
+  const approvedLooms = approvedRows.length;
+  const recordedLooms = approvedRows.filter((row) => isValidLoomUrl(row.loomUrl)).length;
+  const sentLooms = approvedRows.filter((row) => isValidLoomUrl(row.loomUrl) && sentProofFor(row)).length;
+  const touchStates = prospectRows.map((prospect) => {
+    const pipeline = json(join(prospect.path, "pipeline.json"));
+    const recorded = Array.isArray(pipeline.touches) ? pipeline.touches.filter(isRecordedTouch).length : 0;
+    return { scored: prospect.scored, recorded };
+  });
+  const qualifiedTouches = touchStates.reduce((total, item) => total + (item.scored ? item.recorded : 0), 0);
+  const qualifiedProspectsWithTouches = touchStates.filter((item) => item.scored && item.recorded > 0).length;
+  return {
+    approvedLooms,
+    recordedLooms,
+    sentLooms,
+    qualifiedTouches,
+    qualifiedProspectsWithTouches,
+    pendingRecording: approvedLooms - recordedLooms,
+    recordedWithoutSentProof: recordedLooms - sentLooms
+  };
+}
+
 const parityOutputPath = outputPath.startsWith("prospects/kit-")
   ? "prospects/kit-market-proof-run-parity.md"
   : "prospects/market-proof-run-parity.md";
@@ -171,6 +224,11 @@ const recordingBatch = prospects
   .filter((prospect) => !["won", "lost", "paused"].includes(prospect.stage))
   .sort((a, b) => a.weight - b.weight || a.name.localeCompare(b.name))
   .slice(0, limit);
+
+const directionGate = directionGateCounts(
+  read(loomLinksPath).split("\n").map(parseLoomSheetLine).filter(Boolean),
+  prospects
+);
 
 const requirementByArea = {
   "Sender trust": "Run `npm run send:configure -- --physical-address=\"...\" --dkim-selector=... --dry-run` with the real values, then apply it without `--dry-run`. Until then, use contact forms or DMs.",
@@ -260,6 +318,21 @@ npm run prospect:batch-sent -- --from-clipboard
 | Calls | ${metrics.counts.calls} |
 | Closed | ${metrics.counts.closed} |
 | Clients ready | ${metrics.counts.clientsReady} |
+
+## Direction Proof Gate
+
+Source: the direction dossier gates this proof run on 5 approved Looms (recorded, then sent) and 40 qualified personalized touches. Counters read only existing repository state: approval rows and recorded Loom URLs in \`${loomLinksPath}\`, and pipeline \`touches\`/\`sentAt\`/notes under \`prospects/<slug>/\`. Drafts, raw LOOM_URL placeholders, unapproved rows, and prospects without touch evidence never count.
+
+| Gate | Progress | Counted Evidence |
+|---|---:|---|
+| Approved Looms | ${directionGate.approvedLooms}/5 | \`${loomLinksPath}\` rows marked approved for an existing prospect folder |
+| Recorded Looms | ${directionGate.recordedLooms}/5 | approved rows carrying a real recorded Loom share URL |
+| Sent Looms | ${directionGate.sentLooms}/5 | recorded Looms whose pipeline has \`sentAt\` plus a sent touch or note naming that exact Loom URL |
+| Qualified touches | ${directionGate.qualifiedTouches}/40 | recorded \`touches\` entries with channel or note evidence in lead-scored prospect pipelines |
+
+- Pending: ${directionGate.pendingRecording} approved row(s) still carry a raw Loom placeholder and do not count as recorded.
+- Unknown: ${directionGate.recordedWithoutSentProof} recorded Loom(s) have no pipeline sent proof tied to that Loom URL yet.
+- Missing: ${40 - directionGate.qualifiedTouches} qualified touch(es) are still absent; ${directionGate.qualifiedProspectsWithTouches} qualified prospect(s) currently carry touch evidence.
 `;
 
 const outputDir = outputPath.split("/").slice(0, -1).join("/");
@@ -284,5 +357,6 @@ console.log(JSON.stringify({
   parityTotal: parity.total,
   blockers: parity.blockers.map((blocker) => blocker.area),
   selectedProspects: recordingBatch.map((prospect) => prospect.path),
+  directionGate,
   recommendedChannel: channelGuidance.recommendedChannel
 }, null, 2));
