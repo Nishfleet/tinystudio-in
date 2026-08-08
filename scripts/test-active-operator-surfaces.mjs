@@ -15,6 +15,10 @@ const LOOM = "https://www.loom.com/share/1234567890abcdef1234567890abcdef"
 const {equal: eq, deepEqual: deq, notEqual: neq, match: mat, doesNotMatch: dnm, ok} = assert
 const trackedArtifactDate = readFileSync(join(C, "growth-brain/ops/proof-library.md"), "utf8").match(/^Generated:\s*(\d{4}-\d{2}-\d{2})$/m)?.[1]
 if (!trackedArtifactDate) throw new Error("Tracked proof library must contain a Generated YYYY-MM-DD date")
+const promptlySupport = readFileSync(join(C, "public/promptly/support/index.html"), "utf8")
+const promptlySupportHeadings = [...promptlySupport.matchAll(/<h([1-3])\b/gi)].map(match => Number(match[1]))
+ok(promptlySupportHeadings.indexOf(2) > promptlySupportHeadings.indexOf(1), "Promptly support must introduce H2 content after its H1")
+ok(!promptlySupportHeadings.slice(promptlySupportHeadings.indexOf(1) + 1).some((level, index, levels) => level === 3 && (index === 0 || levels[index - 1] < 2)), "Promptly support must not skip H2 before content H3 headings")
 const fixedClockImport = pathToFileURL(sp("lib/test-fixed-clock.mjs")).href
 const retiredSurfacePattern =
 	/npm run\s+owned:|npm run\s+(?:retention:checkups|client:weekly-loop|value:stress)|client brain|convert a won prospect|filled weekly report|won sprint\(s\) with close package and won note|(?:weekly|full-stack) growth desk|weekly client value loop|every closed deal becomes a client sprint folder|convert the prospect into a client sprint folder/i
