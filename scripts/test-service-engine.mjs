@@ -27,6 +27,7 @@ import {
 	validateStageEvidence
 } from "./lib/review-queue.mjs"
 import {assertCanonicalFounderPilotCohort, assertClientScaffold, FOUNDER_PILOT} from "./lib/client-scaffold.mjs"
+import {serviceTrackingWindowEndAt} from "./lib/service-artifacts.mjs"
 import {createPromotionJournal, promotionMarkerPath, validatePromotionJournal} from "./lib/service-promotion-journal.mjs"
 import {commitJournaledTransition, transitionJournalRecord} from "./lib/service-transition-journal.mjs"
 import {addBusinessDaysToTimestamp, businessMillisecondsBetween, localEndOfIsoDate, localIsoDate, timestampIsOnOrBeforeLocalDate, timestampIsOnOrBeforeTrustedNow, trustedNow} from "./date-utils.mjs"
@@ -443,6 +444,11 @@ try {
 	eq(businessMillisecondsBetween("2026-07-11T10:00:00.000Z", "2026-07-12T10:00:00.000Z"), 0)
 	eq(serviceDeadlineAt("2026-07-10T10:00:00.000+05:30", [{reason: "Weekend client delay", startedAt: "2026-07-11T10:00:00.000+05:30", endedAt: "2026-07-12T10:00:00.000+05:30", durationMs: 86400000}]), "2026-07-21T10:00:00.000+05:30")
 	eq(serviceDeadlineAt("2026-07-16T00:15:00.000+05:30"), "2026-07-27T00:15:00.000+05:30")
+	eq(serviceTrackingWindowEndAt("2026-07-13T10:00:00.000Z"), "2026-07-27T10:00:00.000Z")
+	eq(serviceTrackingWindowEndAt("2026-07-13T10:00:00.000Z", [{reason: "Client access delay", startedAt: "2026-07-15T10:00:00.000Z", endedAt: "2026-07-17T10:00:00.000Z", durationMs: 172800000}]), "2026-07-29T10:00:00.000Z")
+	eq(serviceTrackingWindowEndAt("2026-07-13T10:00:00.000Z", [{reason: "Pre-acceptance delay", startedAt: "2026-07-11T10:00:00.000Z", endedAt: "2026-07-12T10:00:00.000Z", durationMs: 86400000}]), "2026-07-27T10:00:00.000Z")
+	eq(serviceTrackingWindowEndAt("2026-07-13T10:00:00.000Z", [{reason: "Straddling delay", startedAt: "2026-07-25T10:00:00.000Z", endedAt: "2026-07-28T10:00:00.000Z", durationMs: 259200000}]), "2026-07-30T10:00:00.000Z")
+	thr(() => serviceTrackingWindowEndAt("not-a-date"), /implementation acceptance timestamp is invalid/)
 
 	const futureApplication = {...application, applicationId: "018f5a54-84aa-7ae0-a1fd-4da350490779", submittedAt: nextLocalMidnight}
 	const futureApplicationPath = rp("future-application.json")
@@ -2124,6 +2130,81 @@ try {
 		eq(ex(inRepoBackup), false)
 	} finally {
 		rm(backupParent, {recursive: true, force: true})
+	}
+
+	// ——— check-service-deadlines.mjs: 14-day tracking attention status ———
+	const deadlineScenarios = []
+	try {
+		const scenario = () => {
+			const dir = mkdtempSync(join(tmpdir(), "tinystudio-deadline-scenario-"))
+			md(join(dir, "clients"), {recursive: true})
+			deadlineScenarios.push(dir)
+			return dir
+		}
+		const runDeadlineCheck = (dir, now) => spawnSync(process.execPath, [join(process.cwd(), "scripts/check-service-deadlines.mjs")], {cwd: dir, env: {...process.env, SERVICE_DEADLINE_NOW: now}, encoding: "utf8"})
+		const day0Fixture = (id, startedAt, pauseHistory = [], activePause = null) => ({
+			applicationId: id, paymentEvidence: `paid: invoice ${id}`, requiredContext: "approved context",
+			approvalOwner: "Founder", implementationOwner: "TinyStudio", offerName: "The Website Correction",
+			offerPriceUsd: 1000, pricingCohort: "founder-pilot", pilotSequence: 1, ready: true,
+			day0StartedAt: startedAt, updatedAt: startedAt, paused: Boolean(activePause), activePause,
+			pauseHistory, totalPausedMs: pauseHistory.reduce((total, pause) => total + pause.durationMs, 0),
+			deadlineAt: addBusinessDaysToTimestamp(startedAt, 7), resumeState: activePause ? "tracking-14-day" : ""
+		})
+		const writeClient = (dir, id, day0, state) => {
+			const folder = join(dir, "clients", id)
+			md(folder, {recursive: true})
+			aw(join(folder, "service-day0.json"), day0)
+			if (state) aw(join(folder, "service-state.json"), state)
+		}
+		const retiredPromiseLanguage = /\b(?:seven[- ]day|7[- ]day)\b|refund|guarantee|sprint/i
+
+		const trackingDir = scenario()
+		const trackingId = "110f5a54-84aa-7ae0-a1fd-4da350490001"
+		writeClient(trackingDir, trackingId, day0Fixture(trackingId, "2026-07-01T10:00:00.000Z"), {state: "tracking-14-day", implementationAcceptedAt: "2026-07-13T10:00:00.000Z"})
+		const onTrack = runDeadlineCheck(trackingDir, "2026-07-20T10:00:00.000Z")
+		eq(onTrack.status, 0, onTrack.stdout)
+		mat(onTrack.stdout, new RegExp(`on-track\\s+${trackingId}\\s+5 business days to the 14-day tracking-window end \\(2026-07-27\\)`))
+		mat(onTrack.stdout, /All clients on track\./)
+		const dueSoon = runDeadlineCheck(trackingDir, "2026-07-24T10:00:00.000Z")
+		eq(dueSoon.status, 1)
+		mat(dueSoon.stdout, new RegExp(`tracking-due-soon\\s+${trackingId}`))
+		const overdue = runDeadlineCheck(trackingDir, "2026-07-28T10:00:00.000Z")
+		eq(overdue.status, 1)
+		mat(overdue.stdout, new RegExp(`TRACKING-OVERDUE\\s+${trackingId}\\s+-1 business days to the 14-day tracking-window end`))
+
+		const pausedDir = scenario()
+		const pausedId = "220f5a54-84aa-7ae0-a1fd-4da350490002"
+		const clientDelay = [{reason: "Client access delay", startedAt: "2026-07-15T10:00:00.000Z", endedAt: "2026-07-17T10:00:00.000Z", durationMs: 172800000}]
+		writeClient(pausedDir, pausedId, day0Fixture(pausedId, "2026-07-01T10:00:00.000Z", clientDelay), {state: "tracking-14-day", implementationAcceptedAt: "2026-07-13T10:00:00.000Z"})
+		const extended = runDeadlineCheck(pausedDir, "2026-07-24T10:00:00.000Z")
+		eq(extended.status, 0, extended.stdout)
+		mat(extended.stdout, new RegExp(`on-track\\s+${pausedId}\\s+3 business days to the 14-day tracking-window end \\(2026-07-29\\)`))
+		eq(runDeadlineCheck(pausedDir, "2026-07-30T10:00:00.000Z").status, 1)
+
+		const mixedDir = scenario()
+		const preTrackingId = "330f5a54-84aa-7ae0-a1fd-4da350490003"
+		writeClient(mixedDir, preTrackingId, day0Fixture(preTrackingId, "2026-07-01T10:00:00.000Z"), {state: "implementation"})
+		const clockPausedId = "440f5a54-84aa-7ae0-a1fd-4da350490004"
+		writeClient(mixedDir, clockPausedId, day0Fixture(clockPausedId, "2026-07-01T10:00:00.000Z", [], {reason: "Client access pending", startedAt: "2026-07-05T10:00:00.000Z"}), {state: "tracking-14-day", implementationAcceptedAt: "2026-07-13T10:00:00.000Z"})
+		const noDay0Id = "550f5a54-84aa-7ae0-a1fd-4da350490005"
+		md(join(mixedDir, "clients", noDay0Id), {recursive: true})
+		aw(join(mixedDir, "clients", noDay0Id, "service-day0.json"), {})
+		const stateMissingId = "660f5a54-84aa-7ae0-a1fd-4da350490006"
+		md(join(mixedDir, "clients", stateMissingId), {recursive: true})
+		aw(join(mixedDir, "clients", stateMissingId, "service-day0.json"), day0Fixture(stateMissingId, "2026-07-01T10:00:00.000Z"))
+		const mixed = runDeadlineCheck(mixedDir, "2026-07-24T10:00:00.000Z")
+		eq(mixed.status, 1)
+		mat(mixed.stdout, new RegExp(`tracking-not-started\\s+${preTrackingId}.*14-day implementation tracking has not started \\(current state: implementation\\); no delivery deadline applies`))
+		mat(mixed.stdout, new RegExp(`paused\\s+${clockPausedId}.*clock paused since 2026-07-05T10:00:00.000Z — Client access pending`))
+		mat(mixed.stdout, new RegExp(`no-day0\\s+${noDay0Id}.*Day 0 not recorded`))
+		mat(mixed.stdout, new RegExp(`state-missing\\s+${stateMissingId}.*service state not recorded`))
+		mat(mixed.stdout, /2 client\(s\) need attention today\./)
+
+		for (const output of [onTrack.stdout, dueSoon.stdout, overdue.stdout, extended.stdout, mixed.stdout]) {
+			assert(!retiredPromiseLanguage.test(output), "check-service-deadlines output revived retired seven-day/refund language")
+		}
+	} finally {
+		for (const dir of deadlineScenarios) rm(dir, {recursive: true, force: true})
 	}
 
 	assert(ALLOWED_COMMANDS.every(argv => Array.isArray(argv) && argv.every(part => typeof part === "string")))
