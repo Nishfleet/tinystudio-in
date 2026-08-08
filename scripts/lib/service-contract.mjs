@@ -333,31 +333,56 @@ function releaseOwnedLock(path, token) {
 	} catch {}
 }
 
+function claimOwner(path) {
+	try {
+		const raw = readFileSync(path, "utf8").trim()
+		const owner = JSON.parse(raw)
+		return {pid: Number(owner.pid), token: typeof owner.token === "string" ? owner.token : ""}
+	} catch {
+		return {pid: 0, token: ""}
+	}
+}
+
+function releaseClaim(path, token) {
+	const owner = claimOwner(path)
+	if (owner.token !== token || owner.pid !== process.pid) return
+	try {
+		unlinkSync(path)
+	} catch {}
+}
+
 function acquireRecoveryCoordinator(path, staleAfterMs) {
 	const token = randomUUID()
-	const create = () => {
-		mkdirSync(path, {recursive: false})
-		writeFileSync(join(path, "owner"), `${JSON.stringify({pid: process.pid, token, createdAt: new Date().toISOString()})}\n`)
-	}
-
+	const ownerJson = `${JSON.stringify({pid: process.pid, token, createdAt: new Date().toISOString()})}\n`
+	// The claim is created atomically with O_EXCL. Unlike the lock directory
+	// (mkdir followed by an owner write), there is no half-made state a
+	// contender can be descheduled inside for long: the file either does not
+	// exist or exists complete. A recoverer can only take over a claim whose
+	// owner is dead or whose content is missing/old, and its unlink is itself
+	// an atomic claim - exactly one recoverer wins, the rest fail with ENOENT.
+	const create = () => writeFileSync(path, ownerJson, {flag: "wx"})
 	try {
 		create()
 	} catch (error) {
 		if (error?.code !== "EEXIST") return null
-		const owner = lockOwner(path)
+		const owner = claimOwner(path)
 		const recoveryStaleAfterMs = Math.max(staleAfterMs, 1000)
 		if (processIsAlive(owner.pid) === true || lockAgeMs(path) < recoveryStaleAfterMs) return null
-		const stalePath = `${path}.stale-${process.pid}-${token}`
 		try {
-			renameSync(path, stalePath)
-			rmSync(stalePath, {recursive: true, force: true})
+			unlinkSync(path)
 			create()
 		} catch {
 			return null
 		}
 	}
-
-	return () => releaseOwnedLock(path, token)
+	// Verify the claim still names this process before entering the critical
+	// section. If a recoverer removed our half-written claim and recreated it,
+	// our late bytes landed on an unlinked inode, so the claim file now
+	// belongs to someone else: back off instead of holding the coordinator
+	// alongside them.
+	const owner = claimOwner(path)
+	if (owner.pid !== process.pid || owner.token !== token) return null
+	return () => releaseClaim(path, token)
 }
 
 export function acquireLock(path, {staleAfterMs = 5 * 60 * 1000} = {}) {
@@ -369,25 +394,42 @@ export function acquireLock(path, {staleAfterMs = 5 * 60 * 1000} = {}) {
 	}
 
 	try {
-		create()
+		mkdirSync(dirname(path), {recursive: true})
 	} catch (error) {
-		if (error?.code !== "EEXIST") throw new Error(`service queue lock failed: ${path}`)
-		const recoveryPath = `${path}.recovery`
-		const releaseRecovery = acquireRecoveryCoordinator(recoveryPath, staleAfterMs)
-		if (!releaseRecovery) throw new Error(`service queue is locked: ${path}`)
+		throw new Error(`service queue lock failed: ${path}`)
+	}
+	// Every acquisition is serialized through the recovery coordinator. The
+	// mkdir + owner-write pair in create() is not atomic: if one contender may
+	// create the lock directory while another contender is recovering it, the
+	// recoverer can rename the fresh directory away and the creator's late
+	// owner write lands in the recoverer's replacement directory, so both
+	// contenders believe they hold the same lock. Holding the coordinator for
+	// the whole create/verify sequence makes the pair mutually exclusive. The
+	// coordinator itself is an atomic O_EXCL claim file, so the coordinator
+	// can never be held by two contenders at once.
+	const recoveryPath = `${path}.recovery`
+	const releaseRecovery = acquireRecoveryCoordinator(recoveryPath, staleAfterMs)
+	if (!releaseRecovery) throw new Error(`service queue is locked: ${path}`)
+	try {
 		try {
+			create()
+		} catch (error) {
+			if (error?.code !== "EEXIST") throw new Error(`service queue lock failed: ${path}`)
 			const owner = lockOwner(path)
 			if (processIsAlive(owner.pid) === true || lockAgeMs(path) < staleAfterMs) throw new Error(`service queue is locked: ${path}`)
 			const stalePath = `${path}.stale-${process.pid}-${token}`
 			renameSync(path, stalePath)
 			rmSync(stalePath, {recursive: true, force: true})
 			create()
-		} catch (recoveryError) {
-			if (String(recoveryError?.message || "").startsWith("service queue is locked:")) throw recoveryError
-			throw new Error(`service queue is locked: ${path}`)
-		} finally {
-			releaseRecovery()
 		}
+		const owner = lockOwner(path)
+		if (owner.pid !== process.pid || owner.token !== token) throw new Error(`service queue is locked: ${path}`)
+	} catch (error) {
+		const message = String(error?.message || "")
+		if (message.startsWith("service queue is locked:") || message.startsWith("service queue lock failed:")) throw error
+		throw new Error(`service queue is locked: ${path}`)
+	} finally {
+		releaseRecovery()
 	}
 
 	return () => releaseOwnedLock(path, token)

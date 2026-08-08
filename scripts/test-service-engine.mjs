@@ -367,6 +367,9 @@ function rrr(item) {
 function lockOwner(path, pid, token) {
 	wf(join(path, "owner"), `${JSON.stringify({pid, token, createdAt: "2026-07-13T00:00:00.000Z"})}\n`)
 }
+function claimOwner(path, pid, token) {
+	wf(path, `${JSON.stringify({pid, token, createdAt: "2026-07-13T00:00:00.000Z"})}\n`)
+}
 const setWebsite = website => candidate => { candidate.applicant.website = website }
 
 try {
@@ -1267,7 +1270,7 @@ try {
 	md(lock, {recursive: true})
 	lockOwner(lock, 2147483647, "dead-before-recovery")
 	utimesSync(lock, staleTime, staleTime)
-	md(`${lock}.recovery`, {recursive: true})
+	wf(`${lock}.recovery`, "")
 	utimesSync(`${lock}.recovery`, staleTime, staleTime)
 	const releaseAfterOwnerlessRecoveryCrash = acquireLock(lock)
 	eq(rj(join(lock, "owner")).pid, process.pid)
@@ -1278,8 +1281,7 @@ try {
 	md(lock, {recursive: true})
 	lockOwner(lock, 2147483647, "dead-after-recovery")
 	utimesSync(lock, staleTime, staleTime)
-	md(`${lock}.recovery`, {recursive: true})
-	lockOwner(`${lock}.recovery`, 2147483647, "dead-recovery")
+	claimOwner(`${lock}.recovery`, 2147483647, "dead-recovery")
 	utimesSync(`${lock}.recovery`, staleTime, staleTime)
 	const releaseAfterOwnedRecoveryCrash = acquireLock(lock)
 	eq(rj(join(lock, "owner")).pid, process.pid)
@@ -1290,8 +1292,7 @@ try {
 	md(lock, {recursive: true})
 	lockOwner(lock, 2147483647, "dead-under-live")
 	utimesSync(lock, staleTime, staleTime)
-	md(`${lock}.recovery`, {recursive: true})
-	lockOwner(`${lock}.recovery`, process.pid, "live-recovery")
+	claimOwner(`${lock}.recovery`, process.pid, "live-recovery")
 	utimesSync(`${lock}.recovery`, staleTime, staleTime)
 	thr(() => acquireLock(lock), /locked/)
 	eq(ex(`${lock}.recovery`), true)
@@ -1313,6 +1314,25 @@ try {
 	assert(contenders.filter(result => result.status === 2 && result.stdout.includes("blocked")).length === 11)
 	eq(ex(lock), false)
 	eq(ex(`${lock}.recovery`), false)
+
+	// Regression: stale recovery must never let several contenders hold the
+	// same lock at once. Race 16 children per round over many rounds with
+	// staleAfterMs 0 (the worst case - any pre-existing lock is immediately
+	// recoverable), alternating fresh and pre-stale lock directories. Every
+	// round must produce exactly one acquirer and clean teardown.
+	for (let round = 0; round < 12; round += 1) {
+		md(lock, {recursive: true})
+		if (round % 2 === 1) {
+			lockOwner(lock, 2147483647, `dead-round-${round}`)
+			utimesSync(lock, staleTime, staleTime)
+		}
+		const roundResults = await Promise.all(Array.from({length: 16}, () => rlc(lock)))
+		const roundAcquired = roundResults.filter(result => result.status === 0 && result.stdout.includes("acquired"))
+		eq(roundAcquired.length, 1, `round ${round}: ${roundAcquired.length} simultaneous holders`)
+		assert(roundResults.filter(result => result.status === 2 && result.stdout.includes("blocked")).length === 15)
+		eq(ex(lock), false)
+		eq(ex(`${lock}.recovery`), false)
+	}
 
 	const it = id => bq().items.find(candidate => candidate.applicationId === id)
 	const I2 = "028f5a54-84aa-7ae0-a1fd-4da350490772"
