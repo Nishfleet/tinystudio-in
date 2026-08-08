@@ -533,6 +533,9 @@ h4 {
   color: var(--muted);
   text-decoration: none;
   overflow-wrap: anywhere;
+  display: inline-block;
+  min-height: 24px;
+  padding: 4px 0;
 }
 
 
