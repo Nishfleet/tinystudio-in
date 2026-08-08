@@ -369,25 +369,40 @@ export function acquireLock(path, {staleAfterMs = 5 * 60 * 1000} = {}) {
 	}
 
 	try {
-		create()
+		mkdirSync(dirname(path), {recursive: true})
 	} catch (error) {
-		if (error?.code !== "EEXIST") throw new Error(`service queue lock failed: ${path}`)
-		const recoveryPath = `${path}.recovery`
-		const releaseRecovery = acquireRecoveryCoordinator(recoveryPath, staleAfterMs)
-		if (!releaseRecovery) throw new Error(`service queue is locked: ${path}`)
+		throw new Error(`service queue lock failed: ${path}`)
+	}
+	// Every acquisition is serialized through the recovery coordinator. The
+	// mkdir + owner-write pair in create() is not atomic: if one contender may
+	// create the lock directory while another contender is recovering it, the
+	// recoverer can rename the fresh directory away and the creator's late
+	// owner write lands in the recoverer's replacement directory, so both
+	// contenders believe they hold the same lock. Holding the coordinator for
+	// the whole create/verify sequence makes the pair mutually exclusive.
+	const recoveryPath = `${path}.recovery`
+	const releaseRecovery = acquireRecoveryCoordinator(recoveryPath, staleAfterMs)
+	if (!releaseRecovery) throw new Error(`service queue is locked: ${path}`)
+	try {
 		try {
+			create()
+		} catch (error) {
+			if (error?.code !== "EEXIST") throw new Error(`service queue lock failed: ${path}`)
 			const owner = lockOwner(path)
 			if (processIsAlive(owner.pid) === true || lockAgeMs(path) < staleAfterMs) throw new Error(`service queue is locked: ${path}`)
 			const stalePath = `${path}.stale-${process.pid}-${token}`
 			renameSync(path, stalePath)
 			rmSync(stalePath, {recursive: true, force: true})
 			create()
-		} catch (recoveryError) {
-			if (String(recoveryError?.message || "").startsWith("service queue is locked:")) throw recoveryError
-			throw new Error(`service queue is locked: ${path}`)
-		} finally {
-			releaseRecovery()
 		}
+		const owner = lockOwner(path)
+		if (owner.pid !== process.pid || owner.token !== token) throw new Error(`service queue is locked: ${path}`)
+	} catch (error) {
+		const message = String(error?.message || "")
+		if (message.startsWith("service queue is locked:") || message.startsWith("service queue lock failed:")) throw error
+		throw new Error(`service queue is locked: ${path}`)
+	} finally {
+		releaseRecovery()
 	}
 
 	return () => releaseOwnedLock(path, token)
