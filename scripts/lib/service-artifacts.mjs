@@ -90,6 +90,30 @@ export function serviceDeadlineAt(day0StartedAt, pauseHistory = []) {
 	const pausedBusinessMs = pauseHistory.reduce((total, pause) => total + businessMillisecondsBetween(pause.startedAt, pause.endedAt), 0)
 	return addBusinessMillisecondsToTimestamp(addBusinessDaysToTimestamp(day0StartedAt, 7), pausedBusinessMs)
 }
+const TRACKING_WINDOW_MS = 14 * 86400000
+
+// The Website Correction contract tracks 14 active days after human acceptance
+// of the implementation pass; client-delay pauses push the window out by the
+// same wall time the clock was stopped (tracking stage evidence requires at
+// least 14 active days between acceptance and the tracked-through instant).
+// Pauses before acceptance or after the window end do not move it.
+export function serviceTrackingWindowEndAt(implementationAcceptedAt, pauseHistory = []) {
+	const anchor = Date.parse(implementationAcceptedAt)
+	if (Number.isNaN(anchor)) throw new Error("implementation acceptance timestamp is invalid")
+	let end = anchor + TRACKING_WINDOW_MS
+	for (let pass = 0; pass <= pauseHistory.length + 2; pass += 1) {
+		const pausedWithin = pauseHistory.reduce((total, pause) => {
+			const start = Date.parse(pause.startedAt)
+			const stop = Date.parse(pause.endedAt)
+			if (Number.isNaN(start) || Number.isNaN(stop)) throw new Error("tracking pause interval is invalid")
+			return total + Math.max(0, Math.min(end, stop) - Math.max(anchor, start))
+		}, 0)
+		const next = anchor + TRACKING_WINDOW_MS + pausedWithin
+		if (next === end) break
+		end = next
+	}
+	return new Date(end).toISOString()
+}
 export function assertExactKeys(value, expected, name) {
 	assert(value && typeof value === "object" && !Array.isArray(value), `${name} must be an object`)
 	const actual = Object.keys(value).sort()
@@ -457,7 +481,7 @@ export function validateDay0Record(value, applicationId) {
 	const {total} = checkedPauseIntervals(value.pauseHistory, value.activePause, Date.parse(value.day0StartedAt), "Day 0")
 	assert(Number.isInteger(value.totalPausedMs) && value.totalPausedMs === total, "Day 0 totalPausedMs mismatch")
 	const expectedDeadline = serviceDeadlineAt(value.day0StartedAt, value.pauseHistory)
-	assert(value.deadlineAt === expectedDeadline, "Day 0 deadline must preserve seven working days and exclude paused time")
+	assert(value.deadlineAt === expectedDeadline, "Day 0 deadline must match the recorded deadline and exclude paused time")
 	return value
 }
 
