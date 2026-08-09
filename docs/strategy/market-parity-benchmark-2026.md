@@ -4,7 +4,7 @@ Generated: 2026-08-06
 
 ## Purpose
 
-Use this to judge whether TinyStudio is merely internally polished or actually comparable with strong CRO, SEO/site-architecture, paid acquisition, lifecycle/email, AI automation audit, and full-service growth providers.
+Use this to judge whether TinyStudio is merely internally polished or actually comparable with strong CRO, SEO/site-architecture, paid acquisition, lifecycle/email, AI automation audit, MSP-aware audit and marketing offers, and full-service growth providers.
 
 ## Current Position
 
@@ -14,6 +14,7 @@ TinyStudio is not trying to beat full-service enterprise CRO agencies on long st
 - boutique SEO/site-architecture audits
 - paid search/social and lifecycle/email retainers
 - AI-assisted marketing operations retainers
+- MSP-aware audit and marketing offers aimed at the same founder-led Managed IT, MSP, and cybersecurity audience
 - human-reviewed website revenue fault sprints for founder-led Managed IT, MSP, and cybersecurity companies
 
 ## Decision Rule
@@ -23,7 +24,7 @@ Use this benchmark as an owner dashboard for market claims. If a row says "do no
 ## Market Price Anchors
 
 Generated: 2026-08-06.
-Market anchors last checked: 2026-05-29.
+Market anchors last checked: 2026-08-09.
 
 Current public market signals:
 
@@ -34,6 +35,10 @@ Current public market signals:
 - OpenClaw Audit lists $2,000 and $5,000 AI automation audit packages with a 48-hour turnaround.
 - WebFX, SmartSites, Ignite Visibility, and Thrive all position as multi-channel agencies across SEO, PPC, paid social, email, CRO, analytics, content, reputation, and web work.
 - MarketHire and GoodFirms pricing guides put serious full-service retainers into the $5,000-$25,000+/month zone depending on scope, channels, and seniority.
+- MSP marketing agencies sell audit-led entry: Tech Pro Marketing audits current marketing on a free growth call and runs a flat $3,000/month retainer for MSPs above $500K revenue; 100Signals' August 2026 comparison (https://100signals.com/best-marketing-agencies-for-managed-service-providers/) puts MSP-focused retainers from $549-$25,000/month, with an entry band of $549-$4,497.
+- MSP website/SEO audit packages start low: JoomConnect includes a website audit and keyword research in every SEO tier from $300-$1,800/month and opens with a free SEO audit.
+- Free MSP-focused audits are a crowded entry point: JoomConnect, Managed Prospecting System, and 100Signals all give away MSP-specific audits (SEO, marketing authority, AI visibility) to open sales conversations.
+- MSP marketing subscriptions undercut agencies: MSP Marketing Edge offers a free trial then $199/month (US) with no contract, plus a free marketing scorecard.
 
 ## Competitive Proof Matrix
 
@@ -48,6 +53,10 @@ Current public market signals:
 | Paid acquisition agencies | Spend-share. | Media ops. | Fix before spend. | do not claim yet | No media claim. |
 | Lifecycle/email providers | Email retainers. | Retention. | Proof + owner. | do not claim yet | Out of scope. |
 | Transparent boutique retainers | Recurring retainers. | Packaging. | Shipped proof. | do not claim yet | After delivery. |
+| MSP marketing agency audits | Free audit; $3k/mo flat (entry $549-$4.5k/mo). | MSP-specific programs. | One-page speed. | do not claim yet | After proof. |
+| MSP website/SEO audit packages | $300-$1.8k/mo; audit included. | Ongoing SEO. | Fault map + fix. | do not claim yet | Not a retainer. |
+| Free MSP marketing/authority audits | Free; 24h reports. | Free diagnostics. | Human-reviewed fix. | do not claim yet | After proof. |
+| MSP marketing subscription toolkits | Free trial; $199/mo. | Content volume. | Done-for-you proof. | do not claim yet | Not a substitute. |
 
 ## TinyStudio Proof Bar
 
@@ -114,3 +123,7 @@ We do not guarantee revenue, ranking, ROAS, conversion, booked-call, or sales-vo
 - GoodFirms digital marketing pricing guide: https://www.goodfirms.co/blog/digital-marketing-pricing-guide
 - HubSpot State of Marketing: https://www.hubspot.com/state-of-marketing
 - Technotize pricing: https://technotize.io/pricing
+- Tech Pro Marketing: https://www.techpromarketing.com/services/msp-marketing-services/
+- JoomConnect MSP SEO: https://www.joomconnect.com/msp-marketing/services/search-engine-optimization
+- Managed Prospecting System: https://managedprospectingsystem.com/news/
+- MSP Marketing Edge pricing: https://www.mspmarketingedge.com/pricing/
