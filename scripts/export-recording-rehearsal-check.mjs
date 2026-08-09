@@ -6,8 +6,10 @@ import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
 import { routedContactPlan } from "./lib/contact-route.mjs";
 import { localIsoDate } from "./date-utils.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
 const args = process.argv.slice(2);
+handleHelp(args, `Usage: npm run prospect:rehearsal -- [--limit=5] [--output=prospects/recording-rehearsal-check.md] [--html=prospects/recording-rehearsal-check.html]`);
 const limitArg = args.find((arg) => arg.startsWith("--limit="));
 const outputArg = args.find((arg) => arg.startsWith("--output="));
 const htmlArg = args.find((arg) => arg.startsWith("--html="));
@@ -388,8 +390,8 @@ const html = `<!doctype html>
 </html>
 `;
 
-write(outputPath, markdown);
-write(htmlPath, html);
+write(resolveOutputPath(outputPath), markdown);
+write(resolveOutputPath(htmlPath, { flag: "--html" }), html);
 
 console.log(JSON.stringify({
   status,

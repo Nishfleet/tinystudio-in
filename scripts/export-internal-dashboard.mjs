@@ -1,11 +1,13 @@
 #!/usr/bin/env node
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
 import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 import { codeRoot, runRepoJson as runJson, serviceRoot } from "./lib/runtime-roots.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: npm run growth:dashboard -- [--plain] [--output=runs/internal-dashboard.md] [--html=runs/internal-dashboard.html]`);
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const htmlArg = process.argv.find((arg) => arg.startsWith("--html="));
 const plain = process.argv.includes("--plain");
@@ -54,7 +56,9 @@ catch (error) {
   const output = String(error.stderr || error.message || "");
   serviceQueue = { items: [], counts: { blocked: 1 }, error: output.match(/service:queue failed:[^\n]*/)?.[0] || "service queue validation failed" };
 }
-const parity = runJson(["scripts/check-market-parity-readiness.mjs", "--skip-kit", "--output=/tmp/tinystudio-internal-dashboard-parity.md"]);
+const parityScratchPath = "runs/.internal-dashboard-parity.md";
+const parity = runJson(["scripts/check-market-parity-readiness.mjs", "--skip-kit", `--output=${parityScratchPath}`]);
+try { rmSync(join(serviceRoot, parityScratchPath), { force: true }); } catch {}
 const todayView = runJson(["scripts/show-growth-command-center.mjs", "--limit=12"]);
 const marketProof = existsSync(join(serviceRoot, "prospects/loom-links.txt"))
   ? runJson(["scripts/export-market-proof-cockpit.mjs"])
@@ -482,8 +486,8 @@ const html = `<!doctype html>
 </html>
 `;
 
-write(resolve(serviceRoot, outputPath), markdown);
-write(resolve(serviceRoot, htmlPath), html);
+write(resolveOutputPath(outputPath), markdown);
+write(resolveOutputPath(htmlPath, { flag: "--html" }), html);
 
 const result = {
   status: doctor.status === "blocked" || parity.status === "not-11-10-yet" || serviceQueueBlocked > 0 || clientIntegrityBlocked > 0 ? "attention-needed" : "ready",
