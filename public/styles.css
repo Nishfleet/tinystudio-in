@@ -892,7 +892,22 @@ h4 {
   }
 
   .page-hero-card {
-    padding: 36px 0 44px;
+    padding: 20px 0 40px;
+  }
+
+  /* Keep the primary CTA in the first screen: long app-page H1s must not
+     bury the action row below the fold on phones. */
+  .page-hero-card h1 {
+    max-width: none;
+    font-size: clamp(1.9rem, 6vw, 3rem);
+  }
+
+  .page-hero-card .page-lead {
+    margin-top: 14px;
+  }
+
+  .page-hero-card .action-row {
+    margin-top: 20px;
   }
 
   .info-card {
