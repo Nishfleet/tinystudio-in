@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { isAbsolute, join, relative, resolve } from "node:path";
 import { execFileSync } from "node:child_process";
 import { localIsoDate } from "./date-utils.mjs";
 import { checkProspectReadiness, prospectWarningWeight } from "./lib/prospect-readiness.mjs";
@@ -9,6 +9,7 @@ import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
 import { routedContactPlan } from "./lib/contact-route.mjs";
 import { canonicalProspectAsk } from "./lib/canonical-service-copy.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
+import { serviceRoot } from "./lib/runtime-roots.mjs";
 
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/11-10-proof-run.md";
@@ -23,8 +24,31 @@ const loomLinksPath = loomLinksArg
     ? "prospects/kit-proof-run-loom-links.txt"
     : "prospects/loom-links.txt";
 
+// Every read and write is anchored to the service root (SERVICE_REPO_ROOT or
+// the invocation directory) so a brief regenerated from any working directory
+// reports the same pipeline state the rest of the operator surfaces read.
+const resolvedOutputPath = isAbsolute(outputPath) ? outputPath : join(serviceRoot, outputPath);
+const resolvedLoomLinksPath = isAbsolute(loomLinksPath) ? loomLinksPath : join(serviceRoot, loomLinksPath);
+const prospectRoot = join(serviceRoot, "prospects");
+const trackedBriefPath = join(serviceRoot, "growth-brain/ops/11-10-proof-run.md");
+
+// The default output is a git-tracked operator surface. When the service root
+// holds no outbound prospect state, regeneration cannot tell an empty pipeline
+// from an unavailable one, so it refuses instead of silently clobbering the
+// tracked brief with a zero pipeline. Explicit private outputs under runs/
+// keep generating zero-state reports on purpose.
+const regeneratesTrackedBrief = resolve(resolvedOutputPath) === resolve(trackedBriefPath);
+if (regeneratesTrackedBrief && !existsSync(prospectRoot)) {
+  console.error(`Refusing to regenerate the tracked 11/10 proof-run brief with a zero pipeline: no outbound prospect state found at ${prospectRoot}. Run this command from the service root that holds prospects/, or set SERVICE_REPO_ROOT to it, or pass an explicit --output= under runs/ for a private zero-state report.`);
+  process.exit(1);
+}
+if (!existsSync(prospectRoot)) {
+  console.warn(`Warning: no outbound prospect state found at ${prospectRoot}; pipeline counts in ${outputPath} will be zero.`);
+}
+
 function runJson(args) {
   const output = execFileSync("node", args, {
+    cwd: serviceRoot,
     encoding: "utf8",
     stdio: ["ignore", "pipe", "pipe"]
   });
@@ -178,15 +202,16 @@ function directionGateCounts(loomRows, prospectRows) {
 const parityOutputPath = outputPath.startsWith("prospects/kit-")
   ? "prospects/kit-market-proof-run-parity.md"
   : "prospects/market-proof-run-parity.md";
+const resolvedParityOutputPath = isAbsolute(parityOutputPath) ? parityOutputPath : join(serviceRoot, parityOutputPath);
 const parityArgs = ["scripts/check-market-parity-readiness.mjs", `--output=${parityOutputPath}`];
-if (skipKit || !existsSync(outputPath)) parityArgs.push("--skip-kit");
+if (skipKit || !existsSync(resolvedOutputPath)) parityArgs.push("--skip-kit");
 const parity = runJson(parityArgs);
-rmSync(parityOutputPath, { force: true });
+rmSync(resolvedParityOutputPath, { force: true });
 
 const metrics = runJson(["scripts/export-growth-metrics.mjs"]);
 const channelGuidance = sendChannelGuidance();
 
-const prospects = listFolders("prospects").map((path) => {
+const prospects = listFolders(prospectRoot).map((path) => {
   const metadata = json(join(path, "metadata.json"));
   const pipeline = json(join(path, "pipeline.json"));
   const readiness = checkProspectReadiness(path);
@@ -226,7 +251,10 @@ const recordingBatch = prospects
   .slice(0, limit);
 
 const directionGate = directionGateCounts(
-  read(loomLinksPath).split("\n").map(parseLoomSheetLine).filter(Boolean),
+  read(resolvedLoomLinksPath).split("\n").map(parseLoomSheetLine).filter(Boolean).map((row) => ({
+    ...row,
+    path: row.path && (isAbsolute(row.path) ? row.path : join(serviceRoot, row.path))
+  })),
   prospects
 );
 
@@ -243,7 +271,7 @@ const blockerRows = parity.blockers.length
   : "| - | - | No blockers. |";
 
 const loomSheetRows = recordingBatch.length
-  ? recordingBatch.map((prospect) => `${prospect.path}|LOOM_URL|approved|${cleanSheetNote(prospect.fault, "specific visible fault")}|${cleanSheetNote(prospect.impact, "buyer impact from the recording")}|${cleanSheetNote(prospect.fix, "first fix shown in the recording")}|${cleanSheetNote(prospect.ask, "ask if they want the sprint plan")}`).join("\n")
+  ? recordingBatch.map((prospect) => `${relative(serviceRoot, prospect.path)}|LOOM_URL|approved|${cleanSheetNote(prospect.fault, "specific visible fault")}|${cleanSheetNote(prospect.impact, "buyer impact from the recording")}|${cleanSheetNote(prospect.fix, "first fix shown in the recording")}|${cleanSheetNote(prospect.ask, "ask if they want the sprint plan")}`).join("\n")
   : "prospects/prospect-slug|https://www.loom.com/share/...|approved|specific fault|buyer impact|first fix|clean ask";
 
 const markdown = `# 11/10 Proof Run
@@ -321,7 +349,7 @@ npm run prospect:batch-sent -- --from-clipboard
 
 ## Direction Proof Gate
 
-Source: the direction dossier gates this proof run on 5 approved Looms (recorded, then sent) and 40 qualified personalized touches. Counters read only existing repository state: approval rows and recorded Loom URLs in \`${loomLinksPath}\`, and pipeline \`touches\`/\`sentAt\`/notes under \`prospects/<slug>/\`. Drafts, raw LOOM_URL placeholders, unapproved rows, and prospects without touch evidence never count.
+Source: the direction dossier gates this proof run on 5 approved Looms (recorded, then sent) and 40 qualified personalized touches. Counters read only existing repository state: approval rows and recorded Loom URLs in \`${loomLinksPath}\`, and pipeline \`touches\`/\`sentAt\`/notes under \`prospects/<slug>/\`. Drafts, raw LOOM_URL placeholders, unapproved rows, and prospects without touch evidence never count. Regeneration refuses to overwrite this tracked brief when the service root holds no prospect pipeline state, so an unavailable pipeline is never mistaken for an empty one.
 
 | Gate | Progress | Counted Evidence |
 |---|---:|---|
@@ -335,17 +363,17 @@ Source: the direction dossier gates this proof run on 5 approved Looms (recorded
 - Missing: ${40 - directionGate.qualifiedTouches} qualified touch(es) are still absent; ${directionGate.qualifiedProspectsWithTouches} qualified prospect(s) currently carry touch evidence.
 `;
 
-const outputDir = outputPath.split("/").slice(0, -1).join("/");
+const outputDir = resolvedOutputPath.split("/").slice(0, -1).join("/");
 if (outputDir) mkdirSync(outputDir, { recursive: true });
-writeFileSync(outputPath, markdown);
+writeFileSync(resolvedOutputPath, markdown);
 
-const loomLinksDir = loomLinksPath.split("/").slice(0, -1).join("/");
+const loomLinksDir = resolvedLoomLinksPath.split("/").slice(0, -1).join("/");
 if (loomLinksDir) mkdirSync(loomLinksDir, { recursive: true });
-const existingLoomRows = read(loomLinksPath).split("\n").map((line) => line.trim()).filter((line) => line && !line.startsWith("#"));
+const existingLoomRows = read(resolvedLoomLinksPath).split("\n").map((line) => line.trim()).filter((line) => line && !line.startsWith("#"));
 const existingLoomPaths = new Set(existingLoomRows.map((line) => line.split("|")[0].trim()));
 const generatedLoomRows = recordingBatch.length ? loomSheetRows.split("\n").filter((line) => !existingLoomPaths.has(line.split("|")[0].trim())) : existingLoomRows.length ? [] : [loomSheetRows];
 const mergedLoomRows = [...existingLoomRows, ...generatedLoomRows];
-writeFileSync(loomLinksPath, `# Replace LOOM_URL with each real Loom share link, or run: npm run market:after-recording -- --from-clipboard\n# Fast format after recording: paste either URL-only lines in this exact order, or prospects/prospect-slug|https://www.loom.com/share/...\n# Full format still works: prospects/prospect-slug|https://www.loom.com/share/...|approved|fault note|impact note|fix note|ask note\n\n${mergedLoomRows.join("\n")}\n`);
+writeFileSync(resolvedLoomLinksPath, `# Replace LOOM_URL with each real Loom share link, or run: npm run market:after-recording -- --from-clipboard\n# Fast format after recording: paste either URL-only lines in this exact order, or prospects/prospect-slug|https://www.loom.com/share/...\n# Full format still works: prospects/prospect-slug|https://www.loom.com/share/...|approved|fault note|impact note|fix note|ask note\n\n${mergedLoomRows.join("\n")}\n`);
 
 console.log(JSON.stringify({
   status: "created",

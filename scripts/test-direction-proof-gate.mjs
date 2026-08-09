@@ -23,8 +23,8 @@ function fixedEnv() {
   return {...process.env, NODE_OPTIONS: [process.env.NODE_OPTIONS, `--import=${fixedClockImport}`].filter(Boolean).join(" "), SERVICE_REPO_ROOT: T, SERVICE_TEST_NOW: `${trackedArtifactDate}T12:00:00.000+05:30`, TZ: "Asia/Kolkata"}
 }
 
-function run(args) {
-  return spawnSync(process.execPath, args, {cwd: T, encoding: "utf8", env: fixedEnv()})
+function run(args, cwd = T) {
+  return spawnSync(process.execPath, args, {cwd, encoding: "utf8", env: fixedEnv()})
 }
 
 function writeJson(path, value) {
@@ -132,6 +132,22 @@ try {
   eq(noProspectsRun.status, 0, noProspectsRun.stderr || noProspectsRun.stdout)
   deq(JSON.parse(noProspectsRun.stdout).directionGate.qualifiedTouches, 0, "no prospects means no qualified touches")
   mat(readFileSync(join(T, "runs/no-prospects-proof-gate.md"), "utf8"), /\| Qualified touches \| 0\/40 \|/)
+
+  rmSync(join(T, "prospects"), {recursive: true, force: true})
+  const trackedBriefPath = join(T, "growth-brain/ops/11-10-proof-run.md")
+  const trackedBriefBefore = readFileSync(trackedBriefPath, "utf8")
+  const refusedRun = run(["scripts/export-market-proof-run.mjs", "--skip-kit"])
+  ok(refusedRun.status !== 0, "regenerating the tracked brief without prospect state must refuse instead of silently reporting a zero pipeline")
+  mat(refusedRun.stderr, /Refusing to regenerate the tracked 11\/10 proof-run brief with a zero pipeline/)
+  eq(readFileSync(trackedBriefPath, "utf8"), trackedBriefBefore, "refused regeneration must leave the tracked brief untouched")
+  eq(existsSync(join(T, "prospects")), false, "refused regeneration must not create a prospect root or loom sheet")
+
+  const anchoredCwd = join(T, "runner-cwd")
+  mkdirSync(anchoredCwd, { recursive: true })
+  const anchoredRun = run([join(C, "scripts/export-market-proof-run.mjs"), "--skip-kit", "--output=runs/rooted-proof-gate.md"], anchoredCwd)
+  eq(anchoredRun.status, 0, anchoredRun.stderr || anchoredRun.stdout)
+  ok(existsSync(join(T, "runs/rooted-proof-gate.md")), "anchored generation must write into the service root")
+  eq(existsSync(join(anchoredCwd, "runs/rooted-proof-gate.md")), false, "anchored generation must not write into the invocation directory")
   console.log("Direction proof gate checks passed.")
 } finally {
   rmSync(T, {recursive: true, force: true})
