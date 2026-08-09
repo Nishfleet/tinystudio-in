@@ -147,6 +147,9 @@ img {
   font-size: 0.95rem;
   font-weight: 500;
   letter-spacing: 0;
+  display: inline-block;
+  min-height: 24px;
+  padding: 4px 0;
   transition: color 160ms ease;
 }
 
@@ -319,6 +322,12 @@ h4 {
   letter-spacing: 0;
 }
 
+.rail-item strong a {
+  display: inline-block;
+  min-height: 24px;
+  padding: 4px 0;
+}
+
 .rail-item p {
   margin: 8px 0 0;
 }
@@ -402,6 +411,9 @@ h4 {
   text-decoration: none;
   font-size: 0.92rem;
   font-weight: 500;
+  display: inline-block;
+  min-height: 24px;
+  padding: 4px 0;
 }
 
 .team-feature {
@@ -533,6 +545,9 @@ h4 {
   color: var(--muted);
   text-decoration: none;
   overflow-wrap: anywhere;
+  display: inline-block;
+  min-height: 24px;
+  padding: 4px 0;
 }
 
 
@@ -678,6 +693,12 @@ h4 {
   color: var(--muted);
   font-size: 0.98rem;
   line-height: 1.45;
+}
+
+.plain-list a {
+  display: inline-block;
+  min-height: 24px;
+  padding: 4px 0;
 }
 
 .page-card.dark .plain-list li {
