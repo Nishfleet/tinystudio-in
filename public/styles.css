@@ -427,8 +427,16 @@ h4 {
   box-shadow: var(--shadow);
 }
 
-.team-feature h4 {
+/* The managed-service section heading is a semantic H3 that keeps the former
+   h4 scale and margin inside .team-feature, so both feature blocks render
+   identically to before the hierarchy repair. Global h3/h4 styling is
+   intentionally untouched. */
+.team-feature :is(h3, h4) {
   margin-top: 12px;
+}
+
+.team-feature h3 {
+  font-size: clamp(1.55rem, 1.8vw, 2rem);
 }
 
 .team-feature p {
