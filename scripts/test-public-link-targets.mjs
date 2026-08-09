@@ -19,6 +19,7 @@ const ok = (cond, msg) => {
 // Every public page that carries the shared header/footer.
 const PUBLIC_PAGES = [
   "public/index.html",
+  "public/404.html",
   "public/contact/index.html",
   "public/promptly/index.html",
   "public/promptly/support/index.html",
