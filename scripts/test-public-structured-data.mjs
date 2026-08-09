@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs"
+import { readFileSync, readdirSync } from "node:fs"
 import { fileURLToPath } from "node:url"
 import { dirname, join } from "node:path"
 
@@ -26,6 +26,36 @@ const PAGES = [
     file: "public/promptly/privacy/index.html",
     pageType: "WebPage",
     label: "Promptly privacy policy page"
+  },
+  {
+    file: "public/privacy/index.html",
+    pageType: "WebPage",
+    label: "studio privacy hub page"
+  },
+  {
+    file: "public/terms/index.html",
+    pageType: "WebPage",
+    label: "terms page"
+  },
+  {
+    file: "public/privacy-choices/index.html",
+    pageType: "WebPage",
+    label: "privacy choices page"
+  },
+  {
+    file: "public/drishti/privacy/index.html",
+    pageType: "WebPage",
+    label: "Drishti privacy policy page"
+  },
+  {
+    file: "public/drishti/support/index.html",
+    pageType: "ContactPage",
+    label: "Drishti support page"
+  },
+  {
+    file: "public/promptly/support/index.html",
+    pageType: "ContactPage",
+    label: "Promptly support page"
   }
 ]
 
@@ -48,6 +78,14 @@ const jsonLdBlocksOf = (html) =>
   [...html.matchAll(/<script\s+type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/gi)].map(
     (m) => m[1]
   )
+
+const publicHtmlFiles = (dir = "public") =>
+  readdirSync(join(ROOT, dir), { withFileTypes: true }).flatMap((entry) => {
+    const path = join(dir, entry.name)
+    if (entry.isDirectory()) return publicHtmlFiles(path)
+    if (entry.isFile() && entry.name === "index.html") return [path]
+    return []
+  })
 
 console.log("test-public-structured-data: JSON-LD structured data on public pages")
 
@@ -103,7 +141,14 @@ for (const { file, pageType, label } of PAGES) {
   )
 }
 
-console.log("B. npm test/ci wiring")
+console.log("B. every public HTML page carries exactly one JSON-LD block")
+for (const file of publicHtmlFiles()) {
+  const html = read(file)
+  const blocks = jsonLdBlocksOf(html)
+  ok(blocks.length === 1, `${file} carries exactly one application/ld+json block`)
+}
+
+console.log("C. npm test/ci wiring")
 const pkg = JSON.parse(read("package.json"))
 const wired = pkg.scripts.test.includes("test-public-structured-data.mjs")
 ok(wired, "npm test runs the public structured data test")
