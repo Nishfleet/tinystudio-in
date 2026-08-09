@@ -8,6 +8,7 @@ const appleIconPath = path.join(root, "apple-touch-icon.svg");
 
 const htmlFiles = [
   "index.html",
+  "404.html",
   "support/index.html",
   "contact/index.html",
   "privacy/index.html",
