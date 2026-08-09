@@ -7,7 +7,9 @@ import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
 import { isValidLoomUrl } from "./lib/loom-url.mjs";
 import { routedContactPlan, routeToChannel } from "./lib/contact-route.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: npm run prospect:outbox -- [--limit=20] [--output=prospects/outbox.html]`);
 const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
 const limit = limitArg ? Number(limitArg.split("=")[1]) : 20;
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
@@ -642,9 +644,10 @@ const html = `<!doctype html>
 </html>
 `;
 
-const outputDir = outputPath.split("/").slice(0, -1).join("/");
+const resolvedOutputPath = resolveOutputPath(outputPath);
+const outputDir = resolvedOutputPath.split("/").slice(0, -1).join("/");
 if (outputDir) mkdirSync(outputDir, { recursive: true });
-writeFileSync(outputPath, html);
+writeFileSync(resolvedOutputPath, html);
 
 console.log(JSON.stringify({
   status: "created",

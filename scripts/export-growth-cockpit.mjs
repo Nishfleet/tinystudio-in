@@ -2,7 +2,9 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { localIsoDate } from "./date-utils.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: npm run growth:cockpit -- [--output=runs/growth-cockpit.html]`);
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const outputPath = outputArg ? outputArg.split("=")[1] : "runs/growth-cockpit.html";
 const today = localIsoDate();
@@ -241,9 +243,10 @@ const html = `<!doctype html>
 </html>
 `;
 
-const outputDir = outputPath.split("/").slice(0, -1).join("/");
+const resolvedOutputPath = resolveOutputPath(outputPath);
+const outputDir = resolvedOutputPath.split("/").slice(0, -1).join("/");
 if (outputDir) mkdirSync(outputDir, { recursive: true });
-writeFileSync(outputPath, `${html.replace(/[ \t]+$/gm, "").trimEnd()}\n`);
+writeFileSync(resolvedOutputPath, `${html.replace(/[ \t]+$/gm, "").trimEnd()}\n`);
 
 console.log(JSON.stringify({
   status: "created",

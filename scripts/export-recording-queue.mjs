@@ -3,7 +3,9 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 import { checkProspectReadiness, prospectWarningWeight } from "./lib/prospect-readiness.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: npm run prospect:queue -- [--limit=5] [--output=prospects/recording-queue.md]`);
 const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
 const limit = limitArg ? Number(limitArg.split("=")[1]) : 5;
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
@@ -63,9 +65,10 @@ for (const prospect of candidates) {
   lines.push("");
 }
 
-const outputDir = outputPath.split("/").slice(0, -1).join("/");
+const resolvedOutputPath = resolveOutputPath(outputPath);
+const outputDir = resolvedOutputPath.split("/").slice(0, -1).join("/");
 if (outputDir) mkdirSync(outputDir, { recursive: true });
-writeFileSync(outputPath, `${lines.join("\n")}\n`);
+writeFileSync(resolvedOutputPath, `${lines.join("\n")}\n`);
 
 console.log(JSON.stringify({
   status: "created",

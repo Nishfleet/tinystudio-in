@@ -4,7 +4,9 @@ import { join } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 import { runRepoJson as runJson } from "./lib/runtime-roots.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: npm run market:learn -- [--limit=10] [--output=runs/market-learning-review.md] [--html=runs/market-learning-review.html]`);
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const htmlArg = process.argv.find((arg) => arg.startsWith("--html="));
 const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
@@ -295,8 +297,8 @@ const html = `<!doctype html>
 </html>
 `;
 
-write(outputPath, markdown);
-write(htmlPath, html);
+write(resolveOutputPath(outputPath), markdown);
+write(resolveOutputPath(htmlPath, { flag: "--html" }), html);
 
 console.log(JSON.stringify({
   status: review.status,

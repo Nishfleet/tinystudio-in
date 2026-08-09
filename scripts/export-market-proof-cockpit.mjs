@@ -7,8 +7,10 @@ import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
 import { routedContactPlan } from "./lib/contact-route.mjs";
 import { classifyOutboundProspect } from "./lib/outbound-prospects.mjs";
 import { runRepoJson as runJson } from "./lib/runtime-roots.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
 const args = process.argv.slice(2);
+handleHelp(args, `Usage: npm run market:proof-cockpit -- [prospects/loom-links.txt] [--limit=5] [--output=runs/market-proof-cockpit.md] [--html=runs/market-proof-cockpit.html]`);
 const inputPath = args.find((arg) => !arg.startsWith("--")) || "prospects/loom-links.txt";
 const outputArg = args.find((arg) => arg.startsWith("--output="));
 const htmlArg = args.find((arg) => arg.startsWith("--html="));
@@ -414,8 +416,8 @@ const html = `<!doctype html>
 </html>
 `;
 
-write(outputPath, markdown);
-write(htmlPath, html);
+write(resolveOutputPath(outputPath), markdown);
+write(resolveOutputPath(htmlPath, { flag: "--html" }), html);
 
 const result = {
   status: cockpitStatus,

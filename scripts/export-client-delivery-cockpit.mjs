@@ -6,8 +6,10 @@ import { localIsoDate } from "./date-utils.mjs";
 import { codeRoot, serviceRoot } from "./lib/runtime-roots.mjs";
 import { resolveRepoPath } from "./lib/service-contract.mjs";
 import { loadValidatedServiceClient } from "./lib/validated-service-client.mjs";
+import { handleHelp } from "./lib/operator-cli.mjs";
 
 const args = process.argv.slice(2);
+handleHelp(args, `Usage: npm run client:cockpit -- clients/client-slug [--output=clients/client-slug/delivery-cockpit.html]`);
 const clientPath = args[0];
 const outputArg = args.find((arg) => arg.startsWith("--output="));
 const repoRoot = serviceRoot;

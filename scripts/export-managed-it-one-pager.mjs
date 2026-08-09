@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 import { readFileSync, writeFileSync } from "node:fs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: npm run sales:one-pager --`);
 const inputPath = "growth-brain/sales/managed-it-one-page-offer.md";
 const outputPath = "growth-brain/sales/managed-it-one-page-offer.html";
 
@@ -148,7 +150,7 @@ ${body}
 </html>
 `;
 
-writeFileSync(outputPath, html);
+writeFileSync(resolveOutputPath(outputPath), html);
 
 console.log(JSON.stringify({
   status: "created",
