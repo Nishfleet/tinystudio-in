@@ -29,7 +29,16 @@ const dkimSelectorCandidates = [
   "pm",
   "mx",
   "sig1",
-  "sig2"
+  "sig2",
+  // Cloudflare Email Service: when Email Routing or Email Sending signs mail for the
+  // domain, Cloudflare provides DKIM records under these selectors (current docs:
+  // https://developers.cloudflare.com/email-service/concepts/email-authentication/).
+  // The sender domain proves Cloudflare is in the mail path via SPF include
+  // _spf.mx.cloudflare.net and MX route*.mx.cloudflare.net.
+  "cf2024-1",
+  "cf2022_cloudflare_email",
+  "c2022_cloudflare_email",
+  "cf-bounce"
 ];
 
 function senderDomain() {

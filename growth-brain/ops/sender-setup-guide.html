@@ -95,9 +95,9 @@
 
 
       <div class="card">
-        <span>DKIM discovery</span>
-        <strong>needs work</strong>
-        <small>common selectors at _domainkey.tinystudio.io</small>
+        <span>DKIM</span>
+        <strong>ready</strong>
+        <small>cf2024-1._domainkey.tinystudio.io</small>
       </div>
 </div>
     </section>
@@ -105,9 +105,6 @@
       <h2>Fix First</h2>
       <ol>
       <li><strong>missing physical postal address</strong><br>Commercial email needs a valid physical postal address. Use a business address, PO box, or private mailbox before cold email.</li>
-
-
-      <li><strong>DKIM selector not configured</strong><br>Set dkimSelector after enabling DKIM in the mail provider. No common DKIM selectors were found in DNS.</li>
 </ol>
     </section>
     <section>
@@ -124,10 +121,11 @@
         <li>Add the DKIM TXT record in Cloudflare if the provider gives one.</li>
         <li>Run <code>npm run send:setup</code>.</li>
       </ol>
+      <p class="sub">If the domain uses Cloudflare Email Routing or Email Sending (SPF includes <code>_spf.mx.cloudflare.net</code>), the DKIM records Cloudflare provides use selector <code>cf2024-1</code> for routed mail or <code>cf-bounce</code> for sent mail; confirm the exact selector in the Cloudflare dashboard before saving it here.</p>
     </section>
     <section>
       <h2>Sources</h2>
-      <p><a href="https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business">FTC CAN-SPAM guide</a> · <a href="https://support.google.com/a/answer/174124">Google DKIM setup</a> · <a href="https://developers.cloudflare.com/dns/manage-dns-records/reference/dns-record-types/">Cloudflare TXT records</a></p>
+      <p><a href="https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business">FTC CAN-SPAM guide</a> · <a href="https://support.google.com/a/answer/174124">Google DKIM setup</a> · <a href="https://developers.cloudflare.com/email-service/concepts/email-authentication/">Cloudflare email authentication</a> · <a href="https://developers.cloudflare.com/dns/manage-dns-records/reference/dns-record-types/">Cloudflare TXT records</a></p>
     </section>
   </main>
 </body>
