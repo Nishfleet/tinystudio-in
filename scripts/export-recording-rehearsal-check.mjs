@@ -8,6 +8,10 @@ import { localIsoDate } from "./date-utils.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 
 const args = process.argv.slice(2);
+if (args.includes("--help") || args.includes("-h")) {
+  console.log("Usage: npm run prospect:rehearsal -- [--limit=5] [--output=prospects/recording-rehearsal-check.md] [--html=prospects/recording-rehearsal-check.html]");
+  process.exit(0);
+}
 const limitArg = args.find((arg) => arg.startsWith("--limit="));
 const outputArg = args.find((arg) => arg.startsWith("--output="));
 const htmlArg = args.find((arg) => arg.startsWith("--html="));
