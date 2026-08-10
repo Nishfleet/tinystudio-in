@@ -13,6 +13,12 @@ const scriptRepoRoot = dirname(dirname(fileURLToPath(import.meta.url)));
 const expectedCwd = process.env.TINYSTUDIO_AUTOMATION_WORKSPACE || canonicalMainWorktree(scriptRepoRoot);
 const isGithubActions = process.env.GITHUB_ACTIONS === "true";
 const serviceRoot = process.env.SERVICE_REPO_ROOT || process.cwd();
+// Canonical operator runtime: the checkout that owns the aggregate private
+// service state. Defaults to the main worktree; overridable for hermetic runs.
+const canonicalRuntimeRoot = process.env.TINYSTUDIO_CANONICAL_RUNTIME || canonicalMainWorktree(scriptRepoRoot);
+// The only service-state roots compared. Counts stay aggregate: record names,
+// deeper paths, and file contents are never read into the report.
+const AGGREGATE_ROOTS = ["clients", "prospects", "service-decisions", "runs/service-engine"];
 const clientsPath = join(serviceRoot, "clients");
 const paidProspectsPath = join(serviceRoot, "prospects");
 const clientIds = new Set();
@@ -59,6 +65,56 @@ function canonicalMainWorktree(repoRoot) {
     }
   } catch {}
   return repoRoot;
+}
+
+// Counts only top-level directories directly under each aggregate root; a
+// missing or unreadable root reports null so it can never be mistaken for an
+// empty root.
+function aggregateRootCounts(root) {
+  const counts = {};
+  for (const relative of AGGREGATE_ROOTS) {
+    const dir = join(root, relative);
+    if (!existsSync(dir)) {
+      counts[relative] = null;
+      continue;
+    }
+    try {
+      let count = 0;
+      for (const entry of readdirSync(dir, { withFileTypes: true })) {
+        if (entry.isDirectory() && !entry.name.startsWith(".")) count += 1;
+      }
+      counts[relative] = count;
+    } catch {
+      counts[relative] = null;
+    }
+  }
+  return counts;
+}
+
+function gitSha(repo, ref) {
+  try {
+    return execFileSync("git", ["-C", repo, "rev-parse", ref], {
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "ignore"]
+    }).trim();
+  } catch {
+    return "";
+  }
+}
+
+// Fetches current origin/main in the configured checkout and resolves it.
+// Any failure (not a git repo, no origin, unreachable, hung fetch) returns ""
+// so the caller fails closed instead of trusting a stale ref.
+function currentOriginMain(repo) {
+  try {
+    execFileSync("git", ["-C", repo, "fetch", "--quiet", "--no-tags", "origin", "main"], {
+      stdio: ["ignore", "ignore", "ignore"],
+      timeout: 60000
+    });
+    return gitSha(repo, "origin/main");
+  } catch {
+    return "";
+  }
 }
 
 function configuredWorkspacePaths(content) {
@@ -146,6 +202,37 @@ for (const retiredPhrase of ["weekly client value loop", "retention checkups", "
   if (prompt.includes(retiredPhrase)) failures.push(`Automation prompt retains retired service concept: ${retiredPhrase}`);
 }
 
+// Environment gates only bind once client records exist: the Friday retention
+// loop is optional while no clients are active, so an empty checkout must not
+// be blocked on checkout freshness or canonical-state parity.
+const checkout = { head: null, originMain: null };
+const aggregateState = {};
+const canonicalState = {};
+if (clientCount > 0) {
+  checkout.head = gitSha(expectedRepo, "HEAD");
+  checkout.originMain = currentOriginMain(expectedRepo);
+  if (!checkout.head || !checkout.originMain) {
+    failures.push("Cannot verify configured checkout against current origin/main");
+  } else if (checkout.head !== checkout.originMain) {
+    failures.push("Configured checkout HEAD differs from current origin/main");
+  }
+
+  Object.assign(aggregateState, aggregateRootCounts(serviceRoot));
+  Object.assign(canonicalState, aggregateRootCounts(canonicalRuntimeRoot));
+  for (const relative of AGGREGATE_ROOTS) {
+    const automationCount = aggregateState[relative];
+    const canonicalCount = canonicalState[relative];
+    if (automationCount === null && canonicalCount === null) continue;
+    if (automationCount === null) {
+      failures.push(`Aggregate service root ${relative} is inaccessible in the automation runtime`);
+    } else if (canonicalCount === null) {
+      failures.push(`Aggregate service root ${relative} is inaccessible in the canonical runtime`);
+    } else if (automationCount !== canonicalCount) {
+      failures.push(`Aggregate service state diverges from canonical runtime (root: ${relative})`);
+    }
+  }
+}
+
 const status = failures.length ? "fail" : warnings.length ? "warn" : "pass";
 
 console.log(JSON.stringify({
@@ -154,6 +241,10 @@ console.log(JSON.stringify({
   path: automationPath,
   weeklyCadence: "Friday retention prep",
   repo: expectedCwd,
+  clientCount,
+  checkout,
+  aggregateState,
+  canonicalState,
   failures,
   ...(failures.length ? { replacementPrompt: RETENTION_AUTOMATION_PROMPT } : {}),
   warnings
