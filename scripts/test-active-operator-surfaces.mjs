@@ -118,7 +118,15 @@ try {
 		"export-market-proof-cockpit.mjs",
 		"export-market-learning-review.mjs",
 		"export-market-proof-run.mjs",
-		"export-managed-it-one-pager.mjs"
+		"export-managed-it-one-pager.mjs",
+		"export-client-channel-readiness.mjs",
+		"export-client-repeatable-workflow.mjs",
+		"export-client-weekly-report.mjs",
+		"export-full-stack-growth-map.mjs",
+		"export-owned-handoff-loom-cockpit.mjs",
+		"export-owned-product-case-studies.mjs",
+		"export-owned-product-workflow-proofs.mjs",
+		"export-owned-startup-proof-capture.mjs"
 	]
 	const artifactBeforeHelp = new Map(
 		[...trackedArtifacts.keys(), ...privateRuntimeArtifacts]
@@ -134,6 +142,10 @@ try {
 	for (const [path, before] of artifactBeforeHelp) {
 		deq(readFileSync(join(T, path), "utf8"), before, `${path} must not be rewritten by --help/-h`)
 	}
+	for (const path of retiredBroadServiceArtifacts) {
+		eq(existsSync(join(T, path)), false, `--help/-h must not recreate retired artifact ${path}`)
+	}
+	eq(existsSync(join(T, "clients/ai-converter")), false, "--help/-h must not make export-owned-startup-proof-capture seed owned client folders")
 
 	// Operator export scripts must refuse output paths that escape the service
 	// root. Every probe targets E, a dedicated test-owned directory outside the
@@ -146,8 +158,20 @@ try {
 		["scripts/export-market-benchmark.mjs", [`--ops=${join(E, "escape-ops.md")}`]],
 		["scripts/export-market-proof-cockpit.mjs", [`--html=${join(E, "escape-cockpit.html")}`]],
 		["scripts/export-recording-rehearsal-check.mjs", [`--output=${join(E, "escape-rehearsal.md")}`]],
-		["scripts/export-sender-setup-guide.mjs", [`--html=${join(E, "escape-guide.html")}`]]
+		["scripts/export-sender-setup-guide.mjs", [`--html=${join(E, "escape-guide.html")}`]],
+		["scripts/export-owned-handoff-loom-cockpit.mjs", [`--output=${join(E, "escape-owned-handoff.md")}`]],
+		["scripts/export-owned-product-case-studies.mjs", [`--output=${join(E, "escape-owned-studies.md")}`]],
+		["scripts/export-owned-product-workflow-proofs.mjs", [`--output=${join(E, "escape-owned-workflow.md")}`]]
 	]
+	mkdirSync(join(T, "clients", "escape-probe"), {recursive: true})
+	for (const args of [
+		["scripts/export-client-repeatable-workflow.mjs", "clients/escape-probe", `--output=${join(E, "escape-workflow.md")}`],
+		["scripts/export-client-weekly-report.mjs", "clients/escape-probe", `--output=${join(E, "escape-weekly.md")}`]
+	]) {
+		const refused = run(args)
+		neq(refused.status, 0, `${args[0]} must refuse an escaping output path`)
+		mat(refused.stderr, /Refusing/, `${args[0]} must explain the refusal`)
+	}
 	for (const [script, args] of escapeProbes) {
 		const refused = run([script, ...args])
 		neq(refused.status, 0, `${script} must refuse an escaping output path`)
