@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { execFileSync } from "node:child_process";
 import { localIsoDate } from "./date-utils.mjs";
 import { checkProspectReadiness, prospectWarningWeight } from "./lib/prospect-readiness.mjs";
@@ -9,7 +9,9 @@ import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
 import { routedContactPlan } from "./lib/contact-route.mjs";
 import { canonicalProspectAsk } from "./lib/canonical-service-copy.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: npm run market:proof-run -- [--limit=N] [--skip-kit] [--output=growth-brain/ops/11-10-proof-run.md] [--loom-links=prospects/loom-links.txt]`);
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/11-10-proof-run.md";
 const loomLinksArg = process.argv.find((arg) => arg.startsWith("--loom-links="));
@@ -22,6 +24,8 @@ const loomLinksPath = loomLinksArg
   : outputPath.startsWith("prospects/kit-")
     ? "prospects/kit-proof-run-loom-links.txt"
     : "prospects/loom-links.txt";
+const resolvedOutputPath = resolveOutputPath(outputPath);
+const resolvedLoomLinksPath = resolveOutputPath(loomLinksPath, { flag: "--loom-links" });
 
 function runJson(args) {
   const output = execFileSync("node", args, {
@@ -179,7 +183,7 @@ const parityOutputPath = outputPath.startsWith("prospects/kit-")
   ? "prospects/kit-market-proof-run-parity.md"
   : "prospects/market-proof-run-parity.md";
 const parityArgs = ["scripts/check-market-parity-readiness.mjs", `--output=${parityOutputPath}`];
-if (skipKit || !existsSync(outputPath)) parityArgs.push("--skip-kit");
+if (skipKit || !existsSync(resolvedOutputPath)) parityArgs.push("--skip-kit");
 const parity = runJson(parityArgs);
 rmSync(parityOutputPath, { force: true });
 
@@ -226,7 +230,7 @@ const recordingBatch = prospects
   .slice(0, limit);
 
 const directionGate = directionGateCounts(
-  read(loomLinksPath).split("\n").map(parseLoomSheetLine).filter(Boolean),
+  read(resolvedLoomLinksPath).split("\n").map(parseLoomSheetLine).filter(Boolean),
   prospects
 );
 
@@ -335,17 +339,17 @@ Source: the direction dossier gates this proof run on 5 approved Looms (recorded
 - Missing: ${40 - directionGate.qualifiedTouches} qualified touch(es) are still absent; ${directionGate.qualifiedProspectsWithTouches} qualified prospect(s) currently carry touch evidence.
 `;
 
-const outputDir = outputPath.split("/").slice(0, -1).join("/");
+const outputDir = dirname(resolvedOutputPath);
 if (outputDir) mkdirSync(outputDir, { recursive: true });
-writeFileSync(outputPath, markdown);
+writeFileSync(resolvedOutputPath, markdown);
 
-const loomLinksDir = loomLinksPath.split("/").slice(0, -1).join("/");
+const loomLinksDir = dirname(resolvedLoomLinksPath);
 if (loomLinksDir) mkdirSync(loomLinksDir, { recursive: true });
-const existingLoomRows = read(loomLinksPath).split("\n").map((line) => line.trim()).filter((line) => line && !line.startsWith("#"));
+const existingLoomRows = read(resolvedLoomLinksPath).split("\n").map((line) => line.trim()).filter((line) => line && !line.startsWith("#"));
 const existingLoomPaths = new Set(existingLoomRows.map((line) => line.split("|")[0].trim()));
 const generatedLoomRows = recordingBatch.length ? loomSheetRows.split("\n").filter((line) => !existingLoomPaths.has(line.split("|")[0].trim())) : existingLoomRows.length ? [] : [loomSheetRows];
 const mergedLoomRows = [...existingLoomRows, ...generatedLoomRows];
-writeFileSync(loomLinksPath, `# Replace LOOM_URL with each real Loom share link, or run: npm run market:after-recording -- --from-clipboard\n# Fast format after recording: paste either URL-only lines in this exact order, or prospects/prospect-slug|https://www.loom.com/share/...\n# Full format still works: prospects/prospect-slug|https://www.loom.com/share/...|approved|fault note|impact note|fix note|ask note\n\n${mergedLoomRows.join("\n")}\n`);
+writeFileSync(resolvedLoomLinksPath, `# Replace LOOM_URL with each real Loom share link, or run: npm run market:after-recording -- --from-clipboard\n# Fast format after recording: paste either URL-only lines in this exact order, or prospects/prospect-slug|https://www.loom.com/share/...\n# Full format still works: prospects/prospect-slug|https://www.loom.com/share/...|approved|fault note|impact note|fix note|ask note\n\n${mergedLoomRows.join("\n")}\n`);
 
 console.log(JSON.stringify({
   status: "created",

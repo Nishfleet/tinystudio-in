@@ -1,17 +1,19 @@
 #!/usr/bin/env node
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { dirname, join } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
 import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 import { codeRoot, runRepoJson as runJson, serviceRoot } from "./lib/runtime-roots.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: npm run growth:dashboard -- [--plain] [--output=runs/internal-dashboard.md] [--html=runs/internal-dashboard.html]`);
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const htmlArg = process.argv.find((arg) => arg.startsWith("--html="));
 const plain = process.argv.includes("--plain");
 const today = localIsoDate();
-const outputPath = outputArg ? outputArg.split("=")[1] : "runs/internal-dashboard.md";
-const htmlPath = htmlArg ? htmlArg.split("=")[1] : "runs/internal-dashboard.html";
+const outputPath = resolveOutputPath(outputArg?.split("=")[1], { fallback: "runs/internal-dashboard.md" });
+const htmlPath = resolveOutputPath(htmlArg?.split("=")[1], { flag: "--html", fallback: "runs/internal-dashboard.html" });
 
 function htmlEscape(value) {
   return String(value ?? "")
@@ -32,7 +34,7 @@ function pill(status) {
 }
 
 function write(path, content) {
-  const dir = path.split("/").slice(0, -1).join("/");
+  const dir = dirname(path);
   if (dir) mkdirSync(dir, { recursive: true });
   writeFileSync(path, content);
 }
@@ -54,7 +56,13 @@ catch (error) {
   const output = String(error.stderr || error.message || "");
   serviceQueue = { items: [], counts: { blocked: 1 }, error: output.match(/service:queue failed:[^\n]*/)?.[0] || "service queue validation failed" };
 }
-const parity = runJson(["scripts/check-market-parity-readiness.mjs", "--skip-kit", "--output=/tmp/tinystudio-internal-dashboard-parity.md"]);
+const parityScratchPath = `runs/.internal-dashboard-parity-${process.pid}.md`;
+let parity;
+try {
+  parity = runJson(["scripts/check-market-parity-readiness.mjs", "--skip-kit", `--output=${parityScratchPath}`]);
+} finally {
+  rmSync(join(serviceRoot, parityScratchPath), { force: true });
+}
 const todayView = runJson(["scripts/show-growth-command-center.mjs", "--limit=12"]);
 const marketProof = existsSync(join(serviceRoot, "prospects/loom-links.txt"))
   ? runJson(["scripts/export-market-proof-cockpit.mjs"])
@@ -482,8 +490,8 @@ const html = `<!doctype html>
 </html>
 `;
 
-write(resolve(serviceRoot, outputPath), markdown);
-write(resolve(serviceRoot, htmlPath), html);
+write(outputPath, markdown);
+write(htmlPath, html);
 
 const result = {
   status: doctor.status === "blocked" || parity.status === "not-11-10-yet" || serviceQueueBlocked > 0 || clientIntegrityBlocked > 0 ? "attention-needed" : "ready",

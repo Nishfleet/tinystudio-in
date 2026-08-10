@@ -1,10 +1,14 @@
 #!/usr/bin/env node
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { dirname } from "node:path";
 import { execFileSync } from "node:child_process";
 import { localIsoDate } from "./date-utils.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
-const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
-const outputPath = outputArg ? outputArg.split("=")[1] : "runs/growth-cockpit.html";
+const args = process.argv.slice(2);
+handleHelp(args, `Usage: npm run growth:cockpit -- [--output=runs/growth-cockpit.html]`);
+const outputArg = args.find((arg) => arg.startsWith("--output="));
+const outputPath = resolveOutputPath(outputArg?.split("=")[1], { fallback: "runs/growth-cockpit.html" });
 const today = localIsoDate();
 
 function runJson(args) {
@@ -241,7 +245,7 @@ const html = `<!doctype html>
 </html>
 `;
 
-const outputDir = outputPath.split("/").slice(0, -1).join("/");
+const outputDir = dirname(outputPath);
 if (outputDir) mkdirSync(outputDir, { recursive: true });
 writeFileSync(outputPath, `${html.replace(/[ \t]+$/gm, "").trimEnd()}\n`);
 

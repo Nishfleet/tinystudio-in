@@ -10,6 +10,7 @@ import {staleGeneratedArtifacts} from "./lib/review-queue.mjs"
 
 const C = dirname(dirname(fileURLToPath(import.meta.url)))
 const T = mkdtempSync(join(tmpdir(), "tinystudio-active-operator-surfaces-"))
+const E = mkdtempSync(join(tmpdir(), "tinystudio-escape-probes-"))
 const sp = name => join(T, "scripts", name)
 const LOOM = "https://www.loom.com/share/1234567890abcdef1234567890abcdef"
 const {equal: eq, deepEqual: deq, notEqual: neq, match: mat, doesNotMatch: dnm, ok} = assert
@@ -92,6 +93,89 @@ try {
 		deq(readFileSync(join(T, path)), expected, `Tracked generated artifact is stale: ${path}`)
 	}
 	for (const path of privateRuntimeArtifacts) eq(existsSync(join(T, path)), true, `Private runtime artifact is missing: ${path}`)
+
+	// Every active operator export script must honor --help and -h before doing
+	// any work: print usage, exit 0, and never write or overwrite a cockpit or
+	// mission artifact.
+	const helpSurface = [
+		"export-client-delivery-cockpit.mjs",
+		"export-sender-setup-guide.mjs",
+		"export-lead-scoring-cockpit.mjs",
+		"export-recording-queue.mjs",
+		"export-recording-cockpit.mjs",
+		"export-recording-teleprompter.mjs",
+		"export-recording-rehearsal-check.mjs",
+		"export-prospect-outbox.mjs",
+		"export-followup-cockpit.mjs",
+		"export-sales-cockpit.mjs",
+		"export-daily-money-mission.mjs",
+		"export-growth-doctor.mjs",
+		"export-growth-cockpit.mjs",
+		"export-growth-metrics.mjs",
+		"export-proof-library.mjs",
+		"export-internal-dashboard.mjs",
+		"export-market-benchmark.mjs",
+		"export-market-proof-cockpit.mjs",
+		"export-market-learning-review.mjs",
+		"export-market-proof-run.mjs",
+		"export-managed-it-one-pager.mjs"
+	]
+	const artifactBeforeHelp = new Map(
+		[...trackedArtifacts.keys(), ...privateRuntimeArtifacts]
+			.map(path => [path, readFileSync(join(T, path), "utf8")])
+	)
+	for (const name of helpSurface) {
+		for (const flag of ["--help", "-h"]) {
+			const helped = run([`scripts/${name}`, flag])
+			eq(helped.status, 0, `${name} ${flag} must exit 0: ${helped.stderr || helped.stdout}`)
+			mat(helped.stdout, /Usage:/, `${name} ${flag} must print usage`)
+		}
+	}
+	for (const [path, before] of artifactBeforeHelp) {
+		deq(readFileSync(join(T, path), "utf8"), before, `${path} must not be rewritten by --help/-h`)
+	}
+
+	// Operator export scripts must refuse output paths that escape the service
+	// root. Every probe targets E, a dedicated test-owned directory outside the
+	// root, so a failed escape can never touch developer-owned files.
+	const escapeProbes = [
+		["scripts/export-growth-metrics.mjs", [`--output=${join(E, "escape-metrics.md")}`]],
+		["scripts/export-growth-cockpit.mjs", [`--output=${join(E, "escape-cockpit.html")}`]],
+		["scripts/export-daily-money-mission.mjs", [`--output=${join(E, "escape-mission.md")}`]],
+		["scripts/export-market-proof-run.mjs", ["--output=runs/escape-run.md", `--loom-links=${join(E, "escape-links.txt")}`]],
+		["scripts/export-market-benchmark.mjs", [`--ops=${join(E, "escape-ops.md")}`]],
+		["scripts/export-market-proof-cockpit.mjs", [`--html=${join(E, "escape-cockpit.html")}`]],
+		["scripts/export-recording-rehearsal-check.mjs", [`--output=${join(E, "escape-rehearsal.md")}`]],
+		["scripts/export-sender-setup-guide.mjs", [`--html=${join(E, "escape-guide.html")}`]]
+	]
+	for (const [script, args] of escapeProbes) {
+		const refused = run([script, ...args])
+		neq(refused.status, 0, `${script} must refuse an escaping output path`)
+		mat(refused.stderr, /Refusing/, `${script} must explain the refusal`)
+	}
+	deq(readdirSync(E), [], `Escaping output paths must not create files outside the root`)
+	const benchmarkBefore = readFileSync(join(T, "docs/strategy/market-parity-benchmark-2026.md"), "utf8")
+	const opsEscape = run(["scripts/export-market-benchmark.mjs", "--output=docs/strategy/market-parity-benchmark-2026.md", `--ops=${join(E, "escape-ops.md")}`])
+	neq(opsEscape.status, 0, "market:benchmark must refuse before writing any artifact")
+	deq(readFileSync(join(T, "docs/strategy/market-parity-benchmark-2026.md"), "utf8"), benchmarkBefore, "market:benchmark must not overwrite the primary artifact when a secondary path escapes")
+	const outsideDir = mkdtempSync(join(tmpdir(), "tinystudio-symlink-outside-"))
+	const escapeSymlink = join(T, "escape-symlink")
+	symlinkSync(outsideDir, escapeSymlink, "dir")
+	const symlinkProbe = run(["scripts/export-growth-metrics.mjs", `--output=${join(escapeSymlink, "metrics.md")}`])
+	neq(symlinkProbe.status, 0, "export must refuse an output path escaping through a symlink")
+	mat(symlinkProbe.stderr, /symlink/, "export must explain the symlink refusal")
+	eq(existsSync(join(outsideDir, "metrics.md")), false, "symlink escape must not create the file outside the root")
+	unlinkSync(escapeSymlink)
+	// A dangling symlink (target does not exist yet) must be refused too;
+	// otherwise writeFileSync would follow it and create the target outside.
+	const danglingTarget = join(E, "dangling-outside.md")
+	const danglingSymlink = join(T, "runs", "dangling-escape.md")
+	symlinkSync(danglingTarget, danglingSymlink)
+	const danglingProbe = run(["scripts/export-growth-metrics.mjs", "--output=runs/dangling-escape.md"])
+	neq(danglingProbe.status, 0, "export must refuse a dangling symlink output path")
+	eq(existsSync(danglingTarget), false, "dangling symlink escape must not create the external target")
+	unlinkSync(danglingSymlink)
+	rmSync(outsideDir, {recursive: true, force: true})
 
 	const application = JSON.parse(readFileSync(join(T, "contracts/fixtures/sprint-application.v1.json"), "utf8"))
 	const importResult = run(["scripts/import-sprint-application.mjs", "contracts/fixtures/sprint-application.v1.json"])
@@ -325,4 +409,5 @@ try {
 	console.log("Active operator surface checks passed.")
 } finally {
 	rmSync(T, {recursive: true, force: true})
+	rmSync(E, {recursive: true, force: true})
 }

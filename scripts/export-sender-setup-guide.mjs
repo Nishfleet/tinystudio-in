@@ -1,18 +1,21 @@
 #!/usr/bin/env node
 import { mkdirSync, writeFileSync } from "node:fs";
+import { dirname } from "node:path";
 import { agencyConfig } from "./lib/agency-config.mjs";
 import { localIsoDate } from "./date-utils.mjs";
 import { runRepoJson as runJson } from "./lib/runtime-roots.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: npm run send:guide -- [--output=growth-brain/ops/sender-setup-guide.md] [--html=growth-brain/ops/sender-setup-guide.html]`);
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
-const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/sender-setup-guide.md";
+const outputPath = resolveOutputPath(outputArg?.split("=")[1], { fallback: "growth-brain/ops/sender-setup-guide.md" });
 const htmlArg = process.argv.find((arg) => arg.startsWith("--html="));
-const htmlPath = htmlArg ? htmlArg.split("=")[1] : "growth-brain/ops/sender-setup-guide.html";
+const htmlPath = resolveOutputPath(htmlArg?.split("=")[1], { flag: "--html", fallback: "growth-brain/ops/sender-setup-guide.html" });
 const today = localIsoDate();
 const config = agencyConfig();
 
 function write(path, content) {
-  const dir = path.split("/").slice(0, -1).join("/");
+  const dir = dirname(path);
   if (dir) mkdirSync(dir, { recursive: true });
   writeFileSync(path, content);
 }

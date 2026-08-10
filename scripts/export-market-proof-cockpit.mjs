@@ -1,21 +1,24 @@
 #!/usr/bin/env node
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
 import { isValidLoomUrl, loomUrlError } from "./lib/loom-url.mjs";
 import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
 import { routedContactPlan } from "./lib/contact-route.mjs";
 import { classifyOutboundProspect } from "./lib/outbound-prospects.mjs";
 import { runRepoJson as runJson } from "./lib/runtime-roots.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
 const args = process.argv.slice(2);
+handleHelp(args, `Usage: npm run market:proof-cockpit -- [prospects/loom-links.txt] [--limit=N] [--plain] [--output=runs/market-proof-cockpit.md] [--html=runs/market-proof-cockpit.html]`);
 const inputPath = args.find((arg) => !arg.startsWith("--")) || "prospects/loom-links.txt";
 const outputArg = args.find((arg) => arg.startsWith("--output="));
 const htmlArg = args.find((arg) => arg.startsWith("--html="));
 const limitArg = args.find((arg) => arg.startsWith("--limit="));
 const plain = args.includes("--plain");
-const outputPath = outputArg ? outputArg.split("=").slice(1).join("=") : "runs/market-proof-cockpit.md";
-const htmlPath = htmlArg ? htmlArg.split("=").slice(1).join("=") : "runs/market-proof-cockpit.html";
+const rawOutputPath = outputArg ? outputArg.split("=").slice(1).join("=") : "runs/market-proof-cockpit.md";
+const outputPath = resolveOutputPath(rawOutputPath);
+const htmlPath = resolveOutputPath(htmlArg?.split("=").slice(1).join("="), { flag: "--html", fallback: "runs/market-proof-cockpit.html" });
 const limit = limitArg ? Number(limitArg.split("=").slice(1).join("=")) : 5;
 const today = localIsoDate();
 
@@ -28,7 +31,7 @@ function json(path) {
 }
 
 function write(path, content) {
-  const dir = path.split("/").slice(0, -1).join("/");
+  const dir = dirname(path);
   if (dir) mkdirSync(dir, { recursive: true });
   writeFileSync(path, content);
 }
@@ -207,7 +210,7 @@ if (!existsSync(inputPath)) {
   process.exit(1);
 }
 
-const checkOutputPath = outputPath.startsWith("prospects/kit-")
+const checkOutputPath = rawOutputPath.startsWith("prospects/kit-")
   ? "prospects/kit-market-proof-run-check.md"
   : "runs/market-proof-run-check.md";
 const check = runJson(["scripts/check-market-proof-run.mjs", inputPath, `--output=${checkOutputPath}`, `--limit=${limit}`]);

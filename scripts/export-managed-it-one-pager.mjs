@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 import { readFileSync, writeFileSync } from "node:fs";
+import { handleHelp } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: npm run sales:one-pager -- (writes growth-brain/sales/managed-it-one-page-offer.html)`);
 const inputPath = "growth-brain/sales/managed-it-one-page-offer.md";
 const outputPath = "growth-brain/sales/managed-it-one-page-offer.html";
 
