@@ -22,7 +22,7 @@ jobs:
   analyze:
     if: ${{ github.event.repository.private == false || vars.ENABLE_PRIVATE_CODEQL == '1' }}
     name: analyze javascript-typescript
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64, vps-verify]
     steps:
       - uses: actions/checkout@v7
       - uses: github/codeql-action/init@v4
