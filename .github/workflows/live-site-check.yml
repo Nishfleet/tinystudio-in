@@ -1,0 +1,27 @@
+name: Live Site Check
+
+on:
+  schedule:
+    # Nightly: catch stale or broken deployments (soft-404s, offline site)
+    # within a day even when no pull requests are open.
+    - cron: "23 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: live-site-check-${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  live-soft-404:
+    runs-on: [self-hosted, linux, x64, vps-verify]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: node scripts/check-public-live-soft-404.mjs
