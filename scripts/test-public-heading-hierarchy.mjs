@@ -16,14 +16,19 @@ const ok = (cond, msg) => {
   }
 }
 
-// The exact public pages covered by the heading-hierarchy finding.
+// The exact public pages covered by the card-heading finding. The homepage
+// (public/index.html) is covered separately in section D below, including the
+// managed-service section's H2 -> H3 outline.
 const AFFECTED_PAGES = [
   "public/contact/index.html",
   "public/promptly/index.html",
   "public/promptly/privacy/index.html",
   "public/drishti/index.html",
   "public/drishti/support/index.html",
-  "public/privacy-choices/index.html"
+  "public/privacy-choices/index.html",
+  "public/terms/index.html",
+  "public/privacy/index.html",
+  "public/drishti/privacy/index.html"
 ]
 
 // Heading levels in document order, e.g. [1, 2, 2, 2, 2, 3, 3, 3].
