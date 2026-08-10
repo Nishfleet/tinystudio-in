@@ -108,6 +108,7 @@ ${configureCommand}
 - Do not invent the DKIM selector. Use the exact selector from the mail provider.
 - If DKIM discovery finds a selector, still confirm it in the mail provider before saving it.
 - For Google Workspace, the default selector is often \`google\`, but verify it in the Google Admin DKIM screen before saving it here.
+- If the domain runs Cloudflare Email Routing or Email Sending (SPF includes \`_spf.mx.cloudflare.net\`), the DKIM records Cloudflare provides use selector \`cf2024-1\` for routed mail or \`cf-bounce\` for sent mail; confirm the exact selector in the Cloudflare dashboard before saving it here.
 - Cloudflare TXT records are the normal DNS record type for DKIM, SPF, and DMARC values.
 - Keep the manual daily cap low while there is no reply data.
 
@@ -115,6 +116,7 @@ ${configureCommand}
 
 - FTC CAN-SPAM business guide: https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business
 - Google Workspace DKIM setup: https://support.google.com/a/answer/174124
+- Cloudflare Email Service authentication (SPF/DKIM/DMARC): https://developers.cloudflare.com/email-service/concepts/email-authentication/
 - Cloudflare DNS TXT records: https://developers.cloudflare.com/dns/manage-dns-records/reference/dns-record-types/
 `;
 
@@ -239,10 +241,11 @@ const html = `<!doctype html>
         <li>Add the DKIM TXT record in Cloudflare if the provider gives one.</li>
         <li>Run <code>npm run send:setup</code>.</li>
       </ol>
+      <p class="sub">If the domain uses Cloudflare Email Routing or Email Sending (SPF includes <code>_spf.mx.cloudflare.net</code>), the DKIM records Cloudflare provides use selector <code>cf2024-1</code> for routed mail or <code>cf-bounce</code> for sent mail; confirm the exact selector in the Cloudflare dashboard before saving it here.</p>
     </section>
     <section>
       <h2>Sources</h2>
-      <p><a href="https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business">FTC CAN-SPAM guide</a> · <a href="https://support.google.com/a/answer/174124">Google DKIM setup</a> · <a href="https://developers.cloudflare.com/dns/manage-dns-records/reference/dns-record-types/">Cloudflare TXT records</a></p>
+      <p><a href="https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business">FTC CAN-SPAM guide</a> · <a href="https://support.google.com/a/answer/174124">Google DKIM setup</a> · <a href="https://developers.cloudflare.com/email-service/concepts/email-authentication/">Cloudflare email authentication</a> · <a href="https://developers.cloudflare.com/dns/manage-dns-records/reference/dns-record-types/">Cloudflare TXT records</a></p>
     </section>
   </main>
 </body>
