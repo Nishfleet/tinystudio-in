@@ -56,7 +56,7 @@ Current public market signals:
 | Automated workflow depth | can claim | Automation prepares intake, research, drafts, QA, evidence, handoff, and routing; humans decide fit, claims, delivery, acceptance, and renewal. |
 | Tangible improvement cadence | do not claim yet | 0 canonical paid client folder(s); 0 client-ready folder(s). |
 | Market traction | do not claim yet | 0/5 Looms, 0/5 sends, 0 replies. |
-| Sender trust | do not claim yet | missing physical postal address; DKIM selector not configured |
+| Sender trust | do not claim yet | missing physical postal address |
 | Proof-run discipline | do not claim yet | proof run needs-recording; approved rows 0; sent rows 0. |
 
 ## TinyStudio Pricing Interpretation

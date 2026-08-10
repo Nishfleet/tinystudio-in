@@ -22,6 +22,7 @@
 
 Entries below preserve implementation history. They are not current operator instructions; use the Active list and the human-review service engine.
 
+- [x] ~~Unblock sender trust DKIM half~~ (2026-08-11) - DKIM discovery now covers Cloudflare Email Service selectors and `send:setup` verifies the live `cf2024-1` DKIM record on tinystudio.io, leaving only the physical postal address warning, which needs a real operator address before cold email.
 - [x] ~~Open full proof stack in record mode~~ (2026-05-29) - `growth:start -- --view=record` now opens the mission, rehearsal gate, teleprompter, and market proof cockpit so recording starts from the proof workflow.
 - [x] ~~Add one-command post-recording proof prep~~ (2026-05-29) - `market:after-recording` now updates Loom URLs, preserves tangible proof notes, prepares send packages, refreshes the outbox, and refreshes the proof cockpit without marking anything sent.
 - [x] ~~Add pre-recording rehearsal quality gate~~ (2026-05-29) - first-batch Looms now get scored for specific fault, buyer-visible value, first fix, clean ask, timing, and send route before recording.
