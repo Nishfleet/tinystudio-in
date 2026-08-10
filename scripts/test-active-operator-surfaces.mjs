@@ -93,6 +93,25 @@ try {
 	}
 	for (const path of privateRuntimeArtifacts) eq(existsSync(join(T, path)), true, `Private runtime artifact is missing: ${path}`)
 
+	// Recording exporters must honor --help/-h before doing any work: print
+	// usage, exit 0, and never write or overwrite a recording artifact.
+	const recordingHelpSurface = [
+		["export-recording-queue.mjs", ["prospects/recording-queue.md"]],
+		["export-recording-cockpit.mjs", ["prospects/recording-cockpit.html"]],
+		["export-recording-teleprompter.mjs", ["prospects/recording-teleprompter.html"]],
+		["export-recording-rehearsal-check.mjs", ["prospects/recording-rehearsal-check.md", "prospects/recording-rehearsal-check.html"]]
+	]
+	for (const [name, artifactPaths] of recordingHelpSurface) {
+		for (const path of artifactPaths) writeFileSync(join(T, path), "help sentinel\n")
+		const helped = run([`scripts/${name}`, "--help"])
+		eq(helped.status, 0, `${name} --help must exit 0: ${helped.stderr || helped.stdout}`)
+		mat(helped.stdout, /Usage:/, `${name} --help must print usage`)
+		for (const path of artifactPaths) {
+			deq(readFileSync(join(T, path), "utf8"), "help sentinel\n", `${name} --help must not overwrite ${path}`)
+			unlinkSync(join(T, path))
+		}
+	}
+
 	const application = JSON.parse(readFileSync(join(T, "contracts/fixtures/sprint-application.v1.json"), "utf8"))
 	const importResult = run(["scripts/import-sprint-application.mjs", "contracts/fixtures/sprint-application.v1.json"])
 	eq(importResult.status, 0)
