@@ -24,7 +24,7 @@ Use this benchmark as an owner dashboard for market claims. If a row says "do no
 ## Market Price Anchors
 
 Generated: 2026-08-06.
-Market anchors last checked: 2026-08-09.
+Market anchors last checked: 2026-08-10.
 
 Current public market signals:
 
@@ -55,7 +55,7 @@ Current public market signals:
 | Transparent boutique retainers | Recurring retainers. | Packaging. | Shipped proof. | do not claim yet | After delivery. |
 | MSP marketing agency audits | Free audit; $3k/mo flat (entry $549-$4.5k/mo). | MSP-specific programs. | One-page speed. | do not claim yet | After proof. |
 | MSP website/SEO audit packages | $300-$1.8k/mo; audit included. | Ongoing SEO. | Fault map + fix. | do not claim yet | Not a retainer. |
-| Free MSP marketing/authority audits | Free; 24h reports. | Free diagnostics. | Human-reviewed fix. | do not claim yet | After proof. |
+| Free MSP marketing/authority audits | Free; audit-led entry. | Free diagnostics. | Human-reviewed fix. | do not claim yet | After proof. |
 | MSP marketing subscription toolkits | Free trial; $199/mo. | Content volume. | Done-for-you proof. | do not claim yet | Not a substitute. |
 
 ## TinyStudio Proof Bar

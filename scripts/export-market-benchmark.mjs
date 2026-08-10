@@ -12,7 +12,7 @@ const outputPath = outputArg ? outputArg.split("=").slice(1).join("=") : "docs/s
 const opsPath = opsArg ? opsArg.split("=").slice(1).join("=") : "growth-brain/ops/competitive-proof-matrix.md";
 const htmlPath = htmlArg ? htmlArg.split("=").slice(1).join("=") : "growth-brain/ops/competitive-proof-matrix.html";
 const today = localIsoDate();
-const MARKET_ANCHORS_LAST_CHECKED = "2026-08-09";
+const MARKET_ANCHORS_LAST_CHECKED = "2026-08-10";
 function write(path, content) {
   const dir = path.split("/").slice(0, -1).join("/");
   if (dir) mkdirSync(dir, { recursive: true });
@@ -158,7 +158,7 @@ const alternatives = [
     name: "Free MSP marketing/authority audits",
     source: "Managed Prospecting System",
     sourceUrl: "https://managedprospectingsystem.com/news/",
-    marketSignal: "Free; 24h reports.",
+    marketSignal: "Free; audit-led entry.",
     strongAt: "Free diagnostics.",
     tinyStudioCanBeatBy: "Human-reviewed fix.",
     currentStatus: metrics.counts.clientsReady > 0 ? "watch" : "fail",
