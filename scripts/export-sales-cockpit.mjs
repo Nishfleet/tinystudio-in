@@ -1,14 +1,16 @@
 #!/usr/bin/env node
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
 import { agencyConfig } from "./lib/agency-config.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: npm run prospect:sales-cockpit -- [--limit=N] [--output=prospects/sales-cockpit.html]`);
 const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
 const limit = limitArg ? Number(limitArg.split("=")[1]) : 20;
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
-const outputPath = outputArg ? outputArg.split("=")[1] : "prospects/sales-cockpit.html";
+const outputPath = resolveOutputPath(outputArg?.split("=")[1], { fallback: "prospects/sales-cockpit.html" });
 const today = localIsoDate();
 const config = agencyConfig();
 
@@ -432,7 +434,7 @@ const html = `<!doctype html>
 </html>
 `;
 
-const outputDir = outputPath.split("/").slice(0, -1).join("/");
+const outputDir = dirname(outputPath);
 if (outputDir) mkdirSync(outputDir, { recursive: true });
 writeFileSync(outputPath, html);
 

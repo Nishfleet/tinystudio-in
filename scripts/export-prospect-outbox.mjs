@@ -1,17 +1,19 @@
 #!/usr/bin/env node
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { execFileSync } from "node:child_process";
 import { checkProspectReadiness } from "./lib/prospect-readiness.mjs";
 import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
 import { isValidLoomUrl } from "./lib/loom-url.mjs";
 import { routedContactPlan, routeToChannel } from "./lib/contact-route.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: npm run prospect:outbox -- [--limit=N] [--output=prospects/outbox.html]`);
 const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
 const limit = limitArg ? Number(limitArg.split("=")[1]) : 20;
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
-const outputPath = outputArg ? outputArg.split("=")[1] : "prospects/outbox.html";
+const outputPath = resolveOutputPath(outputArg?.split("=")[1], { fallback: "prospects/outbox.html" });
 
 function listFolders(root) {
   return listOutboundProspectFolders(root);
@@ -642,7 +644,7 @@ const html = `<!doctype html>
 </html>
 `;
 
-const outputDir = outputPath.split("/").slice(0, -1).join("/");
+const outputDir = dirname(outputPath);
 if (outputDir) mkdirSync(outputDir, { recursive: true });
 writeFileSync(outputPath, html);
 

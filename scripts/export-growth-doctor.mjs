@@ -1,13 +1,15 @@
 #!/usr/bin/env node
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
 import { checkProspectReadiness, prospectWarningWeight } from "./lib/prospect-readiness.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 import { runRepoJson as runJson } from "./lib/runtime-roots.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: npm run growth:doctor -- [--no-checks] [--plain] [--output=runs/growth-doctor.md]`);
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
-const outputPath = outputArg ? outputArg.split("=")[1] : "runs/growth-doctor.md";
+const outputPath = resolveOutputPath(outputArg?.split("=")[1], { fallback: "runs/growth-doctor.md" });
 const skipChecks = process.argv.includes("--no-checks");
 const plain = process.argv.includes("--plain");
 const today = localIsoDate();
@@ -233,7 +235,7 @@ ${focusRows || "- No active focus items."}
 Do not build more system surface until the current bottleneck is worked.
 `;
 
-const outputDir = outputPath.split("/").slice(0, -1).join("/");
+const outputDir = dirname(outputPath);
 if (outputDir) mkdirSync(outputDir, { recursive: true });
 writeFileSync(outputPath, markdown);
 

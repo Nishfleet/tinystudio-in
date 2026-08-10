@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { execFileSync } from "node:child_process";
 import { localIsoDate } from "./date-utils.mjs";
 import { isValidLoomUrl } from "./lib/loom-url.mjs";
@@ -8,13 +8,15 @@ import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
 import { routedContactPlan } from "./lib/contact-route.mjs";
 import { canonicalProspectAsk } from "./lib/canonical-service-copy.mjs";
 import { NO_GUARANTEE_CLIENT_SENTENCE } from "./lib/service-contract.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: npm run growth:mission -- [--limit=N] [--output=runs/daily-money-mission.md] [--html=runs/daily-money-mission.html]`);
 const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
 const limit = limitArg ? Number(limitArg.split("=")[1]) : 5;
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
-const outputPath = outputArg ? outputArg.split("=")[1] : "runs/daily-money-mission.md";
+const outputPath = resolveOutputPath(outputArg?.split("=")[1], { fallback: "runs/daily-money-mission.md" });
 const htmlArg = process.argv.find((arg) => arg.startsWith("--html="));
-const htmlPath = htmlArg ? htmlArg.split("=")[1] : "runs/daily-money-mission.html";
+const htmlPath = resolveOutputPath(htmlArg?.split("=")[1], { flag: "--html", fallback: "runs/daily-money-mission.html" });
 const today = localIsoDate();
 
 function runJson(args) {
@@ -160,7 +162,7 @@ function missionFromMetrics(counts) {
 }
 
 function write(path, content) {
-  const dir = path.split("/").slice(0, -1).join("/");
+  const dir = dirname(path);
   if (dir) mkdirSync(dir, { recursive: true });
   writeFileSync(path, `${String(content).replace(/[ \t]+$/gm, "").trimEnd()}\n`);
 }

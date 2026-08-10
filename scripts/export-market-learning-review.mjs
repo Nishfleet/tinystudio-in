@@ -1,15 +1,17 @@
 #!/usr/bin/env node
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 import { runRepoJson as runJson } from "./lib/runtime-roots.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: npm run market:learn -- [--limit=N] [--output=runs/market-learning-review.md] [--html=runs/market-learning-review.html]`);
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const htmlArg = process.argv.find((arg) => arg.startsWith("--html="));
 const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
-const outputPath = outputArg ? outputArg.split("=").slice(1).join("=") : "runs/market-learning-review.md";
-const htmlPath = htmlArg ? htmlArg.split("=").slice(1).join("=") : "runs/market-learning-review.html";
+const outputPath = resolveOutputPath(outputArg?.split("=").slice(1).join("="), { fallback: "runs/market-learning-review.md" });
+const htmlPath = resolveOutputPath(htmlArg?.split("=").slice(1).join("="), { flag: "--html", fallback: "runs/market-learning-review.html" });
 const limit = limitArg ? Number(limitArg.split("=").slice(1).join("=")) : 10;
 const today = localIsoDate();
 
@@ -26,7 +28,7 @@ function json(path) {
 }
 
 function write(path, content) {
-  const dir = path.split("/").slice(0, -1).join("/");
+  const dir = dirname(path);
   if (dir) mkdirSync(dir, { recursive: true });
   writeFileSync(path, content);
 }

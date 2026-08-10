@@ -1,15 +1,17 @@
 #!/usr/bin/env node
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
 import { checkProspectReadiness } from "./lib/prospect-readiness.mjs";
 import { isValidLoomUrl } from "./lib/loom-url.mjs";
 import { loadValidatedServiceClients } from "./lib/validated-service-client.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 import { runRepoJson } from "./lib/runtime-roots.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: npm run growth:metrics -- [--plain] [--output=growth-brain/ops/live-metrics.md]`);
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
-const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/live-metrics.md";
+const outputPath = resolveOutputPath(outputArg?.split("=")[1], { fallback: "growth-brain/ops/live-metrics.md" });
 const plain = process.argv.includes("--plain");
 const today = localIsoDate();
 const repoRoot = process.env.SERVICE_REPO_ROOT || process.cwd();
@@ -182,7 +184,7 @@ ${Object.entries(stageCounts).sort(([a], [b]) => a.localeCompare(b)).map(([stage
 - If calls are high and closed is low, improve scope, price, or proof.
 `;
 
-const outputDir = outputPath.split("/").slice(0, -1).join("/");
+const outputDir = dirname(outputPath);
 if (outputDir) mkdirSync(outputDir, { recursive: true });
 writeFileSync(outputPath, markdown);
 

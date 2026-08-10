@@ -1,15 +1,17 @@
 #!/usr/bin/env node
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 import { execFileSync } from "node:child_process";
 import { localIsoDate } from "./date-utils.mjs";
 import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: npm run prospect:followups -- [--limit=N] [--date=YYYY-MM-DD] [--output=prospects/followup-cockpit.html]`);
 const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
 const limit = limitArg ? Number(limitArg.split("=")[1]) : 10;
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
-const outputPath = outputArg ? outputArg.split("=")[1] : "prospects/followup-cockpit.html";
+const outputPath = resolveOutputPath(outputArg?.split("=")[1], { fallback: "prospects/followup-cockpit.html" });
 const dateArg = process.argv.find((arg) => arg.startsWith("--date="));
 const today = dateArg ? dateArg.split("=")[1] : localIsoDate();
 
@@ -403,7 +405,7 @@ const html = `<!doctype html>
 </html>
 `;
 
-const outputDir = outputPath.split("/").slice(0, -1).join("/");
+const outputDir = dirname(outputPath);
 if (outputDir) mkdirSync(outputDir, { recursive: true });
 writeFileSync(outputPath, html);
 
