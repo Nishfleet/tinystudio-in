@@ -172,6 +172,7 @@ try {
 		neq(refused.status, 0, `${args[0]} must refuse an escaping output path`)
 		mat(refused.stderr, /Refusing/, `${args[0]} must explain the refusal`)
 	}
+	rmSync(join(T, "clients", "escape-probe"), {recursive: true, force: true})
 	for (const [script, args] of escapeProbes) {
 		const refused = run([script, ...args])
 		neq(refused.status, 0, `${script} must refuse an escaping output path`)
