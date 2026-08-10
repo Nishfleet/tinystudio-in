@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs"
+import { readFileSync, readdirSync } from "node:fs"
 import { fileURLToPath } from "node:url"
 import { dirname, join } from "node:path"
 
@@ -45,6 +45,16 @@ const bodyText = (html) =>
     .replace(/\s+/g, " ")
     .trim()
 
+// Every deployed HTML page (index.html under public/, mirroring the
+// structured-data and link-target tests).
+const publicHtmlFiles = (dir = "public") =>
+  readdirSync(join(ROOT, dir), { withFileTypes: true }).flatMap((entry) => {
+    const path = join(dir, entry.name)
+    if (entry.isDirectory()) return publicHtmlFiles(path)
+    if (entry.isFile() && entry.name === "index.html") return [path]
+    return []
+  })
+
 console.log("test-public-brand-disambiguation: Tiny Studio entity stays distinct from unrelated tiny studio brands")
 
 console.log("A. the homepage says plainly what Tiny Studio is and is not")
@@ -58,16 +68,18 @@ ok(
   "homepage copy states Tiny Studio is not affiliated with other apps or studios using the name"
 )
 
-console.log("B. the homepage Organization entity carries distinguishing identity")
-const org = orgNode(HOME)
-ok(org !== null, "homepage JSON-LD carries the Tiny Studio organization node")
-if (org) {
-  ok(org.name === "Tiny Studio", "organization name is Tiny Studio")
-  ok(org.alternateName === "tinystudio.in", "organization alternateName is tinystudio.in")
-  ok(org.url === "https://tinystudio.in/", "organization url is the tinystudio.in home")
+console.log("B. every public page's Organization entity carries distinguishing identity")
+for (const file of publicHtmlFiles()) {
+  const html = read(file)
+  const org = orgNode(html)
+  ok(org !== null, `${file} carries the Tiny Studio organization node`)
+  if (!org) continue
+  ok(org.name === "Tiny Studio", `${file} organization name is Tiny Studio`)
+  ok(org.alternateName === "tinystudio.in", `${file} organization alternateName is tinystudio.in`)
+  ok(org.url === "https://tinystudio.in/", `${file} organization url is the tinystudio.in home`)
   ok(
     typeof org.description === "string" && org.description.length > 0,
-    "organization carries a description"
+    `${file} organization carries a description`
   )
   ok(
     org.description &&
@@ -75,15 +87,35 @@ if (org) {
       org.description.includes("Promptly") &&
       org.description.includes("Drishti") &&
       org.description.includes("0509"),
-    "organization description names the unique products and home so the entity cannot be mistaken for another tiny studio"
+    `${file} organization description names the unique products and home so the entity cannot be mistaken for another tiny studio`
   )
   ok(
     org.description && org.description.includes("not affiliated"),
-    "organization description states it is not affiliated with other tiny studio brands"
+    `${file} organization description states it is not affiliated with other tiny studio brands`
   )
 }
 
-console.log("C. npm test/ci wiring")
+console.log("C. the AI-facing llms.txt carries the same identity statement")
+const llmsTxt = read("public/llms.txt")
+ok(
+  llmsTxt.includes("independent product company at tinystudio.in"),
+  "llms.txt identifies Tiny Studio as the independent product company at tinystudio.in"
+)
+ok(
+  llmsTxt.includes("not affiliated with any other app or studio that uses the name Tiny Studio"),
+  "llms.txt states Tiny Studio is not affiliated with other apps or studios using the name"
+)
+const bundle = read("scripts/prepare-static-site-bundle.mjs")
+ok(
+  bundle.includes("independent product company at tinystudio.in"),
+  "the llms.txt generator template keeps the independent-company identity"
+)
+ok(
+  bundle.includes("not affiliated with any other app or studio that uses the name Tiny Studio"),
+  "the llms.txt generator template keeps the non-affiliation statement"
+)
+
+console.log("D. npm test/ci wiring")
 const pkg = JSON.parse(read("package.json"))
 ok(
   pkg.scripts.test.includes("test-public-brand-disambiguation.mjs"),
