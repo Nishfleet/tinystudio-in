@@ -21,6 +21,7 @@ const AFFECTED_PAGES = [
   "public/contact/index.html",
   "public/promptly/index.html",
   "public/promptly/privacy/index.html",
+  "public/promptly/support/index.html",
   "public/drishti/index.html",
   "public/drishti/support/index.html",
   "public/privacy-choices/index.html",
