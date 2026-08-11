@@ -25,9 +25,16 @@ concurrency:
 
 jobs:
   analyze:
-    # No private-repo gate: this repo is private, so the old
-    # `vars.ENABLE_PRIVATE_CODEQL == '1'` opt-in skipped analysis on every run.
-    # Security analysis must run on every trigger below.
+    # Gate stays until code scanning is available: this is a private
+    # personal-account repo without GitHub Advanced Security, so the SARIF
+    # upload rejects with "Code scanning is not enabled for this repository"
+    # and the analyze step fails red on every trigger (verified on PR #89,
+    # run 31508386840, after the actions:read fix above). Ungated, every PR
+    # and schedule run would fail and burn the shared VPS runner. Set the
+    # ENABLE_PRIVATE_CODEQL repo variable to '1' once GHAS/code scanning is
+    # provisioned (or when the repo goes public), and the permission fix
+    # above lets the run finish.
+    if: ${{ github.event.repository.private == false || vars.ENABLE_PRIVATE_CODEQL == '1' }}
     name: analyze javascript-typescript
     runs-on: [self-hosted, linux, x64, vps-verify]
     steps:
