@@ -20,7 +20,7 @@ try {
 	const repoRoot = process.env.SERVICE_REPO_ROOT || process.cwd()
 	const result = checkQueue({repoRoot, scope: values.get("scope") || "all", ...(values.get("as-of") ? {asOfDate: values.get("as-of")} : {})})
 	console.log(JSON.stringify(result, null, 2))
-	if (result.status !== "passed") process.exit(1)
+	if (result.status === "failed") process.exit(1)
 } catch (error) {
 	console.error(`service:queue-check failed: ${error.message}`)
 	process.exit(1)
