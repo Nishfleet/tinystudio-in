@@ -38,7 +38,7 @@ Current public market signals:
 - MSP marketing agencies sell audit-led entry: Tech Pro Marketing opens with a free growth call and runs a flat $3,000/month inbound retainer for MSPs above $500K revenue; 100Signals' August 2026 comparison (https://100signals.com/best-marketing-agencies-for-managed-service-providers/) puts MSP-focused retainers from $549-$25,000/month, with an entry tier of $549-$3,000/month.
 - MSP website/SEO audit packages start low: JoomConnect includes a website audit and keyword research in every SEO tier from $300-$1,800/month and opens with a free SEO audit.
 - Free MSP-focused audits are a crowded entry point: JoomConnect, Managed Prospecting System, and 100Signals all give away MSP-specific audits (SEO, authority, AI visibility) to open sales conversations.
-- MSP marketing subscriptions undercut agencies: MSP Marketing Edge offers a 30-day free trial then $199/month (US) with no contract, plus a free marketing scorecard.
+- MSP marketing subscriptions undercut agencies: MSP Marketing Edge offers a free trial then $199/month (US) with no contract, plus a free marketing scorecard.
 
 ## Competitive Proof Matrix
 
