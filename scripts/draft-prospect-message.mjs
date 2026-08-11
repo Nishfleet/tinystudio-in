@@ -118,7 +118,7 @@ if (stage === "sent" || stage.startsWith("followup-")) {
     body = appendEmailComplianceFooter(`Worth sending the exact ${mainPage} structure I would use for this?`);
   } else if (pending?.step === "day-5") {
     subject = `Re: Quick audit for ${name}`;
-    body = appendEmailComplianceFooter(`Quick bump. The main thing I would fix first is ${leakFragment}. If useful, I can send the exact one-page ${config.offerName} scope.`);
+    body = appendEmailComplianceFooter(`Quick bump. The main thing I would fix first is ${leakFragment}. If useful, I can send the exact one-page scope for ${config.offerName}.`);
   } else if (pending?.step === "day-10") {
     subject = `Re: Quick audit for ${name}`;
     body = appendEmailComplianceFooter(`Closing the loop here. I still think ${mainPage} is leaving clarity on the table. Happy to revisit if this becomes a priority.`);
