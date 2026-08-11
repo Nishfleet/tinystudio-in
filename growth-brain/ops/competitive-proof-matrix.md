@@ -1,6 +1,6 @@
 # Market Parity Benchmark 2026
 
-Generated: 2026-08-06
+Generated: 2026-08-12
 
 ## Purpose
 
@@ -22,7 +22,7 @@ Use this benchmark as an owner dashboard for market claims. If a row says "do no
 
 ## Market Price Anchors
 
-Generated: 2026-08-06.
+Generated: 2026-08-12.
 Market anchors last checked: 2026-05-29.
 
 Current public market signals:
@@ -56,8 +56,8 @@ Current public market signals:
 | Automated workflow depth | can claim | Automation prepares intake, research, drafts, QA, evidence, handoff, and routing; humans decide fit, claims, delivery, acceptance, and renewal. |
 | Tangible improvement cadence | do not claim yet | 0 canonical paid client folder(s); 0 client-ready folder(s). |
 | Market traction | do not claim yet | 0/5 Looms, 0/5 sends, 0 replies. |
-| Sender trust | do not claim yet | missing physical postal address; DKIM selector not configured |
-| Proof-run discipline | do not claim yet | proof run needs-recording; approved rows 0; sent rows 0. |
+| Sender trust | do not claim yet | missing physical postal address; outbound mail path is inbound-only; DKIM selector not configured |
+| Proof-run discipline | do not claim yet | proof run missing; approved rows 0; sent rows 0. |
 
 ## TinyStudio Pricing Interpretation
 
