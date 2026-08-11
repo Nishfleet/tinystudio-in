@@ -20,7 +20,9 @@ concurrency:
 
 jobs:
   analyze:
-    if: ${{ github.event.repository.private == false || vars.ENABLE_PRIVATE_CODEQL == '1' }}
+    # No private-repo gate: this repo is private, so the old
+    # `vars.ENABLE_PRIVATE_CODEQL == '1'` opt-in skipped analysis on every run.
+    # Security analysis must run on every trigger below.
     name: analyze javascript-typescript
     runs-on: [self-hosted, linux, x64, vps-verify]
     steps:
