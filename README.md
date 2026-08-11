@@ -73,6 +73,23 @@ node scripts/test-cross-repo-service.mjs --public-repo "/absolute/path/to/TinySt
 git diff --check
 ```
 
+## PR duplicate guard
+
+Same-fix PR pairs kept appearing because the same finding gets dispatched to
+multiple lanes (`fix/operator-export-cli-help` #36 and `fix/operator-export-cli-help-lane1`
+#44 were byte-identical patches; #39/#49 and #40/#52 followed the same pattern).
+The `PR Duplicate Guard` workflow now compares every PR's diff against all
+other open PRs and fails loudly (with a comment naming the canonical PR) when
+another open PR covers the same fix with the same changed-file set. Run the
+same check locally before opening a PR:
+
+```bash
+node scripts/check-pr-duplicates.mjs --pr 0 --repo nish3451/tinystudio-in --no-fail
+```
+
+The check is informational, not a required status, so it never blocks
+legitimate work; it exists to make duplication visible the moment it happens.
+
 ## SaaS graduation evidence gate
 
 TinyStudio does not become SaaS by assumption. Graduation requires **at least 10 paid sprints**, the **same problem in at least 7**, **at least 70% workflow repeatability**, **usefulness at least 8/10**, **approval at least 70%**, a **recurring need**, and **at least 3 deposits or preorders**. Until every threshold is evidenced, this remains a managed service.
