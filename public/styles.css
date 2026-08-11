@@ -550,6 +550,13 @@ h4 {
   padding: 4px 0;
 }
 
+/* The primary contact email must read as a link, not plain text. */
+.footer-links a.footer-email {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
 
 /* Sub-page layout */
 .site-header > .shell {
