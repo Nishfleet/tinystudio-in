@@ -5,12 +5,15 @@
 // Used by the release lane after a Pages deployment. Runs against the live
 // site only; set SKIP_LIVE_CHECKS=1 to skip (exit 0) on offline machines.
 //
-// The four live proofs (all neutral, all merged on main before this lane):
+// The five live proofs (all neutral, all merged on main before this lane):
 //   1. /promptly/support/ renders H2 after H1        (PRs #18/#20)
 //   2. /contact/ carries application/ld+json         (PR #19)
 //   3. unknown URLs get a real 404, not the homepage (PR #34)
 //   4. homepage stays portfolio-only: brand-disambiguation copy (#29) live,
 //      and no managed-service buyer-path content (#10/#11, snoozed).
+//   5. shared-footer pages carry visitor-facing footer copy, not the
+//      launch-prep line replaced by PR #35 ('gives each product a clean
+//      public foundation before launch').
 import { join } from "node:path"
 import { fileURLToPath } from "node:url"
 import { dirname } from "node:path"
@@ -89,6 +92,69 @@ try {
     for (const marker of BUYER_PATH_MARKERS) {
       ok(!body.includes(marker), `homepage has no ${marker}`)
     }
+  }
+
+  console.log("E. shared-footer pages carry visitor-facing footer copy, not launch-prep (PR #35)")
+  {
+    // Same coverage and markers as scripts/test-public-footer-copy.mjs: every
+    // live path that carries the shared footer block must name the actual
+    // products and must not contain any fragment of the launch-prep footer
+    // line the June-20 bundle still serves.
+    const FOOTER_PATHS = [
+      "/contact/",
+      "/drishti/",
+      "/drishti/privacy/",
+      "/drishti/support/",
+      "/privacy-choices/",
+      "/privacy/",
+      "/promptly/",
+      "/promptly/privacy/",
+      "/promptly/support/",
+      "/support/",
+      "/terms/",
+    ]
+    const LAUNCH_PREP_FRAGMENTS = [
+      "clean public foundation",
+      "foundation before launch",
+      "gives each product",
+      "before launch",
+    ]
+    const VISITOR_FACING_FRAGMENTS = ["Promptly", "Drishti"]
+
+    const footerBlockOf = (html) => {
+      const start = html.indexOf("<footer")
+      const end = html.indexOf("</footer>")
+      return start >= 0 && end > start ? html.slice(start, end) : ""
+    }
+
+    const checkFooter = (label, html) => {
+      const footer = footerBlockOf(html)
+      ok(footer.length > 0, `${label} has a footer block`)
+      const copyBlock = footer.match(/<p class="footer-copy"[^>]*>([\s\S]*?)<\/p>/)
+      ok(copyBlock !== null, `${label} has a .footer-copy paragraph`)
+      if (copyBlock) {
+        const copy = copyBlock[1]
+        for (const fragment of VISITOR_FACING_FRAGMENTS) {
+          ok(copy.includes(fragment), `${label} footer copy names ${fragment}`)
+        }
+        for (const fragment of LAUNCH_PREP_FRAGMENTS) {
+          ok(!copy.includes(fragment), `${label} footer copy avoids "${fragment}"`)
+        }
+      }
+      for (const fragment of LAUNCH_PREP_FRAGMENTS) {
+        ok(!footer.includes(fragment), `${label} footer has no "${fragment}"`)
+      }
+    }
+
+    for (const path of FOOTER_PATHS) {
+      const { status, body } = await get(path)
+      ok(status === 200, `${path} returns 200 (got ${status})`)
+      checkFooter(path, body)
+    }
+    const footerProbe = `/definitely-missing-footer-probe-${Date.now()}`
+    const { status, body } = await get(footerProbe)
+    ok(status === 404, `unknown URL returns 404 for footer probe (got ${status})`)
+    checkFooter("404 page", body)
   }
 } catch (error) {
   failures++
