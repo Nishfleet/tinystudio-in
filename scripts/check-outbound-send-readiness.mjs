@@ -76,10 +76,13 @@ try {
 }
 
 const { roots, strict } = config;
-const outboundFiles = new Set(["next-message.md", "send-package.md", "outreach.md", "reply-package.md", "call-booked-package.md", "close-package.md"]);
+const outboundFiles = new Set(["next-message.md", "send-package.md", "recording-notes.md", "outreach.md", "reply-package.md", "call-booked-package.md", "close-package.md"]);
 const optOutPattern = /\b(reply no|do not follow up|unsubscribe|opt out|ignore me)\b/i;
 const placeholderPattern = /\[(?:add Loom link|link|specific fault|Name)\]|Here is the Loom:\s*$/i;
 const salesPlaceholderPattern = /\badd (?:meeting link|payment link|call time)\b/i;
+// Retired broad-agency offers must never project into an outbound send package.
+// Mirrors the canonical retired-ask guard in export-recording-rehearsal-check.mjs.
+const retiredOfferPattern = /7[-\s]day (?:site|website) revenue (?:leak|fault) (?:fix )?sprint|tangible revenue (?:leak|fault) sprint|30[-\s]day action plan|growth desk|three pages|\$\s?500\b/i;
 
 function walk(path) {
   if (!existsSync(path)) return [];
@@ -122,6 +125,10 @@ for (const file of files) {
 
   if (["reply-package.md", "call-booked-package.md", "close-package.md"].includes(filename) && salesPlaceholderPattern.test(content)) {
     findings.push({ file, rule: "sales package still has meeting/payment placeholders" });
+  }
+
+  if (["send-package.md", "recording-notes.md"].includes(filename) && retiredOfferPattern.test(content)) {
+    findings.push({ file, rule: "outbound package sells a retired offer" });
   }
 
   if (filename === "outreach.md" && !optOutPattern.test(content)) {

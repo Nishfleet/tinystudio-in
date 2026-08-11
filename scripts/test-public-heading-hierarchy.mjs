@@ -25,7 +25,10 @@ const AFFECTED_PAGES = [
   "public/promptly/privacy/index.html",
   "public/drishti/index.html",
   "public/drishti/support/index.html",
-  "public/privacy-choices/index.html"
+  "public/privacy-choices/index.html",
+  "public/terms/index.html",
+  "public/privacy/index.html",
+  "public/drishti/privacy/index.html"
 ]
 
 // Heading levels in document order, e.g. [1, 2, 2, 2, 2, 3, 3, 3].
