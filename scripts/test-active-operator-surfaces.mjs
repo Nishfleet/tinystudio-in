@@ -68,8 +68,20 @@ try {
 	const trackedArtifacts = new Map(ACTIVE_OPERATOR_ARTIFACTS.map(path => [path, readFileSync(join(C, path))]))
 	for (const path of ACTIVE_OPERATOR_ARTIFACTS) rmSync(join(T, path), {force: true})
 	writeFileSync(join(T, "growth-brain/ops/11-10-proof-run.md"), "regeneration sentinel\n")
+	// Live metrics must regenerate from an empty prospect root so its tracked
+	// zero counts stay byte-identical, but the tracked 11/10 proof-run brief
+	// refuses to regenerate from a state-less root. Give the surface gate one
+	// inert outbound pipeline record (no score, touches, or loom) so the brief
+	// regenerates through the real path; it is removed again afterwards.
 	for (const args of [
 		["scripts/export-growth-metrics.mjs"],
+	]) {
+		const regenerated = run(args)
+		eq(regenerated.status, 0, regenerated.stderr || regenerated.stdout)
+	}
+	writeJson(join(T, "prospects", "surface-fixture", "metadata.json"), {name: "Surface Fixture", slug: "surface-fixture", website: "https://example.com/surface", vertical: "managed-it-cybersecurity", contact: "Founder"})
+	writeJson(join(T, "prospects", "surface-fixture", "pipeline.json"), {stage: "new", createdAt: "2026-08-01", sentAt: "", sentChannel: "", lastChannel: "", lastTouchAt: "", nextFollowUpAt: "", followUps: [], touches: [], notes: []})
+	for (const args of [
 		["scripts/export-market-proof-run.mjs"],
 		["scripts/check-market-proof-run.mjs"],
 		["scripts/export-sender-setup-guide.mjs"],
@@ -82,6 +94,18 @@ try {
 		["scripts/export-internal-dashboard.mjs"],
 		["scripts/export-daily-money-mission.mjs"],
 		["scripts/export-market-proof-run.mjs"],
+		["scripts/check-market-parity-readiness.mjs"]
+	]) {
+		const regenerated = run(args)
+		eq(regenerated.status, 0, regenerated.stderr || regenerated.stdout)
+	}
+	// Nested gate and metrics chains inside the loop regenerated live metrics
+	// with the surface fixture counted. The byte-identical gate needs the
+	// canonical empty-prospect view back, so drop the fixture and regenerate
+	// the two tracked surfaces that read prospect counts.
+	rmSync(join(T, "prospects", "surface-fixture"), {recursive: true, force: true})
+	for (const args of [
+		["scripts/export-growth-metrics.mjs"],
 		["scripts/check-market-parity-readiness.mjs"]
 	]) {
 		const regenerated = run(args)
