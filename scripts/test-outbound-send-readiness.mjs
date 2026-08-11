@@ -48,6 +48,23 @@ try {
 	assert.notEqual(result.status, 0)
 	assert(output(result).findings.some(finding => finding.rule === "send package still has placeholders"))
 
+	// The send package must never sell a retired broad-agency offer, and
+	// recording-notes.md is embedded verbatim into the send package.
+	for (const [file, content] of [
+		["send-package.md", `${packageHeader}7-Day Site Revenue Fault Sprint with a 30-day action plan. ${optOut}`],
+		["recording-notes.md", `# Recording Notes\n\n## Quality Notes\n\n- Clean ask: If useful, I can run a Tangible Revenue Fault Sprint with a 30-day action plan for $500.\n`]
+	]) {
+		writeFileSync(join(prospect, file), content)
+		result = run()
+		assert.notEqual(result.status, 0, `expected retired-offer failure for ${file}`)
+		assert(output(result).findings.some(finding => finding.rule === "outbound package sells a retired offer"))
+	}
+
+	writeFileSync(join(prospect, "send-package.md"), `${packageHeader}The Website Correction, one highest-leverage page, 14-day implementation tracking. ${optOut}`)
+	writeFileSync(join(prospect, "recording-notes.md"), `# Recording Notes\n\n## Quality Notes\n\n- Clean ask: If useful, I can run a human-reviewed The Website Correction on this one highest-leverage page with a measurement plan.\n`)
+	result = run()
+	assert.equal(result.status, 0, "canonical send package must not trigger the retired-offer rule")
+
 	result = run(["--roots=alternate"])
 	assert.equal(result.status, 0)
 	assert.equal(output(result).filesScanned, 1)
