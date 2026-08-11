@@ -23,8 +23,8 @@ function fixedEnv() {
   return {...process.env, NODE_OPTIONS: [process.env.NODE_OPTIONS, `--import=${fixedClockImport}`].filter(Boolean).join(" "), SERVICE_REPO_ROOT: T, SERVICE_TEST_NOW: `${trackedArtifactDate}T12:00:00.000+05:30`, TZ: "Asia/Kolkata"}
 }
 
-function run(args) {
-  return spawnSync(process.execPath, args, {cwd: T, encoding: "utf8", env: fixedEnv()})
+function run(args, cwd = T) {
+  return spawnSync(process.execPath, args, {cwd, encoding: "utf8", env: fixedEnv()})
 }
 
 function writeJson(path, value) {
@@ -132,6 +132,41 @@ try {
   eq(noProspectsRun.status, 0, noProspectsRun.stderr || noProspectsRun.stdout)
   deq(JSON.parse(noProspectsRun.stdout).directionGate.qualifiedTouches, 0, "no prospects means no qualified touches")
   mat(readFileSync(join(T, "runs/no-prospects-proof-gate.md"), "utf8"), /\| Qualified touches \| 0\/40 \|/)
+
+  rmSync(join(T, "prospects"), {recursive: true, force: true})
+  const trackedBriefPath = join(T, "growth-brain/ops/11-10-proof-run.md")
+  const trackedBriefBefore = readFileSync(trackedBriefPath, "utf8")
+  const refusedRun = run(["scripts/export-market-proof-run.mjs", "--skip-kit"])
+  ok(refusedRun.status !== 0, "regenerating the tracked brief without prospect state must refuse instead of silently reporting a zero pipeline")
+  mat(refusedRun.stderr, /Refusing to regenerate the tracked 11\/10 proof-run brief with a zero pipeline/)
+  eq(readFileSync(trackedBriefPath, "utf8"), trackedBriefBefore, "refused regeneration must leave the tracked brief untouched")
+  eq(existsSync(join(T, "prospects")), false, "refused regeneration must not create a prospect root or loom sheet")
+
+  mkdirSync(join(T, "prospects"), {recursive: true})
+  const refusedEmptyRoot = run(["scripts/export-market-proof-run.mjs", "--skip-kit"])
+  ok(refusedEmptyRoot.status !== 0, "an empty prospects/ directory must still refuse tracked regeneration")
+  const privateZeroRun = run(["scripts/export-market-proof-run.mjs", "--skip-kit", "--output=runs/private-zero-proof.md"])
+  eq(privateZeroRun.status, 0, privateZeroRun.stderr || privateZeroRun.stdout)
+  ok(existsSync(join(T, "prospects/loom-links.txt")), "private zero-state run writes the default loom sheet")
+  const refusedAfterPrivate = run(["scripts/export-market-proof-run.mjs", "--skip-kit"])
+  ok(refusedAfterPrivate.status !== 0, "a default run after a private zero-state run must still refuse")
+  mat(refusedAfterPrivate.stderr, /Refusing to regenerate the tracked 11\/10 proof-run brief with a zero pipeline/)
+  eq(readFileSync(trackedBriefPath, "utf8"), trackedBriefBefore, "refused regeneration after a private run must leave the tracked brief untouched")
+  rmSync(join(T, "prospects"), {recursive: true, force: true})
+
+  const anchoredCwd = join(T, "runner-cwd")
+  mkdirSync(anchoredCwd, { recursive: true })
+  const anchoredRun = run([join(C, "scripts/export-market-proof-run.mjs"), "--skip-kit", "--output=runs/rooted-proof-gate.md"], anchoredCwd)
+  eq(anchoredRun.status, 0, anchoredRun.stderr || anchoredRun.stdout)
+  ok(existsSync(join(T, "runs/rooted-proof-gate.md")), "anchored generation must write into the service root")
+  eq(existsSync(join(anchoredCwd, "runs/rooted-proof-gate.md")), false, "anchored generation must not write into the invocation directory")
+
+  const dataRoot = join(T, "data-only-root")
+  mkdirSync(join(dataRoot, "prospects"), {recursive: true})
+  const dataOnlyRun = spawnSync(process.execPath, [join(C, "scripts/export-market-proof-run.mjs"), "--skip-kit", "--output=runs/data-root-proof.md"], {cwd: T, encoding: "utf8", env: {...fixedEnv(), SERVICE_REPO_ROOT: dataRoot}})
+  eq(dataOnlyRun.status, 0, dataOnlyRun.stderr || dataOnlyRun.stdout)
+  ok(existsSync(join(dataRoot, "runs/data-root-proof.md")), "a data-only service root without scripts/ must still receive the private report")
+  eq(existsSync(join(dataRoot, "prospects/market-proof-run-parity.md")), false, "parity scratch output must be cleaned from the data root")
   console.log("Direction proof gate checks passed.")
 } finally {
   rmSync(T, {recursive: true, force: true})
