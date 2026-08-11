@@ -9,13 +9,16 @@ name: Deploy public site
 # fixes (H2-after-H1 on /promptly/support/, JSON-LD on /contact/, real 404s,
 # portfolio-only homepage).
 #
-# Required secrets (fail-closed when absent):
+# Required secrets (fail-closed once provisioned):
 #   CLOUDFLARE_API_TOKEN  - Cloudflare API token with Cloudflare Pages:Edit
 #                           on the tinystudio.in account
 #   CLOUDFLARE_ACCOUNT_ID - f670a698e17bf160c8e4679823e68916
 # The fleet Workers token (fleet-console/cf.env) does NOT have Pages:Edit;
-# provisioning a Pages-scoped token is a one-time dashboard step. The lane
-# prints the exact steps when the secret is missing or lacks Pages:Edit.
+# provisioning a Pages-scoped token is a one-time dashboard step. While the
+# secrets are absent the publish step is SKIPPED and a notice step prints the
+# exact provisioning steps, so the lane is visibly dormant instead of failing
+# every merge. The moment both secrets exist, every main merge publishes and
+# any deploy/verify failure fails the run loudly (fail-closed).
 
 on:
   push:
@@ -50,7 +53,19 @@ jobs:
         run: node scripts/publish-public-site.mjs --prepare-only --output "$RUNNER_TEMP/tinystudio-public-bundle"
 
       - name: Publish to Cloudflare Pages and verify live
+        if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' && secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: node scripts/publish-public-site.mjs --deploy --bundle "$RUNNER_TEMP/tinystudio-public-bundle"
+
+      - name: Release lane dormant - Pages token not provisioned yet
+        if: ${{ secrets.CLOUDFLARE_API_TOKEN == '' || secrets.CLOUDFLARE_ACCOUNT_ID == '' }}
+        run: |
+          echo "::notice title=Release lane dormant::CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID are not set in repo secrets yet, so the publish step was skipped. The lane will deploy automatically on the next main merge once both secrets are provisioned; until then every merge keeps the pre-deploy and bundle-prepare gates but never touches the live site."
+          echo "One-time provisioning (dashboard, ~2 minutes):"
+          echo "  1. https://dash.cloudflare.com/profile/api-tokens -> Create Token"
+          echo "  2. Use the 'Cloudflare Pages: Edit' template, scope it to the account (account id f670a698e17bf160c8e4679823e68916), create, copy the token."
+          echo "  3. gh secret set CLOUDFLARE_API_TOKEN -R nish3451/tinystudio-in"
+          echo "  4. gh secret set CLOUDFLARE_ACCOUNT_ID -R nish3451/tinystudio-in -b f670a698e17bf160c8e4679823e68916"
+          echo "  5. Re-run this lane (or wait for the next main merge); no code change needed."
