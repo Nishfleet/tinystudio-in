@@ -4,7 +4,7 @@ const {equal: eq, deepEqual: deq, notEqual: neq, match: mat, throws: thr, doesNo
 import {spawn, spawnSync} from "node:child_process"
 import {chmodSync, cpSync, existsSync as ex, lstatSync, mkdirSync as md, mkdtempSync, readFileSync as rf, readdirSync, renameSync as rn, rmSync as rm, statSync, symlinkSync as sl, unlinkSync as un, utimesSync, writeFileSync as wf} from "node:fs"
 import {tmpdir} from "node:os"
-import {dirname, join, relative} from "node:path"
+import {basename, dirname, join, relative} from "node:path"
 import {pathToFileURL} from "node:url"
 import {ALLOWED_COMMANDS, acquireLock, atomicWriteJson as aw, decisionHashFor, isRfc3339Timestamp, minifiedJson, queueInputHashFor, resolveRepoPath, schemaDigest, sha256, sourceHashForApplicant, validateAffirmativePaymentEvidence, validateApplication, validateDecision} from "./lib/service-contract.mjs"
 import {
@@ -1332,6 +1332,33 @@ try {
 		assert(roundResults.filter(result => result.status === 2 && result.stdout.includes("blocked")).length === 15)
 		eq(ex(lock), false)
 		eq(ex(`${lock}.recovery`), false)
+	}
+
+	// Regression: the recovery coordinator's own takeover must also be
+	// single-winner. A crash can leave BOTH the lock directory and the
+	// coordinator claim stale (dead owner, old mtime); when several
+	// contenders race to recover them, every recoverer reads the same stale
+	// claim and then takes it over. That takeover used to be an unlink: once
+	// a recoverer had read the stale claim, its unlink deleted whatever the
+	// claim path then named - including a fresh claim another recoverer had
+	// just created - so two recoverers both held the coordinator and both
+	// entered the lock critical section. Exactly one contender may acquire;
+	// the rest must be blocked, and no displaced-claim debris may remain.
+	for (let round = 0; round < 6; round += 1) {
+		md(lock, {recursive: true})
+		lockOwner(lock, 2147483647, `dead-recovery-round-${round}`)
+		utimesSync(lock, staleTime, staleTime)
+		claimOwner(`${lock}.recovery`, 2147483647, `dead-claim-round-${round}`)
+		utimesSync(`${lock}.recovery`, staleTime, staleTime)
+		const roundResults = await Promise.all(Array.from({length: 24}, () => rlc(lock)))
+		const roundAcquired = roundResults.filter(result => result.status === 0 && result.stdout.includes("acquired"))
+		eq(roundAcquired.length, 1, `recovery round ${round}: ${roundAcquired.length} simultaneous holders`)
+		assert(roundResults.filter(result => result.status === 2 && result.stdout.includes("blocked")).length === 23)
+		eq(ex(lock), false)
+		eq(ex(`${lock}.recovery`), false)
+		for (const leftover of readdirSync(dirname(lock)).filter(entry => entry.startsWith(`${basename(lock)}.displaced-`))) {
+			throw new Error(`displaced-claim debris left behind: ${leftover}`)
+		}
 	}
 
 	const it = id => bq().items.find(candidate => candidate.applicationId === id)

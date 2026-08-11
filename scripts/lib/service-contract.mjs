@@ -358,8 +358,23 @@ function acquireRecoveryCoordinator(path, staleAfterMs) {
 	// (mkdir followed by an owner write), there is no half-made state a
 	// contender can be descheduled inside for long: the file either does not
 	// exist or exists complete. A recoverer can only take over a claim whose
-	// owner is dead or whose content is missing/old, and its unlink is itself
-	// an atomic claim - exactly one recoverer wins, the rest fail with ENOENT.
+	// owner is dead or whose content is missing/old.
+	//
+	// Takeover is a rename, never an unlink. An unlink is unconditional: once
+	// a recoverer has decided a claim is stale, its unlink deletes whatever
+	// the claim path currently names. Between that staleness read and the
+	// unlink, a competing recoverer can remove the stale claim and create its
+	// own fresh claim, and the first recoverer's late unlink destroys that
+	// live claim - both recoverers then believe they hold the coordinator and
+	// both enter the lock critical section, which lets several contenders
+	// take the same lock. rename removes the inode at the claim path exactly
+	// once: a second recoverer's rename fails with ENOENT, so at most one
+	// recoverer can displace any given claim.
+	//
+	// The displaced claim is inspected before it is discarded. If it actually
+	// names a live owner (the staleness read raced with the claim's creation
+	// or another recoverer displaced it first), it is renamed back and the
+	// recoverer backs off instead of breaking the owner's mutual exclusion.
 	const create = () => writeFileSync(path, ownerJson, {flag: "wx"})
 	try {
 		create()
@@ -368,18 +383,34 @@ function acquireRecoveryCoordinator(path, staleAfterMs) {
 		const owner = claimOwner(path)
 		const recoveryStaleAfterMs = Math.max(staleAfterMs, 1000)
 		if (processIsAlive(owner.pid) === true || lockAgeMs(path) < recoveryStaleAfterMs) return null
+		const displacedPath = `${path}.displaced-${process.pid}-${token}`
 		try {
-			unlinkSync(path)
+			renameSync(path, displacedPath)
+		} catch {
+			return null
+		}
+		const displaced = claimOwner(displacedPath)
+		if (processIsAlive(displaced.pid) === true) {
+			// We displaced a live claim: restore it so its holder keeps the
+			// coordinator, and back off. If a new claim appeared at path in
+			// the meantime the restore fails harmlessly and the displaced
+			// claim is orphaned - it never names us, so we never act on it.
+			try {
+				renameSync(displacedPath, path)
+			} catch {}
+			return null
+		}
+		try {
+			rmSync(displacedPath, {force: true})
 			create()
 		} catch {
 			return null
 		}
 	}
 	// Verify the claim still names this process before entering the critical
-	// section. If a recoverer removed our half-written claim and recreated it,
-	// our late bytes landed on an unlinked inode, so the claim file now
-	// belongs to someone else: back off instead of holding the coordinator
-	// alongside them.
+	// section. If a recoverer displaced our claim and recreated it, the claim
+	// file now belongs to someone else: back off instead of holding the
+	// coordinator alongside them.
 	const owner = claimOwner(path)
 	if (owner.pid !== process.pid || owner.token !== token) return null
 	return () => releaseClaim(path, token)
