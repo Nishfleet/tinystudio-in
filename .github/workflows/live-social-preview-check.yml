@@ -1,0 +1,28 @@
+name: Live Social Preview Check
+
+on:
+  schedule:
+    # Nightly: catch stale deployments that dropped social preview imagery
+    # (og:image / twitter:image) within a day even when no pull requests are
+    # open.
+    - cron: "37 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: live-social-preview-check
+  cancel-in-progress: false
+
+jobs:
+  live-social-preview:
+    runs-on: [self-hosted, linux, x64, vps-verify]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: node scripts/check-public-live-social-preview.mjs
