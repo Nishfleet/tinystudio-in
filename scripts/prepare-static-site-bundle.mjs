@@ -63,9 +63,14 @@ Tiny Studio is a small product company behind Promptly, Drishti, and 0509.
 - Support: https://tinystudio.in/support/
 - Contact: https://tinystudio.in/contact/
 - Privacy: https://tinystudio.in/privacy/
+- Privacy choices: https://tinystudio.in/privacy-choices/
 - Terms: https://tinystudio.in/terms/
 - Promptly: https://tinystudio.in/promptly/
+- Promptly support: https://tinystudio.in/promptly/support/
+- Promptly privacy: https://tinystudio.in/promptly/privacy/
 - Drishti: https://tinystudio.in/drishti/
+- Drishti support: https://tinystudio.in/drishti/support/
+- Drishti privacy: https://tinystudio.in/drishti/privacy/
 
 ## Product boundaries
 
@@ -89,6 +94,7 @@ async function main() {
   await fs.writeFile(cssPath, css);
   await fs.copyFile(iconPath, appleIconPath);
   await fs.writeFile(path.join(root, "llms.txt"), llmsTxt);
+  assertLlmsTxtCoversPublicPages(llmsTxt);
 
   for (const relativeFile of htmlFiles) {
     const filePath = path.join(root, relativeFile);
@@ -141,6 +147,22 @@ function addSupportSchema(html) {
   const schema = JSON.stringify(supportSchema, null, 6);
   const script = `    <script type="application/ld+json" data-page-schema="support">\n      ${schema.replace(/\n/g, "\n      ")}\n    </script>\n`;
   return html.replace(/(\s*<link rel="apple-touch-icon")/, `\n${script}$1`);
+}
+
+function pageUrlFor(relativeFile) {
+  return relativeFile === "index.html"
+    ? "https://tinystudio.in/"
+    : `https://tinystudio.in/${path.posix.dirname(relativeFile)}/`;
+}
+
+function assertLlmsTxtCoversPublicPages(content) {
+  const publicFiles = htmlFiles.filter((relativeFile) => relativeFile !== "404.html");
+  const missing = publicFiles
+    .map(pageUrlFor)
+    .filter((url) => !content.includes(url));
+  if (missing.length) {
+    throw new Error(`llms.txt does not list every public page; missing: ${missing.join(", ")}`);
+  }
 }
 
 async function assertLocalAssetsExist() {
