@@ -92,6 +92,16 @@ If useful, I can run a 7-Day Site Revenue Fault Sprint with a 30-day action plan
 	}
 	dnm(loomPackage, retiredOfferPattern)
 
+	const sendResult = spawnSync(process.execPath, [sp("prepare-prospect-send.mjs"), legacyProspectPath, "https://www.loom.com/share/1234567890abcdef1234567890abcdef", "--approved", "--force"], {cwd: repositoryRoot, encoding: "utf8"})
+	eq(sendResult.status, 0, `send prep failed: ${sendResult.stderr}`)
+	const sendPackage = readFileSync(join(legacyProspectPath, "send-package.md"), "utf8")
+	mat(sendPackage, /The Website Correction/)
+	mat(sendPackage, /one highest-leverage page/)
+	for (const forbiddenOutcome of NO_GUARANTEE_OUTCOMES) {
+		mat(sendPackage, new RegExp(forbiddenOutcome.replace("-", "[- ]"), "i"))
+	}
+	dnm(sendPackage, retiredOfferPattern)
+
 	console.log("Active offer projection checks passed.")
 } finally {
 	rmSync(testRoot, {recursive: true, force: true})
