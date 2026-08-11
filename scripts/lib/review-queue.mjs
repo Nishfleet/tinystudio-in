@@ -1058,9 +1058,10 @@ export function checkQueue({repoRoot = process.cwd(), scope = "all", asOfDate = 
 	const expected = buildQueue({repoRoot, scope, asOfDate, trustedDate})
 	const paths = queuePaths(repoRoot)
 	const failures = []
+	const advisories = []
 	if (expected.pendingPromotions.length) failures.push(`service promotion journal requires repair before normal work: ${expected.pendingPromotions.join(", ")}`)
 	if (!existsSync(paths.queueFile)) {
-		failures.push("prepared queue output is missing")
+		advisories.push("queue not prepared - run service:queue")
 	} else {
 		let actual = null
 		try {
@@ -1068,7 +1069,13 @@ export function checkQueue({repoRoot = process.cwd(), scope = "all", asOfDate = 
 		} catch {
 			failures.push("queue output is invalid JSON")
 		}
-		if (actual && sha256(minifiedJson(actual)) !== sha256(minifiedJson(expected))) failures.push("queue output is stale or altered")
+		if (actual) {
+			if (isIsoCalendarDate(actual.asOfDate) && actual.asOfDate < expected.asOfDate) {
+				advisories.push(`queue not prepared since ${actual.asOfDate} - run service:queue`)
+			} else if (sha256(minifiedJson(actual)) !== sha256(minifiedJson(expected))) {
+				failures.push("queue output is stale or altered")
+			}
+		}
 	}
 	for (const item of expected.items) {
 		if (item.status === "blocked") failures.push(`${item.applicationId}: ${item.blocked.join("; ")}`)
@@ -1088,7 +1095,7 @@ export function checkQueue({repoRoot = process.cwd(), scope = "all", asOfDate = 
 			}
 		}
 	}
-	return {status: failures.length ? "failed" : "passed", failures, queue: expected}
+	return {status: failures.length ? "failed" : advisories.length ? "advisory" : "passed", failures, advisories, queue: expected}
 }
 
 export const prepareReviewQueue = prepareQueue
