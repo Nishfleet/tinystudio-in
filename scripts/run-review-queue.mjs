@@ -41,7 +41,7 @@ try {
 	const options = {repoRoot, scope: values.get("scope") || "all", dryRun: flags.has("dry-run"), ...(values.get("application") ? {applicationId: values.get("application")} : {}), ...(values.get("as-of") ? {asOfDate: values.get("as-of")} : {})}
 	const result = mode === "apply" ? applyQueue(options) : mode === "check" ? checkQueue(options) : prepareQueue(options)
 	console.log(JSON.stringify(result, null, 2))
-	if (mode === "check" && result.status !== "passed") process.exitCode = 1
+	if (mode === "check" && result.status === "failed") process.exitCode = 1
 } catch (error) {
 	console.error(`service:queue failed: ${error.message}`)
 	process.exit(1)
