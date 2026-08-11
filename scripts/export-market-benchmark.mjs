@@ -12,7 +12,7 @@ const outputPath = outputArg ? outputArg.split("=").slice(1).join("=") : "docs/s
 const opsPath = opsArg ? opsArg.split("=").slice(1).join("=") : "growth-brain/ops/competitive-proof-matrix.md";
 const htmlPath = htmlArg ? htmlArg.split("=").slice(1).join("=") : "growth-brain/ops/competitive-proof-matrix.html";
 const today = localIsoDate();
-const MARKET_ANCHORS_LAST_CHECKED = "2026-05-29";
+const MARKET_ANCHORS_LAST_CHECKED = "2026-08-11";
 function write(path, content) {
   const dir = path.split("/").slice(0, -1).join("/");
   if (dir) mkdirSync(dir, { recursive: true });
@@ -133,6 +133,46 @@ const alternatives = [
     tinyStudioCanBeatBy: "Shipped proof.",
     currentStatus: metrics.counts.clientsReady > 0 && metrics.counts.loomsRecorded >= 5 ? "watch" : "fail",
     allowedClaim: "After delivery."
+  },
+  {
+    name: "MSP marketing agency audits",
+    source: "100Signals 2026 MSP agency comparison",
+    sourceUrl: "https://100signals.com/best-marketing-agencies-for-managed-service-providers/",
+    marketSignal: "$549-$25k/mo; entry $549-$3k/mo; Tech Pro flat $3k/mo.",
+    strongAt: "MSP-specific programs.",
+    tinyStudioCanBeatBy: "One-page speed.",
+    currentStatus: marketProofReady ? "watch" : "fail",
+    allowedClaim: "After proof."
+  },
+  {
+    name: "MSP website/SEO audit packages",
+    source: "JoomConnect MSP SEO",
+    sourceUrl: "https://www.joomconnect.com/msp-marketing/services/search-engine-optimization",
+    marketSignal: "$300-$1.8k/mo; audit included.",
+    strongAt: "Ongoing SEO.",
+    tinyStudioCanBeatBy: "Fault map + fix.",
+    currentStatus: metrics.counts.clientsReady > 0 ? "watch" : "fail",
+    allowedClaim: "Not a retainer."
+  },
+  {
+    name: "Free MSP marketing/authority audits",
+    source: "Managed Prospecting System news",
+    sourceUrl: "https://managedprospectingsystem.com/news/",
+    marketSignal: "Free; audit-led entry.",
+    strongAt: "Free diagnostics.",
+    tinyStudioCanBeatBy: "Human-reviewed fix.",
+    currentStatus: metrics.counts.clientsReady > 0 ? "watch" : "fail",
+    allowedClaim: "After proof."
+  },
+  {
+    name: "MSP marketing subscription toolkits",
+    source: "MSP Marketing Edge pricing",
+    sourceUrl: "https://www.mspmarketingedge.com/pricing/",
+    marketSignal: "Free trial; $199/mo.",
+    strongAt: "Content volume.",
+    tinyStudioCanBeatBy: "Done-for-you proof.",
+    currentStatus: metrics.counts.clientsReady > 0 && metrics.counts.loomsRecorded >= 5 ? "watch" : "fail",
+    allowedClaim: "Not a substitute."
   }
 ];
 
@@ -182,7 +222,7 @@ Generated: ${today}
 
 ## Purpose
 
-Use this to judge whether TinyStudio is merely internally polished or actually comparable with strong CRO, SEO/site-architecture, paid acquisition, lifecycle/email, AI automation audit, and full-service growth providers.
+Use this to judge whether TinyStudio is merely internally polished or actually comparable with strong CRO, SEO/site-architecture, paid acquisition, lifecycle/email, AI automation audit, MSP-aware audit and marketing offers, and full-service growth providers.
 
 ## Current Position
 
@@ -192,6 +232,7 @@ TinyStudio is not trying to beat full-service enterprise CRO agencies on long st
 - boutique SEO/site-architecture audits
 - paid search/social and lifecycle/email retainers
 - AI-assisted marketing operations retainers
+- MSP-aware audit and marketing offers aimed at the same founder-led Managed IT, MSP, and cybersecurity audience
 - human-reviewed website revenue fault sprints for founder-led Managed IT, MSP, and cybersecurity companies
 
 ## Decision Rule
@@ -212,6 +253,10 @@ Current public market signals:
 - OpenClaw Audit lists $2,000 and $5,000 AI automation audit packages with a 48-hour turnaround.
 - WebFX, SmartSites, Ignite Visibility, and Thrive all position as multi-channel agencies across SEO, PPC, paid social, email, CRO, analytics, content, reputation, and web work.
 - MarketHire and GoodFirms pricing guides put serious full-service retainers into the $5,000-$25,000+/month zone depending on scope, channels, and seniority.
+- MSP marketing agencies sell audit-led entry: Tech Pro Marketing opens with a free growth call and runs a flat $3,000/month inbound retainer for MSPs above $500K revenue; 100Signals' August 2026 comparison (https://100signals.com/best-marketing-agencies-for-managed-service-providers/) puts MSP-focused retainers from $549-$25,000/month, with an entry tier of $549-$3,000/month.
+- MSP website/SEO audit packages start low: JoomConnect includes a website audit and keyword research in every SEO tier from $300-$1,800/month and opens with a free SEO audit.
+- Free MSP-focused audits are a crowded entry point: JoomConnect, Managed Prospecting System, and 100Signals all give away MSP-specific audits (SEO, authority, AI visibility) to open sales conversations.
+- MSP marketing subscriptions undercut agencies: MSP Marketing Edge offers a 30-day free trial then $199/month (US) with no contract, plus a free marketing scorecard.
 
 ## Competitive Proof Matrix
 
