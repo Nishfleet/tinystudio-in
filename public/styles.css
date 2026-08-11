@@ -902,17 +902,17 @@ h4 {
      first useful viewport (design-system hard gate). */
   .product-hero h1 {
     max-width: none;
-    font-size: clamp(2.2rem, 8vw, 3.4rem);
+    font-size: clamp(2rem, 8vw, 3.4rem);
   }
 
   .product-hero .page-lead {
-    margin-top: 16px;
-    font-size: 1rem;
+    margin-top: 14px;
+    font-size: 0.95rem;
     line-height: 1.5;
   }
 
   .product-hero .action-row {
-    margin-top: 24px;
+    margin-top: 20px;
   }
 
   .info-card {
