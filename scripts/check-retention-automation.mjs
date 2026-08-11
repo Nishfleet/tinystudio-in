@@ -1,32 +1,22 @@
 #!/usr/bin/env node
-import { existsSync, readFileSync, readdirSync, realpathSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
-import { homedir } from "node:os";
-import { fileURLToPath } from "node:url";
-import { execFileSync } from "node:child_process";
-import { RETENTION_AUTOMATION_PROMPT } from "./lib/retention-automation.mjs";
+import {existsSync, readFileSync} from "node:fs";
+import {dirname, join} from "node:path";
+import {homedir} from "node:os";
+import {fileURLToPath} from "node:url";
+import {RETENTION_AUTOMATION_PROMPT} from "./lib/retention-automation.mjs";
+import {canonicalMainWorktree, normalizedPath, runPreflight, scriptRepoRoot} from "./lib/retention-preflight.mjs";
 
 const automationId = "tinystudio-retention-checkups";
 const codexHome = process.env.CODEX_HOME || join(homedir(), ".codex");
 const automationPath = join(codexHome, "automations", automationId, "automation.toml");
-const scriptRepoRoot = dirname(dirname(fileURLToPath(import.meta.url)));
-const expectedCwd = process.env.TINYSTUDIO_AUTOMATION_WORKSPACE || canonicalMainWorktree(scriptRepoRoot);
+const repoForFreshness = process.env.TINYSTUDIO_PREFLIGHT_REPO || scriptRepoRoot();
+const expectedCwd = process.env.TINYSTUDIO_AUTOMATION_WORKSPACE || canonicalMainWorktree(repoForFreshness);
 const isGithubActions = process.env.GITHUB_ACTIONS === "true";
-const serviceRoot = process.env.SERVICE_REPO_ROOT || process.cwd();
-const clientsPath = join(serviceRoot, "clients");
-const paidProspectsPath = join(serviceRoot, "prospects");
-const clientIds = new Set();
-if (existsSync(clientsPath)) {
-  for (const entry of readdirSync(clientsPath, { withFileTypes: true })) {
-    if (entry.isDirectory() && !entry.name.startsWith(".")) clientIds.add(entry.name);
-  }
-}
-if (existsSync(paidProspectsPath)) {
-  for (const entry of readdirSync(paidProspectsPath, { withFileTypes: true })) {
-    if (entry.isDirectory() && !entry.name.startsWith(".") && existsSync(join(paidProspectsPath, entry.name, "service-day0.json"))) clientIds.add(entry.name);
-  }
-}
-const clientCount = clientIds.size;
+const stateRoot = process.env.SERVICE_REPO_ROOT || canonicalMainWorktree(repoForFreshness);
+const preflight = runPreflight({repoRoot: repoForFreshness, stateRoot, isGithubActions});
+const clientCount = preflight.activeClients;
+const failures = [...preflight.failures];
+const warnings = [...preflight.warnings];
 
 function value(content, key) {
   const match = String(content || "").match(new RegExp(`^${key}\\s*=\\s*"([^"]*)"`, "m"));
@@ -35,30 +25,6 @@ function value(content, key) {
 
 function missingPhrases(content, phrases) {
   return phrases.filter((phrase) => !String(content || "").includes(phrase));
-}
-
-function normalizedPath(path) {
-  const absolute = resolve(path);
-  try {
-    return realpathSync(absolute);
-  } catch {
-    return absolute;
-  }
-}
-
-function canonicalMainWorktree(repoRoot) {
-  try {
-    const output = execFileSync("git", ["-C", repoRoot, "worktree", "list", "--porcelain"], {
-      encoding: "utf8",
-      stdio: ["ignore", "pipe", "ignore"]
-    });
-    let worktree = "";
-    for (const line of output.split("\n")) {
-      if (line.startsWith("worktree ")) worktree = line.slice("worktree ".length);
-      if (line === "branch refs/heads/main" && worktree) return worktree;
-    }
-  } catch {}
-  return repoRoot;
 }
 
 function configuredWorkspacePaths(content) {
@@ -73,51 +39,47 @@ function configuredWorkspacePaths(content) {
   return paths;
 }
 
+function report(status) {
+  return {
+    status,
+    automationId,
+    path: automationPath,
+    weeklyCadence: "Friday retention prep",
+    repo: expectedCwd,
+    clientCount,
+    freshness: preflight.freshness,
+    roots: preflight.roots,
+    failures,
+    ...(failures.length ? {replacementPrompt: RETENTION_AUTOMATION_PROMPT} : {}),
+    warnings
+  };
+}
+
 if (!existsSync(automationPath)) {
   if (isGithubActions && clientCount === 0) {
     console.log(JSON.stringify({
-      status: "warn",
-      automationId,
-      path: automationPath,
-      weeklyCadence: "Friday retention prep",
-      repo: expectedCwd,
-      failures: [],
+      ...report("warn"),
       warnings: ["Local Codex automation file is unavailable in GitHub Actions; verify this check on Nish's machine"]
     }, null, 2));
     process.exit(0);
   }
 
-  if (clientCount === 0) {
+  if (clientCount === 0 && failures.length === 0) {
     console.log(JSON.stringify({
-      status: "pass",
-      automationId,
-      path: automationPath,
-      weeklyCadence: "Friday retention prep",
-      repo: expectedCwd,
-      clientCount,
-      failures: [],
+      ...report("pass"),
       warnings: ["No client records exist; the scheduled retention loop becomes required before the first client is active"]
     }, null, 2));
     process.exit(0);
   }
 
-  console.log(JSON.stringify({
-    status: "fail",
-    automationId,
-    path: automationPath,
-    clientCount,
-    failures: ["Automation file is missing"],
-    replacementPrompt: RETENTION_AUTOMATION_PROMPT,
-    warnings: []
-  }, null, 2));
+  failures.push("Automation file is missing");
+  console.log(JSON.stringify(report("fail"), null, 2));
   process.exit(1);
 }
 
 const content = readFileSync(automationPath, "utf8");
 const prompt = value(content, "prompt");
 const cadence = value(content, "rrule");
-const failures = [];
-const warnings = [];
 
 if (value(content, "id") !== automationId) failures.push("Automation id does not match TinyStudio retention checkups");
 if (value(content, "kind") !== "cron") failures.push("Automation is not a cron automation");
@@ -148,15 +110,6 @@ for (const retiredPhrase of ["weekly client value loop", "retention checkups", "
 
 const status = failures.length ? "fail" : warnings.length ? "warn" : "pass";
 
-console.log(JSON.stringify({
-  status,
-  automationId,
-  path: automationPath,
-  weeklyCadence: "Friday retention prep",
-  repo: expectedCwd,
-  failures,
-  ...(failures.length ? { replacementPrompt: RETENTION_AUTOMATION_PROMPT } : {}),
-  warnings
-}, null, 2));
+console.log(JSON.stringify(report(status), null, 2));
 
 if (failures.length) process.exit(1);
