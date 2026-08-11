@@ -1,6 +1,6 @@
 # Live Metrics
 
-Generated: 2026-08-12
+Generated: 2026-08-06
 
 ## Funnel
 
