@@ -77,7 +77,7 @@ npm run prospect:batch-sent -- --from-clipboard
 
 ## Direction Proof Gate
 
-Source: the direction dossier gates this proof run on 5 approved Looms (recorded, then sent) and 40 qualified personalized touches. Counters read only existing repository state: approval rows and recorded Loom URLs in `prospects/loom-links.txt`, and pipeline `touches`/`sentAt`/notes under `prospects/<slug>/`. Drafts, raw LOOM_URL placeholders, unapproved rows, and prospects without touch evidence never count.
+Source: the direction dossier gates this proof run on 5 approved Looms (recorded, then sent) and 40 qualified personalized touches. Counters read only existing repository state: approval rows and recorded Loom URLs in `prospects/loom-links.txt`, and pipeline `touches`/`sentAt`/notes under `prospects/<slug>/`. Drafts, raw LOOM_URL placeholders, unapproved rows, and prospects without touch evidence never count. Regeneration refuses to overwrite this tracked brief when the service root holds no prospect pipeline state, so an unavailable pipeline is never mistaken for an empty one.
 
 | Gate | Progress | Counted Evidence |
 |---|---:|---|
