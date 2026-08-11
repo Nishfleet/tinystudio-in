@@ -5,7 +5,9 @@ import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 import { execFileSync } from "node:child_process";
 import { localIsoDate } from "./date-utils.mjs";
 import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: npm run prospect:followups -- [--limit=10] [--output=prospects/followup-cockpit.html]`);
 const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
 const limit = limitArg ? Number(limitArg.split("=")[1]) : 10;
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
@@ -403,9 +405,10 @@ const html = `<!doctype html>
 </html>
 `;
 
-const outputDir = outputPath.split("/").slice(0, -1).join("/");
+const resolvedOutputPath = resolveOutputPath(outputPath);
+const outputDir = resolvedOutputPath.split("/").slice(0, -1).join("/");
 if (outputDir) mkdirSync(outputDir, { recursive: true });
-writeFileSync(outputPath, html);
+writeFileSync(resolvedOutputPath, html);
 
 console.log(JSON.stringify({
   status: "created",

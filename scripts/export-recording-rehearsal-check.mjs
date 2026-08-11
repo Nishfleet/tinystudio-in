@@ -6,8 +6,10 @@ import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
 import { routedContactPlan } from "./lib/contact-route.mjs";
 import { localIsoDate } from "./date-utils.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
 const args = process.argv.slice(2);
+handleHelp(args, `Usage: npm run prospect:rehearsal -- [--limit=5] [--output=prospects/recording-rehearsal-check.md] [--html=prospects/recording-rehearsal-check.html]`);
 const limitArg = args.find((arg) => arg.startsWith("--limit="));
 const outputArg = args.find((arg) => arg.startsWith("--output="));
 const htmlArg = args.find((arg) => arg.startsWith("--html="));
@@ -25,10 +27,11 @@ function json(path) {
   return existsSync(path) ? JSON.parse(readFileSync(path, "utf8")) : {};
 }
 
-function write(path, content) {
-  const dir = dirname(path);
+function write(path, content, flag = "--output") {
+  const resolved = resolveOutputPath(path, { flag });
+  const dir = dirname(resolved);
   if (dir && dir !== ".") mkdirSync(dir, { recursive: true });
-  writeFileSync(path, content);
+  writeFileSync(resolved, content);
 }
 
 function listFolders(root) {
@@ -389,7 +392,7 @@ const html = `<!doctype html>
 `;
 
 write(outputPath, markdown);
-write(htmlPath, html);
+write(htmlPath, html, "--html");
 
 console.log(JSON.stringify({
   status,

@@ -2,7 +2,9 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { localIsoDate } from "./date-utils.mjs";
 import { agencyConfig } from "./lib/agency-config.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: npm run growth:proof -- [--output=growth-brain/ops/proof-library.md]`);
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/proof-library.md";
 const today = localIsoDate();
@@ -63,9 +65,10 @@ This tracked file contains operating rules and approved product facts only. It n
 3. Add only the final human-approved artifact and its permission record.
 `;
 
-const outputDir = outputPath.split("/").slice(0, -1).join("/");
+const resolvedOutputPath = resolveOutputPath(outputPath);
+const outputDir = resolvedOutputPath.split("/").slice(0, -1).join("/");
 if (outputDir) mkdirSync(outputDir, { recursive: true });
-writeFileSync(outputPath, content);
+writeFileSync(resolvedOutputPath, content);
 
 console.log(JSON.stringify({
   status: "created",

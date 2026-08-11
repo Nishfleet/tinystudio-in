@@ -7,8 +7,10 @@ import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
 import { routedContactPlan } from "./lib/contact-route.mjs";
 import { classifyOutboundProspect } from "./lib/outbound-prospects.mjs";
 import { runRepoJson as runJson } from "./lib/runtime-roots.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
 const args = process.argv.slice(2);
+handleHelp(args, `Usage: npm run market:proof-cockpit -- [prospects/loom-links.txt] [--limit=5] [--output=runs/market-proof-cockpit.md] [--html=runs/market-proof-cockpit.html]`);
 const inputPath = args.find((arg) => !arg.startsWith("--")) || "prospects/loom-links.txt";
 const outputArg = args.find((arg) => arg.startsWith("--output="));
 const htmlArg = args.find((arg) => arg.startsWith("--html="));
@@ -27,10 +29,11 @@ function json(path) {
   return existsSync(path) ? JSON.parse(readFileSync(path, "utf8")) : {};
 }
 
-function write(path, content) {
-  const dir = path.split("/").slice(0, -1).join("/");
+function write(path, content, flag = "--output") {
+  const resolved = resolveOutputPath(path, { flag });
+  const dir = resolved.split("/").slice(0, -1).join("/");
   if (dir) mkdirSync(dir, { recursive: true });
-  writeFileSync(path, content);
+  writeFileSync(resolved, content);
 }
 
 function clean(value, fallback = "") {
@@ -415,7 +418,7 @@ const html = `<!doctype html>
 `;
 
 write(outputPath, markdown);
-write(htmlPath, html);
+write(htmlPath, html, "--html");
 
 const result = {
   status: cockpitStatus,

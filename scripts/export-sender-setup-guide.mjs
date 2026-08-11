@@ -3,7 +3,9 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { agencyConfig } from "./lib/agency-config.mjs";
 import { localIsoDate } from "./date-utils.mjs";
 import { runRepoJson as runJson } from "./lib/runtime-roots.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: npm run send:guide -- [--output=growth-brain/ops/sender-setup-guide.md] [--html=growth-brain/ops/sender-setup-guide.html]`);
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/sender-setup-guide.md";
 const htmlArg = process.argv.find((arg) => arg.startsWith("--html="));
@@ -11,10 +13,11 @@ const htmlPath = htmlArg ? htmlArg.split("=")[1] : "growth-brain/ops/sender-setu
 const today = localIsoDate();
 const config = agencyConfig();
 
-function write(path, content) {
-  const dir = path.split("/").slice(0, -1).join("/");
+function write(path, content, flag = "--output") {
+  const resolved = resolveOutputPath(path, { flag });
+  const dir = resolved.split("/").slice(0, -1).join("/");
   if (dir) mkdirSync(dir, { recursive: true });
-  writeFileSync(path, content);
+  writeFileSync(resolved, content);
 }
 
 function escapeHtml(value) {
@@ -250,7 +253,7 @@ const html = `<!doctype html>
 `;
 
 write(outputPath, markdown);
-write(htmlPath, html);
+write(htmlPath, html, "--html");
 
 console.log(JSON.stringify({
   status: "created",

@@ -4,7 +4,9 @@ import { join } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 import { runRepoJson as runJson } from "./lib/runtime-roots.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: npm run market:learn -- [--limit=10] [--output=runs/market-learning-review.md] [--html=runs/market-learning-review.html]`);
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const htmlArg = process.argv.find((arg) => arg.startsWith("--html="));
 const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
@@ -25,10 +27,11 @@ function json(path) {
   return existsSync(path) ? JSON.parse(readFileSync(path, "utf8")) : {};
 }
 
-function write(path, content) {
-  const dir = path.split("/").slice(0, -1).join("/");
+function write(path, content, flag = "--output") {
+  const resolved = resolveOutputPath(path, { flag });
+  const dir = resolved.split("/").slice(0, -1).join("/");
   if (dir) mkdirSync(dir, { recursive: true });
-  writeFileSync(path, content);
+  writeFileSync(resolved, content);
 }
 
 function lineValue(content, pattern, fallback = "") {
@@ -296,7 +299,7 @@ const html = `<!doctype html>
 `;
 
 write(outputPath, markdown);
-write(htmlPath, html);
+write(htmlPath, html, "--html");
 
 console.log(JSON.stringify({
   status: review.status,

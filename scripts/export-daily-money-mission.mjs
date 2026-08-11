@@ -8,7 +8,9 @@ import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
 import { routedContactPlan } from "./lib/contact-route.mjs";
 import { canonicalProspectAsk } from "./lib/canonical-service-copy.mjs";
 import { NO_GUARANTEE_CLIENT_SENTENCE } from "./lib/service-contract.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: npm run growth:mission -- [--limit=5] [--output=runs/daily-money-mission.md] [--html=runs/daily-money-mission.html]`);
 const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
 const limit = limitArg ? Number(limitArg.split("=")[1]) : 5;
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
@@ -160,14 +162,15 @@ function missionFromMetrics(counts) {
 }
 
 function write(path, content) {
-  const dir = path.split("/").slice(0, -1).join("/");
+  const resolved = resolveOutputPath(path);
+  const dir = resolved.split("/").slice(0, -1).join("/");
   if (dir) mkdirSync(dir, { recursive: true });
-  writeFileSync(path, `${String(content).replace(/[ \t]+$/gm, "").trimEnd()}\n`);
+  writeFileSync(resolved, `${String(content).replace(/[ \t]+$/gm, "").trimEnd()}\n`);
 }
 
 function ensureLoomLinksTemplate(prospects) {
   const path = "prospects/loom-links.txt";
-  const existing = read(path);
+  const existing = read(resolveOutputPath(path));
   const hasFilledLinks = existing
     .split("\n")
     .some((line) => {

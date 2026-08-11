@@ -7,7 +7,9 @@ import { isValidLoomUrl } from "./lib/loom-url.mjs";
 import { loadValidatedServiceClients } from "./lib/validated-service-client.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 import { runRepoJson } from "./lib/runtime-roots.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: npm run growth:metrics -- [--plain] [--output=growth-brain/ops/live-metrics.md]`);
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/live-metrics.md";
 const plain = process.argv.includes("--plain");
@@ -182,9 +184,10 @@ ${Object.entries(stageCounts).sort(([a], [b]) => a.localeCompare(b)).map(([stage
 - If calls are high and closed is low, improve scope, price, or proof.
 `;
 
-const outputDir = outputPath.split("/").slice(0, -1).join("/");
+const resolvedOutputPath = resolveOutputPath(outputPath);
+const outputDir = resolvedOutputPath.split("/").slice(0, -1).join("/");
 if (outputDir) mkdirSync(outputDir, { recursive: true });
-writeFileSync(outputPath, markdown);
+writeFileSync(resolvedOutputPath, markdown);
 
 const result = {
   status: "created",

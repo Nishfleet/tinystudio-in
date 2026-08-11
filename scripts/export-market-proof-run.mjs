@@ -9,7 +9,9 @@ import { routedContactPlan } from "./lib/contact-route.mjs";
 import { canonicalProspectAsk } from "./lib/canonical-service-copy.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 import { runRepoJson, serviceRoot } from "./lib/runtime-roots.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: npm run market:proof-run -- [--limit=5] [--skip-kit] [--output=growth-brain/ops/11-10-proof-run.md] [--loom-links=prospects/loom-links.txt]`);
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/11-10-proof-run.md";
 const loomLinksArg = process.argv.find((arg) => arg.startsWith("--loom-links="));
@@ -23,11 +25,12 @@ const loomLinksPath = loomLinksArg
     ? "prospects/kit-proof-run-loom-links.txt"
     : "prospects/loom-links.txt";
 
+const resolvedLoomLinksPath = resolveOutputPath(loomLinksPath, { flag: "--loom-links" });
+
 // Every read and write is anchored to the service root (SERVICE_REPO_ROOT or
 // the invocation directory) so a brief regenerated from any working directory
 // reports the same pipeline state the rest of the operator surfaces read.
-const resolvedOutputPath = isAbsolute(outputPath) ? outputPath : join(serviceRoot, outputPath);
-const resolvedLoomLinksPath = isAbsolute(loomLinksPath) ? loomLinksPath : join(serviceRoot, loomLinksPath);
+const resolvedOutputPath = resolveOutputPath(outputPath);
 const prospectRoot = join(serviceRoot, "prospects");
 const trackedBriefPath = join(serviceRoot, "growth-brain/ops/11-10-proof-run.md");
 
