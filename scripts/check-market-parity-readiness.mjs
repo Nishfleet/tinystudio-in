@@ -73,7 +73,7 @@ function isOwnedStartupProof(clientPath) {
   return /## Proof Type\s+owned-startup/i.test(read(join(clientPath, "proof-context.md")));
 }
 
-const metrics = runJson(["scripts/export-growth-metrics.mjs"]);
+const metrics = runJson(["scripts/export-growth-metrics.mjs", "--output=runs/live-metrics.md"]);
 const sender = runJson(["scripts/check-outbound-sender-setup.mjs"]);
 const kit = skipKit
   ? { status: "skipped", checkedFiles: 0, allowedCommands: 0 }

@@ -6,10 +6,10 @@ Generated: 2026-08-06
 
 | Metric | Count |
 |---|---:|
-| Prospects total | 0 |
-| Active prospects | 0 |
-| Active scored prospects | 0 |
-| Scored including inactive | 0 |
+| Prospects total | 50 |
+| Active prospects | 43 |
+| Active scored prospects | 5 |
+| Scored including inactive | 12 |
 | Looms recorded | 0 |
 | Looms recorded including inactive | 0 |
 | Ready to send | 0 |
@@ -22,7 +22,7 @@ Generated: 2026-08-06
 | Due follow-up | 0 |
 | Clients | 0 |
 | Clients ready | 0 |
-| Client records blocked | 0 |
+| Client records blocked | 3 |
 
 ## Conversion Rates
 
@@ -38,7 +38,9 @@ Generated: 2026-08-06
 
 | Stage | Count |
 |---|---:|
-
+| new | 38 |
+| paused | 7 |
+| scored | 5 |
 
 ## Decision Rule
 
