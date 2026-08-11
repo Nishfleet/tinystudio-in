@@ -39,6 +39,13 @@ function writeJson(path, value) {
 	writeFileSync(path, `${JSON.stringify(value, null, 2)}\n`)
 }
 
+function writeSurfaceProspect(slug, stage, scored) {
+	const dir = join(T, "prospects", slug)
+	writeJson(join(dir, "metadata.json"), {name: slug, slug, website: "https://example.com/surface", vertical: "managed-it-cybersecurity", contact: "Founder"})
+	writeJson(join(dir, "pipeline.json"), {stage, createdAt: "2026-08-01", sentAt: "", sentChannel: "", lastChannel: "", lastTouchAt: "", nextFollowUpAt: "", followUps: [], touches: [], notes: []})
+	if (scored) writeFileSync(join(dir, "lead-score.md"), "- Score: 14/16\n- Priority: record\n")
+}
+
 function hashTree(root) {
 	const hashes = {}
 	function visit(directory) {
@@ -68,8 +75,16 @@ try {
 	const trackedArtifacts = new Map(ACTIVE_OPERATOR_ARTIFACTS.map(path => [path, readFileSync(join(C, path))]))
 	for (const path of ACTIVE_OPERATOR_ARTIFACTS) rmSync(join(T, path), {force: true})
 	writeFileSync(join(T, "growth-brain/ops/11-10-proof-run.md"), "regeneration sentinel\n")
+	// The tracked live metrics surface must refuse to regenerate from a root
+	// without outbound prospect pipeline state instead of silently clobbering
+	// the tracked file with a zero pipeline. The remaining surfaces regenerate
+	// byte-identically from the hermetic empty root first.
+	const metricsRefusal = run(["scripts/export-growth-metrics.mjs"])
+	neq(metricsRefusal.status, 0, "State-less live metrics regeneration must refuse")
+	mat(metricsRefusal.stderr, /Refusing to regenerate the tracked live metrics with a zero pipeline/)
+	mat(metricsRefusal.stderr, /no outbound prospect pipeline state found at/)
+	eq(existsSync(join(T, "growth-brain/ops/live-metrics.md")), false, "Refused metrics export must not write the tracked surface")
 	for (const args of [
-		["scripts/export-growth-metrics.mjs"],
 		["scripts/export-market-proof-run.mjs"],
 		["scripts/check-market-proof-run.mjs"],
 		["scripts/export-sender-setup-guide.mjs"],
@@ -87,10 +102,29 @@ try {
 		const regenerated = run(args)
 		eq(regenerated.status, 0, regenerated.stderr || regenerated.stdout)
 	}
+	// Reproduce the tracked live metrics pipeline exactly: 38 new, 5 scored
+	// (active), and 7 paused (scored) prospect folders = 50 total with 12
+	// scored including inactive, plus 3 unregistered client folders, so the
+	// guarded tracked surface regenerates byte-identically through the real
+	// path. The fixture is inert for every other surface (no scores before
+	// this point are read by them, no touches, no Looms), so their tracked
+	// artifacts stay on the empty-root regeneration.
+	for (let index = 1; index <= 38; index++) writeSurfaceProspect(`surface-new-${index}`, "new", false)
+	for (let index = 1; index <= 5; index++) writeSurfaceProspect(`surface-scored-${index}`, "scored", true)
+	for (let index = 1; index <= 7; index++) writeSurfaceProspect(`surface-paused-${index}`, "paused", true)
+	for (let index = 1; index <= 3; index++) mkdirSync(join(T, "clients", `surface-blocked-${index}`), {recursive: true})
+	const metricsRegenerated = run(["scripts/export-growth-metrics.mjs"])
+	eq(metricsRegenerated.status, 0, metricsRegenerated.stderr || metricsRegenerated.stdout)
 	for (const [path, expected] of trackedArtifacts) {
 		eq(existsSync(join(T, path)), true, `Generator did not recreate ${path}`)
 		deq(readFileSync(join(T, path)), expected, `Tracked generated artifact is stale: ${path}`)
 	}
+	// Drop the pipeline reproduction fixture so the remaining assertions see
+	// the hermetic one-prospect state the imported application creates.
+	for (const prefix of ["surface-new-", "surface-scored-", "surface-paused-"]) {
+		for (let index = 1; index <= 50; index++) rmSync(join(T, "prospects", `${prefix}${index}`), {recursive: true, force: true})
+	}
+	for (let index = 1; index <= 3; index++) rmSync(join(T, "clients", `surface-blocked-${index}`), {recursive: true, force: true})
 	for (const path of privateRuntimeArtifacts) eq(existsSync(join(T, path)), true, `Private runtime artifact is missing: ${path}`)
 
 	const application = JSON.parse(readFileSync(join(T, "contracts/fixtures/sprint-application.v1.json"), "utf8"))
@@ -171,6 +205,11 @@ try {
 		dnm(readFileSync(join(T, artifact), "utf8"), retiredSurfacePattern)
 	}
 	const currentDate = trackedArtifactDate
+	// Nested operator surfaces only consume the metrics JSON and no longer
+	// refresh the tracked surface as a side effect, so regenerate it here for
+	// the state that exists at this point: the outbound fixture plus the
+	// unregistered unpaid client.
+	eq(run(["scripts/export-growth-metrics.mjs"]).status, 0)
 	const liveMetrics = readFileSync(join(T, "growth-brain/ops/live-metrics.md"), "utf8")
 	const growthDoctor = readFileSync(join(T, "runs/growth-doctor.md"), "utf8")
 	const ID = readFileSync(join(T, "runs/internal-dashboard.md"), "utf8")
