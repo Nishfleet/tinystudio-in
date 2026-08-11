@@ -5,12 +5,14 @@
 // Used by the release lane after a Pages deployment. Runs against the live
 // site only; set SKIP_LIVE_CHECKS=1 to skip (exit 0) on offline machines.
 //
-// The four live proofs (all neutral, all merged on main before this lane):
+// The five live proofs (all neutral, all merged on main before this lane):
 //   1. /promptly/support/ renders H2 after H1        (PRs #18/#20)
 //   2. /contact/ carries application/ld+json         (PR #19)
 //   3. unknown URLs get a real 404, not the homepage (PR #34)
 //   4. homepage stays portfolio-only: brand-disambiguation copy (#29) live,
 //      and no managed-service buyer-path content (#10/#11, snoozed).
+//   5. the trust pages /privacy/, /terms/, /drishti/privacy/ render the
+//      fixed H1 -> H2x3 card outline, not the H1 -> H3x3 skip (PR #74).
 import { join } from "node:path"
 import { fileURLToPath } from "node:url"
 import { dirname } from "node:path"
@@ -48,6 +50,17 @@ const h2AfterFirstH1 = (html) => {
   const nextH3 = rest.search(/<h3\b[^>]*>/i)
   return nextH2 !== -1 && (nextH3 === -1 || nextH2 < nextH3)
 }
+
+// Same assertions as scripts/test-public-heading-hierarchy.mjs: the trust
+// pages must serve H1 -> three H2 card titles -> footer H2/H3s, with no
+// heading-level jump (no H1 -> H3 skip).
+const headingLevelsOf = (html) =>
+  [...html.matchAll(/<h([1-6])\b[^>]*>/gi)].map((m) => Number(m[1]))
+
+const infoCardTitleCount = (html) =>
+  (html.match(/<article class="info-card[^"]*"[^>]*>[\s\S]*?<h2\b/gi) || []).length
+
+const TRUST_PAGES = ["/privacy/", "/terms/", "/drishti/privacy/"]
 
 console.log("check-public-live-deploy: live tinystudio.in must match neutral merged fixes")
 
@@ -89,6 +102,21 @@ try {
     for (const marker of BUYER_PATH_MARKERS) {
       ok(!body.includes(marker), `homepage has no ${marker}`)
     }
+  }
+
+  console.log("E. trust pages render the fixed H1 -> H2x3 card outline (PR #74)")
+  for (const path of TRUST_PAGES) {
+    const { status, body } = await get(path)
+    ok(status === 200, `${path} returns 200 (got ${status})`)
+    const levels = headingLevelsOf(body)
+    ok(levels.filter((l) => l === 1).length === 1, `${path} has exactly one H1`)
+    ok(levels[0] === 1, `${path} has the H1 first in the outline`)
+    ok(infoCardTitleCount(body) === 3, `${path} has three card headings as H2s inside .info-card`)
+    let jumps = 0
+    for (let i = 1; i < levels.length; i++) {
+      if (levels[i] - levels[i - 1] > 1) jumps++
+    }
+    ok(jumps === 0, `${path} has no heading-level jump (no H1 -> H3 skip)`)
   }
 } catch (error) {
   failures++
