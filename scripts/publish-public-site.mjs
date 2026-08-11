@@ -16,7 +16,7 @@
 //   node scripts/publish-public-site.mjs                          full pipeline
 //   node scripts/publish-public-site.mjs --prepare-only [--output DIR]
 //   node scripts/publish-public-site.mjs --deploy --bundle DIR    deploy+verify
-import { existsSync } from "node:fs"
+import { existsSync, readFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join, resolve } from "node:path"
 import { fileURLToPath } from "node:url"
@@ -73,10 +73,23 @@ const deployWithWrangler = async (bundleDir) => {
   if (!process.env.CLOUDFLARE_ACCOUNT_ID) {
     throw new Error(`Missing CLOUDFLARE_ACCOUNT_ID (set it to ${PAGES_ACCOUNT_ID}).${PROVISION_MESSAGE}`)
   }
+  // Attach the source commit to the Pages deployment for dashboard provenance.
+  const manifest = JSON.parse(readFileSync(join(bundleDir, "deploy-manifest.json"), "utf8"))
+  const args = ["pages", "deploy", bundleDir, "--project-name", PAGES_PROJECT, "--branch", "main"]
+  if (manifest.source_commit && manifest.source_commit !== "unknown") {
+    args.push(
+      "--commit-hash",
+      manifest.source_commit,
+      "--commit-message",
+      `tinystudio-in ${manifest.source_commit} (lane bundle)`,
+      "--commit-dirty",
+      "true"
+    )
+  }
   try {
     await run(
       wranglerBin,
-      ["pages", "deploy", bundleDir, "--project-name", PAGES_PROJECT, "--branch", "main"],
+      args,
       { CLOUDFLARE_LOAD_DEV_VARS_FROM_DOT_ENV: "false" }
     )
   } catch (error) {
