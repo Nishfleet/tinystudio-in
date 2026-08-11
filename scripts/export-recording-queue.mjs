@@ -4,6 +4,11 @@ import { join } from "node:path";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 import { checkProspectReadiness, prospectWarningWeight } from "./lib/prospect-readiness.mjs";
 
+if (process.argv.includes("--help") || process.argv.includes("-h")) {
+  console.log("Usage: npm run prospect:queue -- [--limit=5] [--output=prospects/recording-queue.md]");
+  process.exit(0);
+}
+
 const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
 const limit = limitArg ? Number(limitArg.split("=")[1]) : 5;
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));

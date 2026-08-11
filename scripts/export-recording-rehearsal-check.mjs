@@ -7,6 +7,11 @@ import { routedContactPlan } from "./lib/contact-route.mjs";
 import { localIsoDate } from "./date-utils.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 
+if (process.argv.includes("--help") || process.argv.includes("-h")) {
+  console.log("Usage: npm run prospect:rehearsal -- [--limit=5] [--include-smoke] [--output=prospects/recording-rehearsal-check.md] [--html=prospects/recording-rehearsal-check.html]");
+  process.exit(0);
+}
+
 const args = process.argv.slice(2);
 const limitArg = args.find((arg) => arg.startsWith("--limit="));
 const outputArg = args.find((arg) => arg.startsWith("--output="));
