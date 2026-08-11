@@ -1258,6 +1258,7 @@ try {
 	const advisoryQueueCli = run(QUEUE, ["--mode", "check", "--as-of", AS_OF_DATE], E(QUEUE_TEST_NOW))
 	eq(advisoryQueueCli.status, 0, advisoryQueueCli.stderr)
 	eq(JSON.parse(advisoryQueueCli.stdout).status, "advisory")
+	wf(queuePaths(R).queueFile, preparedQueueBytes)
 	const staleQueueCheck = checkQueueWithClock({repoRoot: R, asOfDate: "2026-07-30", trustedDate: "2026-07-30"})
 	eq(staleQueueCheck.status, "advisory")
 	assert(staleQueueCheck.advisories.some(message => message.includes("queue not prepared since 2026-07-29")))
