@@ -8,9 +8,14 @@ Tiny Studio is the independent product company at tinystudio.in behind Promptly,
 - Support: https://tinystudio.in/support/
 - Contact: https://tinystudio.in/contact/
 - Privacy: https://tinystudio.in/privacy/
+- Privacy choices: https://tinystudio.in/privacy-choices/
 - Terms: https://tinystudio.in/terms/
 - Promptly: https://tinystudio.in/promptly/
+- Promptly support: https://tinystudio.in/promptly/support/
+- Promptly privacy: https://tinystudio.in/promptly/privacy/
 - Drishti: https://tinystudio.in/drishti/
+- Drishti support: https://tinystudio.in/drishti/support/
+- Drishti privacy: https://tinystudio.in/drishti/privacy/
 
 ## Product boundaries
 
