@@ -25,6 +25,8 @@ import { fileURLToPath } from "node:url"
 import { dirname, join } from "node:path"
 import { randomBytes } from "node:crypto"
 
+import { PUBLIC_PAGE_URLS } from "./lib/public-pages.mjs"
+
 if (process.env.SKIP_LIVE_CHECKS === "1") {
   console.log("check-public-live-soft-404: SKIP_LIVE_CHECKS=1, skipping live site checks")
   process.exit(0)
@@ -73,6 +75,7 @@ try {
     unknown: await fetchWithRetry(`${SITE}${UNKNOWN_PATH}`),
     notFoundAsset: await fetchWithRetry(`${SITE}/404.html`),
     realPage: await fetchWithRetry(`${SITE}/promptly/`),
+    llmsTxt: await fetchWithRetry(`${SITE}/llms.txt`),
   }
 } catch (err) {
   console.error(`  FAIL could not reach ${SITE}: ${err.message}`)
@@ -84,6 +87,7 @@ const { res: homeRes, body: homeBody } = results.home
 const { res: unknownRes, body: unknownBody } = results.unknown
 const { res: notFoundRes, body: notFoundBody } = results.notFoundAsset
 const { res: realRes } = results.realPage
+const { res: llmsTxtRes, body: llmsTxtBody } = results.llmsTxt
 
 console.log("A. the homepage is reachable and intact")
 ok(homeRes.status === 200, `GET / returns HTTP ${homeRes.status}`)
@@ -101,6 +105,14 @@ ok(!notFoundBody.includes(HOME_TITLE), "/404.html body is not the homepage")
 
 console.log("D. a real page still serves")
 ok(realRes.status === 200, `GET /promptly/ returns HTTP ${realRes.status}`)
+
+console.log("E. the deployed llms.txt lists every public page (PR #68 live)")
+ok(llmsTxtRes.status === 200, `GET /llms.txt returns HTTP ${llmsTxtRes.status}`)
+const missingFromLlmsTxt = PUBLIC_PAGE_URLS.filter((url) => !llmsTxtBody.includes(url))
+ok(
+  missingFromLlmsTxt.length === 0,
+  `llms.txt lists all ${PUBLIC_PAGE_URLS.length} public pages (missing: ${missingFromLlmsTxt.join(", ") || "none"})`
+)
 
 console.log(`\n${checks} checks, ${failures} failures`)
 if (failures > 0) {
