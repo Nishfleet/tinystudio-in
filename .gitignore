@@ -40,6 +40,9 @@ clients/
 prospects/
 prospect-imports/
 service-decisions/
+# Operator desk state export (private triage detail). One-off generated file in
+# the workspace root; keep it out of snapshots and status.
+data.json
 
 # Local logs and temporary files.
 *.log
