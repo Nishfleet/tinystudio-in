@@ -11,6 +11,8 @@
 //   3. unknown URLs get a real 404, not the homepage (PR #34)
 //   4. homepage stays portfolio-only: brand-disambiguation copy (#29) live,
 //      and no managed-service buyer-path content (#10/#11, snoozed).
+//   5. the deployed stylesheet keeps the WCAG 2.2 24px footer tap-target
+//      rule (PR #22) so mobile footer links stay >= 24px on every page.
 import { join } from "node:path"
 import { fileURLToPath } from "node:url"
 import { dirname } from "node:path"
@@ -88,6 +90,26 @@ try {
     ok(body.includes("not affiliated"), "non-affiliation copy is live (PR #29)")
     for (const marker of BUYER_PATH_MARKERS) {
       ok(!body.includes(marker), `homepage has no ${marker}`)
+    }
+  }
+
+  console.log("E. the deployed stylesheet keeps the WCAG 2.2 24px footer tap-target rule (PR #22)")
+  {
+    const { status, body } = await get("/styles.css")
+    ok(status === 200, `GET /styles.css returns 200 (got ${status})`)
+    const footerRule = body.match(/\.footer-links\s*a\s*\{([^}]*)\}/)
+    ok(footerRule !== null, "deployed stylesheet has a .footer-links a rule")
+    if (footerRule) {
+      const rule = footerRule[1]
+      ok(/display:\s*(inline-block|inline-flex|block)/.test(rule), ".footer-links a is a block-level box (hit area covers the line box)")
+      ok(!/display:\s*inline\s*;/.test(rule), ".footer-links a is not a plain inline box")
+      ok(/min-height:\s*24px/.test(rule), ".footer-links a declares min-height: 24px")
+      const padding = rule.match(/padding:\s*([^;]+)/)
+      ok(padding !== null, ".footer-links a declares vertical padding")
+      if (padding) {
+        const vertical = parseFloat(padding[1].trim().split(/\s+/)[0])
+        ok(vertical >= 4, `.footer-links a vertical padding is at least 4px (${vertical}px), so 16px text + padding >= 24px`)
+      }
     }
   }
 } catch (error) {
