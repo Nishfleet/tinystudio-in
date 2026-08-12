@@ -26,3 +26,13 @@ jobs:
           cache: npm
       - run: npm ci --ignore-scripts
       - run: npm run ci
+      # Free, always-running dependency security scan. This is the deliberate
+      # substitute for CodeQL code scanning, which cannot run on this plan:
+      # this is a private personal-account repo without GitHub Advanced
+      # Security, so the CodeQL SARIF upload rejects with "Code scanning is
+      # not enabled for this repository" and the job was removed in #122.
+      # Fail-closed: any high-severity advisory in the locked tree fails the
+      # required repo-checks job. Re-enable CodeQL per .github/workflows/README.md
+      # once GHAS/code scanning is provisioned or the repo goes public.
+      - name: Dependency security scan (CodeQL substitute)
+        run: npm audit --audit-level=high
