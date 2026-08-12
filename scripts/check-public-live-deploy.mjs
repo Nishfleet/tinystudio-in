@@ -90,6 +90,16 @@ try {
       ok(!body.includes(marker), `homepage has no ${marker}`)
     }
   }
+
+  console.log("E. no Cloudflare email-obfuscation placeholder on the live homepage")
+  {
+    const { status, body } = await get("/")
+    ok(status === 200, `homepage returns 200 (got ${status})`)
+    ok(body.includes("support&#64;tinystudio.in"), "homepage serves the email entity-encoded (browser-decoded, edge-immutable)")
+    ok(!body.includes("__cf_email__"), "no Cloudflare-obfuscated email span on the homepage")
+    ok(!body.includes("[email"), "no '[email protected]' placeholder text on the homepage")
+    ok(!body.includes("support@tinystudio.in"), "no plaintext email left that Email Address Obfuscation could rewrite")
+  }
 } catch (error) {
   failures++
   console.error(`  FAIL live request error: ${error.message}`)

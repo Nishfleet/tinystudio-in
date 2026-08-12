@@ -124,7 +124,7 @@ const filteredContact = readFileSync(join(bundleDir, "contact/index.html"), "utf
 ok(filteredContact.includes("<html") && filteredContact.includes("</html>"), "contact is still a complete html document")
 ok(filteredContact.includes("Primary inbox"), "neutral support card remains")
 ok(filteredContact.includes("App-specific public pages"), "neutral apps card remains")
-ok(filteredContact.includes("mailto:support@tinystudio.in"), "studio inbox mailto remains")
+ok(filteredContact.includes("mailto:support&#64;tinystudio.in"), "studio inbox mailto remains (entity-encoded, obfuscation-proof)")
 ok(!filteredContact.includes("<script>"), "the measurement-marker script is gone with the application section")
 
 console.log("G. npm test/ci wiring")
@@ -132,6 +132,35 @@ const pkg = JSON.parse(read("package.json"))
 ok(pkg.scripts.test.includes("test-public-deploy-bundle.mjs"), "npm test runs the deploy-bundle test")
 ok(pkg.scripts.ci.includes("test-public-deploy-bundle.mjs"), "npm run ci runs the deploy-bundle test")
 ok(pkg.scripts["site:publish"], "site:publish npm script exists")
+
+console.log("H. no plaintext email is served that Cloudflare Email Address Obfuscation can rewrite")
+// The tinystudio.in zone rewrites literal user@host emails in served HTML into
+// __cf_email__ spans that render as the "[email protected]" placeholder when
+// the decode script does not run. The email must therefore stay entity-encoded
+// (support&#64;tinystudio.in) in every served file; browsers decode the entity
+// in text and hrefs, Cloudflare's obfuscation regex has no literal @ to match.
+const PUBLIC_HTML = [
+  "index.html",
+  "404.html",
+  "support/index.html",
+  "contact/index.html",
+  "privacy/index.html",
+  "privacy-choices/index.html",
+  "terms/index.html",
+  "promptly/index.html",
+  "promptly/support/index.html",
+  "promptly/privacy/index.html",
+  "drishti/index.html",
+  "drishti/support/index.html",
+  "drishti/privacy/index.html",
+]
+const scriptAwareParts = (html) => html.split(/<script\b[^>]*>[\s\S]*?<\/script>/)
+const htmlContent = (html) => scriptAwareParts(html).join("\n")
+for (const rel of PUBLIC_HTML) {
+  const served = htmlContent(read(`public/${rel}`))
+  ok(!served.includes("support@tinystudio.in"), `${rel} has no plaintext email outside script blocks`)
+  ok(served.includes("support&#64;tinystudio.in"), `${rel} serves the email entity-encoded`)
+}
 
 rmSync(bundleDir, { recursive: true, force: true })
 
