@@ -13,7 +13,7 @@
     "client:proof-review": "node scripts/review-client-proof.mjs",
     "retention:automation-check": "node scripts/check-retention-automation.mjs",
     "site:prepare": "node scripts/prepare-static-site-bundle.mjs",
-    "site:check-live": "node scripts/check-public-live-soft-404.mjs",
+    "site:check-live": "node scripts/check-public-live-soft-404.mjs && node scripts/check-public-live-tap-targets.mjs",
     "claims:check": "node scripts/check-outbound-claim-safety.mjs",
     "config:check": "node scripts/check-agency-defaults.mjs",
     "send:configure": "node scripts/configure-sender-setup.mjs",

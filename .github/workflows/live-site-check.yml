@@ -1,11 +1,12 @@
 name: Live Site Check
 
-# Guards the deployed tinystudio.in against soft-404s and stale bundles
-# without blocking pull requests. The deploy lane (deploy-public-site.yml)
-# verifies the live site after every publish; this workflow is the nightly
-# net that catches a stale or misconfigured deployment within a day even
-# when nothing merges. It is deliberately NOT part of `npm run ci` - that
-# blocking chain must stay green on repo state alone.
+# Guards the deployed tinystudio.in against soft-404s, WCAG 2.2 tap-target
+# drift (SC 2.5.8 24px minimum), and stale bundles without blocking pull
+# requests. The deploy lane (deploy-public-site.yml) verifies the live site
+# after every publish; this workflow is the nightly net that catches a stale
+# or misconfigured deployment within a day even when nothing merges. It is
+# deliberately NOT part of `npm run ci` - that blocking chain must stay green
+# on repo state alone.
 #
 # This job is expected to FAIL while the deployment is stale (currently the
 # June-20 bundle); the red run is the loud signal to re-deploy from
@@ -13,8 +14,8 @@ name: Live Site Check
 
 on:
   schedule:
-    # Nightly: catch stale or broken deployments (soft-404s, offline site)
-    # within a day even when no pull requests are open.
+    # Nightly: catch stale or broken deployments (soft-404s, sub-24px link
+    # targets, offline site) within a day even when no pull requests are open.
     - cron: "23 3 * * *"
   workflow_dispatch:
 
@@ -36,3 +37,13 @@ jobs:
           cache: npm
       - run: npm ci --ignore-scripts
       - run: node scripts/check-public-live-soft-404.mjs
+  live-tap-targets:
+    runs-on: [self-hosted, linux, x64, vps-verify]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: node scripts/check-public-live-tap-targets.mjs
