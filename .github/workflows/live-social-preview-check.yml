@@ -1,0 +1,41 @@
+name: Live Social Preview Check
+
+# Guards the deployed tinystudio.in against pages that lost their social
+# preview imagery (og:image / twitter:image) without blocking pull requests.
+# The static test (test-public-social-preview.mjs) proves the repo files
+# carry the meta tags; this workflow is the nightly net that catches a stale
+# or misconfigured deployment within a day even when nothing merges. It is
+# deliberately NOT part of `npm run ci` - that blocking chain must stay green
+# on repo state alone.
+#
+# This job is expected to FAIL while the deployment is stale (the live site
+# still serves the pre-#26 bundle: privacy, privacy-choices, terms, and the
+# Promptly/Drishti support and privacy pages ship with no og:image); the red
+# run is the loud signal to re-deploy from origin/main, not a reason to
+# disable the workflow.
+
+on:
+  schedule:
+    # Nightly: catch stale or broken deployments (missing social preview
+    # imagery, offline site) within a day even when no pull requests are open.
+    - cron: "37 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: live-social-preview-check
+  cancel-in-progress: false
+
+jobs:
+  live-social-preview:
+    runs-on: [self-hosted, linux, x64, vps-verify]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: node scripts/check-public-live-social-preview.mjs
