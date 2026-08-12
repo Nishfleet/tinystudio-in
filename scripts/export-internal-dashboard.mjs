@@ -47,7 +47,7 @@ function readJson(path, fallback = {}) {
 }
 
 const doctor = runJson(["scripts/export-growth-doctor.mjs"]);
-const metrics = runJson(["scripts/export-growth-metrics.mjs"]);
+const metrics = runJson(["scripts/export-growth-metrics.mjs", "--output=runs/live-metrics.md"]);
 let serviceQueue;
 try { serviceQueue = runJson(["scripts/run-review-queue.mjs", "--dry-run", "--scope", "all"]); }
 catch (error) {

@@ -210,7 +210,7 @@ if (skipKit || !existsSync(resolvedOutputPath)) parityArgs.push("--skip-kit");
 const parity = runJson(parityArgs);
 rmSync(resolvedParityOutputPath, { force: true });
 
-const metrics = runJson(["scripts/export-growth-metrics.mjs"]);
+const metrics = runJson(["scripts/export-growth-metrics.mjs", "--output=runs/live-metrics.md"]);
 const channelGuidance = sendChannelGuidance();
 
 const prospects = listFolders(prospectRoot).map((path) => {

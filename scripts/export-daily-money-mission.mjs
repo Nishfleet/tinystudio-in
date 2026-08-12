@@ -202,7 +202,7 @@ const rehearsal = runJson(["scripts/export-recording-rehearsal-check.mjs", `--li
 runJson(["scripts/export-prospect-outbox.mjs"]);
 runJson(["scripts/export-followup-cockpit.mjs"]);
 runJson(["scripts/export-sales-cockpit.mjs"]);
-const metrics = runJson(["scripts/export-growth-metrics.mjs"]);
+const metrics = runJson(["scripts/export-growth-metrics.mjs", "--output=runs/live-metrics.md"]);
 runJson(["scripts/export-proof-library.mjs"]);
 runJson(["scripts/export-managed-it-one-pager.mjs"]);
 const todayResult = runJson(["scripts/show-growth-command-center.mjs", `--limit=${Math.max(limit + 2, 7)}`]);
