@@ -5,12 +5,15 @@
 // Used by the release lane after a Pages deployment. Runs against the live
 // site only; set SKIP_LIVE_CHECKS=1 to skip (exit 0) on offline machines.
 //
-// The four live proofs (all neutral, all merged on main before this lane):
+// The live proofs (all neutral, all merged on main before this lane):
 //   1. /promptly/support/ renders H2 after H1        (PRs #18/#20)
 //   2. /contact/ carries application/ld+json         (PR #19)
 //   3. unknown URLs get a real 404, not the homepage (PR #34)
 //   4. homepage stays portfolio-only: brand-disambiguation copy (#29) live,
 //      and no managed-service buyer-path content (#10/#11, snoozed).
+//   5. every public page carries exactly one application/ld+json block
+//      (trust/support structured data, PR #26 - the 07acd07 bundle shipped
+//      JSON-LD on only 4 of 12 pages).
 import { join } from "node:path"
 import { fileURLToPath } from "node:url"
 import { dirname } from "node:path"
@@ -22,6 +25,22 @@ const BUYER_PATH_MARKERS = [
   "Website Correction",
   "website-correction",
   "data-measure-source",
+]
+
+// Every public page on the live site must carry structured data (PR #26).
+const PUBLIC_PATHS = [
+  "/",
+  "/contact/",
+  "/support/",
+  "/privacy/",
+  "/privacy-choices/",
+  "/terms/",
+  "/promptly/",
+  "/promptly/support/",
+  "/promptly/privacy/",
+  "/drishti/",
+  "/drishti/support/",
+  "/drishti/privacy/",
 ]
 
 let failures = 0
@@ -89,6 +108,14 @@ try {
     for (const marker of BUYER_PATH_MARKERS) {
       ok(!body.includes(marker), `homepage has no ${marker}`)
     }
+  }
+
+  console.log("E. every public page carries structured data (PR #26)")
+  for (const path of PUBLIC_PATHS) {
+    const { status, body } = await get(path)
+    ok(status === 200, `${path} returns 200 (got ${status})`)
+    const blocks = (body.match(/<script\s+type="application\/ld\+json"[^>]*>/gi) || []).length
+    ok(blocks === 1, `${path} carries exactly one application/ld+json block (got ${blocks})`)
   }
 } catch (error) {
   failures++
