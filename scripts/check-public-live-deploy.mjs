@@ -11,6 +11,9 @@
 //   3. unknown URLs get a real 404, not the homepage (PR #34)
 //   4. homepage stays portfolio-only: brand-disambiguation copy (#29) live,
 //      and no managed-service buyer-path content (#10/#11, snoozed).
+// The fifth proof covers the 2026-08-08 dogfood finding pages:
+//   5. /drishti/support/ and /privacy-choices/ render H2 after H1
+//      (the skipped-heading-levels repair, PR #23).
 import { join } from "node:path"
 import { fileURLToPath } from "node:url"
 import { dirname } from "node:path"
@@ -62,6 +65,13 @@ try {
     const { status, body } = await get("/promptly/support/")
     ok(status === 200, `/promptly/support/ returns 200 (got ${status})`)
     ok(h2AfterFirstH1(body), "H2 follows the first H1 before any H3")
+  }
+
+  console.log("A2. finding pages render H2 after H1 (skipped-heading-levels repair, PR #23)")
+  for (const path of ["/drishti/support/", "/privacy-choices/"]) {
+    const { status, body } = await get(path)
+    ok(status === 200, `${path} returns 200 (got ${status})`)
+    ok(h2AfterFirstH1(body), `${path} has H2 following the first H1 before any H3`)
   }
 
   console.log("B. /contact/ carries structured data (PR #19)")

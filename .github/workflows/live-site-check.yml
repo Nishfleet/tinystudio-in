@@ -1,11 +1,12 @@
 name: Live Site Check
 
-# Guards the deployed tinystudio.in against soft-404s and stale bundles
-# without blocking pull requests. The deploy lane (deploy-public-site.yml)
-# verifies the live site after every publish; this workflow is the nightly
-# net that catches a stale or misconfigured deployment within a day even
-# when nothing merges. It is deliberately NOT part of `npm run ci` - that
-# blocking chain must stay green on repo state alone.
+# Guards the deployed tinystudio.in against soft-404s, stale bundles, and
+# regressed heading hierarchies without blocking pull requests. The deploy
+# lane (deploy-public-site.yml) verifies the live site after every publish;
+# this workflow is the nightly net that catches a stale or misconfigured
+# deployment within a day even when nothing merges. It is deliberately NOT
+# part of `npm run ci` - that blocking chain must stay green on repo state
+# alone.
 #
 # This job is expected to FAIL while the deployment is stale (currently the
 # June-20 bundle); the red run is the loud signal to re-deploy from
@@ -36,3 +37,4 @@ jobs:
           cache: npm
       - run: npm ci --ignore-scripts
       - run: node scripts/check-public-live-soft-404.mjs
+      - run: node scripts/test-public-live-heading-hierarchy.mjs
