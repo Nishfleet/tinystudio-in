@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { mkdirSync, writeFileSync } from "node:fs";
 import { agencyConfig } from "./lib/agency-config.mjs";
+import { assertTrackedArtifactWritesUseFixedClock } from "./lib/tracked-artifact-clock.mjs";
 import { localIsoDate } from "./date-utils.mjs";
 import { runRepoJson as runJson } from "./lib/runtime-roots.mjs";
 
@@ -8,6 +9,7 @@ const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/sender-setup-guide.md";
 const htmlArg = process.argv.find((arg) => arg.startsWith("--html="));
 const htmlPath = htmlArg ? htmlArg.split("=")[1] : "growth-brain/ops/sender-setup-guide.html";
+assertTrackedArtifactWritesUseFixedClock([outputPath, htmlPath]);
 const today = localIsoDate();
 const config = agencyConfig();
 

@@ -117,6 +117,31 @@ try {
 	}
 	for (const path of privateRuntimeArtifacts) eq(existsSync(join(T, path)), true, `Private runtime artifact is missing: ${path}`)
 
+	// Real-clock regeneration must be refused up front, not silently written
+	// into the tracked artifacts: a tracked file stamped with the real date (or
+	// real data-derived rows) can never match the fixed-clock regeneration the
+	// byte-identical gate above asserts. Each tracked-path writer must exit
+	// non-zero with the refusal and leave the fixed-clock artifact untouched.
+	const realClockEnv = {...process.env, SERVICE_REPO_ROOT: T, TZ: "Asia/Kolkata"}
+	delete realClockEnv.SERVICE_TEST_NOW
+	delete realClockEnv.NODE_OPTIONS
+	const runRealClock = args => spawnSync(process.execPath, args, {cwd: T, encoding: "utf8", env: realClockEnv})
+	for (const args of [
+		["scripts/export-growth-metrics.mjs"],
+		["scripts/export-sender-setup-guide.mjs"],
+		["scripts/export-market-benchmark.mjs"],
+		["scripts/export-proof-library.mjs"],
+		["scripts/export-market-proof-run.mjs"],
+		["scripts/check-market-parity-readiness.mjs"]
+	]) {
+		const refused = runRealClock(args)
+		neq(refused.status, 0, `${args[0]} real-clock run must refuse: ${refused.stderr || refused.stdout}`)
+		mat(refused.stderr, /Refusing to overwrite the tracked operator artifact/)
+	}
+	for (const [path, expected] of trackedArtifacts) {
+		deq(readFileSync(join(T, path)), expected, `Real-clock regeneration dirtied tracked artifact: ${path}`)
+	}
+
 	const application = JSON.parse(readFileSync(join(T, "contracts/fixtures/sprint-application.v1.json"), "utf8"))
 	const importResult = run(["scripts/import-sprint-application.mjs", "contracts/fixtures/sprint-application.v1.json"])
 	eq(importResult.status, 0)

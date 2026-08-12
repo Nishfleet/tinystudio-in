@@ -2,6 +2,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { localIsoDate } from "./date-utils.mjs";
 import { NO_GUARANTEE_CLIENT_SENTENCE } from "./lib/service-contract.mjs";
+import { assertTrackedArtifactWritesUseFixedClock } from "./lib/tracked-artifact-clock.mjs";
 import { runRepoJson as runJson } from "./lib/runtime-roots.mjs";
 
 const args = process.argv.slice(2);
@@ -11,6 +12,7 @@ const htmlArg = args.find((arg) => arg.startsWith("--html="));
 const outputPath = outputArg ? outputArg.split("=").slice(1).join("=") : "docs/strategy/market-parity-benchmark-2026.md";
 const opsPath = opsArg ? opsArg.split("=").slice(1).join("=") : "growth-brain/ops/competitive-proof-matrix.md";
 const htmlPath = htmlArg ? htmlArg.split("=").slice(1).join("=") : "growth-brain/ops/competitive-proof-matrix.html";
+assertTrackedArtifactWritesUseFixedClock([outputPath, opsPath, htmlPath]);
 const today = localIsoDate();
 const MARKET_ANCHORS_LAST_CHECKED = "2026-05-29";
 function write(path, content) {

@@ -3,6 +3,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { isAbsolute, join } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
 import { agencyConfig } from "./lib/agency-config.mjs";
+import { assertTrackedArtifactWritesUseFixedClock } from "./lib/tracked-artifact-clock.mjs";
 import { loadValidatedServiceClients } from "./lib/validated-service-client.mjs";
 import { runCodeRepoJson, runRepoJson as runJson, serviceRoot } from "./lib/runtime-roots.mjs";
 
@@ -10,6 +11,7 @@ const strict = process.argv.includes("--strict");
 const skipKit = process.argv.includes("--skip-kit");
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/market-parity-readiness.md";
+assertTrackedArtifactWritesUseFixedClock([outputPath]);
 const resolvedOutputPath = isAbsolute(outputPath) ? outputPath : join(serviceRoot, outputPath);
 function runGate(args, codeRootCwd = false) {
   try { return (codeRootCwd ? runCodeRepoJson : runJson)(args); }

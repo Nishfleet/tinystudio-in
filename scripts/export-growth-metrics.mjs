@@ -2,6 +2,7 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
+import { assertTrackedArtifactWritesUseFixedClock } from "./lib/tracked-artifact-clock.mjs";
 import { checkProspectReadiness } from "./lib/prospect-readiness.mjs";
 import { isValidLoomUrl } from "./lib/loom-url.mjs";
 import { loadValidatedServiceClients } from "./lib/validated-service-client.mjs";
@@ -10,6 +11,7 @@ import { runRepoJson } from "./lib/runtime-roots.mjs";
 
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/live-metrics.md";
+assertTrackedArtifactWritesUseFixedClock([outputPath]);
 const plain = process.argv.includes("--plain");
 const today = localIsoDate();
 const repoRoot = process.env.SERVICE_REPO_ROOT || process.cwd();

@@ -9,9 +9,11 @@ import { routedContactPlan } from "./lib/contact-route.mjs";
 import { canonicalProspectAsk } from "./lib/canonical-service-copy.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 import { runRepoJson, serviceRoot } from "./lib/runtime-roots.mjs";
+import { assertTrackedArtifactWritesUseFixedClock } from "./lib/tracked-artifact-clock.mjs";
 
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/11-10-proof-run.md";
+assertTrackedArtifactWritesUseFixedClock([outputPath]);
 const loomLinksArg = process.argv.find((arg) => arg.startsWith("--loom-links="));
 const skipKit = process.argv.includes("--skip-kit");
 const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));

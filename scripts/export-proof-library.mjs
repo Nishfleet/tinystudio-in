@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 import { mkdirSync, writeFileSync } from "node:fs";
 import { localIsoDate } from "./date-utils.mjs";
+import { assertTrackedArtifactWritesUseFixedClock } from "./lib/tracked-artifact-clock.mjs";
 import { agencyConfig } from "./lib/agency-config.mjs";
 
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/proof-library.md";
+assertTrackedArtifactWritesUseFixedClock([outputPath]);
 const today = localIsoDate();
 const config = agencyConfig();
 
