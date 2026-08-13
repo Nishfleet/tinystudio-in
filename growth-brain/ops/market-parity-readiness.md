@@ -25,7 +25,7 @@ Not 11/10 yet: current evidence proves the internal system, but sender trust, ma
 | Automation coverage | pass | recording, send, follow-up, sales, delivery, proof, and metrics surfaces are generated |
 | Stress-tested internals | pass | kit, claim, and send gates pass on current repo state |
 | Comparable price/value | pass | The Website Correction; $1,000 founder pilot; scope one highest-leverage page |
-| Sender trust | fail | missing physical postal address; DKIM selector not configured |
+| Sender trust | fail | missing physical postal address; outbound mail path is inbound-only; DKIM selector not configured |
 | Market proof | fail | 0/5 Looms, 0/5 sends, 0 replies |
 | Sales proof | fail | 0 external client(s) with a validated application, human fit approval, and paid Day 0 |
 | Delivery proof | fail | 0 external paid client(s) ready with approved delivery; 0 with approved claims |
