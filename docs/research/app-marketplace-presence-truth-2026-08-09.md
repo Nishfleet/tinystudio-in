@@ -1,6 +1,6 @@
 # App marketplace presence truth: Promptly and Drishti
 
-First checked: 2026-08-09 (baseline below). Re-verified: 2026-08-11 (see re-verification log).
+First checked: 2026-08-09 (baseline below). Re-verified: 2026-08-11, 2026-08-12 (see re-verification log).
 
 ## Claim
 
@@ -77,3 +77,20 @@ Re-checked live on 2026-08-11:
 - Live app pages: `https://tinystudio.in/promptly/` and `https://tinystudio.in/drishti/` — both HTTP 200; neither contains "Product Hunt" or "AlternativeTo" (zero matches in page HTML); neither carries a `noindex`/`nofollow` robots meta; `robots.txt` allows crawling of all paths and lists the sitemap.
 
 Method note for re-runs: as of 2026-08-11, direct AlternativeTo fetches and several general indexes (DuckDuckGo, Bing, Brave, Startpage, Ecosia, Mojeek) bot-gate direct requests from datacenter egress. The on-platform AlternativeTo searches and the DuckDuckGo site-restricted queries above were re-run through the r.jina.ai reader proxy (live page fetch of the same URLs). The verdict does not depend on any single index: the on-platform searches, the 404 software page, the empty Wayback CDX history, and all four DuckDuckGo site-restricted queries agree.
+
+### 2026-08-12 — re-checked, claim still holds
+
+**Verdict: True as checked on 2026-08-12.** No Tiny Studio listing, page, or indexed mention of Promptly or Drishti on Product Hunt or AlternativeTo. The 2026-08-11 re-check was re-run live; every name-matching result still belongs to an unrelated third party.
+
+Re-checked live on 2026-08-12:
+
+- AlternativeTo on-platform search (`https://alternativeto.net/browse/search/?q=promptly`, via the r.jina.ai reader proxy) — ~12 results, all unrelated: a no-code generative-AI chatbot builder, an open-source blog tool, VK, Meeting On Time (Outlook meeting reminder), a PDF-to-Excel converter, an AI interview answers generator, Prmptly (AI-prompt community), PromptYourJob, a cross-AI prompt/skill manager, and Promptless (docs automation). None is Tiny Studio's booking/no-show app; none links to tinystudio.in.
+- AlternativeTo search for `drishti` — "Drishti" (open-source scientific visualisation software for volumetric/tomography data) plus fuzzy matches (Now&Me, Pollscape). None is Tiny Studio's mindful screen-time app.
+- AlternativeTo search for `tinystudio` — one fuzzy match (JPEG Lossless Rotator); no Tiny Studio listing.
+- AlternativeTo software page `https://alternativeto.net/software/tinystudio/about/` — HTTP 404 "Page not found", no listing exists. The Wayback CDX index holds zero archived `alternativeto.net/software/tinystudio*` URLs (empty result set).
+- Product Hunt exact-name page `producthunt.com/products/tinystudio` — direct fetch and r.jina.ai fetch are Cloudflare CAPTCHA-gated today (stronger than on 2026-08-11, when the proxy could read search results). Wayback holds exactly one capture of the page (2023-05-30); it is still the unrelated Mac subtitle app: Product Hunt title "TinyStudio - Product Information, Latest Updates, and Reviews 2023", maker handle `Tinyfool`, tagline "Using AI to generate subtitles on Mac". Not a Tiny Studio asset.
+- Index checks (DuckDuckGo site-restricted, via the r.jina.ai reader proxy): `site:producthunt.com "tinystudio.in"` — no results; `site:alternativeto.net "tinystudio.in"` — no results; `site:alternativeto.net tinystudio OR "tiny studio" promptly OR drishti` — no results; `site:alternativeto.net "promptly" booking` — no results.
+- Brand-level check: `site:producthunt.com tinystudio` — the only Product Hunt pages are subpages of the unrelated Tinyfool app (`producthunt.com/p/tinystudio` forum, `producthunt.com/products/tinystudio/makers`) plus irrelevant fuzzy leaderboard matches; none references tinystudio.in or Tiny Studio's apps.
+- Live app pages: `https://tinystudio.in/promptly/` and `https://tinystudio.in/drishti/` — both HTTP 200; neither contains "Product Hunt" or "AlternativeTo" (zero matches in page HTML); neither carries a `noindex`/`nofollow` robots meta; `robots.txt` still allows crawling of all paths and lists the sitemap.
+
+Method note: on 2026-08-12 Product Hunt hard-blocks direct fetches, r.jina.ai proxy fetches, and Wayback-forwarded fetches of its search pages behind Cloudflare CAPTCHA, so the on-platform PH search could not be re-run live. The PH side of the verdict rests on the empty `site:producthunt.com "tinystudio.in"` index query (the falsifier for "owned page linking to tinystudio.in"), the brand-level `site:producthunt.com tinystudio` query (all results belong to the unrelated Tinyfool app), and the Wayback capture of the exact-name page. One additional proxy query (`site:producthunt.com "tiny studio" promptly OR drishti`) hit a DuckDuckGo anomaly challenge even through the proxy; it is redundant with the two clean queries above, so the verdict does not depend on it. All independent evidence lines agree.
