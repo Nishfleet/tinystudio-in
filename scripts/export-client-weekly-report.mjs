@@ -3,8 +3,10 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { execFileSync } from "node:child_process";
 import { localIsoDate } from "./date-utils.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
 const args = process.argv.slice(2);
+handleHelp(args, `Usage: node scripts/export-client-weekly-report.mjs clients/client-slug [--week=1] [--dates="May 1-7"] [--output=...]`);
 const clientPath = args[0];
 const outputArg = args.find((arg) => arg.startsWith("--output="));
 const weekArg = args.find((arg) => arg.startsWith("--week="));
@@ -21,7 +23,7 @@ if (!existsSync(clientPath)) {
 }
 
 const week = weekArg ? weekArg.split("=")[1] : "1";
-const outputPath = outputArg ? outputArg.split("=")[1] : join(clientPath, "reports", `week-${week}-report.md`);
+const outputPath = resolveOutputPath(outputArg?.split("=")[1], { fallback: join(clientPath, "reports", `week-${week}-report.md`) });
 
 function read(relativePath) {
   const path = join(clientPath, relativePath);
