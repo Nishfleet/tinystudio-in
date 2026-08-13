@@ -135,6 +135,65 @@ try {
 	for (let index = 1; index <= 3; index++) rmSync(join(T, "clients", `surface-blocked-${index}`), {recursive: true, force: true})
 	for (const path of privateRuntimeArtifacts) eq(existsSync(join(T, path)), true, `Private runtime artifact is missing: ${path}`)
 
+	// The eight remaining export scripts (retired broad-service writers and
+	// client runtime writers) must honor --help/-h the same way: exit 0 with
+	// usage, and never write or overwrite tracked, runtime, or retired
+	// artifacts — including never seeding owned client folders.
+	const remainingHelpSurface = [
+		"export-client-channel-readiness.mjs",
+		"export-client-repeatable-workflow.mjs",
+		"export-client-weekly-report.mjs",
+		"export-full-stack-growth-map.mjs",
+		"export-owned-handoff-loom-cockpit.mjs",
+		"export-owned-product-case-studies.mjs",
+		"export-owned-product-workflow-proofs.mjs",
+		"export-owned-startup-proof-capture.mjs"
+	]
+	const artifactBeforeHelp = new Map(
+		[...trackedArtifacts.keys(), ...privateRuntimeArtifacts]
+			.filter(path => existsSync(join(T, path)))
+			.map(path => [path, readFileSync(join(T, path), "utf8")])
+	)
+	for (const name of remainingHelpSurface) {
+		for (const flag of ["--help", "-h"]) {
+			const helped = run([`scripts/${name}`, flag])
+			eq(helped.status, 0, `${name} ${flag} must exit 0: ${helped.stderr || helped.stdout}`)
+			mat(helped.stdout, /Usage:/, `${name} ${flag} must print usage`)
+		}
+	}
+	for (const [path, before] of artifactBeforeHelp) {
+		deq(readFileSync(join(T, path), "utf8"), before, `${path} must not be rewritten by --help/-h`)
+	}
+	for (const path of retiredBroadServiceArtifacts) {
+		eq(existsSync(join(T, path)), false, `--help/-h must not recreate retired artifact ${path}`)
+	}
+	eq(existsSync(join(T, "clients/ai-converter")), false, "--help/-h must not make export-owned-startup-proof-capture seed owned client folders")
+
+	// The owned-* and client writers must refuse output paths that escape the
+	// service root, without creating the file outside it.
+	mkdirSync(join(T, "clients", "escape-probe"), {recursive: true})
+	for (const args of [
+		["scripts/export-owned-handoff-loom-cockpit.mjs", `--output=${join(T, "..", "escape-owned-handoff.md")}`],
+		["scripts/export-owned-product-case-studies.mjs", `--output=${join(T, "..", "escape-owned-studies.md")}`],
+		["scripts/export-owned-product-workflow-proofs.mjs", `--output=${join(T, "..", "escape-owned-workflow.md")}`],
+		["scripts/export-client-repeatable-workflow.mjs", "clients/escape-probe", `--output=${join(T, "..", "escape-workflow.md")}`],
+		["scripts/export-client-weekly-report.mjs", "clients/escape-probe", `--output=${join(T, "..", "escape-weekly.md")}`]
+	]) {
+		const refused = run(args)
+		neq(refused.status, 0, `${args[0]} must refuse an escaping output path`)
+		mat(refused.stderr, /Refusing/, `${args[0]} must explain the refusal`)
+	}
+	for (const escapePath of [
+		join(T, "..", "escape-owned-handoff.md"),
+		join(T, "..", "escape-owned-studies.md"),
+		join(T, "..", "escape-owned-workflow.md"),
+		join(T, "..", "escape-workflow.md"),
+		join(T, "..", "escape-weekly.md")
+	]) {
+		eq(existsSync(escapePath), false, `escape probe must not create ${escapePath}`)
+	}
+	rmSync(join(T, "clients", "escape-probe"), {recursive: true, force: true})
+
 	const application = JSON.parse(readFileSync(join(T, "contracts/fixtures/sprint-application.v1.json"), "utf8"))
 	const importResult = run(["scripts/import-sprint-application.mjs", "contracts/fixtures/sprint-application.v1.json"])
 	eq(importResult.status, 0)
