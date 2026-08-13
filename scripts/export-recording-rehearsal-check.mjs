@@ -87,10 +87,12 @@ function bannedClaims(content) {
 
 const RETIRED_ASK_PATTERNS = [
   /7[-\s]day (?:site|website) revenue (?:leak|fault) (?:fix )?sprint/i,
+  /7[-\s]day sprint/i,
   /tangible revenue (?:leak|fault) sprint/i,
   /30[-\s]day action plan/i,
   /growth desk/i,
   /three pages/i,
+  /founder sprint/i,
   /\$\s?500\b/i
 ];
 
