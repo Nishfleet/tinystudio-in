@@ -1,6 +1,8 @@
-import { readFileSync } from "node:fs"
+import { createServer } from "node:http"
+import { readFile, readFileSync } from "node:fs"
+import { createRequire } from "node:module"
+import { dirname, extname, join } from "node:path"
 import { fileURLToPath } from "node:url"
-import { dirname, join } from "node:path"
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 const read = (p) => readFileSync(join(ROOT, p), "utf8")
@@ -95,6 +97,160 @@ ok(
   pkg.scripts.ci.includes("test-public-heading-hierarchy.mjs"),
   "npm run ci runs the public heading hierarchy test"
 )
+
+const PROMPTLY_H1 = "Promptly keeps solo professionals booked, prepared, and harder to ghost."
+const h1Rule = css.match(/(?:^|\n)h1\s*{[^}]*}/)?.[0] ?? ""
+const htmlRule = css.match(/(?:^|\n)html\s*{[^}]*}/)?.[0] ?? ""
+const bodyRule = css.match(/(?:^|\n)body\s*{[^}]*}/)?.[0] ?? ""
+
+console.log("D. Promptly 320px heading wrap (source)")
+const promptlyHtml = read("public/promptly/index.html")
+const promptlyH1 = (promptlyHtml.match(/<h1>([\s\S]*?)<\/h1>/)?.[1] ?? "").replace(/\s+/g, " ").trim()
+ok(promptlyH1 === PROMPTLY_H1, "Promptly H1 copy is unchanged")
+ok(
+  /overflow-wrap:\s*(anywhere|break-word)/.test(h1Rule),
+  "shared h1 rule wraps long unbreakable words inside its box"
+)
+ok(
+  !/overflow-x:\s*hidden/.test(htmlRule) &&
+    !/overflow-x:\s*hidden/.test(bodyRule) &&
+    !/overflow-x:\s*hidden/.test(h1Rule),
+  "does not mask overflow with html/body/h1 overflow-x: hidden"
+)
+
+const MIME = {
+  ".html": "text/html; charset=utf-8",
+  ".css": "text/css; charset=utf-8",
+  ".js": "text/javascript; charset=utf-8",
+  ".svg": "image/svg+xml",
+  ".png": "image/png",
+  ".ico": "image/x-icon",
+  ".txt": "text/plain; charset=utf-8",
+  ".xml": "application/xml; charset=utf-8"
+}
+
+const loadChromium = () => {
+  const require = createRequire(import.meta.url)
+  const candidates = [
+    "playwright",
+    join(ROOT, "../0509/node_modules/playwright"),
+    "/home/nish/workspaces/products/0509/node_modules/playwright"
+  ]
+  for (const candidate of candidates) {
+    try {
+      return require(candidate).chromium
+    } catch {
+      // try the next resolver
+    }
+  }
+  return null
+}
+
+const startPublicServer = () =>
+  new Promise((resolve, reject) => {
+    const publicRoot = join(ROOT, "public")
+    const server = createServer((req, res) => {
+      const urlPath = decodeURIComponent((req.url || "/").split("?")[0])
+      const relative = urlPath.endsWith("/") ? `${urlPath}index.html` : urlPath
+      const file = join(publicRoot, relative)
+      if (file !== publicRoot && !file.startsWith(`${publicRoot}/`)) {
+        res.writeHead(403)
+        res.end("forbidden")
+        return
+      }
+      readFile(file, (err, body) => {
+        if (err) {
+          res.writeHead(404)
+          res.end("not found")
+          return
+        }
+        res.writeHead(200, { "content-type": MIME[extname(file)] || "application/octet-stream" })
+        res.end(body)
+      })
+    })
+    server.on("error", reject)
+    server.listen(0, "127.0.0.1", () => resolve(server))
+  })
+
+const measurePage = async (chromium, origin, path, width) => {
+  const page = await chromium.newPage({ viewport: { width, height: 844 }, isMobile: true })
+  try {
+    const response = await page.goto(`${origin}${path}`, { waitUntil: "domcontentloaded" })
+    const metrics = await page.evaluate(() => {
+      const heading = document.querySelector("h1")
+      return {
+        heading: heading ? heading.innerText.replace(/\s+/g, " ").trim() : "",
+        scrollWidth: document.documentElement.scrollWidth,
+        clientWidth: document.documentElement.clientWidth,
+        headingScrollWidth: heading ? heading.scrollWidth : 0,
+        headingClientWidth: heading ? heading.clientWidth : 0,
+        overflowWrap: heading ? getComputedStyle(heading).overflowWrap : "",
+        overflowX: getComputedStyle(document.documentElement).overflowX
+      }
+    })
+    return { status: response?.status() ?? 0, ...metrics }
+  } finally {
+    await page.close()
+  }
+}
+
+console.log("E. Promptly 320px heading wrap (layout)")
+const chromiumLauncher = loadChromium()
+if (!chromiumLauncher) {
+  console.log("  skip layout probe: playwright is not installed in this checkout")
+} else {
+  const server = await startPublicServer()
+  const origin = `http://127.0.0.1:${server.address().port}`
+  const browser = await chromiumLauncher.launch({ headless: true })
+  try {
+    const promptly320 = await measurePage(browser, origin, "/promptly/", 320)
+    const promptly390 = await measurePage(browser, origin, "/promptly/", 390)
+    ok(promptly320.status === 200, `/promptly/ at 320 returns 200 (got ${promptly320.status})`)
+    ok(promptly390.status === 200, `/promptly/ at 390 returns 200 (got ${promptly390.status})`)
+    ok(promptly320.heading === PROMPTLY_H1, "rendered Promptly H1 copy is unchanged at 320")
+    ok(promptly390.heading === PROMPTLY_H1, "rendered Promptly H1 copy is unchanged at 390")
+    ok(
+      promptly320.scrollWidth <= promptly320.clientWidth,
+      `Promptly document does not overflow at 320 (${promptly320.scrollWidth} <= ${promptly320.clientWidth})`
+    )
+    ok(
+      promptly390.scrollWidth <= promptly390.clientWidth,
+      `Promptly document does not overflow at 390 (${promptly390.scrollWidth} <= ${promptly390.clientWidth})`
+    )
+    ok(
+      promptly320.headingScrollWidth <= promptly320.headingClientWidth,
+      `Promptly heading wraps inside its box at 320 (${promptly320.headingScrollWidth} <= ${promptly320.headingClientWidth})`
+    )
+    ok(
+      promptly390.headingScrollWidth <= promptly390.headingClientWidth,
+      `Promptly heading wraps inside its box at 390 (${promptly390.headingScrollWidth} <= ${promptly390.headingClientWidth})`
+    )
+    ok(
+      ["anywhere", "break-word"].includes(promptly320.overflowWrap),
+      `Promptly heading overflow-wrap is a wrapping value at 320 (got ${promptly320.overflowWrap})`
+    )
+    ok(
+      promptly320.overflowX !== "hidden" && promptly390.overflowX !== "hidden",
+      "document overflow-x is not hidden"
+    )
+
+    for (const path of ["/", "/drishti/"]) {
+      const sibling = await measurePage(browser, origin, path, 320)
+      ok(sibling.status === 200, `${path} at 320 returns 200 (got ${sibling.status})`)
+      ok(
+        sibling.scrollWidth <= sibling.clientWidth,
+        `${path} document stays inside 320 after the shared wrap (${sibling.scrollWidth} <= ${sibling.clientWidth})`
+      )
+      ok(
+        sibling.headingScrollWidth <= sibling.headingClientWidth,
+        `${path} heading stays inside its box at 320 (${sibling.headingScrollWidth} <= ${sibling.headingClientWidth})`
+      )
+    }
+  } finally {
+    await browser.close()
+    await new Promise((resolve) => server.close(resolve))
+  }
+}
 
 console.log(`\n${checks} checks, ${failures} failures`)
 process.exit(failures === 0 ? 0 : 1)
