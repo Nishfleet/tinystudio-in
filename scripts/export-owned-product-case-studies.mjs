@@ -2,7 +2,9 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: node scripts/export-owned-product-case-studies.mjs [--output=growth-brain/ops/owned-product-case-studies.md] [--html=growth-brain/ops/owned-product-case-studies.html]`);
 const clients = [
   { path: "clients/ai-converter", name: "AI Converter" },
   { path: "clients/siterep", name: "SiteRep" },
@@ -11,8 +13,8 @@ const clients = [
 
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const htmlArg = process.argv.find((arg) => arg.startsWith("--html="));
-const outputPath = outputArg ? outputArg.split("=").slice(1).join("=") : "growth-brain/ops/owned-product-case-studies.md";
-const htmlPath = htmlArg ? htmlArg.split("=").slice(1).join("=") : "growth-brain/ops/owned-product-case-studies.html";
+const outputPath = resolveOutputPath(outputArg?.split("=").slice(1).join("="), { fallback: "growth-brain/ops/owned-product-case-studies.md" });
+const htmlPath = resolveOutputPath(htmlArg?.split("=").slice(1).join("="), { flag: "--html", fallback: "growth-brain/ops/owned-product-case-studies.html" });
 const today = localIsoDate();
 
 function read(path) {
