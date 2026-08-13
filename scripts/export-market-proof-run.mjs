@@ -374,7 +374,25 @@ writeFileSync(resolvedOutputPath, markdown);
 
 const loomLinksDir = resolvedLoomLinksPath.split("/").slice(0, -1).join("/");
 if (loomLinksDir) mkdirSync(loomLinksDir, { recursive: true });
-const existingLoomRows = read(resolvedLoomLinksPath).split("\n").map((line) => line.trim()).filter((line) => line && !line.startsWith("#"));
+// Retired broad-agency promise language must never persist in the proof-run
+// sheet: it is the single source the brief tells the operator to record and
+// send from. Existing rows keep their operator-captured fault/impact/fix
+// notes and Loom URL, but any ask column that still names a retired offer is
+// refreshed to the canonical ask. Mirrors the retired-offer pattern in
+// check-outbound-send-readiness.mjs and export-recording-rehearsal-check.mjs.
+const retiredPromisePattern = /7[-\s]day (?:site|website) revenue (?:leak|fault) (?:fix )?sprint|7[-\s]day sprint|tangible revenue (?:leak|fault) sprint|30[-\s]day action plan|growth desk|three pages|founder sprint|\$\s?500\b/i;
+let refreshedAsks = 0;
+const existingLoomRows = read(resolvedLoomLinksPath)
+  .split("\n")
+  .map((line) => line.trim())
+  .filter((line) => line && !line.startsWith("#"))
+  .map((line) => {
+    if (!line.includes("|")) return line;
+    const parts = line.split("|");
+    if (parts.length < 7 || !retiredPromisePattern.test(parts[6])) return line;
+    refreshedAsks += 1;
+    return [...parts.slice(0, 6), cleanSheetNote(canonicalProspectAsk(), parts[6])].join("|");
+  });
 // Sheet row paths may be service-root relative or absolute; normalize both
 // sides before deduplicating so regeneration never appends a duplicate row.
 const sheetRowKey = (line) => {
@@ -397,5 +415,6 @@ console.log(JSON.stringify({
   blockers: parity.blockers.map((blocker) => blocker.area),
   selectedProspects: recordingBatch.map((prospect) => prospect.path),
   directionGate,
+  refreshedAsks,
   recommendedChannel: channelGuidance.recommendedChannel
 }, null, 2));
