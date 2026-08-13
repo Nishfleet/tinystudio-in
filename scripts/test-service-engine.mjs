@@ -4,7 +4,7 @@ const {equal: eq, deepEqual: deq, notEqual: neq, match: mat, throws: thr, doesNo
 import {spawn, spawnSync} from "node:child_process"
 import {chmodSync, cpSync, existsSync as ex, lstatSync, mkdirSync as md, mkdtempSync, readFileSync as rf, readdirSync, renameSync as rn, rmSync as rm, statSync, symlinkSync as sl, unlinkSync as un, utimesSync, writeFileSync as wf} from "node:fs"
 import {tmpdir} from "node:os"
-import {dirname, join, relative} from "node:path"
+import {basename, dirname, join, relative} from "node:path"
 import {pathToFileURL} from "node:url"
 import {ALLOWED_COMMANDS, acquireLock, atomicWriteJson as aw, decisionHashFor, isRfc3339Timestamp, minifiedJson, queueInputHashFor, resolveRepoPath, schemaDigest, sha256, sourceHashForApplicant, validateAffirmativePaymentEvidence, validateApplication, validateDecision} from "./lib/service-contract.mjs"
 import {
@@ -1120,11 +1120,13 @@ try {
 		const restoredRoot = join(backupRoundtripParent, "restored")
 		md(restoredRoot)
 		for (const root of ["contracts", GROWTH]) cpSync(rp(root), join(restoredRoot, root), {recursive: true})
-		for (const root of ["clients", "prospects", DECISIONS, "runs"]) {
-			const source = join(snapshot, root)
-			if (ex(source)) cpSync(source, join(restoredRoot, root), {recursive: true})
-		}
 		const restoredEnv = {...E(QUEUE_TEST_NOW), SERVICE_REPO_ROOT: restoredRoot}
+		const productRestored = run(BACKUP, ["restore", "--input", snapshot], restoredEnv)
+		eq(productRestored.status, 0, productRestored.stderr)
+		const productRestoredOutput = JSON.parse(productRestored.stdout)
+		eq(productRestoredOutput.status, "restored")
+		deq(productRestoredOutput.roots, ["clients", "prospects", DECISIONS, "runs/service-engine/outputs"])
+		assert(productRestoredOutput.files > 0)
 		for (const [mode, extra] of [
 			["prepare", []],
 			["check", []],
@@ -1348,6 +1350,37 @@ try {
 		assert(roundResults.filter(result => result.status === 2 && result.stdout.includes("blocked")).length === 15)
 		eq(ex(lock), false)
 		eq(ex(`${lock}.recovery`), false)
+	}
+
+	// Regression: the recovery coordinator's own takeover must also be
+	// single-winner. A crash can leave BOTH the lock directory and the
+	// coordinator claim stale (dead owner, old mtime); when several
+	// contenders race to recover them, every recoverer reads the same stale
+	// claim and then takes it over. That takeover used to be an unlink: once
+	// a recoverer had read the stale claim, its unlink deleted whatever the
+	// claim path then named - including a fresh claim another recoverer had
+	// just created - so two recoverers both held the coordinator and both
+	// entered the lock critical section. Takeover is now a rename (exactly
+	// one recoverer displaces a given claim, losers fail with ENOENT), a
+	// displaced live claim is restored without clobbering, and the critical
+	// section re-verifies its claim before committing the lock. Exactly one
+	// contender may acquire; the rest must be blocked, and no takeover
+	// debris may remain.
+	for (let round = 0; round < 6; round += 1) {
+		md(lock, {recursive: true})
+		lockOwner(lock, 2147483647, `dead-recovery-round-${round}`)
+		utimesSync(lock, staleTime, staleTime)
+		claimOwner(`${lock}.recovery`, 2147483647, `dead-claim-round-${round}`)
+		utimesSync(`${lock}.recovery`, staleTime, staleTime)
+		const roundResults = await Promise.all(Array.from({length: 24}, () => rlc(lock)))
+		const roundAcquired = roundResults.filter(result => result.status === 0 && result.stdout.includes("acquired"))
+		eq(roundAcquired.length, 1, `recovery round ${round}: ${roundAcquired.length} simultaneous holders`)
+		assert(roundResults.filter(result => result.status === 2 && result.stdout.includes("blocked")).length === 23)
+		eq(ex(lock), false)
+		eq(ex(`${lock}.recovery`), false)
+		for (const leftover of readdirSync(dirname(lock)).filter(entry => entry.startsWith(`${basename(lock)}.`) && (entry.includes(".displaced-") || entry.includes(".stale-")))) {
+			throw new Error(`takeover debris left behind: ${leftover}`)
+		}
 	}
 
 	const it = id => bq().items.find(candidate => candidate.applicationId === id)
@@ -2164,6 +2197,76 @@ try {
 		const inRepoBackup = rp("runtime", "in-repo-backup")
 		neq(run(BACKUP, ["create", "--output", inRepoBackup]).status, 0)
 		eq(ex(inRepoBackup), false)
+
+		// ——— restore: product command into isolated clean-clone targets, fail closed ———
+		const restoreTarget = join(backupParent, "restore-target")
+		const prepareRestoreTarget = () => {
+			rm(restoreTarget, {recursive: true, force: true})
+			md(restoreTarget)
+			for (const root of ["contracts", GROWTH]) cpSync(rp(root), join(restoreTarget, root), {recursive: true})
+		}
+		const restoreEnv = {...E(), SERVICE_REPO_ROOT: restoreTarget}
+		prepareRestoreTarget()
+		const missingRestoreInputBefore = snap(restoreTarget)
+		const missingRestoreInput = run(BACKUP, ["restore", "--input", join(backupParent, "missing-snapshot")], restoreEnv)
+		neq(missingRestoreInput.status, 0)
+		mat(missingRestoreInput.stderr, /no such file or directory/)
+		deq(snap(restoreTarget), missingRestoreInputBefore)
+		const missingManifestBackup = join(backupParent, "missing-manifest-snapshot")
+		cpSync(backupPath, missingManifestBackup, {recursive: true})
+		un(join(missingManifestBackup, "manifest.json"))
+		const missingManifestBefore = snap(restoreTarget)
+		const missingManifestRestore = run(BACKUP, ["restore", "--input", missingManifestBackup], restoreEnv)
+		neq(missingManifestRestore.status, 0)
+		mat(missingManifestRestore.stderr, /no such file or directory/)
+		deq(snap(restoreTarget), missingManifestBefore)
+		rm(missingManifestBackup, {recursive: true, force: true})
+		const corruptedBackup = join(backupParent, "corrupted-snapshot")
+		cpSync(backupPath, corruptedBackup, {recursive: true})
+		const corruptedBackupDecision = backedUpFiles.find(entry => entry.path.startsWith("service-decisions/"))
+		const corruptedBackupDecisionPath = join(corruptedBackup, corruptedBackupDecision.path)
+		wf(corruptedBackupDecisionPath, Buffer.concat([rf(corruptedBackupDecisionPath), Buffer.from(" ")]))
+		const corruptedRestoreBefore = snap(restoreTarget)
+		const corruptedRestore = run(BACKUP, ["restore", "--input", corruptedBackup], restoreEnv)
+		neq(corruptedRestore.status, 0)
+		mat(corruptedRestore.stderr, /file manifest mismatch/)
+		deq(snap(restoreTarget), corruptedRestoreBefore)
+		rm(corruptedBackup, {recursive: true, force: true})
+		md(join(restoreTarget, "clients", "existing"), {recursive: true})
+		aw(join(restoreTarget, "clients", "existing", "note.json"), {kept: true})
+		const existingTargetBefore = snap(restoreTarget)
+		const existingTargetRestore = run(BACKUP, ["restore", "--input", backupPath], restoreEnv)
+		neq(existingTargetRestore.status, 0)
+		mat(existingTargetRestore.stderr, /restore target already exists: clients/)
+		deq(snap(restoreTarget), existingTargetBefore)
+		prepareRestoreTarget()
+		const successfulRestore = run(BACKUP, ["restore", "--input", backupPath], restoreEnv)
+		eq(successfulRestore.status, 0, successfulRestore.stderr)
+		const successfulRestoreOutput = JSON.parse(successfulRestore.stdout)
+		eq(successfulRestoreOutput.status, "restored")
+		deq(successfulRestoreOutput.roots, ["clients", "prospects", "service-decisions", "runs/service-engine/outputs"])
+		for (const [relativePath, hash] of Object.entries(snap(backupPath))) {
+			if (relativePath === "manifest.json") continue
+			eq(sha256(rf(join(restoreTarget, relativePath))), hash, `restore changed bytes: ${relativePath}`)
+		}
+		for (const entry of manifest.entries) {
+			const restoredEntryPath = join(restoreTarget, entry.path)
+			eq(statSync(restoredEntryPath).mode & 0o777, entry.type === "directory" ? 0o700 : 0o600, `restore permission mismatch: ${entry.path}`)
+		}
+		const reBackupPath = join(backupParent, "re-backup")
+		eq(run(BACKUP, ["create", "--output", reBackupPath], {...E(), SERVICE_REPO_ROOT: restoreTarget}).status, 0)
+		deq(rj(join(reBackupPath, "manifest.json")).entries, manifest.entries)
+		eq(run(BACKUP, ["verify", "--input", reBackupPath]).status, 0)
+		prepareRestoreTarget()
+		const interruptedBefore = snap(restoreTarget)
+		const interruptedRestore = run(BACKUP, ["restore", "--input", backupPath], {...restoreEnv, SERVICE_BACKUP_TEST_INTERRUPT_SWAP: "1"})
+		neq(interruptedRestore.status, 0)
+		mat(interruptedRestore.stderr, /interrupted mid-swap/)
+		deq(snap(restoreTarget), interruptedBefore)
+		for (const root of ["clients", "prospects", "service-decisions", "runs/service-engine/outputs"]) eq(ex(join(restoreTarget, root)), false)
+		assert(!readdirSync(backupParent).some(name => name.startsWith(".service-restore-staging-")))
+		eq(run(BACKUP, ["verify", "--input", backupPath]).status, 0)
+		rm(restoreTarget, {recursive: true, force: true})
 	} finally {
 		rm(backupParent, {recursive: true, force: true})
 	}
