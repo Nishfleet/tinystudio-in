@@ -215,7 +215,12 @@ export const deployWithWrangler = async (bundleDir, deps = {}) => {
   }
 }
 
-export const runAcceptance = async (deps = {}) => {
+// Live verification of the deployed site after upload: runs the acceptance
+// checker (scripts/check-public-live-deploy.mjs), which probes the live
+// site against the neutral merged fixes. A failed verification triggers the
+// rollback path. Name kept as `verifyLive` to match the fail-closed lane
+// contract asserted by test-deploy-public-site-workflow.mjs.
+export const verifyLive = async (deps = {}) => {
   const { runCommand = defaultRunCommand, acceptanceCmd = defaultAcceptanceCmd() } = deps
   await runCommand(acceptanceCmd[0], acceptanceCmd.slice(1), {})
 }
@@ -232,7 +237,7 @@ export const releasePipeline = async ({ bundleDir, deps = {}, log = console.log,
   await deployWithWrangler(bundleDir, deps)
   log("[publish] running live acceptance against the neutral merged fixes")
   try {
-    await runAcceptance(deps)
+    await verifyLive(deps)
   } catch (error) {
     err(`[publish] acceptance FAILED: ${error.message}`)
     err(`[publish] restoring the previous production deployment ${previous.deploymentId}`)
@@ -260,7 +265,7 @@ export const releasePipeline = async ({ bundleDir, deps = {}, log = console.log,
     log(`[publish] rollback verified: production is ${restored.deploymentId} (${restored.url})`)
     err(`[publish] re-running acceptance against the restored identity ${restored.deploymentId}`)
     try {
-      await runAcceptance(deps)
+      await verifyLive(deps)
     } catch (restoredError) {
       err(
         `[publish] NOTE: the restored deployment ${restored.deploymentId} also fails acceptance (${restoredError.message}); this is the pre-release state - the rollback itself was verified.`

@@ -11,8 +11,9 @@ name: Deploy public site
 #
 # The lane is fail-closed and reversible:
 #   - Missing required secrets FAIL the run loudly. A skipped publish must
-#     never produce a green deploy status (the old "dormant" green step hid
-#     the missing token behind green runs).
+#     never produce a green deploy status: green means "deployed and
+#     verified", nothing else. The old "dormant" green step hid the missing
+#     token behind green runs.
 #   - Before upload the lane captures the current production deployment
 #     identity as the rollback target and refuses to deploy without one
 #     (scripts/publish-public-site.mjs).
@@ -21,15 +22,19 @@ name: Deploy public site
 #     re-verifies the restored identity, re-runs acceptance, and fails
 #     loudly if the rollback itself fails.
 #
-# Required secrets (fail-closed when missing):
+# Required secrets (fail-closed when missing - a skipped publish must never
+# produce a green deploy status):
 #   CLOUDFLARE_API_TOKEN  - Cloudflare API token with Cloudflare Pages:Edit
 #                           on the tinystudio.in account
 #   CLOUDFLARE_ACCOUNT_ID - f670a698e17bf160c8e4679823e68916
 # The fleet Workers token (fleet-console/cf.env) does NOT have Pages:Edit;
-# provisioning a Pages-scoped token is a one-time dashboard step. Until both
-# secrets exist the lane fails every main merge loudly instead of silently
-# skipping the publish; the nightly live-site-check.yml is the staleness
-# alarm while the site is stale.
+# provisioning a Pages-scoped token is a one-time dashboard step.
+#
+# Missing wiring FAILS the run loudly instead of skipping the publish under
+# a green "dormant" status: green means "deployed and verified", nothing
+# else. Until both secrets exist the lane fails every main merge loudly with
+# the provisioning steps printed; the nightly live-site-check.yml is the
+# staleness alarm while the site is stale.
 
 on:
   push:
