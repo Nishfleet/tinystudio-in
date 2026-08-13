@@ -3,8 +3,10 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { CHANNELS, meaningful, parseChannelReadiness, section, tableRows } from "./lib/channel-readiness.mjs";
 import { localIsoDate } from "./date-utils.mjs";
+import { handleHelp } from "./lib/operator-cli.mjs";
 
 const args = process.argv.slice(2);
+handleHelp(args, `Usage: node scripts/export-client-channel-readiness.mjs clients/client-slug`);
 const clientPath = args.find((arg) => !arg.startsWith("--"));
 
 if (!clientPath) {
