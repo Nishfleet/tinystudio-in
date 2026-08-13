@@ -203,34 +203,31 @@ if (!chromiumLauncher) {
   const origin = `http://127.0.0.1:${server.address().port}`
   const browser = await chromiumLauncher.launch({ headless: true })
   try {
+    const promptly280 = await measurePage(browser, origin, "/promptly/", 280)
     const promptly320 = await measurePage(browser, origin, "/promptly/", 320)
+    const promptly360 = await measurePage(browser, origin, "/promptly/", 360)
     const promptly390 = await measurePage(browser, origin, "/promptly/", 390)
-    ok(promptly320.status === 200, `/promptly/ at 320 returns 200 (got ${promptly320.status})`)
-    ok(promptly390.status === 200, `/promptly/ at 390 returns 200 (got ${promptly390.status})`)
-    ok(promptly320.heading === PROMPTLY_H1, "rendered Promptly H1 copy is unchanged at 320")
-    ok(promptly390.heading === PROMPTLY_H1, "rendered Promptly H1 copy is unchanged at 390")
+    const promptlyWidths = [280, 320, 360, 390]
+    const promptlyPages = { 280: promptly280, 320: promptly320, 360: promptly360, 390: promptly390 }
+    for (const width of promptlyWidths) {
+      const page = promptlyPages[width]
+      ok(page.status === 200, `/promptly/ at ${width} returns 200 (got ${page.status})`)
+      ok(page.heading === PROMPTLY_H1, `rendered Promptly H1 copy is unchanged at ${width}`)
+      ok(
+        page.scrollWidth <= page.clientWidth,
+        `Promptly document does not overflow at ${width} (${page.scrollWidth} <= ${page.clientWidth})`
+      )
+      ok(
+        page.headingScrollWidth <= page.headingClientWidth,
+        `Promptly heading wraps inside its box at ${width} (${page.headingScrollWidth} <= ${page.headingClientWidth})`
+      )
+      ok(
+        ["anywhere", "break-word"].includes(page.overflowWrap),
+        `Promptly heading overflow-wrap is a wrapping value at ${width} (got ${page.overflowWrap})`
+      )
+    }
     ok(
-      promptly320.scrollWidth <= promptly320.clientWidth,
-      `Promptly document does not overflow at 320 (${promptly320.scrollWidth} <= ${promptly320.clientWidth})`
-    )
-    ok(
-      promptly390.scrollWidth <= promptly390.clientWidth,
-      `Promptly document does not overflow at 390 (${promptly390.scrollWidth} <= ${promptly390.clientWidth})`
-    )
-    ok(
-      promptly320.headingScrollWidth <= promptly320.headingClientWidth,
-      `Promptly heading wraps inside its box at 320 (${promptly320.headingScrollWidth} <= ${promptly320.headingClientWidth})`
-    )
-    ok(
-      promptly390.headingScrollWidth <= promptly390.headingClientWidth,
-      `Promptly heading wraps inside its box at 390 (${promptly390.headingScrollWidth} <= ${promptly390.headingClientWidth})`
-    )
-    ok(
-      ["anywhere", "break-word"].includes(promptly320.overflowWrap),
-      `Promptly heading overflow-wrap is a wrapping value at 320 (got ${promptly320.overflowWrap})`
-    )
-    ok(
-      promptly320.overflowX !== "hidden" && promptly390.overflowX !== "hidden",
+      promptlyWidths.every((width) => promptlyPages[width].overflowX !== "hidden"),
       "document overflow-x is not hidden"
     )
 
