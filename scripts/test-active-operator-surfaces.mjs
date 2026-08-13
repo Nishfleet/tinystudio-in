@@ -131,12 +131,34 @@ try {
 		"export-owned-product-workflow-proofs.mjs",
 		"export-owned-startup-proof-capture.mjs"
 	]
+	// The growth/ops exporters that overwrite tracked ACTIVE_OPERATOR_ARTIFACTS
+	// must also honor --help/-h: the same exit 0 + usage contract, and they
+	// must not silently rewrite any tracked artifact (live-metrics,
+	// proof-library, market-parity-readiness, 11-10-proof-run, sender-setup-guide,
+	// competitive-proof-matrix, market-parity-benchmark-2026) when asked for
+	// help instead of a real run.
+	const trackedOpsHelpSurface = [
+		"check-market-parity-readiness.mjs",
+		"export-growth-metrics.mjs",
+		"export-internal-dashboard.mjs",
+		"export-market-benchmark.mjs",
+		"export-market-proof-run.mjs",
+		"export-proof-library.mjs",
+		"export-sender-setup-guide.mjs"
+	]
 	const artifactBeforeHelp = new Map(
 		[...trackedArtifacts.keys(), ...privateRuntimeArtifacts]
 			.filter(path => existsSync(join(T, path)))
 			.map(path => [path, readFileSync(join(T, path), "utf8")])
 	)
 	for (const name of remainingHelpSurface) {
+		for (const flag of ["--help", "-h"]) {
+			const helped = run([`scripts/${name}`, flag])
+			eq(helped.status, 0, `${name} ${flag} must exit 0: ${helped.stderr || helped.stdout}`)
+			mat(helped.stdout, /Usage:/, `${name} ${flag} must print usage`)
+		}
+	}
+	for (const name of trackedOpsHelpSurface) {
 		for (const flag of ["--help", "-h"]) {
 			const helped = run([`scripts/${name}`, flag])
 			eq(helped.status, 0, `${name} ${flag} must exit 0: ${helped.stderr || helped.stdout}`)
@@ -159,7 +181,13 @@ try {
 		["scripts/export-owned-product-case-studies.mjs", `--output=${join(T, "..", "escape-owned-studies.md")}`],
 		["scripts/export-owned-product-workflow-proofs.mjs", `--output=${join(T, "..", "escape-owned-workflow.md")}`],
 		["scripts/export-client-repeatable-workflow.mjs", "clients/escape-probe", `--output=${join(T, "..", "escape-workflow.md")}`],
-		["scripts/export-client-weekly-report.mjs", "clients/escape-probe", `--output=${join(T, "..", "escape-weekly.md")}`]
+		["scripts/export-client-weekly-report.mjs", "clients/escape-probe", `--output=${join(T, "..", "escape-weekly.md")}`],
+		["scripts/export-growth-metrics.mjs", `--output=${join(T, "..", "escape-live-metrics.md")}`],
+		["scripts/export-proof-library.mjs", `--output=${join(T, "..", "escape-proof-library.md")}`],
+		["scripts/export-sender-setup-guide.mjs", `--output=${join(T, "..", "escape-sender-setup.md")}`, `--html=${join(T, "..", "escape-sender-setup.html")}`],
+		["scripts/export-market-benchmark.mjs", `--output=${join(T, "..", "escape-benchmark.md")}`, `--ops=${join(T, "..", "escape-matrix.md")}`, `--html=${join(T, "..", "escape-matrix.html")}`],
+		["scripts/export-market-proof-run.mjs", `--output=${join(T, "..", "escape-proof-run.md")}`],
+		["scripts/check-market-parity-readiness.mjs", `--output=${join(T, "..", "escape-parity.md")}`]
 	]) {
 		const refused = run(args)
 		neq(refused.status, 0, `${args[0]} must refuse an escaping output path`)
@@ -170,7 +198,16 @@ try {
 		join(T, "..", "escape-owned-studies.md"),
 		join(T, "..", "escape-owned-workflow.md"),
 		join(T, "..", "escape-workflow.md"),
-		join(T, "..", "escape-weekly.md")
+		join(T, "..", "escape-weekly.md"),
+		join(T, "..", "escape-live-metrics.md"),
+		join(T, "..", "escape-proof-library.md"),
+		join(T, "..", "escape-sender-setup.md"),
+		join(T, "..", "escape-sender-setup.html"),
+		join(T, "..", "escape-benchmark.md"),
+		join(T, "..", "escape-matrix.md"),
+		join(T, "..", "escape-matrix.html"),
+		join(T, "..", "escape-proof-run.md"),
+		join(T, "..", "escape-parity.md")
 	]) {
 		eq(existsSync(escapePath), false, `escape probe must not create ${escapePath}`)
 	}
