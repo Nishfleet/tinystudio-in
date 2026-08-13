@@ -3,13 +3,15 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { isAbsolute, join } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
 import { agencyConfig } from "./lib/agency-config.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 import { loadValidatedServiceClients } from "./lib/validated-service-client.mjs";
 import { runCodeRepoJson, runRepoJson as runJson, serviceRoot } from "./lib/runtime-roots.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: node scripts/check-market-parity-readiness.mjs [--strict] [--skip-kit] [--output=growth-brain/ops/market-parity-readiness.md]`);
 const strict = process.argv.includes("--strict");
 const skipKit = process.argv.includes("--skip-kit");
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
-const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/market-parity-readiness.md";
+const outputPath = resolveOutputPath(outputArg?.split("=").slice(1).join("="), { fallback: "growth-brain/ops/market-parity-readiness.md" });
 const resolvedOutputPath = isAbsolute(outputPath) ? outputPath : join(serviceRoot, outputPath);
 function runGate(args, codeRootCwd = false) {
   try { return (codeRootCwd ? runCodeRepoJson : runJson)(args); }
