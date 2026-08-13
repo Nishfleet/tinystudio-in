@@ -194,7 +194,7 @@ const measurePage = async (chromium, origin, path, width) => {
   }
 }
 
-console.log("E. Promptly 320px heading wrap (layout)")
+console.log("E. Shared h1 wrap keeps every public route inside its box (280-390px)")
 const chromiumLauncher = loadChromium()
 if (!chromiumLauncher) {
   console.log("  skip layout probe: playwright is not installed in this checkout")
@@ -203,49 +203,51 @@ if (!chromiumLauncher) {
   const origin = `http://127.0.0.1:${server.address().port}`
   const browser = await chromiumLauncher.launch({ headless: true })
   try {
-    const promptly320 = await measurePage(browser, origin, "/promptly/", 320)
-    const promptly390 = await measurePage(browser, origin, "/promptly/", 390)
-    ok(promptly320.status === 200, `/promptly/ at 320 returns 200 (got ${promptly320.status})`)
-    ok(promptly390.status === 200, `/promptly/ at 390 returns 200 (got ${promptly390.status})`)
-    ok(promptly320.heading === PROMPTLY_H1, "rendered Promptly H1 copy is unchanged at 320")
-    ok(promptly390.heading === PROMPTLY_H1, "rendered Promptly H1 copy is unchanged at 390")
-    ok(
-      promptly320.scrollWidth <= promptly320.clientWidth,
-      `Promptly document does not overflow at 320 (${promptly320.scrollWidth} <= ${promptly320.clientWidth})`
-    )
-    ok(
-      promptly390.scrollWidth <= promptly390.clientWidth,
-      `Promptly document does not overflow at 390 (${promptly390.scrollWidth} <= ${promptly390.clientWidth})`
-    )
-    ok(
-      promptly320.headingScrollWidth <= promptly320.headingClientWidth,
-      `Promptly heading wraps inside its box at 320 (${promptly320.headingScrollWidth} <= ${promptly320.headingClientWidth})`
-    )
-    ok(
-      promptly390.headingScrollWidth <= promptly390.headingClientWidth,
-      `Promptly heading wraps inside its box at 390 (${promptly390.headingScrollWidth} <= ${promptly390.headingClientWidth})`
-    )
-    ok(
-      ["anywhere", "break-word"].includes(promptly320.overflowWrap),
-      `Promptly heading overflow-wrap is a wrapping value at 320 (got ${promptly320.overflowWrap})`
-    )
-    ok(
-      promptly320.overflowX !== "hidden" && promptly390.overflowX !== "hidden",
-      "document overflow-x is not hidden"
-    )
-
-    for (const path of ["/", "/drishti/"]) {
-      const sibling = await measurePage(browser, origin, path, 320)
-      ok(sibling.status === 200, `${path} at 320 returns 200 (got ${sibling.status})`)
+    const ROUTES = ["/", "/promptly/", "/drishti/", "/contact/", "/support/"]
+    const WIDTHS = [280, 320, 360, 390]
+    const DOCUMENT_OK = new Set()
+    const HEADING_OK = new Set()
+    for (const path of ROUTES) {
+      for (const width of WIDTHS) {
+        const m = await measurePage(browser, origin, path, width)
+        ok(m.status === 200, `${path} at ${width} returns 200 (got ${m.status})`)
+        if (path === "/promptly/") {
+          ok(m.heading === PROMPTLY_H1, `rendered Promptly H1 copy is unchanged at ${width}`)
+        }
+        ok(
+          m.scrollWidth <= m.clientWidth,
+          `${path} document does not overflow at ${width} (${m.scrollWidth} <= ${m.clientWidth})`
+        )
+        ok(
+          m.headingScrollWidth <= m.headingClientWidth,
+          `${path} heading stays inside its box at ${width} (${m.headingScrollWidth} <= ${m.headingClientWidth})`
+        )
+        if (m.scrollWidth <= m.clientWidth) DOCUMENT_OK.add(path)
+        if (m.headingScrollWidth <= m.headingClientWidth) HEADING_OK.add(path)
+      }
+    }
+    // Promptly's unbreakable "professionals" word is the original reason the
+    // shared h1 wrap exists; keep the explicit wrap-value assertions for it.
+    for (const width of WIDTHS) {
+      const m = await measurePage(browser, origin, "/promptly/", width)
       ok(
-        sibling.scrollWidth <= sibling.clientWidth,
-        `${path} document stays inside 320 after the shared wrap (${sibling.scrollWidth} <= ${sibling.clientWidth})`
-      )
-      ok(
-        sibling.headingScrollWidth <= sibling.headingClientWidth,
-        `${path} heading stays inside its box at 320 (${sibling.headingScrollWidth} <= ${sibling.headingClientWidth})`
+        ["anywhere", "break-word"].includes(m.overflowWrap),
+        `Promptly heading overflow-wrap is a wrapping value at ${width} (got ${m.overflowWrap})`
       )
     }
+    ok(
+      ROUTES.every((path) => DOCUMENT_OK.has(path)),
+      `every public route document stays inside its box at every width 280-390 (${[...DOCUMENT_OK].join(", ")})`
+    )
+    ok(
+      ROUTES.every((path) => HEADING_OK.has(path)),
+      `every public route heading stays inside its box at every width 280-390 (${[...HEADING_OK].join(", ")})`
+    )
+    ok(
+      !(await measurePage(browser, origin, "/promptly/", 280)).overflowX.includes("hidden") &&
+        !(await measurePage(browser, origin, "/drishti/", 280)).overflowX.includes("hidden"),
+      "document overflow-x is not hidden"
+    )
   } finally {
     await browser.close()
     await new Promise((resolve) => server.close(resolve))
