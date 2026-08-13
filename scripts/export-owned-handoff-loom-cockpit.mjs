@@ -2,11 +2,13 @@
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { localIsoDate } from "./date-utils.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: node scripts/export-owned-handoff-loom-cockpit.mjs [--output=growth-brain/ops/owned-handoff-loom-cockpit.md] [--html=growth-brain/ops/owned-handoff-loom-cockpit.html]`);
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const htmlArg = process.argv.find((arg) => arg.startsWith("--html="));
-const outputPath = outputArg ? outputArg.split("=").slice(1).join("=") : "growth-brain/ops/owned-handoff-loom-cockpit.md";
-const htmlPath = htmlArg ? htmlArg.split("=").slice(1).join("=") : "growth-brain/ops/owned-handoff-loom-cockpit.html";
+const outputPath = resolveOutputPath(outputArg?.split("=").slice(1).join("="), { fallback: "growth-brain/ops/owned-handoff-loom-cockpit.md" });
+const htmlPath = resolveOutputPath(htmlArg?.split("=").slice(1).join("="), { flag: "--html", fallback: "growth-brain/ops/owned-handoff-loom-cockpit.html" });
 
 const clients = [
   "clients/ai-converter",
