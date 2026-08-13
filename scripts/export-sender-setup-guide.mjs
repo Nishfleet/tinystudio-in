@@ -98,12 +98,13 @@ ${configureCommand}
 
 ## Fix Order
 
-1. Add a real sender postal address to \`senderPhysicalAddress\` in \`growth-brain/ops/agency-config.json\`.
-2. In the mail provider for \`${setup.senderDomain || "the sender domain"}\`, enable DKIM and copy the selector.
-3. Add the selector to \`dkimSelector\` in \`growth-brain/ops/agency-config.json\`.
-4. If the mail provider gives a DKIM TXT record, add it in Cloudflare DNS at \`${dkimHost}\`.
-5. Run \`npm run send:setup\`.
-6. If it is clean, email can join contact forms and DMs as an outbound route.
+1. Connect an outbound sending provider for \`${setup.senderDomain || "the sender domain"}\` (Cloudflare Email Routing forwards inbound mail only and cannot send).
+2. Add a real sender postal address to \`senderPhysicalAddress\` in \`growth-brain/ops/agency-config.json\` (business address, PO box, or private mailbox).
+3. In the outbound provider, enable DKIM and copy the selector.
+4. Add the provider's DKIM TXT record in Cloudflare DNS at \`${dkimHost}\`.
+5. Save the selector as \`dkimSelector\` in \`growth-brain/ops/agency-config.json\`.
+6. Run \`npm run send:setup\`.
+7. If it is clean, email can join contact forms and DMs as an outbound route.
 
 ## Notes
 
@@ -235,10 +236,11 @@ const html = `<!doctype html>
     <section>
       <h2>Order</h2>
       <ol>
-        <li>Add the sender postal address in <code>agency-config.json</code>.</li>
-        <li>Enable DKIM in the mail provider and copy the selector.</li>
+        <li>Connect an outbound sending provider (Cloudflare Email Routing forwards inbound mail only and cannot send).</li>
+        <li>Add the sender postal address in <code>agency-config.json</code> (business address, PO box, or private mailbox).</li>
+        <li>Enable DKIM in the outbound provider and copy the selector.</li>
+        <li>Add the DKIM TXT record in Cloudflare DNS at <code>${escapeHtml(dkimHost)}</code>.</li>
         <li>Save the selector as <code>dkimSelector</code>.</li>
-        <li>Add the DKIM TXT record in Cloudflare if the provider gives one.</li>
         <li>Run <code>npm run send:setup</code>.</li>
       </ol>
     </section>
