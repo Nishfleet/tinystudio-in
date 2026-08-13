@@ -4,7 +4,7 @@ import {dirname, join} from "node:path";
 import {homedir} from "node:os";
 import {fileURLToPath} from "node:url";
 import {RETENTION_AUTOMATION_PROMPT} from "./lib/retention-automation.mjs";
-import {canonicalMainWorktree, normalizedPath, runPreflight, scriptRepoRoot} from "./lib/retention-preflight.mjs";
+import {canonicalMainWorktree, normalizedPath, proveFreshness, runPreflight, scriptRepoRoot} from "./lib/retention-preflight.mjs";
 
 const automationId = "tinystudio-retention-checkups";
 const codexHome = process.env.CODEX_HOME || join(homedir(), ".codex");
@@ -17,6 +17,17 @@ const preflight = runPreflight({repoRoot: repoForFreshness, stateRoot, isGithubA
 const clientCount = preflight.activeClients;
 const failures = [...preflight.failures];
 const warnings = [...preflight.warnings];
+
+// The Friday loop runs from the canonical retention workspace, so that
+// workspace itself must not be a stale checkout running old gate code. When
+// the script runs from the same checkout the preflight already proved it;
+// otherwise prove the canonical workspace directly.
+const expectedRepo = normalizedPath(expectedCwd);
+const canonicalFreshness =
+  normalizedPath(repoForFreshness) === expectedRepo ? preflight.freshness : proveFreshness(expectedCwd);
+if (canonicalFreshness && canonicalFreshness.ok === false) {
+  failures.push(`retention workspace is stale: ${canonicalFreshness.reason}`);
+}
 
 function value(content, key) {
   const match = String(content || "").match(new RegExp(`^${key}\\s*=\\s*"([^"]*)"`, "m"));
@@ -84,7 +95,6 @@ const cadence = value(content, "rrule");
 if (value(content, "id") !== automationId) failures.push("Automation id does not match TinyStudio retention checkups");
 if (value(content, "kind") !== "cron") failures.push("Automation is not a cron automation");
 if (value(content, "status") !== "ACTIVE") failures.push("Automation is not active");
-const expectedRepo = normalizedPath(expectedCwd);
 const configuredRepos = configuredWorkspacePaths(content).map(normalizedPath);
 if (!configuredRepos.includes(expectedRepo)) failures.push("Automation does not point at the TinyStudio repo");
 if (!/^FREQ=WEEKLY;/.test(cadence) || !cadence.includes("BYDAY=FR")) failures.push("Automation is not scheduled as the weekly Friday retention loop");

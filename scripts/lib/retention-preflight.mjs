@@ -64,6 +64,12 @@ export function normalizedPath(path) {
 	}
 }
 
+// Resolves the repository's main worktree: the entry that owns the repository's
+// .git directory, which `git worktree list` always reports first. Hosting the
+// `refs/heads/main` branch is not the same as being the main worktree — a
+// detached main worktree leaves `main` checked out in some other worktree, and
+// substituting that twin here would turn the canonical-state inspection into a
+// hollow pass on the twin's (possibly stale, empty) state root.
 export function canonicalMainWorktree(repoRoot) {
 	try {
 		const output = execFileSync("git", ["-C", repoRoot, "worktree", "list", "--porcelain"], {
@@ -71,10 +77,8 @@ export function canonicalMainWorktree(repoRoot) {
 			stdio: ["ignore", "pipe", "ignore"],
 			timeout: GIT_TIMEOUT_MS
 		})
-		let worktree = ""
 		for (const line of output.split("\n")) {
-			if (line.startsWith("worktree ")) worktree = line.slice("worktree ".length)
-			if (line === "branch refs/heads/main" && worktree) return worktree
+			if (line.startsWith("worktree ")) return line.slice("worktree ".length)
 		}
 	} catch {}
 	return repoRoot
