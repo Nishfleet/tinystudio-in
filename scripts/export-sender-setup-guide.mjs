@@ -2,12 +2,14 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { agencyConfig } from "./lib/agency-config.mjs";
 import { localIsoDate } from "./date-utils.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 import { runRepoJson as runJson } from "./lib/runtime-roots.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: node scripts/export-sender-setup-guide.mjs [--output=growth-brain/ops/sender-setup-guide.md] [--html=growth-brain/ops/sender-setup-guide.html]`);
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
-const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/sender-setup-guide.md";
+const outputPath = resolveOutputPath(outputArg?.split("=").slice(1).join("="), { fallback: "growth-brain/ops/sender-setup-guide.md" });
 const htmlArg = process.argv.find((arg) => arg.startsWith("--html="));
-const htmlPath = htmlArg ? htmlArg.split("=")[1] : "growth-brain/ops/sender-setup-guide.html";
+const htmlPath = resolveOutputPath(htmlArg?.split("=").slice(1).join("="), { flag: "--html", fallback: "growth-brain/ops/sender-setup-guide.html" });
 const today = localIsoDate();
 const config = agencyConfig();
 
