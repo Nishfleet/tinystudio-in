@@ -146,7 +146,7 @@ function statusFor(checks) {
   return "ready";
 }
 
-const metrics = runJson(["scripts/export-growth-metrics.mjs"]);
+const metrics = runJson(["scripts/export-growth-metrics.mjs", "--output=runs/metrics-for-doctor.md"]);
 const todayResult = runJson(["scripts/show-growth-command-center.mjs", "--limit=8"]);
 const recordingPrep = recordingPrepStatus(5);
 const rehearsal = runJson(["scripts/export-recording-rehearsal-check.mjs", "--limit=5"]);
