@@ -11,11 +11,14 @@
 //   3. unknown URLs get a real 404, not the homepage (PR #34)
 //   4. homepage stays portfolio-only: brand-disambiguation copy (#29) live,
 //      and no managed-service buyer-path content (#10/#11, snoozed).
+//   5. /llms.txt lists every public page             (PR #68)
 // Proof 2b covers the 2026-08-08 dogfood finding page:
 //   2b. /contact/ renders H2 after H1 (the heading-hierarchy repair, PR #18).
 import { join } from "node:path"
 import { fileURLToPath } from "node:url"
 import { dirname } from "node:path"
+
+import { PUBLIC_PAGE_URLS } from "./lib/public-pages.mjs"
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 
@@ -98,6 +101,17 @@ try {
     for (const marker of BUYER_PATH_MARKERS) {
       ok(!body.includes(marker), `homepage has no ${marker}`)
     }
+  }
+
+  console.log("E. /llms.txt lists every public page (PR #68 live)")
+  {
+    const { status, body } = await get("/llms.txt")
+    ok(status === 200, `/llms.txt returns 200 (got ${status})`)
+    const missing = PUBLIC_PAGE_URLS.filter((url) => !body.includes(url))
+    ok(
+      missing.length === 0,
+      `llms.txt lists all ${PUBLIC_PAGE_URLS.length} public pages (missing: ${missing.join(", ") || "none"})`
+    )
   }
 } catch (error) {
   failures++
