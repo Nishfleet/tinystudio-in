@@ -129,7 +129,11 @@ try {
 		"export-owned-handoff-loom-cockpit.mjs",
 		"export-owned-product-case-studies.mjs",
 		"export-owned-product-workflow-proofs.mjs",
-		"export-owned-startup-proof-capture.mjs"
+		"export-owned-startup-proof-capture.mjs",
+		"export-recording-cockpit.mjs",
+		"export-recording-queue.mjs",
+		"export-recording-rehearsal-check.mjs",
+		"export-recording-teleprompter.mjs"
 	]
 	// The growth/ops exporters that overwrite tracked ACTIVE_OPERATOR_ARTIFACTS
 	// must also honor --help/-h: the same exit 0 + usage contract, and they
