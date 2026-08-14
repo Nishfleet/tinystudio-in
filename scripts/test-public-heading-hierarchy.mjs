@@ -18,7 +18,9 @@ const ok = (cond, msg) => {
   }
 }
 
-// The exact public pages covered by the heading-hierarchy finding.
+// The exact public pages covered by the card-heading finding. The homepage
+// (public/index.html) is covered separately in section D below, including
+// the managed-service section's H2 -> H3 outline.
 const AFFECTED_PAGES = [
   "public/contact/index.html",
   "public/promptly/index.html",
@@ -87,7 +89,42 @@ ok(
   "the old .info-card h3-only rule is replaced by the shared :is(h2, h3) rule"
 )
 
-console.log("C. npm test/ci wiring")
+console.log("D. homepage managed-service heading hierarchy")
+const home = read("public/index.html")
+const homeLevels = headingLevelsOf(home)
+ok(homeLevels.filter((l) => l === 1).length === 1, "homepage has exactly one H1")
+ok(homeLevels[0] === 1, "the H1 is the first heading in the homepage outline")
+let homeJumps = 0
+for (let i = 1; i < homeLevels.length; i++) {
+  if (homeLevels[i] - homeLevels[i - 1] > 1) {
+    homeJumps++
+    console.error(`    bad transition H${homeLevels[i - 1]} -> H${homeLevels[i]}`)
+  }
+}
+ok(homeJumps === 0, "homepage outline has no heading-level jump greater than one")
+const serviceStart = home.indexOf('<section class="shape" id="managed-service"')
+ok(serviceStart !== -1, "homepage contains the #managed-service section")
+if (serviceStart !== -1) {
+  const serviceEnd = home.indexOf("</section>", serviceStart)
+  const serviceLevels = headingLevelsOf(home.slice(serviceStart, serviceEnd))
+  ok(
+    serviceLevels.length >= 2 && serviceLevels[0] === 2 && serviceLevels[1] === 3,
+    `managed-service section starts H2 then H3 (got H${serviceLevels.join(" -> H")})`
+  )
+}
+
+console.log("E. managed-service heading CSS pairing")
+const teamRuleStart = css.indexOf(".team-feature :is(h3, h4) {")
+ok(teamRuleStart !== -1, "styles.css defines .team-feature :is(h3, h4) {")
+const teamRuleEnd = css.indexOf("}", teamRuleStart)
+const teamRuleBody = teamRuleStart === -1 ? "" : css.slice(teamRuleStart, teamRuleEnd)
+ok(teamRuleBody.includes("margin-top: 12px"), "team-feature rule keeps margin-top: 12px")
+ok(
+  /\.team-feature h3\s*{[^}]*font-size: clamp\(1\.55rem, 1\.8vw, 2rem\)/.test(css),
+  ".team-feature h3 keeps the former h4 heading scale"
+)
+
+console.log("F. npm test/ci wiring")
 const pkg = JSON.parse(read("package.json"))
 ok(
   pkg.scripts.test.includes("test-public-heading-hierarchy.mjs"),
