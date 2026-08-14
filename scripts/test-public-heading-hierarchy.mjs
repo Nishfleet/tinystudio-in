@@ -215,6 +215,8 @@ const measurePage = async (chromium, origin, path, width) => {
     const response = await page.goto(`${origin}${path}`, { waitUntil: "domcontentloaded" })
     const metrics = await page.evaluate(() => {
       const heading = document.querySelector("h1")
+      const cta = document.querySelector('.action-row a.button[href^="mailto:"]')
+      const ctaRect = cta ? cta.getBoundingClientRect() : null
       return {
         heading: heading ? heading.innerText.replace(/\s+/g, " ").trim() : "",
         scrollWidth: document.documentElement.scrollWidth,
@@ -222,7 +224,11 @@ const measurePage = async (chromium, origin, path, width) => {
         headingScrollWidth: heading ? heading.scrollWidth : 0,
         headingClientWidth: heading ? heading.clientWidth : 0,
         overflowWrap: heading ? getComputedStyle(heading).overflowWrap : "",
-        overflowX: getComputedStyle(document.documentElement).overflowX
+        overflowX: getComputedStyle(document.documentElement).overflowX,
+        ctaVisible: cta ? ctaRect.top < innerHeight && ctaRect.bottom >= 0 : false,
+        ctaTop: ctaRect ? ctaRect.top : -1,
+        ctaBottom: ctaRect ? ctaRect.bottom : -1,
+        ctaText: cta ? cta.innerText.replace(/\s+/g, " ").trim() : ""
       }
     })
     return { status: response?.status() ?? 0, ...metrics }
@@ -270,6 +276,14 @@ if (!chromiumLauncher) {
       promptly320.overflowX !== "hidden" && promptly390.overflowX !== "hidden",
       "document overflow-x is not hidden"
     )
+    ok(
+      promptly320.ctaVisible && promptly390.ctaVisible,
+      "Promptly early-access CTA is fully within the first mobile viewport"
+    )
+    ok(
+      promptly320.ctaText === "Get early access" && promptly390.ctaText === "Get early access",
+      `Promptly early-access CTA copy is unchanged (got "${promptly320.ctaText}" at 320)`
+    )
 
     for (const path of ["/", "/drishti/"]) {
       const sibling = await measurePage(browser, origin, path, 320)
@@ -282,6 +296,17 @@ if (!chromiumLauncher) {
         sibling.headingScrollWidth <= sibling.headingClientWidth,
         `${path} heading stays inside its box at 320 (${sibling.headingScrollWidth} <= ${sibling.headingClientWidth})`
       )
+      if (path === "/drishti/") {
+        const drishti390 = await measurePage(browser, origin, "/drishti/", 390)
+        ok(
+          drishti390.ctaVisible,
+          "Drishti early-access CTA is fully within the first mobile viewport"
+        )
+        ok(
+          drishti390.ctaText === "Get early access",
+          `Drishti early-access CTA copy is unchanged (got "${drishti390.ctaText}" at 390)`
+        )
+      }
     }
   } finally {
     await browser.close()
