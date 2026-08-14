@@ -38,4 +38,4 @@ No change to the fail-closed contract: `test-deploy-public-site-workflow.mjs` st
 
 ## PR
 
-https://github.com/nish3451/tinystudio-in/pull/<number> — fix/ci: schedule the tinystudio.in deploy lane so it self-heals once the Pages token lands
+https://github.com/nish3451/tinystudio-in/pull/156 — fix/ci: schedule the tinystudio.in deploy lane so it self-heals once the Pages token lands
