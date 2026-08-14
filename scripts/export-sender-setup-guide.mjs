@@ -54,10 +54,33 @@ function dkimCandidateRows(candidates) {
 const setup = runJson(["scripts/check-outbound-sender-setup.mjs"]);
 const dkimCandidates = setup.dkimCandidates || [];
 const firstDkimCandidate = dkimCandidates[0]?.selector || "";
-const configureCommand = `npm run send:configure -- --physical-address="..." --dkim-selector=${firstDkimCandidate || "..."} --dry-run`;
-const dkimHost = config.dkimSelector && setup.senderDomain
+const dkimSelectorConfigured = Boolean(config.dkimSelector);
+const dkimProviderStep = dkimSelectorConfigured
+  ? `DKIM is configured for \`${config.dkimSelector}\` at \`${config.dkimSelector}._domainkey.${setup.senderDomain}\`. Confirm the selector still matches the mail provider if you swap providers.`
+  : `In the outbound provider, enable DKIM and copy the selector.`;
+const dkimHost = dkimSelectorConfigured && setup.senderDomain
   ? `${config.dkimSelector}._domainkey.${setup.senderDomain}`
   : (firstDkimCandidate ? `${firstDkimCandidate}._domainkey.${setup.senderDomain}` : "<selector>._domainkey." + (setup.senderDomain || "tinystudio.io"));
+const physicalAddressStep = `Add a real sender postal address to \`senderPhysicalAddress\` in \`growth-brain/ops/agency-config.json\` (business address, PO box, or private mailbox). The address must be a published business location, never a placeholder.`;
+const providerConnectStep = `Connect an outbound sending provider for \`${setup.senderDomain || "the sender domain"}\` (Cloudflare Email Routing forwards inbound mail only and cannot send).`;
+const configureSelectorArg = config.dkimSelector ? `--dkim-selector=${config.dkimSelector}` : `--dkim-selector=${firstDkimCandidate || "..."}`;
+const configureCommand = `npm run send:configure -- --physical-address="..." ${configureSelectorArg} --dry-run`;
+const fixSteps = [];
+fixSteps.push(providerConnectStep);
+if (!config.senderPhysicalAddress) fixSteps.push(physicalAddressStep);
+if (!dkimSelectorConfigured) {
+  fixSteps.push(dkimProviderStep);
+  fixSteps.push(`Add the provider's DKIM TXT record in Cloudflare DNS at \`${dkimHost}\`.`);
+  fixSteps.push("Save the selector as `dkimSelector` in `growth-brain/ops/agency-config.json`.");
+} else {
+  fixSteps.push(dkimProviderStep);
+}
+fixSteps.push("Run `npm run send:setup`.");
+fixSteps.push("If it is clean, email can join contact forms and DMs as an outbound route.");
+const fixOrder = fixSteps.map((step, index) => `${index + 1}. ${step}`).join("\n");
+const dkimDiscoveryRow = dkimSelectorConfigured
+  ? `| ${config.dkimSelector} | ${dkimHost} |`
+  : "| - | No common DKIM selector found in DNS yet. |";
 
 const markdown = `# Sender Setup Guide
 
@@ -88,7 +111,7 @@ ${warningRows(setup.warnings || [])}
 
 | Selector | DNS Host |
 |---|---|
-${dkimCandidateRows(dkimCandidates)}
+${dkimDiscoveryRow}
 
 Suggested dry-run command:
 
@@ -98,13 +121,7 @@ ${configureCommand}
 
 ## Fix Order
 
-1. Connect an outbound sending provider for \`${setup.senderDomain || "the sender domain"}\` (Cloudflare Email Routing forwards inbound mail only and cannot send).
-2. Add a real sender postal address to \`senderPhysicalAddress\` in \`growth-brain/ops/agency-config.json\` (business address, PO box, or private mailbox).
-3. In the outbound provider, enable DKIM and copy the selector.
-4. Add the provider's DKIM TXT record in Cloudflare DNS at \`${dkimHost}\`.
-5. Save the selector as \`dkimSelector\` in \`growth-brain/ops/agency-config.json\`.
-6. Run \`npm run send:setup\`.
-7. If it is clean, email can join contact forms and DMs as an outbound route.
+${fixOrder}
 
 ## Notes
 
