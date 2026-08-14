@@ -102,9 +102,9 @@
 
 
       <div class="card">
-        <span>DKIM discovery</span>
-        <strong>needs work</strong>
-        <small>common selectors at _domainkey.tinystudio.io</small>
+        <span>DKIM</span>
+        <strong>ready</strong>
+        <small>resend._domainkey.tinystudio.io</small>
       </div>
 </div>
     </section>
@@ -112,18 +112,12 @@
       <h2>Fix First</h2>
       <ol>
       <li><strong>missing physical postal address</strong><br>Commercial email needs a valid physical postal address. Use a business address, PO box, or private mailbox before cold email.</li>
-
-
-      <li><strong>outbound mail path is inbound-only</strong><br>MX records point at Cloudflare Email Routing (route3.mx.cloudflare.net, route1.mx.cloudflare.net, route2.mx.cloudflare.net), which forwards inbound mail only. Connect a sending provider (Google Workspace, Zoho Mail, Outlook, Resend, Postmark, or SendGrid), enable DKIM there, then save its exact selector as dkimSelector.</li>
-
-
-      <li><strong>DKIM selector not configured</strong><br>Set dkimSelector after enabling DKIM in the mail provider. No common DKIM selectors were found in DNS.</li>
 </ol>
     </section>
     <section>
       <h2>DKIM Discovery</h2>
       <div class="grid"><p>No common DKIM selector found in DNS yet.</p></div>
-      <p><code>npm run send:configure -- --physical-address=&quot;...&quot; --dkim-selector=... --dry-run</code></p>
+      <p><code>npm run send:configure -- --physical-address=&quot;...&quot; --dkim-selector=resend --dry-run</code></p>
     </section>
     <section>
       <h2>Order</h2>
@@ -131,7 +125,7 @@
         <li>Connect an outbound sending provider (Cloudflare Email Routing forwards inbound mail only and cannot send).</li>
         <li>Add the sender postal address in <code>agency-config.json</code> (business address, PO box, or private mailbox).</li>
         <li>Enable DKIM in the outbound provider and copy the selector.</li>
-        <li>Add the DKIM TXT record in Cloudflare DNS at <code>&lt;selector&gt;._domainkey.tinystudio.io</code>.</li>
+        <li>Add the DKIM TXT record in Cloudflare DNS at <code>resend._domainkey.tinystudio.io</code>.</li>
         <li>Save the selector as <code>dkimSelector</code>.</li>
         <li>Run <code>npm run send:setup</code>.</li>
       </ol>
