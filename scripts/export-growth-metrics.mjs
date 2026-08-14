@@ -8,14 +8,14 @@ import { checkProspectReadiness } from "./lib/prospect-readiness.mjs";
 import { isValidLoomUrl } from "./lib/loom-url.mjs";
 import { loadValidatedServiceClients } from "./lib/validated-service-client.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
-import { runRepoJson } from "./lib/runtime-roots.mjs";
+import { runRepoJson, serviceRoot } from "./lib/runtime-roots.mjs";
 
 handleHelp(process.argv.slice(2), `Usage: node scripts/export-growth-metrics.mjs [--output=growth-brain/ops/live-metrics.md] [--plain]`);
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const outputPath = resolveOutputPath(outputArg?.split("=").slice(1).join("="), { fallback: "growth-brain/ops/live-metrics.md" });
 const plain = process.argv.includes("--plain");
 const today = localIsoDate();
-const repoRoot = process.env.SERVICE_REPO_ROOT || process.cwd();
+const repoRoot = serviceRoot;
 
 function listFolders(root) {
   if (root === "prospects" || root.endsWith("/prospects")) return listOutboundProspectFolders(root).filter((path) => !/(^|\/)(?:kit|import)-smoke/.test(path));
