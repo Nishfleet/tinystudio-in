@@ -238,6 +238,16 @@ try {
 	eq(result.status, 0)
 	eq(JSON.parse(result.stdout).status, "pass")
 
+	// The canonical workspace must resolve by git-dir ownership, not by list
+	// position or by which worktree holds `refs/heads/main`. When the twin is
+	// the first porcelain entry (e.g. the main worktree is detached), the gate
+	// still has to inspect the main worktree's state — never the twin's.
+	{
+		const {canonicalMainWorktree} = await import("./lib/retention-preflight.mjs")
+		const canonical = canonicalMainWorktree(repoDir)
+		eq(canonical, repoDir, "canonical workspace must be the git-dir owner even when the twin holds main and heads the porcelain list")
+	}
+
 	// Automation pointed at the twin fails: the twin is not the TinyStudio repo.
 	writeAutomation(RETENTION_AUTOMATION_PROMPT, twinDir)
 	result = run()
