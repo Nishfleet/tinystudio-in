@@ -16,7 +16,8 @@
 //     must still carry the neutral merged fixes used as deploy proof
 //     (H2-after-H1 on /promptly/support/ from #18/#20, JSON-LD on /contact/
 //     from #19, homepage brand disambiguation from #29, top-level real 404
-//     page from #34).
+//     page from #34, and the PR #26 site-wide invariant that every public
+//     page keeps its JSON-LD block).
 //
 // CLI: node scripts/prepare-public-deploy-bundle.mjs --source public --output <dir>
 // Defaults: --source ./public, --output to a fresh temp directory (printed).
@@ -94,6 +95,59 @@ export const NEUTRAL_PROOFS = [
       /<title>[^<]*not found[^<]*<\/title>/i.test(html) &&
       !html.includes("<title>Tiny Studio | Promptly, Drishti, and 0509") &&
       /<meta name="robots" content="noindex">/.test(html),
+  },
+  // Site-wide structured data invariant (PR #26): the 07acd07 bundle shipped
+  // JSON-LD on only 4 of 12 pages; the release lane must never do that again.
+  // Each remaining public page keeps exactly one application/ld+json block.
+  {
+    label: "support page JSON-LD (07acd07 baseline)",
+    file: "support/index.html",
+    test: (html) => html.includes("application/ld+json"),
+  },
+  {
+    label: "privacy hub JSON-LD (PR #26)",
+    file: "privacy/index.html",
+    test: (html) => html.includes("application/ld+json"),
+  },
+  {
+    label: "terms page JSON-LD (PR #26)",
+    file: "terms/index.html",
+    test: (html) => html.includes("application/ld+json"),
+  },
+  {
+    label: "privacy choices JSON-LD (PR #26)",
+    file: "privacy-choices/index.html",
+    test: (html) => html.includes("application/ld+json"),
+  },
+  {
+    label: "Promptly home JSON-LD (07acd07 baseline)",
+    file: "promptly/index.html",
+    test: (html) => html.includes("application/ld+json"),
+  },
+  {
+    label: "Promptly support JSON-LD (PR #26)",
+    file: "promptly/support/index.html",
+    test: (html) => html.includes("application/ld+json"),
+  },
+  {
+    label: "Promptly privacy JSON-LD (PRs #19/#26)",
+    file: "promptly/privacy/index.html",
+    test: (html) => html.includes("application/ld+json"),
+  },
+  {
+    label: "Drishti home JSON-LD (07acd07 baseline)",
+    file: "drishti/index.html",
+    test: (html) => html.includes("application/ld+json"),
+  },
+  {
+    label: "Drishti support JSON-LD (PR #26)",
+    file: "drishti/support/index.html",
+    test: (html) => html.includes("application/ld+json"),
+  },
+  {
+    label: "Drishti privacy JSON-LD (PR #26)",
+    file: "drishti/privacy/index.html",
+    test: (html) => html.includes("application/ld+json"),
   },
 ]
 
