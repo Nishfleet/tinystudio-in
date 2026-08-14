@@ -29,7 +29,36 @@ const dkimSelectorCandidates = [
   "pm",
   "mx",
   "sig1",
-  "sig2"
+  "sig2",
+  // Resend, Postmark, Mailgun, Amazon SES, Mailjet, Brevo, SparkPost, Klaviyo,
+  // HubSpot, Mailchimp, Elastic Email, MailerSend, Fastmail, Yandex, ProtonMail
+  // bridge, Mailgun alt, Mailchimp transactional, and Postmark alt selectors.
+  // Without these the sender trust check would miss a real selector the
+  // provider published in DNS and flag it as unconfigured.
+  "resend",
+  "postmark",
+  "mg",
+  "amazonses",
+  "ses",
+  "mailjet",
+  "brevo",
+  "sendinblue",
+  "sparkpost",
+  "sp",
+  "klaviyo",
+  "hubspot",
+  "hs1",
+  "hs2",
+  "mailchimp",
+  "mc",
+  "elasticemail",
+  "ee",
+  "mailersend",
+  "ms",
+  "fastmail",
+  "fm1",
+  "fm2",
+  "tutanota"
 ];
 
 function senderDomain() {
