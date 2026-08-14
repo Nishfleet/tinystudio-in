@@ -8,8 +8,9 @@ name: Live Site Check
 # blocking chain must stay green on repo state alone.
 #
 # This job is expected to FAIL while the deployment is stale (currently the
-# June-20 bundle); the red run is the loud signal to re-deploy from
-# origin/main, not a reason to disable the workflow.
+# 2026-06-20 bundle, which still serves pre-2026-08-07 public fixes); the red
+# run is the loud signal to re-deploy from origin/main, not a reason to
+# disable the workflow.
 
 on:
   schedule:
@@ -46,3 +47,13 @@ jobs:
           cache: npm
       - run: npm ci --ignore-scripts
       - run: node scripts/test-public-live-contact-heading-hierarchy.mjs
+  live-social-preview:
+    runs-on: [self-hosted, linux, x64, vps-verify]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: node scripts/check-public-live-social-preview.mjs

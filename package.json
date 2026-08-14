@@ -16,6 +16,7 @@
     "site:prepare": "node scripts/prepare-static-site-bundle.mjs",
     "site:check-live": "node scripts/check-public-live-soft-404.mjs",
     "site:check-live-contact-heading-hierarchy": "node scripts/test-public-live-contact-heading-hierarchy.mjs",
+    "site:check-live-social-preview": "node scripts/check-public-live-social-preview.mjs",
     "claims:check": "node scripts/check-outbound-claim-safety.mjs",
     "config:check": "node scripts/check-agency-defaults.mjs",
     "send:configure": "node scripts/configure-sender-setup.mjs",
