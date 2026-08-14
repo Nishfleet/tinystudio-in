@@ -877,6 +877,11 @@ h4 {
     max-width: 9ch;
   }
 
+  .page-hero-card h1 {
+    font-size: clamp(2.1rem, 5.6vw, 3.4rem);
+    max-width: none;
+  }
+
   .product-row,
   .portfolio-row {
     grid-template-columns: 1fr;
