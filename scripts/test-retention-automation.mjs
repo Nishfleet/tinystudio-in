@@ -149,8 +149,9 @@ try {
 	eq(out.freshness.localHead, out.freshness.remoteMain)
 	eq(out.freshness.remoteMain, remoteSha.slice(0, 7))
 
-	// Legacy no-client state: automation missing with no records still passes
-	// with a warning once the preflight is aligned.
+	// No-client state with the automation file missing must fail: the
+	// scheduled loop is required before the first client is active, and an
+	// aligned-but-empty workspace without the guard must not green-pass.
 	rmSync(automationPath, {force: true})
 	rmSync(join(serviceRoot, "clients"), {recursive: true, force: true})
 	mkdirSync(join(serviceRoot, "clients"))
@@ -162,8 +163,22 @@ try {
 	mkdirSync(join(serviceRoot, "runs/service-engine"), {recursive: true})
 
 	result = run()
+	neq(result.status, 0)
+	out = JSON.parse(result.stdout)
+	eq(out.clientCount, 0)
+	assert(out.failures.includes("Automation file is missing"), "empty workspace without the automation guard must fail closed")
+
+	// A no-client state with the automation in place is a legitimate aligned
+	// pass: the guard exists, the workspace is fresh, and the loop is armed
+	// for the first client.
+	writeAutomation(RETENTION_AUTOMATION_PROMPT)
+	result = run()
 	eq(result.status, 0)
-	eq(JSON.parse(result.stdout).clientCount, 0)
+	out = JSON.parse(result.stdout)
+	eq(out.clientCount, 0)
+	eq(out.status, "pass")
+	deq(out.failures, [])
+	rmSync(automationPath, {force: true})
 
 	mkdirSync(join(serviceRoot, "prospects", "paid-service-client"), {recursive: true})
 	writeFileSync(join(serviceRoot, "prospects", "paid-service-client", "service-day0.json"), "{}\n")
