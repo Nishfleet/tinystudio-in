@@ -47,3 +47,8 @@ The item's underlying defect — a CodeQL job that reported green "SKIPPED" on e
 
 - `.lane/reports/docs-lane1-codeql-private-repo-gate-reverify-20260815.md` — this report (unique to this lane)
 - No repository source files changed.
+
+## PR
+
+- Branch `docs/lane1-codeql-private-repo-gate-reverify-20260815` (commit `34b3577`)
+- PR: https://github.com/nish3451/tinystudio-in/pull/183
