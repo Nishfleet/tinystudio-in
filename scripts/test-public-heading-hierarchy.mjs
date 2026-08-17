@@ -209,8 +209,8 @@ const startPublicServer = () =>
     server.listen(0, "127.0.0.1", () => resolve(server))
   })
 
-const measurePage = async (chromium, origin, path, width) => {
-  const page = await chromium.newPage({ viewport: { width, height: 844 }, isMobile: true })
+const measurePage = async (chromium, origin, path, width, height = 844) => {
+  const page = await chromium.newPage({ viewport: { width, height }, isMobile: true })
   try {
     const response = await page.goto(`${origin}${path}`, { waitUntil: "domcontentloaded" })
     const metrics = await page.evaluate(() => {
@@ -225,7 +225,8 @@ const measurePage = async (chromium, origin, path, width) => {
         headingClientWidth: heading ? heading.clientWidth : 0,
         overflowWrap: heading ? getComputedStyle(heading).overflowWrap : "",
         overflowX: getComputedStyle(document.documentElement).overflowX,
-        ctaVisible: cta ? ctaRect.top < innerHeight && ctaRect.bottom >= 0 : false,
+        ctaVisible: cta ? ctaRect.top >= 0 && ctaRect.bottom <= innerHeight : false,
+        ctaFullyInFold: cta ? ctaRect.top >= 0 && ctaRect.bottom <= innerHeight * 0.95 : false,
         ctaTop: ctaRect ? ctaRect.top : -1,
         ctaBottom: ctaRect ? ctaRect.bottom : -1,
         ctaText: cta ? cta.innerText.replace(/\s+/g, " ").trim() : ""
@@ -248,6 +249,7 @@ if (!chromiumLauncher) {
   try {
     const promptly320 = await measurePage(browser, origin, "/promptly/", 320)
     const promptly390 = await measurePage(browser, origin, "/promptly/", 390)
+    const promptly390Short = await measurePage(browser, origin, "/promptly/", 390, 667)
     ok(promptly320.status === 200, `/promptly/ at 320 returns 200 (got ${promptly320.status})`)
     ok(promptly390.status === 200, `/promptly/ at 390 returns 200 (got ${promptly390.status})`)
     ok(promptly320.heading === PROMPTLY_H1, "rendered Promptly H1 copy is unchanged at 320")
@@ -277,8 +279,8 @@ if (!chromiumLauncher) {
       "document overflow-x is not hidden"
     )
     ok(
-      promptly320.ctaVisible && promptly390.ctaVisible,
-      "Promptly early-access CTA is fully within the first mobile viewport"
+      promptly320.ctaFullyInFold && promptly390.ctaFullyInFold && promptly390Short.ctaFullyInFold,
+      `Promptly early-access CTA is fully within the first mobile viewport (320: top=${promptly320.ctaTop} bottom=${promptly320.ctaBottom}; 390: top=${promptly390.ctaTop} bottom=${promptly390.ctaBottom}; 390x667: top=${promptly390Short.ctaTop} bottom=${promptly390Short.ctaBottom})`
     )
     ok(
       promptly320.ctaText === "Get early access" && promptly390.ctaText === "Get early access",
@@ -298,9 +300,10 @@ if (!chromiumLauncher) {
       )
       if (path === "/drishti/") {
         const drishti390 = await measurePage(browser, origin, "/drishti/", 390)
+        const drishti390Short = await measurePage(browser, origin, "/drishti/", 390, 667)
         ok(
-          drishti390.ctaVisible,
-          "Drishti early-access CTA is fully within the first mobile viewport"
+          drishti390.ctaFullyInFold && drishti390Short.ctaFullyInFold,
+          `Drishti early-access CTA is fully within the first mobile viewport at 390 (top=${drishti390.ctaTop} bottom=${drishti390.ctaBottom}) and at 390x667 (top=${drishti390Short.ctaTop} bottom=${drishti390Short.ctaBottom})`
         )
         ok(
           drishti390.ctaText === "Get early access",
