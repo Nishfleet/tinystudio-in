@@ -206,6 +206,58 @@ function create(repoPath, requestedOutput) {
 	}
 }
 
+function restore(repoPath, inputPath) {
+	const verified = verify(repoPath, inputPath)
+	const repoRoot = realpathSync(resolve(repoPath))
+	const manifest = validateManifest(JSON.parse(readFileSync(join(verified.input, MANIFEST), "utf8")))
+	const roots = [...RECORD_ROOTS, OUTPUT_ROOT].filter(root => verified.roots.includes(root))
+	const release = acquireLock(queuePaths(repoRoot).lockDir)
+	let staging = ""
+	let swapped = []
+	let committed = false
+	try {
+		for (const root of roots) {
+			assert(!entryExists(join(repoRoot, root)), `restore target already exists: ${root}`)
+		}
+		staging = join(dirname(repoRoot), `.service-restore-staging-${randomUUID()}`)
+		mkdirSync(staging, {mode: 0o700})
+		chmodSync(staging, 0o700)
+		for (const root of roots) {
+			const destination = join(staging, root)
+			privateDirectory(destination, staging)
+			walk(join(verified.input, root), {copyTo: destination})
+		}
+		assert.deepEqual(walk(staging, {verifyModes: true}), manifest.entries, "staged restore does not match the backup manifest")
+		for (const root of roots) {
+			const target = join(repoRoot, root)
+			mkdirSync(dirname(target), {recursive: true})
+			renameSync(join(staging, root), target)
+			swapped.push(root)
+			if (process.env.SERVICE_BACKUP_TEST_INTERRUPT_SWAP === "1") {
+				throw new Error("service state restore interrupted mid-swap (test injection)")
+			}
+		}
+		committed = true
+		for (const root of swapped) {
+			let current = dirname(join(repoRoot, root))
+			while (current !== repoRoot && containedBy(repoRoot, current)) {
+				chmodSync(current, 0o700)
+				current = dirname(current)
+			}
+		}
+		if (staging) rmSync(staging, {recursive: true, force: true})
+		return {status: "restored", input: verified.input, target: repoRoot, roots, files: verified.files}
+	} catch (error) {
+		if (!committed) {
+			for (const root of swapped) rmSync(join(repoRoot, root), {recursive: true, force: true})
+		}
+		if (staging) rmSync(staging, {recursive: true, force: true})
+		throw error
+	} finally {
+		release()
+	}
+}
+
 function option(args, name) {
 	const index = args.findIndex(value => value === `--${name}` || value.startsWith(`--${name}=`))
 	if (index < 0) return ""
@@ -214,9 +266,10 @@ function option(args, name) {
 
 try {
 	const [mode, ...args] = process.argv.slice(2)
-	assert(["create", "verify"].includes(mode), "usage: service-state-backup.mjs create --output /absolute/path | verify --input /absolute/path")
+	assert(["create", "verify", "restore"].includes(mode), "usage: service-state-backup.mjs create --output /absolute/path | verify --input /absolute/path | restore --input /absolute/path")
 	const repoRoot = process.env.SERVICE_REPO_ROOT || process.cwd()
-	console.log(JSON.stringify(mode === "create" ? create(repoRoot, option(args, "output")) : verify(repoRoot, option(args, "input")), null, 2))
+	const result = mode === "create" ? create(repoRoot, option(args, "output")) : mode === "verify" ? verify(repoRoot, option(args, "input")) : restore(repoRoot, option(args, "input"))
+	console.log(JSON.stringify(result, null, 2))
 } catch (error) {
 	console.error(`service state backup failed: ${error.message}`)
 	process.exit(1)
