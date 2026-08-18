@@ -2,14 +2,16 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { isAbsolute, join, resolve } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 import { checkProspectReadiness } from "./lib/prospect-readiness.mjs";
 import { isValidLoomUrl } from "./lib/loom-url.mjs";
 import { loadValidatedServiceClients } from "./lib/validated-service-client.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 import { runRepoJson } from "./lib/runtime-roots.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: node scripts/export-growth-metrics.mjs [--output=growth-brain/ops/live-metrics.md] [--plain]`);
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
-const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/live-metrics.md";
+const outputPath = resolveOutputPath(outputArg?.split("=").slice(1).join("="), { fallback: "growth-brain/ops/live-metrics.md" });
 const plain = process.argv.includes("--plain");
 const today = localIsoDate();
 const repoRoot = process.env.SERVICE_REPO_ROOT || process.cwd();

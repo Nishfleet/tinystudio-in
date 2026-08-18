@@ -2,6 +2,7 @@
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { isAbsolute, join, relative, resolve } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 import { checkProspectReadiness, prospectWarningWeight } from "./lib/prospect-readiness.mjs";
 import { isValidLoomUrl } from "./lib/loom-url.mjs";
 import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
@@ -10,8 +11,10 @@ import { canonicalProspectAsk } from "./lib/canonical-service-copy.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 import { runRepoJson, serviceRoot } from "./lib/runtime-roots.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: node scripts/export-market-proof-run.mjs [--output=growth-brain/ops/11-10-proof-run.md] [--loom-links=prospects/loom-links.txt] [--limit=5] [--skip-kit]`);
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
-const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/11-10-proof-run.md";
+const outputRel = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/11-10-proof-run.md";
+const outputPath = resolveOutputPath(outputRel, { fallback: "growth-brain/ops/11-10-proof-run.md" });
 const loomLinksArg = process.argv.find((arg) => arg.startsWith("--loom-links="));
 const skipKit = process.argv.includes("--skip-kit");
 const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
@@ -19,7 +22,7 @@ const limit = limitArg ? Number(limitArg.split("=")[1]) : 5;
 const today = localIsoDate();
 const loomLinksPath = loomLinksArg
   ? loomLinksArg.split("=")[1]
-  : outputPath.startsWith("prospects/kit-")
+  : outputRel.startsWith("prospects/kit-")
     ? "prospects/kit-proof-run-loom-links.txt"
     : "prospects/loom-links.txt";
 
@@ -201,7 +204,7 @@ function directionGateCounts(loomRows, prospectRows) {
   };
 }
 
-const parityOutputPath = outputPath.startsWith("prospects/kit-")
+const parityOutputPath = outputRel.startsWith("prospects/kit-")
   ? "prospects/kit-market-proof-run-parity.md"
   : "prospects/market-proof-run-parity.md";
 const resolvedParityOutputPath = isAbsolute(parityOutputPath) ? parityOutputPath : join(serviceRoot, parityOutputPath);
