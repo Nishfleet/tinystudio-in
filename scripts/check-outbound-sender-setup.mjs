@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { resolveTxt } from "node:dns/promises";
+import { resolveMx, resolveTxt } from "node:dns/promises";
 import { agencyConfig } from "./lib/agency-config.mjs";
 
 const strict = process.argv.includes("--strict");
@@ -29,7 +29,36 @@ const dkimSelectorCandidates = [
   "pm",
   "mx",
   "sig1",
-  "sig2"
+  "sig2",
+  // Resend, Postmark, Mailgun, Amazon SES, Mailjet, Brevo, SparkPost, Klaviyo,
+  // HubSpot, Mailchimp, Elastic Email, MailerSend, Fastmail, Yandex, ProtonMail
+  // bridge, Mailgun alt, Mailchimp transactional, and Postmark alt selectors.
+  // Without these the sender trust check would miss a real selector the
+  // provider published in DNS and flag it as unconfigured.
+  "resend",
+  "postmark",
+  "mg",
+  "amazonses",
+  "ses",
+  "mailjet",
+  "brevo",
+  "sendinblue",
+  "sparkpost",
+  "sp",
+  "klaviyo",
+  "hubspot",
+  "hs1",
+  "hs2",
+  "mailchimp",
+  "mc",
+  "elasticemail",
+  "ee",
+  "mailersend",
+  "ms",
+  "fastmail",
+  "fm1",
+  "fm2",
+  "tutanota"
 ];
 
 function senderDomain() {
@@ -42,6 +71,17 @@ async function txtRecords(domain) {
   try {
     const records = await resolveTxt(domain);
     return records.map((record) => record.join(""));
+  } catch {
+    return [];
+  }
+}
+
+async function mxRecords(domain) {
+  try {
+    const records = await resolveMx(domain);
+    return records
+      .sort((a, b) => a.priority - b.priority)
+      .map((record) => record.exchange.toLowerCase());
   } catch {
     return [];
   }
@@ -90,6 +130,21 @@ if (!domain) {
   const dmarc = dmarcTxt.find((record) => /^v=DMARC1\b/i.test(record));
   checks.push({ name: "DMARC", status: dmarc ? "found" : "missing", domain: dmarcDomain });
   if (!dmarc) warn("missing DMARC", `No DMARC TXT record found for ${dmarcDomain}.`);
+
+  const mx = await mxRecords(domain);
+  if (mx.length) {
+    const inboundOnly = mx.every((host) => /^route\d+\.mx\.cloudflare\.net\.?$/.test(host));
+    checks.push({ name: "Outbound mail path", status: inboundOnly ? "missing" : "found", domain: mx.join(", ") });
+    if (inboundOnly && !config.dkimSelector) {
+      warn(
+        "outbound mail path is inbound-only",
+        `MX records point at Cloudflare Email Routing (${mx.join(", ")}), which forwards inbound mail only. Connect a sending provider (Google Workspace, Zoho Mail, Outlook, Resend, Postmark, or SendGrid), enable DKIM there, then save its exact selector as dkimSelector.`
+      );
+    }
+  } else {
+    checks.push({ name: "Outbound mail path", status: "missing", domain: `no MX records for ${domain}` });
+    warn("no MX records for sender domain", "No MX records exist, so replies to the sender address would bounce. Add MX records or use a sender domain that can receive replies before cold email.");
+  }
 
   if (config.dkimSelector) {
     const dkimDomain = `${config.dkimSelector}._domainkey.${domain}`;
