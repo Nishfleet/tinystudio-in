@@ -2,8 +2,10 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, join } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
 const args = process.argv.slice(2);
+handleHelp(args, `Usage: node scripts/export-client-repeatable-workflow.mjs clients/client-slug [--output=...] [--html=...]`);
 const clientPath = args.find((arg) => !arg.startsWith("--"));
 const outputArg = args.find((arg) => arg.startsWith("--output="));
 const htmlArg = args.find((arg) => arg.startsWith("--html="));
@@ -19,8 +21,8 @@ if (!existsSync(clientPath)) {
   process.exit(1);
 }
 
-const outputPath = outputArg ? outputArg.split("=").slice(1).join("=") : join(clientPath, "ops/repeatable-workflow.md");
-const htmlPath = htmlArg ? htmlArg.split("=").slice(1).join("=") : join(clientPath, "ops/repeatable-workflow.html");
+const outputPath = resolveOutputPath(outputArg?.split("=").slice(1).join("="), { fallback: join(clientPath, "ops/repeatable-workflow.md") });
+const htmlPath = resolveOutputPath(htmlArg?.split("=").slice(1).join("="), { flag: "--html", fallback: join(clientPath, "ops/repeatable-workflow.html") });
 
 function read(relativePath) {
   const path = join(clientPath, relativePath);

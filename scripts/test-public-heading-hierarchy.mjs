@@ -1,6 +1,8 @@
-import { readFileSync } from "node:fs"
+import { createServer } from "node:http"
+import { readFile, readFileSync } from "node:fs"
+import { createRequire } from "node:module"
+import { dirname, extname, join } from "node:path"
 import { fileURLToPath } from "node:url"
-import { dirname, join } from "node:path"
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 const read = (p) => readFileSync(join(ROOT, p), "utf8")
@@ -16,7 +18,9 @@ const ok = (cond, msg) => {
   }
 }
 
-// The exact public pages covered by the heading-hierarchy finding.
+// The exact public pages covered by the card-heading finding. The homepage
+// (public/index.html) is covered separately in section D below, including
+// the managed-service section's H2 -> H3 outline.
 const AFFECTED_PAGES = [
   "public/contact/index.html",
   "public/promptly/index.html",
@@ -85,7 +89,42 @@ ok(
   "the old .info-card h3-only rule is replaced by the shared :is(h2, h3) rule"
 )
 
-console.log("C. npm test/ci wiring")
+console.log("D. homepage managed-service heading hierarchy")
+const home = read("public/index.html")
+const homeLevels = headingLevelsOf(home)
+ok(homeLevels.filter((l) => l === 1).length === 1, "homepage has exactly one H1")
+ok(homeLevels[0] === 1, "the H1 is the first heading in the homepage outline")
+let homeJumps = 0
+for (let i = 1; i < homeLevels.length; i++) {
+  if (homeLevels[i] - homeLevels[i - 1] > 1) {
+    homeJumps++
+    console.error(`    bad transition H${homeLevels[i - 1]} -> H${homeLevels[i]}`)
+  }
+}
+ok(homeJumps === 0, "homepage outline has no heading-level jump greater than one")
+const serviceStart = home.indexOf('<section class="shape" id="managed-service"')
+ok(serviceStart !== -1, "homepage contains the #managed-service section")
+if (serviceStart !== -1) {
+  const serviceEnd = home.indexOf("</section>", serviceStart)
+  const serviceLevels = headingLevelsOf(home.slice(serviceStart, serviceEnd))
+  ok(
+    serviceLevels.length >= 2 && serviceLevels[0] === 2 && serviceLevels[1] === 3,
+    `managed-service section starts H2 then H3 (got H${serviceLevels.join(" -> H")})`
+  )
+}
+
+console.log("E. managed-service heading CSS pairing")
+const teamRuleStart = css.indexOf(".team-feature :is(h3, h4) {")
+ok(teamRuleStart !== -1, "styles.css defines .team-feature :is(h3, h4) {")
+const teamRuleEnd = css.indexOf("}", teamRuleStart)
+const teamRuleBody = teamRuleStart === -1 ? "" : css.slice(teamRuleStart, teamRuleEnd)
+ok(teamRuleBody.includes("margin-top: 12px"), "team-feature rule keeps margin-top: 12px")
+ok(
+  /\.team-feature h3\s*{[^}]*font-size: clamp\(1\.55rem, 1\.8vw, 2rem\)/.test(css),
+  ".team-feature h3 keeps the former h4 heading scale"
+)
+
+console.log("F. npm test/ci wiring")
 const pkg = JSON.parse(read("package.json"))
 ok(
   pkg.scripts.test.includes("test-public-heading-hierarchy.mjs"),
@@ -95,6 +134,185 @@ ok(
   pkg.scripts.ci.includes("test-public-heading-hierarchy.mjs"),
   "npm run ci runs the public heading hierarchy test"
 )
+
+const PROMPTLY_H1 = "Promptly keeps solo professionals booked, prepared, and harder to ghost."
+const h1Rule = css.match(/(?:^|\n)h1\s*{[^}]*}/)?.[0] ?? ""
+const htmlRule = css.match(/(?:^|\n)html\s*{[^}]*}/)?.[0] ?? ""
+const bodyRule = css.match(/(?:^|\n)body\s*{[^}]*}/)?.[0] ?? ""
+
+console.log("D. Promptly 320px heading wrap (source)")
+const promptlyHtml = read("public/promptly/index.html")
+const promptlyH1 = (promptlyHtml.match(/<h1>([\s\S]*?)<\/h1>/)?.[1] ?? "").replace(/\s+/g, " ").trim()
+ok(promptlyH1 === PROMPTLY_H1, "Promptly H1 copy is unchanged")
+ok(
+  /overflow-wrap:\s*(anywhere|break-word)/.test(h1Rule),
+  "shared h1 rule wraps long unbreakable words inside its box"
+)
+ok(
+  !/overflow-x:\s*hidden/.test(htmlRule) &&
+    !/overflow-x:\s*hidden/.test(bodyRule) &&
+    !/overflow-x:\s*hidden/.test(h1Rule),
+  "does not mask overflow with html/body/h1 overflow-x: hidden"
+)
+
+const MIME = {
+  ".html": "text/html; charset=utf-8",
+  ".css": "text/css; charset=utf-8",
+  ".js": "text/javascript; charset=utf-8",
+  ".svg": "image/svg+xml",
+  ".png": "image/png",
+  ".ico": "image/x-icon",
+  ".txt": "text/plain; charset=utf-8",
+  ".xml": "application/xml; charset=utf-8"
+}
+
+const loadChromium = () => {
+  const require = createRequire(import.meta.url)
+  const candidates = [
+    "playwright",
+    join(ROOT, "../0509/node_modules/playwright"),
+    "/home/nish/workspaces/products/0509/node_modules/playwright"
+  ]
+  for (const candidate of candidates) {
+    try {
+      return require(candidate).chromium
+    } catch {
+      // try the next resolver
+    }
+  }
+  return null
+}
+
+const startPublicServer = () =>
+  new Promise((resolve, reject) => {
+    const publicRoot = join(ROOT, "public")
+    const server = createServer((req, res) => {
+      const urlPath = decodeURIComponent((req.url || "/").split("?")[0])
+      const relative = urlPath.endsWith("/") ? `${urlPath}index.html` : urlPath
+      const file = join(publicRoot, relative)
+      if (file !== publicRoot && !file.startsWith(`${publicRoot}/`)) {
+        res.writeHead(403)
+        res.end("forbidden")
+        return
+      }
+      readFile(file, (err, body) => {
+        if (err) {
+          res.writeHead(404)
+          res.end("not found")
+          return
+        }
+        res.writeHead(200, { "content-type": MIME[extname(file)] || "application/octet-stream" })
+        res.end(body)
+      })
+    })
+    server.on("error", reject)
+    server.listen(0, "127.0.0.1", () => resolve(server))
+  })
+
+const measurePage = async (chromium, origin, path, width) => {
+  const page = await chromium.newPage({ viewport: { width, height: 844 }, isMobile: true })
+  try {
+    const response = await page.goto(`${origin}${path}`, { waitUntil: "domcontentloaded" })
+    const metrics = await page.evaluate(() => {
+      const heading = document.querySelector("h1")
+      const cta = document.querySelector('.action-row a.button[href^="mailto:"]')
+      const ctaRect = cta ? cta.getBoundingClientRect() : null
+      return {
+        heading: heading ? heading.innerText.replace(/\s+/g, " ").trim() : "",
+        scrollWidth: document.documentElement.scrollWidth,
+        clientWidth: document.documentElement.clientWidth,
+        headingScrollWidth: heading ? heading.scrollWidth : 0,
+        headingClientWidth: heading ? heading.clientWidth : 0,
+        overflowWrap: heading ? getComputedStyle(heading).overflowWrap : "",
+        overflowX: getComputedStyle(document.documentElement).overflowX,
+        ctaVisible: cta ? ctaRect.top < innerHeight && ctaRect.bottom >= 0 : false,
+        ctaTop: ctaRect ? ctaRect.top : -1,
+        ctaBottom: ctaRect ? ctaRect.bottom : -1,
+        ctaText: cta ? cta.innerText.replace(/\s+/g, " ").trim() : ""
+      }
+    })
+    return { status: response?.status() ?? 0, ...metrics }
+  } finally {
+    await page.close()
+  }
+}
+
+console.log("E. Promptly 320px heading wrap (layout)")
+const chromiumLauncher = loadChromium()
+if (!chromiumLauncher) {
+  console.log("  skip layout probe: playwright is not installed in this checkout")
+} else {
+  const server = await startPublicServer()
+  const origin = `http://127.0.0.1:${server.address().port}`
+  const browser = await chromiumLauncher.launch({ headless: true })
+  try {
+    const promptly320 = await measurePage(browser, origin, "/promptly/", 320)
+    const promptly390 = await measurePage(browser, origin, "/promptly/", 390)
+    ok(promptly320.status === 200, `/promptly/ at 320 returns 200 (got ${promptly320.status})`)
+    ok(promptly390.status === 200, `/promptly/ at 390 returns 200 (got ${promptly390.status})`)
+    ok(promptly320.heading === PROMPTLY_H1, "rendered Promptly H1 copy is unchanged at 320")
+    ok(promptly390.heading === PROMPTLY_H1, "rendered Promptly H1 copy is unchanged at 390")
+    ok(
+      promptly320.scrollWidth <= promptly320.clientWidth,
+      `Promptly document does not overflow at 320 (${promptly320.scrollWidth} <= ${promptly320.clientWidth})`
+    )
+    ok(
+      promptly390.scrollWidth <= promptly390.clientWidth,
+      `Promptly document does not overflow at 390 (${promptly390.scrollWidth} <= ${promptly390.clientWidth})`
+    )
+    ok(
+      promptly320.headingScrollWidth <= promptly320.headingClientWidth,
+      `Promptly heading wraps inside its box at 320 (${promptly320.headingScrollWidth} <= ${promptly320.headingClientWidth})`
+    )
+    ok(
+      promptly390.headingScrollWidth <= promptly390.headingClientWidth,
+      `Promptly heading wraps inside its box at 390 (${promptly390.headingScrollWidth} <= ${promptly390.headingClientWidth})`
+    )
+    ok(
+      ["anywhere", "break-word"].includes(promptly320.overflowWrap),
+      `Promptly heading overflow-wrap is a wrapping value at 320 (got ${promptly320.overflowWrap})`
+    )
+    ok(
+      promptly320.overflowX !== "hidden" && promptly390.overflowX !== "hidden",
+      "document overflow-x is not hidden"
+    )
+    ok(
+      promptly320.ctaVisible && promptly390.ctaVisible,
+      "Promptly early-access CTA is fully within the first mobile viewport"
+    )
+    ok(
+      promptly320.ctaText === "Get early access" && promptly390.ctaText === "Get early access",
+      `Promptly early-access CTA copy is unchanged (got "${promptly320.ctaText}" at 320)`
+    )
+
+    for (const path of ["/", "/drishti/"]) {
+      const sibling = await measurePage(browser, origin, path, 320)
+      ok(sibling.status === 200, `${path} at 320 returns 200 (got ${sibling.status})`)
+      ok(
+        sibling.scrollWidth <= sibling.clientWidth,
+        `${path} document stays inside 320 after the shared wrap (${sibling.scrollWidth} <= ${sibling.clientWidth})`
+      )
+      ok(
+        sibling.headingScrollWidth <= sibling.headingClientWidth,
+        `${path} heading stays inside its box at 320 (${sibling.headingScrollWidth} <= ${sibling.headingClientWidth})`
+      )
+      if (path === "/drishti/") {
+        const drishti390 = await measurePage(browser, origin, "/drishti/", 390)
+        ok(
+          drishti390.ctaVisible,
+          "Drishti early-access CTA is fully within the first mobile viewport"
+        )
+        ok(
+          drishti390.ctaText === "Get early access",
+          `Drishti early-access CTA copy is unchanged (got "${drishti390.ctaText}" at 390)`
+        )
+      }
+    }
+  } finally {
+    await browser.close()
+    await new Promise((resolve) => server.close(resolve))
+  }
+}
 
 console.log(`\n${checks} checks, ${failures} failures`)
 process.exit(failures === 0 ? 0 : 1)
