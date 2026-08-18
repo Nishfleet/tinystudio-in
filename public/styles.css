@@ -428,8 +428,15 @@ h4 {
   box-shadow: var(--shadow);
 }
 
-.team-feature h4 {
+/* The managed-service feature heading is a semantic H3 (section outline is
+   H2 -> H3), kept at the former h4 scale and margin so the block renders
+   identically to before the hierarchy repair. */
+.team-feature :is(h3, h4) {
   margin-top: 12px;
+}
+
+.team-feature h3 {
+  font-size: clamp(1.55rem, 1.8vw, 2rem);
 }
 
 .team-feature p {
@@ -868,6 +875,11 @@ h4 {
 
   h1 {
     max-width: 9ch;
+  }
+
+  .page-hero-card h1 {
+    font-size: clamp(2.1rem, 5.6vw, 3.4rem);
+    max-width: none;
   }
 
   .product-row,
