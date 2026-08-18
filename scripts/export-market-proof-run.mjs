@@ -2,6 +2,7 @@
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { isAbsolute, join, relative, resolve } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 import { checkProspectReadiness, prospectWarningWeight } from "./lib/prospect-readiness.mjs";
 import { isValidLoomUrl } from "./lib/loom-url.mjs";
 import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
@@ -10,8 +11,10 @@ import { canonicalProspectAsk } from "./lib/canonical-service-copy.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 import { runRepoJson, serviceRoot } from "./lib/runtime-roots.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: node scripts/export-market-proof-run.mjs [--output=growth-brain/ops/11-10-proof-run.md] [--loom-links=prospects/loom-links.txt] [--limit=5] [--skip-kit]`);
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
-const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/11-10-proof-run.md";
+const outputRel = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/11-10-proof-run.md";
+const outputPath = resolveOutputPath(outputRel, { fallback: "growth-brain/ops/11-10-proof-run.md" });
 const loomLinksArg = process.argv.find((arg) => arg.startsWith("--loom-links="));
 const skipKit = process.argv.includes("--skip-kit");
 const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
@@ -19,7 +22,7 @@ const limit = limitArg ? Number(limitArg.split("=")[1]) : 5;
 const today = localIsoDate();
 const loomLinksPath = loomLinksArg
   ? loomLinksArg.split("=")[1]
-  : outputPath.startsWith("prospects/kit-")
+  : outputRel.startsWith("prospects/kit-")
     ? "prospects/kit-proof-run-loom-links.txt"
     : "prospects/loom-links.txt";
 
@@ -201,7 +204,7 @@ function directionGateCounts(loomRows, prospectRows) {
   };
 }
 
-const parityOutputPath = outputPath.startsWith("prospects/kit-")
+const parityOutputPath = outputRel.startsWith("prospects/kit-")
   ? "prospects/kit-market-proof-run-parity.md"
   : "prospects/market-proof-run-parity.md";
 const resolvedParityOutputPath = isAbsolute(parityOutputPath) ? parityOutputPath : join(serviceRoot, parityOutputPath);
@@ -371,7 +374,25 @@ writeFileSync(resolvedOutputPath, markdown);
 
 const loomLinksDir = resolvedLoomLinksPath.split("/").slice(0, -1).join("/");
 if (loomLinksDir) mkdirSync(loomLinksDir, { recursive: true });
-const existingLoomRows = read(resolvedLoomLinksPath).split("\n").map((line) => line.trim()).filter((line) => line && !line.startsWith("#"));
+// Retired broad-agency promise language must never persist in the proof-run
+// sheet: it is the single source the brief tells the operator to record and
+// send from. Existing rows keep their operator-captured fault/impact/fix
+// notes and Loom URL, but any ask column that still names a retired offer is
+// refreshed to the canonical ask. Mirrors the retired-offer pattern in
+// check-outbound-send-readiness.mjs and export-recording-rehearsal-check.mjs.
+const retiredPromisePattern = /7[-\s]day (?:site|website) revenue (?:leak|fault) (?:fix )?sprint|7[-\s]day sprint|tangible revenue (?:leak|fault) sprint|30[-\s]day action plan|growth desk|three pages|founder sprint|\$\s?500\b/i;
+let refreshedAsks = 0;
+const existingLoomRows = read(resolvedLoomLinksPath)
+  .split("\n")
+  .map((line) => line.trim())
+  .filter((line) => line && !line.startsWith("#"))
+  .map((line) => {
+    if (!line.includes("|")) return line;
+    const parts = line.split("|");
+    if (parts.length < 7 || !retiredPromisePattern.test(parts[6])) return line;
+    refreshedAsks += 1;
+    return [...parts.slice(0, 6), cleanSheetNote(canonicalProspectAsk(), parts[6])].join("|");
+  });
 // Sheet row paths may be service-root relative or absolute; normalize both
 // sides before deduplicating so regeneration never appends a duplicate row.
 const sheetRowKey = (line) => {
@@ -394,5 +415,6 @@ console.log(JSON.stringify({
   blockers: parity.blockers.map((blocker) => blocker.area),
   selectedProspects: recordingBatch.map((prospect) => prospect.path),
   directionGate,
+  refreshedAsks,
   recommendedChannel: channelGuidance.recommendedChannel
 }, null, 2));
