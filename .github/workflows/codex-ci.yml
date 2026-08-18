@@ -17,7 +17,11 @@ concurrency:
 
 jobs:
   repo-checks:
-    runs-on: [self-hosted, linux, x64, vps-verify]
+    # The vps-verify self-hosted runners were halted 2026-08-18 (CI-OFFLOAD
+    # packet); this required check lane must run on GitHub-hosted runners or it
+    # hangs forever waiting for the dead runners. The checks here are pure
+    # Node (npm ci / npm run ci / npm audit) with no VPS-only dependency.
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
