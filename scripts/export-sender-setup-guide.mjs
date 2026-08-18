@@ -2,22 +2,21 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { agencyConfig } from "./lib/agency-config.mjs";
 import { localIsoDate } from "./date-utils.mjs";
-import { runRepoJson as runJson } from "./lib/runtime-roots.mjs";
 import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
+import { runRepoJson as runJson } from "./lib/runtime-roots.mjs";
 
-handleHelp(process.argv.slice(2), `Usage: npm run send:guide -- [--output=growth-brain/ops/sender-setup-guide.md] [--html=growth-brain/ops/sender-setup-guide.html]`);
+handleHelp(process.argv.slice(2), `Usage: node scripts/export-sender-setup-guide.mjs [--output=growth-brain/ops/sender-setup-guide.md] [--html=growth-brain/ops/sender-setup-guide.html]`);
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
-const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/sender-setup-guide.md";
+const outputPath = resolveOutputPath(outputArg?.split("=").slice(1).join("="), { fallback: "growth-brain/ops/sender-setup-guide.md" });
 const htmlArg = process.argv.find((arg) => arg.startsWith("--html="));
-const htmlPath = htmlArg ? htmlArg.split("=")[1] : "growth-brain/ops/sender-setup-guide.html";
+const htmlPath = resolveOutputPath(htmlArg?.split("=").slice(1).join("="), { flag: "--html", fallback: "growth-brain/ops/sender-setup-guide.html" });
 const today = localIsoDate();
 const config = agencyConfig();
 
-function write(path, content, flag = "--output") {
-  const resolved = resolveOutputPath(path, { flag });
-  const dir = resolved.split("/").slice(0, -1).join("/");
+function write(path, content) {
+  const dir = path.split("/").slice(0, -1).join("/");
   if (dir) mkdirSync(dir, { recursive: true });
-  writeFileSync(resolved, content);
+  writeFileSync(path, content);
 }
 
 function escapeHtml(value) {
@@ -55,10 +54,33 @@ function dkimCandidateRows(candidates) {
 const setup = runJson(["scripts/check-outbound-sender-setup.mjs"]);
 const dkimCandidates = setup.dkimCandidates || [];
 const firstDkimCandidate = dkimCandidates[0]?.selector || "";
-const configureCommand = `npm run send:configure -- --physical-address="..." --dkim-selector=${firstDkimCandidate || "..."} --dry-run`;
-const dkimHost = config.dkimSelector && setup.senderDomain
+const dkimSelectorConfigured = Boolean(config.dkimSelector);
+const dkimProviderStep = dkimSelectorConfigured
+  ? `DKIM is configured for \`${config.dkimSelector}\` at \`${config.dkimSelector}._domainkey.${setup.senderDomain}\`. Confirm the selector still matches the mail provider if you swap providers.`
+  : `In the outbound provider, enable DKIM and copy the selector.`;
+const dkimHost = dkimSelectorConfigured && setup.senderDomain
   ? `${config.dkimSelector}._domainkey.${setup.senderDomain}`
   : (firstDkimCandidate ? `${firstDkimCandidate}._domainkey.${setup.senderDomain}` : "<selector>._domainkey." + (setup.senderDomain || "tinystudio.io"));
+const physicalAddressStep = `Add a real sender postal address to \`senderPhysicalAddress\` in \`growth-brain/ops/agency-config.json\` (business address, PO box, or private mailbox). The address must be a published business location, never a placeholder.`;
+const providerConnectStep = `Connect an outbound sending provider for \`${setup.senderDomain || "the sender domain"}\` (Cloudflare Email Routing forwards inbound mail only and cannot send).`;
+const configureSelectorArg = config.dkimSelector ? `--dkim-selector=${config.dkimSelector}` : `--dkim-selector=${firstDkimCandidate || "..."}`;
+const configureCommand = `npm run send:configure -- --physical-address="..." ${configureSelectorArg} --dry-run`;
+const fixSteps = [];
+fixSteps.push(providerConnectStep);
+if (!config.senderPhysicalAddress) fixSteps.push(physicalAddressStep);
+if (!dkimSelectorConfigured) {
+  fixSteps.push(dkimProviderStep);
+  fixSteps.push(`Add the provider's DKIM TXT record in Cloudflare DNS at \`${dkimHost}\`.`);
+  fixSteps.push("Save the selector as `dkimSelector` in `growth-brain/ops/agency-config.json`.");
+} else {
+  fixSteps.push(dkimProviderStep);
+}
+fixSteps.push("Run `npm run send:setup`.");
+fixSteps.push("If it is clean, email can join contact forms and DMs as an outbound route.");
+const fixOrder = fixSteps.map((step, index) => `${index + 1}. ${step}`).join("\n");
+const dkimDiscoveryRow = dkimSelectorConfigured
+  ? `| ${config.dkimSelector} | ${dkimHost} |`
+  : "| - | No common DKIM selector found in DNS yet. |";
 
 const markdown = `# Sender Setup Guide
 
@@ -89,7 +111,7 @@ ${warningRows(setup.warnings || [])}
 
 | Selector | DNS Host |
 |---|---|
-${dkimCandidateRows(dkimCandidates)}
+${dkimDiscoveryRow}
 
 Suggested dry-run command:
 
@@ -99,12 +121,7 @@ ${configureCommand}
 
 ## Fix Order
 
-1. Add a real sender postal address to \`senderPhysicalAddress\` in \`growth-brain/ops/agency-config.json\`.
-2. In the mail provider for \`${setup.senderDomain || "the sender domain"}\`, enable DKIM and copy the selector.
-3. Add the selector to \`dkimSelector\` in \`growth-brain/ops/agency-config.json\`.
-4. If the mail provider gives a DKIM TXT record, add it in Cloudflare DNS at \`${dkimHost}\`.
-5. Run \`npm run send:setup\`.
-6. If it is clean, email can join contact forms and DMs as an outbound route.
+${fixOrder}
 
 ## Notes
 
@@ -236,10 +253,11 @@ const html = `<!doctype html>
     <section>
       <h2>Order</h2>
       <ol>
-        <li>Add the sender postal address in <code>agency-config.json</code>.</li>
-        <li>Enable DKIM in the mail provider and copy the selector.</li>
+        <li>Connect an outbound sending provider (Cloudflare Email Routing forwards inbound mail only and cannot send).</li>
+        <li>Add the sender postal address in <code>agency-config.json</code> (business address, PO box, or private mailbox).</li>
+        <li>Enable DKIM in the outbound provider and copy the selector.</li>
+        <li>Add the DKIM TXT record in Cloudflare DNS at <code>${escapeHtml(dkimHost)}</code>.</li>
         <li>Save the selector as <code>dkimSelector</code>.</li>
-        <li>Add the DKIM TXT record in Cloudflare if the provider gives one.</li>
         <li>Run <code>npm run send:setup</code>.</li>
       </ol>
     </section>
@@ -253,7 +271,7 @@ const html = `<!doctype html>
 `;
 
 write(outputPath, markdown);
-write(htmlPath, html, "--html");
+write(htmlPath, html);
 
 console.log(JSON.stringify({
   status: "created",

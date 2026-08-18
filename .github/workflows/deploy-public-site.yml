@@ -9,6 +9,19 @@ name: Deploy public site
 # fixes (H2-after-H1 on /promptly/support/, JSON-LD on /contact/, real 404s,
 # portfolio-only homepage).
 #
+# The lane is fail-closed and reversible:
+#   - Missing required secrets FAIL the run loudly. A skipped publish must
+#     never produce a green deploy status: green means "deployed and
+#     verified", nothing else. The old "dormant" green step hid the missing
+#     token behind green runs.
+#   - Before upload the lane captures the current production deployment
+#     identity as the rollback target and refuses to deploy without one
+#     (scripts/publish-public-site.mjs).
+#   - After upload the lane runs the live acceptance; on failure it restores
+#     the exact previous Pages deployment via the Cloudflare rollback API,
+#     re-verifies the restored identity, re-runs acceptance, and fails
+#     loudly if the rollback itself fails.
+#
 # Required secrets (fail-closed when missing - a skipped publish must never
 # produce a green deploy status):
 #   CLOUDFLARE_API_TOKEN  - Cloudflare API token with Cloudflare Pages:Edit
@@ -19,8 +32,8 @@ name: Deploy public site
 #
 # Missing wiring FAILS the run loudly instead of skipping the publish under
 # a green "dormant" status: green means "deployed and verified", nothing
-# else. Until both secrets exist every run of this lane is red with the
-# provisioning steps printed, and the nightly live-site-check.yml is the
+# else. Until both secrets exist the lane fails every main merge loudly with
+# the provisioning steps printed; the nightly live-site-check.yml is the
 # staleness alarm while the site is stale.
 
 on:
@@ -78,6 +91,6 @@ jobs:
         if: env.CLOUDFLARE_API_TOKEN != '' && env.CLOUDFLARE_ACCOUNT_ID != ''
         run: node scripts/publish-public-site.mjs --prepare-only --output "$RUNNER_TEMP/tinystudio-public-bundle"
 
-      - name: Publish to Cloudflare Pages and verify live
+      - name: Publish to Cloudflare Pages and verify live (auto-rollback on acceptance failure)
         if: env.CLOUDFLARE_API_TOKEN != '' && env.CLOUDFLARE_ACCOUNT_ID != ''
         run: node scripts/publish-public-site.mjs --deploy --bundle "$RUNNER_TEMP/tinystudio-public-bundle"

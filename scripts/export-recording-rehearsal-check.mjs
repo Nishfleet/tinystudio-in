@@ -5,18 +5,19 @@ import { checkProspectReadiness, prospectWarningWeight } from "./lib/prospect-re
 import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
 import { routedContactPlan } from "./lib/contact-route.mjs";
 import { localIsoDate } from "./date-utils.mjs";
-import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
+import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 
 const args = process.argv.slice(2);
-handleHelp(args, `Usage: npm run prospect:rehearsal -- [--limit=5] [--output=prospects/recording-rehearsal-check.md] [--html=prospects/recording-rehearsal-check.html]`);
+handleHelp(args, `Usage: node scripts/export-recording-rehearsal-check.mjs [--limit=5] [--output=prospects/recording-rehearsal-check.md] [--html=prospects/recording-rehearsal-check.html] [--include-smoke]`);
 const limitArg = args.find((arg) => arg.startsWith("--limit="));
 const outputArg = args.find((arg) => arg.startsWith("--output="));
 const htmlArg = args.find((arg) => arg.startsWith("--html="));
 const includeSmoke = args.includes("--include-smoke");
 const limit = limitArg ? Number(limitArg.split("=")[1]) : 5;
-const outputPath = outputArg ? outputArg.split("=")[1] : "prospects/recording-rehearsal-check.md";
-const htmlPath = htmlArg ? htmlArg.split("=")[1] : "prospects/recording-rehearsal-check.html";
+const outputRel = outputArg ? outputArg.split("=")[1] : "prospects/recording-rehearsal-check.md";
+const outputPath = resolveOutputPath(outputRel, { fallback: "prospects/recording-rehearsal-check.md" });
+const htmlPath = resolveOutputPath(htmlArg ? htmlArg.split("=")[1] : "prospects/recording-rehearsal-check.html", { flag: "--html", fallback: "prospects/recording-rehearsal-check.html" });
 const today = localIsoDate();
 
 function read(path) {
@@ -27,11 +28,10 @@ function json(path) {
   return existsSync(path) ? JSON.parse(readFileSync(path, "utf8")) : {};
 }
 
-function write(path, content, flag = "--output") {
-  const resolved = resolveOutputPath(path, { flag });
-  const dir = dirname(resolved);
+function write(path, content) {
+  const dir = dirname(path);
   if (dir && dir !== ".") mkdirSync(dir, { recursive: true });
-  writeFileSync(resolved, content);
+  writeFileSync(path, content);
 }
 
 function listFolders(root) {
@@ -394,7 +394,7 @@ const html = `<!doctype html>
 `;
 
 write(outputPath, markdown);
-write(htmlPath, html, "--html");
+write(htmlPath, html);
 
 console.log(JSON.stringify({
   status,

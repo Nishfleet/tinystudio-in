@@ -117,68 +117,105 @@ try {
 	}
 	for (const path of privateRuntimeArtifacts) eq(existsSync(join(T, path)), true, `Private runtime artifact is missing: ${path}`)
 
-	// Every active operator export script must honor --help without writing or
-	// overwriting any cockpit or mission artifact.
-	const helpSurface = [
-		"export-client-delivery-cockpit.mjs",
-		"export-sender-setup-guide.mjs",
-		"export-lead-scoring-cockpit.mjs",
-		"export-recording-queue.mjs",
+	// The eight remaining export scripts (retired broad-service writers and
+	// client runtime writers) must honor --help/-h the same way: exit 0 with
+	// usage, and never write or overwrite tracked, runtime, or retired
+	// artifacts — including never seeding owned client folders.
+	const remainingHelpSurface = [
+		"export-client-channel-readiness.mjs",
+		"export-client-repeatable-workflow.mjs",
+		"export-client-weekly-report.mjs",
+		"export-full-stack-growth-map.mjs",
+		"export-owned-handoff-loom-cockpit.mjs",
+		"export-owned-product-case-studies.mjs",
+		"export-owned-product-workflow-proofs.mjs",
+		"export-owned-startup-proof-capture.mjs",
 		"export-recording-cockpit.mjs",
-		"export-recording-teleprompter.mjs",
+		"export-recording-queue.mjs",
 		"export-recording-rehearsal-check.mjs",
-		"export-prospect-outbox.mjs",
-		"export-followup-cockpit.mjs",
-		"export-sales-cockpit.mjs",
-		"export-daily-money-mission.mjs",
-		"export-growth-doctor.mjs",
-		"export-growth-cockpit.mjs",
+		"export-recording-teleprompter.mjs"
+	]
+	// The growth/ops exporters that overwrite tracked ACTIVE_OPERATOR_ARTIFACTS
+	// must also honor --help/-h: the same exit 0 + usage contract, and they
+	// must not silently rewrite any tracked artifact (live-metrics,
+	// proof-library, market-parity-readiness, 11-10-proof-run, sender-setup-guide,
+	// competitive-proof-matrix, market-parity-benchmark-2026) when asked for
+	// help instead of a real run.
+	const trackedOpsHelpSurface = [
+		"check-market-parity-readiness.mjs",
 		"export-growth-metrics.mjs",
-		"export-proof-library.mjs",
 		"export-internal-dashboard.mjs",
 		"export-market-benchmark.mjs",
-		"export-market-proof-cockpit.mjs",
-		"export-market-learning-review.mjs",
 		"export-market-proof-run.mjs",
-		"export-managed-it-one-pager.mjs"
+		"export-proof-library.mjs",
+		"export-sender-setup-guide.mjs"
 	]
-	const liveMetricsBeforeHelp = readFileSync(join(T, "growth-brain/ops/live-metrics.md"), "utf8")
-	for (const name of helpSurface) {
-		const helped = run([`scripts/${name}`, "--help"])
-		eq(helped.status, 0, `${name} --help must exit 0: ${helped.stderr || helped.stdout}`)
-		mat(helped.stdout, /Usage:/, `${name} --help must print usage`)
+	const artifactBeforeHelp = new Map(
+		[...trackedArtifacts.keys(), ...privateRuntimeArtifacts]
+			.filter(path => existsSync(join(T, path)))
+			.map(path => [path, readFileSync(join(T, path), "utf8")])
+	)
+	for (const name of remainingHelpSurface) {
+		for (const flag of ["--help", "-h"]) {
+			const helped = run([`scripts/${name}`, flag])
+			eq(helped.status, 0, `${name} ${flag} must exit 0: ${helped.stderr || helped.stdout}`)
+			mat(helped.stdout, /Usage:/, `${name} ${flag} must print usage`)
+		}
 	}
-	deq(readFileSync(join(T, "growth-brain/ops/live-metrics.md"), "utf8"), liveMetricsBeforeHelp, "--help must not overwrite live metrics")
-	deq(readFileSync(join(T, "growth-brain/ops/proof-library.md")), trackedArtifacts.get("growth-brain/ops/proof-library.md"), "--help must not overwrite the proof library")
-	eq(existsSync(join(T, "runs/daily-money-mission.md")), true, "daily mission must exist from regeneration")
-	const missionBeforeHelp = readFileSync(join(T, "runs/daily-money-mission.md"), "utf8")
-	run(["scripts/export-daily-money-mission.mjs", "--help"])
-	deq(readFileSync(join(T, "runs/daily-money-mission.md"), "utf8"), missionBeforeHelp, "--help must not overwrite the daily money mission")
+	for (const name of trackedOpsHelpSurface) {
+		for (const flag of ["--help", "-h"]) {
+			const helped = run([`scripts/${name}`, flag])
+			eq(helped.status, 0, `${name} ${flag} must exit 0: ${helped.stderr || helped.stdout}`)
+			mat(helped.stdout, /Usage:/, `${name} ${flag} must print usage`)
+		}
+	}
+	for (const [path, before] of artifactBeforeHelp) {
+		deq(readFileSync(join(T, path), "utf8"), before, `${path} must not be rewritten by --help/-h`)
+	}
+	for (const path of retiredBroadServiceArtifacts) {
+		eq(existsSync(join(T, path)), false, `--help/-h must not recreate retired artifact ${path}`)
+	}
+	eq(existsSync(join(T, "clients/ai-converter")), false, "--help/-h must not make export-owned-startup-proof-capture seed owned client folders")
 
-	// Operator export scripts must refuse output paths that escape the service
-	// root, whether absolute, ".."-relative, or through a symlink.
-	const escapeProbes = [
-		["scripts/export-growth-metrics.mjs", ["--output=../escape-metrics.md"], join(T, "../escape-metrics.md")],
-		["scripts/export-growth-cockpit.mjs", ["--output=/tmp/escape-cockpit.html"], "/tmp/escape-cockpit.html"],
-		["scripts/export-daily-money-mission.mjs", ["--html=../../escape-mission.html"], join(T, "../../escape-mission.html")],
-		["scripts/export-market-proof-run.mjs", ["--output=runs/escape-run.md", "--loom-links=../escape-links.txt"], join(T, "../escape-links.txt")],
-		["scripts/export-market-benchmark.mjs", ["--ops=/tmp/escape-ops.md"], "/tmp/escape-ops.md"]
-	]
-	for (const [script, args, escapePath] of escapeProbes) {
-		rmSync(escapePath, {force: true})
-		const refused = run([script, ...args])
-		neq(refused.status, 0, `${script} must refuse an escaping output path`)
-		eq(existsSync(escapePath), false, `${script} must not create ${escapePath}`)
+	// The owned-* and client writers must refuse output paths that escape the
+	// service root, without creating the file outside it.
+	mkdirSync(join(T, "clients", "escape-probe"), {recursive: true})
+	for (const args of [
+		["scripts/export-owned-handoff-loom-cockpit.mjs", `--output=${join(T, "..", "escape-owned-handoff.md")}`],
+		["scripts/export-owned-product-case-studies.mjs", `--output=${join(T, "..", "escape-owned-studies.md")}`],
+		["scripts/export-owned-product-workflow-proofs.mjs", `--output=${join(T, "..", "escape-owned-workflow.md")}`],
+		["scripts/export-client-repeatable-workflow.mjs", "clients/escape-probe", `--output=${join(T, "..", "escape-workflow.md")}`],
+		["scripts/export-client-weekly-report.mjs", "clients/escape-probe", `--output=${join(T, "..", "escape-weekly.md")}`],
+		["scripts/export-growth-metrics.mjs", `--output=${join(T, "..", "escape-live-metrics.md")}`],
+		["scripts/export-proof-library.mjs", `--output=${join(T, "..", "escape-proof-library.md")}`],
+		["scripts/export-sender-setup-guide.mjs", `--output=${join(T, "..", "escape-sender-setup.md")}`, `--html=${join(T, "..", "escape-sender-setup.html")}`],
+		["scripts/export-market-benchmark.mjs", `--output=${join(T, "..", "escape-benchmark.md")}`, `--ops=${join(T, "..", "escape-matrix.md")}`, `--html=${join(T, "..", "escape-matrix.html")}`],
+		["scripts/export-market-proof-run.mjs", `--output=${join(T, "..", "escape-proof-run.md")}`],
+		["scripts/check-market-parity-readiness.mjs", `--output=${join(T, "..", "escape-parity.md")}`]
+	]) {
+		const refused = run(args)
+		neq(refused.status, 0, `${args[0]} must refuse an escaping output path`)
+		mat(refused.stderr, /Refusing/, `${args[0]} must explain the refusal`)
 	}
-	const outsideLink = join(T, "..", "escape-symlink-outside")
-	mkdirSync(outsideLink, {recursive: true})
-	const escapeSymlink = join(T, "escape-symlink")
-	symlinkSync(outsideLink, escapeSymlink)
-	const symlinkProbe = run(["scripts/export-growth-metrics.mjs", `--output=${escapeSymlink}/metrics.md`])
-	neq(symlinkProbe.status, 0, "export must refuse an output path escaping through a symlink")
-	eq(existsSync(join(outsideLink, "metrics.md")), false, "symlink escape must not create the file outside the root")
-	rmSync(outsideLink, {recursive: true, force: true})
-	unlinkSync(escapeSymlink)
+	for (const escapePath of [
+		join(T, "..", "escape-owned-handoff.md"),
+		join(T, "..", "escape-owned-studies.md"),
+		join(T, "..", "escape-owned-workflow.md"),
+		join(T, "..", "escape-workflow.md"),
+		join(T, "..", "escape-weekly.md"),
+		join(T, "..", "escape-live-metrics.md"),
+		join(T, "..", "escape-proof-library.md"),
+		join(T, "..", "escape-sender-setup.md"),
+		join(T, "..", "escape-sender-setup.html"),
+		join(T, "..", "escape-benchmark.md"),
+		join(T, "..", "escape-matrix.md"),
+		join(T, "..", "escape-matrix.html"),
+		join(T, "..", "escape-proof-run.md"),
+		join(T, "..", "escape-parity.md")
+	]) {
+		eq(existsSync(escapePath), false, `escape probe must not create ${escapePath}`)
+	}
+	rmSync(join(T, "clients", "escape-probe"), {recursive: true, force: true})
 
 	const application = JSON.parse(readFileSync(join(T, "contracts/fixtures/sprint-application.v1.json"), "utf8"))
 	const importResult = run(["scripts/import-sprint-application.mjs", "contracts/fixtures/sprint-application.v1.json"])

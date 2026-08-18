@@ -1,17 +1,18 @@
 #!/usr/bin/env node
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { dirname } from "node:path";
 import { join } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 import { checkProspectReadiness } from "./lib/prospect-readiness.mjs";
 import { isValidLoomUrl } from "./lib/loom-url.mjs";
 import { loadValidatedServiceClients } from "./lib/validated-service-client.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 import { runRepoJson } from "./lib/runtime-roots.mjs";
-import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
-handleHelp(process.argv.slice(2), `Usage: npm run growth:metrics -- [--plain] [--output=growth-brain/ops/live-metrics.md]`);
+handleHelp(process.argv.slice(2), `Usage: node scripts/export-growth-metrics.mjs [--output=growth-brain/ops/live-metrics.md] [--plain]`);
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
-const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/live-metrics.md";
+const outputPath = resolveOutputPath(outputArg?.split("=").slice(1).join("="), { fallback: "growth-brain/ops/live-metrics.md" });
 const plain = process.argv.includes("--plain");
 const today = localIsoDate();
 const repoRoot = process.env.SERVICE_REPO_ROOT || process.cwd();
@@ -184,10 +185,9 @@ ${Object.entries(stageCounts).sort(([a], [b]) => a.localeCompare(b)).map(([stage
 - If calls are high and closed is low, improve scope, price, or proof.
 `;
 
-const resolvedOutputPath = resolveOutputPath(outputPath);
-const outputDir = resolvedOutputPath.split("/").slice(0, -1).join("/");
+const outputDir = outputPath.split("/").slice(0, -1).join("/");
 if (outputDir) mkdirSync(outputDir, { recursive: true });
-writeFileSync(resolvedOutputPath, markdown);
+writeFileSync(outputPath, markdown);
 
 const result = {
   status: "created",
