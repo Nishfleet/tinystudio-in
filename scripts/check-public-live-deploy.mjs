@@ -5,13 +5,15 @@
 // Used by the release lane after a Pages deployment. Runs against the live
 // site only; set SKIP_LIVE_CHECKS=1 to skip (exit 0) on offline machines.
 //
-// The four live proofs (all neutral, all merged on main before this lane):
+// The live proofs (all neutral, all merged on main before this lane):
 //   1. /promptly/support/ renders H2 after H1        (PRs #18/#20)
 //   2. /contact/ carries application/ld+json         (PR #19)
 //   3. unknown URLs get a real 404, not the homepage (PR #34)
 //   4. homepage stays portfolio-only: brand-disambiguation copy (#29) live,
 //      and no managed-service buyer-path content (#10/#11, snoozed).
 //   5. /llms.txt lists every public page             (PR #68)
+// Proof 2b covers the 2026-08-08 dogfood finding page:
+//   2b. /contact/ renders H2 after H1 (the heading-hierarchy repair, PR #18).
 import { join } from "node:path"
 import { fileURLToPath } from "node:url"
 import { dirname } from "node:path"
@@ -72,6 +74,13 @@ try {
     const { status, body } = await get("/contact/")
     ok(status === 200, `/contact/ returns 200 (got ${status})`)
     ok(body.includes("application/ld+json"), "page contains application/ld+json")
+  }
+
+  console.log("B2. /contact/ renders H2 after H1 (heading-hierarchy repair, PR #18)")
+  {
+    const { status, body } = await get("/contact/")
+    ok(status === 200, `/contact/ returns 200 (got ${status})`)
+    ok(h2AfterFirstH1(body), "H2 follows the first H1 before any H3")
   }
 
   console.log("C. unknown URLs return a real 404 (PR #34)")

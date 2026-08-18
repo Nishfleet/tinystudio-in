@@ -2,9 +2,11 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { localIsoDate } from "./date-utils.mjs";
 import { agencyConfig } from "./lib/agency-config.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: node scripts/export-proof-library.mjs [--output=growth-brain/ops/proof-library.md]`);
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
-const outputPath = outputArg ? outputArg.split("=")[1] : "growth-brain/ops/proof-library.md";
+const outputPath = resolveOutputPath(outputArg?.split("=").slice(1).join("="), { fallback: "growth-brain/ops/proof-library.md" });
 const today = localIsoDate();
 const config = agencyConfig();
 
