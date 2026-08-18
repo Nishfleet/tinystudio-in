@@ -8,7 +8,7 @@ Make money quickly by selling a useful, productized marketing ops service that c
 
 TinyStudio is not a generic AI agency. It is a Growth Brain operator.
 
-The client does not buy "AI". They buy a human-reviewed **The Website Correction** on one highest-leverage page: a prioritized fault map, rewrite or redesign, one implementation pass or dev-ready handoff, search-trust basics, before/after proof, a Loom, a measurement plan, one revision, and 14-day implementation tracking.
+The client does not buy "AI". They buy human-reviewed **The Website Correction** on one highest-leverage page: a prioritized fault map, rewrite or redesign, one implementation pass or dev-ready handoff, search-trust basics, before/after proof, a Loom, a measurement plan, one revision, and 14-day implementation tracking.
 
 ## Why This Can Work Now
 

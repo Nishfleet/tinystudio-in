@@ -2,7 +2,7 @@
 
 ## Goal
 
-Close the first 1-3 paid Website Correction sprints.
+Close the first 1-3 paid engagements of The Website Correction.
 
 ## Day 1
 
