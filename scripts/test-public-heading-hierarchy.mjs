@@ -215,6 +215,8 @@ const measurePage = async (chromium, origin, path, width) => {
     const response = await page.goto(`${origin}${path}`, { waitUntil: "domcontentloaded" })
     const metrics = await page.evaluate(() => {
       const heading = document.querySelector("h1")
+      const cta = document.querySelector('.action-row a.button[href^="mailto:"]')
+      const ctaRect = cta ? cta.getBoundingClientRect() : null
       return {
         heading: heading ? heading.innerText.replace(/\s+/g, " ").trim() : "",
         scrollWidth: document.documentElement.scrollWidth,
@@ -222,7 +224,11 @@ const measurePage = async (chromium, origin, path, width) => {
         headingScrollWidth: heading ? heading.scrollWidth : 0,
         headingClientWidth: heading ? heading.clientWidth : 0,
         overflowWrap: heading ? getComputedStyle(heading).overflowWrap : "",
-        overflowX: getComputedStyle(document.documentElement).overflowX
+        overflowX: getComputedStyle(document.documentElement).overflowX,
+        ctaVisible: cta ? ctaRect.top < innerHeight && ctaRect.bottom >= 0 : false,
+        ctaTop: ctaRect ? ctaRect.top : -1,
+        ctaBottom: ctaRect ? ctaRect.bottom : -1,
+        ctaText: cta ? cta.innerText.replace(/\s+/g, " ").trim() : ""
       }
     })
     return { status: response?.status() ?? 0, ...metrics }
@@ -272,6 +278,28 @@ if (!chromiumLauncher) {
         `Promptly heading overflow-wrap is a wrapping value at ${width} (got ${m.overflowWrap})`
       )
     }
+    // Keep the early-access CTA within the first mobile viewport on the
+    // primary conversion pages (CTA assertions landed on main after this PR
+    // branched, and survive the merge).
+    const promptly320 = await measurePage(browser, origin, "/promptly/", 320)
+    const promptly390 = await measurePage(browser, origin, "/promptly/", 390)
+    ok(
+      promptly320.ctaVisible && promptly390.ctaVisible,
+      "Promptly early-access CTA is fully within the first mobile viewport"
+    )
+    ok(
+      promptly320.ctaText === "Get early access" && promptly390.ctaText === "Get early access",
+      `Promptly early-access CTA copy is unchanged (got "${promptly320.ctaText}" at 320)`
+    )
+    const drishti390 = await measurePage(browser, origin, "/drishti/", 390)
+    ok(
+      drishti390.ctaVisible,
+      "Drishti early-access CTA is fully within the first mobile viewport"
+    )
+    ok(
+      drishti390.ctaText === "Get early access",
+      `Drishti early-access CTA copy is unchanged (got "${drishti390.ctaText}" at 390)`
+    )
     ok(
       ROUTES.every((path) => DOCUMENT_OK.has(path)),
       `every public route document stays inside its box at every width 280-390 (${[...DOCUMENT_OK].join(", ")})`
