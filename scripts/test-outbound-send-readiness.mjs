@@ -49,19 +49,38 @@ try {
 	assert(output(result).findings.some(finding => finding.rule === "send package still has placeholders"))
 
 	// The send package must never sell a retired broad-agency offer, and
-	// recording-notes.md is embedded verbatim into the send package.
-	for (const [file, content] of [
+	// recording-notes.md is embedded verbatim into the send package. Every
+	// active record/send surface must fail the gate when it still sells a
+	// retired offer (7-day sprint / 30-day action plan / founder sprint /
+	// $500 price), not just send-package.md and recording-notes.md.
+	const retiredFixtures = [
 		["send-package.md", `${packageHeader}7-Day Site Revenue Fault Sprint with a 30-day action plan. ${optOut}`],
-		["recording-notes.md", `# Recording Notes\n\n## Quality Notes\n\n- Clean ask: If useful, I can run a Tangible Revenue Fault Sprint with a 30-day action plan for $500.\n`]
-	]) {
+		["recording-notes.md", `# Recording Notes\n\n## Quality Notes\n\n- Clean ask: If useful, I can run a Tangible Revenue Fault Sprint with a 30-day action plan for $500.\n`],
+		["loom-outline.md", `# Loom Outline\n\n7. Sprint pitch: 7-Day Site Revenue Fault Sprint with a 30-day action plan\n`],
+		["recording-script.md", `# Recording Script\n\n## Talk Track\n\nIf useful, I can run a 7-day sprint where I map this fault for $1,000 founder sprint.\n`],
+		["next-message.md", `${packageHeader}If useful, I can run a 7-day sprint where I map this leak and give you a 30-day action plan. ${optOut}`],
+		["recording-sharpness-brief.md", `# Sharpness Brief\n\n## Positioning Angle\n\nOffer the The Website Correction at $1,000 founder sprint.\n`],
+		["outreach.md", `# Outreach\n\n## First Message\n\nIf useful, I can run a 7-day sprint where I map this fault and give you a 30-day action plan. ${optOut}`]
+	]
+	for (const [file, content] of retiredFixtures) {
 		writeFileSync(join(prospect, file), content)
 		result = run()
 		assert.notEqual(result.status, 0, `expected retired-offer failure for ${file}`)
 		assert(output(result).findings.some(finding => finding.rule === "outbound package sells a retired offer"))
 	}
 
-	writeFileSync(join(prospect, "send-package.md"), `${packageHeader}The Website Correction, one highest-leverage page, 14-day implementation tracking. ${optOut}`)
-	writeFileSync(join(prospect, "recording-notes.md"), `# Recording Notes\n\n## Quality Notes\n\n- Clean ask: If useful, I can run a human-reviewed The Website Correction on this one highest-leverage page with a measurement plan.\n`)
+	// Canonical copy on every surface must pass the retired-offer rule.
+	for (const [file, content] of [
+		["send-package.md", `${packageHeader}The Website Correction, one highest-leverage page, 14-day implementation tracking. ${optOut}`],
+		["recording-notes.md", `# Recording Notes\n\n## Quality Notes\n\n- Clean ask: If useful, I can run a human-reviewed The Website Correction on this one highest-leverage page with a measurement plan.\n`],
+		["loom-outline.md", `# Loom Outline\n\n7. Ask: If useful, I can run a human-reviewed The Website Correction on this one highest-leverage page with 14-day implementation tracking.\n`],
+		["recording-script.md", `# Recording Script\n\n## Talk Track\n\nIf useful, I can run a human-reviewed The Website Correction on this one highest-leverage page.\n`],
+		["next-message.md", `${packageHeader}If useful, I can run a human-reviewed The Website Correction on this one highest-leverage page. ${optOut}`],
+		["recording-sharpness-brief.md", `# Sharpness Brief\n\n## Positioning Angle\n\nThe Website Correction at the $1,000 founder pilot.\n`],
+		["outreach.md", `# Outreach\n\n## First Message\n\nIf useful, I can run a human-reviewed The Website Correction. ${optOut}`]
+	]) {
+		writeFileSync(join(prospect, file), content)
+	}
 	result = run()
 	assert.equal(result.status, 0, "canonical send package must not trigger the retired-offer rule")
 
