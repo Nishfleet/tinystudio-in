@@ -21,6 +21,8 @@
 // asserted here (explicitly via the id="managed-service" marker below) and by
 // scripts/test-public-deploy-bundle.mjs. The section returns only when Nish
 // lifts the snooze and the fail-closed filter is updated deliberately.
+// Proof 2b covers the 2026-08-08 dogfood finding page:
+//   2b. /contact/ renders H2 after H1 (the heading-hierarchy repair, PR #18).
 import { join } from "node:path"
 import { fileURLToPath } from "node:url"
 import { dirname } from "node:path"
@@ -80,6 +82,13 @@ try {
     const { status, body } = await get("/contact/")
     ok(status === 200, `/contact/ returns 200 (got ${status})`)
     ok(body.includes("application/ld+json"), "page contains application/ld+json")
+  }
+
+  console.log("B2. /contact/ renders H2 after H1 (heading-hierarchy repair, PR #18)")
+  {
+    const { status, body } = await get("/contact/")
+    ok(status === 200, `/contact/ returns 200 (got ${status})`)
+    ok(h2AfterFirstH1(body), "H2 follows the first H1 before any H3")
   }
 
   console.log("C. unknown URLs return a real 404 (PR #34)")
