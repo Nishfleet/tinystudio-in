@@ -4,12 +4,14 @@ import { join } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 import { runRepoJson as runJson } from "./lib/runtime-roots.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: node scripts/export-market-learning-review.mjs [--output=runs/market-learning-review.md] [--html=runs/market-learning-review.html] [--limit=10]`);
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const htmlArg = process.argv.find((arg) => arg.startsWith("--html="));
 const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
-const outputPath = outputArg ? outputArg.split("=").slice(1).join("=") : "runs/market-learning-review.md";
-const htmlPath = htmlArg ? htmlArg.split("=").slice(1).join("=") : "runs/market-learning-review.html";
+const outputPath = resolveOutputPath(outputArg?.split("=").slice(1).join("="), { fallback: "runs/market-learning-review.md" });
+const htmlPath = resolveOutputPath(htmlArg?.split("=").slice(1).join("="), { flag: "--html", fallback: "runs/market-learning-review.html" });
 const limit = limitArg ? Number(limitArg.split("=").slice(1).join("=")) : 10;
 const today = localIsoDate();
 

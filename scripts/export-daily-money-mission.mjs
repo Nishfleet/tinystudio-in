@@ -8,13 +8,15 @@ import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
 import { routedContactPlan } from "./lib/contact-route.mjs";
 import { canonicalProspectAsk } from "./lib/canonical-service-copy.mjs";
 import { NO_GUARANTEE_CLIENT_SENTENCE } from "./lib/service-contract.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: node scripts/export-daily-money-mission.mjs [--limit=5] [--output=runs/daily-money-mission.md] [--html=runs/daily-money-mission.html]`);
 const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
 const limit = limitArg ? Number(limitArg.split("=")[1]) : 5;
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
-const outputPath = outputArg ? outputArg.split("=")[1] : "runs/daily-money-mission.md";
+const outputPath = resolveOutputPath(outputArg?.split("=").slice(1).join("="), { fallback: "runs/daily-money-mission.md" });
 const htmlArg = process.argv.find((arg) => arg.startsWith("--html="));
-const htmlPath = htmlArg ? htmlArg.split("=")[1] : "runs/daily-money-mission.html";
+const htmlPath = resolveOutputPath(htmlArg?.split("=").slice(1).join("="), { flag: "--html", fallback: "runs/daily-money-mission.html" });
 const today = localIsoDate();
 
 function runJson(args) {
@@ -166,7 +168,7 @@ function write(path, content) {
 }
 
 function ensureLoomLinksTemplate(prospects) {
-  const path = "prospects/loom-links.txt";
+  const path = resolveOutputPath("prospects/loom-links.txt", { fallback: "prospects/loom-links.txt" });
   const existing = read(path);
   const hasFilledLinks = existing
     .split("\n")
