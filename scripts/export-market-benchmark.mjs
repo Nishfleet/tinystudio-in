@@ -38,7 +38,7 @@ function statusLabel(value) {
   return "do not claim yet";
 }
 
-const metrics = runJson(["scripts/export-growth-metrics.mjs"]);
+const metrics = runJson(["scripts/export-growth-metrics.mjs", "--output=runs/metrics-for-benchmark.md"]);
 const sender = runJson(["scripts/check-outbound-sender-setup.mjs"]);
 const proofRun = existsSync("prospects/loom-links.txt")
   ? runJson(["scripts/check-market-proof-run.mjs"])

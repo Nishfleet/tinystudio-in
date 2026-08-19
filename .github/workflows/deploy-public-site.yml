@@ -35,11 +35,20 @@ name: Deploy public site
 # else. Until both secrets exist the lane fails every main merge loudly with
 # the provisioning steps printed; the nightly live-site-check.yml is the
 # staleness alarm while the site is stale.
+#
+# The daily schedule is the self-heal net: once the Pages token is
+# provisioned, the lane redeploys on its own within a day instead of waiting
+# for the next main push (a token added with no pending merge would otherwise
+# leave the site stale until the next push). While the token is missing the
+# scheduled run fails loudly like every push run - red until provisioned.
 
 on:
   push:
     branches:
       - main
+  schedule:
+    # Daily: pick the stale site back up within a day of the token landing.
+    - cron: "13 3 * * *"
   workflow_dispatch:
 
 permissions:
