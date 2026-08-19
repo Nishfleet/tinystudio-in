@@ -1,11 +1,13 @@
-// Guard the LIVE public site against soft-404s: an unknown URL on
-// tinystudio.in must return HTTP 404 with the real 404 page, never HTTP 200
-// with the homepage.
+// Guard the LIVE public site against soft-404s and a stale a11y bundle: an
+// unknown URL on tinystudio.in must return HTTP 404 with the real 404 page,
+// never HTTP 200 with the homepage, and the deployed stylesheet must keep the
+// WCAG 2.2 24px footer tap-target rule (PR #22) so mobile footer links are
+// tappable on every live page.
 //
-// The static test (test-public-soft-404.mjs) only proves public/404.html
-// exists in the repo; it cannot catch a stale or misconfigured deployment.
-// This check hits the deployed site so a regression is detected the moment it
-// ships. It runs as `npm run site:check-live`, from the nightly
+// The static tests (test-public-soft-404.mjs, test-public-link-targets.mjs)
+// only prove the repo state; they cannot catch a stale or misconfigured
+// deployment. This check hits the deployed site so a regression is detected
+// the moment it ships. It runs as `npm run site:check-live`, from the nightly
 // live-site-check workflow, and as part of the deploy lane's post-deploy
 // verification.
 //
@@ -75,6 +77,7 @@ try {
     unknown: await fetchWithRetry(`${SITE}${UNKNOWN_PATH}`),
     notFoundAsset: await fetchWithRetry(`${SITE}/404.html`),
     realPage: await fetchWithRetry(`${SITE}/promptly/`),
+    css: await fetchWithRetry(`${SITE}/styles.css`),
     llmsTxt: await fetchWithRetry(`${SITE}/llms.txt`),
   }
 } catch (err) {
@@ -87,6 +90,7 @@ const { res: homeRes, body: homeBody } = results.home
 const { res: unknownRes, body: unknownBody } = results.unknown
 const { res: notFoundRes, body: notFoundBody } = results.notFoundAsset
 const { res: realRes } = results.realPage
+const { res: cssRes, body: cssBody } = results.css
 const { res: llmsTxtRes, body: llmsTxtBody } = results.llmsTxt
 
 console.log("A. the homepage is reachable and intact")
@@ -106,7 +110,25 @@ ok(!notFoundBody.includes(HOME_TITLE), "/404.html body is not the homepage")
 console.log("D. a real page still serves")
 ok(realRes.status === 200, `GET /promptly/ returns HTTP ${realRes.status}`)
 
-console.log("E. the deployed llms.txt lists every public page (PR #68 live)")
+// Mirrors section B of test-public-link-targets.mjs against the DEPLOYED
+// stylesheet, so a stale bundle that loses the PR #22 rule fails loudly.
+console.log("E. the deployed stylesheet keeps the WCAG 2.2 24px footer tap-target rule (PR #22)")
+ok(cssRes.status === 200, `GET /styles.css returns HTTP ${cssRes.status}`)
+const footerRule = cssBody.match(/\.footer-links\s*a\s*\{([^}]*)\}/)
+ok(footerRule !== null, "deployed stylesheet has a .footer-links a rule")
+if (footerRule) {
+  const rule = footerRule[1]
+  ok(/display:\s*(inline-block|inline-flex|block)/.test(rule), ".footer-links a is a block-level box (hit area covers the line box)")
+  ok(!/display:\s*inline\s*;/.test(rule), ".footer-links a is not a plain inline box")
+  ok(/min-height:\s*24px/.test(rule), ".footer-links a declares min-height: 24px")
+  const padding = rule.match(/padding:\s*([^;]+)/)
+  ok(padding !== null, ".footer-links a declares vertical padding")
+  if (padding) {
+    const vertical = parseFloat(padding[1].trim().split(/\s+/)[0])
+    ok(vertical >= 4, `.footer-links a vertical padding is at least 4px (${vertical}px), so 16px text + padding >= 24px`)
+  }
+}
+console.log("F. the deployed llms.txt lists every public page (PR #68 live)")
 ok(llmsTxtRes.status === 200, `GET /llms.txt returns HTTP ${llmsTxtRes.status}`)
 const missingFromLlmsTxt = PUBLIC_PAGE_URLS.filter((url) => !llmsTxtBody.includes(url))
 ok(
@@ -116,6 +138,6 @@ ok(
 
 console.log(`\n${checks} checks, ${failures} failures`)
 if (failures > 0) {
-  console.error("\nThe live site is soft-404ing or serving a stale bundle. Re-deploy the public site from origin/main and re-run this check.")
+  console.error("\nThe live site is soft-404ing, serving a stale bundle, or missing the footer tap-target rule. Re-deploy the public site from origin/main and re-run this check.")
 }
 process.exit(failures === 0 ? 0 : 1)
