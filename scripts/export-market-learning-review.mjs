@@ -58,7 +58,7 @@ function percent(numerator, denominator) {
   return `${Math.round((numerator / denominator) * 100)}%`;
 }
 
-const metrics = runJson(["scripts/export-growth-metrics.mjs"]);
+const metrics = runJson(["scripts/export-growth-metrics.mjs", "--output=runs/metrics-for-learning.md"]);
 const proofCheck = existsSync("prospects/loom-links.txt")
   ? runJson(["scripts/check-market-proof-run.mjs"])
   : { status: "missing-proof-run", sentProofRows: 0, readySendPackages: 0, validApprovedRows: 0, recommendedChannel: "unknown", senderWarnings: [] };

@@ -36,7 +36,7 @@ runJson(["scripts/export-prospect-outbox.mjs"]);
 runJson(["scripts/export-followup-cockpit.mjs"]);
 runJson(["scripts/export-sales-cockpit.mjs"]);
 runJson(["scripts/export-daily-money-mission.mjs", "--limit=5"]);
-const metrics = runJson(["scripts/export-growth-metrics.mjs"]);
+const metrics = runJson(["scripts/export-growth-metrics.mjs", "--output=runs/metrics-for-cockpit.md"]);
 runJson(["scripts/export-proof-library.mjs"]);
 runJson(["scripts/export-managed-it-one-pager.mjs"]);
 runJson(["scripts/export-growth-doctor.mjs", "--no-checks"]);
