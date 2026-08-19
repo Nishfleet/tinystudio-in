@@ -7,11 +7,13 @@ import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
 import { isValidLoomUrl } from "./lib/loom-url.mjs";
 import { routedContactPlan, routeToChannel } from "./lib/contact-route.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: node scripts/export-prospect-outbox.mjs [--limit=20] [--output=prospects/outbox.html]`);
 const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
 const limit = limitArg ? Number(limitArg.split("=")[1]) : 20;
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
-const outputPath = outputArg ? outputArg.split("=")[1] : "prospects/outbox.html";
+const outputPath = resolveOutputPath(outputArg?.split("=").slice(1).join("="), { fallback: "prospects/outbox.html" });
 
 function listFolders(root) {
   return listOutboundProspectFolders(root);
