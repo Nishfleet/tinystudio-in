@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname } from "node:path";
+import { dirname, isAbsolute, resolve } from "node:path";
 import { join } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
 import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
@@ -8,17 +8,38 @@ import { checkProspectReadiness } from "./lib/prospect-readiness.mjs";
 import { isValidLoomUrl } from "./lib/loom-url.mjs";
 import { loadValidatedServiceClients } from "./lib/validated-service-client.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
-import { runRepoJson } from "./lib/runtime-roots.mjs";
+import { runRepoJson, serviceRoot } from "./lib/runtime-roots.mjs";
 
 handleHelp(process.argv.slice(2), `Usage: node scripts/export-growth-metrics.mjs [--output=growth-brain/ops/live-metrics.md] [--plain]`);
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const outputPath = resolveOutputPath(outputArg?.split("=").slice(1).join("="), { fallback: "growth-brain/ops/live-metrics.md" });
 const plain = process.argv.includes("--plain");
 const today = localIsoDate();
-const repoRoot = process.env.SERVICE_REPO_ROOT || process.cwd();
+const repoRoot = serviceRoot;
+const trackedMetricsPath = join(serviceRoot, "growth-brain/ops/live-metrics.md");
+
+// Outbound pipeline state exists only when at least one real prospect folder
+// carries a pipeline record. An absent prospects/ directory AND an empty one
+// both mean the pipeline is unavailable, never empty.
+const hasProspectPipelineState = existsSync(join(repoRoot, "prospects"))
+  && listFolders(join(repoRoot, "prospects")).some((path) => existsSync(join(path, "pipeline.json")));
+
+// The default output is a git-tracked operator surface. When the service root
+// holds no outbound prospect pipeline state, regeneration cannot tell an empty
+// pipeline from an unavailable one, so it refuses instead of silently
+// clobbering the tracked metrics with a zero pipeline. Explicit private outputs
+// under runs/ keep generating zero-state reports on purpose.
+const regeneratesTrackedMetrics = resolve(outputPath) === resolve(trackedMetricsPath);
+if (regeneratesTrackedMetrics && !hasProspectPipelineState) {
+  console.error(`Refusing to regenerate the tracked live metrics with a zero pipeline: no outbound prospect pipeline state found at ${join(repoRoot, "prospects")}. Run this command from the service root that holds prospects/, or set SERVICE_REPO_ROOT to it, or pass an explicit --output= under runs/ for a private zero-state report.`);
+  process.exit(1);
+}
+if (!hasProspectPipelineState) {
+  console.warn(`Warning: no outbound prospect pipeline state found at ${join(repoRoot, "prospects")}; pipeline counts in ${outputPath} will be zero.`);
+}
 
 function listFolders(root) {
-  if (root === "prospects" || root.endsWith("/prospects")) return listOutboundProspectFolders(root).filter((path) => !/(^|\/)(?:kit|import)-smoke/.test(path));
+  if (root === "prospects" || root.endsWith("/prospects")) return listOutboundProspectFolders(root);
   if (!existsSync(root)) return [];
   return readdirSync(root, { withFileTypes: true })
     .filter((entry) => entry.isDirectory())

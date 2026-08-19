@@ -154,7 +154,7 @@ ${payback}
 
 ## Close
 
-"The ${FOUNDER_PILOT.offerName} is exactly a ${founderPilotPrice()} for one highest-leverage page. Human reviewers gate the claims and client-facing work. You receive the fault map, rewrite or redesign, one implementation pass or dev-ready handoff, search-trust basics, before/after proof, Loom, measurement plan, one client revision, and 14-day implementation tracking. Day 0 starts after payment, context, and named approval and implementation owners."
+"${FOUNDER_PILOT.offerName} is exactly a ${founderPilotPrice()} for one highest-leverage page. Human reviewers gate the claims and client-facing work. You receive the fault map, rewrite or redesign, one implementation pass or dev-ready handoff, search-trust basics, before/after proof, Loom, measurement plan, one client revision, and 14-day implementation tracking. Day 0 starts after payment, context, and named approval and implementation owners."
 
 ## Guardrails
 
