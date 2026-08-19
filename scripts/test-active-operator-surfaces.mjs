@@ -68,20 +68,25 @@ try {
 	const trackedArtifacts = new Map(ACTIVE_OPERATOR_ARTIFACTS.map(path => [path, readFileSync(join(C, path))]))
 	for (const path of ACTIVE_OPERATOR_ARTIFACTS) rmSync(join(T, path), {force: true})
 	writeFileSync(join(T, "growth-brain/ops/11-10-proof-run.md"), "regeneration sentinel\n")
-	// Live metrics must regenerate from an empty prospect root so its tracked
-	// zero counts stay byte-identical, but the tracked 11/10 proof-run brief
-	// refuses to regenerate from a state-less root. Give the surface gate one
-	// inert outbound pipeline record (no score, touches, or loom) so the brief
-	// regenerates through the real path; it is removed again afterwards.
-	for (const args of [
-		["scripts/export-growth-metrics.mjs"],
-	]) {
-		const regenerated = run(args)
-		eq(regenerated.status, 0, regenerated.stderr || regenerated.stdout)
-	}
+	// Live metrics must refuse to regenerate its tracked default from a
+	// state-less root (no prospect folder carries pipeline.json), exactly like
+	// the tracked 11/10 proof-run brief, so an unavailable pipeline is never
+	// silently clobbered into a zero report. Private --output= under runs/
+	// keeps generating zero-state reports on purpose. Give the surface gate one
+	// inert outbound pipeline record (no score, touches, or loom) so both
+	// tracked defaults regenerate through the real path; it is removed again
+	// afterwards.
+	const refusedTrackedMetrics = run(["scripts/export-growth-metrics.mjs"])
+	neq(refusedTrackedMetrics.status, 0, "tracked live metrics must refuse a state-less root")
+	mat(refusedTrackedMetrics.stderr, /Refusing/, "tracked live metrics refusal must explain itself")
+	eq(existsSync(join(T, "growth-brain/ops/live-metrics.md")), false, "refused tracked metrics must not write the tracked file")
+	const zeroStateMetrics = run(["scripts/export-growth-metrics.mjs", "--output=runs/zero-state-live-metrics.md"])
+	eq(zeroStateMetrics.status, 0, zeroStateMetrics.stderr || zeroStateMetrics.stdout)
+	mat(zeroStateMetrics.stderr, /will be zero/, "private zero-state metrics run must warn")
 	writeJson(join(T, "prospects", "surface-fixture", "metadata.json"), {name: "Surface Fixture", slug: "surface-fixture", website: "https://example.com/surface", vertical: "managed-it-cybersecurity", contact: "Founder"})
 	writeJson(join(T, "prospects", "surface-fixture", "pipeline.json"), {stage: "new", createdAt: "2026-08-01", sentAt: "", sentChannel: "", lastChannel: "", lastTouchAt: "", nextFollowUpAt: "", followUps: [], touches: [], notes: []})
 	for (const args of [
+		["scripts/export-growth-metrics.mjs"],
 		["scripts/export-market-proof-run.mjs"],
 		["scripts/check-market-proof-run.mjs"],
 		["scripts/export-sender-setup-guide.mjs"],
@@ -100,16 +105,21 @@ try {
 		eq(regenerated.status, 0, regenerated.stderr || regenerated.stdout)
 	}
 	// Nested gate and metrics chains inside the loop regenerated live metrics
-	// with the surface fixture counted. The byte-identical gate needs the
-	// canonical empty-prospect view back, so drop the fixture and regenerate
-	// the two tracked surfaces that read prospect counts.
+	// with the surface fixture counted. The tracked default now refuses a
+	// state-less root, so drop the fixture, regenerate the private zero-state
+	// view, and restore the tracked surfaces that read prospect counts to the
+	// canonical empty-prospect baseline.
 	rmSync(join(T, "prospects", "surface-fixture"), {recursive: true, force: true})
-	for (const args of [
-		["scripts/export-growth-metrics.mjs"],
-		["scripts/check-market-parity-readiness.mjs"]
-	]) {
-		const regenerated = run(args)
-		eq(regenerated.status, 0, regenerated.stderr || regenerated.stdout)
+	const finalZeroMetrics = run(["scripts/export-growth-metrics.mjs", "--output=runs/final-zero-live-metrics.md"])
+	eq(finalZeroMetrics.status, 0, finalZeroMetrics.stderr || finalZeroMetrics.stdout)
+	mat(readFileSync(join(T, "runs/final-zero-live-metrics.md"), "utf8"), /\| Prospects total \| 0 \|/, "private zero-state metrics must report a zero pipeline after fixture removal")
+	const refusedAgain = run(["scripts/export-growth-metrics.mjs"])
+	neq(refusedAgain.status, 0, "tracked live metrics must refuse after fixture removal")
+	// The tracked surfaces that read prospect counts cannot regenerate from a
+	// state-less root anymore, so restore the canonical empty-prospect baseline
+	// from the code checkout for the byte-identical gate below.
+	for (const path of ["growth-brain/ops/live-metrics.md", "growth-brain/ops/market-parity-readiness.md"]) {
+		writeFileSync(join(T, path), readFileSync(join(C, path), "utf8"))
 	}
 	for (const [path, expected] of trackedArtifacts) {
 		eq(existsSync(join(T, path)), true, `Generator did not recreate ${path}`)
@@ -349,7 +359,7 @@ try {
 		mat(artifact, new RegExp(`Generated:? ${currentDate}`))
 	}
 	mat(liveMetrics, /\| Clients \| 0 \|/)
-	mat(liveMetrics, /\| Client records blocked \| 1 \|/)
+	mat(liveMetrics, /\| Client records blocked \| 0 \|/)
 	mat(growthDoctor, /\| Clients \| 0 \|/)
 	mat(growthDoctor, /\| Client records blocked \| 1 \|/)
 	dnm(growthDoctor, /Client: Unpaid Fixture/)
