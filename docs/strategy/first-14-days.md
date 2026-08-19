@@ -2,7 +2,7 @@
 
 ## Goal
 
-Close the first 1-3 paid Site Revenue Fault Sprints.
+Close the first 1-3 paid engagements of The Website Correction.
 
 ## Day 1
 
@@ -10,7 +10,7 @@ Close the first 1-3 paid Site Revenue Fault Sprints.
 - Finalize client brain template.
 - Finalize seven agent workflows.
 - Create outreach tracker.
-- Pick first niche: ecommerce brands with clear product pages and real reviews, or B2B/local-service companies with confusing site architecture.
+- Pick first niche: founder-led Managed IT/MSP/cybersecurity companies with a live site, high-value offer, and clear revenue path.
 
 ## Day 2
 
@@ -35,7 +35,7 @@ Close the first 1-3 paid Site Revenue Fault Sprints.
 ## Day 5
 
 - Hold any booked calls.
-- Close founder-priced sprint with direct scope and payment link.
+- Close the $1,000 founder-pilot Website Correction with direct scope and payment link.
 - If no calls booked, send 10 more personalized audits or DMs.
 
 ## Days 6-7
@@ -58,7 +58,7 @@ Close the first 1-3 paid Site Revenue Fault Sprints.
 
 ## Retainer Script
 
-"The sprint found the faults and gave you the first fixes. The monthly version is where I run the weekly growth loop for you: review performance, pick the next best action, ship one improvement, update the brain, and keep competitor/search visibility notes current."
+"The Website Correction found the faults and gave you the first fixes. The monthly version is where I run the weekly growth loop for you: review performance, pick the next best action, ship one improvement, update the brain, and keep competitor/search visibility notes current."
 
 ## Daily Scoreboard
 

@@ -35,7 +35,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 // Exact text and block markers that belong to the snoozed managed-service
 // buyer path (PRs #10/#11). See docs/measurement/public-conversion-signal.md
 // for the conversion-signal contract and the backlog item's accept criteria.
-const HOMEPAGE_HERO_LEAD = /\s+There is also one\s+managed service for founders, reviewed by a human: The Website\s+Correction\./
+const HOMEPAGE_HERO_LEAD = /\s+There is also one\s+human-reviewed managed service for founder-led managed IT and\s+cybersecurity companies with a live site: The Website\s+Correction\./
 const HERO_RAIL_MARKER = 'data-measure-source="homepage-hero"'
 const MANAGED_SERVICE_SECTION_MARKER = '<section class="shape" id="managed-service"'
 const CONTACT_DESCRIPTION_CLAUSE = ", and the Website Correction managed service."

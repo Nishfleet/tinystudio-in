@@ -65,11 +65,19 @@ export function normalizedPath(path) {
 }
 
 // Resolves the repository's main worktree: the entry that owns the repository's
-// .git directory, which `git worktree list` always reports first. Hosting the
-// `refs/heads/main` branch is not the same as being the main worktree — a
-// detached main worktree leaves `main` checked out in some other worktree, and
-// substituting that twin here would turn the canonical-state inspection into a
-// hollow pass on the twin's (possibly stale, empty) state root.
+// .git directory. Hosting the `refs/heads/main` branch is not the same as being
+// the main worktree — a detached main worktree leaves `main` checked out in
+// some other worktree (a twin), and substituting that twin here would turn the
+// canonical-state inspection into a hollow pass on the twin's (possibly stale,
+// empty) state root.
+//
+// The main worktree is identified by git-dir ownership, not by position in the
+// list and not by which worktree holds `refs/heads/main`. For the main
+// worktree, `git rev-parse --git-dir` resolves to the repository's common git
+// dir (`.git` at the repo root); every linked worktree resolves to
+// `<common>/.git/worktrees/<name>` instead. Scanning the porcelain list for the
+// entry whose git dir equals the common dir is therefore exact: no list-order
+// assumption and no branch-holder assumption can substitute a twin.
 export function canonicalMainWorktree(repoRoot) {
 	try {
 		const output = execFileSync("git", ["-C", repoRoot, "worktree", "list", "--porcelain"], {
@@ -77,8 +85,20 @@ export function canonicalMainWorktree(repoRoot) {
 			stdio: ["ignore", "pipe", "ignore"],
 			timeout: GIT_TIMEOUT_MS
 		})
-		for (const line of output.split("\n")) {
-			if (line.startsWith("worktree ")) return line.slice("worktree ".length)
+		const commonDir = normalizedPath(runGit(repoRoot, ["rev-parse", "--git-common-dir"]).trim())
+		for (const entry of output.split("\n\n")) {
+			let worktree = ""
+			for (const line of entry.split("\n")) {
+				if (line.startsWith("worktree ")) worktree = line.slice("worktree ".length)
+			}
+			if (!worktree) continue
+			let gitdir = ""
+			try {
+				gitdir = runGit(worktree, ["rev-parse", "--git-dir"]).trim()
+			} catch {
+				continue
+			}
+			if (normalizedPath(join(worktree, gitdir)) === commonDir) return worktree
 		}
 	} catch {}
 	return repoRoot
