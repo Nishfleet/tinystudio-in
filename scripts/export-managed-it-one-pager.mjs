@@ -1,8 +1,11 @@
 #!/usr/bin/env node
 import { readFileSync, writeFileSync } from "node:fs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: node scripts/export-managed-it-one-pager.mjs [--output=growth-brain/sales/managed-it-one-page-offer.html]`);
 const inputPath = "growth-brain/sales/managed-it-one-page-offer.md";
-const outputPath = "growth-brain/sales/managed-it-one-page-offer.html";
+const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
+const outputPath = resolveOutputPath(outputArg?.split("=").slice(1).join("="), { fallback: "growth-brain/sales/managed-it-one-page-offer.html" });
 
 function escapeHtml(value) {
   return value
