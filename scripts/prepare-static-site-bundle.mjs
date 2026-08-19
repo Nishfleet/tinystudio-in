@@ -36,7 +36,7 @@ const supportSchema = {
         "@id": "https://tinystudio.in/#organization"
       },
       description:
-        "Support for Tiny Studio apps, including Promptly for bookings and Drishti for mindful screen time."
+        "Support for Tiny Studio products, including Promptly for bookings, Drishti for mindful screen time, and 0509 for growth teams."
     }
   ]
 };

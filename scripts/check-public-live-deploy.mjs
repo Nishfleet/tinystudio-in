@@ -183,7 +183,70 @@ try {
       }
     }
   }
-  console.log("H. /llms.txt lists every public page (PR #68 live)")
+  console.log("H. shared-footer pages carry visitor-facing footer copy, not launch-prep (PR #35)")
+  {
+    // Same coverage and markers as scripts/test-public-footer-copy.mjs: every
+    // live path that carries the shared footer block must name the actual
+    // products and must not contain any fragment of the launch-prep footer
+    // line the June-20 bundle still serves.
+    const FOOTER_PATHS = [
+      "/contact/",
+      "/drishti/",
+      "/drishti/privacy/",
+      "/drishti/support/",
+      "/privacy-choices/",
+      "/privacy/",
+      "/promptly/",
+      "/promptly/privacy/",
+      "/promptly/support/",
+      "/support/",
+      "/terms/",
+    ]
+    const LAUNCH_PREP_FRAGMENTS = [
+      "clean public foundation",
+      "foundation before launch",
+      "gives each product",
+      "before launch",
+    ]
+    const VISITOR_FACING_FRAGMENTS = ["Promptly", "Drishti"]
+
+    const footerBlockOf = (html) => {
+      const start = html.indexOf("<footer")
+      const end = html.indexOf("</footer>")
+      return start >= 0 && end > start ? html.slice(start, end) : ""
+    }
+
+    const checkFooter = (label, html) => {
+      const footer = footerBlockOf(html)
+      ok(footer.length > 0, `${label} has a footer block`)
+      const copyBlock = footer.match(/<p class="footer-copy"[^>]*>([\s\S]*?)<\/p>/)
+      ok(copyBlock !== null, `${label} has a .footer-copy paragraph`)
+      if (copyBlock) {
+        const copy = copyBlock[1]
+        for (const fragment of VISITOR_FACING_FRAGMENTS) {
+          ok(copy.includes(fragment), `${label} footer copy names ${fragment}`)
+        }
+        for (const fragment of LAUNCH_PREP_FRAGMENTS) {
+          ok(!copy.includes(fragment), `${label} footer copy avoids "${fragment}"`)
+        }
+      }
+      for (const fragment of LAUNCH_PREP_FRAGMENTS) {
+        ok(!footer.includes(fragment), `${label} footer has no "${fragment}"`)
+      }
+    }
+
+    for (const path of FOOTER_PATHS) {
+      const { status, body } = await get(path)
+      ok(status === 200, `${path} returns 200 (got ${status})`)
+      checkFooter(path, body)
+    }
+    const footerProbe = `/definitely-missing-footer-probe-${Date.now()}`
+    const { status, body } = await get(footerProbe)
+    ok(status === 404, `unknown URL returns 404 for footer probe (got ${status})`)
+    checkFooter("404 page", body)
+  }
+
+  console.log("I. /llms.txt lists every public page (PR #68 live)")
   {
     const { status, body } = await get("/llms.txt")
     ok(status === 200, `/llms.txt returns 200 (got ${status})`)
