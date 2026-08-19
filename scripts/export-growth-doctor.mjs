@@ -2,12 +2,14 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 import { checkProspectReadiness, prospectWarningWeight } from "./lib/prospect-readiness.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 import { runRepoJson as runJson } from "./lib/runtime-roots.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: node scripts/export-growth-doctor.mjs [--output=runs/growth-doctor.md] [--no-checks] [--plain]`);
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
-const outputPath = outputArg ? outputArg.split("=")[1] : "runs/growth-doctor.md";
+const outputPath = resolveOutputPath(outputArg?.split("=").slice(1).join("="), { fallback: "runs/growth-doctor.md" });
 const skipChecks = process.argv.includes("--no-checks");
 const plain = process.argv.includes("--plain");
 const today = localIsoDate();
@@ -146,7 +148,7 @@ function statusFor(checks) {
   return "ready";
 }
 
-const metrics = runJson(["scripts/export-growth-metrics.mjs"]);
+const metrics = runJson(["scripts/export-growth-metrics.mjs", "--output=runs/metrics-for-doctor.md"]);
 const todayResult = runJson(["scripts/show-growth-command-center.mjs", "--limit=8"]);
 const recordingPrep = recordingPrepStatus(5);
 const rehearsal = runJson(["scripts/export-recording-rehearsal-check.mjs", "--limit=5"]);

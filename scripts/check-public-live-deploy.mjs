@@ -118,7 +118,17 @@ try {
     )
   }
 
-  console.log("E. shared-footer pages carry visitor-facing footer copy, not launch-prep (PR #35)")
+  console.log("E. no Cloudflare email-obfuscation placeholder on the live homepage")
+  {
+    const { status, body } = await get("/")
+    ok(status === 200, `homepage returns 200 (got ${status})`)
+    ok(body.includes("support&#64;tinystudio.in"), "homepage serves the email entity-encoded (browser-decoded, edge-immutable)")
+    ok(!body.includes("__cf_email__"), "no Cloudflare-obfuscated email span on the homepage")
+    ok(!body.includes("[email"), "no '[email protected]' placeholder text on the homepage")
+    ok(!body.includes("support@tinystudio.in"), "no plaintext email left that Email Address Obfuscation could rewrite")
+  }
+
+  console.log("F. shared-footer pages carry visitor-facing footer copy, not launch-prep (PR #35)")
   {
     // Same coverage and markers as scripts/test-public-footer-copy.mjs: every
     // live path that carries the shared footer block must name the actual

@@ -8,7 +8,7 @@ Make money quickly by selling a useful, productized marketing ops service that c
 
 TinyStudio is not a generic AI agency. It is a Growth Brain operator.
 
-The client does not buy "AI". They buy a 7-Day Site Revenue Fault Sprint that turns their scattered business context into better page copy, ad ideas, email drafts, competitor awareness, and a weekly learning loop.
+The client does not buy "AI". They buy human-reviewed **The Website Correction** on one highest-leverage page: a prioritized fault map, rewrite or redesign, one implementation pass or dev-ready handoff, search-trust basics, before/after proof, a Loom, a measurement plan, one revision, and 14-day implementation tracking.
 
 ## Why This Can Work Now
 
@@ -32,13 +32,13 @@ The client does not buy "AI". They buy a 7-Day Site Revenue Fault Sprint that tu
 | Stage | Offer | Price |
 |---|---|---:|
 | Entry | Loom audit | Free |
-| First sale | 7-Day Site Revenue Fault Sprint | `$750-$2,500` |
-| Continuation | Weekly Growth Desk | `$1,500+/month` |
+| First sale | The Website Correction (founder pilot) | `$1,000` |
+| Continuation | Weekly Growth Desk | `$2,000-$5,000/month` |
 | Later | Software-assisted dashboard | Not now |
 
 ## First Niche
 
-Start with ecommerce, local services, and B2B service businesses that already have real context.
+Start with founder-led Managed IT, MSP, and cybersecurity companies that already have a live site, high-value offer, and real context.
 
 Do not pick pre-revenue startups first. The sprint needs raw material: reviews, pages, ads, emails, analytics, search intent, and competitors.
 
