@@ -9,24 +9,46 @@ name: Deploy public site
 # fixes (H2-after-H1 on /promptly/support/, JSON-LD on /contact/, real 404s,
 # portfolio-only homepage).
 #
-# Required secrets (fail-closed when present):
+# The lane is fail-closed and reversible:
+#   - Missing required secrets FAIL the run loudly. A skipped publish must
+#     never produce a green deploy status: green means "deployed and
+#     verified", nothing else. The old "dormant" green step hid the missing
+#     token behind green runs.
+#   - Before upload the lane captures the current production deployment
+#     identity as the rollback target and refuses to deploy without one
+#     (scripts/publish-public-site.mjs).
+#   - After upload the lane runs the live acceptance; on failure it restores
+#     the exact previous Pages deployment via the Cloudflare rollback API,
+#     re-verifies the restored identity, re-runs acceptance, and fails
+#     loudly if the rollback itself fails.
+#
+# Required secrets (fail-closed when missing - a skipped publish must never
+# produce a green deploy status):
 #   CLOUDFLARE_API_TOKEN  - Cloudflare API token with Cloudflare Pages:Edit
 #                           on the tinystudio.in account
 #   CLOUDFLARE_ACCOUNT_ID - f670a698e17bf160c8e4679823e68916
 # The fleet Workers token (fleet-console/cf.env) does NOT have Pages:Edit;
 # provisioning a Pages-scoped token is a one-time dashboard step.
 #
-# While BOTH secrets are absent the lane runs a seconds-long "dormant"
-# notice step that prints the exact provisioning steps and exits green, so
-# main merges are not blocked by the missing credential. The moment both
-# secrets exist, every main merge runs the full publish-and-verify pipeline
-# and any failure fails the run loudly (fail-closed). The nightly
-# live-site-check.yml is the loud staleness alarm while the site is stale.
+# Missing wiring FAILS the run loudly instead of skipping the publish under
+# a green "dormant" status: green means "deployed and verified", nothing
+# else. Until both secrets exist the lane fails every main merge loudly with
+# the provisioning steps printed; the nightly live-site-check.yml is the
+# staleness alarm while the site is stale.
+#
+# The daily schedule is the self-heal net: once the Pages token is
+# provisioned, the lane redeploys on its own within a day instead of waiting
+# for the next main push (a token added with no pending merge would otherwise
+# leave the site stale until the next push). While the token is missing the
+# scheduled run fails loudly like every push run - red until provisioned.
 
 on:
   push:
     branches:
       - main
+  schedule:
+    # Daily: pick the stale site back up within a day of the token landing.
+    - cron: "13 3 * * *"
   workflow_dispatch:
 
 permissions:
@@ -49,16 +71,17 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Release lane dormant - Pages token not provisioned yet
+      - name: Required Pages secrets not provisioned - fail loudly
         if: env.CLOUDFLARE_API_TOKEN == '' || env.CLOUDFLARE_ACCOUNT_ID == ''
         run: |
-          echo "::warning title=Release lane dormant::CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID are not set in repo secrets, so the publish step is skipped. The lane will deploy automatically on the next main merge once both secrets are provisioned; until then the live site stays on its current bundle and the nightly live-site-check.yml reports it."
+          echo "::error title=Release lane cannot run::CLOUDFLARE_API_TOKEN and/or CLOUDFLARE_ACCOUNT_ID are not set in repo secrets. The lane fails closed instead of skipping the publish: a skipped publish must never show a green deploy status."
           echo "One-time provisioning (dashboard, ~2 minutes):"
           echo "  1. https://dash.cloudflare.com/profile/api-tokens -> Create Token"
           echo "  2. Use the 'Cloudflare Pages: Edit' template, scope it to the account (account id f670a698e17bf160c8e4679823e68916), create, copy the token."
           echo "  3. gh secret set CLOUDFLARE_API_TOKEN -R nish3451/tinystudio-in"
           echo "  4. gh secret set CLOUDFLARE_ACCOUNT_ID -R nish3451/tinystudio-in -b f670a698e17bf160c8e4679823e68916"
           echo "  5. Re-run this lane (or wait for the next main merge); no code change needed."
+          exit 1
 
       - uses: actions/setup-node@v7
         if: env.CLOUDFLARE_API_TOKEN != '' && env.CLOUDFLARE_ACCOUNT_ID != ''
@@ -77,6 +100,6 @@ jobs:
         if: env.CLOUDFLARE_API_TOKEN != '' && env.CLOUDFLARE_ACCOUNT_ID != ''
         run: node scripts/publish-public-site.mjs --prepare-only --output "$RUNNER_TEMP/tinystudio-public-bundle"
 
-      - name: Publish to Cloudflare Pages and verify live
+      - name: Publish to Cloudflare Pages and verify live (auto-rollback on acceptance failure)
         if: env.CLOUDFLARE_API_TOKEN != '' && env.CLOUDFLARE_ACCOUNT_ID != ''
         run: node scripts/publish-public-site.mjs --deploy --bundle "$RUNNER_TEMP/tinystudio-public-bundle"

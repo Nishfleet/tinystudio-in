@@ -6,7 +6,8 @@
   "description": "TinyStudio's autonomous preparation engine for its human-reviewed website revenue leak service.",
   "scripts": {
     "client:new": "node scripts/create-client-sprint.mjs",
-    "client:check": "node scripts/check-client-readiness.mjs",
+    "client:check": "node scripts/check-client-readiness.mjs --strict",
+    "client:check:advisory": "node scripts/check-client-readiness.mjs",
     "client:cockpit": "node scripts/export-client-delivery-cockpit.mjs",
     "client:kickoff": "node scripts/draft-client-kickoff.mjs",
     "client:acceptance": "node scripts/review-client-acceptance.mjs",
@@ -18,7 +19,8 @@
     "claims:check": "node scripts/check-outbound-claim-safety.mjs",
     "config:check": "node scripts/check-agency-defaults.mjs",
     "send:configure": "node scripts/configure-sender-setup.mjs",
-    "send:setup": "node scripts/check-outbound-sender-setup.mjs",
+    "send:setup": "node scripts/check-outbound-sender-setup.mjs --strict",
+    "send:setup:advisory": "node scripts/check-outbound-sender-setup.mjs",
     "send:guide": "node scripts/export-sender-setup-guide.mjs",
     "send:normalize": "node scripts/normalize-outbound-templates.mjs",
     "send:check": "node scripts/check-outbound-send-readiness.mjs",
@@ -27,7 +29,8 @@
     "prospect:contact-plan": "node scripts/enrich-prospect-contact-plan.mjs",
     "prospect:batch-contact-plan": "node scripts/enrich-prospect-contact-plan-batch.mjs",
     "prospect:package": "node scripts/draft-loom-package.mjs",
-    "prospect:check": "node scripts/check-prospect-readiness.mjs",
+    "prospect:check": "node scripts/check-prospect-readiness.mjs --strict",
+    "prospect:check:advisory": "node scripts/check-prospect-readiness.mjs",
     "prospect:loom": "node scripts/add-prospect-loom-link.mjs",
     "prospect:send-prep": "node scripts/prepare-prospect-send.mjs",
     "prospect:batch-send-prep": "node scripts/prepare-prospect-batch-send.mjs",
@@ -37,7 +40,8 @@
     "prospect:message": "node scripts/draft-prospect-message.mjs",
     "prospect:batch-score": "node scripts/batch-score-prospects.mjs",
     "prospect:score-check": "node scripts/check-lead-score-integrity.mjs",
-    "prospect:site-check": "node scripts/check-recording-sites.mjs",
+    "prospect:site-check": "node scripts/check-recording-sites.mjs --strict",
+    "prospect:site-check:advisory": "node scripts/check-recording-sites.mjs",
     "prospect:snapshot": "node scripts/snapshot-prospect-page.mjs",
     "prospect:batch-snapshot": "node scripts/snapshot-recording-batch.mjs",
     "prospect:brief": "node scripts/draft-recording-sharpness-brief.mjs",
@@ -64,11 +68,13 @@
     "growth:dashboard": "node scripts/export-internal-dashboard.mjs",
     "growth-brain:check": "node scripts/check-human-service-kit.mjs",
     "market:benchmark": "node scripts/export-market-benchmark.mjs",
-    "market:parity": "node scripts/check-market-parity-readiness.mjs",
+    "market:parity": "node scripts/check-market-parity-readiness.mjs --strict",
+    "market:parity:advisory": "node scripts/check-market-parity-readiness.mjs",
     "market:proof-run": "node scripts/export-market-proof-run.mjs",
     "market:recordings": "node scripts/update-market-proof-looms.mjs",
     "market:after-recording": "node scripts/prepare-market-proof-after-recording.mjs",
-    "market:proof-check": "node scripts/check-market-proof-run.mjs",
+    "market:proof-check": "node scripts/check-market-proof-run.mjs --strict",
+    "market:proof-check:advisory": "node scripts/check-market-proof-run.mjs",
     "market:proof-cockpit": "node scripts/export-market-proof-cockpit.mjs",
     "market:learn": "node scripts/export-market-learning-review.mjs",
     "sales:one-pager": "node scripts/export-managed-it-one-pager.mjs",
@@ -87,9 +93,9 @@
     "product:truth": "node scripts/check-product-truth.mjs",
     "mobbin:run": "node scripts/run-design-system-proving-lab.mjs",
     "mobbin:check": "node scripts/run-design-system-proving-lab.mjs --dry-run",
-    "ci": "node scripts/test-service-engine.mjs && node scripts/test-sales-intake-contract.mjs && node scripts/test-active-offer-projection.mjs && node scripts/test-active-operator-surfaces.mjs && node scripts/test-direction-proof-gate.mjs && node scripts/test-client-readiness-contract.mjs && node scripts/test-validated-service-client.mjs && node scripts/test-client-acceptance-gates.mjs && node scripts/check-product-truth.mjs && node scripts/check-human-service-kit.mjs && node scripts/test-design-system-proving-lab.mjs && node scripts/check-retention-automation.mjs && node scripts/test-retention-automation.mjs && node scripts/check-agency-defaults.mjs && node scripts/check-outbound-claim-safety.mjs && node scripts/check-outbound-send-readiness.mjs && node scripts/test-outbound-send-readiness.mjs && node scripts/test-public-conversion-signal.mjs && node scripts/test-public-structured-data.mjs && node scripts/test-public-brand-disambiguation.mjs && node scripts/test-public-heading-hierarchy.mjs && node scripts/test-public-link-targets.mjs && node scripts/test-public-social-preview.mjs && node scripts/test-public-soft-404.mjs && node scripts/test-public-deploy-bundle.mjs && node scripts/test-pr-duplicates.mjs && find scripts -name '*.mjs' -print0 | xargs -0 -n1 node --check",
+    "ci": "node scripts/test-service-engine.mjs && node scripts/test-sales-intake-contract.mjs && node scripts/test-active-offer-projection.mjs && node scripts/test-active-operator-surfaces.mjs && node scripts/test-direction-proof-gate.mjs && node scripts/test-client-readiness-contract.mjs && node scripts/test-validated-service-client.mjs && node scripts/test-client-acceptance-gates.mjs && node scripts/test-operator-check-strictness.mjs && node scripts/check-product-truth.mjs && node scripts/check-human-service-kit.mjs && node scripts/test-design-system-proving-lab.mjs && node scripts/check-retention-automation.mjs && node scripts/test-retention-automation.mjs && node scripts/check-agency-defaults.mjs && node scripts/check-outbound-claim-safety.mjs && node scripts/check-outbound-send-readiness.mjs && node scripts/test-outbound-send-readiness.mjs && node scripts/test-public-conversion-signal.mjs && node scripts/test-public-structured-data.mjs && node scripts/test-public-brand-disambiguation.mjs && node scripts/test-public-heading-hierarchy.mjs && node scripts/test-public-link-targets.mjs && node scripts/test-public-social-preview.mjs && node scripts/test-public-soft-404.mjs && node scripts/test-public-deploy-bundle.mjs && node scripts/test-deploy-public-site-workflow.mjs && node scripts/test-pages-release.mjs && node scripts/test-pr-duplicates.mjs && find scripts -name '*.mjs' -print0 | xargs -0 -n1 node --check",
     "check": "npm test",
-    "test": "node scripts/test-service-engine.mjs && node scripts/test-sales-intake-contract.mjs && node scripts/test-active-offer-projection.mjs && node scripts/test-active-operator-surfaces.mjs && node scripts/test-direction-proof-gate.mjs && node scripts/test-client-readiness-contract.mjs && node scripts/test-validated-service-client.mjs && node scripts/test-client-acceptance-gates.mjs && node scripts/check-product-truth.mjs && node scripts/check-human-service-kit.mjs && node scripts/test-design-system-proving-lab.mjs && node scripts/check-retention-automation.mjs && node scripts/test-retention-automation.mjs && node scripts/check-agency-defaults.mjs && node scripts/check-outbound-claim-safety.mjs && node scripts/check-outbound-send-readiness.mjs && node scripts/test-outbound-send-readiness.mjs && node scripts/test-public-conversion-signal.mjs && node scripts/test-public-structured-data.mjs && node scripts/test-public-brand-disambiguation.mjs && node scripts/test-public-heading-hierarchy.mjs && node scripts/test-public-link-targets.mjs && node scripts/test-public-social-preview.mjs && node scripts/test-public-soft-404.mjs && node scripts/test-public-deploy-bundle.mjs && node scripts/test-pr-duplicates.mjs && find scripts -name '*.mjs' -print0 | xargs -0 -n1 node --check",
+    "test": "node scripts/test-service-engine.mjs && node scripts/test-sales-intake-contract.mjs && node scripts/test-active-offer-projection.mjs && node scripts/test-active-operator-surfaces.mjs && node scripts/test-direction-proof-gate.mjs && node scripts/test-client-readiness-contract.mjs && node scripts/test-validated-service-client.mjs && node scripts/test-client-acceptance-gates.mjs && node scripts/test-operator-check-strictness.mjs && node scripts/check-product-truth.mjs && node scripts/check-human-service-kit.mjs && node scripts/test-design-system-proving-lab.mjs && node scripts/check-retention-automation.mjs && node scripts/test-retention-automation.mjs && node scripts/check-agency-defaults.mjs && node scripts/check-outbound-claim-safety.mjs && node scripts/check-outbound-send-readiness.mjs && node scripts/test-outbound-send-readiness.mjs && node scripts/test-public-conversion-signal.mjs && node scripts/test-public-structured-data.mjs && node scripts/test-public-brand-disambiguation.mjs && node scripts/test-public-heading-hierarchy.mjs && node scripts/test-public-link-targets.mjs && node scripts/test-public-social-preview.mjs && node scripts/test-public-soft-404.mjs && node scripts/test-public-deploy-bundle.mjs && node scripts/test-deploy-public-site-workflow.mjs && node scripts/test-pages-release.mjs && node scripts/test-pr-duplicates.mjs && find scripts -name '*.mjs' -print0 | xargs -0 -n1 node --check",
     "site:publish": "node scripts/publish-public-site.mjs",
     "site:publish:check": "node scripts/publish-public-site.mjs --prepare-only"
   },
@@ -97,6 +103,6 @@
     "node": ">=20"
   },
   "devDependencies": {
-    "wrangler": "4.120.0"
+    "wrangler": "4.123.0"
   }
 }
