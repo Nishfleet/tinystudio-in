@@ -246,6 +246,17 @@ try {
     checkFooter("404 page", body)
   }
 
+  console.log("I. /llms.txt lists every public page (PR #68 live)")
+  {
+    const { status, body } = await get("/llms.txt")
+    ok(status === 200, `/llms.txt returns 200 (got ${status})`)
+    const missing = PUBLIC_PAGE_URLS.filter((url) => !body.includes(url))
+    ok(
+      missing.length === 0,
+      `llms.txt lists all ${PUBLIC_PAGE_URLS.length} public pages (missing: ${missing.join(", ") || "none"})`
+    )
+  }
+
 } catch (error) {
   failures++
   console.error(`  FAIL live request error: ${error.message}`)
