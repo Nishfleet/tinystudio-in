@@ -11,6 +11,16 @@
 //   3. unknown URLs get a real 404, not the homepage (PR #34)
 //   4. homepage stays portfolio-only: brand-disambiguation copy (#29) live,
 //      and no managed-service buyer-path content (#10/#11, snoozed).
+//
+// Review disposition (2026-08-11, Grok live-review finding "homepage is
+// missing the entire <section id=\"managed-service\"> block on the live site
+// while the merged homepage on main carries it"): intended, snooze honored.
+// The section is deliberately absent from every publishable bundle - the
+// snoozed-by-Nish (2026-08-08) managed-service buyer path from PRs #10/#11 is
+// stripped by scripts/prepare-public-deploy-bundle.mjs and its absence is
+// asserted here (explicitly via the id="managed-service" marker below) and by
+// scripts/test-public-deploy-bundle.mjs. The section returns only when Nish
+// lifts the snooze and the fail-closed filter is updated deliberately.
 //   5. /llms.txt lists every public page             (PR #68)
 // Proof 2b covers the 2026-08-08 dogfood finding page:
 //   2b. /contact/ renders H2 after H1 (the heading-hierarchy repair, PR #18).
@@ -27,6 +37,7 @@ const BUYER_PATH_MARKERS = [
   "Website Correction",
   "website-correction",
   "data-measure-source",
+  'id="managed-service"',
 ]
 
 let failures = 0
@@ -101,6 +112,10 @@ try {
     for (const marker of BUYER_PATH_MARKERS) {
       ok(!body.includes(marker), `homepage has no ${marker}`)
     }
+    ok(
+      !body.includes('<section class="shape" id="managed-service"'),
+      "the entire managed-service section block is absent from the homepage"
+    )
   }
 
   console.log("E. /llms.txt lists every public page (PR #68 live)")
