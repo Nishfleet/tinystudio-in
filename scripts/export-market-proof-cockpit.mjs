@@ -2,6 +2,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 import { isValidLoomUrl, loomUrlError } from "./lib/loom-url.mjs";
 import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
 import { routedContactPlan } from "./lib/contact-route.mjs";
@@ -9,13 +10,14 @@ import { classifyOutboundProspect } from "./lib/outbound-prospects.mjs";
 import { runRepoJson as runJson } from "./lib/runtime-roots.mjs";
 
 const args = process.argv.slice(2);
+handleHelp(args, `Usage: node scripts/export-market-proof-cockpit.mjs [prospects/loom-links.txt] [--output=runs/market-proof-cockpit.md] [--html=runs/market-proof-cockpit.html] [--limit=5] [--plain]`);
 const inputPath = args.find((arg) => !arg.startsWith("--")) || "prospects/loom-links.txt";
 const outputArg = args.find((arg) => arg.startsWith("--output="));
 const htmlArg = args.find((arg) => arg.startsWith("--html="));
 const limitArg = args.find((arg) => arg.startsWith("--limit="));
 const plain = args.includes("--plain");
-const outputPath = outputArg ? outputArg.split("=").slice(1).join("=") : "runs/market-proof-cockpit.md";
-const htmlPath = htmlArg ? htmlArg.split("=").slice(1).join("=") : "runs/market-proof-cockpit.html";
+const outputPath = resolveOutputPath(outputArg?.split("=").slice(1).join("="), { fallback: "runs/market-proof-cockpit.md" });
+const htmlPath = resolveOutputPath(htmlArg?.split("=").slice(1).join("="), { flag: "--html", fallback: "runs/market-proof-cockpit.html" });
 const limit = limitArg ? Number(limitArg.split("=").slice(1).join("=")) : 5;
 const today = localIsoDate();
 
