@@ -52,6 +52,9 @@ export const FORBIDDEN_MARKERS = [
   { label: "website-correction ids/hrefs", test: (html) => html.includes("website-correction") },
   { label: "data-measure-source", test: (html) => html.includes("data-measure-source") },
   { label: "managed service phrase", test: (html) => /managed\s+service/i.test(html) },
+  // The entire managed-service homepage section (review finding 2026-08-11:
+  // the snoozed buyer path must never appear on the live homepage).
+  { label: "managed-service section id", test: (html) => html.includes('id="managed-service"') },
 ]
 
 // Neutral merged fixes that must SURVIVE in the bundle (deploy proof).
