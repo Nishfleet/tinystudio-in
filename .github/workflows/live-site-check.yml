@@ -1,16 +1,18 @@
 name: Live Site Check
 
 # Guards the deployed tinystudio.in against soft-404s, WCAG 2.2 tap-target
-# drift (SC 2.5.8 24px minimum), and stale bundles without blocking pull
-# requests. The deploy lane (deploy-public-site.yml) verifies the live site
-# after every publish; this workflow is the nightly net that catches a stale
-# or misconfigured deployment within a day even when nothing merges. It is
-# deliberately NOT part of `npm run ci` - that blocking chain must stay green
-# on repo state alone.
+# drift (SC 2.5.8 24px minimum), regressed heading hierarchies, and stale
+# bundles without blocking pull requests. The deploy lane
+# (deploy-public-site.yml) verifies the live site after every publish; this
+# workflow is the nightly net that catches a stale or misconfigured
+# deployment within a day even when nothing merges. It is deliberately NOT
+# part of `npm run ci` - that blocking chain must stay green on repo state
+# alone.
 #
 # This job is expected to FAIL while the deployment is stale (currently the
-# June-20 bundle); the red run is the loud signal to re-deploy from
-# origin/main, not a reason to disable the workflow.
+# 2026-06-20 bundle, which still serves pre-2026-08-07 public fixes); the red
+# run is the loud signal to re-deploy from origin/main, not a reason to
+# disable the workflow.
 
 on:
   schedule:
@@ -37,6 +39,7 @@ jobs:
           cache: npm
       - run: npm ci --ignore-scripts
       - run: node scripts/check-public-live-soft-404.mjs
+      - run: node scripts/test-public-live-heading-hierarchy.mjs
   live-contact-heading-hierarchy:
     runs-on: [self-hosted, linux, x64, vps-verify]
     steps:
@@ -57,3 +60,13 @@ jobs:
           cache: npm
       - run: npm ci --ignore-scripts
       - run: node scripts/check-public-live-tap-targets.mjs
+  live-social-preview:
+    runs-on: [self-hosted, linux, x64, vps-verify]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: node scripts/check-public-live-social-preview.mjs

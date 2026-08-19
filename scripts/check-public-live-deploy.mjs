@@ -11,11 +11,9 @@
 //   3. unknown URLs get a real 404, not the homepage (PR #34)
 //   4. homepage stays portfolio-only: brand-disambiguation copy (#29) live,
 //      and no managed-service buyer-path content (#10/#11, snoozed).
-//   5. the trust pages /privacy/, /terms/, /drishti/privacy/ render the
-//      fixed H1 -> H2x3 card outline, not the H1 -> H3x3 skip (PR #74).
 //
 // Review disposition (2026-08-11, Grok live-review finding "homepage is
-// missing the entire <section id="managed-service"> block on the live site
+// missing the entire <section id=\"managed-service\"> block on the live site
 // while the merged homepage on main carries it"): intended, snooze honored.
 // The section is deliberately absent from every publishable bundle - the
 // snoozed-by-Nish (2026-08-08) managed-service buyer path from PRs #10/#11 is
@@ -26,8 +24,13 @@
 //   5. every public page carries exactly one application/ld+json block
 //      (trust/support structured data, PR #26 - the 07acd07 bundle shipped
 //      JSON-LD on only 4 of 12 pages).
+// The fifth proof covers the 2026-08-08 dogfood finding pages:
+//   5. /drishti/support/ and /privacy-choices/ render H2 after H1
+//      (the skipped-heading-levels repair, PR #23).
 // Proof 2b covers the 2026-08-08 dogfood finding page:
 //   2b. /contact/ renders H2 after H1 (the heading-hierarchy repair, PR #18).
+//   5. the deployed stylesheet keeps the WCAG 2.2 24px footer tap-target
+//      rule (PR #22) so mobile footer links stay >= 24px on every page.
 import { join } from "node:path"
 import { fileURLToPath } from "node:url"
 import { dirname } from "node:path"
@@ -83,17 +86,6 @@ const h2AfterFirstH1 = (html) => {
   return nextH2 !== -1 && (nextH3 === -1 || nextH2 < nextH3)
 }
 
-// Same assertions as scripts/test-public-heading-hierarchy.mjs: the trust
-// pages must serve H1 -> three H2 card titles -> footer H2/H3s, with no
-// heading-level jump (no H1 -> H3 skip).
-const headingLevelsOf = (html) =>
-  [...html.matchAll(/<h([1-6])\b[^>]*>/gi)].map((m) => Number(m[1]))
-
-const infoCardTitleCount = (html) =>
-  (html.match(/<article class="info-card[^"]*"[^>]*>[\s\S]*?<h2\b/gi) || []).length
-
-const TRUST_PAGES = ["/privacy/", "/terms/", "/drishti/privacy/"]
-
 console.log("check-public-live-deploy: live tinystudio.in must match neutral merged fixes")
 
 if (process.env.SKIP_LIVE_CHECKS === "1") {
@@ -107,6 +99,13 @@ try {
     const { status, body } = await get("/promptly/support/")
     ok(status === 200, `/promptly/support/ returns 200 (got ${status})`)
     ok(h2AfterFirstH1(body), "H2 follows the first H1 before any H3")
+  }
+
+  console.log("A2. finding pages render H2 after H1 (skipped-heading-levels repair, PR #23)")
+  for (const path of ["/drishti/support/", "/privacy-choices/"]) {
+    const { status, body } = await get(path)
+    ok(status === 200, `${path} returns 200 (got ${status})`)
+    ok(h2AfterFirstH1(body), `${path} has H2 following the first H1 before any H3`)
   }
 
   console.log("B. /contact/ carries structured data (PR #19)")
@@ -165,7 +164,26 @@ try {
     ok(blocks === 1, `${path} carries exactly one application/ld+json block (got ${blocks})`)
   }
 
-  console.log("G. trust pages render the fixed H1 -> H2x3 card outline (PR #74)")
+  console.log("G. the deployed stylesheet keeps the WCAG 2.2 24px footer tap-target rule (PR #22)")
+  {
+    const { status, body } = await get("/styles.css")
+    ok(status === 200, `GET /styles.css returns 200 (got ${status})`)
+    const footerRule = body.match(/\.footer-links\s*a\s*\{([^}]*)\}/)
+    ok(footerRule !== null, "deployed stylesheet has a .footer-links a rule")
+    if (footerRule) {
+      const rule = footerRule[1]
+      ok(/display:\s*(inline-block|inline-flex|block)/.test(rule), ".footer-links a is a block-level box (hit area covers the line box)")
+      ok(!/display:\s*inline\s*;/.test(rule), ".footer-links a is not a plain inline box")
+      ok(/min-height:\s*24px/.test(rule), ".footer-links a declares min-height: 24px")
+      const padding = rule.match(/padding:\s*([^;]+)/)
+      ok(padding !== null, ".footer-links a declares vertical padding")
+      if (padding) {
+        const vertical = parseFloat(padding[1].trim().split(/\s+/)[0])
+        ok(vertical >= 4, `.footer-links a vertical padding is at least 4px (${vertical}px), so 16px text + padding >= 24px`)
+      }
+    }
+  }
+  console.log("H. trust pages render the fixed H1 -> H2x3 card outline (PR #74)")
   for (const path of TRUST_PAGES) {
     const { status, body } = await get(path)
     ok(status === 200, `${path} returns 200 (got ${status})`)
@@ -179,6 +197,7 @@ try {
     }
     ok(jumps === 0, `${path} has no heading-level jump (no H1 -> H3 skip)`)
   }
+
 } catch (error) {
   failures++
   console.error(`  FAIL live request error: ${error.message}`)
