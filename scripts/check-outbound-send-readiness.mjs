@@ -4,6 +4,7 @@ import { isAbsolute, join } from "node:path";
 import { isServiceApplicationFolder } from "./lib/outbound-prospects.mjs";
 import { serviceRoot } from "./lib/runtime-roots.mjs";
 import { resolveRepoPath } from "./lib/service-contract.mjs";
+import { RETIRED_OFFER_PATTERN } from "./lib/retired-offer-pattern.mjs";
 
 const defaultRoot = resolveRepoPath(serviceRoot, "prospects");
 
@@ -83,16 +84,16 @@ const outboundFiles = new Set([
   "next-message.md", "send-package.md", "recording-notes.md", "outreach.md",
   "reply-package.md", "call-booked-package.md", "close-package.md",
   "loom-outline.md", "recording-script.md", "recording-sharpness-brief.md",
-  "audit-brief.md", "buyer-room.md", "loom-package.md"
+  "audit-brief.md", "buyer-room.md", "loom-package.md",
+  "contact-plan.md", "value-calculator.md", "sales-call-prep.md", "lead-score.md"
 ]);
 const optOutPattern = /\b(reply no|do not follow up|unsubscribe|opt out|ignore me)\b/i;
 const placeholderPattern = /\[(?:add Loom link|link|specific fault|Name)\]|Here is the Loom:\s*$/i;
 const salesPlaceholderPattern = /\badd (?:meeting link|payment link|call time)\b/i;
 // Retired broad-agency offers must never project into an outbound send package
 // or any runtime sheet that feeds it (loom outlines, recording scripts,
-// sharpness briefs, audit briefs, buyer rooms). Mirrors the canonical
-// retired-ask guard in export-recording-rehearsal-check.mjs.
-const retiredOfferPattern = /7[-\s]day (?:site|website) revenue (?:leak|fault) (?:fix )?sprint|7[-\s]day sprint|tangible revenue (?:leak|fault) sprint|30[-\s]day action plan|growth desk|three pages|founder sprint|\$\s?500\b/i;
+// sharpness briefs, audit briefs, buyer rooms, contact plans). Mirrors the
+// canonical retired-ask guard in export-recording-rehearsal-check.mjs.
 
 function walk(path) {
   if (!existsSync(path)) return [];
@@ -137,7 +138,7 @@ for (const file of files) {
     findings.push({ file, rule: "sales package still has meeting/payment placeholders" });
   }
 
-  if (retiredOfferPattern.test(content)) {
+  if (RETIRED_OFFER_PATTERN.test(content)) {
     findings.push({ file, rule: "outbound package sells a retired offer" });
   }
 
