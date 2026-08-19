@@ -7,6 +7,7 @@ import { isValidLoomUrl, loomUrlError } from "./lib/loom-url.mjs";
 import { formatChannelGuidanceMarkdown } from "./lib/send-channel-guidance.mjs";
 import { formatReplyWorthinessMarkdown, replyWorthiness } from "./lib/reply-worthy-proof.mjs";
 import { guardOutboundProspectPath } from "./lib/outbound-prospects.mjs";
+import { RETIRED_OFFER_PATTERN } from "./lib/retired-offer-pattern.mjs";
 
 const args = process.argv.slice(2);
 const prospectPath = args[0];
@@ -76,6 +77,26 @@ const message = read("next-message.md");
 const contactPlan = read("contact-plan.md");
 const recordingNotes = read("recording-notes.md");
 const contactRoute = contactPlan ? section(contactPlan, "Best Route", "See contact-plan.md") : "";
+
+// The send package embeds these files verbatim. Refuse to generate it if any
+// still sells a retired broad-agency offer, so a stale runtime sheet can never
+// reach a prospect through the active send package.
+const sendInputs = [
+  ["next-message.md", message],
+  ["contact-plan.md", contactPlan],
+  ["recording-notes.md", recordingNotes]
+];
+const retiredInputs = sendInputs.filter(([, content]) => RETIRED_OFFER_PATTERN.test(content));
+if (retiredInputs.length && !force) {
+  console.error(JSON.stringify({
+    status: "blocked",
+    reason: "Send package inputs still sell a retired offer",
+    prospectPath,
+    loomUrl,
+    files: retiredInputs.map(([file]) => file)
+  }, null, 2));
+  process.exit(1);
+}
 
 const sendPackage = `# Send Package
 

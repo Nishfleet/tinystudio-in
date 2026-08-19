@@ -1,12 +1,14 @@
 #!/usr/bin/env node
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: node scripts/export-lead-scoring-cockpit.mjs [--limit=10] [--output=prospects/lead-scoring-cockpit.html]`);
 const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
 const limit = limitArg ? Number(limitArg.split("=")[1]) : 10;
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
-const outputPath = outputArg ? outputArg.split("=")[1] : "prospects/lead-scoring-cockpit.html";
+const outputPath = resolveOutputPath(outputArg?.split("=").slice(1).join("="), { fallback: "prospects/lead-scoring-cockpit.html" });
 
 function listFolders(root) {
   return listOutboundProspectFolders(root);
