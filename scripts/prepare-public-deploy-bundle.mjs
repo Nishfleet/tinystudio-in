@@ -15,7 +15,8 @@
 //   - post-filter: the bundle must contain none of the forbidden markers and
 //     must still carry the neutral merged fixes used as deploy proof
 //     (H2-after-H1 on /promptly/support/ from #18/#20, JSON-LD on /contact/
-//     from #19, homepage brand disambiguation from #29).
+//     from #19, homepage brand disambiguation from #29, top-level real 404
+//     page from #34).
 //
 // CLI: node scripts/prepare-public-deploy-bundle.mjs --source public --output <dir>
 // Defaults: --source ./public, --output to a fresh temp directory (printed).
@@ -51,6 +52,9 @@ export const FORBIDDEN_MARKERS = [
   { label: "website-correction ids/hrefs", test: (html) => html.includes("website-correction") },
   { label: "data-measure-source", test: (html) => html.includes("data-measure-source") },
   { label: "managed service phrase", test: (html) => /managed\s+service/i.test(html) },
+  // The entire managed-service homepage section (review finding 2026-08-11:
+  // the snoozed buyer path must never appear on the live homepage).
+  { label: "managed-service section id", test: (html) => html.includes('id="managed-service"') },
 ]
 
 // Neutral merged fixes that must SURVIVE in the bundle (deploy proof).
@@ -79,6 +83,20 @@ export const NEUTRAL_PROOFS = [
     label: "homepage non-affiliation copy (PR #29)",
     file: "index.html",
     test: (html) => html.includes("not affiliated"),
+  },
+  {
+    // The top-level 404 page is what terminates Cloudflare Pages' single-page
+    // application fallback: without it every unknown URL is served as the
+    // homepage with HTTP 200 (the soft-404 PR #34 fixed). It must therefore be
+    // part of the deploy-proof set, not just an existing file: if it is ever
+    // lost or becomes a homepage clone, the release lane itself fails closed
+    // instead of publishing a bundle that soft-404s again.
+    label: "top-level real 404 page (PR #34) - terminates Pages SPA fallback",
+    file: "404.html",
+    test: (html) =>
+      /<title>[^<]*not found[^<]*<\/title>/i.test(html) &&
+      !html.includes("<title>Tiny Studio | Promptly, Drishti, and 0509") &&
+      /<meta name="robots" content="noindex">/.test(html),
   },
 ]
 

@@ -106,3 +106,27 @@ A tag being present or a link being opened proves nothing about completion.
    the contact wiring must be re-verified before any conversion conclusion is
    drawn. Under this rule, "no tagged clicks" and "no applications" are both
    observable, and either direction can be disproven by a single counterexample.
+
+## Review dispositions
+
+### 2026-08-11 — "homepage is missing the entire `<section id="managed-service">` block on the live site"
+
+Grok live-review finding, dispositioned by the tinystudio-in lane (2026-08-11):
+the live homepage has no managed-service section while the merged homepage on
+main carries one. Verdict: **intended, snooze honored — not a regression.**
+
+- The managed-service buyer path (PRs #10/#11) is snoozed-by-Nish (2026-08-08:
+  do not build, publish, or deploy it without his explicit yes).
+- The release lane strips the entire section (and every buyer-path marker)
+  from the publishable bundle via `scripts/prepare-public-deploy-bundle.mjs`
+  (fail-closed in both directions), and the live deploy check asserts its
+  absence explicitly (`id="managed-service"` in
+  `scripts/check-public-live-deploy.mjs`, mirrored by
+  `scripts/test-public-deploy-bundle.mjs`).
+- Live evidence 2026-08-11: `https://tinystudio.in/` contains no
+  `id="managed-service"`, no "Website Correction", no "website-correction",
+  and no `data-measure-source`. (The live site is still the 2026-06-20 bundle
+  07acd07, which predates PR #10; the filter would strip the section even on a
+  fresh deploy.)
+- The section returns only when Nish lifts the snooze; the fail-closed filter
+  is then updated deliberately, never silently.

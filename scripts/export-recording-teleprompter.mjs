@@ -4,12 +4,16 @@ import { dirname, join, relative } from "node:path";
 import { checkProspectReadiness, prospectWarningWeight } from "./lib/prospect-readiness.mjs";
 import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
 import { routedContactPlan } from "./lib/contact-route.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 
-const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
+const args = process.argv.slice(2);
+handleHelp(args, `Usage: node scripts/export-recording-teleprompter.mjs [--limit=5] [--output=prospects/recording-teleprompter.html]`);
+const limitArg = args.find((arg) => arg.startsWith("--limit="));
 const limit = limitArg ? Number(limitArg.split("=")[1]) : 5;
-const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
-const outputPath = outputArg ? outputArg.split("=")[1] : "prospects/recording-teleprompter.html";
+const outputArg = args.find((arg) => arg.startsWith("--output="));
+const outputRel = outputArg ? outputArg.split("=")[1] : "prospects/recording-teleprompter.html";
+const outputPath = resolveOutputPath(outputRel, { fallback: "prospects/recording-teleprompter.html" });
 
 function listFolders(root) {
   return listOutboundProspectFolders(root);

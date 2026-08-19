@@ -13,6 +13,18 @@
 //      and no managed-service buyer-path content (#10/#11, snoozed).
 //   5. the trust pages /privacy/, /terms/, /drishti/privacy/ render the
 //      fixed H1 -> H2x3 card outline, not the H1 -> H3x3 skip (PR #74).
+//
+// Review disposition (2026-08-11, Grok live-review finding "homepage is
+// missing the entire <section id="managed-service"> block on the live site
+// while the merged homepage on main carries it"): intended, snooze honored.
+// The section is deliberately absent from every publishable bundle - the
+// snoozed-by-Nish (2026-08-08) managed-service buyer path from PRs #10/#11 is
+// stripped by scripts/prepare-public-deploy-bundle.mjs and its absence is
+// asserted here (explicitly via the id="managed-service" marker below) and by
+// scripts/test-public-deploy-bundle.mjs. The section returns only when Nish
+// lifts the snooze and the fail-closed filter is updated deliberately.
+// Proof 2b covers the 2026-08-08 dogfood finding page:
+//   2b. /contact/ renders H2 after H1 (the heading-hierarchy repair, PR #18).
 import { join } from "node:path"
 import { fileURLToPath } from "node:url"
 import { dirname } from "node:path"
@@ -24,6 +36,7 @@ const BUYER_PATH_MARKERS = [
   "Website Correction",
   "website-correction",
   "data-measure-source",
+  'id="managed-service"',
 ]
 
 let failures = 0
@@ -84,6 +97,13 @@ try {
     ok(body.includes("application/ld+json"), "page contains application/ld+json")
   }
 
+  console.log("B2. /contact/ renders H2 after H1 (heading-hierarchy repair, PR #18)")
+  {
+    const { status, body } = await get("/contact/")
+    ok(status === 200, `/contact/ returns 200 (got ${status})`)
+    ok(h2AfterFirstH1(body), "H2 follows the first H1 before any H3")
+  }
+
   console.log("C. unknown URLs return a real 404 (PR #34)")
   {
     const probe = `/definitely-missing-live-deploy-${Date.now()}`
@@ -102,6 +122,10 @@ try {
     for (const marker of BUYER_PATH_MARKERS) {
       ok(!body.includes(marker), `homepage has no ${marker}`)
     }
+    ok(
+      !body.includes('<section class="shape" id="managed-service"'),
+      "the entire managed-service section block is absent from the homepage"
+    )
   }
 
   console.log("E. trust pages render the fixed H1 -> H2x3 card outline (PR #74)")
