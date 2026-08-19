@@ -150,6 +150,23 @@ try {
 		"export-proof-library.mjs",
 		"export-sender-setup-guide.mjs"
 	]
+	// The runtime cockpit and mission writers (private runs/ and prospects/
+	// surfaces) must honor --help/-h the same way: exit 0 with usage, and
+	// never write or overwrite tracked or runtime artifacts when asked for
+	// help instead of a real run.
+	const runtimeHelpSurface = [
+		"export-client-delivery-cockpit.mjs",
+		"export-daily-money-mission.mjs",
+		"export-followup-cockpit.mjs",
+		"export-growth-cockpit.mjs",
+		"export-growth-doctor.mjs",
+		"export-lead-scoring-cockpit.mjs",
+		"export-managed-it-one-pager.mjs",
+		"export-market-learning-review.mjs",
+		"export-market-proof-cockpit.mjs",
+		"export-prospect-outbox.mjs",
+		"export-sales-cockpit.mjs"
+	]
 	const artifactBeforeHelp = new Map(
 		[...trackedArtifacts.keys(), ...privateRuntimeArtifacts]
 			.filter(path => existsSync(join(T, path)))
@@ -163,6 +180,13 @@ try {
 		}
 	}
 	for (const name of trackedOpsHelpSurface) {
+		for (const flag of ["--help", "-h"]) {
+			const helped = run([`scripts/${name}`, flag])
+			eq(helped.status, 0, `${name} ${flag} must exit 0: ${helped.stderr || helped.stdout}`)
+			mat(helped.stdout, /Usage:/, `${name} ${flag} must print usage`)
+		}
+	}
+	for (const name of runtimeHelpSurface) {
 		for (const flag of ["--help", "-h"]) {
 			const helped = run([`scripts/${name}`, flag])
 			eq(helped.status, 0, `${name} ${flag} must exit 0: ${helped.stderr || helped.stdout}`)
@@ -191,7 +215,18 @@ try {
 		["scripts/export-sender-setup-guide.mjs", `--output=${join(T, "..", "escape-sender-setup.md")}`, `--html=${join(T, "..", "escape-sender-setup.html")}`],
 		["scripts/export-market-benchmark.mjs", `--output=${join(T, "..", "escape-benchmark.md")}`, `--ops=${join(T, "..", "escape-matrix.md")}`, `--html=${join(T, "..", "escape-matrix.html")}`],
 		["scripts/export-market-proof-run.mjs", `--output=${join(T, "..", "escape-proof-run.md")}`],
-		["scripts/check-market-parity-readiness.mjs", `--output=${join(T, "..", "escape-parity.md")}`]
+		["scripts/check-market-parity-readiness.mjs", `--output=${join(T, "..", "escape-parity.md")}`],
+		["scripts/export-daily-money-mission.mjs", `--output=${join(T, "..", "escape-mission.md")}`],
+		["scripts/export-growth-cockpit.mjs", `--output=${join(T, "..", "escape-growth-cockpit.html")}`],
+		["scripts/export-growth-doctor.mjs", `--output=${join(T, "..", "escape-growth-doctor.md")}`],
+		["scripts/export-lead-scoring-cockpit.mjs", `--output=${join(T, "..", "escape-lead-scoring.html")}`],
+		["scripts/export-managed-it-one-pager.mjs", `--output=${join(T, "..", "escape-one-pager.html")}`],
+		["scripts/export-market-learning-review.mjs", `--output=${join(T, "..", "escape-learning-review.md")}`],
+		["scripts/export-market-proof-cockpit.mjs", `--output=${join(T, "..", "escape-proof-cockpit.md")}`],
+		["scripts/export-prospect-outbox.mjs", `--output=${join(T, "..", "escape-outbox.html")}`],
+		["scripts/export-sales-cockpit.mjs", `--output=${join(T, "..", "escape-sales.html")}`],
+		["scripts/export-followup-cockpit.mjs", `--output=${join(T, "..", "escape-followup.html")}`],
+		["scripts/export-client-delivery-cockpit.mjs", "clients/escape-probe", `--output=${join(T, "..", "escape-delivery.html")}`]
 	]) {
 		const refused = run(args)
 		neq(refused.status, 0, `${args[0]} must refuse an escaping output path`)
@@ -211,7 +246,18 @@ try {
 		join(T, "..", "escape-matrix.md"),
 		join(T, "..", "escape-matrix.html"),
 		join(T, "..", "escape-proof-run.md"),
-		join(T, "..", "escape-parity.md")
+		join(T, "..", "escape-parity.md"),
+		join(T, "..", "escape-mission.md"),
+		join(T, "..", "escape-growth-cockpit.html"),
+		join(T, "..", "escape-growth-doctor.md"),
+		join(T, "..", "escape-lead-scoring.html"),
+		join(T, "..", "escape-one-pager.html"),
+		join(T, "..", "escape-learning-review.md"),
+		join(T, "..", "escape-proof-cockpit.md"),
+		join(T, "..", "escape-outbox.html"),
+		join(T, "..", "escape-sales.html"),
+		join(T, "..", "escape-followup.html"),
+		join(T, "..", "escape-delivery.html")
 	]) {
 		eq(existsSync(escapePath), false, `escape probe must not create ${escapePath}`)
 	}
