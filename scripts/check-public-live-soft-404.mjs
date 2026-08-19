@@ -27,6 +27,8 @@ import { fileURLToPath } from "node:url"
 import { dirname, join } from "node:path"
 import { randomBytes } from "node:crypto"
 
+import { PUBLIC_PAGE_URLS } from "./lib/public-pages.mjs"
+
 if (process.env.SKIP_LIVE_CHECKS === "1") {
   console.log("check-public-live-soft-404: SKIP_LIVE_CHECKS=1, skipping live site checks")
   process.exit(0)
@@ -76,6 +78,7 @@ try {
     notFoundAsset: await fetchWithRetry(`${SITE}/404.html`),
     realPage: await fetchWithRetry(`${SITE}/promptly/`),
     css: await fetchWithRetry(`${SITE}/styles.css`),
+    llmsTxt: await fetchWithRetry(`${SITE}/llms.txt`),
   }
 } catch (err) {
   console.error(`  FAIL could not reach ${SITE}: ${err.message}`)
@@ -88,6 +91,7 @@ const { res: unknownRes, body: unknownBody } = results.unknown
 const { res: notFoundRes, body: notFoundBody } = results.notFoundAsset
 const { res: realRes } = results.realPage
 const { res: cssRes, body: cssBody } = results.css
+const { res: llmsTxtRes, body: llmsTxtBody } = results.llmsTxt
 
 console.log("A. the homepage is reachable and intact")
 ok(homeRes.status === 200, `GET / returns HTTP ${homeRes.status}`)
@@ -124,6 +128,13 @@ if (footerRule) {
     ok(vertical >= 4, `.footer-links a vertical padding is at least 4px (${vertical}px), so 16px text + padding >= 24px`)
   }
 }
+console.log("F. the deployed llms.txt lists every public page (PR #68 live)")
+ok(llmsTxtRes.status === 200, `GET /llms.txt returns HTTP ${llmsTxtRes.status}`)
+const missingFromLlmsTxt = PUBLIC_PAGE_URLS.filter((url) => !llmsTxtBody.includes(url))
+ok(
+  missingFromLlmsTxt.length === 0,
+  `llms.txt lists all ${PUBLIC_PAGE_URLS.length} public pages (missing: ${missingFromLlmsTxt.join(", ") || "none"})`
+)
 
 console.log(`\n${checks} checks, ${failures} failures`)
 if (failures > 0) {

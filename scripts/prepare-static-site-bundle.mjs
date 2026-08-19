@@ -1,26 +1,14 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 
+import { PUBLIC_HTML_FILES, missingFromLlmsTxt } from "./lib/public-pages.mjs";
+
 const root = path.resolve("public");
 const cssPath = path.join(root, "styles.css");
 const iconPath = path.join(root, "favicon.svg");
 const appleIconPath = path.join(root, "apple-touch-icon.svg");
 
-const htmlFiles = [
-  "index.html",
-  "404.html",
-  "support/index.html",
-  "contact/index.html",
-  "privacy/index.html",
-  "privacy-choices/index.html",
-  "terms/index.html",
-  "promptly/index.html",
-  "promptly/support/index.html",
-  "promptly/privacy/index.html",
-  "drishti/index.html",
-  "drishti/support/index.html",
-  "drishti/privacy/index.html"
-];
+const htmlFiles = PUBLIC_HTML_FILES;
 
 const supportSchema = {
   "@context": "https://schema.org",
@@ -48,7 +36,7 @@ const supportSchema = {
         "@id": "https://tinystudio.in/#organization"
       },
       description:
-        "Support for Tiny Studio apps, including Promptly for bookings and Drishti for mindful screen time."
+        "Support for Tiny Studio products, including Promptly for bookings, Drishti for mindful screen time, and 0509 for growth teams."
     }
   ]
 };
@@ -154,17 +142,8 @@ function addSupportSchema(html) {
   return html.replace(/(\s*<link rel="apple-touch-icon")/, `\n${script}$1`);
 }
 
-function pageUrlFor(relativeFile) {
-  return relativeFile === "index.html"
-    ? "https://tinystudio.in/"
-    : `https://tinystudio.in/${path.posix.dirname(relativeFile)}/`;
-}
-
 function assertLlmsTxtCoversPublicPages(content) {
-  const publicFiles = htmlFiles.filter((relativeFile) => relativeFile !== "404.html");
-  const missing = publicFiles
-    .map(pageUrlFor)
-    .filter((url) => !content.includes(url));
+  const missing = missingFromLlmsTxt(content);
   if (missing.length) {
     throw new Error(`llms.txt does not list every public page; missing: ${missing.join(", ")}`);
   }

@@ -2,6 +2,8 @@ import { existsSync, readFileSync } from "node:fs"
 import { fileURLToPath } from "node:url"
 import { dirname, join } from "node:path"
 
+import { PUBLIC_PAGE_URLS, missingFromLlmsTxt } from "./lib/public-pages.mjs"
+
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 const read = (p) => readFileSync(join(ROOT, p), "utf8")
 
@@ -97,6 +99,12 @@ if (existsSync(join(ROOT, NOT_FOUND_PAGE))) {
   ok(/class="footer"/.test(html), "the 404 page keeps the site footer")
   ok(/class="footer-links"/.test(html), "the 404 page keeps footer link lists")
 }
+
+console.log("C2. llms.txt lists every public page (single source of truth)")
+const llmsTxt = read("public/llms.txt")
+const llmsMissing = missingFromLlmsTxt(llmsTxt)
+ok(llmsMissing.length === 0, `llms.txt lists all ${PUBLIC_PAGE_URLS.length} public pages (missing: ${llmsMissing.join(", ") || "none"})`)
+ok(llmsTxt.includes("This file describes public site context only."), "llms.txt keeps the public-site-context disclaimer")
 
 console.log("D. npm test/ci wiring")
 const pkg = JSON.parse(read("package.json"))
