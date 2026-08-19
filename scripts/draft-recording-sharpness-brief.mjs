@@ -219,7 +219,7 @@ Use this before recording. The job is not to sound clever. The job is to make on
 4. Credibility: ${proof[0] || "use only visible proof from the live page"}
 5. Solution: ${firstFix}
 6. Proof: ${proof[1] || contrast}
-7. CTA: Offer the ${config.offerName} at ${price} without promising revenue, rankings, ROAS, or lift.
+7. CTA: Offer ${config.offerName} at ${price} without promising revenue, rankings, ROAS, or lift.
 
 ## So-What Chain
 
