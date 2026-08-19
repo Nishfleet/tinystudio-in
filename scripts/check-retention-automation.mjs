@@ -75,14 +75,10 @@ if (!existsSync(automationPath)) {
     process.exit(0);
   }
 
-  if (clientCount === 0 && failures.length === 0) {
-    console.log(JSON.stringify({
-      ...report("pass"),
-      warnings: ["No client records exist; the scheduled retention loop becomes required before the first client is active"]
-    }, null, 2));
-    process.exit(0);
-  }
-
+  // An aligned-but-empty canonical workspace must not green-pass without the
+  // automation guard: the scheduled loop is required before the first client
+  // becomes active, so a missing automation file is a failure even when no
+  // client records exist yet.
   failures.push("Automation file is missing");
   console.log(JSON.stringify(report("fail"), null, 2));
   process.exit(1);
