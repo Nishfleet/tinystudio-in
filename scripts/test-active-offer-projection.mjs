@@ -102,6 +102,60 @@ If useful, I can run a 7-Day Site Revenue Fault Sprint with a 30-day action plan
 	}
 	dnm(sendPackage, retiredOfferPattern)
 
+	// A stale contact-plan.md feeds the send package verbatim, so send prep
+	// must refuse to generate it without --force.
+	writeFileSync(
+		join(legacyProspectPath, "recording-notes.md"),
+		`# Recording Notes
+
+## Quality Notes
+
+- Visible fault: The primary buyer path is unclear
+- Buyer impact: Competing calls to action split attention
+- First fix: Make one managed-service action primary
+- Clean ask: If useful, I can run a human-reviewed The Website Correction on this one highest-leverage page.
+`
+	)
+	writeFileSync(
+		join(legacyProspectPath, "recording-sharpness-brief.md"),
+		`# Sharpness Brief
+
+## Positioning Angle
+
+The Website Correction at the $1,000 founder pilot.
+
+## Direct Response Slide
+
+The primary buyer path is unclear.
+
+## So-What Chain
+
+Buyers cannot decide, so they leave.
+`
+	)
+	writeFileSync(
+		join(legacyProspectPath, "contact-plan.md"),
+		`# Contact Plan
+
+## Best Route
+
+Email the founder directly.
+
+## Pitch
+
+If useful, I can run a 7-Day Site Revenue Fault Sprint with a 30-day action plan.
+`
+	)
+	const blockedSendResult = spawnSync(process.execPath, [sp("prepare-prospect-send.mjs"), legacyProspectPath, "https://www.loom.com/share/1234567890abcdef1234567890abcdef", "--approved"], {cwd: repositoryRoot, encoding: "utf8"})
+	eq(blockedSendResult.status, 1, "send prep must block a retired contact-plan")
+	mat(blockedSendResult.stderr, /Send package inputs still sell a retired offer/)
+	mat(blockedSendResult.stderr, /contact-plan\.md/)
+	const forcedSendResult = spawnSync(process.execPath, [sp("prepare-prospect-send.mjs"), legacyProspectPath, "https://www.loom.com/share/1234567890abcdef1234567890abcdef", "--approved", "--force"], {cwd: repositoryRoot, encoding: "utf8"})
+	eq(forcedSendResult.status, 0, `forced send prep failed: ${forcedSendResult.stderr}`)
+	rmSync(join(legacyProspectPath, "contact-plan.md"))
+	rmSync(join(legacyProspectPath, "recording-notes.md"))
+	rmSync(join(legacyProspectPath, "recording-sharpness-brief.md"))
+
 	console.log("Active offer projection checks passed.")
 } finally {
 	rmSync(testRoot, {recursive: true, force: true})
