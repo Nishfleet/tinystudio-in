@@ -5,7 +5,7 @@
 // Used by the release lane after a Pages deployment. Runs against the live
 // site only; set SKIP_LIVE_CHECKS=1 to skip (exit 0) on offline machines.
 //
-// The five live proofs (all neutral, all merged on main before this lane):
+// The live proofs (all neutral, all merged on main before this lane):
 //   1. /promptly/support/ renders H2 after H1        (PRs #18/#20)
 //   2. /contact/ carries application/ld+json         (PR #19)
 //   3. unknown URLs get a real 404, not the homepage (PR #34)
@@ -21,11 +21,13 @@
 // asserted here (explicitly via the id="managed-service" marker below) and by
 // scripts/test-public-deploy-bundle.mjs. The section returns only when Nish
 // lifts the snooze and the fail-closed filter is updated deliberately.
-//   5. shared-footer pages carry visitor-facing footer copy, not the
-//      launch-prep line replaced by PR #35 ('gives each product a clean
-//      public foundation before launch').
+//   5. every public page carries exactly one application/ld+json block
+//      (trust/support structured data, PR #26 - the 07acd07 bundle shipped
+//      JSON-LD on only 4 of 12 pages).
 // Proof 2b covers the 2026-08-08 dogfood finding page:
 //   2b. /contact/ renders H2 after H1 (the heading-hierarchy repair, PR #18).
+//   5. the deployed stylesheet keeps the WCAG 2.2 24px footer tap-target
+//      rule (PR #22) so mobile footer links stay >= 24px on every page.
 import { join } from "node:path"
 import { fileURLToPath } from "node:url"
 import { dirname } from "node:path"
@@ -38,6 +40,22 @@ const BUYER_PATH_MARKERS = [
   "website-correction",
   "data-measure-source",
   'id="managed-service"',
+]
+
+// Every public page on the live site must carry structured data (PR #26).
+const PUBLIC_PATHS = [
+  "/",
+  "/contact/",
+  "/support/",
+  "/privacy/",
+  "/privacy-choices/",
+  "/terms/",
+  "/promptly/",
+  "/promptly/support/",
+  "/promptly/privacy/",
+  "/drishti/",
+  "/drishti/support/",
+  "/drishti/privacy/",
 ]
 
 let failures = 0
@@ -128,7 +146,34 @@ try {
     ok(!body.includes("support@tinystudio.in"), "no plaintext email left that Email Address Obfuscation could rewrite")
   }
 
-  console.log("F. shared-footer pages carry visitor-facing footer copy, not launch-prep (PR #35)")
+  console.log("F. every public page carries structured data (PR #26)")
+  for (const path of PUBLIC_PATHS) {
+    const { status, body } = await get(path)
+    ok(status === 200, `${path} returns 200 (got ${status})`)
+    const blocks = (body.match(/<script\s+type="application\/ld\+json"[^>]*>/gi) || []).length
+    ok(blocks === 1, `${path} carries exactly one application/ld+json block (got ${blocks})`)
+  }
+
+  console.log("G. the deployed stylesheet keeps the WCAG 2.2 24px footer tap-target rule (PR #22)")
+  {
+    const { status, body } = await get("/styles.css")
+    ok(status === 200, `GET /styles.css returns 200 (got ${status})`)
+    const footerRule = body.match(/\.footer-links\s*a\s*\{([^}]*)\}/)
+    ok(footerRule !== null, "deployed stylesheet has a .footer-links a rule")
+    if (footerRule) {
+      const rule = footerRule[1]
+      ok(/display:\s*(inline-block|inline-flex|block)/.test(rule), ".footer-links a is a block-level box (hit area covers the line box)")
+      ok(!/display:\s*inline\s*;/.test(rule), ".footer-links a is not a plain inline box")
+      ok(/min-height:\s*24px/.test(rule), ".footer-links a declares min-height: 24px")
+      const padding = rule.match(/padding:\s*([^;]+)/)
+      ok(padding !== null, ".footer-links a declares vertical padding")
+      if (padding) {
+        const vertical = parseFloat(padding[1].trim().split(/\s+/)[0])
+        ok(vertical >= 4, `.footer-links a vertical padding is at least 4px (${vertical}px), so 16px text + padding >= 24px`)
+      }
+    }
+  }
+  console.log("H. shared-footer pages carry visitor-facing footer copy, not launch-prep (PR #35)")
   {
     // Same coverage and markers as scripts/test-public-footer-copy.mjs: every
     // live path that carries the shared footer block must name the actual
@@ -190,6 +235,7 @@ try {
     ok(status === 404, `unknown URL returns 404 for footer probe (got ${status})`)
     checkFooter("404 page", body)
   }
+
 } catch (error) {
   failures++
   console.error(`  FAIL live request error: ${error.message}`)

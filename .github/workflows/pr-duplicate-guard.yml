@@ -1,0 +1,48 @@
+name: PR Duplicate Guard
+
+# Stops duplicate same-fix pull requests from silently piling up (the fleet
+# kept dispatching the same finding to multiple lanes: #36/#44/#55/#56,
+# #39/#49, #40/#52, #38/#48/#51, ...). On every PR event this job compares
+# the PR's diff against every other OPEN pull request. When another open PR
+# covers the same fix (>= 80% shared changed-file coverage and >= 50% patch
+# similarity on the shared files), the check fails loudly and the job posts
+# one marker comment naming the duplicate(s) and the canonical PR. The check
+# is deliberately not a required status, so legitimate work never blocks on
+# it; it exists to make the duplication visible the moment it happens.
+#
+# Run locally before opening a PR:
+#   node scripts/check-pr-duplicates.mjs --pr 0 --no-fail --repo OWNER/REPO
+# (use the real PR number once the PR exists).
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  workflow_dispatch:
+    inputs:
+      pr-number:
+        description: "PR number to check (defaults to the PR that triggered the run)"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: pr-duplicate-guard-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  duplicate-guard:
+    runs-on: [self-hosted, linux, x64, vps-verify]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 20
+      - name: Detect same-fix duplicate open PRs
+        run: node scripts/check-pr-duplicates.mjs --pr "$PR_NUMBER" --comment
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.inputs.pr-number || github.event.pull_request.number }}
