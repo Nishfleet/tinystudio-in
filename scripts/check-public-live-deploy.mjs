@@ -118,7 +118,17 @@ try {
     )
   }
 
-  console.log("E. /llms.txt lists every public page (PR #68 live)")
+  console.log("E. no Cloudflare email-obfuscation placeholder on the live homepage")
+  {
+    const { status, body } = await get("/")
+    ok(status === 200, `homepage returns 200 (got ${status})`)
+    ok(body.includes("support&#64;tinystudio.in"), "homepage serves the email entity-encoded (browser-decoded, edge-immutable)")
+    ok(!body.includes("__cf_email__"), "no Cloudflare-obfuscated email span on the homepage")
+    ok(!body.includes("[email"), "no '[email protected]' placeholder text on the homepage")
+    ok(!body.includes("support@tinystudio.in"), "no plaintext email left that Email Address Obfuscation could rewrite")
+  }
+
+  console.log("F. /llms.txt lists every public page (PR #68 live)")
   {
     const { status, body } = await get("/llms.txt")
     ok(status === 200, `/llms.txt returns 200 (got ${status})`)
