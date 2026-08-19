@@ -57,10 +57,10 @@ const EDITORIAL_FRAGMENTS = [
 // route. Each page must keep both so an over-aggressive rewrite that deletes
 // product identity or the support path fails CI.
 const PAGE_REQUIREMENTS = {
-  "public/drishti/index.html": ["Drishti", "support@tinystudio.in"],
-  "public/drishti/privacy/index.html": ["Drishti", "support@tinystudio.in"],
-  "public/promptly/index.html": ["Promptly", "support@tinystudio.in"],
-  "public/promptly/privacy/index.html": ["Promptly", "support@tinystudio.in"]
+  "public/drishti/index.html": ["Drishti", "support&#64;tinystudio.in"],
+  "public/drishti/privacy/index.html": ["Drishti", "support&#64;tinystudio.in"],
+  "public/promptly/index.html": ["Promptly", "support&#64;tinystudio.in"],
+  "public/promptly/privacy/index.html": ["Promptly", "support&#64;tinystudio.in"]
 }
 
 console.log("test-public-app-copy-voice: the four public app pages carry only visitor-facing copy")
