@@ -125,6 +125,7 @@ try {
     ok(!body.includes("__cf_email__"), "no Cloudflare-obfuscated email span on the homepage")
     ok(!body.includes("[email"), "no '[email protected]' placeholder text on the homepage")
     ok(!body.includes("support@tinystudio.in"), "no plaintext email left that Email Address Obfuscation could rewrite")
+  }
 
   console.log("F. the deployed stylesheet keeps the WCAG 2.2 24px footer tap-target rule (PR #22)")
   {
