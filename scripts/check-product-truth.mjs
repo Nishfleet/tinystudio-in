@@ -249,6 +249,24 @@ for (const path of activeGeneratorSources) {
 	}
 }
 
+// The canonical offer name already starts with "The"; copy that interpolates it
+// directly after an article produces doubled-article text ("the The Website
+// Correction") in operator-facing output.
+for (const path of [
+	"scripts/draft-sales-call-prep.mjs",
+	"scripts/draft-recording-sharpness-brief.mjs",
+	"scripts/draft-loom-recording-script.mjs",
+	"scripts/draft-client-kickoff.mjs",
+	"scripts/draft-prospect-message.mjs",
+	"scripts/lib/canonical-service-copy.mjs",
+	"scripts/lib/client-scaffold.mjs"
+]) {
+	const content = existsSync(path) ? readFileSync(path, "utf8") : ""
+	if (/\b(?:the|The)\s*\$\{(?:config|FOUNDER_PILOT|day0)\.offerName\}/.test(content)) {
+		failures.push(`${path}: offer name is interpolated directly after the article 'the'`)
+	}
+}
+
 for (const [path, requiredPatterns] of [
 	[
 		"scripts/draft-sales-call-prep.mjs",

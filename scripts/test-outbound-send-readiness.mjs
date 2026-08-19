@@ -60,7 +60,11 @@ try {
 		["recording-script.md", `# Recording Script\n\n## Talk Track\n\nIf useful, I can run a 7-day sprint where I map this fault for $1,000 founder sprint.\n`],
 		["next-message.md", `${packageHeader}If useful, I can run a 7-day sprint where I map this leak and give you a 30-day action plan. ${optOut}`],
 		["recording-sharpness-brief.md", `# Sharpness Brief\n\n## Positioning Angle\n\nOffer the The Website Correction at $1,000 founder sprint.\n`],
-		["outreach.md", `# Outreach\n\n## First Message\n\nIf useful, I can run a 7-day sprint where I map this fault and give you a 30-day action plan. ${optOut}`]
+		["outreach.md", `# Outreach\n\n## First Message\n\nIf useful, I can run a 7-day sprint where I map this fault and give you a 30-day action plan. ${optOut}`],
+		["contact-plan.md", `# Contact Plan\n\n## Best Route\n\nEmail the founder.\n\n## Pitch\n\nIf useful, I can run a 7-Day Site Revenue Fault Sprint with a 30-day action plan.\n`],
+		["value-calculator.md", `# Value Calculator\n\nIf useful, I can run a Tangible Revenue Fault Sprint and Growth Desk across three pages for $500.\n`],
+		["sales-call-prep.md", `# Sales Call Prep\n\nOffer the 7-day sprint at the $1,000 founder sprint.\n`],
+		["lead-score.md", `# Lead Score\n\nIf useful, I can run a 7-day sprint with a 30-day action plan.\n`]
 	]
 	for (const [file, content] of retiredFixtures) {
 		writeFileSync(join(prospect, file), content)
@@ -77,7 +81,11 @@ try {
 		["recording-script.md", `# Recording Script\n\n## Talk Track\n\nIf useful, I can run a human-reviewed The Website Correction on this one highest-leverage page.\n`],
 		["next-message.md", `${packageHeader}If useful, I can run a human-reviewed The Website Correction on this one highest-leverage page. ${optOut}`],
 		["recording-sharpness-brief.md", `# Sharpness Brief\n\n## Positioning Angle\n\nThe Website Correction at the $1,000 founder pilot.\n`],
-		["outreach.md", `# Outreach\n\n## First Message\n\nIf useful, I can run a human-reviewed The Website Correction. ${optOut}`]
+		["outreach.md", `# Outreach\n\n## First Message\n\nIf useful, I can run a human-reviewed The Website Correction. ${optOut}`],
+		["contact-plan.md", `# Contact Plan\n\n## Best Route\n\nEmail the founder.\n`],
+		["value-calculator.md", `# Value Calculator\n\nEstimate the value of one highest-leverage page fix.\n`],
+		["sales-call-prep.md", `# Sales Call Prep\n\nThe Website Correction at the $1,000 founder pilot.\n`],
+		["lead-score.md", `# Lead Score\n\nScore: 8\n\nPriority: follow-up.\n`]
 	]) {
 		writeFileSync(join(prospect, file), content)
 	}
