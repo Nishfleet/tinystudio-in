@@ -409,6 +409,25 @@ try {
 	ok(DCD.activeTasks.includes("Service-root dashboard sentinel"))
 	ok(!DCD.activeTasks.includes("CWD-only dashboard poison"))
 
+	const MC = join(T, "metrics-cwd")
+	mkdirSync(join(MC, "growth-brain/ops"), {recursive: true})
+	mkdirSync(join(MC, "runs"), {recursive: true})
+	writeFileSync(join(MC, "growth-brain/ops/live-metrics.md"), "# CWD-only metrics poison\n")
+	const divergentMetrics = spawnSync(process.execPath, [sp("export-growth-metrics.mjs")], {cwd: MC, encoding: "utf8", env: fixedEnv()})
+	eq(divergentMetrics.status, 0, divergentMetrics.stderr || divergentMetrics.stdout)
+	const divergentMetricsJson = JSON.parse(divergentMetrics.stdout)
+	eq(divergentMetricsJson.path, join(T, "growth-brain/ops/live-metrics.md"))
+	eq(divergentMetricsJson.counts.prospectsTotal, 1)
+	eq(readFileSync(join(MC, "growth-brain/ops/live-metrics.md"), "utf8"), "# CWD-only metrics poison\n")
+	eq(existsSync(join(MC, "runs/divergent-live-metrics.md")), false)
+	mat(readFileSync(join(T, "growth-brain/ops/live-metrics.md"), "utf8"), /\| Prospects total \| 1 \|/)
+	const divergentMetricsPrivate = spawnSync(process.execPath, [sp("export-growth-metrics.mjs"), "--output=runs/divergent-live-metrics.md"], {cwd: MC, encoding: "utf8", env: fixedEnv()})
+	eq(divergentMetricsPrivate.status, 0, divergentMetricsPrivate.stderr || divergentMetricsPrivate.stdout)
+	eq(JSON.parse(divergentMetricsPrivate.stdout).path, join(T, "runs/divergent-live-metrics.md"))
+	eq(existsSync(join(T, "runs/divergent-live-metrics.md")), true)
+	eq(existsSync(join(MC, "runs/divergent-live-metrics.md")), false)
+	eq(readFileSync(join(MC, "growth-brain/ops/live-metrics.md"), "utf8"), "# CWD-only metrics poison\n")
+
 	for (const directory of ["growth-brain/workflows", "growth-brain/retention"]) {
 		for (const file of readdirSync(join(T, directory)).filter(name => name.endsWith(".md"))) {
 			const content = readFileSync(join(T, directory, file), "utf8")
