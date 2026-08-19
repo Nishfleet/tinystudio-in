@@ -257,6 +257,21 @@ try {
     )
   }
 
+  console.log("J. trust pages render the fixed H1 -> H2x3 card outline (PR #74)")
+  for (const path of TRUST_PAGES) {
+    const { status, body } = await get(path)
+    ok(status === 200, `${path} returns 200 (got ${status})`)
+    const levels = headingLevelsOf(body)
+    ok(levels.filter((l) => l === 1).length === 1, `${path} has exactly one H1`)
+    ok(levels[0] === 1, `${path} has the H1 first in the outline`)
+    ok(infoCardTitleCount(body) === 3, `${path} has three card headings as H2s inside .info-card`)
+    let jumps = 0
+    for (let i = 1; i < levels.length; i++) {
+      if (levels[i] - levels[i - 1] > 1) jumps++
+    }
+    ok(jumps === 0, `${path} has no heading-level jump (no H1 -> H3 skip)`)
+  }
+
 } catch (error) {
   failures++
   console.error(`  FAIL live request error: ${error.message}`)
