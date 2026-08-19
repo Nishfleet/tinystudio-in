@@ -50,8 +50,8 @@ const SUBMISSION_VOICE_FRAGMENTS = [
 // The replacement copy speaks to visitors: one shared inbox, app-specific
 // support pages, and routes that stay easy to find.
 const VISITOR_FACING_FRAGMENTS = {
-  "public/support/index.html": ["shared inbox", "Promptly", "Drishti", "support@tinystudio.in"],
-  "public/contact/index.html": ["in one place", "Promptly", "Drishti", "support@tinystudio.in"]
+  "public/support/index.html": ["shared inbox", "Promptly", "Drishti", "support&#64;tinystudio.in"],
+  "public/contact/index.html": ["in one place", "Promptly", "Drishti", "support&#64;tinystudio.in"]
 }
 
 console.log("test-public-support-contact-voice: studio support/contact pages avoid App Store Connect submission voice")
