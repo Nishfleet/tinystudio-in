@@ -101,8 +101,13 @@ for (const a of ctaTags) {
 
 console.log("D. contact endpoint source propagation")
 const contactHtml = read(CONTACT_HTML)
+// The @ is entity-encoded in served HTML (support&#64;tinystudio.in) so the
+// zone-level Cloudflare Email Address Obfuscation rewrite cannot degrade the
+// CTA to the "[email protected]" placeholder; browsers decode the entity, so
+// the mailto route below is inspected on a decoded copy.
+const contactHtmlDecodedAts = contactHtml.replace(/&#64;/gi, "@")
 ok(
-  /href\s*=\s*"mailto:support@tinystudio\.in\?subject=[^"]*"/i.test(contactHtml),
+  /href\s*=\s*"mailto:support@tinystudio\.in\?subject=[^"]*"/i.test(contactHtmlDecodedAts),
   "contact page has a Website Correction application mailto route"
 )
 ok(
