@@ -67,7 +67,7 @@ const approvalOwner = day0.approvalOwner;
 const highestLeveragePage = field(sprintPlan, "Highest-leverage page:", "choose the highest-leverage page");
 const sprint = `**${day0.offerName}**\n\nIncluded: ${config.includedDeliverables.join(", ")}.`;
 const timingAndPrice = `- Day 0: ${day0.day0StartedAt}\n- Working-day deadline: ${day0.deadlineAt}\n- Clock rule: ${config.dayZeroRule}\n- Founder pilot ${pilotPosition} of ${FOUNDER_PILOT.capacity}: **${founderPilotPrice}**.`;
-const approvalOpening = `Thanks for approving the ${config.offerName}. Day 0 is recorded and the service is paid.`;
+const approvalOpening = `Thanks for approving ${config.offerName}. Day 0 is recorded and the service is paid.`;
 
 const kickoff = `# ${name} Kickoff Message
 
