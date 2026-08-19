@@ -15,6 +15,8 @@
 //   - post-filter: the bundle must contain none of the forbidden markers and
 //     must still carry the neutral merged fixes used as deploy proof
 //     (H2-after-H1 on /promptly/support/ from #18/#20, JSON-LD on /contact/
+//     from #19, homepage brand disambiguation from #29, and the PR #26
+//     site-wide invariant that every public page keeps its JSON-LD block).
 //     from #19, homepage brand disambiguation from #29, top-level real 404
 //     page from #34).
 //
@@ -35,7 +37,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 // Exact text and block markers that belong to the snoozed managed-service
 // buyer path (PRs #10/#11). See docs/measurement/public-conversion-signal.md
 // for the conversion-signal contract and the backlog item's accept criteria.
-const HOMEPAGE_HERO_LEAD = /\s+There is also one\s+managed service for founders, reviewed by a human: The Website\s+Correction\./
+const HOMEPAGE_HERO_LEAD = /\s+There is also one\s+human-reviewed managed service for founder-led managed IT and\s+cybersecurity companies with a live site: The Website\s+Correction\./
 const HERO_RAIL_MARKER = 'data-measure-source="homepage-hero"'
 const MANAGED_SERVICE_SECTION_MARKER = '<section class="shape" id="managed-service"'
 const CONTACT_DESCRIPTION_CLAUSE = ", and the Website Correction managed service."
@@ -83,6 +85,59 @@ export const NEUTRAL_PROOFS = [
     label: "homepage non-affiliation copy (PR #29)",
     file: "index.html",
     test: (html) => html.includes("not affiliated"),
+  },
+  // Site-wide structured data invariant (PR #26): the 07acd07 bundle shipped
+  // JSON-LD on only 4 of 12 pages; the release lane must never do that again.
+  // Each remaining public page keeps exactly one application/ld+json block.
+  {
+    label: "support page JSON-LD (07acd07 baseline)",
+    file: "support/index.html",
+    test: (html) => html.includes("application/ld+json"),
+  },
+  {
+    label: "privacy hub JSON-LD (PR #26)",
+    file: "privacy/index.html",
+    test: (html) => html.includes("application/ld+json"),
+  },
+  {
+    label: "terms page JSON-LD (PR #26)",
+    file: "terms/index.html",
+    test: (html) => html.includes("application/ld+json"),
+  },
+  {
+    label: "privacy choices JSON-LD (PR #26)",
+    file: "privacy-choices/index.html",
+    test: (html) => html.includes("application/ld+json"),
+  },
+  {
+    label: "Promptly home JSON-LD (07acd07 baseline)",
+    file: "promptly/index.html",
+    test: (html) => html.includes("application/ld+json"),
+  },
+  {
+    label: "Promptly support JSON-LD (PR #26)",
+    file: "promptly/support/index.html",
+    test: (html) => html.includes("application/ld+json"),
+  },
+  {
+    label: "Promptly privacy JSON-LD (PRs #19/#26)",
+    file: "promptly/privacy/index.html",
+    test: (html) => html.includes("application/ld+json"),
+  },
+  {
+    label: "Drishti home JSON-LD (07acd07 baseline)",
+    file: "drishti/index.html",
+    test: (html) => html.includes("application/ld+json"),
+  },
+  {
+    label: "Drishti support JSON-LD (PR #26)",
+    file: "drishti/support/index.html",
+    test: (html) => html.includes("application/ld+json"),
+  },
+  {
+    label: "Drishti privacy JSON-LD (PR #26)",
+    file: "drishti/privacy/index.html",
+    test: (html) => html.includes("application/ld+json"),
   },
   {
     // The top-level 404 page is what terminates Cloudflare Pages' single-page

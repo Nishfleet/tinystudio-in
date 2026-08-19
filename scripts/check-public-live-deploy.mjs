@@ -5,7 +5,7 @@
 // Used by the release lane after a Pages deployment. Runs against the live
 // site only; set SKIP_LIVE_CHECKS=1 to skip (exit 0) on offline machines.
 //
-// The five live proofs (all neutral, all merged on main before this lane):
+// The live proofs (all neutral, all merged on main before this lane):
 //   1. /promptly/support/ renders H2 after H1        (PRs #18/#20)
 //   2. /contact/ carries application/ld+json         (PR #19)
 //   3. unknown URLs get a real 404, not the homepage (PR #34)
@@ -23,6 +23,9 @@
 // asserted here (explicitly via the id="managed-service" marker below) and by
 // scripts/test-public-deploy-bundle.mjs. The section returns only when Nish
 // lifts the snooze and the fail-closed filter is updated deliberately.
+//   5. every public page carries exactly one application/ld+json block
+//      (trust/support structured data, PR #26 - the 07acd07 bundle shipped
+//      JSON-LD on only 4 of 12 pages).
 // Proof 2b covers the 2026-08-08 dogfood finding page:
 //   2b. /contact/ renders H2 after H1 (the heading-hierarchy repair, PR #18).
 import { join } from "node:path"
@@ -37,6 +40,22 @@ const BUYER_PATH_MARKERS = [
   "website-correction",
   "data-measure-source",
   'id="managed-service"',
+]
+
+// Every public page on the live site must carry structured data (PR #26).
+const PUBLIC_PATHS = [
+  "/",
+  "/contact/",
+  "/support/",
+  "/privacy/",
+  "/privacy-choices/",
+  "/terms/",
+  "/promptly/",
+  "/promptly/support/",
+  "/promptly/privacy/",
+  "/drishti/",
+  "/drishti/support/",
+  "/drishti/privacy/",
 ]
 
 let failures = 0
@@ -128,7 +147,25 @@ try {
     )
   }
 
-  console.log("E. trust pages render the fixed H1 -> H2x3 card outline (PR #74)")
+  console.log("E. no Cloudflare email-obfuscation placeholder on the live homepage")
+  {
+    const { status, body } = await get("/")
+    ok(status === 200, `homepage returns 200 (got ${status})`)
+    ok(body.includes("support&#64;tinystudio.in"), "homepage serves the email entity-encoded (browser-decoded, edge-immutable)")
+    ok(!body.includes("__cf_email__"), "no Cloudflare-obfuscated email span on the homepage")
+    ok(!body.includes("[email"), "no '[email protected]' placeholder text on the homepage")
+    ok(!body.includes("support@tinystudio.in"), "no plaintext email left that Email Address Obfuscation could rewrite")
+  }
+
+  console.log("F. every public page carries structured data (PR #26)")
+  for (const path of PUBLIC_PATHS) {
+    const { status, body } = await get(path)
+    ok(status === 200, `${path} returns 200 (got ${status})`)
+    const blocks = (body.match(/<script\s+type="application\/ld\+json"[^>]*>/gi) || []).length
+    ok(blocks === 1, `${path} carries exactly one application/ld+json block (got ${blocks})`)
+  }
+
+  console.log("G. trust pages render the fixed H1 -> H2x3 card outline (PR #74)")
   for (const path of TRUST_PAGES) {
     const { status, body } = await get(path)
     ok(status === 200, `${path} returns 200 (got ${status})`)
