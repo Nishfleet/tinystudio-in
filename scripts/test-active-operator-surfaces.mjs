@@ -68,20 +68,25 @@ try {
 	const trackedArtifacts = new Map(ACTIVE_OPERATOR_ARTIFACTS.map(path => [path, readFileSync(join(C, path))]))
 	for (const path of ACTIVE_OPERATOR_ARTIFACTS) rmSync(join(T, path), {force: true})
 	writeFileSync(join(T, "growth-brain/ops/11-10-proof-run.md"), "regeneration sentinel\n")
-	// Live metrics must regenerate from an empty prospect root so its tracked
-	// zero counts stay byte-identical, but the tracked 11/10 proof-run brief
-	// refuses to regenerate from a state-less root. Give the surface gate one
-	// inert outbound pipeline record (no score, touches, or loom) so the brief
-	// regenerates through the real path; it is removed again afterwards.
-	for (const args of [
-		["scripts/export-growth-metrics.mjs"],
-	]) {
-		const regenerated = run(args)
-		eq(regenerated.status, 0, regenerated.stderr || regenerated.stdout)
-	}
+	// Live metrics must refuse to regenerate its tracked default from a
+	// state-less root (no prospect folder carries pipeline.json), exactly like
+	// the tracked 11/10 proof-run brief, so an unavailable pipeline is never
+	// silently clobbered into a zero report. Private --output= under runs/
+	// keeps generating zero-state reports on purpose. Give the surface gate one
+	// inert outbound pipeline record (no score, touches, or loom) so both
+	// tracked defaults regenerate through the real path; it is removed again
+	// afterwards.
+	const refusedTrackedMetrics = run(["scripts/export-growth-metrics.mjs"])
+	neq(refusedTrackedMetrics.status, 0, "tracked live metrics must refuse a state-less root")
+	mat(refusedTrackedMetrics.stderr, /Refusing/, "tracked live metrics refusal must explain itself")
+	eq(existsSync(join(T, "growth-brain/ops/live-metrics.md")), false, "refused tracked metrics must not write the tracked file")
+	const zeroStateMetrics = run(["scripts/export-growth-metrics.mjs", "--output=runs/zero-state-live-metrics.md"])
+	eq(zeroStateMetrics.status, 0, zeroStateMetrics.stderr || zeroStateMetrics.stdout)
+	mat(zeroStateMetrics.stderr, /will be zero/, "private zero-state metrics run must warn")
 	writeJson(join(T, "prospects", "surface-fixture", "metadata.json"), {name: "Surface Fixture", slug: "surface-fixture", website: "https://example.com/surface", vertical: "managed-it-cybersecurity", contact: "Founder"})
 	writeJson(join(T, "prospects", "surface-fixture", "pipeline.json"), {stage: "new", createdAt: "2026-08-01", sentAt: "", sentChannel: "", lastChannel: "", lastTouchAt: "", nextFollowUpAt: "", followUps: [], touches: [], notes: []})
 	for (const args of [
+		["scripts/export-growth-metrics.mjs"],
 		["scripts/export-market-proof-run.mjs"],
 		["scripts/check-market-proof-run.mjs"],
 		["scripts/export-sender-setup-guide.mjs"],
@@ -100,16 +105,21 @@ try {
 		eq(regenerated.status, 0, regenerated.stderr || regenerated.stdout)
 	}
 	// Nested gate and metrics chains inside the loop regenerated live metrics
-	// with the surface fixture counted. The byte-identical gate needs the
-	// canonical empty-prospect view back, so drop the fixture and regenerate
-	// the two tracked surfaces that read prospect counts.
+	// with the surface fixture counted. The tracked default now refuses a
+	// state-less root, so drop the fixture, regenerate the private zero-state
+	// view, and restore the tracked surfaces that read prospect counts to the
+	// canonical empty-prospect baseline.
 	rmSync(join(T, "prospects", "surface-fixture"), {recursive: true, force: true})
-	for (const args of [
-		["scripts/export-growth-metrics.mjs"],
-		["scripts/check-market-parity-readiness.mjs"]
-	]) {
-		const regenerated = run(args)
-		eq(regenerated.status, 0, regenerated.stderr || regenerated.stdout)
+	const finalZeroMetrics = run(["scripts/export-growth-metrics.mjs", "--output=runs/final-zero-live-metrics.md"])
+	eq(finalZeroMetrics.status, 0, finalZeroMetrics.stderr || finalZeroMetrics.stdout)
+	mat(readFileSync(join(T, "runs/final-zero-live-metrics.md"), "utf8"), /\| Prospects total \| 0 \|/, "private zero-state metrics must report a zero pipeline after fixture removal")
+	const refusedAgain = run(["scripts/export-growth-metrics.mjs"])
+	neq(refusedAgain.status, 0, "tracked live metrics must refuse after fixture removal")
+	// The tracked surfaces that read prospect counts cannot regenerate from a
+	// state-less root anymore, so restore the canonical empty-prospect baseline
+	// from the code checkout for the byte-identical gate below.
+	for (const path of ["growth-brain/ops/live-metrics.md", "growth-brain/ops/market-parity-readiness.md"]) {
+		writeFileSync(join(T, path), readFileSync(join(C, path), "utf8"))
 	}
 	for (const [path, expected] of trackedArtifacts) {
 		eq(existsSync(join(T, path)), true, `Generator did not recreate ${path}`)
@@ -150,6 +160,23 @@ try {
 		"export-proof-library.mjs",
 		"export-sender-setup-guide.mjs"
 	]
+	// The runtime cockpit and mission writers (private runs/ and prospects/
+	// surfaces) must honor --help/-h the same way: exit 0 with usage, and
+	// never write or overwrite tracked or runtime artifacts when asked for
+	// help instead of a real run.
+	const runtimeHelpSurface = [
+		"export-client-delivery-cockpit.mjs",
+		"export-daily-money-mission.mjs",
+		"export-followup-cockpit.mjs",
+		"export-growth-cockpit.mjs",
+		"export-growth-doctor.mjs",
+		"export-lead-scoring-cockpit.mjs",
+		"export-managed-it-one-pager.mjs",
+		"export-market-learning-review.mjs",
+		"export-market-proof-cockpit.mjs",
+		"export-prospect-outbox.mjs",
+		"export-sales-cockpit.mjs"
+	]
 	const artifactBeforeHelp = new Map(
 		[...trackedArtifacts.keys(), ...privateRuntimeArtifacts]
 			.filter(path => existsSync(join(T, path)))
@@ -163,6 +190,13 @@ try {
 		}
 	}
 	for (const name of trackedOpsHelpSurface) {
+		for (const flag of ["--help", "-h"]) {
+			const helped = run([`scripts/${name}`, flag])
+			eq(helped.status, 0, `${name} ${flag} must exit 0: ${helped.stderr || helped.stdout}`)
+			mat(helped.stdout, /Usage:/, `${name} ${flag} must print usage`)
+		}
+	}
+	for (const name of runtimeHelpSurface) {
 		for (const flag of ["--help", "-h"]) {
 			const helped = run([`scripts/${name}`, flag])
 			eq(helped.status, 0, `${name} ${flag} must exit 0: ${helped.stderr || helped.stdout}`)
@@ -191,7 +225,18 @@ try {
 		["scripts/export-sender-setup-guide.mjs", `--output=${join(T, "..", "escape-sender-setup.md")}`, `--html=${join(T, "..", "escape-sender-setup.html")}`],
 		["scripts/export-market-benchmark.mjs", `--output=${join(T, "..", "escape-benchmark.md")}`, `--ops=${join(T, "..", "escape-matrix.md")}`, `--html=${join(T, "..", "escape-matrix.html")}`],
 		["scripts/export-market-proof-run.mjs", `--output=${join(T, "..", "escape-proof-run.md")}`],
-		["scripts/check-market-parity-readiness.mjs", `--output=${join(T, "..", "escape-parity.md")}`]
+		["scripts/check-market-parity-readiness.mjs", `--output=${join(T, "..", "escape-parity.md")}`],
+		["scripts/export-daily-money-mission.mjs", `--output=${join(T, "..", "escape-mission.md")}`],
+		["scripts/export-growth-cockpit.mjs", `--output=${join(T, "..", "escape-growth-cockpit.html")}`],
+		["scripts/export-growth-doctor.mjs", `--output=${join(T, "..", "escape-growth-doctor.md")}`],
+		["scripts/export-lead-scoring-cockpit.mjs", `--output=${join(T, "..", "escape-lead-scoring.html")}`],
+		["scripts/export-managed-it-one-pager.mjs", `--output=${join(T, "..", "escape-one-pager.html")}`],
+		["scripts/export-market-learning-review.mjs", `--output=${join(T, "..", "escape-learning-review.md")}`],
+		["scripts/export-market-proof-cockpit.mjs", `--output=${join(T, "..", "escape-proof-cockpit.md")}`],
+		["scripts/export-prospect-outbox.mjs", `--output=${join(T, "..", "escape-outbox.html")}`],
+		["scripts/export-sales-cockpit.mjs", `--output=${join(T, "..", "escape-sales.html")}`],
+		["scripts/export-followup-cockpit.mjs", `--output=${join(T, "..", "escape-followup.html")}`],
+		["scripts/export-client-delivery-cockpit.mjs", "clients/escape-probe", `--output=${join(T, "..", "escape-delivery.html")}`]
 	]) {
 		const refused = run(args)
 		neq(refused.status, 0, `${args[0]} must refuse an escaping output path`)
@@ -211,7 +256,18 @@ try {
 		join(T, "..", "escape-matrix.md"),
 		join(T, "..", "escape-matrix.html"),
 		join(T, "..", "escape-proof-run.md"),
-		join(T, "..", "escape-parity.md")
+		join(T, "..", "escape-parity.md"),
+		join(T, "..", "escape-mission.md"),
+		join(T, "..", "escape-growth-cockpit.html"),
+		join(T, "..", "escape-growth-doctor.md"),
+		join(T, "..", "escape-lead-scoring.html"),
+		join(T, "..", "escape-one-pager.html"),
+		join(T, "..", "escape-learning-review.md"),
+		join(T, "..", "escape-proof-cockpit.md"),
+		join(T, "..", "escape-outbox.html"),
+		join(T, "..", "escape-sales.html"),
+		join(T, "..", "escape-followup.html"),
+		join(T, "..", "escape-delivery.html")
 	]) {
 		eq(existsSync(escapePath), false, `escape probe must not create ${escapePath}`)
 	}
@@ -303,7 +359,7 @@ try {
 		mat(artifact, new RegExp(`Generated:? ${currentDate}`))
 	}
 	mat(liveMetrics, /\| Clients \| 0 \|/)
-	mat(liveMetrics, /\| Client records blocked \| 1 \|/)
+	mat(liveMetrics, /\| Client records blocked \| 0 \|/)
 	mat(growthDoctor, /\| Clients \| 0 \|/)
 	mat(growthDoctor, /\| Client records blocked \| 1 \|/)
 	dnm(growthDoctor, /Client: Unpaid Fixture/)

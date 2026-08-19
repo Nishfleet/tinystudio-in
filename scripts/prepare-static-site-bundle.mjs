@@ -130,10 +130,15 @@ function removeGeneratedHeadAssets(html) {
     .replace(/\n\s*<script data-cfasync="false" src="\/cdn-cgi\/scripts\/5c5dd728\/cloudflare-static\/email-decode\.min\.js"><\/script>/g, "");
 }
 
+// Restore Cloudflare email-obfuscation artifacts (the __cf_email__ span and
+// the /cdn-cgi/l/email-protection href) to the canonical, obfuscation-proof
+// form: the @ is entity-encoded (support&#64;tinystudio.in) so the zone-level
+// Email Address Obfuscation rewrite at the edge has no literal @ to match and
+// the email CTA can never degrade to the "[email protected]" placeholder.
 function replaceCloudflareEmailProtection(html) {
   return html
-    .replace(/href="\/cdn-cgi\/l\/email-protection#[^"]+"/g, 'href="mailto:support@tinystudio.in"')
-    .replace(/<span class="__cf_email__" data-cfemail="[^"]+">\[email&#160;protected\]<\/span>/g, "support@tinystudio.in");
+    .replace(/href="\/cdn-cgi\/l\/email-protection#[^"]+"/g, 'href="mailto:support&#64;tinystudio.in"')
+    .replace(/<span class="__cf_email__" data-cfemail="[^"]+">\[email&#160;protected\]<\/span>/g, "support&#64;tinystudio.in");
 }
 
 function fixSupportHeadingOrder(html) {
