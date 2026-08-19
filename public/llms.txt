@@ -1,6 +1,6 @@
 # Tiny Studio
 
-Tiny Studio is a small product company behind Promptly, Drishti, and 0509.
+Tiny Studio is the independent product company at tinystudio.in behind Promptly, Drishti, and 0509. It is not affiliated with any other app or studio that uses the name Tiny Studio.
 
 ## Public pages
 
@@ -8,9 +8,14 @@ Tiny Studio is a small product company behind Promptly, Drishti, and 0509.
 - Support: https://tinystudio.in/support/
 - Contact: https://tinystudio.in/contact/
 - Privacy: https://tinystudio.in/privacy/
+- Privacy choices: https://tinystudio.in/privacy-choices/
 - Terms: https://tinystudio.in/terms/
 - Promptly: https://tinystudio.in/promptly/
+- Promptly support: https://tinystudio.in/promptly/support/
+- Promptly privacy: https://tinystudio.in/promptly/privacy/
 - Drishti: https://tinystudio.in/drishti/
+- Drishti support: https://tinystudio.in/drishti/support/
+- Drishti privacy: https://tinystudio.in/drishti/privacy/
 
 ## Product boundaries
 

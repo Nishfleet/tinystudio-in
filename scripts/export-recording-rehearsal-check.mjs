@@ -5,16 +5,19 @@ import { checkProspectReadiness, prospectWarningWeight } from "./lib/prospect-re
 import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
 import { routedContactPlan } from "./lib/contact-route.mjs";
 import { localIsoDate } from "./date-utils.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 
 const args = process.argv.slice(2);
+handleHelp(args, `Usage: node scripts/export-recording-rehearsal-check.mjs [--limit=5] [--output=prospects/recording-rehearsal-check.md] [--html=prospects/recording-rehearsal-check.html] [--include-smoke]`);
 const limitArg = args.find((arg) => arg.startsWith("--limit="));
 const outputArg = args.find((arg) => arg.startsWith("--output="));
 const htmlArg = args.find((arg) => arg.startsWith("--html="));
 const includeSmoke = args.includes("--include-smoke");
 const limit = limitArg ? Number(limitArg.split("=")[1]) : 5;
-const outputPath = outputArg ? outputArg.split("=")[1] : "prospects/recording-rehearsal-check.md";
-const htmlPath = htmlArg ? htmlArg.split("=")[1] : "prospects/recording-rehearsal-check.html";
+const outputRel = outputArg ? outputArg.split("=")[1] : "prospects/recording-rehearsal-check.md";
+const outputPath = resolveOutputPath(outputRel, { fallback: "prospects/recording-rehearsal-check.md" });
+const htmlPath = resolveOutputPath(htmlArg ? htmlArg.split("=")[1] : "prospects/recording-rehearsal-check.html", { flag: "--html", fallback: "prospects/recording-rehearsal-check.html" });
 const today = localIsoDate();
 
 function read(path) {
@@ -82,10 +85,12 @@ function bannedClaims(content) {
 
 const RETIRED_ASK_PATTERNS = [
   /7[-\s]day (?:site|website) revenue (?:leak|fault) (?:fix )?sprint/i,
+  /7[-\s]day sprint/i,
   /tangible revenue (?:leak|fault) sprint/i,
   /30[-\s]day action plan/i,
   /growth desk/i,
   /three pages/i,
+  /founder sprint/i,
   /\$\s?500\b/i
 ];
 

@@ -1,6 +1,8 @@
-import { readFileSync } from "node:fs"
+import { createServer } from "node:http"
+import { readFile, readFileSync } from "node:fs"
+import { createRequire } from "node:module"
+import { dirname, extname, join } from "node:path"
 import { fileURLToPath } from "node:url"
-import { dirname, join } from "node:path"
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 const read = (p) => readFileSync(join(ROOT, p), "utf8")
@@ -132,6 +134,190 @@ ok(
   pkg.scripts.ci.includes("test-public-heading-hierarchy.mjs"),
   "npm run ci runs the public heading hierarchy test"
 )
+
+const PROMPTLY_H1 = "Promptly keeps solo professionals booked, prepared, and harder to ghost."
+const h1Rule = css.match(/(?:^|\n)h1\s*{[^}]*}/)?.[0] ?? ""
+const htmlRule = css.match(/(?:^|\n)html\s*{[^}]*}/)?.[0] ?? ""
+const bodyRule = css.match(/(?:^|\n)body\s*{[^}]*}/)?.[0] ?? ""
+
+console.log("D. Promptly 320px heading wrap (source)")
+const promptlyHtml = read("public/promptly/index.html")
+const promptlyH1 = (promptlyHtml.match(/<h1>([\s\S]*?)<\/h1>/)?.[1] ?? "").replace(/\s+/g, " ").trim()
+ok(promptlyH1 === PROMPTLY_H1, "Promptly H1 copy is unchanged")
+ok(
+  /overflow-wrap:\s*(anywhere|break-word)/.test(h1Rule),
+  "shared h1 rule wraps long unbreakable words inside its box"
+)
+ok(
+  !/overflow-x:\s*hidden/.test(htmlRule) &&
+    !/overflow-x:\s*hidden/.test(bodyRule) &&
+    !/overflow-x:\s*hidden/.test(h1Rule),
+  "does not mask overflow with html/body/h1 overflow-x: hidden"
+)
+
+const MIME = {
+  ".html": "text/html; charset=utf-8",
+  ".css": "text/css; charset=utf-8",
+  ".js": "text/javascript; charset=utf-8",
+  ".svg": "image/svg+xml",
+  ".png": "image/png",
+  ".ico": "image/x-icon",
+  ".txt": "text/plain; charset=utf-8",
+  ".xml": "application/xml; charset=utf-8"
+}
+
+const loadChromium = () => {
+  const require = createRequire(import.meta.url)
+  const candidates = [
+    "playwright",
+    join(ROOT, "../0509/node_modules/playwright"),
+    "/home/nish/workspaces/products/0509/node_modules/playwright"
+  ]
+  for (const candidate of candidates) {
+    try {
+      return require(candidate).chromium
+    } catch {
+      // try the next resolver
+    }
+  }
+  return null
+}
+
+const startPublicServer = () =>
+  new Promise((resolve, reject) => {
+    const publicRoot = join(ROOT, "public")
+    const server = createServer((req, res) => {
+      const urlPath = decodeURIComponent((req.url || "/").split("?")[0])
+      const relative = urlPath.endsWith("/") ? `${urlPath}index.html` : urlPath
+      const file = join(publicRoot, relative)
+      if (file !== publicRoot && !file.startsWith(`${publicRoot}/`)) {
+        res.writeHead(403)
+        res.end("forbidden")
+        return
+      }
+      readFile(file, (err, body) => {
+        if (err) {
+          res.writeHead(404)
+          res.end("not found")
+          return
+        }
+        res.writeHead(200, { "content-type": MIME[extname(file)] || "application/octet-stream" })
+        res.end(body)
+      })
+    })
+    server.on("error", reject)
+    server.listen(0, "127.0.0.1", () => resolve(server))
+  })
+
+const measurePage = async (chromium, origin, path, width) => {
+  const page = await chromium.newPage({ viewport: { width, height: 844 }, isMobile: true })
+  try {
+    const response = await page.goto(`${origin}${path}`, { waitUntil: "domcontentloaded" })
+    const metrics = await page.evaluate(() => {
+      const heading = document.querySelector("h1")
+      const cta = document.querySelector('.action-row a.button[href^="mailto:"]')
+      const ctaRect = cta ? cta.getBoundingClientRect() : null
+      return {
+        heading: heading ? heading.innerText.replace(/\s+/g, " ").trim() : "",
+        scrollWidth: document.documentElement.scrollWidth,
+        clientWidth: document.documentElement.clientWidth,
+        headingScrollWidth: heading ? heading.scrollWidth : 0,
+        headingClientWidth: heading ? heading.clientWidth : 0,
+        overflowWrap: heading ? getComputedStyle(heading).overflowWrap : "",
+        overflowX: getComputedStyle(document.documentElement).overflowX,
+        ctaVisible: cta ? ctaRect.top < innerHeight && ctaRect.bottom >= 0 : false,
+        ctaTop: ctaRect ? ctaRect.top : -1,
+        ctaBottom: ctaRect ? ctaRect.bottom : -1,
+        ctaText: cta ? cta.innerText.replace(/\s+/g, " ").trim() : ""
+      }
+    })
+    return { status: response?.status() ?? 0, ...metrics }
+  } finally {
+    await page.close()
+  }
+}
+
+console.log("E. Shared h1 wrap keeps every public route inside its box (280-390px)")
+const chromiumLauncher = loadChromium()
+if (!chromiumLauncher) {
+  console.log("  skip layout probe: playwright is not installed in this checkout")
+} else {
+  const server = await startPublicServer()
+  const origin = `http://127.0.0.1:${server.address().port}`
+  const browser = await chromiumLauncher.launch({ headless: true })
+  try {
+    const ROUTES = ["/", "/promptly/", "/drishti/", "/contact/", "/support/"]
+    const WIDTHS = [280, 320, 360, 390]
+    const DOCUMENT_OK = new Set()
+    const HEADING_OK = new Set()
+    for (const path of ROUTES) {
+      for (const width of WIDTHS) {
+        const m = await measurePage(browser, origin, path, width)
+        ok(m.status === 200, `${path} at ${width} returns 200 (got ${m.status})`)
+        if (path === "/promptly/") {
+          ok(m.heading === PROMPTLY_H1, `rendered Promptly H1 copy is unchanged at ${width}`)
+        }
+        ok(
+          m.scrollWidth <= m.clientWidth,
+          `${path} document does not overflow at ${width} (${m.scrollWidth} <= ${m.clientWidth})`
+        )
+        ok(
+          m.headingScrollWidth <= m.headingClientWidth,
+          `${path} heading stays inside its box at ${width} (${m.headingScrollWidth} <= ${m.headingClientWidth})`
+        )
+        if (m.scrollWidth <= m.clientWidth) DOCUMENT_OK.add(path)
+        if (m.headingScrollWidth <= m.headingClientWidth) HEADING_OK.add(path)
+      }
+    }
+    // Promptly's unbreakable "professionals" word is the original reason the
+    // shared h1 wrap exists; keep the explicit wrap-value assertions for it.
+    for (const width of WIDTHS) {
+      const m = await measurePage(browser, origin, "/promptly/", width)
+      ok(
+        ["anywhere", "break-word"].includes(m.overflowWrap),
+        `Promptly heading overflow-wrap is a wrapping value at ${width} (got ${m.overflowWrap})`
+      )
+    }
+    // Keep the early-access CTA within the first mobile viewport on the
+    // primary conversion pages (CTA assertions landed on main after this PR
+    // branched, and survive the merge).
+    const promptly320 = await measurePage(browser, origin, "/promptly/", 320)
+    const promptly390 = await measurePage(browser, origin, "/promptly/", 390)
+    ok(
+      promptly320.ctaVisible && promptly390.ctaVisible,
+      "Promptly early-access CTA is fully within the first mobile viewport"
+    )
+    ok(
+      promptly320.ctaText === "Get early access" && promptly390.ctaText === "Get early access",
+      `Promptly early-access CTA copy is unchanged (got "${promptly320.ctaText}" at 320)`
+    )
+    const drishti390 = await measurePage(browser, origin, "/drishti/", 390)
+    ok(
+      drishti390.ctaVisible,
+      "Drishti early-access CTA is fully within the first mobile viewport"
+    )
+    ok(
+      drishti390.ctaText === "Get early access",
+      `Drishti early-access CTA copy is unchanged (got "${drishti390.ctaText}" at 390)`
+    )
+    ok(
+      ROUTES.every((path) => DOCUMENT_OK.has(path)),
+      `every public route document stays inside its box at every width 280-390 (${[...DOCUMENT_OK].join(", ")})`
+    )
+    ok(
+      ROUTES.every((path) => HEADING_OK.has(path)),
+      `every public route heading stays inside its box at every width 280-390 (${[...HEADING_OK].join(", ")})`
+    )
+    ok(
+      !(await measurePage(browser, origin, "/promptly/", 280)).overflowX.includes("hidden") &&
+        !(await measurePage(browser, origin, "/drishti/", 280)).overflowX.includes("hidden"),
+      "document overflow-x is not hidden"
+    )
+  } finally {
+    await browser.close()
+    await new Promise((resolve) => server.close(resolve))
+  }
+}
 
 console.log(`\n${checks} checks, ${failures} failures`)
 process.exit(failures === 0 ? 0 : 1)

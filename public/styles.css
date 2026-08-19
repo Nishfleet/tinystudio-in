@@ -210,6 +210,7 @@ h1 {
   margin-top: 14px;
   font-size: clamp(3.4rem, 7vw, 6.7rem);
   max-width: 10ch;
+  overflow-wrap: anywhere;
 }
 
 h2 {
@@ -876,6 +877,11 @@ h4 {
     max-width: 9ch;
   }
 
+  .page-hero-card h1 {
+    font-size: clamp(2.1rem, 5.6vw, 3.4rem);
+    max-width: none;
+  }
+
   .product-row,
   .portfolio-row {
     grid-template-columns: 1fr;
@@ -900,6 +906,26 @@ h4 {
 
   .page-hero-card {
     padding: 36px 0 44px;
+  }
+
+  /* Product heroes (Promptly, Drishti) carry sentence-length h1s that the
+     global narrow-column h1 cap (9ch) balloons into ~8-10 stacked lines on
+     mobile, pushing the primary early-access CTA below the first viewport.
+     Let the product h1 wrap wider and scale down so the CTA surfaces in the
+     first useful viewport (design-system hard gate). */
+  .product-hero h1 {
+    max-width: none;
+    font-size: clamp(2rem, 8vw, 3.4rem);
+  }
+
+  .product-hero .page-lead {
+    margin-top: 14px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .product-hero .action-row {
+    margin-top: 20px;
   }
 
   .info-card {

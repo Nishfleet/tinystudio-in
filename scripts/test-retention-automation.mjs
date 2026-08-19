@@ -37,8 +37,8 @@ function writeAutomationSingular(prompt, workspace = repoDir) {
 	writeFileSync(automationPath, `id = "tinystudio-retention-checkups"\nkind = "cron"\nname = "TinyStudio retention checkups"\nprompt = "${prompt}"\nstatus = "ACTIVE"\nrrule = "FREQ=WEEKLY;BYDAY=FR;BYHOUR=9;BYMINUTE=0"\nworkspace = "${workspace}"\n`)
 }
 
-function run(github = "false") {
-	return spawnSync(process.execPath, [script], {cwd: fixtureRoot, env: {...process.env, CODEX_HOME: codexHome, GITHUB_ACTIONS: github, SERVICE_REPO_ROOT: serviceRoot, TINYSTUDIO_PREFLIGHT_REPO: repoDir}, encoding: "utf8"})
+function run(github = "false", preflightRepo = repoDir) {
+	return spawnSync(process.execPath, [script], {cwd: fixtureRoot, env: {...process.env, CODEX_HOME: codexHome, GITHUB_ACTIONS: github, SERVICE_REPO_ROOT: serviceRoot, TINYSTUDIO_PREFLIGHT_REPO: preflightRepo}, encoding: "utf8"})
 }
 
 try {
@@ -149,8 +149,9 @@ try {
 	eq(out.freshness.localHead, out.freshness.remoteMain)
 	eq(out.freshness.remoteMain, remoteSha.slice(0, 7))
 
-	// Legacy no-client state: automation missing with no records still passes
-	// with a warning once the preflight is aligned.
+	// No-client state with the automation file missing must fail: the
+	// scheduled loop is required before the first client is active, and an
+	// aligned-but-empty workspace without the guard must not green-pass.
 	rmSync(automationPath, {force: true})
 	rmSync(join(serviceRoot, "clients"), {recursive: true, force: true})
 	mkdirSync(join(serviceRoot, "clients"))
@@ -162,8 +163,22 @@ try {
 	mkdirSync(join(serviceRoot, "runs/service-engine"), {recursive: true})
 
 	result = run()
+	neq(result.status, 0)
+	out = JSON.parse(result.stdout)
+	eq(out.clientCount, 0)
+	assert(out.failures.includes("Automation file is missing"), "empty workspace without the automation guard must fail closed")
+
+	// A no-client state with the automation in place is a legitimate aligned
+	// pass: the guard exists, the workspace is fresh, and the loop is armed
+	// for the first client.
+	writeAutomation(RETENTION_AUTOMATION_PROMPT)
+	result = run()
 	eq(result.status, 0)
-	eq(JSON.parse(result.stdout).clientCount, 0)
+	out = JSON.parse(result.stdout)
+	eq(out.clientCount, 0)
+	eq(out.status, "pass")
+	deq(out.failures, [])
+	rmSync(automationPath, {force: true})
 
 	mkdirSync(join(serviceRoot, "prospects", "paid-service-client"), {recursive: true})
 	writeFileSync(join(serviceRoot, "prospects", "paid-service-client", "service-day0.json"), "{}\n")
@@ -221,6 +236,96 @@ try {
 	result = run()
 	eq(result.status, 0)
 	eq(JSON.parse(result.stdout).status, "pass")
+
+	// Closed-twin regression: when the repository's main worktree is detached,
+	// `refs/heads/main` gets checked out in some other worktree (the twin). The
+	// twin must never become the canonical retention workspace: the gate has to
+	// keep inspecting the main worktree's state, and the automation still has
+	// to point at the main worktree, not the twin.
+	const twinDir = join(fixtureRoot, "twin")
+	runGit(repoDir, ["checkout", "--detach"])
+	runGit(repoDir, ["worktree", "add", twinDir, "main"])
+
+	// Automation pointed at the main worktree still passes while the twin holds
+	// the main branch.
+	writeAutomation(RETENTION_AUTOMATION_PROMPT, repoDir)
+	result = run()
+	eq(result.status, 0)
+	eq(JSON.parse(result.stdout).status, "pass")
+
+	// The canonical workspace must resolve by git-dir ownership, not by list
+	// position or by which worktree holds `refs/heads/main`. When the twin is
+	// the first porcelain entry (e.g. the main worktree is detached), the gate
+	// still has to inspect the main worktree's state — never the twin's.
+	{
+		const {canonicalMainWorktree} = await import("./lib/retention-preflight.mjs")
+		const canonical = canonicalMainWorktree(repoDir)
+		eq(canonical, repoDir, "canonical workspace must be the git-dir owner even when the twin holds main and heads the porcelain list")
+	}
+
+	// Automation pointed at the twin fails: the twin is not the TinyStudio repo.
+	writeAutomation(RETENTION_AUTOMATION_PROMPT, twinDir)
+	result = run()
+	neq(result.status, 0)
+	out = JSON.parse(result.stdout)
+	assert(out.failures.includes("Automation does not point at the TinyStudio repo"), "twin workspace must not be accepted as the TinyStudio repo")
+
+	// A stale canonical workspace fails even when the gate runs from a fresh
+	// checkout elsewhere in the same repository: the Friday loop would run the
+	// canonical workspace's old gate code.
+	const staleBase = runGit(repoDir, ["rev-parse", "HEAD~1"])
+	runGit(repoDir, ["reset", "--hard", staleBase])
+	writeAutomation(RETENTION_AUTOMATION_PROMPT, repoDir)
+	result = run("false", twinDir)
+	neq(result.status, 0)
+	out = JSON.parse(result.stdout)
+	assert(out.failures.includes("retention workspace is stale: checkout is behind or diverged from remote main"), "stale canonical workspace must fail closed even when the gate runs from a fresh checkout")
+	assert(!out.failures.includes("Automation does not point at the TinyStudio repo"), "stale canonical workspace must fail on staleness, not on the workspace pointer")
+	runGit(repoDir, ["reset", "--hard", remoteSha])
+
+	// Stale + empty canonical workspace: the canonical workspace is behind
+	// remote main AND the canonical state roots are missing. Both signals must
+	// surface as failures, and the gate must not green-pass either path.
+	// The closed-twin fix pinned the canonical workspace to the main worktree,
+	// but the gate still has to fail closed when the main worktree itself is
+	// running stale code over an empty state.
+	runGit(repoDir, ["reset", "--hard", staleBase])
+	rmSync(join(serviceRoot, "clients"), {recursive: true, force: true})
+	rmSync(join(serviceRoot, "prospects"), {recursive: true, force: true})
+	rmSync(join(serviceRoot, "service-decisions"), {recursive: true, force: true})
+	rmSync(join(serviceRoot, "runs"), {recursive: true, force: true})
+	writeAutomation(RETENTION_AUTOMATION_PROMPT, repoDir)
+	result = run("false", twinDir)
+	neq(result.status, 0)
+	out = JSON.parse(result.stdout)
+	eq(out.clientCount, 0)
+	assert(out.failures.includes("retention workspace is stale: checkout is behind or diverged from remote main"), "stale + empty canonical workspace must fail on staleness")
+	assert(out.failures.includes("canonical state root missing: clients"), "stale + empty canonical workspace must fail on missing clients state root")
+	assert(out.failures.includes("canonical state root missing: prospects"), "stale + empty canonical workspace must fail on missing prospects state root")
+	neq(out.status, "pass", "stale + empty canonical workspace must never green-pass")
+	runGit(repoDir, ["reset", "--hard", remoteSha])
+	makeRoots()
+
+	// Automation file missing on a stale + empty workspace fails closed even
+	// harder: the "Automation file is missing" failure must be added on top of
+	// the stale + empty failures, so the operator cannot repair the gap by
+	// pointing at stale code alone.
+	runGit(repoDir, ["reset", "--hard", staleBase])
+	rmSync(automationPath, {force: true})
+	rmSync(join(serviceRoot, "clients"), {recursive: true, force: true})
+	rmSync(join(serviceRoot, "prospects"), {recursive: true, force: true})
+	rmSync(join(serviceRoot, "service-decisions"), {recursive: true, force: true})
+	rmSync(join(serviceRoot, "runs"), {recursive: true, force: true})
+	result = run("false", twinDir)
+	neq(result.status, 0)
+	out = JSON.parse(result.stdout)
+	eq(out.clientCount, 0)
+	assert(out.failures.includes("retention workspace is stale: checkout is behind or diverged from remote main"), "stale + empty + missing automation must fail on staleness")
+	assert(out.failures.includes("canonical state root missing: clients"), "stale + empty + missing automation must fail on missing clients state root")
+	assert(out.failures.includes("Automation file is missing"), "stale + empty + missing automation must fail on missing automation file")
+	neq(out.status, "pass", "stale + empty + missing automation must never green-pass")
+	runGit(repoDir, ["reset", "--hard", remoteSha])
+	makeRoots()
 
 	console.log("Retention automation applicability checks passed.")
 } finally {

@@ -11,6 +11,18 @@
 //   3. unknown URLs get a real 404, not the homepage (PR #34)
 //   4. homepage stays portfolio-only: brand-disambiguation copy (#29) live,
 //      and no managed-service buyer-path content (#10/#11, snoozed).
+//
+// Review disposition (2026-08-11, Grok live-review finding "homepage is
+// missing the entire <section id=\"managed-service\"> block on the live site
+// while the merged homepage on main carries it"): intended, snooze honored.
+// The section is deliberately absent from every publishable bundle - the
+// snoozed-by-Nish (2026-08-08) managed-service buyer path from PRs #10/#11 is
+// stripped by scripts/prepare-public-deploy-bundle.mjs and its absence is
+// asserted here (explicitly via the id="managed-service" marker below) and by
+// scripts/test-public-deploy-bundle.mjs. The section returns only when Nish
+// lifts the snooze and the fail-closed filter is updated deliberately.
+// Proof 2b covers the 2026-08-08 dogfood finding page:
+//   2b. /contact/ renders H2 after H1 (the heading-hierarchy repair, PR #18).
 import { join } from "node:path"
 import { fileURLToPath } from "node:url"
 import { dirname } from "node:path"
@@ -22,6 +34,7 @@ const BUYER_PATH_MARKERS = [
   "Website Correction",
   "website-correction",
   "data-measure-source",
+  'id="managed-service"',
 ]
 
 let failures = 0
@@ -71,6 +84,13 @@ try {
     ok(body.includes("application/ld+json"), "page contains application/ld+json")
   }
 
+  console.log("B2. /contact/ renders H2 after H1 (heading-hierarchy repair, PR #18)")
+  {
+    const { status, body } = await get("/contact/")
+    ok(status === 200, `/contact/ returns 200 (got ${status})`)
+    ok(h2AfterFirstH1(body), "H2 follows the first H1 before any H3")
+  }
+
   console.log("C. unknown URLs return a real 404 (PR #34)")
   {
     const probe = `/definitely-missing-live-deploy-${Date.now()}`
@@ -89,6 +109,20 @@ try {
     for (const marker of BUYER_PATH_MARKERS) {
       ok(!body.includes(marker), `homepage has no ${marker}`)
     }
+    ok(
+      !body.includes('<section class="shape" id="managed-service"'),
+      "the entire managed-service section block is absent from the homepage"
+    )
+  }
+
+  console.log("E. no Cloudflare email-obfuscation placeholder on the live homepage")
+  {
+    const { status, body } = await get("/")
+    ok(status === 200, `homepage returns 200 (got ${status})`)
+    ok(body.includes("support&#64;tinystudio.in"), "homepage serves the email entity-encoded (browser-decoded, edge-immutable)")
+    ok(!body.includes("__cf_email__"), "no Cloudflare-obfuscated email span on the homepage")
+    ok(!body.includes("[email"), "no '[email protected]' placeholder text on the homepage")
+    ok(!body.includes("support@tinystudio.in"), "no plaintext email left that Email Address Obfuscation could rewrite")
   }
 } catch (error) {
   failures++
