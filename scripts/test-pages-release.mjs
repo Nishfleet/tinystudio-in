@@ -38,6 +38,14 @@ const ok = (cond, msg) => {
   }
 }
 
+// Pin the real Cloudflare API base as a LITERAL. Every other expectation in
+// this file derives URLs from CF_API_BASE, so a typo in the constant used to
+// satisfy the mocks while 403ing in production (the /api/v4 bug, 2026-08-20).
+if (CF_API_BASE !== "https://api.cloudflare.com/client/v4") {
+  console.error(`CF_API_BASE regression: expected https://api.cloudflare.com/client/v4, got ${CF_API_BASE}`)
+  process.exit(1)
+}
+
 const projectUrl = () => `${CF_API_BASE}/accounts/${PAGES_ACCOUNT_ID}/pages/projects/${PAGES_PROJECT}`
 const rollbackUrl = (id) => `${CF_API_BASE}/accounts/${PAGES_ACCOUNT_ID}/pages/projects/${PAGES_PROJECT}/deployments/${id}/rollback`
 
