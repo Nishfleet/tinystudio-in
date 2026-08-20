@@ -48,6 +48,24 @@ const CONTACT_INFO_CARD_CONTENT = "Apply for The Website Correction"
 const CONTACT_APPLICATION_SECTION_MARKER = '<section class="app-strip reveal delay-1" id="website-correction-application"'
 const CONTACT_SEND_SENTENCE = /\s*For The Website Correction, share your site URL and the page that matters most so a human can review fit and scope\./
 
+// The homepage head/meta now leads with the managed-service offer (The Website
+// Correction) for founder-led MSP buyers, but the deploy bundle is portfolio-only
+// while the buyer path stays snoozed-by-Nish. The filter must therefore revert
+// the title, meta description, og/twitter title+description+image:alt, and the
+// JSON-LD WebPage name/description back to the portfolio framing so the bundle
+// never ships the snoozed offer in any surface a search result, link preview, or
+// browser tab reads. The body-copy markers above already remove the offer from
+// the page; these revert the head surfaces that the body ops do not touch.
+const HOMEPAGE_TITLE_NEW = "Tiny Studio | The Website Correction for founder-led MSPs"
+const HOMEPAGE_TITLE_OLD = "Tiny Studio | Promptly, Drishti, and 0509"
+const HOMEPAGE_DESC_NEW =
+  "The Website Correction is a human-reviewed managed website service from Tiny Studio for founder-led managed IT and MSP companies with a live site."
+const HOMEPAGE_DESC_OLD =
+  "Tiny Studio builds products for people and one sharper software system for teams, including Promptly, Drishti, and 0509."
+const HOMEPAGE_IMAGE_ALT_NEW =
+  "The Website Correction: a managed website service from Tiny Studio for founder-led MSPs."
+const HOMEPAGE_IMAGE_ALT_OLD = "Tiny Studio products: Promptly, Drishti, and 0509."
+
 // Everything that must be ABSENT from a publishable bundle.
 export const FORBIDDEN_MARKERS = [
   { label: "The Website Correction", test: (html) => html.includes("Website Correction") },
@@ -293,6 +311,11 @@ const buildOps = () => [
   { file: "index.html", kind: "regex", pattern: HOMEPAGE_HERO_LEAD, replace: "" },
   { file: "index.html", kind: "article-block", marker: HERO_RAIL_MARKER },
   { file: "index.html", kind: "section-block", marker: MANAGED_SERVICE_SECTION_MARKER, tag: "section" },
+  // Revert the head/meta surfaces to the portfolio framing so the snoozed offer
+  // never ships in the title, description, og/twitter, or JSON-LD of the bundle.
+  { file: "index.html", kind: "replace-all", from: HOMEPAGE_TITLE_NEW, to: HOMEPAGE_TITLE_OLD },
+  { file: "index.html", kind: "replace-all", from: HOMEPAGE_DESC_NEW, to: HOMEPAGE_DESC_OLD },
+  { file: "index.html", kind: "replace-all", from: HOMEPAGE_IMAGE_ALT_NEW, to: HOMEPAGE_IMAGE_ALT_OLD },
   // public/contact/index.html
   { file: "contact/index.html", kind: "replace-all", from: CONTACT_DESCRIPTION_CLAUSE, to: "." },
   { file: "contact/index.html", kind: "regex", pattern: CONTACT_PAGE_LEAD, replace: "." },
