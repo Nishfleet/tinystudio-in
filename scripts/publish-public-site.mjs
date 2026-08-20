@@ -2,7 +2,7 @@
 //
 // Pipeline: prepare the filtered deploy bundle from public/ (snoozed
 // managed-service buyer path removed, neutral fixes asserted), publish it to
-// the Cloudflare Pages project tiny-studio-3f5 with wrangler direct upload
+// the Cloudflare Pages project tiny-studio (subdomain tiny-studio-3f5.pages.dev) with wrangler direct upload
 // (independent of the Cloudflare GitHub integration), then verify the live
 // site against the neutral merged fixes.
 //
@@ -41,7 +41,7 @@ import { preparePublicDeployBundle } from "./prepare-public-deploy-bundle.mjs"
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 
-export const PAGES_PROJECT = "tiny-studio-3f5"
+export const PAGES_PROJECT = "tiny-studio"
 export const PAGES_ACCOUNT_ID = "f670a698e17bf160c8e4679823e68916"
 export const LIVE_BASE = "https://tinystudio.in"
 export const CF_API_BASE = "https://api.cloudflare.com/api/v4"

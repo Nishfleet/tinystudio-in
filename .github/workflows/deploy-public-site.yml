@@ -3,7 +3,7 @@ name: Deploy public site
 # The tinystudio.in release lane. Every merge to main prepares a filtered
 # deploy bundle from public/ (the snoozed managed-service buyer path from
 # PRs #10/#11 is removed; every other merged fix is kept), publishes it to
-# the Cloudflare Pages project tiny-studio-3f5 with wrangler direct upload
+# the Cloudflare Pages project tiny-studio (subdomain tiny-studio-3f5.pages.dev) with wrangler direct upload
 # (independent of the Cloudflare GitHub integration, which has been broken
 # since 2026-06-20), then verifies the live site against the neutral merged
 # fixes (H2-after-H1 on /promptly/support/, JSON-LD on /contact/, real 404s,
