@@ -568,6 +568,52 @@ console.log("H. the upload must be PROVEN to have become production before the l
     ok(promoted.deploymentId === "fresh-deployment", "verifyProductionPromotion returns the promoted identity")
     ok(promoted.commitHash === "test-source-commit", "the promoted deployment carries this bundle's source commit")
   })
+
+  // H6. A blip on the Cloudflare read is a retry, not a failed release; an
+  // unreadable identity all the way to the last attempt is fatal.
+  const state6 = makeState("previous-deployment")
+  const { fetchImpl: baseFetch6 } = makeFakeFetch(state6)
+  const { runCommand: r6 } = makeFakeRun(state6)
+  let reads6 = 0
+  const f6 = async (url, init = {}) => {
+    if ((!init.method || init.method === "GET") && url === projectUrl()) {
+      reads6++
+      // capture read = 1; the first promotion read (2) blips.
+      if (reads6 === 2) return new Response(JSON.stringify({ success: false }), { status: 500 })
+    }
+    return baseFetch6(url, init)
+  }
+  let resolved6 = false
+  await withEnv(async () => {
+    await releasePipeline({ bundleDir: dir, deps: { fetchImpl: f6, runCommand: r6, wranglerBin: fakeWrangler, ...instant }, ...quiet })
+    resolved6 = true
+  })
+  ok(resolved6, "a transient Cloudflare read error is retried, not turned into a failed release")
+
+  const state7 = makeState("previous-deployment")
+  const { fetchImpl: baseFetch7 } = makeFakeFetch(state7)
+  const { runCommand: r7 } = makeFakeRun(state7)
+  let uploaded7 = false
+  const f7 = async (url, init = {}) => {
+    if (uploaded7 && (!init.method || init.method === "GET") && url === projectUrl()) {
+      return new Response(JSON.stringify({ success: false }), { status: 500 })
+    }
+    return baseFetch7(url, init)
+  }
+  const r7Tracking = async (command, args) => {
+    const result = await r7(command, args)
+    if (args[0] === "pages" && args[1] === "deploy") uploaded7 = true
+    return result
+  }
+  let threw7 = ""
+  await withEnv(async () => {
+    try {
+      await releasePipeline({ bundleDir: dir, deps: { fetchImpl: f7, runCommand: r7Tracking, wranglerBin: fakeWrangler, ...instant }, ...quiet })
+    } catch (error) {
+      threw7 = error.message
+    }
+  })
+  ok(threw7.includes("UPLOAD NOT PROVEN LIVE"), "an identity that stays unreadable fails the release loudly")
 }
 
 // ---------------------------------------------------------------------------

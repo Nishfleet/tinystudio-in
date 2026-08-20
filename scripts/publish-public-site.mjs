@@ -73,7 +73,7 @@ Cloudflare Pages:Edit on account ${PAGES_ACCOUNT_ID} (tinystudio.in is served
 by the Pages project ${PAGES_PROJECT} - see the apex CNAME in the zone).
 
 The fleet Workers token (fleet-console/cf.env) does NOT include Pages:Edit,
-which is why the site has been stale since 2026-06-20.
+which is why the site sat stale from 2026-06-20 to 2026-08-20.
 
 One-time provisioning (dashboard, ~2 minutes):
   1. https://dash.cloudflare.com/profile/api-tokens -> Create Token
@@ -216,15 +216,32 @@ export const verifyProductionPromotion = async ({ previous, expectedCommit = nul
     promotionDelayMs = PROMOTION_DELAY_MS,
   } = deps
   let current = null
+  let lastReadError = null
   for (let attempt = 1; attempt <= promotionAttempts; attempt++) {
-    current = await currentProductionIdentity(deps)
+    try {
+      current = await currentProductionIdentity(deps)
+      lastReadError = null
+    } catch (error) {
+      // A blip on the Cloudflare read must not fail a release that did go
+      // live; only an unreadable identity on the LAST attempt is fatal.
+      lastReadError = error
+      current = null
+      log(`[publish] could not read the production identity (attempt ${attempt}/${promotionAttempts}): ${error.message}`)
+    }
     if (current && current.deploymentId !== previous.deploymentId) break
     if (attempt < promotionAttempts) {
-      log(
-        `[publish] production is still ${previous.deploymentId} (attempt ${attempt}/${promotionAttempts}); waiting ${promotionDelayMs}ms for Cloudflare to promote the upload`
-      )
+      if (current) {
+        log(
+          `[publish] production is still ${previous.deploymentId} (attempt ${attempt}/${promotionAttempts}); waiting ${promotionDelayMs}ms for Cloudflare to promote the upload`
+        )
+      }
       await sleep(promotionDelayMs)
     }
+  }
+  if (lastReadError) {
+    throw new Error(
+      `UPLOAD NOT PROVEN LIVE: could not read the production deployment of Pages project ${PAGES_PROJECT} after the upload (${lastReadError.message}). The release cannot be shown to have gone live.`
+    )
   }
   if (!current) {
     throw new Error(
