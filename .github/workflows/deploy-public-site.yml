@@ -64,7 +64,9 @@ jobs:
     # Secrets are hoisted to the job env because the `secrets` context is not
     # available in step-level `if:` conditions; the `env` context is.
     env:
-      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      # Accept either secret name: CLOUDFLARE_API_TOKEN (documented) or
+      # CLOUDFLARE (what the owner provisioned 2026-08-20). First non-empty wins.
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN != '' && secrets.CLOUDFLARE_API_TOKEN || secrets.CLOUDFLARE }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
     steps:
       - uses: actions/checkout@v7
@@ -74,7 +76,7 @@ jobs:
       - name: Required Pages secrets not provisioned - fail loudly
         if: env.CLOUDFLARE_API_TOKEN == '' || env.CLOUDFLARE_ACCOUNT_ID == ''
         run: |
-          echo "::error title=Release lane cannot run::CLOUDFLARE_API_TOKEN and/or CLOUDFLARE_ACCOUNT_ID are not set in repo secrets. The lane fails closed instead of skipping the publish: a skipped publish must never show a green deploy status."
+          echo "::error title=Release lane cannot run::No Cloudflare token secret (CLOUDFLARE_API_TOKEN or CLOUDFLARE) and/or CLOUDFLARE_ACCOUNT_ID set in repo secrets. The lane fails closed instead of skipping the publish: a skipped publish must never show a green deploy status."
           echo "One-time provisioning (dashboard, ~2 minutes):"
           echo "  1. https://dash.cloudflare.com/profile/api-tokens -> Create Token"
           echo "  2. Use the 'Cloudflare Pages: Edit' template, scope it to the account (account id f670a698e17bf160c8e4679823e68916), create, copy the token."
