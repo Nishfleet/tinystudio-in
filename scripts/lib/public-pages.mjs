@@ -43,3 +43,16 @@ export const PUBLIC_PAGE_URLS = PUBLIC_HTML_FILES.filter(
 // missing URLs (empty array when coverage is complete).
 export const missingFromLlmsTxt = (content) =>
   PUBLIC_PAGE_URLS.filter((url) => !content.includes(url))
+
+// The trust surfaces: legal/privacy pages that must render the fixed
+// H1 -> three H2 info-cards outline (PR #74). The release-lane verifier
+// (check-public-live-deploy.mjs) asserts this on every deploy; it
+// referenced TRUST_PAGES without any definition, which crashed section J
+// with a ReferenceError on every acceptance run (2026-08-20).
+export const TRUST_PAGES = [
+  "/privacy/",
+  "/privacy-choices/",
+  "/terms/",
+  "/promptly/privacy/",
+  "/drishti/privacy/",
+]

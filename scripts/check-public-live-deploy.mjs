@@ -44,6 +44,17 @@
 import { join } from "node:path"
 import { fileURLToPath } from "node:url"
 import { dirname } from "node:path"
+import { PUBLIC_PAGE_URLS, TRUST_PAGES } from "./lib/public-pages.mjs"
+
+// Section J helpers — same implementations as test-public-heading-hierarchy.mjs.
+// Section J shipped referencing these without defining them; it could never
+// have run before 2026-08-20 because the lane died earlier (CF_API_BASE typo,
+// Node 20, missing PUBLIC_PAGE_URLS import), so the ReferenceErrors hid.
+const headingLevelsOf = (html) =>
+  [...html.matchAll(/<h([1-6])\b[^>]*>/gi)].map((m) => Number(m[1]))
+
+const infoCardTitleCount = (html) =>
+  (html.match(/<article class="info-card[^"]*"[^>]*>[\s\S]*?<h2\b/gi) || []).length
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 
