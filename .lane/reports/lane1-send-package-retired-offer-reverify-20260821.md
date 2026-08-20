@@ -86,4 +86,5 @@ None changed (verification-only run). The prior fix (PR #158) touched:
 - `scripts/test-active-offer-projection.mjs` — proves the in-path block
   blocks a retired `contact-plan.md` and `--force` recovers.
 
-PR: <https://github.com/nish3451/tinystudio-in/pull/158>
+PR (prior fix): <https://github.com/nish3451/tinystudio-in/pull/158>
+PR (this reverification run): <https://github.com/nish3451/tinystudio-in/pull/226>
