@@ -44,7 +44,11 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 export const PAGES_PROJECT = "tiny-studio"
 export const PAGES_ACCOUNT_ID = "f670a698e17bf160c8e4679823e68916"
 export const LIVE_BASE = "https://tinystudio.in"
-export const CF_API_BASE = "https://api.cloudflare.com/api/v4"
+// The documented Cloudflare API base is /client/v4. This constant shipped
+// as /api/v4 (403 on every call), so the release lane never worked and the
+// site sat stale from 2026-06-20 to 2026-08-20. The regression test pins the
+// literal string so a mock can never hide this again.
+export const CF_API_BASE = "https://api.cloudflare.com/client/v4"
 
 const PROVISION_MESSAGE = `
 The release lane cannot publish yet: it needs a Cloudflare API token with
