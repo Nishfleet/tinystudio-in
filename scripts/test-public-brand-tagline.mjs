@@ -35,6 +35,7 @@ const APP_TAGLINE = "Independent iPhone apps"
 const STUDIO_PAGES = [
   "public/support/index.html",
   "public/contact/index.html",
+  "public/website-correction/index.html",
   "public/privacy/index.html",
   "public/privacy-choices/index.html",
   "public/terms/index.html",

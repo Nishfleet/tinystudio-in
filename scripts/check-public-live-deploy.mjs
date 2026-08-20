@@ -1,6 +1,6 @@
 // Verify that the tinystudio.in production deployment matches the neutral
 // merged public fixes (the deploy-path acceptance proof), and that the
-// snoozed managed-service buyer path is NOT live.
+// Website Correction offer surface is live.
 //
 // Used by the release lane after a Pages deployment. Runs against the live
 // site only; set SKIP_LIVE_CHECKS=1 to skip (exit 0) on offline machines.
@@ -9,8 +9,18 @@
 //   1. /promptly/support/ renders H2 after H1        (PRs #18/#20)
 //   2. /contact/ carries application/ld+json         (PR #19)
 //   3. unknown URLs get a real 404, not the homepage (PR #34)
-//   4. homepage stays portfolio-only: brand-disambiguation copy (#29) live,
-//      and no managed-service buyer-path content (#10/#11, snoozed).
+//   4. homepage leads with the Website Correction offer (offer-surface PR,
+//      which lifts the 2026-08-08 snooze): brand-disambiguation copy (#29)
+//      stays live and the managed-service surface is present.
+//
+// The 2026-08-08 snooze ("do not build, publish, or deploy the
+// managed-service buyer path without his explicit yes") is deliberately lifted
+// by the offer-surface PR, which is PR-only and never merges without human
+// review. Once merged and deployed, the homepage and /website-correction/ must
+// be live and the release lane verifies them here.
+//   5. every public page carries exactly one application/ld+json block
+//      (trust/support structured data, PR #26 - the 07acd07 bundle shipped
+//      JSON-LD on only 4 of 12 pages).
 //
 // Review disposition (2026-08-11, Grok live-review finding "homepage is
 // missing the entire <section id=\"managed-service\"> block on the live site
@@ -38,17 +48,12 @@ import { dirname } from "node:path"
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 
 const BASE = "https://tinystudio.in"
-const BUYER_PATH_MARKERS = [
-  "Website Correction",
-  "website-correction",
-  "data-measure-source",
-  'id="managed-service"',
-]
 
 // Every public page on the live site must carry structured data (PR #26).
 const PUBLIC_PATHS = [
   "/",
   "/contact/",
+  "/website-correction/",
   "/support/",
   "/privacy/",
   "/privacy-choices/",
@@ -127,23 +132,27 @@ try {
     const probe = `/definitely-missing-live-deploy-${Date.now()}`
     const { status, body } = await get(probe)
     ok(status === 404, `unknown URL returns 404 (got ${status})`)
-    ok(!body.includes("<title>Tiny Studio | Promptly, Drishti, and 0509"), "the 404 body is not the homepage")
+    ok(!body.includes("<title>The Website Correction • Tiny Studio"), "the 404 body is not the homepage")
   }
 
-  console.log("D. homepage is portfolio-only (snooze honored, #29 live)")
+  console.log("D. homepage leads with the Website Correction offer (snooze lifted, #29 live)")
   {
     const { status, body } = await get("/")
     ok(status === 200, `homepage returns 200 (got ${status})`)
-    ok(body.includes("<title>Tiny Studio | Promptly, Drishti, and 0509"), "portfolio title is live")
+    ok(body.includes("<title>The Website Correction • Tiny Studio"), "offer title is live")
     ok(body.includes('"alternateName"'), "brand-disambiguation JSON-LD is live (PR #29)")
     ok(body.includes("not affiliated"), "non-affiliation copy is live (PR #29)")
-    for (const marker of BUYER_PATH_MARKERS) {
-      ok(!body.includes(marker), `homepage has no ${marker}`)
-    }
-    ok(
-      !body.includes('<section class="shape" id="managed-service"'),
-      "the entire managed-service section block is absent from the homepage"
-    )
+    ok(body.includes("data-measure-source=\"homepage-hero\""), "homepage hero Website Correction CTA is live")
+    ok(body.includes('id="managed-service"'), "the managed-service section block is live on the homepage")
+    ok(body.includes("/website-correction/"), "homepage links to the offer page")
+  }
+
+  console.log("D2. the /website-correction/ offer page is live")
+  {
+    const { status, body } = await get("/website-correction/")
+    ok(status === 200, `/website-correction/ returns 200 (got ${status})`)
+    ok(body.includes("The Website Correction"), "offer page names the offer")
+    ok(body.includes("application/ld+json"), "offer page carries structured data")
   }
 
   console.log("E. no Cloudflare email-obfuscation placeholder on the live homepage")

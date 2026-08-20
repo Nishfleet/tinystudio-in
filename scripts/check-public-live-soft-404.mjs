@@ -36,7 +36,7 @@ if (process.env.SKIP_LIVE_CHECKS === "1") {
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 const SITE = "https://tinystudio.in"
-const HOME_TITLE = "Tiny Studio | Promptly, Drishti, and 0509"
+const HOME_TITLE = "The Website Correction • Tiny Studio"
 const NOT_FOUND_TITLE = "Page not found"
 
 // A fresh random path each run defeats edge caches and proves the 404
