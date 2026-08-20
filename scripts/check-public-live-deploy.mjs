@@ -35,6 +35,8 @@ import { join } from "node:path"
 import { fileURLToPath } from "node:url"
 import { dirname } from "node:path"
 
+import { PUBLIC_PAGE_URLS } from "./lib/public-pages.mjs"
+
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 
 const BASE = "https://tinystudio.in"
@@ -85,6 +87,17 @@ const h2AfterFirstH1 = (html) => {
   const nextH3 = rest.search(/<h3\b[^>]*>/i)
   return nextH2 !== -1 && (nextH3 === -1 || nextH2 < nextH3)
 }
+
+// Same assertions as scripts/test-public-heading-hierarchy.mjs: the trust
+// pages must serve H1 -> three H2 card titles -> footer H2/H3s, with no
+// heading-level jump (no H1 -> H3 skip).
+const headingLevelsOf = (html) =>
+  [...html.matchAll(/<h([1-6])\b[^>]*>/gi)].map((m) => Number(m[1]))
+
+const infoCardTitleCount = (html) =>
+  (html.match(/<article class="info-card[^"]*"[^>]*>[\s\S]*?<h2\b/gi) || []).length
+
+const TRUST_PAGES = ["/privacy/", "/terms/", "/drishti/privacy/"]
 
 console.log("check-public-live-deploy: live tinystudio.in must match neutral merged fixes")
 
