@@ -104,7 +104,7 @@
       <div class="card">
         <span>DKIM</span>
         <strong>ready</strong>
-        <small>resend._domainkey.tinystudio.io</small>
+        <small>cf2024-1._domainkey.tinystudio.io</small>
       </div>
 </div>
     </section>
@@ -117,7 +117,7 @@
     <section>
       <h2>DKIM Discovery</h2>
       <div class="grid"><p>No common DKIM selector found in DNS yet.</p></div>
-      <p><code>npm run send:configure -- --physical-address=&quot;...&quot; --dkim-selector=resend --dry-run</code></p>
+      <p><code>npm run send:configure -- --physical-address=&quot;...&quot; --dkim-selector=cf2024-1 --dry-run</code></p>
     </section>
     <section>
       <h2>Order</h2>
@@ -125,7 +125,7 @@
         <li>Connect an outbound sending provider (Cloudflare Email Routing forwards inbound mail only and cannot send).</li>
         <li>Add the sender postal address in <code>agency-config.json</code> (business address, PO box, or private mailbox).</li>
         <li>Enable DKIM in the outbound provider and copy the selector.</li>
-        <li>Add the DKIM TXT record in Cloudflare DNS at <code>resend._domainkey.tinystudio.io</code>.</li>
+        <li>Add the DKIM TXT record in Cloudflare DNS at <code>cf2024-1._domainkey.tinystudio.io</code>.</li>
         <li>Save the selector as <code>dkimSelector</code>.</li>
         <li>Run <code>npm run send:setup</code>.</li>
       </ol>

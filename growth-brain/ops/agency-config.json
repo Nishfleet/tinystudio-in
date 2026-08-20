@@ -32,7 +32,7 @@
   "optOutLine": "If this is not useful, reply no and I will not follow up.",
   "senderEmail": "hello@tinystudio.io",
   "senderPhysicalAddress": "",
-  "dkimSelector": "resend",
+  "dkimSelector": "cf2024-1",
   "manualDailySendCap": 20,
   "humanDailyReviewCap": 20,
   "meetingPlaceholder": "add meeting link",
