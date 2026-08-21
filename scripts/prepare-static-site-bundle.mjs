@@ -43,7 +43,7 @@ const supportSchema = {
 
 const llmsTxt = `# Tiny Studio
 
-Tiny Studio is the independent product company at tinystudio.in behind Promptly, Drishti, and 0509. It is not affiliated with any other app or studio that uses the name Tiny Studio.
+Tiny Studio is the independent product company at tinystudio.in behind Promptly, Drishti, and 0509. Tiny Studio also offers The Website Correction, a human-reviewed managed service for founder-led Managed IT/MSP/cybersecurity companies with a live site: one focused correction pass on the single highest-leverage page, available as a $1,000 fixed-scope founder pilot for the first three clients. It is not affiliated with any other app or studio that uses the name Tiny Studio.
 
 ## Public pages
 
@@ -81,6 +81,10 @@ async function main() {
     );
   await fs.writeFile(cssPath, css);
   await fs.copyFile(iconPath, appleIconPath);
+  const committedLlmsTxt = await readOptionalFile(path.join(root, "llms.txt"));
+  if (committedLlmsTxt !== null) {
+    assertLlmsTxtDescriptionMatchesTemplate(committedLlmsTxt, llmsTxt);
+  }
   await fs.writeFile(path.join(root, "llms.txt"), llmsTxt);
   assertLlmsTxtCoversPublicPages(llmsTxt);
 
@@ -146,6 +150,33 @@ function assertLlmsTxtCoversPublicPages(content) {
   const missing = missingFromLlmsTxt(content);
   if (missing.length) {
     throw new Error(`llms.txt does not list every public page; missing: ${missing.join(", ")}`);
+  }
+}
+
+async function readOptionalFile(filePath) {
+  try {
+    return await fs.readFile(filePath, "utf8");
+  } catch {
+    return null;
+  }
+}
+
+function extractLlmsTxtDescriptionParagraph(content) {
+  return content
+    .split("## Public pages")[0]
+    .split(/\n{2,}/)
+    .map((block) => block.trim())
+    .filter((block) => block.length > 0 && !block.startsWith("#"))
+    .join("\n\n");
+}
+
+function assertLlmsTxtDescriptionMatchesTemplate(committedContent, templateContent) {
+  const committedParagraph = extractLlmsTxtDescriptionParagraph(committedContent);
+  const templateParagraph = extractLlmsTxtDescriptionParagraph(templateContent);
+  if (committedParagraph !== templateParagraph) {
+    throw new Error(
+      "public/llms.txt description paragraph drifted from the llms.txt generator template; apply the same description paragraph to public/llms.txt and scripts/prepare-static-site-bundle.mjs"
+    );
   }
 }
 
