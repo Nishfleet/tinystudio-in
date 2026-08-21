@@ -2,7 +2,8 @@
 // (tiny-studio-3f5).
 //
 // The bundle is a verbatim copy of public/ with ONE deliberate, documented
-// change: the managed-service buyer path (PRs #10/#11 content) is removed
+// change: the managed-service buyer path (PRs #10/#11 content, including the
+// offer sentence in llms.txt) is removed
 // because it remains snoozed-by-Nish (2026-08-08: "do not build, publish, or
 // deploy the managed-service buyer path without his explicit yes"). Every
 // other merged public fix must survive untouched.
@@ -30,7 +31,7 @@ import { fileURLToPath } from "node:url"
 import { dirname } from "node:path"
 import { spawnSync } from "node:child_process"
 
-export const SNOOZE_FILTER_VERSION = 1
+export const SNOOZE_FILTER_VERSION = 2
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 
@@ -47,6 +48,8 @@ const CONTACT_INFO_CARD_MARKER = '<section class="app-strip reveal delay-1">'
 const CONTACT_INFO_CARD_CONTENT = "Apply for The Website Correction"
 const CONTACT_APPLICATION_SECTION_MARKER = '<section class="app-strip reveal delay-1" id="website-correction-application"'
 const CONTACT_SEND_SENTENCE = /\s*For The Website Correction, share your site URL and the page that matters most so a human can review fit and scope\./
+const LLMS_OFFER_SENTENCE =
+  "It also offers The Website Correction, a human-reviewed managed service for founder-led Managed IT/MSP/cybersecurity companies with a live site: one focused correction pass on the single highest-leverage page, priced as a $1,000 fixed-scope founder pilot for the first three clients. "
 
 // Everything that must be ABSENT from a publishable bundle.
 export const FORBIDDEN_MARKERS = [
@@ -308,6 +311,21 @@ const buildOps = () => [
   { file: "contact/index.html", kind: "regex", pattern: CONTACT_SEND_SENTENCE, replace: "" },
 ]
 
+const filterLlmsTxt = (source) => {
+  if (!source.includes(LLMS_OFFER_SENTENCE)) {
+    throw new Error(
+      [
+        "snooze filter drifted for llms.txt:",
+        "  - offer sentence marker not found in the source description paragraph",
+        "Either the llms.txt description changed on main or the snooze was lifted.",
+        "Update the marker in scripts/prepare-public-deploy-bundle.mjs deliberately;",
+        "never deploy the snoozed buyer path while the snooze stands.",
+      ].join("\n")
+    )
+  }
+  return source.replace(LLMS_OFFER_SENTENCE, "")
+}
+
 const filterFile = (file, sourceHtml) => {
   const ops = buildOps().filter((op) => op.file === file)
   const { html, errors } = applyOps(sourceHtml, ops)
@@ -370,6 +388,10 @@ export const preparePublicDeployBundle = async ({ sourceDir, outputDir }) => {
   await fs.writeFile(join(output, "index.html"), filtered)
   const contact = filterFile("contact/index.html", await fs.readFile(join(source, "contact/index.html"), "utf8"))
   await fs.writeFile(join(output, "contact/index.html"), contact)
+  await fs.writeFile(
+    join(output, "llms.txt"),
+    filterLlmsTxt(await fs.readFile(join(source, "llms.txt"), "utf8"))
+  )
 
   const forbiddenFailures = assertForbiddenAbsent(output)
   if (forbiddenFailures.length > 0) {
@@ -385,7 +407,7 @@ export const preparePublicDeployBundle = async ({ sourceDir, outputDir }) => {
     prepared_at: new Date().toISOString(),
     source_commit: sourceCommit(),
     file_count: (await fs.readdir(output, { recursive: true })).length,
-    note: "managed-service buyer path (PRs #10/#11) removed per snoozed-by-nish 2026-08-08",
+    note: "managed-service buyer path (PRs #10/#11) and the llms.txt offer sentence removed per snoozed-by-nish 2026-08-08",
   }
   await fs.writeFile(join(output, "deploy-manifest.json"), `${JSON.stringify(manifest, null, 2)}\n`)
   return output
