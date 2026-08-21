@@ -5,9 +5,11 @@ import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 import { execFileSync } from "node:child_process";
 import { localIsoDate } from "./date-utils.mjs";
 import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
-import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
+import { handleHelp, refuseUnknownArgs, resolveOutputPath } from "./lib/operator-cli.mjs";
 
-handleHelp(process.argv.slice(2), `Usage: node scripts/export-followup-cockpit.mjs [--limit=10] [--output=prospects/followup-cockpit.html] [--date=YYYY-MM-DD]`);
+const usage = `Usage: node scripts/export-followup-cockpit.mjs [--limit=10] [--output=prospects/followup-cockpit.html] [--date=YYYY-MM-DD]`;
+handleHelp(process.argv.slice(2), usage);
+refuseUnknownArgs(process.argv.slice(2), ["--limit", "--output", "--date"], usage);
 const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
 const limit = limitArg ? Number(limitArg.split("=")[1]) : 10;
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
