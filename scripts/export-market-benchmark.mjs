@@ -17,7 +17,7 @@ const outputPath = resolveOutputPath(outputRel, { fallback: outputRel });
 const opsPath = resolveOutputPath(opsRel, { flag: "--ops", fallback: opsRel });
 const htmlPath = resolveOutputPath(htmlRel, { flag: "--html", fallback: htmlRel });
 const today = localIsoDate();
-const MARKET_ANCHORS_LAST_CHECKED = "2026-08-13";
+const MARKET_ANCHORS_LAST_CHECKED = "2026-08-21";
 function write(path, content) {
   const dir = path.split("/").slice(0, -1).join("/");
   if (dir) mkdirSync(dir, { recursive: true });
@@ -178,6 +178,26 @@ const alternatives = [
     tinyStudioCanBeatBy: "Done-for-you proof.",
     currentStatus: metrics.counts.clientsReady > 0 && metrics.counts.loomsRecorded >= 5 ? "watch" : "fail",
     allowedClaim: "Not a substitute."
+  },
+  {
+    name: "MSP homepage clarity diagnostics (Concannon)",
+    source: "MS Concannon Homepage Clarity Diagnostic",
+    sourceUrl: "https://diagnostic.msconcannon.com/",
+    marketSignal: "$297; 3 business days; Loom + written summary.",
+    strongAt: "MSP messaging clarity; 30-second test.",
+    tinyStudioCanBeatBy: "Implementation + before/after proof + tracking.",
+    currentStatus: marketProofReady ? "watch" : "fail",
+    allowedClaim: "After proof; messaging-only, no copy or implementation."
+  },
+  {
+    name: "MSP website video reviews (Copeman)",
+    source: "Mark Copeman Website Review Service",
+    sourceUrl: "https://markcopeman.com/website-review-service/",
+    marketSignal: "£299 + VAT / $395; 5 working days; 30+ min video critique.",
+    strongAt: "Broad MSP website critique (presence, aesthetics, content, SEO).",
+    tinyStudioCanBeatBy: "One-page fault map + implementation + proof + tracking.",
+    currentStatus: marketProofReady ? "watch" : "fail",
+    allowedClaim: "After proof; review-only, no implementation."
   }
 ];
 
@@ -262,6 +282,8 @@ Current public market signals:
 - MSP website/SEO audit packages start low: JoomConnect includes a website audit and keyword research in every SEO tier from $300-$1,800/month and opens with a free SEO audit.
 - Free MSP-focused audits are a crowded entry point: JoomConnect, Managed Prospecting System, and 100Signals all give away MSP-specific audits (SEO, authority, AI visibility) to open sales conversations.
 - MSP marketing subscriptions undercut agencies: MSP Marketing Edge offers a free trial then $199/month (US) with no contract, plus a free marketing scorecard.
+- MSP homepage clarity diagnostics are a direct comparable: MS Concannon (https://diagnostic.msconcannon.com/) charges $297 for a 5-7 minute Loom plus a written summary, delivered within 3 business days, messaging-only with no copy or implementation (checked 2026-08-21).
+- MSP website video reviews sit beside the diagnostic: Mark Copeman (https://markcopeman.com/website-review-service/) charges £299 + VAT or $395 for a 30+ minute video critique across presence, aesthetics, content, and platform/SEO, delivered within 5 working days, review-only with no implementation (checked 2026-08-21).
 
 ## Competitive Proof Matrix
 
