@@ -47,6 +47,12 @@ const CONTACT_INFO_CARD_MARKER = '<section class="app-strip reveal delay-1">'
 const CONTACT_INFO_CARD_CONTENT = "Apply for The Website Correction"
 const CONTACT_APPLICATION_SECTION_MARKER = '<section class="app-strip reveal delay-1" id="website-correction-application"'
 const CONTACT_SEND_SENTENCE = /\s*For The Website Correction, share your site URL and the page that matters most so a human can review fit and scope\./
+// JSON-LD Organization description: the managed-service sentence inserted by
+// the JSON-LD offer packet. Stripped from the deploy bundle so the snoozed
+// buyer path does not leak through structured data.
+const JSONLD_ORG_MANAGED_SERVICE = / Tiny Studio also offers The Website Correction, a human-reviewed managed service for founder-led Managed IT\/MSP\/cybersecurity companies with a live site: one focused correction pass on the single highest-leverage page, available as a \$1,000 fixed-scope founder pilot for the first three clients\./
+// JSON-LD WebSite description: shorter managed-service sentence.
+const JSONLD_SITE_MANAGED_SERVICE = / Tiny Studio also offers The Website Correction, a human-reviewed managed service for founder-led Managed IT\/MSP\/cybersecurity companies with a live site\./
 
 // Everything that must be ABSENT from a publishable bundle.
 export const FORBIDDEN_MARKERS = [
@@ -293,6 +299,10 @@ const buildOps = () => [
   { file: "index.html", kind: "regex", pattern: HOMEPAGE_HERO_LEAD, replace: "" },
   { file: "index.html", kind: "article-block", marker: HERO_RAIL_MARKER },
   { file: "index.html", kind: "section-block", marker: MANAGED_SERVICE_SECTION_MARKER, tag: "section" },
+  // JSON-LD managed-service descriptions (stripped so the snoozed buyer path
+  // does not leak through structured data).
+  { file: "index.html", kind: "regex", pattern: JSONLD_ORG_MANAGED_SERVICE, replace: "" },
+  { file: "index.html", kind: "regex", pattern: JSONLD_SITE_MANAGED_SERVICE, replace: "" },
   // public/contact/index.html
   { file: "contact/index.html", kind: "replace-all", from: CONTACT_DESCRIPTION_CLAUSE, to: "." },
   { file: "contact/index.html", kind: "regex", pattern: CONTACT_PAGE_LEAD, replace: "." },
