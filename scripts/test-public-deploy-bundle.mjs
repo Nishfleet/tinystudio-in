@@ -44,6 +44,8 @@ const expectedSourceMarkers = [
   { label: "homepage hero-lead buyer-path sentence", html: sourceIndex, test: (h) => h.includes("There is also one") && h.includes("The Website") },
   { label: "homepage hero-rail Website Correction item", html: sourceIndex, test: (h) => h.includes('data-measure-source="homepage-hero"') },
   { label: "homepage managed-service section", html: sourceIndex, test: (h) => h.includes('id="managed-service"') },
+  { label: "homepage JSON-LD Organization managed-service description", html: sourceIndex, test: (h) => h.includes("Tiny Studio also offers The Website Correction") && h.includes("fixed-scope founder pilot") },
+  { label: "homepage JSON-LD WebSite managed-service description", html: sourceIndex, test: (h) => /Tiny Studio also offers The Website Correction, a human-reviewed managed service for founder-led Managed IT\/MSP\/cybersecurity companies with a live site\./.test(h) },
   { label: "contact description clause", html: sourceContact, test: (h) => h.includes(", and the Website Correction managed service.") },
   { label: "contact page-lead clause", html: sourceContact, test: (h) => h.includes("human-reviewed managed") },
   { label: "contact plain-list item", html: sourceContact, test: (h) => h.includes("<li>The Website Correction managed service</li>") },
