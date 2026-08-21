@@ -2,11 +2,13 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { localIsoDate } from "./date-utils.mjs";
-import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
+import { handleHelp, refuseUnknownArgs, resolveOutputPath } from "./lib/operator-cli.mjs";
 import { agencyConfig } from "./lib/agency-config.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 
-handleHelp(process.argv.slice(2), `Usage: node scripts/export-sales-cockpit.mjs [--limit=20] [--output=prospects/sales-cockpit.html]`);
+const usage = `Usage: node scripts/export-sales-cockpit.mjs [--limit=20] [--output=prospects/sales-cockpit.html]`;
+handleHelp(process.argv.slice(2), usage);
+refuseUnknownArgs(process.argv.slice(2), ["--limit", "--output"], usage);
 const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
 const limit = limitArg ? Number(limitArg.split("=")[1]) : 20;
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));

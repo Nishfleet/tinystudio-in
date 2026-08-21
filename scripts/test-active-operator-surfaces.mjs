@@ -211,6 +211,39 @@ try {
 	}
 	eq(existsSync(join(T, "clients/ai-converter")), false, "--help/-h must not make export-owned-startup-proof-capture seed owned client folders")
 
+	// Unknown bare flags must never fall through to a real run either: the
+	// runtime cockpit and mission writers named by the operator --help item
+	// refuse them with the usage line and leave every tracked or runtime
+	// artifact untouched (no new file, no rewrite).
+	const unknownFlagSurface = [
+		"export-daily-money-mission.mjs",
+		"export-followup-cockpit.mjs",
+		"export-prospect-outbox.mjs",
+		"export-sales-cockpit.mjs"
+	]
+	const unknownFlagProbePaths = [
+		...trackedArtifacts.keys(),
+		...privateRuntimeArtifacts,
+		"prospects/loom-links.txt",
+		"prospects/sales-cockpit.html",
+		"prospects/outbox.html",
+		"prospects/followup-cockpit.html"
+	]
+	const beforeUnknown = new Map(unknownFlagProbePaths.map(path => [path, {
+		exists: existsSync(join(T, path)),
+		content: existsSync(join(T, path)) ? readFileSync(join(T, path), "utf8") : null
+	}]))
+	for (const name of unknownFlagSurface) {
+		const refusedUnknown = run([`scripts/${name}`, "--bogus"])
+		neq(refusedUnknown.status, 0, `${name} --bogus must exit non-zero`)
+		mat(refusedUnknown.stderr, /Refusing unknown argument --bogus/, `${name} --bogus must explain the refusal`)
+		mat(refusedUnknown.stderr, /Usage:/, `${name} --bogus must print usage`)
+	}
+	for (const [path, before] of beforeUnknown) {
+		eq(existsSync(join(T, path)), before.exists, `--bogus must not change existence of ${path}`)
+		if (before.exists) deq(readFileSync(join(T, path), "utf8"), before.content, `${path} must not be rewritten by unknown flags`)
+	}
+
 	// The owned-* and client writers must refuse output paths that escape the
 	// service root, without creating the file outside it.
 	mkdirSync(join(T, "clients", "escape-probe"), {recursive: true})
