@@ -106,6 +106,6 @@ for (const page of LIVE_PAGES) {
   if (html !== null) assertRepairedOutline(page.name, page.source, html)
 }
 
-console.log("\nLive /promptly/support/ heading-hierarchy guard result: the finding stays open against tinystudio.in until a refresh of the live deployment lands on origin/main.")
+console.log("\nLive /promptly/support/ heading-hierarchy guard result: the deployed page keeps the PR #20 repaired outline (reverified 2026-08-20, reverify lane1 report .lane/reports/lane1-promptly-support-heading-hierarchy-restore-20260820.md).")
 console.log(`\n${checks} checks, ${failures} failures`)
 process.exit(failures === 0 ? 0 : 1)
