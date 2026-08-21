@@ -130,3 +130,22 @@ main carries one. Verdict: **intended, snooze honored — not a regression.**
   fresh deploy.)
 - The section returns only when Nish lifts the snooze; the fail-closed filter
   is then updated deliberately, never silently.
+
+### 2026-08-21 — re-verified, still intended (deploy path repaired, snooze still honored)
+
+Re-dispatched item "live site is missing the entire `<section id="managed-service">`
+block on the homepage while the merged homepage on main carries it". Fresh
+verification (2026-08-21, lane 1):
+
+- Source: `public/index.html` still carries the section at `id="managed-service"`
+  (line 284), unchanged on origin/main HEAD `ccfbd4b`.
+- Live: fresh fetch of `https://tinystudio.in/` returns 200 with the portfolio
+  title and contains no `id="managed-service"`, no "Website Correction", no
+  "website-correction", no "managed service", and no `data-measure-source`.
+- Provenance: the live `deploy-manifest.json` (fetched 2026-08-21) shows
+  `filter_version: 1`, `source_commit: ccfbd4b` (current main), `prepared_at:
+  2026-08-21T03:59:56Z`, note "managed-service buyer path (PRs #10/#11) removed
+  per snoozed-by-nish 2026-08-08". The absence is the fail-closed filter's
+  deliberate output on a current bundle — not a stale deploy.
+- Verdict unchanged: **intended, snooze honored — not a regression.** No product
+  change made; the section returns only when Nish lifts the snooze.
