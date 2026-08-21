@@ -33,7 +33,6 @@ The client does not buy "AI". They buy human-reviewed **The Website Correction**
 |---|---|---:|
 | Entry | Loom audit | Free |
 | First sale | The Website Correction (founder pilot) | `$1,000` |
-| Continuation | Weekly Growth Desk | `$2,000-$5,000/month` |
 | Later | Software-assisted dashboard | Not now |
 
 ## First Niche
@@ -61,7 +60,7 @@ Do not jump straight to a full-service menu. Start with the sharpest wedge, prov
 
 ## SEO Architecture Wedge
 
-For B2B and local-service clients, the fastest useful audit is often not "write more content". It is:
+For founder-led Managed IT, MSP, and cybersecurity clients, the fastest useful audit is often not "write more content". It is:
 
 - focus the homepage on the most valuable buying intent
 - create or clarify dedicated service pages
