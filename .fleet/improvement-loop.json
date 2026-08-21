@@ -1,0 +1,15 @@
+{
+  "items": {
+    "8caeed8581": {
+      "at": "2026-08-21T09:16:33.426Z",
+      "receipt": {
+        "note": "already resolved on main by PR #133 (commit c617364)",
+        "pr": 133
+      },
+      "reverify_count": 0,
+      "reverify_history": [],
+      "status": "resolved"
+    }
+  },
+  "version": 1
+}
