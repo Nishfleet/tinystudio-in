@@ -41,5 +41,6 @@ The repo ships a `PR Duplicate Guard` (`.github/workflows/pr-duplicate-guard.yml
 
 ## PR
 
-- Branch: `docs/lane1-codeql-reremove-verify-20260821` (commit `# see git`)
+- Branch: `docs/lane1-codeql-reremove-verify-20260821` (commit `ed6b37a`)
 - Canonical fix PR: https://github.com/nish3451/tinystudio-in/pull/235
+- This lane's evidence PR: https://github.com/nish3451/tinystudio-in/pull/242
