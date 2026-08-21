@@ -359,7 +359,10 @@ try {
 		mat(artifact, new RegExp(`Generated:? ${currentDate}`))
 	}
 	mat(liveMetrics, /\| Clients \| 0 \|/)
-	mat(liveMetrics, /\| Client records blocked \| 0 \|/)
+	// The daily mission flow refreshes the tracked live-metrics default from a
+	// populated root, so the surface carries the fixture's real blocked-client
+	// count instead of the canonical empty baseline.
+	mat(liveMetrics, /\| Client records blocked \| 1 \|/)
 	mat(growthDoctor, /\| Clients \| 0 \|/)
 	mat(growthDoctor, /\| Client records blocked \| 1 \|/)
 	dnm(growthDoctor, /Client: Unpaid Fixture/)
