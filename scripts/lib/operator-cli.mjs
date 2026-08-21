@@ -18,6 +18,21 @@ export function handleHelp(args, usage) {
   }
 }
 
+// Refuse any argument whose flag name is not in `knownFlags` ("--limit" also
+// matches "--limit=5"). An operator typo like --bogus must never fall through
+// to a real run that writes cockpit/mission artifacts; it gets the usage line
+// and a non-zero exit instead, matching the growth:start Usage pattern.
+export function refuseUnknownArgs(args, knownFlags, usage) {
+  const known = new Set(knownFlags);
+  for (const arg of args) {
+    if (!known.has(arg.split("=")[0])) {
+      console.error(`Refusing unknown argument ${arg}.`);
+      console.error(usage.trim());
+      process.exit(1);
+    }
+  }
+}
+
 function refuse(flag, value, reason) {
   console.error(`Refusing ${flag}=${value}: ${reason}. Output paths must stay inside the repository (${serviceRoot}).`);
   process.exit(1);
