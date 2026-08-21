@@ -30,7 +30,7 @@ import { fileURLToPath } from "node:url"
 import { dirname } from "node:path"
 import { spawnSync } from "node:child_process"
 
-export const SNOOZE_FILTER_VERSION = 1
+export const SNOOZE_FILTER_VERSION = 2
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 
@@ -47,6 +47,11 @@ const CONTACT_INFO_CARD_MARKER = '<section class="app-strip reveal delay-1">'
 const CONTACT_INFO_CARD_CONTENT = "Apply for The Website Correction"
 const CONTACT_APPLICATION_SECTION_MARKER = '<section class="app-strip reveal delay-1" id="website-correction-application"'
 const CONTACT_SEND_SENTENCE = /\s*For The Website Correction, share your site URL and the page that matters most so a human can review fit and scope\./
+
+const LLMS_OFFER_PARAGRAPH =
+  "Tiny Studio sells The Website Correction, a human-reviewed managed service that runs one focused correction pass on the single highest-leverage page of a founder-led Managed IT, MSP, or cybersecurity company's live site. The $1,000 fixed-scope founder pilot covers the first three clients. Tiny Studio is also the independent product company at tinystudio.in behind Promptly, Drishti, and 0509. It is not affiliated with any other app or studio that uses the name Tiny Studio."
+const LLMS_PORTFOLIO_PARAGRAPH =
+  "Tiny Studio is the independent product company at tinystudio.in behind Promptly, Drishti, and 0509. It is not affiliated with any other app or studio that uses the name Tiny Studio."
 
 // Everything that must be ABSENT from a publishable bundle.
 export const FORBIDDEN_MARKERS = [
@@ -306,6 +311,7 @@ const buildOps = () => [
   },
   { file: "contact/index.html", kind: "section-block", marker: CONTACT_APPLICATION_SECTION_MARKER, tag: "section" },
   { file: "contact/index.html", kind: "regex", pattern: CONTACT_SEND_SENTENCE, replace: "" },
+  { file: "llms.txt", kind: "replace-all", from: LLMS_OFFER_PARAGRAPH, to: LLMS_PORTFOLIO_PARAGRAPH },
 ]
 
 const filterFile = (file, sourceHtml) => {
@@ -370,6 +376,8 @@ export const preparePublicDeployBundle = async ({ sourceDir, outputDir }) => {
   await fs.writeFile(join(output, "index.html"), filtered)
   const contact = filterFile("contact/index.html", await fs.readFile(join(source, "contact/index.html"), "utf8"))
   await fs.writeFile(join(output, "contact/index.html"), contact)
+  const llmsTxt = filterFile("llms.txt", await fs.readFile(join(source, "llms.txt"), "utf8"))
+  await fs.writeFile(join(output, "llms.txt"), llmsTxt)
 
   const forbiddenFailures = assertForbiddenAbsent(output)
   if (forbiddenFailures.length > 0) {
