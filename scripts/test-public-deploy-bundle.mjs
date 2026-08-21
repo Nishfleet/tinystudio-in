@@ -1,10 +1,11 @@
-// Guard the tinystudio.in deploy bundle against drift in both directions:
-//   - the snooze filter must remove every managed-service buyer-path marker
-//     (PRs #10/#11, snoozed-by-Nish 2026-08-08) and leave nothing behind;
+// Guard the tinystudio.in deploy bundle against drift:
 //   - every neutral merged public fix used as deploy proof (H2-after-H1 on
 //     /promptly/support/ #18/#20, JSON-LD on /contact/ #19, homepage brand
-//     disambiguation #29, top-level real 404 page #34) must survive the
-//     filter untouched.
+//     disambiguation #29, top-level real 404 page #34) must survive untouched;
+//   - the Website Correction offer surface (homepage repositioning + the
+//     /website-correction/ offer page) must be PART of the bundle. The
+//     2026-08-08 snooze was deliberately lifted by the offer-surface PR,
+//     which is PR-only and never merges without human review.
 //
 // The bundle is prepared in a temp directory; the worktree is never modified.
 import { mkdtempSync, rmSync, existsSync } from "node:fs"
@@ -15,7 +16,7 @@ import { dirname } from "node:path"
 import { readFileSync } from "node:fs"
 
 import {
-  FORBIDDEN_MARKERS,
+  OFFER_PROOFS,
   NEUTRAL_PROOFS,
   preparePublicDeployBundle,
 } from "./prepare-public-deploy-bundle.mjs"
@@ -34,28 +35,24 @@ const ok = (cond, msg) => {
   }
 }
 
-console.log("test-public-deploy-bundle: the publishable bundle is portfolio-only and keeps neutral fixes")
+console.log("test-public-deploy-bundle: the publishable bundle includes the Website Correction offer surface")
 
 const sourceIndex = read("public/index.html")
 const sourceContact = read("public/contact/index.html")
 
-console.log("A. the snooze filter still has work to do on main (markers present in source)")
-const expectedSourceMarkers = [
-  { label: "homepage hero-lead buyer-path sentence", html: sourceIndex, test: (h) => h.includes("There is also one") && h.includes("The Website") },
-  { label: "homepage hero-rail Website Correction item", html: sourceIndex, test: (h) => h.includes('data-measure-source="homepage-hero"') },
+console.log("A. the source carries the offer surface the bundle must include")
+const sourceOfferMarkers = [
+  { label: "homepage leads with The Website Correction", html: sourceIndex, test: (h) => h.includes("<h1>The Website Correction.") },
+  { label: "homepage hero Website Correction CTA", html: sourceIndex, test: (h) => h.includes('data-measure-source="homepage-hero"') },
   { label: "homepage managed-service section", html: sourceIndex, test: (h) => h.includes('id="managed-service"') },
-  { label: "contact description clause", html: sourceContact, test: (h) => h.includes(", and the Website Correction managed service.") },
-  { label: "contact page-lead clause", html: sourceContact, test: (h) => h.includes("human-reviewed managed") },
-  { label: "contact plain-list item", html: sourceContact, test: (h) => h.includes("<li>The Website Correction managed service</li>") },
-  { label: "contact info-card section", html: sourceContact, test: (h) => h.includes("Apply for The Website Correction") },
+  { label: "homepage links to the offer page", html: sourceIndex, test: (h) => h.includes("/website-correction/") },
   { label: "contact application section", html: sourceContact, test: (h) => h.includes('id="website-correction-application"') },
-  { label: "contact what-to-send sentence", html: sourceContact, test: (h) => h.includes("For The Website Correction, share your site URL") },
 ]
-for (const marker of expectedSourceMarkers) {
+for (const marker of sourceOfferMarkers) {
   ok(marker.test(marker.html), `source still carries ${marker.label}`)
 }
 
-console.log("B. the prepared bundle contains none of the snoozed markers")
+console.log("B. the prepared bundle keeps the offer surface")
 let bundleDir = ""
 try {
   bundleDir = mkdtempSync(join(tmpdir(), "tinystudio-bundle-test-"))
@@ -65,11 +62,11 @@ try {
   ok(false, `bundle preparation failed: ${error.message}`)
 }
 
-const bundleFiles = ["index.html", "contact/index.html"]
-for (const rel of bundleFiles) {
+const offerFiles = ["index.html", "website-correction/index.html"]
+for (const rel of offerFiles) {
   const html = readFileSync(join(bundleDir, rel), "utf8")
-  for (const marker of FORBIDDEN_MARKERS) {
-    ok(!marker.test(html), `${rel} has no ${marker.label}`)
+  for (const proof of OFFER_PROOFS.filter((p) => p.file === rel)) {
+    ok(proof.test(html), `${rel} keeps ${proof.label}`)
   }
 }
 
@@ -91,6 +88,7 @@ const requiredFiles = [
   "llms.txt",
   "_headers",
   "contact/index.html",
+  "website-correction/index.html",
   "support/index.html",
   "privacy/index.html",
   "privacy-choices/index.html",
@@ -110,23 +108,21 @@ for (const rel of requiredFiles) {
   ok(existsSync(join(bundleDir, rel)), `${rel} exists in the bundle`)
 }
 
-console.log("E. the filtered homepage is still a coherent page")
-const filteredIndex = readFileSync(join(bundleDir, "index.html"), "utf8")
-ok(filteredIndex.includes("<html"), "homepage is still an html document")
-ok(filteredIndex.includes("</html>"), "homepage still closes html")
-ok(filteredIndex.includes('class="hero-rail"'), "hero rail remains")
-ok((filteredIndex.match(/<article class="rail-item">/g) || []).length === 3, "hero rail keeps exactly the three portfolio items")
-ok(filteredIndex.includes('id="products"'), "products section remains")
-ok(filteredIndex.includes('id="teams"'), "teams section remains")
-ok(filteredIndex.includes('<section class="shape" id="managed-service"') === false, "managed-service section is gone")
+console.log("E. the bundled homepage leads with the offer and is a coherent page")
+const bundleIndex = readFileSync(join(bundleDir, "index.html"), "utf8")
+ok(bundleIndex.includes("<html"), "homepage is still an html document")
+ok(bundleIndex.includes("</html>"), "homepage still closes html")
+ok(bundleIndex.includes('class="hero-rail"'), "hero rail remains")
+ok(bundleIndex.includes('id="products"'), "products section remains")
+ok(bundleIndex.includes('id="teams"'), "teams section remains")
+ok(bundleIndex.includes('id="managed-service"'), "managed-service section remains")
+ok(bundleIndex.includes("<h1>The Website Correction."), "homepage H1 leads with the offer")
 
-console.log("F. the filtered contact page is still a coherent page")
-const filteredContact = readFileSync(join(bundleDir, "contact/index.html"), "utf8")
-ok(filteredContact.includes("<html") && filteredContact.includes("</html>"), "contact is still a complete html document")
-ok(filteredContact.includes("Primary inbox"), "neutral support card remains")
-ok(filteredContact.includes("App-specific public pages"), "neutral apps card remains")
-ok(filteredContact.includes("mailto:support&#64;tinystudio.in"), "studio inbox mailto remains (entity-encoded, obfuscation-proof)")
-ok(!filteredContact.includes("<script>"), "the measurement-marker script is gone with the application section")
+console.log("F. the bundled offer page is a complete page")
+const bundleOffer = readFileSync(join(bundleDir, "website-correction/index.html"), "utf8")
+ok(bundleOffer.includes("<html") && bundleOffer.includes("</html>"), "offer page is a complete html document")
+ok(bundleOffer.includes("The Website Correction"), "offer page names the offer")
+ok(bundleOffer.includes("mailto:support&#64;tinystudio.in"), "offer page keeps the studio inbox mailto (entity-encoded)")
 
 console.log("G. npm test/ci wiring")
 const pkg = JSON.parse(read("package.json"))
@@ -145,6 +141,7 @@ const PUBLIC_HTML = [
   "404.html",
   "support/index.html",
   "contact/index.html",
+  "website-correction/index.html",
   "privacy/index.html",
   "privacy-choices/index.html",
   "terms/index.html",

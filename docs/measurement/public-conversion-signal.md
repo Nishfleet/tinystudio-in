@@ -3,7 +3,7 @@
 Scope: read-only measurement of which public page pointed a visitor to The
 Website Correction application route. This layer does not deploy, send, or
 collect anything. It does not change pricing or legal copy, does not touch
-auth, payments, or leads, and does not depend on PR #10's public copy.
+auth, payments, or leads.
 
 ## Signal source
 
@@ -16,16 +16,17 @@ Canonical stable source names:
 
 | Name | Placement | State in this checkout |
 | --- | --- | --- |
-| `homepage-hero` | Website Correction CTA in the homepage hero rail | Defined; no live CTA (PR #10 copy not merged) |
-| `homepage-service` | Website Correction CTA in the homepage managed-service section | Defined; no live CTA (PR #10 copy not merged) |
+| `homepage-hero` | Website Correction CTA in the homepage hero rail | Live (homepage hero apply button) |
+| `homepage-service` | Website Correction CTA in the homepage managed-service section | Live (homepage managed-service section apply button) |
 | `homepage-footer` | Website Correction CTA in the homepage footer | Defined; no live CTA |
 
 Names are used only when they correspond to a real Website Correction CTA;
-a name with no live CTA is dormant, not attached to unrelated links. In this
-checkout the homepage has no Website Correction CTA: the "Ask about 0509" and
-footer "0509" links are product CTAs (0509 is a product, not The Website
-Correction) and must never carry a Website Correction source name. Any new
-placement needs a new registered name, added here, to the allowlist in
+a name with no live CTA is dormant, not attached to unrelated links. The
+homepage hero and managed-service apply buttons carry the live `homepage-hero`
+and `homepage-service` source tags; the "Ask about 0509" and footer "0509"
+links are product CTAs (0509 is a product, not The Website Correction) and
+must never carry a Website Correction source name. Any new placement needs a
+new registered name, added here, to the allowlist in
 `public/contact/index.html`, and to `scripts/test-public-conversion-signal.mjs`.
 
 ## Offer naming

@@ -50,6 +50,7 @@ Tiny Studio is the independent product company at tinystudio.in behind Promptly,
 - Home: https://tinystudio.in/
 - Support: https://tinystudio.in/support/
 - Contact: https://tinystudio.in/contact/
+- The Website Correction: https://tinystudio.in/website-correction/
 - Privacy: https://tinystudio.in/privacy/
 - Privacy choices: https://tinystudio.in/privacy-choices/
 - Terms: https://tinystudio.in/terms/
@@ -65,6 +66,7 @@ Tiny Studio is the independent product company at tinystudio.in behind Promptly,
 - Promptly is presented as an app for bookings, reminders, payment proof, and day-of clarity for solo professionals.
 - Drishti is presented as a mindful screen-time app built around pauses, intention checks, and less guilt-heavy friction.
 - 0509 is presented as a sharper operational product lane for growth teams.
+- The Website Correction is a human-reviewed managed service: one correction pass on the highest-leverage page of a founder-led Managed IT or cybersecurity company's live site.
 - This file describes public site context only. It does not include private user data, internal roadmaps, or support tickets.
 `;
 

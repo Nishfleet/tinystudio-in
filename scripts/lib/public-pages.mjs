@@ -16,6 +16,8 @@ export const PUBLIC_HTML_FILES = [
   "404.html",
   "support/index.html",
   "contact/index.html",
+  "website-correction/index.html",
+  "privacy/index.html",
   "privacy/index.html",
   "privacy-choices/index.html",
   "terms/index.html",
