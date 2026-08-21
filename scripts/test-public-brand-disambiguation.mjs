@@ -102,7 +102,7 @@ ok(
   "llms.txt identifies Tiny Studio as the independent product company at tinystudio.in"
 )
 ok(
-  llmsTxt.includes("not affiliated with any other app or studio that uses the name Tiny Studio"),
+  llmsTxt.includes("not affiliated with other apps or studios that use the name Tiny Studio"),
   "llms.txt states Tiny Studio is not affiliated with other apps or studios using the name"
 )
 const bundle = read("scripts/prepare-static-site-bundle.mjs")
@@ -111,7 +111,7 @@ ok(
   "the llms.txt generator template keeps the independent-company identity"
 )
 ok(
-  bundle.includes("not affiliated with any other app or studio that uses the name Tiny Studio"),
+  bundle.includes("not affiliated with other apps or studios that use the name Tiny Studio"),
   "the llms.txt generator template keeps the non-affiliation statement"
 )
 
