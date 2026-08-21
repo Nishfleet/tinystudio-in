@@ -7,9 +7,12 @@ This directory holds the repository's GitHub Actions workflows.
 **Decision.** CodeQL code scanning is deliberately NOT configured in this
 repository. The nonfunctional CodeQL analyze job was removed in PR #122
 (commit `3b31706`, "remove nonfunctional CodeQL analyze job — no GHAS
-entitlement on this plan"). The free, always-running dependency security scan
-in `codex-ci.yml` (`npm audit --audit-level=high`, inside the required
-`repo-checks` job) is the substitute security signal.
+entitlement on this plan"), re-added by accident on 2026-08-19 by merge
+`410f3e66` (resolve conflict with main → keep CodeQL job with actions:read
++ private-repo gate), and re-removed by the 2026-08-21 revert below. The
+free, always-running dependency security scan in `codex-ci.yml`
+(`npm audit --audit-level=high`, inside the required `repo-checks` job) is
+the substitute security signal.
 
 **Why CodeQL cannot run here.** This is a private personal-account repository
 without GitHub Advanced Security (GHAS). Code scanning (and SARIF upload) is
