@@ -52,7 +52,13 @@ ok(!html.includes("/website-correction/"), "compare hub does not mention /websit
 console.log("C. ranking language stays out of visible copy")
 const stripped = html.replace(/href="[^"]*"/g, "")
 ok(!/\bbest\b/i.test(stripped), "after stripping hrefs, remainder has no standalone best")
-ok(!stripped.includes("better than"), "after stripping hrefs, remainder has no better than")
+const disclaimer = "Tiny Studio is not claiming to be better than any named agency."
+ok(stripped.includes(disclaimer), "compare hub keeps the prescribed not-better-than disclaimer")
+const withoutPrescribedDisclaimer = stripped.split(disclaimer).join("")
+ok(
+  !withoutPrescribedDisclaimer.includes("better than"),
+  "after stripping hrefs, remainder has no better than outside the prescribed disclaimer"
+)
 
 console.log("D. npm test/ci wiring")
 const pkg = JSON.parse(read("package.json"))
