@@ -391,24 +391,37 @@ function acquireRecoveryCoordinator(path, staleAfterMs) {
 		} catch {
 			return null
 		}
-		const displaced = claimOwner(displacedPath)
-		if (processIsAlive(displaced.pid) === true) {
-			// We displaced a claim whose owner is alive: restore it so its
-			// holder keeps the coordinator, and back off. If a new claim
-			// appeared at path in the meantime the restore fails harmlessly
-			// and the displaced claim is orphaned - it never names us, so we
-			// never act on it, and its holder notices at its own re-verify.
-			try {
-				linkSync(displacedPath, path)
-				unlinkSync(displacedPath)
-			} catch {}
-			return null
-		}
+		// Unconditional cleanup: the displaced artifact is ours and must not
+		// survive this function under any path. The restore branch can fail
+		// its linkSync with EEXIST (a newer claim appeared at path) and the
+		// old code swallowed that in an empty catch, orphaning the displaced
+		// file; the rmSync/create branch can throw mid-way. The finally
+		// removes the displaced file no matter which branch ran or threw.
+		// rmSync(force) is a no-op if the file was already removed.
 		try {
-			rmSync(displacedPath, {force: true})
-			create()
-		} catch {
-			return null
+			const displaced = claimOwner(displacedPath)
+			if (processIsAlive(displaced.pid) === true) {
+				// We displaced a claim whose owner is alive: restore it so its
+				// holder keeps the coordinator, and back off. If a new claim
+				// appeared at path in the meantime the restore fails harmlessly
+				// and the displaced claim is orphaned - it never names us, so we
+				// never act on it, and its holder notices at its own re-verify.
+				try {
+					linkSync(displacedPath, path)
+					unlinkSync(displacedPath)
+				} catch {}
+				return null
+			}
+			try {
+				rmSync(displacedPath, {force: true})
+				create()
+			} catch {
+				return null
+			}
+		} finally {
+			try {
+				rmSync(displacedPath, {force: true})
+			} catch {}
 		}
 	}
 	// Verify the claim still names this process before entering the critical
@@ -473,9 +486,18 @@ export function acquireLock(path, {staleAfterMs = 5 * 60 * 1000} = {}) {
 			const owner = lockOwner(path)
 			if (processIsAlive(owner.pid) === true || lockAgeMs(path) < staleAfterMs) throw new Error(`service queue is locked: ${path}`)
 			const stalePath = `${path}.stale-${process.pid}-${token}`
-			renameSync(path, stalePath)
-			rmSync(stalePath, {recursive: true, force: true})
-			create()
+			try {
+				renameSync(path, stalePath)
+				rmSync(stalePath, {recursive: true, force: true})
+				create()
+			} finally {
+				// Unconditional cleanup: if renameSync succeeded but rmSync or
+				// create threw, the stale directory would be orphaned. rmSync
+				// (force) is a no-op if it was already removed.
+				try {
+					rmSync(stalePath, {recursive: true, force: true})
+				} catch {}
+			}
 		}
 		const owner = lockOwner(path)
 		if (owner.pid !== process.pid || owner.token !== token) throw new Error(`service queue is locked: ${path}`)
