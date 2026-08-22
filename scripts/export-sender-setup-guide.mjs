@@ -3,6 +3,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { agencyConfig } from "./lib/agency-config.mjs";
 import { localIsoDate } from "./date-utils.mjs";
 import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
+import { assertTrackedLockstepWrite } from "./lib/ops-lockstep.mjs";
 import { runRepoJson as runJson } from "./lib/runtime-roots.mjs";
 
 handleHelp(process.argv.slice(2), `Usage: node scripts/export-sender-setup-guide.mjs [--output=growth-brain/ops/sender-setup-guide.md] [--html=growth-brain/ops/sender-setup-guide.html]`);
@@ -270,7 +271,9 @@ const html = `<!doctype html>
 </html>
 `;
 
+assertTrackedLockstepWrite(outputPath, today);
 write(outputPath, markdown);
+assertTrackedLockstepWrite(htmlPath, today);
 write(htmlPath, html);
 
 console.log(JSON.stringify({

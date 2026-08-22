@@ -206,17 +206,12 @@ const rehearsal = runJson(["scripts/export-recording-rehearsal-check.mjs", `--li
 runJson(["scripts/export-prospect-outbox.mjs"]);
 runJson(["scripts/export-followup-cockpit.mjs"]);
 runJson(["scripts/export-sales-cockpit.mjs"]);
-// Refresh the tracked live-metrics surface from the daily flow when the
-// service root carries outbound pipeline state. The tracked default refuses a
-// state-less root (it cannot tell an unavailable pipeline from an empty one),
-// so fall back to the private runs/ report when the exporter declines.
-let metrics;
 try {
-  metrics = runJson(["scripts/export-growth-metrics.mjs"]);
+  runJson(["scripts/refresh-operator-artifacts.mjs"]);
 } catch {
-  metrics = runJson(["scripts/export-growth-metrics.mjs", "--output=runs/metrics-for-mission.md"]);
+  // lockstep refresh is best-effort from the daily mission; the mission still reads private metrics
 }
-runJson(["scripts/export-proof-library.mjs"]);
+const metrics = runJson(["scripts/export-growth-metrics.mjs", "--output=runs/metrics-for-mission.md"]);
 runJson(["scripts/export-managed-it-one-pager.mjs"]);
 const todayResult = runJson(["scripts/show-growth-command-center.mjs", `--limit=${Math.max(limit + 2, 7)}`]);
 

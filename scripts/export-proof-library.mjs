@@ -3,6 +3,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { localIsoDate } from "./date-utils.mjs";
 import { agencyConfig } from "./lib/agency-config.mjs";
 import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
+import { assertTrackedLockstepWrite } from "./lib/ops-lockstep.mjs";
 
 handleHelp(process.argv.slice(2), `Usage: node scripts/export-proof-library.mjs [--output=growth-brain/ops/proof-library.md]`);
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
@@ -67,6 +68,7 @@ This tracked file contains operating rules and approved product facts only. It n
 
 const outputDir = outputPath.split("/").slice(0, -1).join("/");
 if (outputDir) mkdirSync(outputDir, { recursive: true });
+assertTrackedLockstepWrite(outputPath, today);
 writeFileSync(outputPath, content);
 
 console.log(JSON.stringify({
