@@ -38,6 +38,7 @@ console.log("test-public-deploy-bundle: the publishable bundle is portfolio-only
 
 const sourceIndex = read("public/index.html")
 const sourceContact = read("public/contact/index.html")
+const sourceLlmsTxt = read("public/llms.txt")
 
 console.log("A. the snooze filter still has work to do on main (markers present in source)")
 const expectedSourceMarkers = [
@@ -46,6 +47,7 @@ const expectedSourceMarkers = [
   { label: "homepage managed-service section", html: sourceIndex, test: (h) => h.includes('id="managed-service"') },
   { label: "homepage JSON-LD Organization managed-service description", html: sourceIndex, test: (h) => h.includes("Tiny Studio also offers The Website Correction") && h.includes("fixed-scope founder pilot") },
   { label: "homepage JSON-LD WebSite managed-service description", html: sourceIndex, test: (h) => /Tiny Studio also offers The Website Correction, a human-reviewed managed service for founder-led Managed IT\/MSP\/cybersecurity companies with a live site\./.test(h) },
+  { label: "llms.txt description managed-service sentence", html: sourceLlmsTxt, test: (h) => h.includes("Tiny Studio also offers The Website Correction") && h.includes("fixed-scope founder pilot") },
   { label: "contact description clause", html: sourceContact, test: (h) => h.includes(", and the Website Correction managed service.") },
   { label: "contact page-lead clause", html: sourceContact, test: (h) => h.includes("human-reviewed managed") },
   { label: "contact plain-list item", html: sourceContact, test: (h) => h.includes("<li>The Website Correction managed service</li>") },
@@ -67,7 +69,7 @@ try {
   ok(false, `bundle preparation failed: ${error.message}`)
 }
 
-const bundleFiles = ["index.html", "contact/index.html"]
+const bundleFiles = ["index.html", "contact/index.html", "llms.txt"]
 for (const rel of bundleFiles) {
   const html = readFileSync(join(bundleDir, rel), "utf8")
   for (const marker of FORBIDDEN_MARKERS) {
@@ -129,6 +131,19 @@ ok(filteredContact.includes("Primary inbox"), "neutral support card remains")
 ok(filteredContact.includes("App-specific public pages"), "neutral apps card remains")
 ok(filteredContact.includes("mailto:support&#64;tinystudio.in"), "studio inbox mailto remains (entity-encoded, obfuscation-proof)")
 ok(!filteredContact.includes("<script>"), "the measurement-marker script is gone with the application section")
+
+console.log("F2. the filtered llms.txt is still a coherent portfolio-only file")
+const filteredLlmsTxt = readFileSync(join(bundleDir, "llms.txt"), "utf8")
+ok(filteredLlmsTxt.startsWith("# Tiny Studio"), "llms.txt keeps its title")
+ok(filteredLlmsTxt.includes("independent product company at tinystudio.in"), "llms.txt keeps the independent-company identity")
+ok(
+  filteredLlmsTxt.includes("It is not affiliated with other apps or studios that use the name Tiny Studio"),
+  "llms.txt keeps the verbatim non-affiliation sentence"
+)
+ok(
+  !filteredLlmsTxt.includes("The Website Correction") && !/managed\s+service/i.test(filteredLlmsTxt),
+  "llms.txt carries no snoozed buyer-path sentence"
+)
 
 console.log("G. npm test/ci wiring")
 const pkg = JSON.parse(read("package.json"))
