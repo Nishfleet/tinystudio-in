@@ -23,6 +23,16 @@ import {
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 const read = (p) => readFileSync(join(ROOT, p), "utf8")
 
+const orgDescriptionFromLdJson = (html) => {
+  const m = html.match(/<script\s+type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/i)
+  if (!m) return null
+  try {
+    const graph = JSON.parse(m[1])
+    const org = (graph["@graph"] || []).find((n) => n["@type"] === "Organization" && n["@id"] === "https://tinystudio.in/#organization")
+    return org && typeof org.description === "string" ? org.description : null
+  } catch { return null }
+}
+
 let failures = 0
 let checks = 0
 const ok = (cond, msg) => {
@@ -52,6 +62,7 @@ const expectedSourceMarkers = [
   { label: "contact info-card section", html: sourceContact, test: (h) => h.includes("Apply for The Website Correction") },
   { label: "contact application section", html: sourceContact, test: (h) => h.includes('id="website-correction-application"') },
   { label: "contact what-to-send sentence", html: sourceContact, test: (h) => h.includes("For The Website Correction, share your site URL") },
+  { label: "compare hub JSON-LD Organization managed-service description", html: read("public/compare/index.html"), test: (h) => h.includes("Tiny Studio also offers The Website Correction") },
 ]
 for (const marker of expectedSourceMarkers) {
   ok(marker.test(marker.html), `source still carries ${marker.label}`)
@@ -74,6 +85,13 @@ for (const rel of bundleFiles) {
     ok(!marker.test(html), `${rel} has no ${marker.label}`)
   }
 }
+
+console.log("B2. the bundled compare hub ships no managed-service Organization sentence after the strip")
+const bundledCompareOrgDescription = orgDescriptionFromLdJson(readFileSync(join(bundleDir, "compare/index.html"), "utf8"))
+ok(bundledCompareOrgDescription !== null, "bundled compare keeps a parseable Organization description")
+ok(bundledCompareOrgDescription !== null && bundledCompareOrgDescription.includes("Promptly") && bundledCompareOrgDescription.includes("Drishti") && bundledCompareOrgDescription.includes("0509"), "bundled compare Organization description keeps the app portfolio")
+ok(bundledCompareOrgDescription !== null && !bundledCompareOrgDescription.includes("Website Correction"), "bundled compare Organization description drops The Website Correction after the strip")
+ok(bundledCompareOrgDescription !== null && !/managed\s+service/i.test(bundledCompareOrgDescription), "bundled compare Organization description drops the managed-service sentence after the strip")
 
 console.log("C. the bundle keeps every neutral merged fix used as deploy proof")
 for (const proof of NEUTRAL_PROOFS) {
