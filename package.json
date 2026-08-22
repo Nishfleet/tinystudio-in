@@ -67,6 +67,7 @@
     "growth:cockpit": "node scripts/export-growth-cockpit.mjs",
     "growth:metrics": "node scripts/export-growth-metrics.mjs",
     "growth:proof": "node scripts/export-proof-library.mjs",
+    "ops:refresh": "node scripts/refresh-operator-artifacts.mjs",
     "growth:dashboard": "node scripts/export-internal-dashboard.mjs",
     "growth-brain:check": "node scripts/check-human-service-kit.mjs",
     "market:benchmark": "node scripts/export-market-benchmark.mjs",

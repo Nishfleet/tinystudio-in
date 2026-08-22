@@ -9,6 +9,7 @@ import { isValidLoomUrl } from "./lib/loom-url.mjs";
 import { loadValidatedServiceClients } from "./lib/validated-service-client.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 import { runRepoJson, serviceRoot } from "./lib/runtime-roots.mjs";
+import { assertTrackedLockstepWrite } from "./lib/ops-lockstep.mjs";
 
 handleHelp(process.argv.slice(2), `Usage: node scripts/export-growth-metrics.mjs [--output=growth-brain/ops/live-metrics.md] [--plain]`);
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
@@ -208,6 +209,7 @@ ${Object.entries(stageCounts).sort(([a], [b]) => a.localeCompare(b)).map(([stage
 
 const outputDir = outputPath.split("/").slice(0, -1).join("/");
 if (outputDir) mkdirSync(outputDir, { recursive: true });
+assertTrackedLockstepWrite(outputPath, today);
 writeFileSync(outputPath, markdown);
 
 const result = {
