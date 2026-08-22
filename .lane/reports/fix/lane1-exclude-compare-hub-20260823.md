@@ -2,6 +2,7 @@
 
 - Item: `e3eeb95230` — merged `/compare/` hub deadlocks the public release lane and would leak the snoozed Website Correction buyer path
 - Branch: `fix/lane1-exclude-compare-hub-20260823`
+- PR: https://github.com/nish3451/tinystudio-in/pull/259
 - Base: `origin/main` (`36ff5123943a2b67594225ef2999392dc7104972`)
 - Shape: **(a) exclude** `compare/` from every publishable/crawlable surface. Not shape (b) body-stripping.
 - Source page `public/compare/index.html` is untouched (byte-identical to main) for a future un-snooze.
