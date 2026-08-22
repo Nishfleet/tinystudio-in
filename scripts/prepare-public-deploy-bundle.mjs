@@ -30,7 +30,7 @@ import { fileURLToPath } from "node:url"
 import { dirname } from "node:path"
 import { spawnSync } from "node:child_process"
 
-export const SNOOZE_FILTER_VERSION = 1
+export const SNOOZE_FILTER_VERSION = 2
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 
@@ -52,6 +52,7 @@ const CONTACT_SEND_SENTENCE = /\s*For The Website Correction, share your site UR
 // buyer path does not leak through structured data.
 const JSONLD_ORG_MANAGED_SERVICE = / Tiny Studio also offers The Website Correction, a human-reviewed managed service for founder-led Managed IT\/MSP\/cybersecurity companies with a live site: one focused correction pass on the single highest-leverage page, available as a \$1,000 fixed-scope founder pilot for the first three clients\./
 // JSON-LD WebSite description: shorter managed-service sentence.
+// It is now also stripped from the twelve non-home pages' Organization descriptions.
 const JSONLD_SITE_MANAGED_SERVICE = / Tiny Studio also offers The Website Correction, a human-reviewed managed service for founder-led Managed IT\/MSP\/cybersecurity companies with a live site\./
 
 // Everything that must be ABSENT from a publishable bundle.
@@ -188,6 +189,22 @@ const REQUIRED_FILES = [
   "social/drishti-social.png",
 ]
 
+export const FILTERED_PAGES = [
+  "index.html",
+  "contact/index.html",
+  "compare/index.html",
+  "support/index.html",
+  "privacy/index.html",
+  "privacy-choices/index.html",
+  "terms/index.html",
+  "promptly/index.html",
+  "promptly/support/index.html",
+  "promptly/privacy/index.html",
+  "drishti/index.html",
+  "drishti/support/index.html",
+  "drishti/privacy/index.html",
+]
+
 const splitLines = (html) => html.split("\n")
 
 // Remove the balanced <block> element whose opening tag sits on startIndex.
@@ -316,6 +333,13 @@ const buildOps = () => [
   },
   { file: "contact/index.html", kind: "section-block", marker: CONTACT_APPLICATION_SECTION_MARKER, tag: "section" },
   { file: "contact/index.html", kind: "regex", pattern: CONTACT_SEND_SENTENCE, replace: "" },
+  { file: "contact/index.html", kind: "regex", pattern: JSONLD_SITE_MANAGED_SERVICE, replace: "" },
+  ...FILTERED_PAGES.filter((rel) => rel !== "index.html" && rel !== "contact/index.html").map((rel) => ({
+    file: rel,
+    kind: "regex",
+    pattern: JSONLD_SITE_MANAGED_SERVICE,
+    replace: "",
+  })),
 ]
 
 const filterFile = (file, sourceHtml) => {
@@ -376,10 +400,10 @@ export const preparePublicDeployBundle = async ({ sourceDir, outputDir }) => {
   await fs.mkdir(output, { recursive: true })
   await fs.cp(source, output, { recursive: true })
 
-  const filtered = filterFile("index.html", await fs.readFile(join(source, "index.html"), "utf8"))
-  await fs.writeFile(join(output, "index.html"), filtered)
-  const contact = filterFile("contact/index.html", await fs.readFile(join(source, "contact/index.html"), "utf8"))
-  await fs.writeFile(join(output, "contact/index.html"), contact)
+  for (const rel of FILTERED_PAGES) {
+    const filtered = filterFile(rel, await fs.readFile(join(source, rel), "utf8"))
+    await fs.writeFile(join(output, rel), filtered)
+  }
 
   const forbiddenFailures = assertForbiddenAbsent(output)
   if (forbiddenFailures.length > 0) {
