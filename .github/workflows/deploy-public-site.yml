@@ -9,7 +9,7 @@ name: Deploy public site
 # fixes (H2-after-H1 on /promptly/support/, JSON-LD on /contact/, real 404s,
 # portfolio-only homepage).
 #
-# The lane is fail-closed and reversible:
+# The lane is fail-closed, provable and reversible:
 #   - Missing required secrets FAIL the run loudly. A skipped publish must
 #     never produce a green deploy status: green means "deployed and
 #     verified", nothing else. The old "dormant" green step hid the missing
@@ -17,7 +17,13 @@ name: Deploy public site
 #   - Before upload the lane captures the current production deployment
 #     identity as the rollback target and refuses to deploy without one
 #     (scripts/publish-public-site.mjs).
-#   - After upload the lane runs the live acceptance; on failure it restores
+#   - After upload the lane PROVES the upload became production (canonical
+#     deployment id moved, source commit is this bundle's). The acceptance
+#     below only asserts already-merged fixes, so it passes against the OLD
+#     site: without this proof an upload that never went live still reported
+#     "done". Promotion failures do not roll back - production never moved,
+#     or moved to a deployment that is not ours.
+#   - Then the lane runs the live acceptance; on failure it restores
 #     the exact previous Pages deployment via the Cloudflare rollback API,
 #     re-verifies the restored identity, re-runs acceptance, and fails
 #     loudly if the rollback itself fails.
@@ -25,29 +31,33 @@ name: Deploy public site
 # Required secrets (fail-closed when missing - a skipped publish must never
 # produce a green deploy status):
 #   CLOUDFLARE_API_TOKEN  - Cloudflare API token with Cloudflare Pages:Edit
-#                           on the tinystudio.in account
+#                           on the tinystudio.in account. PROVISIONED
+#                           2026-08-20 under the secret name CLOUDFLARE; the
+#                           job env below accepts either name.
 #   CLOUDFLARE_ACCOUNT_ID - f670a698e17bf160c8e4679823e68916
 # The fleet Workers token (fleet-console/cf.env) does NOT have Pages:Edit;
-# provisioning a Pages-scoped token is a one-time dashboard step.
+# provisioning a Pages-scoped token was a one-time dashboard step.
 #
 # Missing wiring FAILS the run loudly instead of skipping the publish under
 # a green "dormant" status: green means "deployed and verified", nothing
-# else. Until both secrets exist the lane fails every main merge loudly with
-# the provisioning steps printed; the nightly live-site-check.yml is the
-# staleness alarm while the site is stale.
+# else. The nightly live-site-check.yml is the independent staleness alarm.
 #
-# The daily schedule is the self-heal net: once the Pages token is
-# provisioned, the lane redeploys on its own within a day instead of waiting
-# for the next main push (a token added with no pending merge would otherwise
-# leave the site stale until the next push). While the token is missing the
-# scheduled run fails loudly like every push run - red until provisioned.
+# History: the lane was created dormant, then failed on every run from
+# creation until 2026-08-20 - CF_API_BASE was /api/v4 (403 on every call,
+# #208), wrangler 4.123 refuses Node 20 (#209) and acceptance section J was
+# dead code (#211). Production served the 2026-06-20 bundle throughout. The
+# first fully green publish was 2026-08-20.
+#
+# The daily schedule is the self-heal net: the lane redeploys on its own
+# within a day instead of waiting for the next main push, so a repair with no
+# pending merge still reaches production.
 
 on:
   push:
     branches:
       - main
   schedule:
-    # Daily: pick the stale site back up within a day of the token landing.
+    # Daily: catch a stale or reverted production deployment within a day.
     - cron: "13 3 * * *"
   workflow_dispatch:
 
