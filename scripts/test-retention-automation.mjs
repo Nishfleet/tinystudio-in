@@ -225,6 +225,28 @@ try {
 	neq(result.status, 0)
 	assert(JSON.parse(result.stdout).failures.some(failure => failure.includes("retired service concept")))
 
+	for (const phrase of [
+		"Before inspecting any private state",
+		"fetch origin/main",
+		"named workspace onto origin/main",
+		"re-run the freshness proof",
+		"still behind or diverged",
+		"Do not inspect service:queue or service:evidence"
+	]) {
+		assert(RETENTION_AUTOMATION_PROMPT.includes(phrase), `replacement prompt must contain: ${phrase}`)
+	}
+
+	writeAutomation("Run the TinyStudio retention automation check. Inspect the service:queue and service:evidence records for active clients. Summarize client-delay pauses, 14-day implementation tracking due or overdue, implementation evidence gaps, usefulness and recurring-need signals, proof/claim blockers, and every item awaiting human renewal or continuation review. Automation may prepare research, drafts, QA, packages, and routing only. Do not send client messages. Do not approve claims automatically. Do not accept delivery. Do not renew.")
+	result = run()
+	neq(result.status, 0)
+	out = JSON.parse(result.stdout)
+	assert(out.failures.includes("Automation prompt missing: Before inspecting any private state"), "prompt without private-state-first ordering must fail closed")
+	assert(out.failures.includes("Automation prompt missing: fetch origin/main"), "prompt without origin/main fetch must fail closed")
+	assert(out.failures.includes("Automation prompt missing: named workspace onto origin/main"), "prompt without named-workspace sync must fail closed")
+	assert(out.failures.includes("Automation prompt missing: re-run the freshness proof"), "prompt without re-run freshness proof must fail closed")
+	assert(out.failures.includes("Automation prompt missing: still behind or diverged"), "prompt without behind-or-diverged refuse must fail closed")
+	assert(out.failures.includes("Automation prompt missing: Do not inspect service:queue or service:evidence"), "prompt without refuse-service-inspection must fail closed")
+
 	writeAutomation(RETENTION_AUTOMATION_PROMPT, "/tmp/wrong-tinystudio-workspace")
 	result = run()
 	neq(result.status, 0)
