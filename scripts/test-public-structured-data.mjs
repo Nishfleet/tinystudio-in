@@ -67,6 +67,8 @@ const PAGES = [
 const ORG_ID = "https://tinystudio.in/#organization"
 const EXPECTED_ORG_DESCRIPTION =
   "Tiny Studio is the independent product company at tinystudio.in behind Promptly, Drishti, and 0509. Tiny Studio also offers The Website Correction, a human-reviewed managed service for founder-led Managed IT/MSP/cybersecurity companies with a live site. It is not affiliated with other apps or studios that use the name Tiny Studio."
+const SUPPORT_ORG_DESCRIPTION =
+  "Tiny Studio is the independent product company at tinystudio.in behind Promptly, Drishti, and 0509. It is not affiliated with other apps or studios that use the name Tiny Studio."
 const ORG_NAME = "Tiny Studio"
 
 const titleOf = (html) => {
@@ -167,7 +169,6 @@ const NON_HOME_ORG_PAGES = [
   "public/promptly/index.html",
   "public/promptly/privacy/index.html",
   "public/promptly/support/index.html",
-  "public/support/index.html",
   "public/terms/index.html",
 ]
 for (const file of NON_HOME_ORG_PAGES) {
@@ -183,6 +184,23 @@ for (const file of NON_HOME_ORG_PAGES) {
   ok(
     desc === EXPECTED_ORG_DESCRIPTION,
     `${file} Organization description names the app portfolio and The Website Correction identically to the studio-wide entity`
+  )
+}
+
+console.log("B3. the support page carries its own Organization description without the snoozed managed-service sentence")
+{
+  const blocks = jsonLdBlocksOf(read("public/support/index.html"))
+  let desc = null
+  if (blocks.length === 1) {
+    try {
+      const graph = JSON.parse(blocks[0])
+      const org = (graph["@graph"] || []).find((n) => n["@type"] === "Organization" && n["@id"] === ORG_ID)
+      if (org && typeof org.description === "string") desc = org.description
+    } catch { desc = null }
+  }
+  ok(
+    desc === SUPPORT_ORG_DESCRIPTION,
+    "support page Organization description matches the support-specific description with no The Website Correction sentence"
   )
 }
 

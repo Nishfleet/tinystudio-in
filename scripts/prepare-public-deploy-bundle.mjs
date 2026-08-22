@@ -31,7 +31,7 @@ import { fileURLToPath } from "node:url"
 import { dirname } from "node:path"
 import { spawnSync } from "node:child_process"
 
-export const SNOOZE_FILTER_VERSION = 3
+export const SNOOZE_FILTER_VERSION = 4
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 
@@ -334,7 +334,7 @@ const buildOps = () => [
   { file: "contact/index.html", kind: "section-block", marker: CONTACT_APPLICATION_SECTION_MARKER, tag: "section" },
   { file: "contact/index.html", kind: "regex", pattern: CONTACT_SEND_SENTENCE, replace: "" },
   { file: "contact/index.html", kind: "regex", pattern: JSONLD_SITE_MANAGED_SERVICE, replace: "" },
-  ...FILTERED_PAGES.filter((rel) => rel !== "index.html" && rel !== "contact/index.html").map((rel) => ({
+  ...FILTERED_PAGES.filter((rel) => rel !== "index.html" && rel !== "contact/index.html" && rel !== "support/index.html").map((rel) => ({
     file: rel,
     kind: "regex",
     pattern: JSONLD_SITE_MANAGED_SERVICE,
