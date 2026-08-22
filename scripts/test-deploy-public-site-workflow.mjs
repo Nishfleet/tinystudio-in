@@ -14,6 +14,10 @@
 //   3. Every deploy/verify step is gated on BOTH secrets being present.
 //   4. The deploy path actually runs the live acceptance script
 //      (check-public-live-deploy.mjs) so green requires verified live state.
+//   5. The publish script proves the upload became production BEFORE that
+//      acceptance runs - the acceptance asserts already-merged fixes and so
+//      passes against a stale site, which is how production stayed on the
+//      2026-06-20 bundle under a lane that reported "done".
 //
 // RED on the pre-change workflow (dormant step present, no exit-1 step),
 // GREEN on the changed workflow.
@@ -113,8 +117,21 @@ ok(deploySteps.every((s) => (s.if || "").includes(GATE)), "every deploy-pipeline
 const publish = steps.find((s) => /Publish to Cloudflare Pages/.test(s.name || ""))
 ok(!!publish, "publish-and-verify step exists")
 ok(!!publish && /publish-public-site\.mjs --deploy/.test(publish.run), "deploy runs publish-public-site.mjs --deploy")
-ok(/check-public-live-deploy\.mjs/.test(readFileSync(join(ROOT, "scripts", "publish-public-site.mjs"), "utf8")), "publish script runs check-public-live-deploy.mjs after upload")
-ok(/verifyLive/.test(readFileSync(join(ROOT, "scripts", "publish-public-site.mjs"), "utf8")), "publish script verifies the live site after deploy (verifyLive)")
+const publishScript = readFileSync(join(ROOT, "scripts", "publish-public-site.mjs"), "utf8")
+ok(/check-public-live-deploy\.mjs/.test(publishScript), "publish script runs check-public-live-deploy.mjs after upload")
+ok(/verifyLive/.test(publishScript), "publish script verifies the live site after deploy (verifyLive)")
+
+// 5. Green also requires PROOF the upload became production. The acceptance in
+// (4) probes the live site for already-merged fixes, so it passes against a
+// stale site: without this proof an upload that never went live still reports
+// "done" (production sat on the 2026-06-20 bundle exactly this way).
+ok(/verifyProductionPromotion/.test(publishScript), "publish script proves the upload became the production deployment")
+const pipeline = publishScript.slice(publishScript.indexOf("export const releasePipeline"))
+const promotionAt = pipeline.indexOf("verifyProductionPromotion")
+const uploadAt = pipeline.indexOf("deployWithWrangler")
+const acceptanceAt = pipeline.indexOf("verifyLive")
+ok(promotionAt > -1 && uploadAt > -1 && acceptanceAt > -1 && uploadAt < promotionAt && promotionAt < acceptanceAt,
+  "the release pipeline proves promotion after the upload and before the acceptance")
 
 console.log(`\n${checks} checks, ${failures} failures`)
 process.exit(failures === 0 ? 0 : 1)
