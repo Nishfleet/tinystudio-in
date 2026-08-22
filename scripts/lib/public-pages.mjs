@@ -32,7 +32,7 @@ export const pageUrlFor = (relativeFile) =>
     ? "https://tinystudio.in/"
     : `https://tinystudio.in/${relativeFile.split("/").slice(0, -1).join("/")}/`
 
-// The 11 canonical public URLs (every page except the 404 catch-all).
+// The 12 canonical public URLs (every page except the 404 catch-all).
 export const PUBLIC_PAGE_URLS = PUBLIC_HTML_FILES.filter(
   (relativeFile) => relativeFile !== "404.html"
 ).map(pageUrlFor)
