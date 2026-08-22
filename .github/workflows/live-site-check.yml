@@ -9,10 +9,13 @@ name: Live Site Check
 # part of `npm run ci` - that blocking chain must stay green on repo state
 # alone.
 #
-# This job is expected to FAIL while the deployment is stale (currently the
-# 2026-06-20 bundle, which still serves pre-2026-08-07 public fixes); the red
-# run is the loud signal to re-deploy from origin/main, not a reason to
-# disable the workflow.
+# This job is the staleness alarm and RED MEANS ACT. Production was stale on
+# the 2026-06-20 bundle until the release lane was repaired on 2026-08-20
+# (#208 CF_API_BASE, #209 Node 22, #211 dead acceptance section) and
+# redeployed origin/main; the first green run after the repair was
+# 2026-08-20. A red run now means the live site regressed or went stale
+# again - re-run deploy-public-site.yml and read its output. It is never a
+# reason to disable or "expect" the failure.
 
 on:
   schedule:
