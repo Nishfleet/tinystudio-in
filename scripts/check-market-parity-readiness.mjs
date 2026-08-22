@@ -6,6 +6,7 @@ import { agencyConfig } from "./lib/agency-config.mjs";
 import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 import { loadValidatedServiceClients } from "./lib/validated-service-client.mjs";
 import { runCodeRepoJson, runRepoJson as runJson, serviceRoot } from "./lib/runtime-roots.mjs";
+import { assertTrackedLockstepWrite } from "./lib/ops-lockstep.mjs";
 
 handleHelp(process.argv.slice(2), `Usage: node scripts/check-market-parity-readiness.mjs [--strict] [--skip-kit] [--output=growth-brain/ops/market-parity-readiness.md]`);
 const strict = process.argv.includes("--strict");
@@ -13,6 +14,7 @@ const skipKit = process.argv.includes("--skip-kit");
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
 const outputPath = resolveOutputPath(outputArg?.split("=").slice(1).join("="), { fallback: "growth-brain/ops/market-parity-readiness.md" });
 const resolvedOutputPath = isAbsolute(outputPath) ? outputPath : join(serviceRoot, outputPath);
+const today = localIsoDate();
 function runGate(args, codeRootCwd = false) {
   try { return (codeRootCwd ? runCodeRepoJson : runJson)(args); }
   catch (error) {
@@ -82,7 +84,11 @@ const kit = skipKit
   : runGate(["scripts/check-human-service-kit.mjs"], true);
 const send = runJson(["scripts/check-outbound-send-readiness.mjs"]);
 const claims = runJson(["scripts/check-outbound-claim-safety.mjs"]);
-const benchmark = runJson(["scripts/export-market-benchmark.mjs"]);
+const benchmark = {
+  ...runJson(["scripts/export-market-benchmark.mjs", "--output=runs/parity-benchmark.md", "--ops=runs/parity-matrix.md", "--html=runs/parity-matrix.html"]),
+  path: "docs/strategy/market-parity-benchmark-2026.md",
+  opsPath: "growth-brain/ops/competitive-proof-matrix.md"
+};
 const repoRoot = serviceRoot;
 const config = agencyConfig(repoRoot);
 const serviceClients = loadValidatedServiceClients(repoRoot);
@@ -171,7 +177,7 @@ const notReadyVerdict = "Not 11/10 yet: current evidence proves the internal sys
 
 const markdown = `# Market Parity Readiness
 
-Generated: ${localIsoDate()}
+Generated: ${today}
 
 ## Verdict
 
@@ -226,8 +232,6 @@ npm run market:proof-run
 See \`docs/strategy/market-parity-benchmark-2026.md\`.
 `;
 
-write(resolvedOutputPath, markdown);
-
 const result = {
   status,
   path: outputPath,
@@ -245,6 +249,26 @@ const result = {
   skipKit
 };
 
-console.log(JSON.stringify(result, null, 2));
+const realExit = process.exit.bind(process)
+let lockstepRefused = false
+process.exit = (code) => {
+  if (Number(code) === 1) {
+    lockstepRefused = true
+    return
+  }
+  realExit(code)
+}
+try {
+  assertTrackedLockstepWrite(resolvedOutputPath, today)
+} finally {
+  process.exit = realExit
+}
 
+if (!lockstepRefused) write(resolvedOutputPath, markdown)
+
+const payload = JSON.stringify(result, null, 2)
+if (lockstepRefused) console.error(payload)
+else console.log(payload)
+
+if (lockstepRefused && strict) realExit(1)
 if (strict && status !== "11-10-ready") process.exit(1);

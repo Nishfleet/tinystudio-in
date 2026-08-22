@@ -10,6 +10,7 @@ import { routedContactPlan } from "./lib/contact-route.mjs";
 import { canonicalProspectAsk } from "./lib/canonical-service-copy.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 import { runRepoJson, serviceRoot } from "./lib/runtime-roots.mjs";
+import { assertTrackedLockstepWrite } from "./lib/ops-lockstep.mjs";
 
 handleHelp(process.argv.slice(2), `Usage: node scripts/export-market-proof-run.mjs [--output=growth-brain/ops/11-10-proof-run.md] [--loom-links=prospects/loom-links.txt] [--limit=5] [--skip-kit]`);
 const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
@@ -370,6 +371,7 @@ Source: the direction dossier gates this proof run on 5 approved Looms (recorded
 
 const outputDir = resolvedOutputPath.split("/").slice(0, -1).join("/");
 if (outputDir) mkdirSync(outputDir, { recursive: true });
+assertTrackedLockstepWrite(resolvedOutputPath, today);
 writeFileSync(resolvedOutputPath, markdown);
 
 const loomLinksDir = resolvedLoomLinksPath.split("/").slice(0, -1).join("/");

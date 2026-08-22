@@ -3,6 +3,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { localIsoDate } from "./date-utils.mjs";
 import { NO_GUARANTEE_CLIENT_SENTENCE } from "./lib/service-contract.mjs";
 import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
+import { assertTrackedLockstepWrite } from "./lib/ops-lockstep.mjs";
 import { runRepoJson as runJson } from "./lib/runtime-roots.mjs";
 
 handleHelp(process.argv.slice(2), `Usage: node scripts/export-market-benchmark.mjs [--output=docs/strategy/market-parity-benchmark-2026.md] [--ops=growth-brain/ops/competitive-proof-matrix.md] [--html=growth-brain/ops/competitive-proof-matrix.html]`);
@@ -415,8 +416,11 @@ const html = `<!doctype html>
 </html>
 `;
 
+assertTrackedLockstepWrite(outputPath, today);
 write(outputPath, markdown);
+assertTrackedLockstepWrite(opsPath, today);
 write(opsPath, markdown);
+assertTrackedLockstepWrite(htmlPath, today);
 write(htmlPath, html);
 
 const status = proofBars.some((item) => item.status === "fail")
