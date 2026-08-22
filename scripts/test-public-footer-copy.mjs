@@ -22,6 +22,7 @@ const ok = (cond, msg) => {
 const FOOTER_PAGES = [
   "public/404.html",
   "public/contact/index.html",
+  "public/compare/index.html",
   "public/drishti/index.html",
   "public/drishti/privacy/index.html",
   "public/drishti/support/index.html",

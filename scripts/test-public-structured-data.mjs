@@ -56,6 +56,11 @@ const PAGES = [
     file: "public/promptly/support/index.html",
     pageType: "ContactPage",
     label: "Promptly support page"
+  },
+  {
+    file: "public/compare/index.html",
+    pageType: "WebPage",
+    label: "compare hub page"
   }
 ]
 

@@ -21,6 +21,7 @@ const PUBLIC_PAGES = [
   "public/index.html",
   "public/404.html",
   "public/contact/index.html",
+  "public/compare/index.html",
   "public/promptly/index.html",
   "public/promptly/support/index.html",
   "public/promptly/privacy/index.html",
