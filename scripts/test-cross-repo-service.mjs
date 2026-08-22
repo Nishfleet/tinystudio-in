@@ -17,13 +17,16 @@ function fail(message) {
 }
 
 function usage() {
-	return "Usage: node scripts/test-cross-repo-service.mjs --public-repo /absolute/path"
+	return "Usage: node scripts/test-cross-repo-service.mjs [--public-repo /absolute/path]"
 }
 
 function parseArgs(argv) {
-	if (argv.length !== 2 || argv[0] !== "--public-repo" || !argv[1]) fail(usage())
-	if (!isAbsolute(argv[1])) fail(`--public-repo must be an absolute path (received ${argv[1]}).`)
-	return resolve(argv[1])
+	if (argv.length === 0) return {mode: "hermetic"}
+	if (argv.length === 2 && argv[0] === "--public-repo" && argv[1]) {
+		if (!isAbsolute(argv[1])) fail(`--public-repo must be an absolute path (received ${argv[1]}).`)
+		return {mode: "public-repo", publicRoot: resolve(argv[1])}
+	}
+	fail(usage())
 }
 
 function findRepoRoot(start) {
@@ -98,6 +101,48 @@ function compareContracts(opsRoot, publicRoot) {
 	}
 }
 
+function lockOpsContracts(opsRoot) {
+	for (const relativePath of CONTRACT_FILES) {
+		const opsPath = join(opsRoot, relativePath)
+		requireRegularFile(opsPath, "Ops contract file")
+		const opsBytes = readFileSync(opsPath)
+		const opsDigest = sha256(opsBytes)
+
+		const expectedDigest = EXPECTED_SCHEMA_DIGESTS[relativePath]
+		if (expectedDigest && opsDigest !== expectedDigest) {
+			fail(`Unexpected ${relativePath} sha256: ${opsDigest}; expected frozen digest ${expectedDigest}.`)
+		}
+
+		if (EXPECTED_SCHEMA_IDS[relativePath]) {
+			const schema = readJson(opsPath, "Ops schema")
+			if (schema.$id !== EXPECTED_SCHEMA_IDS[relativePath]) {
+				fail(`Unexpected $id in ${relativePath}: ${String(schema.$id)}; expected ${EXPECTED_SCHEMA_IDS[relativePath]}.`)
+			}
+		}
+
+		const expectedFixtureDigest = FIXTURE_SCHEMA_DIGESTS[relativePath]
+		if (expectedFixtureDigest) {
+			const fixture = readJson(opsPath, "Ops fixture")
+			if (fixture.schemaDigest !== expectedFixtureDigest) {
+				fail(`Fixture ${relativePath} carries schemaDigest ${String(fixture.schemaDigest)}; expected ${expectedFixtureDigest}.`)
+			}
+		}
+
+		console.log(`Contract lock: ${relativePath} (sha256 ${opsDigest})`)
+	}
+}
+
+function assertCiInvokesHermeticCrossRepoTest(opsRoot) {
+	const packageJson = JSON.parse(readFileSync(join(opsRoot, "package.json"), "utf8"))
+	const ciCommands = String(packageJson.scripts?.ci || "").split("&&").map(s => s.trim())
+	if (!ciCommands.includes("node scripts/test-cross-repo-service.mjs")) {
+		fail("scripts.ci does not invoke node scripts/test-cross-repo-service.mjs as a fail-closed && command")
+	}
+	if (String(packageJson.scripts?.test || "").includes("test-cross-repo-service.mjs")) {
+		fail("scripts.test must not invoke test-cross-repo-service.mjs (check-human-service-kit forbids it)")
+	}
+}
+
 function runScript(repoRoot, script, env, label) {
 	const scriptPath = join(repoRoot, script)
 	requireRegularFile(scriptPath, `${label} script`)
@@ -111,10 +156,22 @@ function runScript(repoRoot, script, env, label) {
 }
 
 function main() {
-	const publicRoot = parseArgs(process.argv.slice(2))
+	const args = parseArgs(process.argv.slice(2))
 	const scriptDirectory = realpathSync(dirname(fileURLToPath(import.meta.url)))
 	const opsRoot = findRepoRoot(scriptDirectory)
 	if (!opsRoot) fail("Could not locate the autonomous-service ops repository root from this script.")
+
+	if (args.mode === "hermetic") {
+		lockOpsContracts(opsRoot)
+		assertCiInvokesHermeticCrossRepoTest(opsRoot)
+		const fixturePath = join(opsRoot, "contracts/fixtures/sprint-application.v1.json")
+		requireRegularFile(fixturePath, "Hermetic service fixture")
+		runScript(opsRoot, "scripts/test-service-engine.mjs", {SERVICE_FIXTURE_INPUT: fixturePath}, "Ops service-engine test")
+		console.log("Hermetic cross-repo service contract test passed.")
+		return
+	}
+
+	const publicRoot = args.publicRoot
 	if (!existsSync(publicRoot)) fail(`Public repository does not exist: ${publicRoot}`)
 	const publicRealRoot = realpathSync(publicRoot)
 	compareContracts(opsRoot, publicRealRoot)
