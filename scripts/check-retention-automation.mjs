@@ -119,7 +119,13 @@ for (const missing of missingPhrases(prompt, [
   "Do not send client messages",
   "Do not approve claims automatically",
   "Do not accept delivery",
-  "Do not renew"
+  "Do not renew",
+  "Before inspecting any private state",
+  "fetch origin/main",
+  "named workspace onto origin/main",
+  "re-run the freshness proof",
+  "still behind or diverged",
+  "Do not inspect service:queue or service:evidence"
 ])) {
   failures.push(`Automation prompt missing: ${missing}`);
 }
