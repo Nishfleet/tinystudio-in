@@ -14,7 +14,16 @@
 //      identity (canonical deployment id/url/source commit) as the rollback
 //      target and REFUSES to deploy when no safe rollback target can be
 //      proven.
-//   3. After upload the lane runs the live acceptance
+//   3. After upload the lane PROVES the uploaded deployment actually became
+//      production (the canonical deployment id changed away from the
+//      rollback target, and its source commit is the bundle's). Without this
+//      proof the acceptance below is meaningless: it probes tinystudio.in
+//      against a fixed list of ALREADY-merged fixes, so an upload that never
+//      goes live (preview branch, wrong project, no-op upload, custom domain
+//      pointing elsewhere) still passes it and the lane prints "done" over a
+//      stale site. That is exactly how production sat on the 2026-06-20
+//      bundle for two months.
+//   4. After promotion is proven the lane runs the live acceptance
 //      (scripts/check-public-live-deploy.mjs). On failure it restores the
 //      exact previous production deployment via the supported Cloudflare
 //      Pages rollback API, re-verifies the restored identity, re-runs the
@@ -50,13 +59,21 @@ export const LIVE_BASE = "https://tinystudio.in"
 // literal string so a mock can never hide this again.
 export const CF_API_BASE = "https://api.cloudflare.com/client/v4"
 
+// Cloudflare promotes a direct-upload deployment to production as part of the
+// upload, but the project's canonical_deployment field is read-after-write on
+// their API. Poll a bounded number of times so a slow promotion is a wait, not
+// a false red; exhausting the budget means the upload genuinely did not go
+// live and the lane must say so.
+export const PROMOTION_ATTEMPTS = 6
+export const PROMOTION_DELAY_MS = 5000
+
 const PROVISION_MESSAGE = `
 The release lane cannot publish yet: it needs a Cloudflare API token with
 Cloudflare Pages:Edit on account ${PAGES_ACCOUNT_ID} (tinystudio.in is served
 by the Pages project ${PAGES_PROJECT} - see the apex CNAME in the zone).
 
 The fleet Workers token (fleet-console/cf.env) does NOT include Pages:Edit,
-which is why the site has been stale since 2026-06-20.
+which is why the site sat stale from 2026-06-20 to 2026-08-20.
 
 One-time provisioning (dashboard, ~2 minutes):
   1. https://dash.cloudflare.com/profile/api-tokens -> Create Token
@@ -69,6 +86,7 @@ One-time provisioning (dashboard, ~2 minutes):
 
 const defaultWranglerBin = () => join(ROOT, "node_modules", ".bin", "wrangler")
 const defaultAcceptanceCmd = () => [process.execPath, join(ROOT, "scripts", "check-public-live-deploy.mjs")]
+const defaultSleep = (ms) => new Promise((resolvePromise) => setTimeout(resolvePromise, ms))
 
 const defaultRunCommand = (command, args, env = {}) =>
   new Promise((resolvePromise, reject) => {
@@ -90,6 +108,7 @@ export const defaultDeps = () => ({
   runCommand: defaultRunCommand,
   wranglerBin: defaultWranglerBin(),
   acceptanceCmd: defaultAcceptanceCmd(),
+  sleep: defaultSleep,
 })
 
 export const requireDeployCredentials = () => {
@@ -160,6 +179,96 @@ export const identitiesMatch = (a, b) => {
   return true
 }
 
+export const readBundleManifest = (bundleDir) => JSON.parse(readFileSync(join(bundleDir, "deploy-manifest.json"), "utf8"))
+
+// The commit the bundle was built from, or null when the bundle could not
+// name one (`unknown`): in that case the lane cannot pin ownership of the
+// promoted deployment by commit, only that production changed.
+export const bundleSourceCommit = (bundleDir) => {
+  const manifest = readBundleManifest(bundleDir)
+  const commit = manifest.source_commit
+  return commit && commit !== "unknown" ? commit : null
+}
+
+// Cloudflare may echo a short sha; compare case-insensitively on the shorter
+// of the two so a truncated hash is a match, not a spurious release failure.
+export const sameSourceCommit = (expected, actual) => {
+  if (!expected || !actual) return false
+  const a = String(expected).toLowerCase()
+  const b = String(actual).toLowerCase()
+  const n = Math.min(a.length, b.length)
+  return n >= 7 && a.slice(0, n) === b.slice(0, n)
+}
+
+// PROVE the upload became production. This is the check whose absence let the
+// site sit on the 2026-06-20 bundle while the lane reported success: the live
+// acceptance only asserts previously merged fixes, so it passes against the
+// OLD site when an upload never goes live.
+//
+// Failure here is NOT a rollback case. If production never moved there is
+// nothing to restore (production already is the pre-release state), and if
+// production moved to a deployment that is not ours, rolling back would
+// clobber somebody else's release. Both are loud, hands-off failures.
+export const verifyProductionPromotion = async ({ previous, expectedCommit = null }, deps = {}, log = () => {}) => {
+  const {
+    sleep = defaultSleep,
+    promotionAttempts = PROMOTION_ATTEMPTS,
+    promotionDelayMs = PROMOTION_DELAY_MS,
+  } = deps
+  let current = null
+  let lastReadError = null
+  for (let attempt = 1; attempt <= promotionAttempts; attempt++) {
+    try {
+      current = await currentProductionIdentity(deps)
+      lastReadError = null
+    } catch (error) {
+      // A blip on the Cloudflare read must not fail a release that did go
+      // live; only an unreadable identity on the LAST attempt is fatal.
+      lastReadError = error
+      current = null
+      log(`[publish] could not read the production identity (attempt ${attempt}/${promotionAttempts}): ${error.message}`)
+    }
+    if (current && current.deploymentId !== previous.deploymentId) break
+    if (attempt < promotionAttempts) {
+      if (current) {
+        log(
+          `[publish] production is still ${previous.deploymentId} (attempt ${attempt}/${promotionAttempts}); waiting ${promotionDelayMs}ms for Cloudflare to promote the upload`
+        )
+      }
+      await sleep(promotionDelayMs)
+    }
+  }
+  if (lastReadError) {
+    throw new Error(
+      `UPLOAD NOT PROVEN LIVE: could not read the production deployment of Pages project ${PAGES_PROJECT} after the upload (${lastReadError.message}). The release cannot be shown to have gone live.`
+    )
+  }
+  if (!current) {
+    throw new Error(
+      `UPLOAD NOT PROVEN LIVE: Cloudflare reports no production deployment on Pages project ${PAGES_PROJECT} after the upload, so the release cannot be shown to have gone live.`
+    )
+  }
+  if (current.deploymentId === previous.deploymentId) {
+    throw new Error(
+      `UPLOAD DID NOT GO LIVE: production on Pages project ${PAGES_PROJECT} is still ${previous.deploymentId} (${previous.url}) after wrangler reported a successful upload. ` +
+        `The bundle went somewhere that is not production (preview branch, wrong project, or a custom domain served by another project), so ${LIVE_BASE} still serves the previous release. ` +
+        `The live acceptance is NOT proof here: it asserts already-merged fixes and passes against the stale site.`
+    )
+  }
+  if (expectedCommit && current.commitHash && !sameSourceCommit(expectedCommit, current.commitHash)) {
+    throw new Error(
+      `PRODUCTION IS NOT THIS RELEASE: production moved to ${current.deploymentId} (${current.url}) built from ${current.commitHash}, but this bundle was built from ${expectedCommit}. ` +
+        `Refusing to claim the release went live; not rolling back, because that deployment belongs to somebody else.`
+    )
+  }
+  if (expectedCommit && !current.commitHash) {
+    log(
+      `[publish] WARNING: production moved to ${current.deploymentId} but Cloudflare reports no source commit for it; promotion is proven by deployment id alone.`
+    )
+  }
+  return current
+}
+
 // Restore the exact previous production deployment via the supported
 // Cloudflare Pages rollback API (POST .../deployments/{id}/rollback).
 export const rollbackTo = async (identity, deps = {}) => {
@@ -190,8 +299,10 @@ export const deployWithWrangler = async (bundleDir, deps = {}) => {
     throw new Error("wrangler is not installed - run npm ci first")
   }
   requireDeployCredentials()
-  // Attach the source commit to the Pages deployment for dashboard provenance.
-  const manifest = JSON.parse(readFileSync(join(bundleDir, "deploy-manifest.json"), "utf8"))
+  // Attach the source commit to the Pages deployment for dashboard provenance
+  // AND so the lane can prove afterwards that the deployment now in
+  // production is this bundle (see verifyProductionPromotion).
+  const manifest = readBundleManifest(bundleDir)
   const args = ["pages", "deploy", bundleDir, "--project-name", PAGES_PROJECT, "--branch", "main"]
   if (manifest.source_commit && manifest.source_commit !== "unknown") {
     args.push(
@@ -230,15 +341,20 @@ export const verifyLive = async (deps = {}) => {
 }
 
 // The release pipeline: credentials -> capture rollback target -> upload ->
-// acceptance -> rollback + re-verify on failure. Throws on any failure; the
-// CLI turns that into a loud non-zero exit.
+// prove the upload became production -> acceptance -> rollback + re-verify on
+// acceptance failure. Throws on any failure; the CLI turns that into a loud
+// non-zero exit.
 export const releasePipeline = async ({ bundleDir, deps = {}, log = console.log, err = console.error }) => {
   requireDeployCredentials()
   log(`[publish] capturing current production deployment identity as rollback target (project ${PAGES_PROJECT})`)
   const previous = await captureProductionIdentity(deps)
   log(`[publish] rollback target: ${previous.deploymentId} url=${previous.url} source=${previous.commitHash || "unknown"}`)
+  const expectedCommit = bundleSourceCommit(bundleDir)
   log("[publish] uploading bundle")
   await deployWithWrangler(bundleDir, deps)
+  log("[publish] proving the upload became the production deployment")
+  const promoted = await verifyProductionPromotion({ previous, expectedCommit }, deps, log)
+  log(`[publish] promotion proven: production is now ${promoted.deploymentId} (${promoted.url}) source=${promoted.commitHash || "unknown"}`)
   log("[publish] running live acceptance against the neutral merged fixes")
   try {
     await verifyLive(deps)
