@@ -86,4 +86,10 @@ Tracked ops artifacts on this worktree were not regenerated or committed.
 
 ## PR
 
-(PR URL filled after `gh pr create`)
+https://github.com/nish3451/tinystudio-in/pull/251
+
+`gh pr view --json url,baseRefName,headRefName`:
+
+```
+{"baseRefName":"main","headRefName":"fix/lane1-ops-artifact-lockstep-20260822","url":"https://github.com/nish3451/tinystudio-in/pull/251"}
+```
