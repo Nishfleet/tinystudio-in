@@ -132,11 +132,14 @@ test-public-sitemap-lastmod: every sitemap lastmod matches the backing page's la
 sitemap lastmod freshness: 12 checked, 0 skipped, 0 failures
 ```
 
-7. PR exists and is open (filled after `gh pr create`):
+7. PR exists and is open:
 
 ```
 $ gh pr view --json state,headRefName
+{"headRefName":"fix/lane1-sitemap-homepage-lastmod-guard-20260822","state":"OPEN"}
 ```
+
+https://github.com/nish3451/tinystudio-in/pull/253
 
 8. Claims published atomically:
 
