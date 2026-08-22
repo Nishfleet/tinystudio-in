@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-import {existsSync, mkdirSync, cpSync, rmSync} from "node:fs"
+import {existsSync, mkdirSync, cpSync, rmSync, mkdtempSync} from "node:fs"
 import {execFileSync} from "node:child_process"
-import {mkdtempSync, tmpdir} from "node:os"
+import {tmpdir} from "node:os"
 import {dirname, join} from "node:path"
 import {handleHelp, refuseUnknownArgs} from "./lib/operator-cli.mjs"
 import {ACTIVE_OPERATOR_ARTIFACTS} from "./lib/service-contract.mjs"
