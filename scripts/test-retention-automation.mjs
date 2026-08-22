@@ -37,8 +37,8 @@ function writeAutomationSingular(prompt, workspace = repoDir) {
 	writeFileSync(automationPath, `id = "tinystudio-retention-checkups"\nkind = "cron"\nname = "TinyStudio retention checkups"\nprompt = "${prompt}"\nstatus = "ACTIVE"\nrrule = "FREQ=WEEKLY;BYDAY=FR;BYHOUR=9;BYMINUTE=0"\nworkspace = "${workspace}"\n`)
 }
 
-function run(github = "false", preflightRepo = repoDir) {
-	return spawnSync(process.execPath, [script], {cwd: fixtureRoot, env: {...process.env, CODEX_HOME: codexHome, GITHUB_ACTIONS: github, SERVICE_REPO_ROOT: serviceRoot, TINYSTUDIO_PREFLIGHT_REPO: preflightRepo}, encoding: "utf8"})
+function run(github = "false", preflightRepo = repoDir, extraArgs = []) {
+	return spawnSync(process.execPath, [script, ...extraArgs], {cwd: fixtureRoot, env: {...process.env, CODEX_HOME: codexHome, GITHUB_ACTIONS: github, SERVICE_REPO_ROOT: serviceRoot, TINYSTUDIO_PREFLIGHT_REPO: preflightRepo}, encoding: "utf8"})
 }
 
 try {
@@ -134,6 +134,16 @@ try {
 	result = run()
 	neq(result.status, 0)
 	deq(JSON.parse(result.stdout).failures, ["Automation file is missing"])
+
+	// Advisory mode keeps every finding visible but never fails the run, so
+	// machine-local private-state lag cannot permanently redden the shared
+	// regression suite. The default invocation above stays strict.
+	result = run("false", repoDir, ["--advisory"])
+	eq(result.status, 0)
+	out = JSON.parse(result.stdout)
+	eq(out.status, "warn")
+	deq(out.failures, ["Automation file is missing"])
+	assert(out.warnings.some(warning => warning.includes("Advisory mode")), "advisory mode must label the demoted findings")
 
 	// Aligned state passes: remote main is the ancestor of the local HEAD,
 	// every root exists, every active client is covered, and the automation

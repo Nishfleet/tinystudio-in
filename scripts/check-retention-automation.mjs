@@ -6,6 +6,15 @@ import {fileURLToPath} from "node:url";
 import {RETENTION_AUTOMATION_PROMPT} from "./lib/retention-automation.mjs";
 import {canonicalMainWorktree, normalizedPath, proveFreshness, runPreflight, scriptRepoRoot} from "./lib/retention-preflight.mjs";
 
+// --advisory keeps every finding visible but never fails the run. The shared
+// `npm run check` regression suite runs the gate in advisory mode so a
+// machine's real private state lagging behind (unrecorded decisions, missing
+// engine artifacts, a stale canonical workspace, a missing automation file)
+// cannot permanently redden the suite and starve the checks after it. The
+// strict fail-closed behavior stays the default for the Friday retention loop
+// (`npm run retention:automation-check`), which is the consumer the preflight
+// contract protects.
+const advisory = process.argv.includes("--advisory");
 const automationId = "tinystudio-retention-checkups";
 const codexHome = process.env.CODEX_HOME || join(homedir(), ".codex");
 const automationPath = join(codexHome, "automations", automationId, "automation.toml");
@@ -78,8 +87,13 @@ if (!existsSync(automationPath)) {
   // An aligned-but-empty canonical workspace must not green-pass without the
   // automation guard: the scheduled loop is required before the first client
   // becomes active, so a missing automation file is a failure even when no
-  // client records exist yet.
+  // client records exist yet. Advisory mode reports it without failing.
   failures.push("Automation file is missing");
+  if (advisory) {
+    warnings.push("Advisory mode: retention-gate findings are reported without failing the shared check run");
+    console.log(JSON.stringify(report("warn"), null, 2));
+    process.exit(0);
+  }
   console.log(JSON.stringify(report("fail"), null, 2));
   process.exit(1);
 }
@@ -114,8 +128,12 @@ for (const retiredPhrase of ["weekly client value loop", "retention checkups", "
   if (prompt.includes(retiredPhrase)) failures.push(`Automation prompt retains retired service concept: ${retiredPhrase}`);
 }
 
-const status = failures.length ? "fail" : warnings.length ? "warn" : "pass";
+if (advisory && failures.length) {
+  warnings.push("Advisory mode: retention-gate findings are reported without failing the shared check run");
+}
+
+const status = failures.length && !advisory ? "fail" : warnings.length ? "warn" : "pass";
 
 console.log(JSON.stringify(report(status), null, 2));
 
-if (failures.length) process.exit(1);
+if (failures.length && !advisory) process.exit(1);
