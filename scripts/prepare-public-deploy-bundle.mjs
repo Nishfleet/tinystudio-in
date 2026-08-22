@@ -1,11 +1,12 @@
 // Prepare the deploy bundle for the tinystudio.in Cloudflare Pages project
 // (tiny-studio-3f5).
 //
-// The bundle is a verbatim copy of public/ with ONE deliberate, documented
-// change: the managed-service buyer path (PRs #10/#11 content) is removed
+// The bundle is a verbatim copy of public/ with TWO deliberate, documented
+// changes: the managed-service buyer path (PRs #10/#11 content) is removed
 // because it remains snoozed-by-Nish (2026-08-08: "do not build, publish, or
-// deploy the managed-service buyer path without his explicit yes"). Every
-// other merged public fix must survive untouched.
+// deploy the managed-service buyer path without his explicit yes"), AND the
+// entire public/compare/ directory is excluded. Every other merged public
+// fix must survive untouched.
 //
 // The filter is fail-closed in both directions:
 //   - pre-filter: every snooze marker the filter knows must exist in the
@@ -30,7 +31,7 @@ import { fileURLToPath } from "node:url"
 import { dirname } from "node:path"
 import { spawnSync } from "node:child_process"
 
-export const SNOOZE_FILTER_VERSION = 2
+export const SNOOZE_FILTER_VERSION = 3
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 
@@ -192,7 +193,6 @@ const REQUIRED_FILES = [
 export const FILTERED_PAGES = [
   "index.html",
   "contact/index.html",
-  "compare/index.html",
   "support/index.html",
   "privacy/index.html",
   "privacy-choices/index.html",
@@ -400,6 +400,12 @@ export const preparePublicDeployBundle = async ({ sourceDir, outputDir }) => {
   await fs.mkdir(output, { recursive: true })
   await fs.cp(source, output, { recursive: true })
 
+  // Snoozed-by-Nish (2026-08-08): the /compare/ Website Correction buyer-path
+  // hub is excluded from every publishable bundle. It returns only when Nish
+  // lifts the snooze; see scripts/test-public-compare-page.mjs (source-side
+  // contract, kept green on main).
+  await fs.rm(join(output, "compare"), { recursive: true, force: true })
+
   for (const rel of FILTERED_PAGES) {
     const filtered = filterFile(rel, await fs.readFile(join(source, rel), "utf8"))
     await fs.writeFile(join(output, rel), filtered)
@@ -419,7 +425,7 @@ export const preparePublicDeployBundle = async ({ sourceDir, outputDir }) => {
     prepared_at: new Date().toISOString(),
     source_commit: sourceCommit(),
     file_count: (await fs.readdir(output, { recursive: true })).length,
-    note: "managed-service buyer path (PRs #10/#11) removed per snoozed-by-nish 2026-08-08",
+    note: "managed-service buyer path (PRs #10/#11) removed and /compare/ hub excluded per snoozed-by-nish 2026-08-08",
   }
   await fs.writeFile(join(output, "deploy-manifest.json"), `${JSON.stringify(manifest, null, 2)}\n`)
   return output

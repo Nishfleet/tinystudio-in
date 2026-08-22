@@ -283,6 +283,13 @@ try {
     ok(jumps === 0, `${path} has no heading-level jump (no H1 -> H3 skip)`)
   }
 
+  console.log("K. the snoozed /compare/ hub returns 404 on the live site (leak closed)")
+  {
+    const { status, body } = await get("/compare/")
+    ok(status === 404, `/compare/ returns 404 on the live site (got ${status})`)
+    ok(!body.includes("Website Correction"), "/compare/ response body carries no buyer-path content")
+  }
+
 } catch (error) {
   failures++
   console.error(`  FAIL live request error: ${error.message}`)
