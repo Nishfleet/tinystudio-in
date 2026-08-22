@@ -23,6 +23,7 @@ const ok = (cond, msg) => {
 // the managed-service section's H2 -> H3 outline.
 const AFFECTED_PAGES = [
   "public/contact/index.html",
+  "public/compare/index.html",
   "public/promptly/index.html",
   "public/promptly/privacy/index.html",
   "public/drishti/index.html",
@@ -246,7 +247,7 @@ if (!chromiumLauncher) {
   const origin = `http://127.0.0.1:${server.address().port}`
   const browser = await chromiumLauncher.launch({ headless: true })
   try {
-    const ROUTES = ["/", "/promptly/", "/drishti/", "/contact/", "/support/"]
+    const ROUTES = ["/", "/promptly/", "/drishti/", "/contact/", "/compare/", "/support/"]
     const WIDTHS = [280, 320, 360, 390]
     const DOCUMENT_OK = new Set()
     const HEADING_OK = new Set()
