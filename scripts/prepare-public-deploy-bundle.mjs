@@ -30,7 +30,7 @@ import { fileURLToPath } from "node:url"
 import { dirname } from "node:path"
 import { spawnSync } from "node:child_process"
 
-export const SNOOZE_FILTER_VERSION = 1
+export const SNOOZE_FILTER_VERSION = 2
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 
@@ -53,6 +53,12 @@ const CONTACT_SEND_SENTENCE = /\s*For The Website Correction, share your site UR
 const JSONLD_ORG_MANAGED_SERVICE = / Tiny Studio also offers The Website Correction, a human-reviewed managed service for founder-led Managed IT\/MSP\/cybersecurity companies with a live site: one focused correction pass on the single highest-leverage page, available as a \$1,000 fixed-scope founder pilot for the first three clients\./
 // JSON-LD WebSite description: shorter managed-service sentence.
 const JSONLD_SITE_MANAGED_SERVICE = / Tiny Studio also offers The Website Correction, a human-reviewed managed service for founder-led Managed IT\/MSP\/cybersecurity companies with a live site\./
+// llms.txt description paragraph: the same managed-service sentence the
+// homepage Organization JSON-LD carries. Stripped from the deploy bundle so
+// the snoozed buyer path does not leak through the AI-facing file either;
+// the bundled llms.txt keeps the portfolio-only description.
+const LLMS_TXT_MANAGED_SERVICE = / Tiny Studio also offers The Website Correction, a human-reviewed managed service for founder-led Managed IT\/MSP\/cybersecurity companies with a live site: one focused correction pass on the single highest-leverage page, available as a \$1,000 fixed-scope founder pilot for the first three clients\./
+export { LLMS_TXT_MANAGED_SERVICE }
 
 // Everything that must be ABSENT from a publishable bundle.
 export const FORBIDDEN_MARKERS = [
@@ -303,6 +309,9 @@ const buildOps = () => [
   // does not leak through structured data).
   { file: "index.html", kind: "regex", pattern: JSONLD_ORG_MANAGED_SERVICE, replace: "" },
   { file: "index.html", kind: "regex", pattern: JSONLD_SITE_MANAGED_SERVICE, replace: "" },
+  // llms.txt managed-service sentence (same snooze rationale as the JSON-LD
+  // descriptions above).
+  { file: "llms.txt", kind: "regex", pattern: LLMS_TXT_MANAGED_SERVICE, replace: "" },
   // public/contact/index.html
   { file: "contact/index.html", kind: "replace-all", from: CONTACT_DESCRIPTION_CLAUSE, to: "." },
   { file: "contact/index.html", kind: "regex", pattern: CONTACT_PAGE_LEAD, replace: "." },
@@ -380,6 +389,8 @@ export const preparePublicDeployBundle = async ({ sourceDir, outputDir }) => {
   await fs.writeFile(join(output, "index.html"), filtered)
   const contact = filterFile("contact/index.html", await fs.readFile(join(source, "contact/index.html"), "utf8"))
   await fs.writeFile(join(output, "contact/index.html"), contact)
+  const llmsTxt = filterFile("llms.txt", await fs.readFile(join(source, "llms.txt"), "utf8"))
+  await fs.writeFile(join(output, "llms.txt"), llmsTxt)
 
   const forbiddenFailures = assertForbiddenAbsent(output)
   if (forbiddenFailures.length > 0) {
