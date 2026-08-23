@@ -31,6 +31,8 @@
 //   2b. /contact/ renders H2 after H1 (the heading-hierarchy repair, PR #18).
 //   5. the deployed stylesheet keeps the WCAG 2.2 24px footer tap-target
 //      rule (PR #22) so mobile footer links stay >= 24px on every page.
+//   6. the deployed stylesheet keeps the shared h1 wrap rule (PR #134):
+//      overflow-wrap anywhere/break-word inside the top-level h1 block.
 import { join } from "node:path"
 import { fileURLToPath } from "node:url"
 import { dirname } from "node:path"
@@ -288,6 +290,20 @@ try {
     const { status, body } = await get("/compare/")
     ok(status === 404, `/compare/ returns 404 on the live site (got ${status})`)
     ok(!body.includes("Website Correction"), "/compare/ response body carries no buyer-path content")
+  }
+
+  console.log("L. the deployed stylesheet keeps the shared h1 wrap rule (PR #134)")
+  {
+    const { status, body } = await get("/styles.css")
+    ok(status === 200, `GET /styles.css returns 200 (got ${status})`)
+    const h1Rule = body.match(/(?:^|\n)h1\s*\{([^}]*)\}/)
+    ok(h1Rule !== null, "deployed stylesheet has a top-level h1 rule")
+    if (h1Rule) {
+      ok(
+        /overflow-wrap:\s*(anywhere|break-word)/.test(h1Rule[1]),
+        "deployed h1 rule declares overflow-wrap anywhere/break-word so Promptly's longest word wraps inside its box"
+      )
+    }
   }
 
 } catch (error) {
