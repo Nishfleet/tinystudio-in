@@ -90,6 +90,9 @@ const jsonLdBlocksOf = (html) =>
     (m) => m[1]
   )
 
+const htmlWithoutJsonLd = (html) =>
+  html.replace(/<script\s+type="application\/ld\+json"[^>]*>[\s\S]*?<\/script>/gi, "")
+
 const publicHtmlFiles = (dir = "public") =>
   readdirSync(join(ROOT, dir), { withFileTypes: true }).flatMap((entry) => {
     const path = join(dir, entry.name)
@@ -288,6 +291,16 @@ console.log("B3. the support page carries its own Organization description witho
   ok(
     desc === SUPPORT_ORG_DESCRIPTION,
     "support page Organization description matches the support-specific description with no The Website Correction sentence"
+  )
+}
+
+console.log("B5. the support page title, meta, and body carry no Website Correction or managed-service phrase")
+{
+  const html = read("public/support/index.html")
+  const sourceWithoutJsonLd = htmlWithoutJsonLd(html)
+  ok(
+    !sourceWithoutJsonLd.includes("Website Correction") && !/managed\s+service/i.test(sourceWithoutJsonLd),
+    "support page title, meta description, og/twitter meta, and visible body contain no Website Correction or managed-service phrase"
   )
 }
 
