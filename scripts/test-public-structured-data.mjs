@@ -152,7 +152,93 @@ for (const { file, pageType, label } of PAGES) {
   )
 }
 
-console.log("B. every public HTML page carries exactly one JSON-LD block")
+console.log("B. homepage Organization knowsAbout and Service schema for The Website Correction")
+{
+  const file = "public/index.html"
+  const html = read(file)
+  const blocks = jsonLdBlocksOf(html)
+  ok(blocks.length === 1, `${file} has exactly one application/ld+json block`)
+  if (blocks.length !== 1) {
+    console.error("  skipping homepage knowsAbout/Service checks (no JSON-LD block)")
+  } else {
+    let graph
+    try {
+      graph = JSON.parse(blocks[0])
+      ok(true, `${file} JSON-LD block parses as valid JSON`)
+    } catch (err) {
+      ok(false, `${file} JSON-LD block parses as valid JSON (${err.message})`)
+      graph = null
+    }
+    if (graph) {
+      const nodes = graph["@graph"] || []
+      const org = nodes.find((n) => n["@type"] === "Organization" && n["@id"] === ORG_ID)
+      ok(org !== undefined, `${file} carries the Organization node`)
+      if (org) {
+        ok(
+          Array.isArray(org["knowsAbout"]) && org["knowsAbout"].length >= 4,
+          `${file} Organization declares knowsAbout with at least 4 entries`
+        )
+        if (Array.isArray(org["knowsAbout"])) {
+          const knowsAboutText = org["knowsAbout"].join(" ").toLowerCase()
+          ok(
+            knowsAboutText.includes("msp") || knowsAboutText.includes("managed it"),
+            `${file} knowsAbout declares MSP/managed-IT service expertise`
+          )
+          ok(
+            knowsAboutText.includes("website") || knowsAboutText.includes("website service"),
+            `${file} knowsAbout declares website service expertise`
+          )
+          ok(
+            knowsAboutText.includes("human-reviewed") || knowsAboutText.includes("human reviewed"),
+            `${file} knowsAbout declares human-reviewed service expertise`
+          )
+        }
+      }
+
+      const service = nodes.find((n) => n["@type"] === "Service")
+      ok(service !== undefined, `${file} carries a Service schema node`)
+      if (service) {
+        ok(
+          service["provider"] && service["provider"]["@id"] === ORG_ID,
+          `${file} Service provider links to the Organization entity`
+        )
+        ok(
+          typeof service["serviceType"] === "string" && service["serviceType"].length > 0,
+          `${file} Service declares a serviceType`
+        )
+        ok(
+          typeof service["areaServed"] === "string" && service["areaServed"].length > 0,
+          `${file} Service declares an areaServed`
+        )
+        ok(
+          typeof service["description"] === "string" && service["description"].length > 0,
+          `${file} Service declares a description`
+        )
+        if (typeof service["description"] === "string") {
+          const desc = service["description"].toLowerCase()
+          ok(
+            desc.includes("human-reviewed") || desc.includes("human reviewed"),
+            `${file} Service description names the human-reviewed managed service`
+          )
+          ok(
+            desc.includes("msp") || desc.includes("managed it"),
+            `${file} Service description names the MSP/managed-IT buyer`
+          )
+          ok(
+            desc.includes("$1,000") || desc.includes("$1000"),
+            `${file} Service description names the $1,000 founder pilot price`
+          )
+          ok(
+            !desc.includes("guarantee") && !desc.includes("roas") && !desc.includes("conversion rate"),
+            `${file} Service description makes no revenue/ranking/ROAS/conversion guarantees`
+          )
+        }
+      }
+    }
+  }
+}
+
+console.log("C. every public HTML page carries exactly one JSON-LD block")
 for (const file of publicHtmlFiles()) {
   const html = read(file)
   const blocks = jsonLdBlocksOf(html)
@@ -222,7 +308,7 @@ console.log("B4. the studio privacy hub carries its own Organization description
   )
 }
 
-console.log("C. npm test/ci wiring")
+console.log("D. npm test/ci wiring")
 const pkg = JSON.parse(read("package.json"))
 const wired = pkg.scripts.test.includes("test-public-structured-data.mjs")
 ok(wired, "npm test runs the public structured data test")
