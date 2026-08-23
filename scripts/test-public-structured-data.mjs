@@ -72,6 +72,21 @@ const SUPPORT_ORG_DESCRIPTION =
 const PRIVACY_HUB_ORG_DESCRIPTION =
   "Tiny Studio is the independent product company at tinystudio.in behind Promptly, Drishti, and 0509. It is not affiliated with other apps or studios that use the name Tiny Studio."
 const ORG_NAME = "Tiny Studio"
+const EXPECTED_KNOWS_ABOUT = [
+  "Promptly",
+  "Drishti",
+  "0509",
+  "The Website Correction",
+  "bookings and no-show prevention for solo professionals",
+  "mindful screen time",
+  "competitor monitoring for growth teams",
+  "one-page website correction sprints"
+]
+const SERVICE_ID = "https://tinystudio.in/#website-correction-service"
+const SERVICE_NAME = "The Website Correction"
+const SERVICE_TYPE = "Website correction"
+const EXPECTED_SERVICE_DESCRIPTION =
+  "A human-reviewed, focused one-page sprint for founder-led managed IT and cybersecurity companies with a live site: one highest-leverage page, human-reviewed fit, a fault map, rewrite or redesign, one implementation pass or dev-ready handoff, before/after proof, a Loom, a measurement plan, one revision, and 14-day implementation tracking."
 
 const titleOf = (html) => {
   const m = html.match(/<title>([^<]*)<\/title>/i)
@@ -219,6 +234,61 @@ console.log("B4. the studio privacy hub carries its own Organization description
   ok(
     desc === PRIVACY_HUB_ORG_DESCRIPTION,
     "studio privacy hub Organization description matches the privacy-hub description with no The Website Correction sentence"
+  )
+}
+
+console.log("B5. every public page Organization carries the studio-wide knowsAbout list")
+for (const file of publicHtmlFiles()) {
+  const blocks = jsonLdBlocksOf(read(file))
+  if (blocks.length !== 1) continue
+
+  let org
+  try {
+    const graph = JSON.parse(blocks[0])
+    org = (graph["@graph"] || []).find(
+      (node) => node["@type"] === "Organization" && node["@id"] === ORG_ID
+    )
+  } catch {
+    org = null
+  }
+
+  ok(org, `${file} carries the Tiny Studio Organization node`)
+  ok(
+    JSON.stringify(org?.knowsAbout) === JSON.stringify(EXPECTED_KNOWS_ABOUT),
+    `${file} Organization knowsAbout matches the studio-wide topic list exactly (order included)`
+  )
+}
+
+console.log("B6. the homepage graph declares The Website Correction as a Service node")
+{
+  const blocks = jsonLdBlocksOf(read("public/index.html"))
+  let graph
+  try {
+    graph = blocks.length === 1 ? JSON.parse(blocks[0]) : null
+  } catch {
+    graph = null
+  }
+
+  const services = (graph?.["@graph"] || []).filter((n) => n["@type"] === "Service")
+  ok(
+    services.length === 1,
+    "homepage JSON-LD graph carries exactly one Service node"
+  )
+  const service = services[0]
+  ok(service?.["@id"] === SERVICE_ID, "homepage Service node @id matches the pinned website-correction service id")
+  ok(service?.name === SERVICE_NAME, "homepage Service node name matches The Website Correction")
+  ok(service?.serviceType === SERVICE_TYPE, "homepage Service node serviceType matches Website correction")
+  ok(
+    service?.provider && service.provider["@id"] === ORG_ID,
+    "homepage Service node provider references the Tiny Studio organization"
+  )
+  ok(
+    service?.description === EXPECTED_SERVICE_DESCRIPTION,
+    "homepage Service node description matches the pinned sprint copy"
+  )
+  ok(
+    Object.keys(service || {}).sort().join(",") === "@id,@type,description,name,provider,serviceType",
+    "homepage Service node carries only the six pinned properties"
   )
 }
 
