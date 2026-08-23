@@ -114,6 +114,14 @@ ok(
   bundle.includes("not affiliated with other apps or studios that use the name Tiny Studio"),
   "the llms.txt generator template keeps the non-affiliation statement"
 )
+ok(
+  llmsTxt.includes("The Website Correction"),
+  "llms.txt mentions The Website Correction managed service"
+)
+ok(
+  bundle.includes("The Website Correction"),
+  "the llms.txt generator template keeps The Website Correction service mention"
+)
 
 console.log("D. npm test/ci wiring")
 const pkg = JSON.parse(read("package.json"))

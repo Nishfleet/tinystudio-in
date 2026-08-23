@@ -43,7 +43,7 @@ const supportSchema = {
 
 const llmsTxt = `# Tiny Studio
 
-Tiny Studio is the independent product company at tinystudio.in behind Promptly, Drishti, and 0509. It is not affiliated with other apps or studios that use the name Tiny Studio.
+Tiny Studio is the independent product company at tinystudio.in behind Promptly, Drishti, and 0509. Tiny Studio also offers The Website Correction, a human-reviewed managed service for founder-led Managed IT/MSP/cybersecurity companies with a live site. It is not affiliated with other apps or studios that use the name Tiny Studio.
 
 ## Public pages
 
