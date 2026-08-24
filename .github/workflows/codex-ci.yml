@@ -73,7 +73,7 @@ jobs:
           set -uo pipefail
           # --exclude .specify: this directory is vendored spec-kit
           # scaffolding (37 tracked files), not the repo's product code. Its
-          # bash/common.sh has a bounded `while true` root-walk (breaks at /)
+          # bash/common.sh has an unbounded poll loop root-walk (breaks at /)
           # that the orchestration gate flags. The canonical gate's own
           # paths.include already excludes node_modules; excluding vendored
           # scaffolding is the same discipline. Product code under
