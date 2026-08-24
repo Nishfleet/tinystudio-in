@@ -1,5 +1,12 @@
 name: Codex CI
 
+# Thin caller for the canonical reusable PR-checks workflow.
+# The standard (timeout-minutes, concurrency+cancel, npm cache, batched CI +
+# gitleaks, docs-only fast path, 7-day SARIF retention) lives in
+# nish3451/shared-workflows and is applied here by construction. Updates on the
+# `v1` branch propagate automatically. Do not override the called workflow's
+# steps — pass inputs instead.
+
 on:
   pull_request:
   push:
@@ -11,56 +18,11 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  group: codex-ci-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
-  repo-checks:
-    runs-on: ubuntu-latest
-    # Observed history: median ~2.5min, healthy max ~9.1min. The 128.6min
-    # outlier was a queued run, not execution. 20min is ~2x the healthy max
-    # and well under the 360min hosted-runner cap; a hang here would otherwise
-    # hold the codex-ci concurrency group indefinitely (the 2026-08-23/24 stall).
-    timeout-minutes: 20
-    # The `repo-checks` context IS branch-protection required on this repo
-    # (the protection list is ['repo-checks']), so paths-ignore is FORBIDDEN
-    # at the workflow level - a SKIPPED required context counts as SATISFIED,
-    # which would let docs-only PRs merge without the npm ci + npm run ci +
-    # npm audit gate running. Standing rule 2026-08-23 prescribes an in-job
-    # docs-only fast path instead: classify the diff first, skip the heavy
-    # steps when every changed file is prose/evidence. The job always runs
-    # and always reaches a real conclusion, so the gate stays honest.
-    steps:
-      - name: Classify the PR (docs-only fast path)
-        id: docs
-        uses: ./.github/actions/docs-classify
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Docs-only fast path
-        if: steps.docs.outputs.docs-only == 'true'
-        run: |
-          echo "::notice::Docs-only PR - repo-checks suite skipped (required \`repo-checks\` context still ran and reported success)."
-
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        if: steps.docs.outputs.docs-only != 'true'
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
-        if: steps.docs.outputs.docs-only != 'true'
-        with:
-          node-version: 20
-          cache: npm
-      - run: npm ci --ignore-scripts
-        if: steps.docs.outputs.docs-only != 'true'
-      - run: npm run ci
-        if: steps.docs.outputs.docs-only != 'true'
-      # Free, always-running dependency security scan. This is the deliberate
-      # substitute for CodeQL code scanning, which cannot run on this plan:
-      # this is a private personal-account repo without GitHub Advanced
-      # Security, so the CodeQL SARIF upload rejects with "Code scanning is
-      # not enabled for this repository" and the job was removed in #122.
-      # Fail-closed: any high-severity advisory in the locked tree fails the
-      # required repo-checks job. Re-enable CodeQL per .github/workflows/README.md
-      # once GHAS/code scanning is provisioned or the repo goes public.
-      - name: Dependency security scan (CodeQL substitute)
-        if: steps.docs.outputs.docs-only != 'true'
-        run: npm audit --audit-level=high
+  pr-checks:
+    uses: nish3451/shared-workflows/.github/workflows/pr-checks.yml@v1
+    with:
+      node-version: "20"
+      install-command: npm ci --ignore-scripts
+      verify-command: npm run ci && npm audit --audit-level=high
+    secrets: inherit
