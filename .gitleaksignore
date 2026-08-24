@@ -1,0 +1,17 @@
+# gitleaks findings that are proven false positives.
+#
+# Each entry is a FINGERPRINT: commit:path:rule:line. A fingerprint pins one
+# exact line of one exact commit, so ignoring it can never hide a future or
+# different secret - not even the same rule in the same file on another line.
+#
+# Add an entry only after confirming by hand that the value is not a real
+# credential, and say why on the comment line above it.
+
+# The generic-api-key rule matched a prose word in a design-system
+# reject-rules sentence ("No invented reviews, ratings, instructor
+# [redacted-word], injury/medical claims...") in a reference packet. This is
+# descriptive text, not a key assignment. Matched with low entropy (3.66).
+# Verified by hand: no secret value, no assignment, no token shape. Confirmed
+# across all 2,145 blobs in history — this is the only gitleaks finding in
+# the repo.
+a8be36c3b24ebcb803bdb58dab45a300b0deaeed:docs/evidence/design-system-proving-lab/reference-runs/latest/southbank-pilates-club-london/reference-packet.json:generic-api-key:198
