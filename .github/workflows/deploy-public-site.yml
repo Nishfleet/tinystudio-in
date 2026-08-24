@@ -71,6 +71,13 @@ concurrency:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    # Observed history: median ~4.9min, healthy max ~9.5min. The 86.8min outlier
+    # was a queued run, not execution. 20min is ~2x the healthy max and well
+    # under the 360min hosted-runner cap. This workflow uses
+    # cancel-in-progress: false, so without a timeout a hung publish would hold
+    # the deploy-public-site concurrency group indefinitely - exactly the
+    # 2026-08-23/24 fleet stall shape.
+    timeout-minutes: 20
     # Secrets are hoisted to the job env because the `secrets` context is not
     # available in step-level `if:` conditions; the `env` context is.
     env:
