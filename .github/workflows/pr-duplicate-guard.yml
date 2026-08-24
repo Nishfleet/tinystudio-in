@@ -17,6 +17,21 @@ name: PR Duplicate Guard
 on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
+    paths-ignore:
+      # The `duplicate-guard` context is NOT branch-protection required on
+      # this repo (the protection list is ['repo-checks']), so paths-ignore
+      # here is safe: a skipped run never lies about gate status because
+      # nothing waits on this context. Docs-only PRs never have a same-fix
+      # duplicate to flag.
+      - "**/*.md"
+      - "**/*.mdx"
+      - "**/*.txt"
+      - "docs/**"
+      - ".lane/**"
+      - ".github/dependabot.yml"
+      - "LICENSE*"
+      - ".gitignore"
+      - ".gitattributes"
   workflow_dispatch:
     inputs:
       pr-number:
