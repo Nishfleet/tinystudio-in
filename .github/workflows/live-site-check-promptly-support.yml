@@ -24,7 +24,7 @@ concurrency:
 
 jobs:
   live-promptly-support-heading-hierarchy:
-    runs-on: [self-hosted, linux, x64, vps-verify]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
