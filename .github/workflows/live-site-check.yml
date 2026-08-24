@@ -33,7 +33,7 @@ concurrency:
 
 jobs:
   live-soft-404:
-    runs-on: [self-hosted, linux, x64, vps-verify]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -44,7 +44,7 @@ jobs:
       - run: node scripts/check-public-live-soft-404.mjs
       - run: node scripts/test-public-live-heading-hierarchy.mjs
   live-contact-heading-hierarchy:
-    runs-on: [self-hosted, linux, x64, vps-verify]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -54,7 +54,7 @@ jobs:
       - run: npm ci --ignore-scripts
       - run: node scripts/test-public-live-contact-heading-hierarchy.mjs
   live-tap-targets:
-    runs-on: [self-hosted, linux, x64, vps-verify]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -64,7 +64,7 @@ jobs:
       - run: npm ci --ignore-scripts
       - run: node scripts/check-public-live-tap-targets.mjs
   live-social-preview:
-    runs-on: [self-hosted, linux, x64, vps-verify]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
