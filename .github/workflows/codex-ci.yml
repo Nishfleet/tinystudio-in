@@ -1,5 +1,12 @@
 name: Codex CI
 
+# Thin caller for the canonical reusable PR-checks workflow.
+# The standard (timeout-minutes, concurrency+cancel, npm cache, batched CI +
+# gitleaks, docs-only fast path, 7-day SARIF retention) lives in
+# nish3451/shared-workflows and is applied here by construction. Updates on the
+# `v1` branch propagate automatically. Do not override the called workflow's
+# steps — pass inputs instead.
+
 on:
   pull_request:
   push:
@@ -11,28 +18,11 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  group: codex-ci-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
-  repo-checks:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
-        with:
-          node-version: 20
-          cache: npm
-      - run: npm ci --ignore-scripts
-      - run: npm run ci
-      # Free, always-running dependency security scan. This is the deliberate
-      # substitute for CodeQL code scanning, which cannot run on this plan:
-      # this is a private personal-account repo without GitHub Advanced
-      # Security, so the CodeQL SARIF upload rejects with "Code scanning is
-      # not enabled for this repository" and the job was removed in #122.
-      # Fail-closed: any high-severity advisory in the locked tree fails the
-      # required repo-checks job. Re-enable CodeQL per .github/workflows/README.md
-      # once GHAS/code scanning is provisioned or the repo goes public.
-      - name: Dependency security scan (CodeQL substitute)
-        run: npm audit --audit-level=high
+  pr-checks:
+    uses: nish3451/shared-workflows/.github/workflows/pr-checks.yml@v1
+    with:
+      node-version: "20"
+      install-command: npm ci --ignore-scripts
+      verify-command: npm run ci && npm audit --audit-level=high
+    secrets: inherit
