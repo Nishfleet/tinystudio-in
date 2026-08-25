@@ -13,6 +13,15 @@ name: PR Duplicate Guard
 # Run locally before opening a PR:
 #   node scripts/check-pr-duplicates.mjs --pr 0 --no-fail --repo OWNER/REPO
 # (use the real PR number once the PR exists).
+#
+# CHEAP BY DESIGN (2026-08-24): the script is dependency-free (only
+# node:url, a Node builtin) and fetches every PR diff through the GitHub
+# API, so it needs neither a repo checkout nor an npm install. The old job
+# did actions/checkout + setup-node + (implicitly) a full tree on every PR
+# event and averaged ~11 minutes a run. This version fetches just the one
+# script file via the contents API and runs it with the runner's built-in
+# node, finishing in seconds. The check itself is unchanged: same script,
+# same thresholds, same --comment behaviour.
 
 on:
   pull_request:
@@ -35,14 +44,30 @@ concurrency:
 jobs:
   duplicate-guard:
     runs-on: ubuntu-latest
+    # Observed history: median ~0.3min, healthy max ~5.2min. The 115.1min
+    # outlier was a queued run, not execution. 15min is ~3x the healthy max
+    # and well under the 360min hosted-runner cap; a hang here would otherwise
+    # hold the pr-duplicate-guard concurrency group indefinitely.
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-        with:
-          node-version: 20
-      - name: Detect same-fix duplicate open PRs
-        run: node scripts/check-pr-duplicates.mjs --pr "$PR_NUMBER" --comment
+      - name: Fetch the guard script and run it (no checkout, no npm install)
+        shell: bash
         env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           PR_NUMBER: ${{ github.event.inputs.pr-number || github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+          # The script is the only repo file this job needs; it pulls every
+          # PR diff via the API. Fetching it via the contents API avoids a
+          # full checkout and an npm install, cutting the run from ~11 min
+          # to seconds. ubuntu-latest ships Node 20+, so no setup-node.
+          mkdir -p scripts
+          curl -sS --fail \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/contents/scripts/check-pr-duplicates.mjs" \
+            | python3 -c 'import base64,json,sys; sys.stdout.buffer.write(base64.b64decode(json.load(sys.stdin)["content"]))' \
+            > scripts/check-pr-duplicates.mjs
+          node scripts/check-pr-duplicates.mjs --pr "$PR_NUMBER" --comment
