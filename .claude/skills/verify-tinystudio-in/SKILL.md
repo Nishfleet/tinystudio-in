@@ -119,6 +119,9 @@ Per-feature steps live in `features/`:
 | Compare page `/compare/` | `features/compare.md` |
 | Contact page `/contact/` | `features/contact.md` |
 | Support page `/support/` | `features/support.md` |
+| Privacy hub `/privacy/` | `features/privacy.md` |
+| Privacy questions `/privacy-choices/` | `features/privacy-choices.md` |
+| Website terms `/terms/` | `features/terms.md` |
 
 Two drive styles:
 
@@ -139,6 +142,11 @@ behaviour. Every page is fully deterministic on a plain `GET /<route>/`:
 - `/compare/` → 200, H1 starts with `The Website Correction is a focused`.
 - `/contact/` → 200, H1 starts with `A direct line to Tiny Studio.`
 - `/support/` → 200, H1 starts with the support copy on the page.
+- `/privacy/` → 200, H1 is `The studio privacy center for Tiny Studio.`
+- `/privacy-choices/` → 200, H1 is
+  `Privacy questions and data requests have a clear route.`
+- `/terms/` → 200, H1 is
+  `Website terms for Tiny Studio's public pages.`
 - `/this-route-does-not-exist` → 404 (the `404.html` body is rendered
   with status 404 by the harness).
 
