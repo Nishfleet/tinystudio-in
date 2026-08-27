@@ -146,7 +146,8 @@ behaviour. Every page is fully deterministic on a plain `GET /<route>/`:
 - `/privacy-choices/` → 200, H1 is
   `Privacy questions and data requests have a clear route.`
 - `/terms/` → 200, H1 is
-  `Website terms for Tiny Studio's public pages.`
+  `Website terms for Tiny Studio’s public pages.` (curly apostrophe `'`,
+  U+2019 — the rendered HTML uses a typographic apostrophe, not ASCII `'`)
 - `/this-route-does-not-exist` → 404 (the `404.html` body is rendered
   with status 404 by the harness).
 

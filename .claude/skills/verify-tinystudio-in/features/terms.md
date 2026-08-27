@@ -16,8 +16,9 @@ Preconditions: the harness is up at the recorded `PORT`; the `DOCTOR`
 checks from the parent `SKILL.md` all passed.
 
 - `GET /terms/` — expect 200, HTML body. The H1 is exactly
-  `Website terms for Tiny Studio's public pages.` and is the first
-  heading in the outline.
+  `Website terms for Tiny Studio’s public pages.` (curly apostrophe `'`,
+  U+2019 — match it literally; the rendered HTML does not use ASCII `'`)
+  and is the first heading in the outline.
 
   ```bash
   PORT=$(cat /tmp/verify-tinystudio-in/server.port)
