@@ -68,3 +68,9 @@ the user-visible behaviour. It then uses four H2 sections in order:
 - [Contact page `/contact/`](./contact.md) — direct support, privacy,
   and 0509 contact paths.
 - [Support page `/support/`](./support.md) — first-line support page.
+- [Privacy hub `/privacy/`](./privacy.md) — studio privacy center with
+  outbound links to per-app privacy pages.
+- [Privacy questions `/privacy-choices/`](./privacy-choices.md) —
+  privacy questions and data-request route.
+- [Website terms `/terms/`](./terms.md) — public-website terms
+  (informational; no checkout).
