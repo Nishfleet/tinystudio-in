@@ -108,6 +108,6 @@
     "node": ">=20"
   },
   "devDependencies": {
-    "wrangler": "4.123.0"
+    "wrangler": "4.127.0"
   }
 }
