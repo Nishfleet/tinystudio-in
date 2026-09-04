@@ -6,6 +6,9 @@ export const codeRoot = dirname(dirname(dirname(fileURLToPath(import.meta.url)))
 export const serviceRoot = resolve(process.env.SERVICE_REPO_ROOT || process.cwd())
 
 function runJson(args, cwd) {
+	// Child processes inherit the parent environment; SERVICE_TEST_NOW (and the
+	// test-fixed-clock import in NODE_OPTIONS) must pass through so tracked
+	// operator artifacts stay on the fixed clock inside nested generations.
 	return JSON.parse(execFileSync(process.execPath, [resolve(codeRoot, args[0]), ...args.slice(1)], {cwd, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"]}))
 }
 
