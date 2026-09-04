@@ -80,6 +80,46 @@
           </aside>
         </section>
 
+        <section class="app-strip reveal delay-1" id="website-correction">
+          <div class="app-strip-grid">
+            <article>
+              <p class="eyebrow">Managed service</p>
+              <h3>The Website Correction application</h3>
+              <p class="section-copy">
+                For the human-reviewed Website Correction service, use the
+                application email below. A human reviews fit and scope before
+                any work starts.
+              </p>
+              <div class="action-row">
+                <a class="button" id="website-correction-mailto" href="mailto:support@tinystudio.in?subject=Website%20Correction">Apply by email</a>
+              </div>
+              <p class="section-copy" id="website-correction-note">
+                This email can carry a visible source label (for example
+                "homepage-hero") that records which page position opened it.
+                That label is for Tiny Studio's internal measurement only.
+                Nothing is sent until you press send, and no message content is
+                read or collected automatically.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <script>
+          (function () {
+            var link = document.getElementById("website-correction-mailto");
+            if (!link) return;
+            var allowed = ["homepage-hero", "homepage-footer"];
+            var found = /[?&]source=([^&#]+)/.exec(location.search);
+            var source = found ? decodeURIComponent(found[1]) : "";
+            if (allowed.indexOf(source) === -1) return;
+            link.href = "mailto:support@tinystudio.in?subject=Website%20Correction&body=Source%3A%20" + encodeURIComponent(source) + "%0A%0A";
+            var note = document.getElementById("website-correction-note");
+            if (note) {
+              note.textContent = 'This email was opened from the "' + source + '" source label. That label is for Tiny Studio\u2019s internal measurement only. Nothing is sent until you press send, and no message content is read or collected automatically.';
+            }
+          })();
+        </script>
+
         <section class="card-grid">
           <article class="info-card reveal delay-1">
             <p class="eyebrow">Support</p>
