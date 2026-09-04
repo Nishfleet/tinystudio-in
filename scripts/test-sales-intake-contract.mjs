@@ -106,7 +106,7 @@ try {
 	eq(callPrep.status, 0)
 	eq(JSON.parse(callPrep.stdout).pilotSlotsRemaining, 3)
 	const callPrepOutput = readFileSync(join(salesProspect, "sales-call-prep.md"), "utf8")
-	for (const expected of ["- Sprint: The Website Correction", "- Scope: one highest-leverage page", "- Timeline: 7 working days from Day 0", "- Price: $1,000 founder pilot"]) mat(callPrepOutput, new RegExp(expected.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")))
+	for (const expected of ["- Sprint: The Website Correction", "- Scope: one highest-leverage page", "- Timeline: Day 0 starts after payment, required context, and named approval and implementation owners; 14-day implementation tracking", "- Price: $1,000 founder pilot"]) mat(callPrepOutput, new RegExp(expected.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")))
 	dnm(callPrepOutput, /Full-Stack Growth Desk|three pages|30 days|\$500/)
 
 	expectZeroWriteFailure("scripts/prepare-prospect-close-package.mjs", [salesProspectArg, "--price", "$500", "--payment", "https://pay.example.com/founder-pilot"], /price is immutable during the founder pilot: \$1,000 founder pilot/)
@@ -136,6 +136,26 @@ try {
 	expectZeroWriteFailure("scripts/draft-sales-call-prep.mjs", [salesProspectArg], /founder pilot capacity is complete after 3 paid clients/)
 	expectZeroWriteFailure("scripts/prepare-prospect-close-package.mjs", [salesProspectArg, "--payment", "https://pay.example.com/fourth-client"], /founder pilot capacity is complete after 3 paid clients/)
 	eq(existsSync(closeOutputPath), false)
+
+	// PRODUCT.md promises no seven-day delivery: the offer is a fixed-scope The
+	// Website Correction with Day 0 prerequisites and 14-day implementation
+	// tracking. Active sales/operator surfaces must not promise a seven-day
+	// sprint or ask the buyer to approve a 7-day fix. Historical comparison
+	// context (average-provider speed, competitor turnarounds) is not flagged.
+	const staleSevenDayPromise = /7[- ]day sprint|seven[- ]day sprint|seven working days|\bin 7 days\b|\b7 working days\b/i
+	const activeOfferSurfaces = [
+		"growth-brain/prospecting/warm-network-scripts.md",
+		"growth-brain/sales/sales-call-script.md",
+		"scripts/create-prospect-audit.mjs",
+		"scripts/draft-sales-call-prep.mjs",
+		"scripts/prepare-prospect-call-booked.mjs",
+		"scripts/export-market-benchmark.mjs",
+		"docs/strategy/market-parity-benchmark-2026.md",
+		"growth-brain/ops/competitive-proof-matrix.md"
+	]
+	for (const path of activeOfferSurfaces) {
+		dnm(readFileSync(join(repoRoot, path), "utf8"), staleSevenDayPromise, `${path}: stale seven-day delivery promise`)
+	}
 
 	console.log("Sales and external-intake contract checks passed.")
 } finally {

@@ -71,7 +71,7 @@ TinyStudio must prove these advantages:
 
 | Area | Average Provider | TinyStudio Must Beat It By |
 |---|---|---|
-| Speed | 2-6 week audit/report | 7-day sprint with implementation-ready assets |
+| Speed | 2-6 week audit/report | Fixed-scope one-page correction with 14-day implementation tracking |
 | Specificity | Generic best-practice checklist | Approved application context, real page evidence, and claim-safe customer language |
 | Output | PDF recommendations | Fault map, page fix, implementation handoff, proof, and measurement plan |
 | Channel breadth | Sell every channel by default | Add only ready channels with access, economics, measurement, and approval |
