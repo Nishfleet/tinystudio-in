@@ -60,4 +60,4 @@ State the page leak, the evidence, the change, and the next measurement in plain
 
 ## Promise boundary
 
-The first 3 clients are exactly **$1,000 founder pilots**. No revenue, ranking, ROAS, conversion, booked-call, or sales-volume guarantees are made. Automation may prepare research, drafts, QA, packages, and routing, but cannot autonomously send, publish, spend, approve, accept, or renew.
+The first 3 clients are exactly **$1,000 founder pilots**. We provide no revenue, ranking, ROAS, conversion, booked-call, or sales-volume guarantees. Automation may prepare research, drafts, QA, packages, and routing, but cannot autonomously send, publish, spend, approve, accept, or renew.

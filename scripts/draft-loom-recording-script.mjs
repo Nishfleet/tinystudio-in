@@ -191,7 +191,7 @@ const script = `# ${metadata.name} Loom Recording Script
 
 ## Goal
 
-Record a 2-3 minute cold audit that shows one clear leak and makes the ${config.offerName} feel like the obvious next step.
+Record a 2-3 minute cold audit that shows one clear leak and makes the next step obvious.
 
 ## Before Recording
 
