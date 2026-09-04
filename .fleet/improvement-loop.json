@@ -1,0 +1,17 @@
+{
+  "items": {
+    "c33e2af2b6": {
+      "at": "2026-08-21T08:05:04.989Z",
+      "receipt": {
+        "commit": "c82c88c",
+        "note": "seventh incarnation 2026-08-21 on fresh origin/main c1464ee: test passes exit 0, checkout clean; fix c82c88c (PR #162) ancestor of main; loop root-caused - prior incarnations left evidence uncommitted so produced_work() kept the lane alive; reports now committed and branch pushed so work_landed() closes the lane",
+        "pr": 162,
+        "report": ".lane/reports/lane1-test-active-operator-surfaces-tracked-artifact-seventh-reverify-20260821.md"
+      },
+      "reverify_count": 0,
+      "reverify_history": [],
+      "status": "resolved"
+    }
+  },
+  "version": 1
+}
