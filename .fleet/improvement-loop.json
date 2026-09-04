@@ -1,0 +1,15 @@
+{
+  "items": {
+    "55e1318661": {
+      "at": "2026-08-21T09:13:12.284Z",
+      "receipt": {
+        "note": "already resolved on main by PR #125 (commit aedcfa7): 6 studio-level pages now brand the studio as \"Products for people and teams\" per homepage positioning; \"Independent iPhone apps\" retained only on the 6 app pages. Guard test scripts/test-public-brand-tagline.mjs (21/21 pass) added in same PR.",
+        "pr": 125
+      },
+      "reverify_count": 0,
+      "reverify_history": [],
+      "status": "resolved"
+    }
+  },
+  "version": 1
+}
