@@ -2,17 +2,22 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { localIsoDate } from "./date-utils.mjs";
 import { NO_GUARANTEE_CLIENT_SENTENCE } from "./lib/service-contract.mjs";
+import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 import { runRepoJson as runJson } from "./lib/runtime-roots.mjs";
 
+handleHelp(process.argv.slice(2), `Usage: node scripts/export-market-benchmark.mjs [--output=docs/strategy/market-parity-benchmark-2026.md] [--ops=growth-brain/ops/competitive-proof-matrix.md] [--html=growth-brain/ops/competitive-proof-matrix.html]`);
 const args = process.argv.slice(2);
 const outputArg = args.find((arg) => arg.startsWith("--output="));
 const opsArg = args.find((arg) => arg.startsWith("--ops="));
 const htmlArg = args.find((arg) => arg.startsWith("--html="));
-const outputPath = outputArg ? outputArg.split("=").slice(1).join("=") : "docs/strategy/market-parity-benchmark-2026.md";
-const opsPath = opsArg ? opsArg.split("=").slice(1).join("=") : "growth-brain/ops/competitive-proof-matrix.md";
-const htmlPath = htmlArg ? htmlArg.split("=").slice(1).join("=") : "growth-brain/ops/competitive-proof-matrix.html";
+const outputRel = outputArg?.split("=").slice(1).join("=") || "docs/strategy/market-parity-benchmark-2026.md";
+const opsRel = opsArg?.split("=").slice(1).join("=") || "growth-brain/ops/competitive-proof-matrix.md";
+const htmlRel = htmlArg?.split("=").slice(1).join("=") || "growth-brain/ops/competitive-proof-matrix.html";
+const outputPath = resolveOutputPath(outputRel, { fallback: outputRel });
+const opsPath = resolveOutputPath(opsRel, { flag: "--ops", fallback: opsRel });
+const htmlPath = resolveOutputPath(htmlRel, { flag: "--html", fallback: htmlRel });
 const today = localIsoDate();
-const MARKET_ANCHORS_LAST_CHECKED = "2026-08-11";
+const MARKET_ANCHORS_LAST_CHECKED = "2026-08-13";
 function write(path, content) {
   const dir = path.split("/").slice(0, -1).join("/");
   if (dir) mkdirSync(dir, { recursive: true });
@@ -400,9 +405,9 @@ const status = proofBars.some((item) => item.status === "fail")
 
 console.log(JSON.stringify({
   status,
-  path: outputPath,
-  opsPath,
-  htmlPath,
+  path: outputRel,
+  opsPath: opsRel,
+  htmlPath: htmlRel,
   alternatives: alternatives.length,
   proofBars,
   sources: alternatives.map((item) => item.sourceUrl)
