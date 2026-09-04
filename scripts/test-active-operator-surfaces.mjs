@@ -52,6 +52,37 @@ function hashTree(root) {
 try {
 	for (const path of [...retiredTrackedPrivateArtifacts, ...retiredBroadServiceArtifacts]) eq(existsSync(join(C, path)), false, `Retired operator artifact remains active: ${path}`)
 	mat(readFileSync(join(C, "growth-brain/ops/historical/README.md"), "utf8"), /not active product truth/)
+	const staleSpeedPromisePatterns = [/\b(?:seven|7)[ -]day\b/i, /\bin\s+(?:7|seven)\s+days?\b/i]
+	function staleSpeedPromiseHits(content) {
+		const hits = []
+		for (const pattern of staleSpeedPromisePatterns) {
+			const regex = new RegExp(pattern.source, "gi")
+			let match
+			while ((match = regex.exec(content))) hits.push({match: match[0], index: match.index})
+		}
+		return hits.sort((left, right) => left.index - right.index)
+	}
+	for (const path of ["growth-brain/prospecting/warm-network-scripts.md", "growth-brain/sales/sales-call-script.md"]) {
+		const content = readFileSync(join(C, path), "utf8")
+		deq(staleSpeedPromiseHits(content), [], `${path} must not promise a seven-day delivery`)
+		mat(content, /14-day implementation tracking/)
+		mat(content, /The Website Correction/)
+	}
+	for (const path of ["scripts/create-prospect-audit.mjs", "scripts/draft-sales-call-prep.mjs", "scripts/prepare-prospect-call-booked.mjs"]) {
+		deq(staleSpeedPromiseHits(readFileSync(join(C, path), "utf8")), [], `${path} must not generate a seven-day delivery promise`)
+	}
+	for (const path of ["docs/strategy/market-parity-benchmark-2026.md", "growth-brain/ops/competitive-proof-matrix.md"]) {
+		const content = readFileSync(join(C, path), "utf8")
+		const sectionStart = content.indexOf("## To Be Better Than Average Agencies")
+		ok(sectionStart >= 0, `${path} must keep the labelled comparison section`)
+		const sectionEnd = content.indexOf("\n## ", sectionStart + 1)
+		const comparisonSection = content.slice(sectionStart, sectionEnd < 0 ? undefined : sectionEnd)
+		mat(comparisonSection, /\| Average Provider \|/)
+		mat(comparisonSection, /\| TinyStudio Must Beat It By \|/)
+		for (const hit of staleSpeedPromiseHits(content)) {
+			ok(hit.index >= sectionStart && (sectionEnd < 0 || hit.index < sectionEnd), `${path}: seven-day mention escaped the labelled comparison section`)
+		}
+	}
 	for (const directory of ["scripts", "growth-brain", "contracts", "docs"]) {
 		cpSync(join(C, directory), join(T, directory), {recursive: true})
 	}

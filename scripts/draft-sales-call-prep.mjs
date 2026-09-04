@@ -150,7 +150,7 @@ ${payback}
 2. Is this page supposed to generate calls, demos, audits, or another action?
 3. Who approves page, copy, or site structure changes?
 4. What context can you share: analytics, reviews, competitors, customer objections, and implementation access?
-5. If the sprint gives you implementation-ready fixes in 7 days, is this worth doing now?
+5. If the sprint gives you one reviewed, implementation-ready page fix with 14-day implementation tracking, is this worth doing now?
 
 ## Close
 
