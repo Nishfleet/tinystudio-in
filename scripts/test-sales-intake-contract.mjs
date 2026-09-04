@@ -13,6 +13,10 @@ const repoRoot = dirname(dirname(fileURLToPath(import.meta.url)))
 const testRoot = mkdtempSync(join(tmpdir(), "tinystudio-sales-intake-contract-"))
 const serviceRoot = join(testRoot, "service-repo")
 const externalRoot = join(testRoot, "external-application-export")
+// Stale seven-day delivery promises must never return to active offer-facing
+// surfaces. Scoped to the owned sales/operator surfaces so historical comparison
+// context (for example the benchmark "7-day sprint" speed row) is not flagged.
+const staleSevenDayPromise = /\b(?:7[- ]day|seven[- ]day|in 7 days|7 working days|seven working days)\b/i
 
 function sha256(bytes) {
 	return createHash("sha256").update(bytes).digest("hex")
@@ -106,8 +110,36 @@ try {
 	eq(callPrep.status, 0)
 	eq(JSON.parse(callPrep.stdout).pilotSlotsRemaining, 3)
 	const callPrepOutput = readFileSync(join(salesProspect, "sales-call-prep.md"), "utf8")
-	for (const expected of ["- Sprint: The Website Correction", "- Scope: one highest-leverage page", "- Timeline: 7 working days from Day 0", "- Price: $1,000 founder pilot"]) mat(callPrepOutput, new RegExp(expected.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")))
+	for (const expected of ["- Sprint: The Website Correction", "- Scope: one highest-leverage page", "- Timeline: 14-day implementation tracking from Day 0", "- Price: $1,000 founder pilot"]) mat(callPrepOutput, new RegExp(expected.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")))
 	dnm(callPrepOutput, /Full-Stack Growth Desk|three pages|30 days|\$500/)
+	dnm(callPrepOutput, staleSevenDayPromise)
+	mat(callPrepOutput, /14-day implementation tracking from Day 0/)
+
+	for (const [surfacePath, replacementTruth] of [
+		["growth-brain/prospecting/warm-network-scripts.md", /human-reviewed The Website Correction/],
+		["growth-brain/sales/sales-call-script.md", /14-day implementation tracking/]
+	]) {
+		const surface = readFileSync(join(repoRoot, surfacePath), "utf8")
+		dnm(surface, staleSevenDayPromise)
+		mat(surface, replacementTruth)
+	}
+
+	const auditRun = run("scripts/create-prospect-audit.mjs", ["Regression Audit Fixture"])
+	eq(auditRun.status, 0, auditRun.stderr)
+	const auditRoot = join(serviceRoot, "prospects", "regression-audit-fixture")
+	const auditOutline = readFileSync(join(auditRoot, "loom-outline.md"), "utf8")
+	dnm(auditOutline, staleSevenDayPromise)
+	mat(auditOutline, /fixed-scope sprint/)
+	mat(auditOutline, /14-day implementation tracking/)
+	const auditBrief = readFileSync(join(auditRoot, "audit-brief.md"), "utf8")
+	dnm(auditBrief, staleSevenDayPromise)
+	mat(auditBrief, /fixed-scope sprint/)
+
+	const callBookedPrep = run("scripts/prepare-prospect-call-booked.mjs", [salesProspect, "--time", "2026-07-15T10:00:00.000Z"])
+	eq(callBookedPrep.status, 0, callBookedPrep.stderr)
+	const callBookedOutput = readFileSync(join(salesProspect, "call-booked-package.md"), "utf8")
+	dnm(callBookedOutput, staleSevenDayPromise)
+	mat(callBookedOutput, /4\. Ask whether the fixed-scope sprint is worth starting now\./)
 
 	expectZeroWriteFailure("scripts/prepare-prospect-close-package.mjs", [salesProspectArg, "--price", "$500", "--payment", "https://pay.example.com/founder-pilot"], /price is immutable during the founder pilot: \$1,000 founder pilot/)
 	expectZeroWriteFailure("scripts/prepare-prospect-close-package.mjs", [salesProspectArg, "--payment", "$500 by bank transfer"], /payment contains a noncanonical founder-pilot price/)
