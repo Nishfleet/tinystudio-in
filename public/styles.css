@@ -700,8 +700,14 @@ h4 {
   box-shadow: var(--shadow);
 }
 
-.info-card h3 {
+/* Card headings keep the former h3 card-title scale and margin even when
+   semantic markup uses h2; inside cards the global h2 max-width cap (12ch)
+   is removed so card titles can wrap naturally. Global h2 styling is
+   intentionally untouched. */
+.info-card :is(h2, h3) {
   margin-top: 12px;
+  font-size: clamp(1.65rem, 2vw, 2.35rem);
+  max-width: none;
 }
 
 .info-card p {
