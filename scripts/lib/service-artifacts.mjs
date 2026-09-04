@@ -86,9 +86,26 @@ export const isIso = isRfc3339Timestamp
 export function isHash(value) {
 	return typeof value === "string" && /^[a-f0-9]{64}$/.test(value)
 }
+// Deterministic Day 0 tracking anchor derived from the recorded start and
+// pause history. It exists to keep Day 0 records and review-queue provenance
+// hash-stable; it is an internal operational field, not a customer promise.
 export function serviceDeadlineAt(day0StartedAt, pauseHistory = []) {
 	const pausedBusinessMs = pauseHistory.reduce((total, pause) => total + businessMillisecondsBetween(pause.startedAt, pause.endedAt), 0)
 	return addBusinessMillisecondsToTimestamp(addBusinessDaysToTimestamp(day0StartedAt, 7), pausedBusinessMs)
+}
+
+// End of the 14-day implementation-tracking window: the accepted implementation
+// timestamp plus 14 calendar days, extended by every completed client-delay
+// pause that overlaps the window (matching the stage-evidence rule that
+// tracking requires 14 active days). An active pause is reported separately and
+// shifts the end only when it completes and enters pauseHistory.
+export function implementationTrackingDeadlineAt(implementationAcceptedAt, pauseHistory = []) {
+	const accepted = Date.parse(implementationAcceptedAt)
+	const pausedMs = (pauseHistory || []).reduce(
+		(total, pause) => total + Math.max(0, Date.parse(pause.endedAt) - Math.max(Date.parse(pause.startedAt), accepted)),
+		0,
+	)
+	return new Date(accepted + 14 * 86400000 + pausedMs).toISOString()
 }
 export function assertExactKeys(value, expected, name) {
 	assert(value && typeof value === "object" && !Array.isArray(value), `${name} must be an object`)
@@ -457,7 +474,7 @@ export function validateDay0Record(value, applicationId) {
 	const {total} = checkedPauseIntervals(value.pauseHistory, value.activePause, Date.parse(value.day0StartedAt), "Day 0")
 	assert(Number.isInteger(value.totalPausedMs) && value.totalPausedMs === total, "Day 0 totalPausedMs mismatch")
 	const expectedDeadline = serviceDeadlineAt(value.day0StartedAt, value.pauseHistory)
-	assert(value.deadlineAt === expectedDeadline, "Day 0 deadline must preserve seven working days and exclude paused time")
+	assert(value.deadlineAt === expectedDeadline, "Day 0 deadlineAt does not match the recorded Day 0 start and pause history")
 	return value
 }
 

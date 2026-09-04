@@ -30,6 +30,7 @@ import {assertCanonicalFounderPilotCohort, assertClientScaffold, FOUNDER_PILOT} 
 import {createPromotionJournal, promotionMarkerPath, validatePromotionJournal} from "./lib/service-promotion-journal.mjs"
 import {commitJournaledTransition, transitionJournalRecord} from "./lib/service-transition-journal.mjs"
 import {addBusinessDaysToTimestamp, businessMillisecondsBetween, localEndOfIsoDate, localIsoDate, timestampIsOnOrBeforeLocalDate, timestampIsOnOrBeforeTrustedNow, trustedNow} from "./date-utils.mjs"
+import {implementationTrackingDeadlineAt} from "./lib/service-artifacts.mjs"
 
 const AS_OF_DATE = "2026-07-29"
 const DECISION_TEST_NOW = "2026-07-13T23:59:00.000+05:30"
@@ -2125,6 +2126,87 @@ try {
 	} finally {
 		rm(backupParent, {recursive: true, force: true})
 	}
+
+	// ---- service deadline checker: retired contract language stays out ----
+	const checkerSource = rf(join(process.cwd(), "scripts/check-service-deadlines.mjs"), "utf8")
+	for (const retired of ["7-day", "seven-day", "refund", "guarantee", "delivery deadline", "delivery promise", "delivery guarantee", "public delivery", "sprint promise"]) {
+		assert(!checkerSource.toLowerCase().includes(retired), `checker still carries retired contract language: ${retired}`)
+	}
+	const artifactsSource = rf(join(process.cwd(), "scripts/lib/service-artifacts.mjs"), "utf8")
+	for (const retired of ["7-day", "seven-day", "refund", "delivery deadline", "delivery promise", "delivery guarantee", "public delivery"]) {
+		assert(!artifactsSource.toLowerCase().includes(retired), `service artifacts still carry retired contract language: ${retired}`)
+	}
+
+	eq(implementationTrackingDeadlineAt("2026-07-10T00:00:00.000Z"), "2026-07-24T00:00:00.000Z")
+	eq(implementationTrackingDeadlineAt("2026-07-10T10:00:00.000+05:30"), "2026-07-24T04:30:00.000Z")
+	const trackingPause = (startedAt, endedAt) => ({reason: "Client delay", startedAt, endedAt, durationMs: Date.parse(endedAt) - Date.parse(startedAt)})
+	eq(implementationTrackingDeadlineAt("2026-07-10T00:00:00.000Z", [trackingPause("2026-07-05T00:00:00.000Z", "2026-07-06T00:00:00.000Z")]), "2026-07-24T00:00:00.000Z", "pause before acceptance must not shift the window")
+	eq(implementationTrackingDeadlineAt("2026-07-10T00:00:00.000Z", [trackingPause("2026-07-16T00:00:00.000Z", "2026-07-20T00:00:00.000Z")]), "2026-07-28T00:00:00.000Z", "pause after acceptance must extend the window")
+	eq(implementationTrackingDeadlineAt("2026-07-10T00:00:00.000Z", [trackingPause("2026-07-09T00:00:00.000Z", "2026-07-11T00:00:00.000Z")]), "2026-07-25T00:00:00.000Z", "pause spanning acceptance counts only the active part")
+
+	const deadlineRoot = mkdtempSync(join(tmpdir(), "tinystudio-deadline-checker-"))
+	const deadlineEmpty = mkdtempSync(join(tmpdir(), "tinystudio-deadline-empty-"))
+	const deadlineDay0 = startedAt => JSON.stringify({day0StartedAt: startedAt, paused: false, activePause: null, pauseHistory: []})
+	const deadlineState = (state, acceptedAt = "", contextRevision = 0) => JSON.stringify({state, implementationAcceptedAt: acceptedAt, contextRevision})
+	const deadlineClient = (name, day0Body, stateBody = null) => {
+		const folder = join(deadlineRoot, "clients", name)
+		md(folder, {recursive: true})
+		wf(join(folder, "service-day0.json"), `${day0Body}\n`)
+		if (stateBody !== null) wf(join(folder, "service-state.json"), `${stateBody}\n`)
+	}
+	const runDeadlines = asOf => spawnSync(process.execPath, [join(process.cwd(), "scripts/check-service-deadlines.mjs")], {cwd: deadlineRoot, encoding: "utf8", env: {...process.env, SERVICE_DEADLINE_NOW: asOf}})
+	const emptyDeadlines = spawnSync(process.execPath, [join(process.cwd(), "scripts/check-service-deadlines.mjs")], {cwd: deadlineEmpty, encoding: "utf8"})
+	eq(emptyDeadlines.status, 0)
+	mat(emptyDeadlines.stdout, /No paid clients with a Day 0 record\. Nothing to check\./)
+	deadlineClient("alice", deadlineDay0("2026-07-13T10:00:00.000Z"), deadlineState("client-approved"))
+	deadlineClient("bob", deadlineDay0("2026-07-13T10:00:00.000Z"), deadlineState("tracking-14-day", "2026-07-10T00:00:00.000Z"))
+	deadlineClient("carol", deadlineDay0("2026-07-13T10:00:00.000Z"), deadlineState("tracking-14-day", "2026-07-01T00:00:00.000Z"))
+	deadlineClient("grace", JSON.stringify({day0StartedAt: "2026-07-13T10:00:00.000Z", paused: false, activePause: null, pauseHistory: [trackingPause("2026-07-05T00:00:00.000Z", "2026-07-09T00:00:00.000Z")]}), deadlineState("tracking-14-day", "2026-07-01T00:00:00.000Z"))
+	deadlineClient("dave", JSON.stringify({day0StartedAt: "2026-07-13T10:00:00.000Z", paused: true, activePause: {reason: "CMS access pending", startedAt: "2026-07-15T00:00:00.000Z"}, pauseHistory: []}))
+	deadlineClient("eve", JSON.stringify({}))
+	deadlineClient("frank", deadlineDay0("2026-07-13T10:00:00.000Z"), deadlineState("tracking-14-day", "2026-07-07T00:00:00.000Z"))
+	deadlineClient("gina", deadlineDay0("2026-07-13T10:00:00.000Z"), deadlineState("tracking-14-day", "2026-07-01T00:00:00.000Z", 2))
+	md(join(deadlineRoot, "clients", "gina", "service-evidence", "tracking-14-day"), {recursive: true})
+	wf(join(deadlineRoot, "clients", "gina", "service-evidence", "tracking-14-day", "2.json"), "{}\n")
+	deadlineClient("hank", deadlineDay0("2026-07-13T10:00:00.000Z"), deadlineState("complete", "2026-07-01T00:00:00.000Z"))
+
+	const attentionRun = runDeadlines("2026-07-20T00:00:00.000Z")
+	eq(attentionRun.status, 1, attentionRun.stdout)
+	for (const retired of ["7-day", "seven-day", "refund", "guarantee"]) {
+		assert(!attentionRun.stdout.toLowerCase().includes(retired), `checker output still carries retired contract language: ${retired}`)
+	}
+	mat(attentionRun.stdout, /no-day0\s+eve\s+Day 0 not recorded/)
+	mat(attentionRun.stdout, /tracking\s+bob\s+4 days left in the 14-day implementation tracking window \(ends 2026-07-24\)/)
+	mat(attentionRun.stdout, /due-soon\s+frank\s+1 days left in the 14-day implementation tracking window \(ends 2026-07-21\)/)
+	mat(attentionRun.stdout, /tracking-due\s+carol\s+5 days past the 14-day implementation tracking window \(ended 2026-07-15\)/)
+	mat(attentionRun.stdout, /tracking-due\s+grace\s+1 days past the 14-day implementation tracking window \(ended 2026-07-19\)/)
+	mat(attentionRun.stdout, /paused\s+dave\s+clock paused since 2026-07-15T00:00:00\.000Z — CMS access pending/)
+	mat(attentionRun.stdout, /tracking-complete\s+gina\s+14-day tracking evidence recorded — awaiting human decision/)
+	mat(attentionRun.stdout, /tracking-complete\s+hank\s+14-day implementation tracking complete/)
+	mat(attentionRun.stdout, /no-deadline\s+alice\s+no deadline applicable — 14-day implementation tracking starts after implementation acceptance \(service state: client-approved, Day 0 2026-07-13\)/)
+	mat(attentionRun.stdout, /4 client\(s\) need attention today\./)
+
+	const boundaryRun = runDeadlines("2026-07-24T00:00:00.000Z")
+	mat(boundaryRun.stdout, /tracking-due\s+bob\s+0 days past the 14-day implementation tracking window \(ended 2026-07-24\)/)
+	const preBoundaryRun = runDeadlines("2026-07-23T12:00:00.000Z")
+	mat(preBoundaryRun.stdout, /due-soon\s+bob\s+0\.5 days left in the 14-day implementation tracking window \(ends 2026-07-24\)/)
+
+	const clearRoot = mkdtempSync(join(tmpdir(), "tinystudio-deadline-clear-"))
+	const clearClient = (name, day0Body, stateBody = null) => {
+		const folder = join(clearRoot, "clients", name)
+		md(folder, {recursive: true})
+		wf(join(folder, "service-day0.json"), `${day0Body}\n`)
+		if (stateBody !== null) wf(join(folder, "service-state.json"), `${stateBody}\n`)
+	}
+	clearClient("bob", deadlineDay0("2026-07-13T10:00:00.000Z"), deadlineState("tracking-14-day", "2026-07-10T00:00:00.000Z"))
+	clearClient("dave", JSON.stringify({day0StartedAt: "2026-07-13T10:00:00.000Z", paused: true, activePause: {reason: "CMS access pending", startedAt: "2026-07-15T00:00:00.000Z"}, pauseHistory: []}))
+	clearClient("hank", deadlineDay0("2026-07-13T10:00:00.000Z"), deadlineState("complete", "2026-07-01T00:00:00.000Z"))
+	const clearRun = spawnSync(process.execPath, [join(process.cwd(), "scripts/check-service-deadlines.mjs")], {cwd: clearRoot, encoding: "utf8", env: {...process.env, SERVICE_DEADLINE_NOW: "2026-07-20T00:00:00.000Z"}})
+	eq(clearRun.status, 0, clearRun.stdout)
+	mat(clearRun.stdout, /No tracking deadlines need attention\./)
+	rm(deadlineRoot, {recursive: true, force: true})
+	rm(deadlineEmpty, {recursive: true, force: true})
+	rm(clearRoot, {recursive: true, force: true})
 
 	assert(ALLOWED_COMMANDS.every(argv => Array.isArray(argv) && argv.every(part => typeof part === "string")))
 	const engineSource = [rf(join(process.cwd(), "scripts/lib/review-queue.mjs"), "utf8"), rf(join(process.cwd(), QUEUE), "utf8")].join("\n")
