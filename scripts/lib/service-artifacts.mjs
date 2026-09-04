@@ -49,7 +49,11 @@ const NEGATED_GUARANTEE_CLAUSE_PATTERN = new RegExp(`\\b(?:(?:do(?:es)?|did|will
 const NEITHER_GUARANTEE_CLAUSE_PATTERN = /\bneither [^,:.!?;\n]{1,80}\bnor\b[^,:.!?;\n]{1,80}\b(?:is|are|was|were)\s+guaranteed\b/gi
 const GUARANTEE_NOUN = "(?:guarantees?|promises?|assurances?)"
 const GUARANTEE_SCOPE = `(?:${FORBIDDEN_OUTCOME_TERM}|outcomes?)`
-const NO_GUARANTEE_CLAUSE_PATTERN = new RegExp(`\\b(?:no\\s+(?:${GUARANTEE_SCOPE}\\s+)?${GUARANTEE_NOUN}|without\\s+(?:any\\s+)?(?:${GUARANTEE_SCOPE}\\s+)?${GUARANTEE_NOUN})\\b(?:\\s+(?:of|for)\\s+${GUARANTEE_SCOPE})?(?:\\s+(?:is|are|was|were)\\s+made)?`, "gi")
+const GUARANTEE_SCOPE_TERM = "(?:revenue|rankings?|roas|conversions?|conversion[\\s-]+(?:rate|lift)|booked[\\s-]+calls?|sales[\\s-]+volume|outcomes?)"
+const NO_GUARANTEE_CLAUSE_PATTERN = new RegExp(
+	`\\b(?:no\\s+(?:(?:${GUARANTEE_SCOPE_TERM}\\s*,\\s*(?:(?:and|or)\\s+)?|${GUARANTEE_SCOPE_TERM}\\s+(?:and|or)\\s+)*${GUARANTEE_SCOPE_TERM}\\s+)?${GUARANTEE_NOUN}|without\\s+(?:any\\s+)?(?:(?:${GUARANTEE_SCOPE_TERM}\\s*,\\s*(?:(?:and|or)\\s+)?|${GUARANTEE_SCOPE_TERM}\\s+(?:and|or)\\s+)*${GUARANTEE_SCOPE_TERM}\\s+)?${GUARANTEE_NOUN})\\b(?:\\s+(?:of|for)\\s+${GUARANTEE_SCOPE})?(?:\\s+(?:is|are|was|were)\\s+made)?`,
+	"gi"
+)
 const NEGATED_OUTCOME_IMPLICATION_PATTERN = new RegExp(
 	`\\b(?:do(?:es)?|did|will|can|could|would|should|is|are|was|were)\\s+(?:not|never)\\s+(?:imply|mean|represent|constitute|signal|cause|create|deliver|generate|produce|drive|bring|give|yield|increase|improve|raise|grow|boost|lift|affect|alter|change|hurt|reduce|promise|guarantee|assure|ensure|result(?:\\s+${CHANGE_LINK_ADVERB})?\\s+in|lead(?:\\s+${CHANGE_LINK_ADVERB})?\\s+to)\\b(?:(?!\\b${CONTRAST_BOUNDARY}\\b)[^.!?;\\n]){0,80}?\\b${FORBIDDEN_OUTCOME_TERM}\\b(?:\\s+(?:results?|outcomes?|performance))?`,
 	"gi"

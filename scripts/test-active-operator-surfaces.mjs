@@ -22,8 +22,10 @@ const privateRuntimeArtifacts = ["daily-money-mission.md", "daily-money-mission.
 const retiredTrackedPrivateArtifacts = privateRuntimeArtifacts.map(path => `growth-brain/ops/${path.slice("runs/".length)}`)
 const retiredBroadServiceArtifacts = ["full-stack-growth-map.md", "full-stack-growth-map.html", "metrics-dashboard.md", "owned-handoff-loom-cockpit.md", "owned-handoff-loom-cockpit.html", "owned-product-case-studies.md", "owned-product-case-studies.html", "owned-product-live-signals.md", "owned-product-live-signals.html", "owned-product-metrics-update.md", "owned-product-workflow-proofs.md", "owned-product-workflow-proofs.html", "owned-proof-review.md", "owned-proof-review.html", "retention-checkups.md", "retention-dashboard.html", "value-retention-stress-test.md", "weekly-client-value-loop.md"].map(name => `growth-brain/ops/${name}`)
 
+const fixtureEnv = {...process.env, NODE_OPTIONS: [process.env.NODE_OPTIONS, `--import=${fixedClockImport}`].filter(Boolean).join(" "), SERVICE_REPO_ROOT: T, SERVICE_TEST_NOW: `${trackedArtifactDate}T12:00:00.000+05:30`, TZ: "Asia/Kolkata"}
+
 function run(args) {
-	return spawnSync(process.execPath, args, {cwd: T, encoding: "utf8", env: {...process.env, NODE_OPTIONS: [process.env.NODE_OPTIONS, `--import=${fixedClockImport}`].filter(Boolean).join(" "), SERVICE_REPO_ROOT: T, SERVICE_TEST_NOW: `${trackedArtifactDate}T12:00:00.000+05:30`, TZ: "Asia/Kolkata"}})
+	return spawnSync(process.execPath, args, {cwd: T, encoding: "utf8", env: fixtureEnv})
 }
 
 function writeJson(path, value) {
@@ -196,7 +198,7 @@ try {
 
 	const DC = join(T, "dashboard-cwd")
 	mkdirSync(join(DC, "prospects"), {recursive: true})
-	const rootedProspect = spawnSync(process.execPath, [sp("create-prospect-audit.mjs"), "Rooted Prospect"], {cwd: DC, encoding: "utf8", env: {...process.env, SERVICE_REPO_ROOT: T}})
+	const rootedProspect = spawnSync(process.execPath, [sp("create-prospect-audit.mjs"), "Rooted Prospect"], {cwd: DC, encoding: "utf8", env: fixtureEnv})
 	eq(rootedProspect.status, 0, rootedProspect.stderr)
 	eq(existsSync(join(T, "prospects/rooted-prospect/metadata.json")), true)
 	eq(existsSync(join(DC, "prospects/rooted-prospect")), false)
@@ -208,13 +210,13 @@ try {
 	writeFileSync(join(T, "prospects/loom-links.txt"), "# Service-root proof rows are intentionally empty\n")
 	const tasksPath = join(T, "TASKS.md")
 	writeFileSync(tasksPath, readFileSync(tasksPath, "utf8").replace("## Active\n", "## Active\n\n- [ ] Service-root dashboard sentinel\n"))
-	const DD = spawnSync(process.execPath, [sp("export-internal-dashboard.mjs"), "--output=runs/divergent-dashboard.md", "--html=runs/divergent-dashboard.html"], {cwd: DC, encoding: "utf8", env: {...process.env, SERVICE_REPO_ROOT: T}})
+	const DD = spawnSync(process.execPath, [sp("export-internal-dashboard.mjs"), "--output=runs/divergent-dashboard.md", "--html=runs/divergent-dashboard.html"], {cwd: DC, encoding: "utf8", env: fixtureEnv})
 	eq(DD.status, 0, DD.stderr)
 	eq(JSON.parse(DD.stdout).marketProof.rows, 0)
 	const DM = readFileSync(join(T, "runs/divergent-dashboard.md"), "utf8")
 	mat(DM, /Service-root dashboard sentinel/)
 	dnm(DM, /CWD-only dashboard poison/)
-	const DCC = spawnSync(process.execPath, [sp("show-growth-command-center.mjs")], {cwd: DC, encoding: "utf8", env: {...process.env, SERVICE_REPO_ROOT: T}})
+	const DCC = spawnSync(process.execPath, [sp("show-growth-command-center.mjs")], {cwd: DC, encoding: "utf8", env: fixtureEnv})
 	eq(DCC.status, 0, DCC.stderr)
 	const DCD = JSON.parse(DCC.stdout)
 	eq(DCD.counts.prospectsTotal, 1)
