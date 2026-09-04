@@ -67,6 +67,10 @@
             <div class="action-row">
               <a class="button" href="mailto:support@tinystudio.in">support@tinystudio.in</a>
               <a class="ghost-button" href="/support/">Support hub</a>
+              <a
+                class="ghost-button"
+                id="signal-apply"
+                href="mailto:support@tinystudio.in?subject=Website%20Correction">Apply for the managed service</a>
             </div>
           </div>
 
@@ -78,6 +82,32 @@
               <li>Studio-level legal and privacy pages</li>
             </ul>
           </aside>
+        </section>
+
+        <section class="app-strip reveal delay-1">
+          <div class="app-strip-grid">
+            <article>
+              <p class="eyebrow">Website signal</p>
+              <p class="section-copy" id="signal-note" hidden>
+                You arrived from the <span id="signal-source-name"></span> area
+                of the website. This is for internal measurement only — no
+                analytics, no cookies, and nothing is sent automatically. If
+                you email us, the source may appear in the prefilled subject or
+                body, which you can edit before sending.
+              </p>
+            </article>
+            <article>
+              <p class="eyebrow">How the source marker works</p>
+              <p class="section-copy">
+                Homepage links to this page may carry a source marker in the
+                address bar (such as ?source=homepage-hero). The marker is a
+                read-only URL parameter used only to help Tiny Studio
+                understand which page a visitor came from. It is not stored or
+                collected here, and it never leaves your browser unless you
+                choose to send an email with it.
+              </p>
+            </article>
+          </div>
         </section>
 
         <section class="card-grid">
@@ -211,5 +241,23 @@
           <p class="copyright">© 2026 Tiny Studio</p>
         </section>
       </div>
-    </footer></body>
+    </footer>
+    <script id="signal-script">
+      (function () {
+        var source = new URLSearchParams(window.location.search).get("source");
+        var note = document.getElementById("signal-note");
+        var name = document.getElementById("signal-source-name");
+        var apply = document.getElementById("signal-apply");
+        if (!source || !note || !name || !apply) return;
+        if (!/^[a-z0-9-]{1,40}$/.test(source)) return;
+        name.textContent = source;
+        note.hidden = false;
+        apply.href =
+          "mailto:support@tinystudio.in?subject=" +
+          encodeURIComponent("Website Correction") +
+          "&body=" +
+          encodeURIComponent("Source page: " + source);
+      })();
+    </script>
+  </body>
 </html>
