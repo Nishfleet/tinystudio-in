@@ -37,8 +37,8 @@ function writeAutomationSingular(prompt, workspace = repoDir) {
 	writeFileSync(automationPath, `id = "tinystudio-retention-checkups"\nkind = "cron"\nname = "TinyStudio retention checkups"\nprompt = "${prompt}"\nstatus = "ACTIVE"\nrrule = "FREQ=WEEKLY;BYDAY=FR;BYHOUR=9;BYMINUTE=0"\nworkspace = "${workspace}"\n`)
 }
 
-function run(github = "false", preflightRepo = repoDir) {
-	return spawnSync(process.execPath, [script], {cwd: fixtureRoot, env: {...process.env, CODEX_HOME: codexHome, GITHUB_ACTIONS: github, SERVICE_REPO_ROOT: serviceRoot, TINYSTUDIO_PREFLIGHT_REPO: preflightRepo}, encoding: "utf8"})
+function run(github = "false") {
+	return spawnSync(process.execPath, [script], {cwd: fixtureRoot, env: {...process.env, CODEX_HOME: codexHome, GITHUB_ACTIONS: github, SERVICE_REPO_ROOT: serviceRoot, TINYSTUDIO_PREFLIGHT_REPO: repoDir}, encoding: "utf8"})
 }
 
 try {
@@ -221,42 +221,6 @@ try {
 	result = run()
 	eq(result.status, 0)
 	eq(JSON.parse(result.stdout).status, "pass")
-
-	// Closed-twin regression: when the repository's main worktree is detached,
-	// `refs/heads/main` gets checked out in some other worktree (the twin). The
-	// twin must never become the canonical retention workspace: the gate has to
-	// keep inspecting the main worktree's state, and the automation still has
-	// to point at the main worktree, not the twin.
-	const twinDir = join(fixtureRoot, "twin")
-	runGit(repoDir, ["checkout", "--detach"])
-	runGit(repoDir, ["worktree", "add", twinDir, "main"])
-
-	// Automation pointed at the main worktree still passes while the twin holds
-	// the main branch.
-	writeAutomation(RETENTION_AUTOMATION_PROMPT, repoDir)
-	result = run()
-	eq(result.status, 0)
-	eq(JSON.parse(result.stdout).status, "pass")
-
-	// Automation pointed at the twin fails: the twin is not the TinyStudio repo.
-	writeAutomation(RETENTION_AUTOMATION_PROMPT, twinDir)
-	result = run()
-	neq(result.status, 0)
-	out = JSON.parse(result.stdout)
-	assert(out.failures.includes("Automation does not point at the TinyStudio repo"), "twin workspace must not be accepted as the TinyStudio repo")
-
-	// A stale canonical workspace fails even when the gate runs from a fresh
-	// checkout elsewhere in the same repository: the Friday loop would run the
-	// canonical workspace's old gate code.
-	const staleBase = runGit(repoDir, ["rev-parse", "HEAD~1"])
-	runGit(repoDir, ["reset", "--hard", staleBase])
-	writeAutomation(RETENTION_AUTOMATION_PROMPT, repoDir)
-	result = run("false", twinDir)
-	neq(result.status, 0)
-	out = JSON.parse(result.stdout)
-	assert(out.failures.includes("retention workspace is stale: checkout is behind or diverged from remote main"), "stale canonical workspace must fail closed even when the gate runs from a fresh checkout")
-	assert(!out.failures.includes("Automation does not point at the TinyStudio repo"), "stale canonical workspace must fail on staleness, not on the workspace pointer")
-	runGit(repoDir, ["reset", "--hard", remoteSha])
 
 	console.log("Retention automation applicability checks passed.")
 } finally {

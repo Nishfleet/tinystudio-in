@@ -12,7 +12,7 @@ Parity score: 5/10.
 
 | Area | Current Evidence | Required Proof |
 |---|---|---|
-| Sender trust | missing physical postal address | Run `npm run send:configure -- --physical-address="..." --dkim-selector=... --dry-run` with the real values, then apply it without `--dry-run`. Until then, use contact forms or DMs. |
+| Sender trust | missing physical postal address; DKIM selector not configured | Run `npm run send:configure -- --physical-address="..." --dkim-selector=... --dry-run` with the real values, then apply it without `--dry-run`. Until then, use contact forms or DMs. |
 | Market proof | 0/5 Looms, 0/5 sends, 0 replies | Record and send 5 approved Looms with fault, impact, fix, and ask notes. |
 | Sales proof | 0 external client(s) with a validated application, human fit approval, and paid Day 0 | Capture at least 1 external consented application, human fit approval, and validated paid Day 0 record. |
 | Delivery proof | 0 external paid client(s) ready with approved delivery; 0 with approved claims | Complete hash-bound human approval, implementation acceptance, approved claims, scorecard, and client readiness for that paid client. |
@@ -44,7 +44,7 @@ npm run market:proof-check
 
 5. Send from the outbox, using the route shown for each prospect. Recommended channel right now: contact form or DM.
 
-Sender warnings: missing physical postal address.
+Sender warnings: missing physical postal address; DKIM selector not configured.
 
 6. After sending, use the outbox copied sent sheet:
 

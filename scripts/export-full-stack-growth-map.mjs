@@ -1,9 +1,7 @@
 #!/usr/bin/env node
 import { mkdirSync, writeFileSync } from "node:fs";
 import { localIsoDate } from "./date-utils.mjs";
-import { handleHelp } from "./lib/operator-cli.mjs";
 
-handleHelp(process.argv.slice(2), `Usage: node scripts/export-full-stack-growth-map.mjs`);
 const today = localIsoDate();
 const outputPath = "growth-brain/ops/full-stack-growth-map.md";
 const htmlPath = "growth-brain/ops/full-stack-growth-map.html";

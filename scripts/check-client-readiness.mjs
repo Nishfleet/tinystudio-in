@@ -5,12 +5,12 @@ import { fileURLToPath } from "node:url";
 import { loadValidatedServiceClient } from "./lib/validated-service-client.mjs";
 import { resolveRepoPath } from "./lib/service-contract.mjs";
 
-const clientArg = process.argv.slice(2).find((arg) => !arg.startsWith("--"));
+const clientArg = process.argv[2];
 const strict = process.argv.includes("--strict");
 const repoRoot = process.env.SERVICE_REPO_ROOT || process.cwd();
 
 if (!clientArg) {
-  console.error("Usage: npm run client:check -- clients/client-slug (strict; advisory report: npm run client:check:advisory -- clients/client-slug)");
+  console.error("Usage: npm run client:check -- clients/client-slug [-- --strict]");
   process.exit(1);
 }
 

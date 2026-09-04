@@ -3,8 +3,7 @@
 //     (PRs #10/#11, snoozed-by-Nish 2026-08-08) and leave nothing behind;
 //   - every neutral merged public fix used as deploy proof (H2-after-H1 on
 //     /promptly/support/ #18/#20, JSON-LD on /contact/ #19, homepage brand
-//     disambiguation #29, top-level real 404 page #34) must survive the
-//     filter untouched.
+//     disambiguation #29) must survive the filter untouched.
 //
 // The bundle is prepared in a temp directory; the worktree is never modified.
 import { mkdtempSync, rmSync, existsSync } from "node:fs"

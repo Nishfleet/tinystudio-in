@@ -5,16 +5,12 @@ import { execFileSync } from "node:child_process";
 import { checkProspectReadiness, prospectWarningWeight } from "./lib/prospect-readiness.mjs";
 import { sendChannelGuidance } from "./lib/send-channel-guidance.mjs";
 import { routedContactPlan } from "./lib/contact-route.mjs";
-import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 
-const args = process.argv.slice(2);
-handleHelp(args, `Usage: node scripts/export-recording-cockpit.mjs [--limit=5] [--output=prospects/recording-cockpit.html]`);
-const limitArg = args.find((arg) => arg.startsWith("--limit="));
+const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
 const limit = limitArg ? Number(limitArg.split("=")[1]) : 5;
-const outputArg = args.find((arg) => arg.startsWith("--output="));
-const outputRel = outputArg ? outputArg.split("=")[1] : "prospects/recording-cockpit.html";
-const outputPath = resolveOutputPath(outputRel, { fallback: "prospects/recording-cockpit.html" });
+const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
+const outputPath = outputArg ? outputArg.split("=")[1] : "prospects/recording-cockpit.html";
 
 function listFolders(root) {
   return listOutboundProspectFolders(root);

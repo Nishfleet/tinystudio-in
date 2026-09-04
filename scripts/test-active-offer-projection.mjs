@@ -12,7 +12,7 @@ const testRoot = mkdtempSync(join(tmpdir(), "tinystudio-active-offer-projection-
 const sp = name => join(repositoryRoot, "scripts", name)
 const {equal: eq, match: mat, doesNotMatch: dnm} = assert
 const legacyProspectPath = join(testRoot, "prospects", "legacy-offer-fixture")
-const retiredOfferPattern = /7-Day Site Revenue Fault Sprint|7[- ]day sprint|Tangible Revenue Fault Sprint|30[- ]day action plan|Growth Desk|three pages|founder sprint|\$500/i
+const retiredOfferPattern = /7-Day Site Revenue Fault Sprint|Tangible Revenue Fault Sprint|30[- ]day action plan|Growth Desk|three pages|\$500/i
 
 function writeJson(path, value) {
 	mkdirSync(dirname(path), {recursive: true})

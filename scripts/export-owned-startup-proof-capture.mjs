@@ -3,9 +3,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { execFileSync } from "node:child_process";
 import { localIsoDate } from "./date-utils.mjs";
-import { handleHelp } from "./lib/operator-cli.mjs";
 
-handleHelp(process.argv.slice(2), `Usage: node scripts/export-owned-startup-proof-capture.mjs`);
 const today = localIsoDate();
 
 const startups = [

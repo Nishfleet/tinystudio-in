@@ -1,17 +1,13 @@
 #!/usr/bin/env node
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { handleHelp, resolveOutputPath } from "./lib/operator-cli.mjs";
 import { listOutboundProspectFolders } from "./lib/outbound-prospects.mjs";
 import { checkProspectReadiness, prospectWarningWeight } from "./lib/prospect-readiness.mjs";
 
-const args = process.argv.slice(2);
-handleHelp(args, `Usage: node scripts/export-recording-queue.mjs [--limit=5] [--output=prospects/recording-queue.md]`);
-const limitArg = args.find((arg) => arg.startsWith("--limit="));
+const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
 const limit = limitArg ? Number(limitArg.split("=")[1]) : 5;
-const outputArg = args.find((arg) => arg.startsWith("--output="));
-const outputRel = outputArg ? outputArg.split("=")[1] : "prospects/recording-queue.md";
-const outputPath = resolveOutputPath(outputRel, { fallback: "prospects/recording-queue.md" });
+const outputArg = process.argv.find((arg) => arg.startsWith("--output="));
+const outputPath = outputArg ? outputArg.split("=")[1] : "prospects/recording-queue.md";
 
 function listFolders(root) {
   return listOutboundProspectFolders(root);

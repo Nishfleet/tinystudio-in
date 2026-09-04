@@ -3,11 +3,11 @@ import { existsSync } from "node:fs";
 import { checkProspectReadiness } from "./lib/prospect-readiness.mjs";
 import { guardOutboundProspectPath } from "./lib/outbound-prospects.mjs";
 
-const prospectPath = process.argv.slice(2).find((arg) => !arg.startsWith("--"));
+const prospectPath = process.argv[2];
 const strict = process.argv.includes("--strict");
 
 if (!prospectPath) {
-  console.error("Usage: npm run prospect:check -- prospects/prospect-slug (strict; advisory report: npm run prospect:check:advisory -- prospects/prospect-slug)");
+  console.error("Usage: npm run prospect:check -- prospects/prospect-slug [-- --strict]");
   process.exit(1);
 }
 

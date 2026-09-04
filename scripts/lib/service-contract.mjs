@@ -1,5 +1,5 @@
 import {createHash, randomUUID} from "node:crypto"
-import {chmodSync, existsSync, linkSync, readFileSync, mkdirSync, renameSync, writeFileSync, unlinkSync, rmdirSync, realpathSync, rmSync, statSync} from "node:fs"
+import {chmodSync, existsSync, readFileSync, mkdirSync, renameSync, writeFileSync, unlinkSync, rmdirSync, realpathSync, rmSync, statSync} from "node:fs"
 import {dirname, isAbsolute, relative, resolve, join} from "node:path"
 
 export const APPLICATION_CONTRACT = "tinystudio.sprint-application"
@@ -358,25 +358,8 @@ function acquireRecoveryCoordinator(path, staleAfterMs) {
 	// (mkdir followed by an owner write), there is no half-made state a
 	// contender can be descheduled inside for long: the file either does not
 	// exist or exists complete. A recoverer can only take over a claim whose
-	// owner is dead or whose content is missing/old.
-	//
-	// Takeover is a rename, never an unlink. An unlink is unconditional: once
-	// a recoverer has decided a claim is stale, its unlink deletes whatever
-	// the claim path currently names. Between that staleness read and the
-	// unlink, a competing recoverer can remove the stale claim and create its
-	// own fresh claim, and the first recoverer's late unlink destroys that
-	// live claim - both recoverers then believe they hold the coordinator and
-	// both enter the lock critical section, which lets several contenders
-	// take the same lock. rename removes the inode at the claim path exactly
-	// once: a second recoverer's rename fails with ENOENT, so at most one
-	// recoverer can displace any given claim.
-	//
-	// The displaced claim is inspected before it is discarded. If it actually
-	// names a live owner (the staleness read raced with the claim's creation
-	// or another recoverer displaced it first), it is restored with a hard
-	// link - linkSync fails with EEXIST if the claim path was re-occupied in
-	// the meantime, so a restore can never clobber a newer claim - and the
-	// recoverer backs off instead of breaking the owner's mutual exclusion.
+	// owner is dead or whose content is missing/old, and its unlink is itself
+	// an atomic claim - exactly one recoverer wins, the rest fail with ENOENT.
 	const create = () => writeFileSync(path, ownerJson, {flag: "wx"})
 	try {
 		create()
@@ -385,49 +368,21 @@ function acquireRecoveryCoordinator(path, staleAfterMs) {
 		const owner = claimOwner(path)
 		const recoveryStaleAfterMs = Math.max(staleAfterMs, 1000)
 		if (processIsAlive(owner.pid) === true || lockAgeMs(path) < recoveryStaleAfterMs) return null
-		const displacedPath = `${path}.displaced-${process.pid}-${token}`
 		try {
-			renameSync(path, displacedPath)
-		} catch {
-			return null
-		}
-		const displaced = claimOwner(displacedPath)
-		if (processIsAlive(displaced.pid) === true) {
-			// We displaced a claim whose owner is alive: restore it so its
-			// holder keeps the coordinator, and back off. If a new claim
-			// appeared at path in the meantime the restore fails harmlessly
-			// and the displaced claim is orphaned - it never names us, so we
-			// never act on it, and its holder notices at its own re-verify.
-			try {
-				linkSync(displacedPath, path)
-				unlinkSync(displacedPath)
-			} catch {}
-			return null
-		}
-		try {
-			rmSync(displacedPath, {force: true})
+			unlinkSync(path)
 			create()
 		} catch {
 			return null
 		}
 	}
 	// Verify the claim still names this process before entering the critical
-	// section. If a recoverer displaced our claim and recreated it, the claim
-	// file now belongs to someone else: back off instead of holding the
-	// coordinator alongside them.
+	// section. If a recoverer removed our half-written claim and recreated it,
+	// our late bytes landed on an unlinked inode, so the claim file now
+	// belongs to someone else: back off instead of holding the coordinator
+	// alongside them.
 	const owner = claimOwner(path)
 	if (owner.pid !== process.pid || owner.token !== token) return null
-	// owns() lets the critical section re-verify the claim before it commits.
-	// A contender whose claim was displaced mid-critical-section must not
-	// hand the lock to its caller: another contender holds the coordinator
-	// right now and its lock operations are not mutually exclusive with ours.
-	return {
-		release: () => releaseClaim(path, token),
-		owns: () => {
-			const current = claimOwner(path)
-			return current.pid === process.pid && current.token === token
-		}
-	}
+	return () => releaseClaim(path, token)
 }
 
 export function acquireLock(path, {staleAfterMs = 5 * 60 * 1000} = {}) {
@@ -452,19 +407,9 @@ export function acquireLock(path, {staleAfterMs = 5 * 60 * 1000} = {}) {
 	// the whole create/verify sequence makes the pair mutually exclusive. The
 	// coordinator itself is an atomic O_EXCL claim file, so the coordinator
 	// can never be held by two contenders at once.
-	//
-	// The coordinator claim is re-verified after the lock is created. The
-	// takeover is single-winner, but a recoverer whose staleness read raced
-	// with the claim's creation can still briefly displace a live claim (and
-	// restore it, or lose the restore to a newer claim). A contender whose
-	// claim is gone at commit time may be sharing the critical section with
-	// the new coordinator holder, so it backs off instead of returning the
-	// lock - and removes its own lock directory if it is still the one at the
-	// lock path, so the queue does not stay locked behind a holder that
-	// already gave up.
 	const recoveryPath = `${path}.recovery`
-	const recovery = acquireRecoveryCoordinator(recoveryPath, staleAfterMs)
-	if (!recovery) throw new Error(`service queue is locked: ${path}`)
+	const releaseRecovery = acquireRecoveryCoordinator(recoveryPath, staleAfterMs)
+	if (!releaseRecovery) throw new Error(`service queue is locked: ${path}`)
 	try {
 		try {
 			create()
@@ -479,16 +424,12 @@ export function acquireLock(path, {staleAfterMs = 5 * 60 * 1000} = {}) {
 		}
 		const owner = lockOwner(path)
 		if (owner.pid !== process.pid || owner.token !== token) throw new Error(`service queue is locked: ${path}`)
-		if (!recovery.owns()) {
-			releaseOwnedLock(path, token)
-			throw new Error(`service queue is locked: ${path}`)
-		}
 	} catch (error) {
 		const message = String(error?.message || "")
 		if (message.startsWith("service queue is locked:") || message.startsWith("service queue lock failed:")) throw error
 		throw new Error(`service queue is locked: ${path}`)
 	} finally {
-		recovery.release()
+		releaseRecovery()
 	}
 
 	return () => releaseOwnedLock(path, token)

@@ -17,34 +17,35 @@ Use this before cold email. Until this guide is clean, use contact forms or DMs 
 |---|---|---|
 | SPF | ready | tinystudio.io |
 | DMARC | ready | _dmarc.tinystudio.io |
-| Outbound mail path | needs work | route3.mx.cloudflare.net, route1.mx.cloudflare.net, route2.mx.cloudflare.net |
-| DKIM | ready | resend._domainkey.tinystudio.io |
+| DKIM discovery | needs work | common selectors at _domainkey.tinystudio.io |
 
 ## Warnings To Fix
 
 | Warning | What It Means |
 |---|---|
 | missing physical postal address | Commercial email needs a valid physical postal address. Use a business address, PO box, or private mailbox before cold email. |
+| DKIM selector not configured | Set dkimSelector after enabling DKIM in the mail provider. No common DKIM selectors were found in DNS. |
 
 ## DKIM Discovery
 
 | Selector | DNS Host |
 |---|---|
-| resend | resend._domainkey.tinystudio.io |
+| - | No common DKIM selector found in DNS yet. |
 
 Suggested dry-run command:
 
 ```bash
-npm run send:configure -- --physical-address="..." --dkim-selector=resend --dry-run
+npm run send:configure -- --physical-address="..." --dkim-selector=... --dry-run
 ```
 
 ## Fix Order
 
-1. Connect an outbound sending provider for `tinystudio.io` (Cloudflare Email Routing forwards inbound mail only and cannot send).
-2. Add a real sender postal address to `senderPhysicalAddress` in `growth-brain/ops/agency-config.json` (business address, PO box, or private mailbox). The address must be a published business location, never a placeholder.
-3. DKIM is configured for `resend` at `resend._domainkey.tinystudio.io`. Confirm the selector still matches the mail provider if you swap providers.
-4. Run `npm run send:setup`.
-5. If it is clean, email can join contact forms and DMs as an outbound route.
+1. Add a real sender postal address to `senderPhysicalAddress` in `growth-brain/ops/agency-config.json`.
+2. In the mail provider for `tinystudio.io`, enable DKIM and copy the selector.
+3. Add the selector to `dkimSelector` in `growth-brain/ops/agency-config.json`.
+4. If the mail provider gives a DKIM TXT record, add it in Cloudflare DNS at `<selector>._domainkey.tinystudio.io`.
+5. Run `npm run send:setup`.
+6. If it is clean, email can join contact forms and DMs as an outbound route.
 
 ## Notes
 
