@@ -14,7 +14,7 @@ The first 3 clients are exactly **$1,000 founder pilots**. The call does not app
 4. "Who will approve claims, proof, copy, and the final client-facing work?"
 5. "Who can implement the reviewed change, and what access or handoff format will they need?"
 6. "What page evidence, analytics, reviews, and customer objections can you share?"
-7. "If the sprint gives you one reviewed, implementation-ready page fix in 7 days, is that worth doing now?"
+7. "If the sprint gives you one reviewed, implementation-ready page fix with 14-day tracking, is that worth doing now?"
 
 ## Qualification
 

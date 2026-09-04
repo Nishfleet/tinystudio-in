@@ -106,8 +106,11 @@ try {
 	eq(callPrep.status, 0)
 	eq(JSON.parse(callPrep.stdout).pilotSlotsRemaining, 3)
 	const callPrepOutput = readFileSync(join(salesProspect, "sales-call-prep.md"), "utf8")
-	for (const expected of ["- Sprint: The Website Correction", "- Scope: one highest-leverage page", "- Timeline: 7 working days from Day 0", "- Price: $1,000 founder pilot"]) mat(callPrepOutput, new RegExp(expected.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")))
+	for (const expected of ["- Sprint: The Website Correction", "- Scope: one highest-leverage page", "- Timeline: Day 0 starts only after payment, required context, an approval owner, and an implementation owner; 14-day implementation tracking", "- Price: $1,000 founder pilot"]) mat(callPrepOutput, new RegExp(expected.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")))
 	dnm(callPrepOutput, /Full-Stack Growth Desk|three pages|30 days|\$500/)
+	// Regression gate on generated copy: the prep must not promise a seven-day
+	// delivery or ask the buyer to approve a 7-day fix.
+	dnm(callPrepOutput, /\b(?:7|seven)[- ]?days?\b|\b(?:7|seven)[- ]working days\b/i)
 
 	expectZeroWriteFailure("scripts/prepare-prospect-close-package.mjs", [salesProspectArg, "--price", "$500", "--payment", "https://pay.example.com/founder-pilot"], /price is immutable during the founder pilot: \$1,000 founder pilot/)
 	expectZeroWriteFailure("scripts/prepare-prospect-close-package.mjs", [salesProspectArg, "--payment", "$500 by bank transfer"], /payment contains a noncanonical founder-pilot price/)
@@ -136,6 +139,24 @@ try {
 	expectZeroWriteFailure("scripts/draft-sales-call-prep.mjs", [salesProspectArg], /founder pilot capacity is complete after 3 paid clients/)
 	expectZeroWriteFailure("scripts/prepare-prospect-close-package.mjs", [salesProspectArg, "--payment", "https://pay.example.com/fourth-client"], /founder pilot capacity is complete after 3 paid clients/)
 	eq(existsSync(closeOutputPath), false)
+
+	// Regression gate: active offer-facing surfaces must never promise a
+	// seven-day delivery or ask the buyer to approve a 7-day fix. Historical
+	// comparison context (for example the market-parity benchmark's speed row)
+	// is deliberately out of scope for this scan.
+	const staleSevenDayPromise = /\b(?:7|seven)[- ]?days?\b|\b(?:7|seven)[- ]working days\b/i
+	const activeOfferSurfaces = [
+		["growth-brain/prospecting/warm-network-scripts.md", /14-day implementation tracking/],
+		["growth-brain/sales/sales-call-script.md", /14-day implementation tracking/],
+		["scripts/create-prospect-audit.mjs", /14-day implementation tracking/],
+		["scripts/draft-sales-call-prep.mjs", /14-day implementation tracking/],
+		["scripts/prepare-prospect-call-booked.mjs", /fixed-scope sprint/]
+	]
+	for (const [surface, trackingTruth] of activeOfferSurfaces) {
+		const content = readFileSync(join(repoRoot, surface), "utf8")
+		dnm(content, staleSevenDayPromise)
+		mat(content, trackingTruth)
+	}
 
 	console.log("Sales and external-intake contract checks passed.")
 } finally {
