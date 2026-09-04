@@ -90,6 +90,14 @@ export function serviceDeadlineAt(day0StartedAt, pauseHistory = []) {
 	const pausedBusinessMs = pauseHistory.reduce((total, pause) => total + businessMillisecondsBetween(pause.startedAt, pause.endedAt), 0)
 	return addBusinessMillisecondsToTimestamp(addBusinessDaysToTimestamp(day0StartedAt, 7), pausedBusinessMs)
 }
+// End of the Website Correction's 14-day implementation-tracking window: 14
+// working days from Day 0, extended by the business time any client-delay
+// pause stopped the clock. Internal tracking/attention only — it is not a
+// delivery or refund deadline for the client.
+export function serviceTrackingDeadlineAt(day0StartedAt, pauseHistory = []) {
+	const pausedBusinessMs = pauseHistory.reduce((total, pause) => total + businessMillisecondsBetween(pause.startedAt, pause.endedAt), 0)
+	return addBusinessMillisecondsToTimestamp(addBusinessDaysToTimestamp(day0StartedAt, 14), pausedBusinessMs)
+}
 export function assertExactKeys(value, expected, name) {
 	assert(value && typeof value === "object" && !Array.isArray(value), `${name} must be an object`)
 	const actual = Object.keys(value).sort()
