@@ -700,8 +700,12 @@ h4 {
   box-shadow: var(--shadow);
 }
 
-.info-card h3 {
+/* Card titles keep the former card h3 treatment even when they are H2s:
+   card-scale font size, card margin, and no global h2 12ch max-width cap. */
+.info-card :is(h2, h3) {
   margin-top: 12px;
+  font-size: clamp(1.65rem, 2vw, 2.35rem);
+  max-width: none;
 }
 
 .info-card p {
