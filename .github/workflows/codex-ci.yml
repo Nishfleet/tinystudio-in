@@ -38,3 +38,20 @@ jobs:
       # once GHAS/code scanning is provisioned or the repo goes public.
       - name: Dependency security scan (CodeQL substitute)
         run: npm audit --audit-level=high
+
+  # no-glue: the shared fleet gate (fleet-ops#8756). One composite action in
+  # Nishfleet/fleet-ops; a job named `no-glue` invokes it as a step so the
+  # check context is exactly `no-glue` for the main-required-checks ruleset.
+  # src/** and test/** carry this repo's own .mjs code — extra-allowed;
+  # script dirs and shell extensions stay banned everywhere.
+  no-glue:
+    name: no-glue
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: Nishfleet/fleet-ops/.github/actions/no-glue@main
+        with:
+          extra-allowed: "src/** test/**"
