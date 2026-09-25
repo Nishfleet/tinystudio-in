@@ -4,8 +4,8 @@ import {mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync} from "node:
 import {tmpdir} from "node:os"
 import {dirname, join} from "node:path"
 import {fileURLToPath} from "node:url"
-import {CANONICAL_PROSPECT_ASK} from "./lib/canonical-service-copy.mjs"
-import {NO_GUARANTEE_CLIENT_SENTENCE, NO_GUARANTEE_OUTCOMES} from "./lib/service-contract.mjs"
+import {CANONICAL_PROSPECT_ASK} from "../scripts/lib/canonical-service-copy.mjs"
+import {NO_GUARANTEE_CLIENT_SENTENCE, NO_GUARANTEE_OUTCOMES} from "../scripts/lib/service-contract.mjs"
 
 const repositoryRoot = dirname(dirname(fileURLToPath(import.meta.url)))
 const testRoot = mkdtempSync(join(tmpdir(), "tinystudio-active-offer-projection-"))

@@ -4,8 +4,8 @@
 // import from here instead of hard-coding its own list:
 //   - scripts/prepare-static-site-bundle.mjs (bundle generator + its
 //     llms.txt coverage assertion)
-//   - scripts/check-public-live-deploy.mjs (release-lane live verifier)
-//   - scripts/check-public-live-soft-404.mjs (nightly stale-bundle net)
+//   - test/check-public-live-deploy.mjs (release-lane live verifier)
+//   - test/check-public-live-soft-404.mjs (nightly stale-bundle net)
 //
 // Drift between these lists is how the live llms.txt ended up listing only
 // 7 of the 12 public URLs (the five per-app support/privacy trust pages

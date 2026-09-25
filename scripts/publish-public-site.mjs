@@ -24,7 +24,7 @@
 //      stale site. That is exactly how production sat on the 2026-06-20
 //      bundle for two months.
 //   4. After promotion is proven the lane runs the live acceptance
-//      (scripts/check-public-live-deploy.mjs). On failure it restores the
+//      (test/check-public-live-deploy.mjs). On failure it restores the
 //      exact previous production deployment via the supported Cloudflare
 //      Pages rollback API, re-verifies the restored identity, re-runs the
 //      acceptance against it, and surfaces any rollback failure loudly.
@@ -85,7 +85,7 @@ One-time provisioning (dashboard, ~2 minutes):
 `
 
 const defaultWranglerBin = () => join(ROOT, "node_modules", ".bin", "wrangler")
-const defaultAcceptanceCmd = () => [process.execPath, join(ROOT, "scripts", "check-public-live-deploy.mjs")]
+const defaultAcceptanceCmd = () => [process.execPath, join(ROOT, "test", "check-public-live-deploy.mjs")]
 const defaultSleep = (ms) => new Promise((resolvePromise) => setTimeout(resolvePromise, ms))
 
 const defaultRunCommand = (command, args, env = {}) =>
@@ -331,7 +331,7 @@ export const deployWithWrangler = async (bundleDir, deps = {}) => {
 }
 
 // Live verification of the deployed site after upload: runs the acceptance
-// checker (scripts/check-public-live-deploy.mjs), which probes the live
+// checker (test/check-public-live-deploy.mjs), which probes the live
 // site against the neutral merged fixes. A failed verification triggers the
 // rollback path. Name kept as `verifyLive` to match the fail-closed lane
 // contract asserted by test-deploy-public-site-workflow.mjs.

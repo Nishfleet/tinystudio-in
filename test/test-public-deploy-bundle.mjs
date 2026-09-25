@@ -18,7 +18,7 @@ import {
   FORBIDDEN_MARKERS,
   NEUTRAL_PROOFS,
   preparePublicDeployBundle,
-} from "./prepare-public-deploy-bundle.mjs"
+} from "../scripts/prepare-public-deploy-bundle.mjs"
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 const read = (p) => readFileSync(join(ROOT, p), "utf8")

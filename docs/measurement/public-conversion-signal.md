@@ -26,7 +26,7 @@ checkout the homepage has no Website Correction CTA: the "Ask about 0509" and
 footer "0509" links are product CTAs (0509 is a product, not The Website
 Correction) and must never carry a Website Correction source name. Any new
 placement needs a new registered name, added here, to the allowlist in
-`public/contact/index.html`, and to `scripts/test-public-conversion-signal.mjs`.
+`public/contact/index.html`, and to `test/test-public-conversion-signal.mjs`.
 
 ## Offer naming
 
@@ -98,7 +98,7 @@ A tag being present or a link being opened proves nothing about completion.
 1. The tag pipeline is falsified iff any Website Correction CTA exists on the
    public homepage without a registered `data-measure-source` tag, or the
    contact endpoint fails to propagate an accepted source into the visible
-   prefilled subject line. `scripts/test-public-conversion-signal.mjs`
+   prefilled subject line. `test/test-public-conversion-signal.mjs`
    enforces this rule deterministically and fails when it breaks.
 2. A completed application is counted only when a received human message
    arrives in the studio inbox. If an application email arrives whose subject
@@ -121,8 +121,8 @@ main carries one. Verdict: **intended, snooze honored — not a regression.**
   from the publishable bundle via `scripts/prepare-public-deploy-bundle.mjs`
   (fail-closed in both directions), and the live deploy check asserts its
   absence explicitly (`id="managed-service"` in
-  `scripts/check-public-live-deploy.mjs`, mirrored by
-  `scripts/test-public-deploy-bundle.mjs`).
+  `test/check-public-live-deploy.mjs`, mirrored by
+  `test/test-public-deploy-bundle.mjs`).
 - Live evidence 2026-08-11: `https://tinystudio.in/` contains no
   `id="managed-service"`, no "Website Correction", no "website-correction",
   and no `data-measure-source`. (The live site is still the 2026-06-20 bundle

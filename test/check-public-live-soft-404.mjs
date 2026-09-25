@@ -27,7 +27,7 @@ import { fileURLToPath } from "node:url"
 import { dirname, join } from "node:path"
 import { randomBytes } from "node:crypto"
 
-import { PUBLIC_PAGE_URLS } from "./lib/public-pages.mjs"
+import { PUBLIC_PAGE_URLS } from "../scripts/lib/public-pages.mjs"
 
 if (process.env.SKIP_LIVE_CHECKS === "1") {
   console.log("check-public-live-soft-404: SKIP_LIVE_CHECKS=1, skipping live site checks")

@@ -26,7 +26,7 @@ import {
   rollbackTo,
   sameSourceCommit,
   verifyProductionPromotion,
-} from "./publish-public-site.mjs"
+} from "../scripts/publish-public-site.mjs"
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 

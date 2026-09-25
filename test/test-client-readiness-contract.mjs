@@ -14,6 +14,7 @@ const F = mkdtempSync(join(tmpdir(), "tinystudio-readiness-contract-"))
 const folder = `clients/${applicationId}`
 
 cpSync(join(R, "scripts"), join(F, "scripts"), {recursive: true})
+cpSync(join(R, "test"), join(F, "test"), {recursive: true})
 cpSync(join(R, "growth-brain"), join(F, "growth-brain"), {recursive: true})
 cpSync(join(R, "contracts"), join(F, "contracts"), {recursive: true})
 for (const file of ["README.md", "MEMORY.md", "TASKS.md", "PRODUCT.md", "AGENT_WORKFLOW.md", "package.json"]) cpSync(join(R, file), join(F, file))
