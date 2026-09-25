@@ -5,8 +5,8 @@ import {existsSync, mkdirSync, mkdtempSync, rmSync, unlinkSync, writeFileSync} f
 import {join} from "node:path"
 import {tmpdir} from "node:os"
 import {spawnSync} from "node:child_process"
-import {minifiedJson, sha256} from "../scripts/lib/service-contract.mjs"
-import * as validatedServiceClient from "../scripts/lib/validated-service-client.mjs"
+import {minifiedJson, sha256} from "../src/lib/service-contract.mjs"
+import * as validatedServiceClient from "../src/lib/validated-service-client.mjs"
 
 const {loadValidatedServiceClient, sortTrackingEvidence} = validatedServiceClient
 
@@ -21,7 +21,7 @@ try {
 	writeFileSync(join(clientPath, "service-evidence", "tracking-14-day", "10.json"), JSON.stringify({stage: "tracking-14-day", forged: true}))
 
 	const before = existsSync(join(clientPath, "kickoff-message.md"))
-	const kickoff = spawnSync(process.execPath, [join(process.cwd(), "scripts/draft-client-kickoff.mjs"), "clients/unpaid-client"], {cwd: process.cwd(), env: {...process.env, SERVICE_REPO_ROOT: fixtureRoot}, encoding: "utf8"})
+	const kickoff = spawnSync(process.execPath, [join(process.cwd(), "src/draft-client-kickoff.mjs"), "clients/unpaid-client"], {cwd: process.cwd(), env: {...process.env, SERVICE_REPO_ROOT: fixtureRoot}, encoding: "utf8"})
 	eq(kickoff.status, 1)
 	mat(kickoff.stderr, /canonical paid service application|valid paid Day 0/i)
 	eq(existsSync(join(clientPath, "kickoff-message.md")), before)

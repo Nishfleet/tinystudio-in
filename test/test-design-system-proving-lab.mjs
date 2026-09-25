@@ -10,12 +10,12 @@ function run(args) {
 }
 
 const emptyReferenceResult = run([
-  "scripts/run-design-system-proving-lab.mjs",
+  "src/run-design-system-proving-lab.mjs",
   "--dry-run",
   "--reference-run",
   "docs/evidence/design-system-proving-lab/reference-runs/__empty-test-fixture__"
 ]);
-const result = run(["scripts/run-design-system-proving-lab.mjs", "--dry-run"]);
+const result = run(["src/run-design-system-proving-lab.mjs", "--dry-run"]);
 const failures = [];
 
 if (result.status !== "pass") failures.push("proving-lab setup contract should pass");

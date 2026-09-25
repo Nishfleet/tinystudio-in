@@ -118,7 +118,7 @@ main carries one. Verdict: **intended, snooze honored — not a regression.**
 - The managed-service buyer path (PRs #10/#11) is snoozed-by-Nish (2026-08-08:
   do not build, publish, or deploy it without his explicit yes).
 - The release lane strips the entire section (and every buyer-path marker)
-  from the publishable bundle via `scripts/prepare-public-deploy-bundle.mjs`
+  from the publishable bundle via `src/prepare-public-deploy-bundle.mjs`
   (fail-closed in both directions), and the live deploy check asserts its
   absence explicitly (`id="managed-service"` in
   `test/check-public-live-deploy.mjs`, mirrored by

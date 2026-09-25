@@ -105,7 +105,7 @@ ok(
   llmsTxt.includes("not affiliated with other apps or studios that use the name Tiny Studio"),
   "llms.txt states Tiny Studio is not affiliated with other apps or studios using the name"
 )
-const bundle = read("scripts/prepare-static-site-bundle.mjs")
+const bundle = read("src/prepare-static-site-bundle.mjs")
 ok(
   bundle.includes("independent product company at tinystudio.in"),
   "the llms.txt generator template keeps the independent-company identity"

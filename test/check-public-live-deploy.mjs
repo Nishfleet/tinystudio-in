@@ -17,7 +17,7 @@
 // while the merged homepage on main carries it"): intended, snooze honored.
 // The section is deliberately absent from every publishable bundle - the
 // snoozed-by-Nish (2026-08-08) managed-service buyer path from PRs #10/#11 is
-// stripped by scripts/prepare-public-deploy-bundle.mjs and its absence is
+// stripped by src/prepare-public-deploy-bundle.mjs and its absence is
 // asserted here (explicitly via the id="managed-service" marker below) and by
 // test/test-public-deploy-bundle.mjs. The section returns only when Nish
 // lifts the snooze and the fail-closed filter is updated deliberately.
@@ -36,7 +36,7 @@
 import { join } from "node:path"
 import { fileURLToPath } from "node:url"
 import { dirname } from "node:path"
-import { PUBLIC_PAGE_URLS, TRUST_PAGES } from "../scripts/lib/public-pages.mjs"
+import { PUBLIC_PAGE_URLS, TRUST_PAGES } from "../src/lib/public-pages.mjs"
 
 // Section J helpers — same implementations as test-public-heading-hierarchy.mjs.
 // Section J shipped referencing these without defining them; it could never

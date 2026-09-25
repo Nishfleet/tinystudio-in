@@ -12,7 +12,7 @@ const fixtureRoot = mkdtempSync(join(tmpdir(), "ts-accept-"))
 const clientPath = "clients/gate"
 const checklistPath = join(fixtureRoot, clientPath, "quality/sprint-acceptance-checklist.md")
 const templatePath = join(fixtureRoot, "growth-brain/quality/sprint-acceptance-checklist.md")
-const readiness = "scripts/check-client-readiness.mjs"
+const readiness = "src/check-client-readiness.mjs"
 
 function filesUnder(root) {
 	const files = []
@@ -44,18 +44,18 @@ function run(args, cwd = fixtureRoot, dataRoot = cwd) {
 }
 
 try {
-	cpSync(join(repoRoot, "scripts"), join(fixtureRoot, "scripts"), {recursive: true})
+	cpSync(join(repoRoot, "src"), join(fixtureRoot, "src"), {recursive: true})
 	mkdirSync(dirname(templatePath), {recursive: true})
 	cpSync(join(repoRoot, "growth-brain/quality/sprint-acceptance-checklist.md"), templatePath)
 	const canonicalChecklist = readFileSync(templatePath, "utf8")
 	const checkedChecklist = canonicalChecklist.replace(/^- \[ \]/gm, "- [x]")
 	const uncheckedChecklist = checkedChecklist.replace("- [x] Claims review passed.", "- [ ] Claims review passed.")
-	const acceptance = ["scripts/review-client-acceptance.mjs", clientPath]
+	const acceptance = ["src/review-client-acceptance.mjs", clientPath]
 	const human = ["--handoff-loom=https://www.loom.com/share/acceptance-gate", "--reviewer=Human Reviewer"]
 	writeFileSync(join(fixtureRoot, readiness), 'console.log(JSON.stringify({ status: "ready", warnings: [] }));\n')
-	writeFileSync(join(fixtureRoot, "scripts/export-client-delivery-cockpit.mjs"), 'console.log(JSON.stringify({ status: "exported" }));\n')
+	writeFileSync(join(fixtureRoot, "src/export-client-delivery-cockpit.mjs"), 'console.log(JSON.stringify({ status: "exported" }));\n')
 	for (const name of ["export-client-facing-dashboard.mjs", "export-client-renewal-review.mjs"]) {
-		writeFileSync(join(fixtureRoot, "scripts", name), 'throw new Error("retired generator invoked");\n')
+		writeFileSync(join(fixtureRoot, "src", name), 'throw new Error("retired generator invoked");\n')
 	}
 
 	const qualityPath = dirname(checklistPath)
@@ -72,7 +72,7 @@ try {
 
 	writeFileSync(join(qualityPath, "claim-proof-ledger.md"), "| Claim | Source | Proof Type | Approved By | Status |\n|---|---|---|---|---|\n| A claim | source | public source |  | draft |\n")
 	const retiredFlagBefore = treeSnapshot(fixtureRoot)
-	const retiredFlag = run(["scripts/review-client-proof.mjs", clientPath, "--approve=1", "--approve-scorecard", "--reviewer=Human Reviewer"])
+	const retiredFlag = run(["src/review-client-proof.mjs", clientPath, "--approve=1", "--approve-scorecard", "--reviewer=Human Reviewer"])
 	eq(retiredFlag.status, 1)
 	mat(retiredFlag.stderr, /approve-scorecard is retired/i)
 	deq(treeSnapshot(fixtureRoot), retiredFlagBefore)
@@ -98,7 +98,7 @@ try {
 
 	const dataOnlyRoot = join(fixtureRoot, "data-only-root")
 	cpSync(join(fixtureRoot, "clients"), join(dataOnlyRoot, "clients"), {recursive: true})
-	const dataOnlyDryRun = run([join(fixtureRoot, "scripts/review-client-acceptance.mjs"), clientPath, "--dry-run"], fixtureRoot, dataOnlyRoot)
+	const dataOnlyDryRun = run([join(fixtureRoot, "src/review-client-acceptance.mjs"), clientPath, "--dry-run"], fixtureRoot, dataOnlyRoot)
 	eq(dataOnlyDryRun.status, 0, dataOnlyDryRun.stderr)
 	eq(JSON.parse(dataOnlyDryRun.stdout).checklist.templateExists, true)
 
@@ -114,7 +114,7 @@ try {
 	mat(checkedAfterContent, /- Reviewer: Human Reviewer/)
 	dnm(checkedAfterContent, /^- \[ \]/m)
 
-	const splitProof = run([join(fixtureRoot, "scripts/review-client-proof.mjs"), clientPath, "--dry-run"], fixtureRoot, dataOnlyRoot)
+	const splitProof = run([join(fixtureRoot, "src/review-client-proof.mjs"), clientPath, "--dry-run"], fixtureRoot, dataOnlyRoot)
 	eq(splitProof.status, 0, splitProof.stderr)
 	eq(JSON.parse(splitProof.stdout).clientPath, join(dataOnlyRoot, clientPath))
 

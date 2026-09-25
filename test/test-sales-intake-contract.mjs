@@ -62,7 +62,7 @@ try {
 	const fixtureBytes = readFileSync(fixturePath)
 	writeFileSync(externalApplicationPath, fixtureBytes)
 
-	const imported = run("scripts/import-sprint-application.mjs", [externalApplicationPath])
+	const imported = run("src/import-sprint-application.mjs", [externalApplicationPath])
 	eq(imported.status, 0)
 	deq(readFileSync(externalApplicationPath), fixtureBytes)
 	const application = JSON.parse(fixtureBytes)
@@ -70,20 +70,20 @@ try {
 
 	const symlinkPath = join(externalRoot, "application-link.json")
 	symlinkSync(externalApplicationPath, symlinkPath)
-	expectZeroWriteFailure("scripts/import-sprint-application.mjs", [symlinkPath], /must not be a symbolic link/)
-	expectZeroWriteFailure("scripts/import-sprint-application.mjs", [externalRoot], /must be a regular file/)
+	expectZeroWriteFailure("src/import-sprint-application.mjs", [symlinkPath], /must not be a symbolic link/)
+	expectZeroWriteFailure("src/import-sprint-application.mjs", [externalRoot], /must be a regular file/)
 
 	const oversizedPath = join(externalRoot, "oversized.json")
 	writeFileSync(oversizedPath, Buffer.alloc(256 * 1024 + 1, 0x20))
-	expectZeroWriteFailure("scripts/import-sprint-application.mjs", [oversizedPath], /exceeds the 262144-byte limit/)
+	expectZeroWriteFailure("src/import-sprint-application.mjs", [oversizedPath], /exceeds the 262144-byte limit/)
 
 	const extraSchemaPath = join(externalRoot, "extra-schema-field.json")
 	writeJson(extraSchemaPath, {...application, unexpectedField: true})
-	expectZeroWriteFailure("scripts/import-sprint-application.mjs", [extraSchemaPath], /unexpected or missing fields/)
+	expectZeroWriteFailure("src/import-sprint-application.mjs", [extraSchemaPath], /unexpected or missing fields/)
 
 	const invalidJsonPath = join(externalRoot, "invalid.json")
 	writeFileSync(invalidJsonPath, "{not-json}\n")
-	expectZeroWriteFailure("scripts/import-sprint-application.mjs", [invalidJsonPath], /must be valid JSON/)
+	expectZeroWriteFailure("src/import-sprint-application.mjs", [invalidJsonPath], /must be valid JSON/)
 
 	const salesProspectArg = "prospects/sales-contract-fixture"
 	const salesProspect = join(serviceRoot, salesProspectArg)
@@ -94,15 +94,15 @@ try {
 	writeFileSync(join(salesProspect, "buyer-room.md"), "## Scope\n- Sprint: Full-Stack Growth Desk\n- Scope: three pages\n- Timeline: 30 days\n- Price: $500\n")
 	writeFileSync(join(salesProspect, "value-calculator.md"), "## Payback\n- Payback customers needed: one\n")
 
-	const queuePrepare = run("scripts/run-review-queue.mjs", ["--mode=prepare", "--scope=all", "--as-of=2026-07-14"])
+	const queuePrepare = run("src/run-review-queue.mjs", ["--mode=prepare", "--scope=all", "--as-of=2026-07-14"])
 	eq(queuePrepare.status, 0)
 	eq(JSON.parse(queuePrepare.stdout).humanDailyReviewCap, 37)
 
-	const draftMessage = run("scripts/draft-prospect-message.mjs", [salesProspect])
+	const draftMessage = run("src/draft-prospect-message.mjs", [salesProspect])
 	eq(draftMessage.status, 0)
 	mat(readFileSync(join(salesProspect, "next-message.md"), "utf8"), /Fixture Founder/)
 
-	const callPrep = run("scripts/draft-sales-call-prep.mjs", [salesProspectArg])
+	const callPrep = run("src/draft-sales-call-prep.mjs", [salesProspectArg])
 	eq(callPrep.status, 0)
 	eq(JSON.parse(callPrep.stdout).pilotSlotsRemaining, 3)
 	const callPrepOutput = readFileSync(join(salesProspect, "sales-call-prep.md"), "utf8")
@@ -119,10 +119,10 @@ try {
 		"growth-brain/sales/follow-up-sequences.md",
 		"growth-brain/offer.md",
 		"growth-brain/sales/proposal-template.md",
-		"scripts/create-prospect-audit.mjs",
-		"scripts/draft-sales-call-prep.mjs",
-		"scripts/prepare-prospect-call-booked.mjs",
-		"scripts/prepare-prospect-close-package.mjs"
+		"src/create-prospect-audit.mjs",
+		"src/draft-sales-call-prep.mjs",
+		"src/prepare-prospect-call-booked.mjs",
+		"src/prepare-prospect-close-package.mjs"
 	];
 	for (const surface of activeOfferSurfaces) {
 		dnm(readFileSync(join(repoRoot, surface), "utf8"), staleSevenDayPromise, `${surface} still promises a seven-day delivery`);
@@ -137,11 +137,11 @@ try {
 		mat(stale, staleSevenDayPromise);
 	}
 
-	expectZeroWriteFailure("scripts/prepare-prospect-close-package.mjs", [salesProspectArg, "--price", "$500", "--payment", "https://pay.example.com/founder-pilot"], /price is immutable during the founder pilot: \$1,000 founder pilot/)
-	expectZeroWriteFailure("scripts/prepare-prospect-close-package.mjs", [salesProspectArg, "--payment", "$500 by bank transfer"], /payment contains a noncanonical founder-pilot price/)
-	expectZeroWriteFailure("scripts/prepare-prospect-close-package.mjs", [salesProspectArg, "--next-step", "Pay $500 by bank transfer"], /next-step contains a noncanonical founder-pilot price/)
+	expectZeroWriteFailure("src/prepare-prospect-close-package.mjs", [salesProspectArg, "--price", "$500", "--payment", "https://pay.example.com/founder-pilot"], /price is immutable during the founder pilot: \$1,000 founder pilot/)
+	expectZeroWriteFailure("src/prepare-prospect-close-package.mjs", [salesProspectArg, "--payment", "$500 by bank transfer"], /payment contains a noncanonical founder-pilot price/)
+	expectZeroWriteFailure("src/prepare-prospect-close-package.mjs", [salesProspectArg, "--next-step", "Pay $500 by bank transfer"], /next-step contains a noncanonical founder-pilot price/)
 
-	const closePrep = run("scripts/prepare-prospect-close-package.mjs", [salesProspectArg, "--price", "$1,000 founder pilot", "--payment", "https://pay.example.com/founder-pilot"])
+	const closePrep = run("src/prepare-prospect-close-package.mjs", [salesProspectArg, "--price", "$1,000 founder pilot", "--payment", "https://pay.example.com/founder-pilot"])
 	eq(closePrep.status, 0)
 	const closeResult = JSON.parse(closePrep.stdout)
 	eq(closeResult.price, "$1,000 founder pilot")
@@ -164,8 +164,8 @@ try {
 	rmSync(closeOutputPath, {force: true})
 	rmSync(join(salesProspect, "sales-call-prep.md"), {force: true})
 
-	expectZeroWriteFailure("scripts/draft-sales-call-prep.mjs", [salesProspectArg], /founder pilot capacity is complete after 3 paid clients/)
-	expectZeroWriteFailure("scripts/prepare-prospect-close-package.mjs", [salesProspectArg, "--payment", "https://pay.example.com/fourth-client"], /founder pilot capacity is complete after 3 paid clients/)
+	expectZeroWriteFailure("src/draft-sales-call-prep.mjs", [salesProspectArg], /founder pilot capacity is complete after 3 paid clients/)
+	expectZeroWriteFailure("src/prepare-prospect-close-package.mjs", [salesProspectArg, "--payment", "https://pay.example.com/fourth-client"], /founder pilot capacity is complete after 3 paid clients/)
 	eq(existsSync(closeOutputPath), false)
 
 	console.log("Sales and external-intake contract checks passed.")
