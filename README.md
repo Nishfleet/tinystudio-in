@@ -70,8 +70,8 @@ Run the checks before treating a packet as ready:
 npm run product:truth
 npm run claims:check
 npm run config:check
-node scripts/test-service-engine.mjs
-node scripts/test-cross-repo-service.mjs --public-repo "/absolute/path/to/TinyStudio.io"
+node test/test-service-engine.mjs
+node test/test-cross-repo-service.mjs --public-repo "/absolute/path/to/TinyStudio.io"
 git diff --check
 ```
 

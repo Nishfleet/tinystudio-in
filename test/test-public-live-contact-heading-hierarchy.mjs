@@ -1,18 +1,17 @@
-// Guard the LIVE public site against skipped heading levels on the pages
-// that carry the repaired outline in source.
+// Guard the LIVE tinystudio.in /contact/ page against the heading-hierarchy
+// finding that was repaired in source but still ships on the deployed site.
 //
-// The 2026-08-08 dogfood finding "Repair skipped heading levels on Drishti
-// support and Privacy Choices pages" was repaired in source by PR #23 (card
-// headings promoted from H3 to H2, outline H1 -> H2s -> H3s with no jumps),
-// and scripts/test-public-heading-hierarchy.mjs guards the worktree HTML.
-// This check re-asserts the repaired outline against the pages the live
-// site actually serves, so a stale deployment (like the June-20 bundle
-// still serving H3 cards) fails loudly instead of silently re-opening the
-// finding.
+// The 2026-08-08 dogfood finding "Heading hierarchy needs cleanup on /contact"
+// (finding 52753880dfc7) was repaired in source by PR #18 (card headings
+// promoted from H3 to H2, outline H1 -> H2s -> H3s with no jumps), and
+// test/test-public-heading-hierarchy.mjs guards the worktree HTML. This
+// check re-asserts the repaired outline against the page the live site
+// actually serves, so a stale deployment (like the June-20 bundle still
+// serving H3 cards) fails loudly instead of silently re-opening the finding.
 //
-// It runs as `npm run site:check-live-heading-hierarchy`, from the nightly
-// live-site-check workflow (the loud staleness alarm while the site is
-// stale) and on demand. It is deliberately NOT part of `npm run test` /
+// It runs as `npm run site:check-live-contact-heading-hierarchy`, from the
+// nightly live-site-check workflow (the loud staleness alarm while the site
+// is stale) and on demand. It is deliberately NOT part of `npm run test` /
 // `npm run ci`: those blocking chains must stay green on repo state alone,
 // while the live site is deployed by an external mechanism (Cloudflare
 // Pages). Blocking CI on the live site would keep every pull request red
@@ -23,7 +22,7 @@
 // (ok, no assertion); a page that is reachable but stale fails loudly.
 //
 // Escape hatch for machines without network access:
-//   SKIP_LIVE_CHECKS=1 npm run site:check-live-heading-hierarchy
+//   SKIP_LIVE_CHECKS=1 npm run site:check-live-contact-heading-hierarchy
 //
 // Only public tinystudio.in URLs and the local source files are referenced
 // here; there is no per-environment configuration.
@@ -35,7 +34,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 const read = (p) => readFileSync(join(ROOT, p), "utf8")
 
 if (process.env.SKIP_LIVE_CHECKS === "1") {
-  console.log("test-public-live-heading-hierarchy: SKIP_LIVE_CHECKS=1, skipping live site checks")
+  console.log("test-public-live-contact-heading-hierarchy: SKIP_LIVE_CHECKS=1, skipping live site checks")
   process.exit(0)
 }
 
@@ -50,21 +49,16 @@ const ok = (cond, msg) => {
   }
 }
 
-// The deployed pages must keep the repaired heading outline (H1 -> H2 cards
-// -> H2 footer -> H3 footer columns, no skipped levels). The local suite
-// (test-public-heading-hierarchy.mjs) asserts the same outline against the
-// worktree HTML; this guard re-asserts it against what the live site
-// serves.
+// The deployed /contact/ page must keep the repaired heading outline
+// (H1 -> H2 cards -> H2 footer -> H3 footer columns, no skipped levels).
+// The local suite (test-public-heading-hierarchy.mjs) asserts the same
+// outline against the worktree HTML; this guard re-asserts it against what
+// the live site serves.
 const LIVE_PAGES = [
   {
-    name: "Drishti support",
-    url: "https://tinystudio.in/drishti/support/",
-    source: "public/drishti/support/index.html"
-  },
-  {
-    name: "Privacy Choices",
-    url: "https://tinystudio.in/privacy-choices/",
-    source: "public/privacy-choices/index.html"
+    name: "Contact",
+    url: "https://tinystudio.in/contact/",
+    source: "public/contact/index.html"
   }
 ]
 const LIVE_CSS_URL = "https://tinystudio.in/styles.css"
@@ -113,9 +107,9 @@ const assertRepairedOutline = (name, source, html) => {
   }
 }
 
-console.log("test-public-live-heading-hierarchy: the deployed tinystudio.in pages keep the repaired heading outline (no skipped levels)")
+console.log("test-public-live-contact-heading-hierarchy: the deployed tinystudio.in /contact/ page keeps the repaired heading outline (no skipped levels)")
 
-console.log("A. live pages carry the repaired heading hierarchy")
+console.log("A. live /contact/ carries the repaired heading hierarchy")
 for (const page of LIVE_PAGES) {
   const html = await fetchLive(page.url)
   if (html !== null) assertRepairedOutline(page.name, page.source, html)
@@ -140,6 +134,6 @@ if (css !== null) {
   }
 }
 
-console.log("\nLive heading-hierarchy guard result: the finding stays open against tinystudio.in until a refresh of the live deployment lands on origin/main.")
+console.log("\nLive /contact/ heading-hierarchy guard result: the finding stays open against tinystudio.in until a refresh of the live deployment lands on origin/main.")
 console.log(`\n${checks} checks, ${failures} failures`)
 process.exit(failures === 0 ? 0 : 1)

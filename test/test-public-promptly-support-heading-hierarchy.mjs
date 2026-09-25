@@ -1,10 +1,10 @@
 // Hermetic PR #20 Promptly-support heading lock (sol-postmerge-20).
 //
 // PR #20 (merge 1536cc88) promoted the three Promptly support info-card
-// titles from H3 to H2. scripts/test-public-heading-hierarchy.mjs still
+// titles from H3 to H2. test/test-public-heading-hierarchy.mjs still
 // omits public/promptly/support/index.html from AFFECTED_PAGES; this file
 // is the dedicated source lock so that omission cannot silently return.
-// The live alarm is scripts/test-public-live-promptly-support-heading-hierarchy.mjs
+// The live alarm is test/test-public-live-promptly-support-heading-hierarchy.mjs
 // and is deliberately NOT part of npm test / npm run ci.
 import { readFileSync } from "node:fs"
 import { dirname, join } from "node:path"
@@ -40,7 +40,7 @@ const h2BeforeH3AfterH1 = (html) => {
 }
 
 const PAGE = "public/promptly/support/index.html"
-const LIVE_SCRIPT = "scripts/test-public-live-promptly-support-heading-hierarchy.mjs"
+const LIVE_SCRIPT = "test/test-public-live-promptly-support-heading-hierarchy.mjs"
 const LIVE_WORKFLOW = ".github/workflows/live-site-check-promptly-support.yml"
 const REPAIRED_TITLES = [
   "A single, clear support route.",
@@ -87,7 +87,7 @@ console.log("C. live alarm + nightly workflow exist and stay out of npm test/ci"
   ok(live.includes("SKIP_LIVE_CHECKS"), "live script honors SKIP_LIVE_CHECKS")
   ok(
     pkg.scripts["site:check-live-promptly-support-heading-hierarchy"] ===
-      "node scripts/test-public-live-promptly-support-heading-hierarchy.mjs",
+      "node test/test-public-live-promptly-support-heading-hierarchy.mjs",
     "package.json has site:check-live-promptly-support-heading-hierarchy"
   )
   ok(
@@ -113,7 +113,7 @@ console.log("C. live alarm + nightly workflow exist and stay out of npm test/ci"
 
 console.log("D. existing post-deploy / bundle proofs for /promptly/support/ still named (do not edit those files)")
 {
-  const liveDeploy = read("scripts/check-public-live-deploy.mjs")
+  const liveDeploy = read("test/check-public-live-deploy.mjs")
   const bundle = read("scripts/prepare-public-deploy-bundle.mjs")
   ok(liveDeploy.includes('get("/promptly/support/")'), "check-public-live-deploy still fetches /promptly/support/")
   ok(bundle.includes("promptly/support/index.html"), "NEUTRAL_PROOFS region still names promptly/support/index.html")

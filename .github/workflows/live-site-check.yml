@@ -41,8 +41,8 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci --ignore-scripts
-      - run: node scripts/check-public-live-soft-404.mjs
-      - run: node scripts/test-public-live-heading-hierarchy.mjs
+      - run: node test/check-public-live-soft-404.mjs
+      - run: node test/test-public-live-heading-hierarchy.mjs
   live-contact-heading-hierarchy:
     runs-on: ubuntu-latest
     steps:
@@ -52,7 +52,7 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci --ignore-scripts
-      - run: node scripts/test-public-live-contact-heading-hierarchy.mjs
+      - run: node test/test-public-live-contact-heading-hierarchy.mjs
   live-tap-targets:
     runs-on: ubuntu-latest
     steps:
@@ -62,7 +62,7 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci --ignore-scripts
-      - run: node scripts/check-public-live-tap-targets.mjs
+      - run: node test/check-public-live-tap-targets.mjs
   live-social-preview:
     runs-on: ubuntu-latest
     steps:
@@ -72,4 +72,4 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci --ignore-scripts
-      - run: node scripts/check-public-live-social-preview.mjs
+      - run: node test/check-public-live-social-preview.mjs

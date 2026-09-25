@@ -5,8 +5,8 @@ import {cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, r
 import {tmpdir} from "node:os"
 import {dirname, join, relative} from "node:path"
 import {fileURLToPath, pathToFileURL} from "node:url"
-import {ACTIVE_OPERATOR_ARTIFACTS} from "./lib/service-contract.mjs"
-import {staleGeneratedArtifacts} from "./lib/review-queue.mjs"
+import {ACTIVE_OPERATOR_ARTIFACTS} from "../scripts/lib/service-contract.mjs"
+import {staleGeneratedArtifacts} from "../scripts/lib/review-queue.mjs"
 
 const C = dirname(dirname(fileURLToPath(import.meta.url)))
 const T = mkdtempSync(join(tmpdir(), "tinystudio-active-operator-surfaces-"))
@@ -56,7 +56,7 @@ function hashTree(root) {
 try {
 	for (const path of [...retiredTrackedPrivateArtifacts, ...retiredBroadServiceArtifacts]) eq(existsSync(join(C, path)), false, `Retired operator artifact remains active: ${path}`)
 	mat(readFileSync(join(C, "growth-brain/ops/historical/README.md"), "utf8"), /not active product truth/)
-	for (const directory of ["scripts", "growth-brain", "contracts", "docs"]) {
+	for (const directory of ["scripts", "growth-brain", "contracts", "docs", "test"]) {
 		cpSync(join(C, directory), join(T, directory), {recursive: true})
 	}
 	for (const file of ["TASKS.md", "PRODUCT.md", "AGENT_WORKFLOW.md", "MEMORY.md", "README.md", "package.json"]) {

@@ -5,8 +5,8 @@ import {cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeF
 import {tmpdir} from "node:os"
 import {dirname, join} from "node:path"
 import {fileURLToPath, pathToFileURL} from "node:url"
-import {ACTIVE_OPERATOR_ARTIFACTS} from "./lib/service-contract.mjs"
-import {generatedStamp} from "./lib/ops-lockstep.mjs"
+import {ACTIVE_OPERATOR_ARTIFACTS} from "../scripts/lib/service-contract.mjs"
+import {generatedStamp} from "../scripts/lib/ops-lockstep.mjs"
 
 const {equal: eq, deepEqual: deq, notEqual: neq, match: mat, ok} = assert
 const C = dirname(dirname(fileURLToPath(import.meta.url)))

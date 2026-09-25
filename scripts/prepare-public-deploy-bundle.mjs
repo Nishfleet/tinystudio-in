@@ -402,7 +402,7 @@ export const preparePublicDeployBundle = async ({ sourceDir, outputDir }) => {
 
   // Snoozed-by-Nish (2026-08-08): the /compare/ Website Correction buyer-path
   // hub is excluded from every publishable bundle. It returns only when Nish
-  // lifts the snooze; see scripts/test-public-compare-page.mjs (source-side
+  // lifts the snooze; see test/test-public-compare-page.mjs (source-side
   // contract, kept green on main).
   await fs.rm(join(output, "compare"), { recursive: true, force: true })
 

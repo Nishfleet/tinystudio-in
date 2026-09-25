@@ -2,7 +2,7 @@
 // heading-hierarchy finding repaired in source by PR #20 (merge 1536cc88)
 // but still shipping on the deployed June-20 bundle.
 //
-// Source lock: scripts/test-public-promptly-support-heading-hierarchy.mjs
+// Source lock: test/test-public-promptly-support-heading-hierarchy.mjs
 // (wired into npm test / npm run ci). This live alarm is deliberately NOT
 // part of those blocking chains: they must stay green on repo state alone
 // while Cloudflare Pages is stale. Blocking CI on the live site would keep

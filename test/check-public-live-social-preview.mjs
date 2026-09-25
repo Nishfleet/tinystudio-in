@@ -4,7 +4,7 @@
 // The class-gap item "Social preview imagery missing on 7 of 12 public
 // pages" (the 7 pages being /privacy/, /privacy-choices/, /terms/, and the
 // Promptly/Drishti support+privacy pairs) was repaired in source by PR #26
-// (commit ffe6e1f), and scripts/test-public-social-preview.mjs guards the
+// (commit ffe6e1f), and test/test-public-social-preview.mjs guards the
 // worktree HTML. This check re-asserts the full og:image + twitter:image
 // blocks against what the live site actually serves, so a stale deployment
 // (the June-20 bundle still serving 5 of 12 pages with no social preview
@@ -50,7 +50,7 @@ const ok = (cond, msg) => {
   }
 }
 
-// Every public page (canonical list, mirrors scripts/test-public-social-preview.mjs).
+// Every public page (canonical list, mirrors test/test-public-social-preview.mjs).
 const PUBLIC_PAGES = [
   { name: "Homepage", path: "", image: "tiny-studio-social.png" },
   { name: "Contact", path: "contact/", image: "tiny-studio-social.png" },

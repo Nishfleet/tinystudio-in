@@ -6,7 +6,7 @@ import {chmodSync, cpSync, existsSync as ex, lstatSync, mkdirSync as md, mkdtemp
 import {tmpdir} from "node:os"
 import {basename, dirname, join, relative} from "node:path"
 import {pathToFileURL} from "node:url"
-import {ALLOWED_COMMANDS, acquireLock, atomicWriteJson as aw, decisionHashFor, isRfc3339Timestamp, minifiedJson, queueInputHashFor, resolveRepoPath, schemaDigest, sha256, sourceHashForApplicant, validateAffirmativePaymentEvidence, validateApplication, validateDecision} from "./lib/service-contract.mjs"
+import {ALLOWED_COMMANDS, acquireLock, atomicWriteJson as aw, decisionHashFor, isRfc3339Timestamp, minifiedJson, queueInputHashFor, resolveRepoPath, schemaDigest, sha256, sourceHashForApplicant, validateAffirmativePaymentEvidence, validateApplication, validateDecision} from "../scripts/lib/service-contract.mjs"
 import {
 	CLAIMS_POLICY_VERSION,
 	NO_GUARANTEE_DISCLAIMER,
@@ -25,12 +25,12 @@ import {
 	reviewCapLedgerPath,
 	serviceDeadlineAt,
 	validateStageEvidence
-} from "./lib/review-queue.mjs"
-import {assertCanonicalFounderPilotCohort, assertClientScaffold, FOUNDER_PILOT} from "./lib/client-scaffold.mjs"
-import {serviceTrackingWindowEndAt} from "./lib/service-artifacts.mjs"
-import {createPromotionJournal, promotionMarkerPath, validatePromotionJournal} from "./lib/service-promotion-journal.mjs"
-import {commitJournaledTransition, transitionJournalRecord} from "./lib/service-transition-journal.mjs"
-import {addBusinessDaysToTimestamp, businessMillisecondsBetween, localEndOfIsoDate, localIsoDate, timestampIsOnOrBeforeLocalDate, timestampIsOnOrBeforeTrustedNow, trustedNow} from "./date-utils.mjs"
+} from "../scripts/lib/review-queue.mjs"
+import {assertCanonicalFounderPilotCohort, assertClientScaffold, FOUNDER_PILOT} from "../scripts/lib/client-scaffold.mjs"
+import {serviceTrackingWindowEndAt} from "../scripts/lib/service-artifacts.mjs"
+import {createPromotionJournal, promotionMarkerPath, validatePromotionJournal} from "../scripts/lib/service-promotion-journal.mjs"
+import {commitJournaledTransition, transitionJournalRecord} from "../scripts/lib/service-transition-journal.mjs"
+import {addBusinessDaysToTimestamp, businessMillisecondsBetween, localEndOfIsoDate, localIsoDate, timestampIsOnOrBeforeLocalDate, timestampIsOnOrBeforeTrustedNow, trustedNow} from "../scripts/date-utils.mjs"
 
 const AS_OF_DATE = "2026-07-29"
 const DECISION_TEST_NOW = "2026-07-13T23:59:00.000+05:30"

@@ -88,7 +88,7 @@ curl -s -o /dev/null -w "%{http_code}\n" "http://127.0.0.1:4178/%2e%2e/package.j
 - 404 body for a missing route means the server is not soft-404ing as the
   homepage. The Python server returns its own plain-text 404 body — the
   branded `404.html` in `public/` is what the live deploy serves, and it
-  is guarded separately by `scripts/test-public-soft-404.mjs`.
+  is guarded separately by `test/test-public-soft-404.mjs`.
 - Path-escape answers 404 (never 200, never 500). `--path-as-is` is not
   needed on this server: it returns 404 either way.
 

@@ -5,8 +5,8 @@ import {existsSync, mkdirSync, mkdtempSync, rmSync, unlinkSync, writeFileSync} f
 import {join} from "node:path"
 import {tmpdir} from "node:os"
 import {spawnSync} from "node:child_process"
-import {minifiedJson, sha256} from "./lib/service-contract.mjs"
-import * as validatedServiceClient from "./lib/validated-service-client.mjs"
+import {minifiedJson, sha256} from "../scripts/lib/service-contract.mjs"
+import * as validatedServiceClient from "../scripts/lib/validated-service-client.mjs"
 
 const {loadValidatedServiceClient, sortTrackingEvidence} = validatedServiceClient
 

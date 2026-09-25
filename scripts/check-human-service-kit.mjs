@@ -42,8 +42,8 @@ const requiredFiles = [
 	"scripts/repair-service-transition.mjs",
 	"scripts/service-state-backup.mjs",
 	"scripts/run-review-queue.mjs",
-	"scripts/test-client-readiness-contract.mjs",
-	"scripts/test-service-engine.mjs"
+	"test/test-client-readiness-contract.mjs",
+	"test/test-service-engine.mjs"
 ]
 
 const retiredClientCommands = ["client:dashboard", "client:weekly-report", "client:weekly-check", "client:channels", "client:channels-check", "client:workflow", "client:weekly-loop", "client:renewal"]
@@ -130,7 +130,7 @@ if (defaultGate.includes("test-cross-repo-service.mjs")) failures.push("Default 
 
 const activeScriptFiles = new Set()
 for (const command of Object.values(packageJson.scripts)) {
-	for (const match of String(command).matchAll(/\bnode\s+(scripts\/[a-z0-9._/-]+\.mjs)\b/gi)) activeScriptFiles.add(match[1])
+	for (const match of String(command).matchAll(/\bnode\s+((?:scripts|test)\/[a-z0-9._/-]+\.mjs)\b/gi)) activeScriptFiles.add(match[1])
 }
 for (const path of activeScriptFiles) {
 	const codePath = join(codeRoot, path)

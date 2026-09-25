@@ -19,7 +19,7 @@
 // snoozed-by-Nish (2026-08-08) managed-service buyer path from PRs #10/#11 is
 // stripped by scripts/prepare-public-deploy-bundle.mjs and its absence is
 // asserted here (explicitly via the id="managed-service" marker below) and by
-// scripts/test-public-deploy-bundle.mjs. The section returns only when Nish
+// test/test-public-deploy-bundle.mjs. The section returns only when Nish
 // lifts the snooze and the fail-closed filter is updated deliberately.
 //   5. every public page carries exactly one application/ld+json block
 //      (trust/support structured data, PR #26 - the 07acd07 bundle shipped
@@ -36,7 +36,7 @@
 import { join } from "node:path"
 import { fileURLToPath } from "node:url"
 import { dirname } from "node:path"
-import { PUBLIC_PAGE_URLS, TRUST_PAGES } from "./lib/public-pages.mjs"
+import { PUBLIC_PAGE_URLS, TRUST_PAGES } from "../scripts/lib/public-pages.mjs"
 
 // Section J helpers — same implementations as test-public-heading-hierarchy.mjs.
 // Section J shipped referencing these without defining them; it could never
@@ -198,7 +198,7 @@ try {
   }
   console.log("H. shared-footer pages carry visitor-facing footer copy, not launch-prep (PR #35)")
   {
-    // Same coverage and markers as scripts/test-public-footer-copy.mjs: every
+    // Same coverage and markers as test/test-public-footer-copy.mjs: every
     // live path that carries the shared footer block must name the actual
     // products and must not contain any fragment of the launch-prep footer
     // line the June-20 bundle still serves.

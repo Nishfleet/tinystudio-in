@@ -32,4 +32,4 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci --ignore-scripts
-      - run: node scripts/test-public-live-promptly-support-heading-hierarchy.mjs
+      - run: node test/test-public-live-promptly-support-heading-hierarchy.mjs

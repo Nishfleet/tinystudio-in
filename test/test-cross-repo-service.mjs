@@ -17,7 +17,7 @@ function fail(message) {
 }
 
 function usage() {
-	return "Usage: node scripts/test-cross-repo-service.mjs --public-repo /absolute/path"
+	return "Usage: node test/test-cross-repo-service.mjs --public-repo /absolute/path"
 }
 
 function parseArgs(argv) {
@@ -29,7 +29,7 @@ function parseArgs(argv) {
 function findRepoRoot(start) {
 	let current = resolve(start)
 	while (true) {
-		if (existsSync(join(current, "contracts")) && existsSync(join(current, "scripts", "test-service-engine.mjs"))) return current
+		if (existsSync(join(current, "contracts")) && existsSync(join(current, "test", "test-service-engine.mjs"))) return current
 		const parent = dirname(current)
 		if (parent === current) return null
 		current = parent
@@ -122,10 +122,10 @@ function main() {
 	const tempRoot = mkdtempSync(join(tmpdir(), "tinystudio-cross-repo-service-"))
 	const exportPath = join(tempRoot, "application-export.json")
 	try {
-		runScript(publicRealRoot, "scripts/test-worker.mjs", {SERVICE_TEST_EXPORT: exportPath}, "Public worker test")
+		runScript(publicRealRoot, "test/test-worker.mjs", {SERVICE_TEST_EXPORT: exportPath}, "Public worker test")
 		requireRegularFile(exportPath, "Public worker export")
 		if (readFileSync(exportPath).length === 0) fail(`Public worker export is empty: ${exportPath}`)
-		runScript(opsRoot, "scripts/test-service-engine.mjs", {SERVICE_FIXTURE_INPUT: exportPath}, "Ops service-engine test")
+		runScript(opsRoot, "test/test-service-engine.mjs", {SERVICE_FIXTURE_INPUT: exportPath}, "Ops service-engine test")
 		console.log("Cross-repo service contract test passed.")
 	} finally {
 		rmSync(tempRoot, {recursive: true, force: true})
