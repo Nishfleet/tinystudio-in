@@ -35,7 +35,7 @@ Operational dates deliberately use `Asia/Kolkata` regardless of host or CI timez
 - `growth-brain/sprint-checklist.md`, `growth-brain/delivery-template.md`, and `growth-brain/workflows/client-sprint-workflow.md` define delivery.
 - `growth-brain/quality/` contains acceptance and proof gates.
 - `growth-brain/ops/agency-config.json` is the shared configuration for generated drafts.
-- `scripts/check-product-truth.mjs` checks active service surfaces only.
+- `src/check-product-truth.mjs` checks active service surfaces only.
 - `public/` is the separate tinystudio.in portfolio and is intentionally outside the service truth gate.
 
 ## Safe operating loop
@@ -80,17 +80,9 @@ git diff --check
 Same-fix PR pairs kept appearing because the same finding gets dispatched to
 multiple lanes (`fix/operator-export-cli-help` #36 and `fix/operator-export-cli-help-lane1`
 #44 were byte-identical patches; #39/#49 and #40/#52 followed the same pattern).
-The `PR Duplicate Guard` workflow now compares every PR's diff against all
-other open PRs and fails loudly (with a comment naming the canonical PR) when
-another open PR covers the same fix with the same changed-file set. Run the
-same check locally before opening a PR:
-
-```bash
-node scripts/check-pr-duplicates.mjs --pr 0 --repo nish3451/tinystudio-in --no-fail
-```
-
-The check is informational, not a required status, so it never blocks
-legitimate work; it exists to make duplication visible the moment it happens.
+The in-repo duplicate guard was deleted in #303: the agent-dispatch queue,
+GitHub rulesets and auto-merge now own same-fix dedup, so there is no local
+command to run. `docs/no-glue-kept-scripts.md` records why.
 
 ## SaaS graduation evidence gate
 

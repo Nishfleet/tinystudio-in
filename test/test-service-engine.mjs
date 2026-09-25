@@ -6,7 +6,7 @@ import {chmodSync, cpSync, existsSync as ex, lstatSync, mkdirSync as md, mkdtemp
 import {tmpdir} from "node:os"
 import {basename, dirname, join, relative} from "node:path"
 import {pathToFileURL} from "node:url"
-import {ALLOWED_COMMANDS, acquireLock, atomicWriteJson as aw, decisionHashFor, isRfc3339Timestamp, minifiedJson, queueInputHashFor, resolveRepoPath, schemaDigest, sha256, sourceHashForApplicant, validateAffirmativePaymentEvidence, validateApplication, validateDecision} from "../scripts/lib/service-contract.mjs"
+import {ALLOWED_COMMANDS, acquireLock, atomicWriteJson as aw, decisionHashFor, isRfc3339Timestamp, minifiedJson, queueInputHashFor, resolveRepoPath, schemaDigest, sha256, sourceHashForApplicant, validateAffirmativePaymentEvidence, validateApplication, validateDecision} from "../src/lib/service-contract.mjs"
 import {
 	CLAIMS_POLICY_VERSION,
 	NO_GUARANTEE_DISCLAIMER,
@@ -25,12 +25,12 @@ import {
 	reviewCapLedgerPath,
 	serviceDeadlineAt,
 	validateStageEvidence
-} from "../scripts/lib/review-queue.mjs"
-import {assertCanonicalFounderPilotCohort, assertClientScaffold, FOUNDER_PILOT} from "../scripts/lib/client-scaffold.mjs"
-import {serviceTrackingWindowEndAt} from "../scripts/lib/service-artifacts.mjs"
-import {createPromotionJournal, promotionMarkerPath, validatePromotionJournal} from "../scripts/lib/service-promotion-journal.mjs"
-import {commitJournaledTransition, transitionJournalRecord} from "../scripts/lib/service-transition-journal.mjs"
-import {addBusinessDaysToTimestamp, businessMillisecondsBetween, localEndOfIsoDate, localIsoDate, timestampIsOnOrBeforeLocalDate, timestampIsOnOrBeforeTrustedNow, trustedNow} from "../scripts/date-utils.mjs"
+} from "../src/lib/review-queue.mjs"
+import {assertCanonicalFounderPilotCohort, assertClientScaffold, FOUNDER_PILOT} from "../src/lib/client-scaffold.mjs"
+import {serviceTrackingWindowEndAt} from "../src/lib/service-artifacts.mjs"
+import {createPromotionJournal, promotionMarkerPath, validatePromotionJournal} from "../src/lib/service-promotion-journal.mjs"
+import {commitJournaledTransition, transitionJournalRecord} from "../src/lib/service-transition-journal.mjs"
+import {addBusinessDaysToTimestamp, businessMillisecondsBetween, localEndOfIsoDate, localIsoDate, timestampIsOnOrBeforeLocalDate, timestampIsOnOrBeforeTrustedNow, trustedNow} from "../src/date-utils.mjs"
 
 const AS_OF_DATE = "2026-07-29"
 const DECISION_TEST_NOW = "2026-07-13T23:59:00.000+05:30"
@@ -46,20 +46,20 @@ const METRIC = "Primary call-to-action path count"
 const BASELINE = "Three competing actions"
 const DECISIONS = "service-decisions"
 const GROWTH = "growth-brain"
-const BACKUP = "scripts/service-state-backup.mjs"
-const DECIDE = "scripts/record-service-decision.mjs"
-const DAY0 = "scripts/record-service-day0.mjs"
-const IMPORT = "scripts/import-sprint-application.mjs"
-const REPAIR = "scripts/repair-service-transition.mjs"
-const RESUME = "scripts/record-service-resume.mjs"
-const QUEUE = "scripts/run-review-queue.mjs"
+const BACKUP = "src/service-state-backup.mjs"
+const DECIDE = "src/record-service-decision.mjs"
+const DAY0 = "src/record-service-day0.mjs"
+const IMPORT = "src/import-sprint-application.mjs"
+const REPAIR = "src/repair-service-transition.mjs"
+const RESUME = "src/record-service-resume.mjs"
+const QUEUE = "src/run-review-queue.mjs"
 const R = mkdtempSync(join(tmpdir(), "tinystudio-service-test-"))
 const rp = (...parts) => join(R, ...parts)
 const rj = path => JSON.parse(rf(path, "utf8"))
 const sf = folder => join(folder, "service-state.json")
 const df = folder => join(folder, "service-day0.json")
 const rs = folder => rj(sf(folder))
-const fixedClockImport = pathToFileURL(join(process.cwd(), "scripts/lib/test-fixed-clock.mjs")).href
+const fixedClockImport = pathToFileURL(join(process.cwd(), "src/lib/test-fixed-clock.mjs")).href
 const serviceOptions = (options = {}) => ({repoRoot: R, asOfDate: AS_OF_DATE, ...options, trustedDate: AS_OF_DATE})
 const bq = options => buildQueueWithClock(serviceOptions(options))
 const prepQ = options => prepareQueueWithClock(serviceOptions(options))
@@ -87,7 +87,7 @@ function rna(script, args) {
 }
 
 function rlc(lockPath) {
-	const moduleUrl = pathToFileURL(join(process.cwd(), "scripts/lib/service-contract.mjs")).href
+	const moduleUrl = pathToFileURL(join(process.cwd(), "src/lib/service-contract.mjs")).href
 	const code = `import { acquireLock } from ${JSON.stringify(moduleUrl)};\ntry {\n  const release = acquireLock(process.argv[1], { staleAfterMs: 0 });\n  console.log("acquired");\n  await new Promise((resolve) => setTimeout(resolve, 1500));\n  release();\n} catch {\n  console.log("blocked");\n  process.exitCode = 2;\n}`
 	return new Promise(resolve => {
 		const child = spawn(process.execPath, ["--input-type=module", "--eval", code, lockPath], {encoding: "utf8", stdio: ["ignore", "pipe", "pipe"]})
@@ -177,7 +177,7 @@ function dc(id, decision, note, extra = []) {
 }
 
 function lvc(repoRootValue, clientPath, now = "2026-07-30T12:00:00.000Z") {
-	const moduleUrl = pathToFileURL(join(process.cwd(), "scripts/lib/validated-service-client.mjs")).href
+	const moduleUrl = pathToFileURL(join(process.cwd(), "src/lib/validated-service-client.mjs")).href
 	const source = `import { loadValidatedServiceClient } from ${JSON.stringify(moduleUrl)}; console.log(JSON.stringify(loadValidatedServiceClient(${JSON.stringify(repoRootValue)}, ${JSON.stringify(clientPath)})));`
 	const result = spawnSync(process.execPath, ["--import", fixedClockImport, "--input-type=module", "--eval", source], {cwd: process.cwd(), env: {...process.env, SERVICE_REPO_ROOT: repoRootValue, SERVICE_TEST_NOW: now, TZ: "Asia/Kolkata"}, encoding: "utf8"})
 	eq(result.status, 0)
@@ -196,7 +196,7 @@ function rdc(id, decision, note, expectedError) {
 }
 
 function ec(id, args, expectSuccess = true) {
-	const result = run("scripts/record-service-evidence.mjs", [...args, id])
+	const result = run("src/record-service-evidence.mjs", [...args, id])
 	if (expectSuccess) eq(result.status, 0, result.stderr)
 	else neq(result.status, 0)
 	return result
@@ -816,7 +816,7 @@ try {
 	const invalidMode = run(QUEUE, ["--mode=aply"])
 	neq(invalidMode.status, 0)
 	deq(snap(R), invalidModeBefore)
-	const invalidCheckOption = run("scripts/check-review-queue.mjs", ["--asof", AS_OF_DATE])
+	const invalidCheckOption = run("src/check-review-queue.mjs", ["--asof", AS_OF_DATE])
 	neq(invalidCheckOption.status, 0)
 	deq(snap(R), invalidModeBefore)
 
@@ -1192,7 +1192,7 @@ try {
 	const divergentCockpitCwd = mkdtempSync(join(tmpdir(), "tinystudio-cockpit-divergent-cwd-"))
 	const divergentCockpitOutput = join(folder, "data-root-delivery-cockpit.html")
 	try {
-		const divergentCockpit = spawnSync(process.execPath, [join(process.cwd(), "scripts/export-client-delivery-cockpit.mjs"), `clients/${appId}`, `--output=${divergentCockpitOutput}`], {cwd: divergentCockpitCwd, encoding: "utf8", env: {...E(QUEUE_TEST_NOW), SERVICE_REPO_ROOT: R}})
+		const divergentCockpit = spawnSync(process.execPath, [join(process.cwd(), "src/export-client-delivery-cockpit.mjs"), `clients/${appId}`, `--output=${divergentCockpitOutput}`], {cwd: divergentCockpitCwd, encoding: "utf8", env: {...E(QUEUE_TEST_NOW), SERVICE_REPO_ROOT: R}})
 		eq(divergentCockpit.status, 0, divergentCockpit.stderr)
 		eq(JSON.parse(divergentCockpit.stdout).status, "created")
 		const divergentCockpitHtml = rf(divergentCockpitOutput, "utf8")
@@ -1693,7 +1693,7 @@ try {
 	un(firstRevisionApprovedPath)
 	eq(it(I5).status, "blocked")
 	const blockedEvidenceBefore = snap(f5)
-	const blockedEvidence = run("scripts/record-service-evidence.mjs", [I5, "--stage", "client-approved", "--client-outcome", "approved", "--client-feedback", "Client approved the revised artifact.", "--implementation-owner", "TinyStudio", "--reviewed-artifact-hash", rs(f5).approvedArtifactHash, "--recorded-at", "2026-07-13T16:00:00.000Z"])
+	const blockedEvidence = run("src/record-service-evidence.mjs", [I5, "--stage", "client-approved", "--client-outcome", "approved", "--client-feedback", "Client approved the revised artifact.", "--implementation-owner", "TinyStudio", "--reviewed-artifact-hash", rs(f5).approvedArtifactHash, "--recorded-at", "2026-07-13T16:00:00.000Z"])
 	neq(blockedEvidence.status, 0)
 	deq(snap(f5), blockedEvidenceBefore)
 	wf(firstRevisionApprovedPath, firstRevisionApprovedBytes)
@@ -1702,7 +1702,7 @@ try {
 	eq(i5.state, "client-approved")
 	const futureEvidenceBefore = snap(f5)
 	const futureEvidence = run(
-		"scripts/record-service-evidence.mjs",
+		"src/record-service-evidence.mjs",
 		[I5, "--stage", "client-approved", "--client-outcome", "approved", "--client-feedback", "Client approved the revised artifact.", "--reviewed-artifact-hash", rs(f5).approvedArtifactHash, "--recorded-at", "2026-07-13T18:00:00.000Z"],
 		E("2026-07-13T17:00:00.000Z")
 	)
@@ -2127,17 +2127,17 @@ try {
 			assert(!/\n\s+at\s/.test(result.stderr))
 		}
 
-		const invalidPrice = run("scripts/prepare-prospect-close-package.mjs", [salesProspect, "--price", "$900 founder pilot"], guardEnv)
+		const invalidPrice = run("src/prepare-prospect-close-package.mjs", [salesProspect, "--price", "$900 founder pilot"], guardEnv)
 		assertConciseGuardFailure(invalidPrice)
 		mat(invalidPrice.stderr, /price is immutable during the founder pilot/)
-		const invalidPayment = run("scripts/prepare-prospect-close-package.mjs", [salesProspect, "--payment", "not-a-payment-url"], guardEnv)
+		const invalidPayment = run("src/prepare-prospect-close-package.mjs", [salesProspect, "--payment", "not-a-payment-url"], guardEnv)
 		assertConciseGuardFailure(invalidPayment)
 		mat(invalidPayment.stderr, /payment must be an HTTP\(S\) URL/)
 
 		const excludedProspect = join(salesGuardRoot, "service-application")
 		md(excludedProspect, {recursive: true})
 		aw(join(excludedProspect, "service-application.json"), {applicationId: "guard-excluded"})
-		const outboundBlocked = run("scripts/draft-sales-call-prep.mjs", [excludedProspect], guardEnv)
+		const outboundBlocked = run("src/draft-sales-call-prep.mjs", [excludedProspect], guardEnv)
 		assertConciseGuardFailure(outboundBlocked)
 		mat(outboundBlocked.stderr, /Refusing outbound operation/)
 
@@ -2150,10 +2150,10 @@ try {
 			md(client, {recursive: true})
 			aw(join(client, "service-application.json"), {applicationId})
 		}
-		const callCapacityBlocked = run("scripts/draft-sales-call-prep.mjs", [salesProspect], guardEnv)
+		const callCapacityBlocked = run("src/draft-sales-call-prep.mjs", [salesProspect], guardEnv)
 		assertConciseGuardFailure(callCapacityBlocked)
 		mat(callCapacityBlocked.stderr, /founder pilot capacity is complete after 3 paid clients/)
-		const closeCapacityBlocked = run("scripts/prepare-prospect-close-package.mjs", [salesProspect], guardEnv)
+		const closeCapacityBlocked = run("src/prepare-prospect-close-package.mjs", [salesProspect], guardEnv)
 		assertConciseGuardFailure(closeCapacityBlocked)
 		mat(closeCapacityBlocked.stderr, /founder pilot capacity is complete after 3 paid clients/)
 	} finally {
@@ -2329,7 +2329,7 @@ try {
 			deadlineScenarios.push(dir)
 			return dir
 		}
-		const runDeadlineCheck = (dir, now) => spawnSync(process.execPath, [join(process.cwd(), "scripts/check-service-deadlines.mjs")], {cwd: dir, env: {...process.env, SERVICE_DEADLINE_NOW: now}, encoding: "utf8"})
+		const runDeadlineCheck = (dir, now) => spawnSync(process.execPath, [join(process.cwd(), "src/check-service-deadlines.mjs")], {cwd: dir, env: {...process.env, SERVICE_DEADLINE_NOW: now}, encoding: "utf8"})
 		const day0Fixture = (id, startedAt, pauseHistory = [], activePause = null) => ({
 			applicationId: id, paymentEvidence: `paid: invoice ${id}`, requiredContext: "approved context",
 			approvalOwner: "Founder", implementationOwner: "TinyStudio", offerName: "The Website Correction",
@@ -2396,7 +2396,7 @@ try {
 	}
 
 	assert(ALLOWED_COMMANDS.every(argv => Array.isArray(argv) && argv.every(part => typeof part === "string")))
-	const engineSource = [rf(join(process.cwd(), "scripts/lib/review-queue.mjs"), "utf8"), rf(join(process.cwd(), QUEUE), "utf8")].join("\n")
+	const engineSource = [rf(join(process.cwd(), "src/lib/review-queue.mjs"), "utf8"), rf(join(process.cwd(), QUEUE), "utf8")].join("\n")
 	assert(!/node:child_process|\bfetch\s*\(|\bexec(?:File)?\s*\(|\bspawn\s*\(/.test(engineSource))
 
 	console.log(JSON.stringify({status: "passed", checks: 38}, null, 2))

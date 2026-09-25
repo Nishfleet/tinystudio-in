@@ -5,8 +5,8 @@ import {cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeF
 import {tmpdir} from "node:os"
 import {dirname, join} from "node:path"
 import {fileURLToPath, pathToFileURL} from "node:url"
-import {ACTIVE_OPERATOR_ARTIFACTS} from "../scripts/lib/service-contract.mjs"
-import {generatedStamp} from "../scripts/lib/ops-lockstep.mjs"
+import {ACTIVE_OPERATOR_ARTIFACTS} from "../src/lib/service-contract.mjs"
+import {generatedStamp} from "../src/lib/ops-lockstep.mjs"
 
 const {equal: eq, deepEqual: deq, notEqual: neq, match: mat, ok} = assert
 const C = dirname(dirname(fileURLToPath(import.meta.url)))
@@ -26,7 +26,7 @@ function run(args, extraEnv) {
       ...extraEnv,
       SERVICE_REPO_ROOT: T,
       TZ: "Asia/Kolkata",
-      NODE_OPTIONS: [process.env.NODE_OPTIONS, `--import=${pathToFileURL(join(T, "scripts/lib/test-fixed-clock.mjs")).href}`].filter(Boolean).join(" ")
+      NODE_OPTIONS: [process.env.NODE_OPTIONS, `--import=${pathToFileURL(join(T, "src/lib/test-fixed-clock.mjs")).href}`].filter(Boolean).join(" ")
     }
   })
 }
@@ -38,7 +38,7 @@ function parseJsonObject(text) {
 }
 
 try {
-  for (const directory of ["scripts", "growth-brain", "contracts", "docs"]) {
+  for (const directory of ["src", "growth-brain", "contracts", "docs"]) {
     cpSync(join(C, directory), join(T, directory), {recursive: true})
   }
   for (const file of ["TASKS.md", "PRODUCT.md", "AGENT_WORKFLOW.md", "MEMORY.md", "README.md", "package.json"]) {
@@ -51,7 +51,7 @@ try {
   writeJson(join(T, "prospects/lockstep-fixture/pipeline.json"), {stage: "new", createdAt: "2026-08-01", sentAt: "", sentChannel: "", lastChannel: "", lastTouchAt: "", nextFollowUpAt: "", followUps: [], touches: [], notes: []})
 
   // A. --help
-  const help = run(["scripts/refresh-operator-artifacts.mjs", "--help"], {SERVICE_TEST_NOW: "2026-08-06T12:00:00.000+05:30"})
+  const help = run(["src/refresh-operator-artifacts.mjs", "--help"], {SERVICE_TEST_NOW: "2026-08-06T12:00:00.000+05:30"})
   eq(help.status, 0, help.stderr || help.stdout)
   mat(help.stdout, /Usage:/)
   eq(readFileSync(join(T, "growth-brain/ops/proof-library.md"), "utf8"), readFileSync(join(C, "growth-brain/ops/proof-library.md"), "utf8"))
@@ -64,7 +64,7 @@ try {
 
   // B. Partial real-clock write refuses
   const before = readFileSync(join(T, "growth-brain/ops/live-metrics.md"))
-  const partial = run(["scripts/export-growth-metrics.mjs"], {SERVICE_TEST_NOW: "2026-12-31T12:00:00.000+05:30"})
+  const partial = run(["src/export-growth-metrics.mjs"], {SERVICE_TEST_NOW: "2026-12-31T12:00:00.000+05:30"})
   neq(partial.status, 0, partial.stderr || partial.stdout)
   const combined = `${partial.stdout || ""}${partial.stderr || ""}`
   mat(combined, /Refusing to regenerate growth-brain\/ops\/live-metrics\.md/)
@@ -72,19 +72,19 @@ try {
   deq(readFileSync(join(T, "growth-brain/ops/live-metrics.md")), before)
 
   // C. Private output is unrestricted
-  const privateOut = run(["scripts/export-growth-metrics.mjs", "--output=runs/probe-metrics.md"], {SERVICE_TEST_NOW: "2026-12-31T12:00:00.000+05:30"})
+  const privateOut = run(["src/export-growth-metrics.mjs", "--output=runs/probe-metrics.md"], {SERVICE_TEST_NOW: "2026-12-31T12:00:00.000+05:30"})
   eq(privateOut.status, 0, privateOut.stderr || privateOut.stdout)
   ok(existsSync(join(T, "runs/probe-metrics.md")))
   eq(generatedStamp(readFileSync(join(T, "runs/probe-metrics.md"), "utf8")), "2026-12-31")
   deq(readFileSync(join(T, "growth-brain/ops/live-metrics.md")), before)
 
   // D. Same-date tracked write is allowed
-  const sameDate = run(["scripts/export-proof-library.mjs"], {SERVICE_TEST_NOW: "2026-08-06T12:00:00.000+05:30"})
+  const sameDate = run(["src/export-proof-library.mjs"], {SERVICE_TEST_NOW: "2026-08-06T12:00:00.000+05:30"})
   eq(sameDate.status, 0, sameDate.stderr || sameDate.stdout)
   eq(generatedStamp(readFileSync(join(T, "growth-brain/ops/proof-library.md"), "utf8")), "2026-08-06")
 
   // E. Lockstep refresh stamps every artifact
-  const refreshed = run(["scripts/refresh-operator-artifacts.mjs"], {SERVICE_TEST_NOW: "2026-12-31T12:00:00.000+05:30"})
+  const refreshed = run(["src/refresh-operator-artifacts.mjs"], {SERVICE_TEST_NOW: "2026-12-31T12:00:00.000+05:30"})
   eq(refreshed.status, 0, refreshed.stderr || refreshed.stdout)
   const payload = parseJsonObject(refreshed.stdout)
   eq(payload.status, "refreshed")
@@ -97,14 +97,14 @@ try {
   // F. Preflight without pipeline
   const T2 = mkdtempSync(join(tmpdir(), "tinystudio-ops-lockstep-"))
   try {
-    for (const directory of ["scripts", "growth-brain", "contracts", "docs"]) {
+    for (const directory of ["src", "growth-brain", "contracts", "docs"]) {
       cpSync(join(C, directory), join(T2, directory), {recursive: true})
     }
     for (const file of ["TASKS.md", "PRODUCT.md", "AGENT_WORKFLOW.md", "MEMORY.md", "README.md", "package.json"]) {
       cpSync(join(C, file), join(T2, file))
     }
     mkdirSync(join(T2, "prospects"), {recursive: true})
-    const noPipeline = spawnSync(process.execPath, ["scripts/refresh-operator-artifacts.mjs"], {
+    const noPipeline = spawnSync(process.execPath, ["src/refresh-operator-artifacts.mjs"], {
       cwd: T2,
       encoding: "utf8",
       env: {
@@ -112,7 +112,7 @@ try {
         SERVICE_TEST_NOW: "2026-08-06T12:00:00.000+05:30",
         SERVICE_REPO_ROOT: T2,
         TZ: "Asia/Kolkata",
-        NODE_OPTIONS: [process.env.NODE_OPTIONS, `--import=${pathToFileURL(join(T2, "scripts/lib/test-fixed-clock.mjs")).href}`].filter(Boolean).join(" ")
+        NODE_OPTIONS: [process.env.NODE_OPTIONS, `--import=${pathToFileURL(join(T2, "src/lib/test-fixed-clock.mjs")).href}`].filter(Boolean).join(" ")
       }
     })
     neq(noPipeline.status, 0, noPipeline.stderr || noPipeline.stdout)

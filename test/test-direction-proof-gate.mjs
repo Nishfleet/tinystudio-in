@@ -11,7 +11,7 @@ const T = mkdtempSync(join(tmpdir(), "tinystudio-direction-proof-gate-"))
 const { equal: eq, deepEqual: deq, match: mat, ok } = assert
 const trackedArtifactDate = readFileSync(join(C, "growth-brain/ops/proof-library.md"), "utf8").match(/^Generated:\s*(\d{4}-\d{2}-\d{2})$/m)?.[1]
 if (!trackedArtifactDate) throw new Error("Tracked proof library must contain a Generated YYYY-MM-DD date")
-const fixedClockImport = pathToFileURL(join(T, "scripts/lib/test-fixed-clock.mjs")).href
+const fixedClockImport = pathToFileURL(join(T, "src/lib/test-fixed-clock.mjs")).href
 const LOOM = {
   alpha: "https://www.loom.com/share/aaaa1111aaaa1111aaaa1111",
   gamma: "https://www.loom.com/share/cccc1111cccc1111cccc1111",
@@ -41,7 +41,7 @@ function writeProspect(slug, {score = true, stage = "new", sentAt = "", sentChan
 }
 
 try {
-  for (const directory of ["scripts", "growth-brain", "contracts", "docs"]) {
+  for (const directory of ["src", "growth-brain", "contracts", "docs"]) {
     cpSync(join(C, directory), join(T, directory), {recursive: true})
   }
   for (const file of ["TASKS.md", "PRODUCT.md", "AGENT_WORKFLOW.md", "MEMORY.md", "README.md", "package.json"]) {
@@ -85,7 +85,7 @@ try {
   ].join("\n")
   writeFileSync(sheetPath, sheet)
 
-  const generated = run(["scripts/export-market-proof-run.mjs", "--skip-kit", "--output=runs/direction-proof-gate.md"])
+  const generated = run(["src/export-market-proof-run.mjs", "--skip-kit", "--output=runs/direction-proof-gate.md"])
   eq(generated.status, 0, generated.stderr || generated.stdout)
   const result = JSON.parse(generated.stdout)
 
@@ -112,7 +112,7 @@ try {
   }
 
   const sheetAfter = readFileSync(sheetPath, "utf8")
-  const regenerated = run(["scripts/export-market-proof-run.mjs", "--skip-kit", "--output=runs/direction-proof-gate.md"])
+  const regenerated = run(["src/export-market-proof-run.mjs", "--skip-kit", "--output=runs/direction-proof-gate.md"])
   eq(regenerated.status, 0, regenerated.stderr || regenerated.stdout)
   eq(JSON.parse(regenerated.stdout).directionGate.approvedLooms, 4)
   eq(readFileSync(sheetPath, "utf8"), sheetAfter, "second generation must not mutate the loom-links sheet")
@@ -120,7 +120,7 @@ try {
   deq(markdownAgain.split("## Direction Proof Gate").at(-1), markdown.split("## Direction Proof Gate").at(-1), "gate section must be deterministic across runs")
 
   rmSync(join(T, "prospects"), {recursive: true, force: true})
-  const emptyRun = run(["scripts/export-market-proof-run.mjs", "--skip-kit", "--output=runs/empty-proof-gate.md", "--loom-links=runs/empty-loom-links.txt"])
+  const emptyRun = run(["src/export-market-proof-run.mjs", "--skip-kit", "--output=runs/empty-proof-gate.md", "--loom-links=runs/empty-loom-links.txt"])
   eq(emptyRun.status, 0, emptyRun.stderr || emptyRun.stdout)
   deq(JSON.parse(emptyRun.stdout).directionGate, {
     approvedLooms: 0, recordedLooms: 0, sentLooms: 0,
@@ -128,7 +128,7 @@ try {
     pendingRecording: 0, recordedWithoutSentProof: 0
   }, "empty repo state must surface 0/5 and 0/40 with no inferred progress")
   ok(existsSync(join(T, "runs/empty-loom-links.txt")), "generator must still write the empty sheet")
-  const noProspectsRun = run(["scripts/export-market-proof-run.mjs", "--skip-kit", "--output=runs/no-prospects-proof-gate.md"])
+  const noProspectsRun = run(["src/export-market-proof-run.mjs", "--skip-kit", "--output=runs/no-prospects-proof-gate.md"])
   eq(noProspectsRun.status, 0, noProspectsRun.stderr || noProspectsRun.stdout)
   deq(JSON.parse(noProspectsRun.stdout).directionGate.qualifiedTouches, 0, "no prospects means no qualified touches")
   mat(readFileSync(join(T, "runs/no-prospects-proof-gate.md"), "utf8"), /\| Qualified touches \| 0\/40 \|/)
@@ -136,19 +136,19 @@ try {
   rmSync(join(T, "prospects"), {recursive: true, force: true})
   const trackedBriefPath = join(T, "growth-brain/ops/11-10-proof-run.md")
   const trackedBriefBefore = readFileSync(trackedBriefPath, "utf8")
-  const refusedRun = run(["scripts/export-market-proof-run.mjs", "--skip-kit"])
+  const refusedRun = run(["src/export-market-proof-run.mjs", "--skip-kit"])
   ok(refusedRun.status !== 0, "regenerating the tracked brief without prospect state must refuse instead of silently reporting a zero pipeline")
   mat(refusedRun.stderr, /Refusing to regenerate the tracked 11\/10 proof-run brief with a zero pipeline/)
   eq(readFileSync(trackedBriefPath, "utf8"), trackedBriefBefore, "refused regeneration must leave the tracked brief untouched")
   eq(existsSync(join(T, "prospects")), false, "refused regeneration must not create a prospect root or loom sheet")
 
   mkdirSync(join(T, "prospects"), {recursive: true})
-  const refusedEmptyRoot = run(["scripts/export-market-proof-run.mjs", "--skip-kit"])
+  const refusedEmptyRoot = run(["src/export-market-proof-run.mjs", "--skip-kit"])
   ok(refusedEmptyRoot.status !== 0, "an empty prospects/ directory must still refuse tracked regeneration")
-  const privateZeroRun = run(["scripts/export-market-proof-run.mjs", "--skip-kit", "--output=runs/private-zero-proof.md"])
+  const privateZeroRun = run(["src/export-market-proof-run.mjs", "--skip-kit", "--output=runs/private-zero-proof.md"])
   eq(privateZeroRun.status, 0, privateZeroRun.stderr || privateZeroRun.stdout)
   ok(existsSync(join(T, "prospects/loom-links.txt")), "private zero-state run writes the default loom sheet")
-  const refusedAfterPrivate = run(["scripts/export-market-proof-run.mjs", "--skip-kit"])
+  const refusedAfterPrivate = run(["src/export-market-proof-run.mjs", "--skip-kit"])
   ok(refusedAfterPrivate.status !== 0, "a default run after a private zero-state run must still refuse")
   mat(refusedAfterPrivate.stderr, /Refusing to regenerate the tracked 11\/10 proof-run brief with a zero pipeline/)
   eq(readFileSync(trackedBriefPath, "utf8"), trackedBriefBefore, "refused regeneration after a private run must leave the tracked brief untouched")
@@ -156,16 +156,16 @@ try {
 
   const anchoredCwd = join(T, "runner-cwd")
   mkdirSync(anchoredCwd, { recursive: true })
-  const anchoredRun = run([join(C, "scripts/export-market-proof-run.mjs"), "--skip-kit", "--output=runs/rooted-proof-gate.md"], anchoredCwd)
+  const anchoredRun = run([join(C, "src/export-market-proof-run.mjs"), "--skip-kit", "--output=runs/rooted-proof-gate.md"], anchoredCwd)
   eq(anchoredRun.status, 0, anchoredRun.stderr || anchoredRun.stdout)
   ok(existsSync(join(T, "runs/rooted-proof-gate.md")), "anchored generation must write into the service root")
   eq(existsSync(join(anchoredCwd, "runs/rooted-proof-gate.md")), false, "anchored generation must not write into the invocation directory")
 
   const dataRoot = join(T, "data-only-root")
   mkdirSync(join(dataRoot, "prospects"), {recursive: true})
-  const dataOnlyRun = spawnSync(process.execPath, [join(C, "scripts/export-market-proof-run.mjs"), "--skip-kit", "--output=runs/data-root-proof.md"], {cwd: T, encoding: "utf8", env: {...fixedEnv(), SERVICE_REPO_ROOT: dataRoot}})
+  const dataOnlyRun = spawnSync(process.execPath, [join(C, "src/export-market-proof-run.mjs"), "--skip-kit", "--output=runs/data-root-proof.md"], {cwd: T, encoding: "utf8", env: {...fixedEnv(), SERVICE_REPO_ROOT: dataRoot}})
   eq(dataOnlyRun.status, 0, dataOnlyRun.stderr || dataOnlyRun.stdout)
-  ok(existsSync(join(dataRoot, "runs/data-root-proof.md")), "a data-only service root without scripts/ must still receive the private report")
+  ok(existsSync(join(dataRoot, "runs/data-root-proof.md")), "a data-only service root without src/ must still receive the private report")
   eq(existsSync(join(dataRoot, "prospects/market-proof-run-parity.md")), false, "parity scratch output must be cleaned from the data root")
   console.log("Direction proof gate checks passed.")
 } finally {

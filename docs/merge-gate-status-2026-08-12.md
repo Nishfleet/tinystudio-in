@@ -51,7 +51,7 @@ code PRs on machine gates alone; the review ladder is the designed gate.
 
 The repo gate itself is green: the runner's own `repo-checks` runs pass on fresh
 clones. Local `npm run ci` on this worktree fails only at
-`scripts/check-retention-automation.mjs` because the machine-local automation
+`src/check-retention-automation.mjs` because the machine-local automation
 (`/home/nish/.codex/automations/tinystudio-retention-checkups/automation.toml`)
 points at `/home/nish/workspaces/products/tinystudio-in-autonomous-service`, which
 does not exist on this box; that path is machine state, not repo content, and is

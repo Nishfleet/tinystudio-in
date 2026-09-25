@@ -117,7 +117,7 @@ ok(deploySteps.every((s) => (s.if || "").includes(GATE)), "every deploy-pipeline
 const publish = steps.find((s) => /Publish to Cloudflare Pages/.test(s.name || ""))
 ok(!!publish, "publish-and-verify step exists")
 ok(!!publish && /publish-public-site\.mjs --deploy/.test(publish.run), "deploy runs publish-public-site.mjs --deploy")
-const publishScript = readFileSync(join(ROOT, "scripts", "publish-public-site.mjs"), "utf8")
+const publishScript = readFileSync(join(ROOT, "src", "publish-public-site.mjs"), "utf8")
 ok(/check-public-live-deploy\.mjs/.test(publishScript), "publish script runs check-public-live-deploy.mjs after upload")
 ok(/verifyLive/.test(publishScript), "publish script verifies the live site after deploy (verifyLive)")
 

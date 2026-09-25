@@ -4,12 +4,12 @@ import {mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync} from "node:
 import {tmpdir} from "node:os"
 import {dirname, join} from "node:path"
 import {fileURLToPath} from "node:url"
-import {CANONICAL_PROSPECT_ASK} from "../scripts/lib/canonical-service-copy.mjs"
-import {NO_GUARANTEE_CLIENT_SENTENCE, NO_GUARANTEE_OUTCOMES} from "../scripts/lib/service-contract.mjs"
+import {CANONICAL_PROSPECT_ASK} from "../src/lib/canonical-service-copy.mjs"
+import {NO_GUARANTEE_CLIENT_SENTENCE, NO_GUARANTEE_OUTCOMES} from "../src/lib/service-contract.mjs"
 
 const repositoryRoot = dirname(dirname(fileURLToPath(import.meta.url)))
 const testRoot = mkdtempSync(join(tmpdir(), "tinystudio-active-offer-projection-"))
-const sp = name => join(repositoryRoot, "scripts", name)
+const sp = name => join(repositoryRoot, "src", name)
 const {equal: eq, match: mat, doesNotMatch: dnm} = assert
 const legacyProspectPath = join(testRoot, "prospects", "legacy-offer-fixture")
 const retiredOfferPattern = /7-Day Site Revenue Fault Sprint|7[- ]day sprint|Tangible Revenue Fault Sprint|30[- ]day action plan|Growth Desk|three pages|founder sprint|\$500/i

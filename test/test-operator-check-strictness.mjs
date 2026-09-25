@@ -19,7 +19,7 @@ import {fileURLToPath} from "node:url"
 const {equal: eq, notEqual: neq, ok} = assert
 const C = dirname(dirname(fileURLToPath(import.meta.url)))
 const T = mkdtempSync(join(tmpdir(), "tinystudio-operator-check-strictness-"))
-const S = join(T, "scripts")
+const S = join(T, "src")
 const LOOM = "https://www.loom.com/share/1234567890abcdef1234567890abcdef"
 
 // Named readiness/operator commands that must be strict by default (blocked -> nonzero).
@@ -69,7 +69,7 @@ function parsePayload(ran, label) {
 
 try {
 	// Fixture root A: canonical code + data surfaces with deliberate blocked state.
-	for (const directory of ["scripts", "growth-brain", "contracts", "docs"]) {
+	for (const directory of ["src", "growth-brain", "contracts", "docs"]) {
 		cpSync(join(C, directory), join(T, directory), {recursive: true})
 	}
 	for (const file of ["TASKS.md", "PRODUCT.md", "AGENT_WORKFLOW.md", "MEMORY.md", "README.md", "package.json"]) {
@@ -159,7 +159,7 @@ try {
 	// Fixture root B: no queued prospects -> prospect:site-check is green.
 	const B = join(T, "site-check-green")
 	mkdirSync(join(B, "prospects"), {recursive: true})
-	for (const file of ["scripts", "package.json"]) cpSync(join(C, file), join(B, file), {recursive: true})
+	for (const file of ["src", "package.json"]) cpSync(join(C, file), join(B, file), {recursive: true})
 	eq(npmRun(B, "prospect:site-check").status, 0, "site-check must pass with no queued prospects")
 
 	// Gate hygiene: required gates run the strictness detector and never advisory aliases.

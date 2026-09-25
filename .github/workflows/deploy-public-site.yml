@@ -16,7 +16,7 @@ name: Deploy public site
 #     token behind green runs.
 #   - Before upload the lane captures the current production deployment
 #     identity as the rollback target and refuses to deploy without one
-#     (scripts/publish-public-site.mjs).
+#     (src/publish-public-site.mjs).
 #   - After upload the lane PROVES the upload became production (canonical
 #     deployment id moved, source commit is this bundle's). The acceptance
 #     below only asserts already-merged fixes, so it passes against the OLD
@@ -110,8 +110,8 @@ jobs:
 
       - name: Prepare the filtered deploy bundle
         if: env.CLOUDFLARE_API_TOKEN != '' && env.CLOUDFLARE_ACCOUNT_ID != ''
-        run: node scripts/publish-public-site.mjs --prepare-only --output "$RUNNER_TEMP/tinystudio-public-bundle"
+        run: node src/publish-public-site.mjs --prepare-only --output "$RUNNER_TEMP/tinystudio-public-bundle"
 
       - name: Publish to Cloudflare Pages and verify live (auto-rollback on acceptance failure)
         if: env.CLOUDFLARE_API_TOKEN != '' && env.CLOUDFLARE_ACCOUNT_ID != ''
-        run: node scripts/publish-public-site.mjs --deploy --bundle "$RUNNER_TEMP/tinystudio-public-bundle"
+        run: node src/publish-public-site.mjs --deploy --bundle "$RUNNER_TEMP/tinystudio-public-bundle"

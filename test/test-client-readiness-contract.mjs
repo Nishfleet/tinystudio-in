@@ -13,7 +13,7 @@ const R = dirname(dirname(fileURLToPath(import.meta.url)))
 const F = mkdtempSync(join(tmpdir(), "tinystudio-readiness-contract-"))
 const folder = `clients/${applicationId}`
 
-cpSync(join(R, "scripts"), join(F, "scripts"), {recursive: true})
+cpSync(join(R, "src"), join(F, "src"), {recursive: true})
 cpSync(join(R, "test"), join(F, "test"), {recursive: true})
 cpSync(join(R, "growth-brain"), join(F, "growth-brain"), {recursive: true})
 cpSync(join(R, "contracts"), join(F, "contracts"), {recursive: true})
@@ -23,8 +23,8 @@ function run(args, extraEnv = {}) {
 	return spawnSync(process.execPath, args, {cwd: F, encoding: "utf8", env: {...process.env, SERVICE_REPO_ROOT: F, ...extraEnv}})
 }
 
-const script = (name, ...args) => ["scripts/" + name, ...args]
-const sp = name => join(F, "scripts", name)
+const script = (name, ...args) => ["src/" + name, ...args]
+const sp = name => join(F, "src", name)
 
 const sourceSnapshot = {clients: treeSnapshot(join(R, "clients")), prospects: treeSnapshot(join(R, "prospects"))}
 
@@ -260,8 +260,8 @@ try {
 	writeFileSync(privateLearningsPath, "# Private weekly learning\n\nPRIVATE WEEKLY LEARNING TEXT\n")
 
 	for (const args of [
-		["scripts/draft-client-kickoff.mjs", folder],
-		["scripts/export-client-delivery-cockpit.mjs", folder]
+		["src/draft-client-kickoff.mjs", folder],
+		["src/export-client-delivery-cockpit.mjs", folder]
 	]) {
 		const result = run(args)
 		eq(result.status, 0)

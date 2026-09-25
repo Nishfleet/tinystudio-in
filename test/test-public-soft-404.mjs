@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from "node:fs"
 import { fileURLToPath } from "node:url"
 import { dirname, join } from "node:path"
 
-import { PUBLIC_PAGE_URLS, missingFromLlmsTxt } from "../scripts/lib/public-pages.mjs"
+import { PUBLIC_PAGE_URLS, missingFromLlmsTxt } from "../src/lib/public-pages.mjs"
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 const read = (p) => readFileSync(join(ROOT, p), "utf8")

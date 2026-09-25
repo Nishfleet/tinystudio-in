@@ -114,7 +114,7 @@ console.log("C. live alarm + nightly workflow exist and stay out of npm test/ci"
 console.log("D. existing post-deploy / bundle proofs for /promptly/support/ still named (do not edit those files)")
 {
   const liveDeploy = read("test/check-public-live-deploy.mjs")
-  const bundle = read("scripts/prepare-public-deploy-bundle.mjs")
+  const bundle = read("src/prepare-public-deploy-bundle.mjs")
   ok(liveDeploy.includes('get("/promptly/support/")'), "check-public-live-deploy still fetches /promptly/support/")
   ok(bundle.includes("promptly/support/index.html"), "NEUTRAL_PROOFS region still names promptly/support/index.html")
   ok(bundle.includes("PRs #18/#20") || bundle.includes("PR #20"), "bundle proof still names PR #20")

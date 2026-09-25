@@ -7,7 +7,7 @@ import {fileURLToPath} from "node:url"
 import {spawnSync} from "node:child_process"
 
 const fixtureRoot = mkdtempSync(join(tmpdir(), "tinystudio-outbound-readiness-"))
-const script = join(dirname(fileURLToPath(import.meta.url)), "..", "scripts", "check-outbound-send-readiness.mjs")
+const script = join(dirname(fileURLToPath(import.meta.url)), "..", "src", "check-outbound-send-readiness.mjs")
 const prospect = join(fixtureRoot, "prospects", "fixture")
 const codeCwd = join(fixtureRoot, "code-cwd")
 const alternateRoot = join(fixtureRoot, "alternate")

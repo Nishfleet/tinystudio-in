@@ -7,7 +7,7 @@ TinyStudio (repo `tinystudio-in`) is a human-reviewed managed service for one
 narrow offer (The Website Correction) plus the public portfolio at
 `tinystudio.in`. The only user-touchable surface is the static site in
 `public/`. The active service engine, growth brain, and operator scripts in
-`scripts/` are offline tooling — never driven by an end user, and out of
+`src/` are offline tooling — never driven by an end user, and out of
 scope for this harness.
 
 Agents doing E2E verification MUST use this harness instead of improvising a

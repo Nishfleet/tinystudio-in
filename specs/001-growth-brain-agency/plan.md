@@ -10,34 +10,34 @@ Create the minimum complete agency operating kit inside this repo.
 - `growth-brain/` contains the operating kit.
 - `docs/strategy/` contains the full plan and 14-day sales path.
 - `specs/001-growth-brain-agency/` contains the Spec Kit control surface.
-- `scripts/check-prospect-readiness.mjs` and `scripts/check-client-readiness.mjs` prevent draft work from being sent.
-- `scripts/check-outbound-claim-safety.mjs` prevents unprovable outbound claims from leaving the system.
-- `scripts/enrich-prospect-contact-plan.mjs` creates a prospect send-route file from listed website contact surfaces.
-- `scripts/draft-loom-recording-script.mjs` creates a record-ready talk track from prospect notes.
-- `scripts/export-recording-queue.mjs` exports the next batch of Looms to record.
-- `scripts/export-recording-cockpit.mjs` exports the next recording batch as a browser page.
-- `scripts/export-recording-teleprompter.mjs` exports a focused recording page for batch Loom work.
-- `scripts/add-prospect-loom-link.mjs` updates prospect send surfaces after a real Loom exists.
-- `scripts/draft-prospect-message.mjs` creates the exact next message for first sends and follow-ups.
-- `scripts/export-prospect-outbox.mjs` exports recorded Looms with channel copy and stage commands.
-- `scripts/prepare-prospect-send.mjs` turns one Loom URL into updated send surfaces, a readiness check, and a final send package.
-- `scripts/prepare-prospect-batch-send.mjs` turns a batch Loom-link file into multiple send packages.
-- `scripts/complete-prospect-batch-send.mjs` marks a sent Loom-link batch as sent and schedules follow-ups.
-- `scripts/update-prospect-pipeline.mjs` tracks sent Looms, follow-ups, replies, calls, wins, and losses.
-- `scripts/export-followup-cockpit.mjs` exports due follow-ups as a browser page with copyable channel messages.
-- `scripts/prepare-prospect-reply.mjs` turns a reply into a reply package and call-prep packet.
-- `scripts/draft-sales-call-prep.mjs` creates the sales-call close packet.
-- `scripts/prepare-prospect-call-booked.mjs` turns a booked call into confirmation copy, call prep, agenda, and close-loop commands.
-- `scripts/prepare-prospect-close-package.mjs` turns a completed call into a scoped proposal/follow-up, payment CTA, and conversion commands.
-- `scripts/convert-prospect-to-client.mjs` creates a client sprint folder from a won prospect.
-- `scripts/draft-client-kickoff.mjs` creates the first client kickoff message and context checklist.
-- `scripts/export-client-delivery-cockpit.mjs` creates one delivery board for running a paid sprint.
-- `scripts/show-growth-command-center.mjs` turns current prospect/client state into today's action list.
-- `scripts/export-growth-cockpit.mjs` exports one browser start screen for the daily workflow.
-- `scripts/export-growth-metrics.mjs` exports the current funnel scoreboard.
-- `scripts/export-proof-library.mjs` exports the current proof and learning library.
-- `scripts/export-internal-dashboard.mjs` exports the concise owner dashboard with next/pending actions, a TASKS-backed to-do list, funnel counts, retention risk, and 11/10 blockers.
-- `scripts/export-managed-it-one-pager.mjs` exports the first niche-specific sales sheet to printable HTML.
+- `src/check-prospect-readiness.mjs` and `src/check-client-readiness.mjs` prevent draft work from being sent.
+- `src/check-outbound-claim-safety.mjs` prevents unprovable outbound claims from leaving the system.
+- `src/enrich-prospect-contact-plan.mjs` creates a prospect send-route file from listed website contact surfaces.
+- `src/draft-loom-recording-script.mjs` creates a record-ready talk track from prospect notes.
+- `src/export-recording-queue.mjs` exports the next batch of Looms to record.
+- `src/export-recording-cockpit.mjs` exports the next recording batch as a browser page.
+- `src/export-recording-teleprompter.mjs` exports a focused recording page for batch Loom work.
+- `src/add-prospect-loom-link.mjs` updates prospect send surfaces after a real Loom exists.
+- `src/draft-prospect-message.mjs` creates the exact next message for first sends and follow-ups.
+- `src/export-prospect-outbox.mjs` exports recorded Looms with channel copy and stage commands.
+- `src/prepare-prospect-send.mjs` turns one Loom URL into updated send surfaces, a readiness check, and a final send package.
+- `src/prepare-prospect-batch-send.mjs` turns a batch Loom-link file into multiple send packages.
+- `src/complete-prospect-batch-send.mjs` marks a sent Loom-link batch as sent and schedules follow-ups.
+- `src/update-prospect-pipeline.mjs` tracks sent Looms, follow-ups, replies, calls, wins, and losses.
+- `src/export-followup-cockpit.mjs` exports due follow-ups as a browser page with copyable channel messages.
+- `src/prepare-prospect-reply.mjs` turns a reply into a reply package and call-prep packet.
+- `src/draft-sales-call-prep.mjs` creates the sales-call close packet.
+- `src/prepare-prospect-call-booked.mjs` turns a booked call into confirmation copy, call prep, agenda, and close-loop commands.
+- `src/prepare-prospect-close-package.mjs` turns a completed call into a scoped proposal/follow-up, payment CTA, and conversion commands.
+- `src/convert-prospect-to-client.mjs` creates a client sprint folder from a won prospect.
+- `src/draft-client-kickoff.mjs` creates the first client kickoff message and context checklist.
+- `src/export-client-delivery-cockpit.mjs` creates one delivery board for running a paid sprint.
+- `src/show-growth-command-center.mjs` turns current prospect/client state into today's action list.
+- `src/export-growth-cockpit.mjs` exports one browser start screen for the daily workflow.
+- `src/export-growth-metrics.mjs` exports the current funnel scoreboard.
+- `src/export-proof-library.mjs` exports the current proof and learning library.
+- `src/export-internal-dashboard.mjs` exports the concise owner dashboard with next/pending actions, a TASKS-backed to-do list, funnel counts, retention risk, and 11/10 blockers.
+- `src/export-managed-it-one-pager.mjs` exports the first niche-specific sales sheet to printable HTML.
 
 ## Verification
 
