@@ -13,7 +13,7 @@ for the booking and no-show-prevention app, no account, no session. Route:
 
 ## How to drive it
 
-Preconditions: the harness is up at the recorded `PORT`; the `DOCTOR`
+Preconditions: the harness is up on 127.0.0.1:4178; the `DOCTOR`
 checks from the parent `SKILL.md` all passed.
 
 - `GET /promptly/` — expect 200, HTML body. The H1 starts with
@@ -21,8 +21,7 @@ checks from the parent `SKILL.md` all passed.
   and is the first heading in the outline.
 
   ```bash
-  PORT=$(cat /tmp/verify-tinystudio-in/server.port)
-  curl -fsS "http://127.0.0.1:$PORT/promptly/" -o /tmp/verify-tinystudio-in/html/promptly.html
+  curl -fsS "http://127.0.0.1:4178/promptly/" -o /tmp/verify-tinystudio-in/html/promptly.html
   grep -c "Promptly keeps solo professionals booked, prepared, and harder to ghost." /tmp/verify-tinystudio-in/html/promptly.html
   ```
 
@@ -50,8 +49,8 @@ checks from the parent `SKILL.md` all passed.
   `/promptly/support/` and `/promptly/privacy/`.
 
   ```bash
-  curl -s -o /dev/null -w "%{http_code}\n" "http://127.0.0.1:$PORT/promptly/support/"
-  curl -s -o /dev/null -w "%{http_code}\n" "http://127.0.0.1:$PORT/promptly/privacy/"
+  curl -s -o /dev/null -w "%{http_code}\n" "http://127.0.0.1:4178/promptly/support/"
+  curl -s -o /dev/null -w "%{http_code}\n" "http://127.0.0.1:4178/promptly/privacy/"
   ```
 
 ## What proves success

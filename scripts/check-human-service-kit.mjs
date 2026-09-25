@@ -147,7 +147,6 @@ for (const path of activeScriptFiles) {
 }
 
 for (const path of filesUnder(join(codeRoot, "scripts"))) {
-	if (path.startsWith(join(codeRoot, "scripts/retired"))) continue
 	const source = readFileSync(path, "utf8")
 	if (/^(?:# Retired:|[\s\S]{0,300}Status: Retired)/.test(source)) continue
 	for (const match of source.matchAll(/\bnpm run\s+([a-z0-9:-]+)/gi)) {

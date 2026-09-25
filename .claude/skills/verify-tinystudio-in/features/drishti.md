@@ -12,7 +12,7 @@ for the mindful screen time app, no account, no session. Route:
 
 ## How to drive it
 
-Preconditions: the harness is up at the recorded `PORT`; the `DOCTOR`
+Preconditions: the harness is up on 127.0.0.1:4178; the `DOCTOR`
 checks from the parent `SKILL.md` all passed.
 
 - `GET /drishti/` — expect 200, HTML body. The H1 starts with
@@ -20,8 +20,7 @@ checks from the parent `SKILL.md` all passed.
   and is the first heading in the outline.
 
   ```bash
-  PORT=$(cat /tmp/verify-tinystudio-in/server.port)
-  curl -fsS "http://127.0.0.1:$PORT/drishti/" -o /tmp/verify-tinystudio-in/html/drishti.html
+  curl -fsS "http://127.0.0.1:4178/drishti/" -o /tmp/verify-tinystudio-in/html/drishti.html
   grep -c "Drishti helps bring awareness to screen time before distraction takes over." /tmp/verify-tinystudio-in/html/drishti.html
   ```
 
@@ -51,8 +50,8 @@ checks from the parent `SKILL.md` all passed.
   `/drishti/support/` and `/drishti/privacy/`.
 
   ```bash
-  curl -s -o /dev/null -w "%{http_code}\n" "http://127.0.0.1:$PORT/drishti/support/"
-  curl -s -o /dev/null -w "%{http_code}\n" "http://127.0.0.1:$PORT/drishti/privacy/"
+  curl -s -o /dev/null -w "%{http_code}\n" "http://127.0.0.1:4178/drishti/support/"
+  curl -s -o /dev/null -w "%{http_code}\n" "http://127.0.0.1:4178/drishti/privacy/"
   ```
 
 ## What proves success

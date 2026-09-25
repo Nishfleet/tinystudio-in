@@ -11,17 +11,17 @@ account, no session, no form. Route: `public/index.html`.
 
 ## How to drive it
 
-Preconditions: the harness is up at the recorded `PORT`; the `DOCTOR`
+Preconditions: the harness is up on 127.0.0.1:4178; the `DOCTOR`
 checks from the parent `SKILL.md` all passed.
 
-- `GET /` — expect 200, HTML body, `Content-Type: text/html; charset=utf-8`.
+- `GET /` — expect 200, HTML body (`Content-Type: text/html`, the
+  Python server sends no charset parameter).
   The H1 is exactly `Products for people. One sharper system for teams.`
   and is the first heading in the outline. The two `#people` and `#teams`
   anchors exist in the page.
 
   ```bash
-  PORT=$(cat /tmp/verify-tinystudio-in/server.port)
-  curl -fsS "http://127.0.0.1:$PORT/" -o /tmp/verify-tinystudio-in/html/home.html
+  curl -fsS "http://127.0.0.1:4178/" -o /tmp/verify-tinystudio-in/html/home.html
   grep -c "Products for people. One sharper system for teams." /tmp/verify-tinystudio-in/html/home.html
   ```
 
@@ -48,7 +48,7 @@ checks from the parent `SKILL.md` all passed.
 
   ```bash
   for path in /support/ /contact/; do
-    code=$(curl -s -o /dev/null -w "%{http_code}" "http://127.0.0.1:$PORT$path")
+    code=$(curl -s -o /dev/null -w "%{http_code}" "http://127.0.0.1:4178$path")
     echo "$path -> $code"
   done
   ```

@@ -6,17 +6,16 @@ driving, then use the matching feature file as the recipe.
 
 ## Baseline preconditions
 
-- Launch the harness at `http://127.0.0.1:<port>` with
-  `node scripts/verify-tinystudio-in-serve.mjs` (default port 4178, or
-  the first free port above it).
-- Capture the bound port to `/tmp/verify-tinystudio-in/server.port`.
+- Launch the harness at `http://127.0.0.1:4178` with
+  `python3 -m http.server 4178 --bind 127.0.0.1 --directory public`. The
+  port is fixed, so no port file is written.
 - Run the three `DOCTOR` checks from the parent `SKILL.md` and require
   all three to pass before any feature drive.
 - Never drive an instance that was not started by this verification run.
 
 ## Driving conventions
 
-- Start every recipe from the harness URL recorded by the LAUNCH step.
+- Start every recipe from the harness URL `http://127.0.0.1:4178`.
 - Prefer ARIA roles, `aria-label`s, semantic heading order, and the
   exact H1 copy in the recipe over CSS selectors and DOM position.
 - Treat every `curl` URL and every `expected` string as literal. The
@@ -35,7 +34,7 @@ driving, then use the matching feature file as the recipe.
   fingerprints the recipe names.
 - Drive-time proof: write the HTML to `/tmp/verify-tinystudio-in/html/`
   and grep for the exact strings the recipe lists.
-- Report an unreachable path with the route, the harness port, the
+- Report an unreachable path with the route, the harness port 4178, the
   `lsof`/log line, and the unmet precondition. Do not report a skipped
   drive as verified through a different route.
 

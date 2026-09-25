@@ -13,7 +13,7 @@ itself — it links to the contact and privacy routes. Route:
 
 ## How to drive it
 
-Preconditions: the harness is up at the recorded `PORT`; the `DOCTOR`
+Preconditions: the harness is up on 127.0.0.1:4178; the `DOCTOR`
 checks from the parent `SKILL.md` all passed.
 
 - `GET /privacy-choices/` — expect 200, HTML body. The H1 is exactly
@@ -21,8 +21,7 @@ checks from the parent `SKILL.md` all passed.
   first heading in the outline.
 
   ```bash
-  PORT=$(cat /tmp/verify-tinystudio-in/server.port)
-  curl -fsS "http://127.0.0.1:$PORT/privacy-choices/" -o /tmp/verify-tinystudio-in/html/privacy-choices.html
+  curl -fsS "http://127.0.0.1:4178/privacy-choices/" -o /tmp/verify-tinystudio-in/html/privacy-choices.html
   grep -c "Privacy questions and data requests have a clear route." /tmp/verify-tinystudio-in/html/privacy-choices.html
   ```
 
@@ -42,7 +41,7 @@ checks from the parent `SKILL.md` all passed.
 
   ```bash
   for path in /privacy/ /contact/; do
-    code=$(curl -s -o /dev/null -w "%{http_code}" "http://127.0.0.1:$PORT$path")
+    code=$(curl -s -o /dev/null -w "%{http_code}" "http://127.0.0.1:4178$path")
     echo "$path -> $code"
   done
   ```

@@ -14,7 +14,7 @@ per-app destinations, and the workflow-honest copy. Route:
 
 ## How to drive it
 
-Preconditions: the harness is up at the recorded `PORT`; the `DOCTOR`
+Preconditions: the harness is up on 127.0.0.1:4178; the `DOCTOR`
 checks from the parent `SKILL.md` all passed.
 
 - `GET /support/` — expect 200, HTML body. The H1 is exactly
@@ -22,8 +22,7 @@ checks from the parent `SKILL.md` all passed.
   heading in the outline.
 
   ```bash
-  PORT=$(cat /tmp/verify-tinystudio-in/server.port)
-  curl -fsS "http://127.0.0.1:$PORT/support/" -o /tmp/verify-tinystudio-in/html/support.html
+  curl -fsS "http://127.0.0.1:4178/support/" -o /tmp/verify-tinystudio-in/html/support.html
   grep -c "Support that stays simple and easy to find." /tmp/verify-tinystudio-in/html/support.html
   ```
 
@@ -43,8 +42,8 @@ checks from the parent `SKILL.md` all passed.
   every product page.
 
   ```bash
-  curl -s -o /dev/null -w "%{http_code}\n" "http://127.0.0.1:$PORT/promptly/support/"
-  curl -s -o /dev/null -w "%{http_code}\n" "http://127.0.0.1:$PORT/drishti/support/"
+  curl -s -o /dev/null -w "%{http_code}\n" "http://127.0.0.1:4178/promptly/support/"
+  curl -s -o /dev/null -w "%{http_code}\n" "http://127.0.0.1:4178/drishti/support/"
   grep -c 'href="/promptly/support/"' /tmp/verify-tinystudio-in/html/support.html
   grep -c 'href="/drishti/support/"' /tmp/verify-tinystudio-in/html/support.html
   ```
