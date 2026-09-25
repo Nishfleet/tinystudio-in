@@ -16,61 +16,48 @@ matching file in `features/` in the same PR.
 
 ## LAUNCH
 
-### Primary — deterministic fixture server (use this)
+### Launch — Python stdlib static server
 
 ```bash
-node scripts/verify-tinystudio-in-serve.mjs
+python3 -m http.server 4178 --bind 127.0.0.1 --directory public
 ```
 
 What it does, in order:
 
-1. Binds a `node:http` server on `127.0.0.1:<port>` (default 4178, or the
-   first free port above it), serving the repo's `public/` directory with
-   the exact MIME map the live Cloudflare Pages deploy uses
-   (`text/html; charset=utf-8`, `text/css; charset=utf-8`,
-   `text/javascript; charset=utf-8`, `image/svg+xml`, `image/png`,
-   `application/xml; charset=utf-8`, etc).
-2. Refuses to serve a file that escapes `public/` (any request with `..` or
-   an absolute path under the root answers 403), and 404s anything else.
-3. Logs `verify-tinystudio-in: serving public/ at http://127.0.0.1:<port>`
-   to stdout once it is ready, and prints a JSON snapshot of the bound
-   address.
+1. Binds a stdlib `http.server` on `127.0.0.1:4178`, serving the repo's
+   `public/` directory. The port is fixed by the command, so the URL is
+   always `http://127.0.0.1:4178`.
+2. Uses `mimetypes.guess_type()` for `Content-Type`, so `text/html`,
+   `text/css`, `text/plain`, `application/xml` and `image/svg+xml` all
+   resolve; no charset parameter is sent.
+3. Logs one line per request to stdout (method, route, status), with the
+   startup banner `Serving HTTP on 127.0.0.1 port 4178` first.
 
-Base URL: `http://127.0.0.1:<port>`. Loopback only — the harness binds to
-`127.0.0.1` so it never accepts external traffic.
+Base URL: `http://127.0.0.1:4178`. Loopback only — the server binds to
+`127.0.0.1`, so it never accepts external traffic.
 
 The harness has no live dependencies. It does NOT call out to a paid
 provider, does not contact Cloudflare, and does not require a Cloudflare
 account. State is the static files on disk, exactly as the deploy bundle
 ships them.
 
-Readiness signal: the line `verify-tinystudio-in: serving public/ at
-http://127.0.0.1:<port>` printed once, followed by the listening event
-silence (no error event). The harness exits 1 if `public/` is missing or
-empty.
+Readiness signal: `curl -fsS http://127.0.0.1:4178/` answers 200. Poll
+for it rather than reading the log — the startup banner is block-buffered
+when stdout is redirected to a file:
 
 ```bash
 mkdir -p /tmp/verify-tinystudio-in
-node scripts/verify-tinystudio-in-serve.mjs > /tmp/verify-tinystudio-in/server.log 2>&1 &
+python3 -m http.server 4178 --bind 127.0.0.1 --directory public \
+  > /tmp/verify-tinystudio-in/server.log 2>&1 &
 echo $! > /tmp/verify-tinystudio-in/server.pid
-# Wait for the bound-port line
-for i in 1 2 3 4 5 6 7 8 9 10; do
-  if grep -q "serving public/" /tmp/verify-tinystudio-in/server.log 2>/dev/null; then break; fi
-  sleep 0.5
+# Wait for the server to answer; the port is known, so just poll it
+while ! curl -fsS -o /dev/null http://127.0.0.1:4178/ 2>/dev/null; do
+  sleep 0.25
 done
-PORT=$(grep -oE "127\.0\.0\.1:[0-9]+" /tmp/verify-tinystudio-in/server.log | head -1 | cut -d: -f2)
-echo $PORT > /tmp/verify-tinystudio-in/server.port
 ```
 
-### Secondary — `python3 -m http.server` (visual only)
-
-```bash
-cd public && python3 -m http.server 4178 --bind 127.0.0.1
-```
-
-Use only for a one-off visual peek. The Python server does NOT apply the
-production MIME map, does NOT block path-escape, and does NOT match the
-deployment binary exactly — never assert pass/fail against it.
+There is no port file and no `PORT` variable anywhere in this skill: the
+port is written literally as 4178 in every recipe.
 
 ### Never
 
@@ -82,27 +69,28 @@ deployment binary exactly — never assert pass/fail against it.
 
 ## DOCTOR
 
-Three checks, in order, each against the recorded port:
+Three checks, in order, each against `http://127.0.0.1:4178`:
 
 ```bash
-PORT=$(cat /tmp/verify-tinystudio-in/server.port)
-# 1. The root index returns 200 with the H1 the homepage asserts.
-curl -fsS "http://127.0.0.1:$PORT/" | grep -c "Products for people. One sharper system for teams."
-# 2. The 404 page exists and answers 404 on a missing route.
-curl -s -o /dev/null -w "%{http_code}\n" "http://127.0.0.1:$PORT/this-route-does-not-exist"
-# 3. Path-escape is refused. Curl normalises `/../` before sending, so
-# the harness defence only fires for an escape that survives the
-# client: either a URL-encoded form (`%2e%2e`) or a `curl --path-as-is`
-# request. Both MUST return 403.
-curl -s -o /dev/null -w "%{http_code}\n" "http://127.0.0.1:$PORT/%2e%2e/package.json"
-curl -s -o /dev/null -w "%{http_code}\n" --path-as-is "http://127.0.0.1:$PORT/../package.json"
+# 1. The root index answers 200 with the H1 the homepage asserts.
+curl -fsS "http://127.0.0.1:4178/" | grep -c "Products for people. One sharper system for teams."
+# 2. A missing route answers 404, not 200 with an error body.
+curl -s -o /dev/null -w "%{http_code}\n" "http://127.0.0.1:4178/this-route-does-not-exist"
+# 3. Path-escape never serves a parent file. Curl normalises `/../`
+# before sending, so use the URL-encoded form (`%2e%2e`). The Python
+# server answers 404 for an escape (it never 200s), unlike the Cloudflare
+# Pages deploy's 403. Assert 404 here.
+curl -s -o /dev/null -w "%{http_code}\n" "http://127.0.0.1:4178/%2e%2e/package.json"
 ```
 
-- Root H1 present means the harness bound the directory correctly and the
-  index file is parseable HTML.
-- 404 page resolves to a 404 status, not a 200 with an error body.
-- Path-escape answers 403 (never 200, never 500). The harness MUST refuse
-  to serve a parent file.
+- Root H1 present means the server bound the `public/` directory correctly
+  and the index file is parseable HTML.
+- 404 body for a missing route means the server is not soft-404ing as the
+  homepage. The Python server returns its own plain-text 404 body — the
+  branded `404.html` in `public/` is what the live deploy serves, and it
+  is guarded separately by `scripts/test-public-soft-404.mjs`.
+- Path-escape answers 404 (never 200, never 500). `--path-as-is` is not
+  needed on this server: it returns 404 either way.
 
 If any check fails, the harness is not usable. Do not run feature drives
 against a broken instance.
@@ -127,8 +115,9 @@ Two drive styles:
 
 - **HTTP drive** — `curl` against the static HTML. Enough for CI-less
   proof, sees everything the server returns.
-- **Browser drive** — Playwright via `node scripts/verify-tinystudio-in-drive.mjs`
-  or an interactive browser tool. Required for anything about layout,
+- **Browser drive** — Playwright via an interactive browser tool, or the
+  CLI: `npx --yes playwright screenshot --full-page http://127.0.0.1:4178<route> /tmp/verify-tinystudio-in/<name>.png`.
+  Required for anything about layout,
   mobile, overflow, tap targets, focus, or keyboard.
 
 ### Deterministic inputs on the 4178 server
@@ -148,8 +137,8 @@ behaviour. Every page is fully deterministic on a plain `GET /<route>/`:
 - `/terms/` → 200, H1 is
   `Website terms for Tiny Studio’s public pages.` (curly apostrophe `'`,
   U+2019 — the rendered HTML uses a typographic apostrophe, not ASCII `'`)
-- `/this-route-does-not-exist` → 404 (the `404.html` body is rendered
-  with status 404 by the harness).
+- `/this-route-does-not-exist` → 404 (the Python server's own 404 body,
+  not the branded `public/404.html` that the live deploy serves).
 
 ### Test-only surfaces — never drive these
 
@@ -168,21 +157,23 @@ ones write to the worktree:
 
 ## EVIDENCE
 
-**Server log.** The harness prints one line per request to stdout
-(method, route, status). The captured launch log IS the server evidence.
+**Server log.** The server prints one line per request to stdout
+(method, route, status), after a `Serving HTTP on 127.0.0.1 port 4178`
+startup banner. The captured launch log IS the server evidence.
 
-**HTML proof.** Save the fetched SSR HTML for every drive:
+**HTML proof.** Save the fetched HTML for every drive with
+`curl -sS -o /tmp/verify-tinystudio-in/<name>.html -w '%{http_code}\n' http://127.0.0.1:4178<route>`:
 
 ```bash
-PORT=$(cat /tmp/verify-tinystudio-in/server.port)
 mkdir -p /tmp/verify-tinystudio-in/html
-curl -fsS "http://127.0.0.1:$PORT/" -o /tmp/verify-tinystudio-in/html/home.html
+curl -fsS -o /tmp/verify-tinystudio-in/html/home.html http://127.0.0.1:4178/
 ```
 
 **Browser proof** (when the drive needs layout, mobile, or visual checks):
-use `node scripts/verify-tinystudio-in-drive.mjs <route>` (it opens a
-Playwright page, dumps the rendered HTML, and saves a full-page
-screenshot). Screenshots land in `/tmp/verify-tinystudio-in/screenshots/`.
+`npx --yes playwright screenshot --full-page http://127.0.0.1:4178<route> /tmp/verify-tinystudio-in/<name>.png`
+opens a Playwright page and saves a full-page screenshot. It prints the
+served status too, so `-w '%{http_code}\n'` on the paired curl keeps the status/body
+check separate from the capture.
 
 **What counts as proof:** readiness 200 + doctor pass + the feature's
 observable state from its `features/` file, captured to files. A claim
@@ -193,14 +184,13 @@ Never commit evidence into this repo.
 
 ## CLEANUP
 
-Kill the harness by its recorded PID. The harness has no children, but
+Kill the server by its recorded PID. The server has no children, but
 lsof the bound port to be sure:
 
 ```bash
 kill "$(cat /tmp/verify-tinystudio-in/server.pid)" 2>/dev/null
-sleep 0.5
-PORT=$(cat /tmp/verify-tinystudio-in/server.port 2>/dev/null)
-[ -n "$PORT" ] && lsof -i :"$PORT"   # must print nothing
+sleep 0.25
+lsof -i :4178   # must print nothing
 ```
 
 - `/tmp/verify-tinystudio-in/` may be deleted wholesale. The harness

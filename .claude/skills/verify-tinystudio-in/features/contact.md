@@ -15,7 +15,7 @@ point. Route: `public/contact/index.html`.
 
 ## How to drive it
 
-Preconditions: the harness is up at the recorded `PORT`; the `DOCTOR`
+Preconditions: the harness is up on 127.0.0.1:4178; the `DOCTOR`
 checks from the parent `SKILL.md` all passed.
 
 - `GET /contact/` — expect 200, HTML body. The H1 is exactly
@@ -23,8 +23,7 @@ checks from the parent `SKILL.md` all passed.
   outline.
 
   ```bash
-  PORT=$(cat /tmp/verify-tinystudio-in/server.port)
-  curl -fsS "http://127.0.0.1:$PORT/contact/" -o /tmp/verify-tinystudio-in/html/contact.html
+  curl -fsS "http://127.0.0.1:4178/contact/" -o /tmp/verify-tinystudio-in/html/contact.html
   grep -c "A direct line to Tiny Studio." /tmp/verify-tinystudio-in/html/contact.html
   ```
 

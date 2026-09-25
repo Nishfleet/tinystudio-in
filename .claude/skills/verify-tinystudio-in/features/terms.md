@@ -12,7 +12,7 @@ account, no session, no form. Purely informational. Route:
 
 ## How to drive it
 
-Preconditions: the harness is up at the recorded `PORT`; the `DOCTOR`
+Preconditions: the harness is up on 127.0.0.1:4178; the `DOCTOR`
 checks from the parent `SKILL.md` all passed.
 
 - `GET /terms/` — expect 200, HTML body. The H1 is exactly
@@ -21,8 +21,7 @@ checks from the parent `SKILL.md` all passed.
   and is the first heading in the outline.
 
   ```bash
-  PORT=$(cat /tmp/verify-tinystudio-in/server.port)
-  curl -fsS "http://127.0.0.1:$PORT/terms/" -o /tmp/verify-tinystudio-in/html/terms.html
+  curl -fsS "http://127.0.0.1:4178/terms/" -o /tmp/verify-tinystudio-in/html/terms.html
   grep -c "Website terms for Tiny Studio" /tmp/verify-tinystudio-in/html/terms.html
   ```
 
@@ -42,7 +41,7 @@ checks from the parent `SKILL.md` all passed.
 
   ```bash
   for path in /contact/ /support/; do
-    code=$(curl -s -o /dev/null -w "%{http_code}" "http://127.0.0.1:$PORT$path")
+    code=$(curl -s -o /dev/null -w "%{http_code}" "http://127.0.0.1:4178$path")
     echo "$path -> $code"
   done
   ```

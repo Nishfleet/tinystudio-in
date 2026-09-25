@@ -12,7 +12,7 @@ session, no form. Links out to per-app privacy pages. Route:
 
 ## How to drive it
 
-Preconditions: the harness is up at the recorded `PORT`; the `DOCTOR`
+Preconditions: the harness is up on 127.0.0.1:4178; the `DOCTOR`
 checks from the parent `SKILL.md` all passed.
 
 - `GET /privacy/` — expect 200, HTML body. The H1 is exactly
@@ -20,8 +20,7 @@ checks from the parent `SKILL.md` all passed.
   in the outline.
 
   ```bash
-  PORT=$(cat /tmp/verify-tinystudio-in/server.port)
-  curl -fsS "http://127.0.0.1:$PORT/privacy/" -o /tmp/verify-tinystudio-in/html/privacy.html
+  curl -fsS "http://127.0.0.1:4178/privacy/" -o /tmp/verify-tinystudio-in/html/privacy.html
   grep -c "The studio privacy center for Tiny Studio." /tmp/verify-tinystudio-in/html/privacy.html
   ```
 
@@ -42,7 +41,7 @@ checks from the parent `SKILL.md` all passed.
 
   ```bash
   for path in /promptly/privacy/ /drishti/privacy/ /privacy-choices/; do
-    code=$(curl -s -o /dev/null -w "%{http_code}" "http://127.0.0.1:$PORT$path")
+    code=$(curl -s -o /dev/null -w "%{http_code}" "http://127.0.0.1:4178$path")
     echo "$path -> $code"
   done
   ```

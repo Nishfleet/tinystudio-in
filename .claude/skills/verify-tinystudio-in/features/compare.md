@@ -12,7 +12,7 @@ Route: `public/compare/index.html`.
 
 ## How to drive it
 
-Preconditions: the harness is up at the recorded `PORT`; the `DOCTOR`
+Preconditions: the harness is up on 127.0.0.1:4178; the `DOCTOR`
 checks from the parent `SKILL.md` all passed.
 
 - `GET /compare/` — expect 200, HTML body. The H1 is exactly
@@ -20,8 +20,7 @@ checks from the parent `SKILL.md` all passed.
   and is the first heading in the outline.
 
   ```bash
-  PORT=$(cat /tmp/verify-tinystudio-in/server.port)
-  curl -fsS "http://127.0.0.1:$PORT/compare/" -o /tmp/verify-tinystudio-in/html/compare.html
+  curl -fsS "http://127.0.0.1:4178/compare/" -o /tmp/verify-tinystudio-in/html/compare.html
   grep -c "The Website Correction is a focused one-page sprint, not a retainer." /tmp/verify-tinystudio-in/html/compare.html
   ```
 
@@ -52,7 +51,7 @@ checks from the parent `SKILL.md` all passed.
   `/contact/`.
 
   ```bash
-  curl -s -o /dev/null -w "%{http_code}\n" "http://127.0.0.1:$PORT/contact/"
+  curl -s -o /dev/null -w "%{http_code}\n" "http://127.0.0.1:4178/contact/"
   ```
 
 ## What proves success
