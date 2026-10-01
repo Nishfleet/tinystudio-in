@@ -30,6 +30,7 @@ import { join, resolve } from "node:path"
 import { fileURLToPath } from "node:url"
 import { dirname } from "node:path"
 import { spawnSync } from "node:child_process"
+import Beasties from "beasties"
 
 export const SNOOZE_FILTER_VERSION = 5
 
@@ -393,6 +394,19 @@ const sourceCommit = () => {
   return res.status === 0 ? res.stdout.trim() : "unknown"
 }
 
+// Critical CSS is generated here, on every bundle build, from the bundle's own
+// styles.css. public/*.html keeps a plain stylesheet link, so nothing inlined
+// can drift from styles.css. Beasties inlines the rules each page uses and
+// turns the full sheet into a non-blocking swap load.
+const inlineCriticalCss = async (bundleDir) => {
+  const beasties = new Beasties({ path: bundleDir, preload: "swap", logLevel: "warn" })
+  const pages = (await fs.readdir(bundleDir, { recursive: true })).filter((rel) => rel.endsWith(".html"))
+  for (const rel of pages) {
+    const file = join(bundleDir, rel)
+    await fs.writeFile(file, await beasties.process(await fs.readFile(file, "utf8")))
+  }
+}
+
 export const preparePublicDeployBundle = async ({ sourceDir, outputDir }) => {
   const source = resolve(sourceDir)
   const output = resolve(outputDir)
@@ -410,6 +424,8 @@ export const preparePublicDeployBundle = async ({ sourceDir, outputDir }) => {
     const filtered = filterFile(rel, await fs.readFile(join(source, rel), "utf8"))
     await fs.writeFile(join(output, rel), filtered)
   }
+
+  await inlineCriticalCss(output)
 
   const forbiddenFailures = assertForbiddenAbsent(output)
   if (forbiddenFailures.length > 0) {
