@@ -91,7 +91,7 @@ async function main() {
     html = replaceCloudflareEmailProtection(html);
     html = html.replace(
       /<link rel="icon" href="\/favicon\.svg" type="image\/svg\+xml">/,
-      `<link rel="apple-touch-icon" href="/apple-touch-icon.svg">\n    <link rel="preload" href="/styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">\n    <noscript><link rel="stylesheet" href="/styles.css"></noscript>\n    <link rel="icon" href="/favicon.svg" type="image/svg+xml">`
+      `<link rel="apple-touch-icon" href="/apple-touch-icon.svg">\n    <link rel="stylesheet" href="/styles.css">\n    <link rel="icon" href="/favicon.svg" type="image/svg+xml">`
     );
 
     if (relativeFile === "support/index.html") {
