@@ -397,9 +397,11 @@ const sourceCommit = () => {
 // Critical CSS is generated here, on every bundle build, from the bundle's own
 // styles.css. public/*.html keeps a plain stylesheet link, so nothing inlined
 // can drift from styles.css. Beasties inlines the rules each page uses and
-// turns the full sheet into a non-blocking swap load.
+// turns the full sheet into a non-blocking swap load. The sheet is under
+// inlineThreshold, so beasties inlines it whole and drops the stylesheet link:
+// no stylesheet request is left on a page.
 const inlineCriticalCss = async (bundleDir) => {
-  const beasties = new Beasties({ path: bundleDir, preload: "swap", logLevel: "warn" })
+  const beasties = new Beasties({ path: bundleDir, preload: "swap", inlineThreshold: 65536, logLevel: "warn" })
   const pages = (await fs.readdir(bundleDir, { recursive: true })).filter((rel) => rel.endsWith(".html"))
   for (const rel of pages) {
     const file = join(bundleDir, rel)
