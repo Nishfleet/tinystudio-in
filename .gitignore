@@ -53,3 +53,4 @@ data.json
 
 # Local visual verification captures. Keep durable concept assets under docs/assets/.
 /*.png
+.lighthouseci/
