@@ -60,7 +60,7 @@ The detection gap: nothing guarded the DEPLOYED site against missing social prev
 
 ## What unblocks live delivery
 
-1. Nish provisions a Cloudflare Pages:Edit token: `gh secret set CLOUDFLARE_API_TOKEN -R nish3451/tinystudio-in` (account id `f670a698e17bf160c8e4679823e68916`).
+1. Nish provisions a Cloudflare Pages:Edit token: `gh secret set CLOUDFLARE_API_TOKEN -R nish3451/tinystudio-in` (account id `<account-id>`).
 2. The deploy lane runs on the next main push (or workflow_dispatch); the 7 pages then serve imagery with the other merged public fixes.
 3. This item can be ticked on live proof — the new nightly guard goes green automatically.
 

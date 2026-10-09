@@ -45,7 +45,7 @@ This item was first dispatched to lane 1 and fixed in source (PR #143, commit `4
 ### 3. Deploy blocker — unchanged, still NEEDS-NISH
 
 - `.github/workflows/deploy-public-site.yml` line 69 accepts either secret name (`CLOUDFLARE_API_TOKEN` documented, or `CLOUDFLARE` provisioned 2026-08-20). Line 76 still fails closed at "Required Pages secrets not provisioned - fail loudly" when both are empty.
-- The owner secret `CLOUDFLARE_ACCOUNT_ID` was set 2026-08-12 (`f670a698e17bf160c8e4679823e68916`); the lane needs the Pages:Edit token to land via `gh secret set CLOUDFLARE_API_TOKEN -R nish3451/tinystudio-in` (or the alternate `CLOUDFLARE` name) for the deploy to clear the gate.
+- The owner secret `CLOUDFLARE_ACCOUNT_ID` was set 2026-08-12 (`<account-id>`); the lane needs the Pages:Edit token to land via `gh secret set CLOUDFLARE_API_TOKEN -R nish3451/tinystudio-in` (or the alternate `CLOUDFLARE` name) for the deploy to clear the gate.
 - Until then, every main-merge deploy fails identically at the same gate, and the live homepage cannot pick up any of the merged public fixes, including PR #143.
 
 ## Why no product PR was opened

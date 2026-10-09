@@ -66,7 +66,7 @@ code change is needed:
 
 1. https://dash.cloudflare.com/profile/api-tokens -> Create Token
 2. Use the "Cloudflare Pages: Edit" template, scope to account
-   `f670a698e17bf160c8e4679823e68916`, create, copy the token.
+   `<account-id>`, create, copy the token.
 3. `gh secret set CLOUDFLARE_API_TOKEN -R nish3451/tinystudio-in`
 4. Trigger the deploy lane (merge to main or `workflow_dispatch` on
    `Deploy public site`).

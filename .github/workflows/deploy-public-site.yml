@@ -34,7 +34,7 @@ name: Deploy public site
 #                           on the tinystudio.in account. PROVISIONED
 #                           2026-08-20 under the secret name CLOUDFLARE; the
 #                           job env below accepts either name.
-#   CLOUDFLARE_ACCOUNT_ID - f670a698e17bf160c8e4679823e68916
+#   CLOUDFLARE_ACCOUNT_ID - the account id that owns the Pages project (org secret)
 # The fleet Workers token (fleet-console/cf.env) does NOT have Pages:Edit;
 # provisioning a Pages-scoped token was a one-time dashboard step.
 #
@@ -89,9 +89,9 @@ jobs:
           echo "::error title=Release lane cannot run::No Cloudflare token secret (CLOUDFLARE_API_TOKEN or CLOUDFLARE) and/or CLOUDFLARE_ACCOUNT_ID set in repo secrets. The lane fails closed instead of skipping the publish: a skipped publish must never show a green deploy status."
           echo "One-time provisioning (dashboard, ~2 minutes):"
           echo "  1. https://dash.cloudflare.com/profile/api-tokens -> Create Token"
-          echo "  2. Use the 'Cloudflare Pages: Edit' template, scope it to the account (account id f670a698e17bf160c8e4679823e68916), create, copy the token."
+          echo "  2. Use the 'Cloudflare Pages: Edit' template, scope it to the account (note the account id), create, copy the token."
           echo "  3. gh secret set CLOUDFLARE_API_TOKEN -R nish3451/tinystudio-in"
-          echo "  4. gh secret set CLOUDFLARE_ACCOUNT_ID -R nish3451/tinystudio-in -b f670a698e17bf160c8e4679823e68916"
+          echo "  4. gh secret set CLOUDFLARE_ACCOUNT_ID -R nish3451/tinystudio-in -b <account-id>"
           echo "  5. Re-run this lane (or wait for the next main merge); no code change needed."
           exit 1
 

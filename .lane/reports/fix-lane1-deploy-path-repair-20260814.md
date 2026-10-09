@@ -14,7 +14,7 @@ Production is still the 2026-06-20-era bundle; every merged public fix since the
 
 - `gh secret list -R nish3451/tinystudio-in` shows only `CLOUDFLARE_ACCOUNT_ID` (set 2026-08-12). `CLOUDFLARE_API_TOKEN` is absent.
 - Every recent deploy lane run fails in the "Required Pages secrets not provisioned - fail loudly" step; run 31809551059 (2026-08-14T14:29Z) log shows `CLOUDFLARE_API_TOKEN:` empty and `CLOUDFLARE_ACCOUNT_ID: ***`.
-- The fleet Workers token (`/home/nish/.config/fleet-console/cf.env`) authenticates but lacks Pages:Edit — verified by running `wrangler pages project list`: `Authentication error [code: 10000]` on `/accounts/f670a698e17bf160c8e4679823e68916/pages/projects`.
+- The fleet Workers token (`/home/nish/.config/fleet-console/cf.env`) authenticates but lacks Pages:Edit — verified by running `wrangler pages project list`: `Authentication error [code: 10000]` on `/accounts/<account-id>/pages/projects`.
 - No wrangler OAuth session exists on this VPS (no `~/.wrangler/config` with OAuth creds), so `wrangler login` cannot substitute for the repo secret.
 
 The site is observably stale: `node scripts/check-public-live-soft-404.mjs` fails 5/9 checks — unknown URLs return HTTP 200 with the homepage (soft-404). Diffing live `/` against `public/index.html` at origin/main shows the whole managed-service section, brand-disambiguation copy, and the disambiguation JSON-LD are missing live (old bundle).
@@ -32,7 +32,7 @@ No change to the fail-closed contract: `test-deploy-public-site-workflow.mjs` st
 
 ## What unblocks live delivery (NEEDS-NISH)
 
-1. Cloudflare dashboard → `dash.cloudflare.com/profile/api-tokens` → Create Token → "Cloudflare Pages: Edit" template, scoped to account `f670a698e17bf160c8e4679823e68916`.
+1. Cloudflare dashboard → `dash.cloudflare.com/profile/api-tokens` → Create Token → "Cloudflare Pages: Edit" template, scoped to account `<account-id>`.
 2. `gh secret set CLOUDFLARE_API_TOKEN -R nish3451/tinystudio-in`
 3. The lane then self-heals: next main push, `workflow_dispatch`, or the daily scheduled run deploys the merged public fixes and verifies them live (with auto-rollback on acceptance failure).
 
