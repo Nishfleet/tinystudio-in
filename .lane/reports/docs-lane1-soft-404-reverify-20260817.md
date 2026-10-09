@@ -34,7 +34,7 @@
 - `gh secret list -R nish3451/tinystudio-in` (checked 2026-08-17) shows only `CLOUDFLARE_ACCOUNT_ID`; `CLOUDFLARE_API_TOKEN` is still missing.
 - Latest `Deploy public site` runs on main pushes all fail at the first gate (2026-08-15/08-17): runs 31879817382, 31877380127, 31875206883, 31874513620, 31872758030, 31981955551 (2026-08-17T00:24:49Z).
 - Nightly `Live Site Check` (the deliberate staleness alarm) has failed every night, including 2026-08-16T04:02:44Z (run 31925686688) — the red runs are the design working, not a new regression.
-- The only Cloudflare token on this VPS (`/home/nish/.config/fleet-console/cf.env`) is valid but has no Pages permission: `GET /accounts/f670a698e17bf160c8e4679823e68916/pages/projects/tiny-studio-3f5` → HTTP 403 "Authentication error" (checked 2026-08-17). It cannot deploy the site.
+- The only Cloudflare token on this VPS (`/home/nish/.config/fleet-console/cf.env`) is valid but has no Pages permission: `GET /accounts/<account-id>/pages/projects/tiny-studio-3f5` → HTTP 403 "Authentication error" (checked 2026-08-17). It cannot deploy the site.
 
 ### 4. What today's re-verification adds over the prior report (PR #149)
 
@@ -46,7 +46,7 @@
 Provision a Cloudflare Pages-scoped API token and re-run the deploy lane — no code change is needed:
 
 1. https://dash.cloudflare.com/profile/api-tokens -> Create Token
-2. Use the "Cloudflare Pages: Edit" template, scope to account `f670a698e17bf160c8e4679823e68916`, create, copy the token.
+2. Use the "Cloudflare Pages: Edit" template, scope to account `<account-id>`, create, copy the token.
 3. `gh secret set CLOUDFLARE_API_TOKEN -R nish3451/tinystudio-in`
 4. Trigger the deploy lane (`workflow_dispatch` on `Deploy public site` or next main merge).
 5. Re-run `node scripts/check-public-live-soft-404.mjs` → must report 0 failures (unknown URL returns 404 with the real 404 page). The lane's post-deploy acceptance then holds the live proof forever.

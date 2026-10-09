@@ -31,7 +31,7 @@
 //
 // Credentials (same contract as the 0509 production lane):
 //   CLOUDFLARE_API_TOKEN  - must include Cloudflare Pages:Edit on the account
-//   CLOUDFLARE_ACCOUNT_ID - f670a698e17bf160c8e4679823e68916
+//   CLOUDFLARE_ACCOUNT_ID - the account id that owns the Pages project (org secret)
 // The fleet Workers token (fleet-console/cf.env) does NOT have Pages:Edit;
 // provisioning a Pages-scoped token is the documented one-time setup step.
 //
@@ -51,7 +51,6 @@ import { preparePublicDeployBundle } from "./prepare-public-deploy-bundle.mjs"
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 
 export const PAGES_PROJECT = "tiny-studio"
-export const PAGES_ACCOUNT_ID = "f670a698e17bf160c8e4679823e68916"
 export const LIVE_BASE = "https://tinystudio.in"
 // The documented Cloudflare API base is /client/v4. This constant shipped
 // as /api/v4 (403 on every call), so the release lane never worked and the
@@ -69,7 +68,7 @@ export const PROMOTION_DELAY_MS = 5000
 
 const PROVISION_MESSAGE = `
 The release lane cannot publish yet: it needs a Cloudflare API token with
-Cloudflare Pages:Edit on account ${PAGES_ACCOUNT_ID} (tinystudio.in is served
+Cloudflare Pages:Edit on account <account-id> (tinystudio.in is served
 by the Pages project ${PAGES_PROJECT} - see the apex CNAME in the zone).
 
 The fleet Workers token (fleet-console/cf.env) does NOT include Pages:Edit,
@@ -78,9 +77,9 @@ which is why the site sat stale from 2026-06-20 to 2026-08-20.
 One-time provisioning (dashboard, ~2 minutes):
   1. https://dash.cloudflare.com/profile/api-tokens -> Create Token
   2. Use the "Cloudflare Pages: Edit" template, scope it to the account
-     (account id ${PAGES_ACCOUNT_ID}), create, copy the token.
+     (note the account id), create, copy the token.
   3. gh secret set CLOUDFLARE_API_TOKEN -R nish3451/tinystudio-in
-  4. gh secret set CLOUDFLARE_ACCOUNT_ID -R nish3451/tinystudio-in -b ${PAGES_ACCOUNT_ID}
+  4. gh secret set CLOUDFLARE_ACCOUNT_ID -R nish3451/tinystudio-in -b <account-id>
   5. Re-run this lane (or wait for the next main merge); no code change needed.
 `
 
@@ -116,7 +115,7 @@ export const requireDeployCredentials = () => {
     throw new Error(`Missing CLOUDFLARE_API_TOKEN.${PROVISION_MESSAGE}`)
   }
   if (!process.env.CLOUDFLARE_ACCOUNT_ID) {
-    throw new Error(`Missing CLOUDFLARE_ACCOUNT_ID (set it to ${PAGES_ACCOUNT_ID}).${PROVISION_MESSAGE}`)
+    throw new Error(`Missing CLOUDFLARE_ACCOUNT_ID (the id of the account that owns the Pages project).${PROVISION_MESSAGE}`)
   }
 }
 

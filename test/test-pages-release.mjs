@@ -15,7 +15,6 @@ import { dirname } from "node:path"
 
 import {
   CF_API_BASE,
-  PAGES_ACCOUNT_ID,
   PAGES_PROJECT,
   bundleSourceCommit,
   captureProductionIdentity,
@@ -27,6 +26,9 @@ import {
   sameSourceCommit,
   verifyProductionPromotion,
 } from "../src/publish-public-site.mjs"
+
+// A made-up id: the lane reads the real one from CLOUDFLARE_ACCOUNT_ID.
+const PAGES_ACCOUNT_ID = "test-account-id"
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 

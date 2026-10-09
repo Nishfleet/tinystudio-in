@@ -43,7 +43,7 @@ The discrepancy is not a new regression: it is the same root cause the prior rep
 
 - `GET https://api.github.com/repos/nish3451/tinystudio-in/actions/secrets` (checked 2026-08-17 via the same OAuth token the lane uses): **`total_count: 1`** — only `CLOUDFLARE_ACCOUNT_ID` (set 2026-08-12); `CLOUDFLARE_API_TOKEN` is still missing.
 - Latest `Deploy public site` workflow run on `push 53ea7a9` (run `32000121501`, started 2026-08-17T06:03:42Z): failed at step **"Required Pages secrets not provisioned - fail loudly"** at 06:05:20 UTC. The workflow log records `CLOUDFLARE_API_TOKEN:` empty and `CLOUDFLARE_ACCOUNT_ID: ***` — same as the 2026-08-14 report. The fail-closed behaviour is working as designed (this lane never produces a green deploy run while the secret is missing).
-- The only Cloudflare token on this VPS (`/home/nish/.config/fleet-console/cf.env`, `CLOUDFLARE_API_TOKEN=cfut_…`) is valid but has no Pages permission: `GET /accounts/f670a698e17bf160c8e4679823e68916/pages/projects/…` → HTTP 403 "Authentication error". It cannot deploy.
+- The only Cloudflare token on this VPS (`/home/nish/.config/fleet-console/cf.env`, `CLOUDFLARE_API_TOKEN=cfut_…`) is valid but has no Pages permission: `GET /accounts/<account-id>/pages/projects/…` → HTTP 403 "Authentication error". It cannot deploy.
 - `.github/workflows/deploy-public-site.yml` is fail-closed: missing `CLOUDFLARE_API_TOKEN` or `CLOUDFLARE_ACCOUNT_ID` fails the run loudly at line 66 of the workflow, so a skipped publish can never show green.
 - Nightly `Live Site Check` continues to fail every night (the design working, not a regression), independently of this item.
 
@@ -62,7 +62,7 @@ The packet's fallback: "or by reporting plainly why the item cannot be done." Th
 
 ## What unblocks live delivery
 
-1. Nish provisions a Cloudflare Pages-scoped API token via https://dash.cloudflare.com/profile/api-tokens (use the "Cloudflare Pages: Edit" template, scope to account `f670a698e17bf160c8e4679823e68916`).
+1. Nish provisions a Cloudflare Pages-scoped API token via https://dash.cloudflare.com/profile/api-tokens (use the "Cloudflare Pages: Edit" template, scope to account `<account-id>`).
 2. `gh secret set CLOUDFLARE_API_TOKEN -R nish3451/tinystudio-in` (or paste via the Actions secrets UI).
 3. The deploy lane runs on the next main push (or `workflow_dispatch` on `Deploy public site`); the five meta descriptions then go live with the other ~17 merged public fixes.
 4. Re-run `node scripts/check-public-live-deploy.mjs` (it captures the live `<meta>` from each route) — must show `0 failures` on these five meta descriptions, confirming the live site now matches source.

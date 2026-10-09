@@ -46,7 +46,7 @@ The live site leaves the June-20 bundle only after the one-time Cloudflare dashb
 
 1. Create a `Cloudflare Pages: Edit` token in the dashboard.
 2. `gh secret set CLOUDFLARE_API_TOKEN -R nish3451/tinystudio-in`
-3. `gh secret set CLOUDFLARE_ACCOUNT_ID -R nish3451/tinystudio-in -b f670a698e17bf160c8e4679823e68916` (already set 2026-08-12)
+3. `gh secret set CLOUDFLARE_ACCOUNT_ID -R nish3451/tinystudio-in -b <account-id>` (already set 2026-08-12)
 4. The deploy lane then publishes on the next main merge; the new proof E verifies all 12 URLs live, and the nightly net keeps watching.
 
 ## Notes on other lanes' state

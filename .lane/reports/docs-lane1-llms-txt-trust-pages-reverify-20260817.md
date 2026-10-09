@@ -63,7 +63,7 @@ The discrepancy is not a new regression — it is the same root cause every prio
 
 - `GET https://api.github.com/repos/nish3451/tinystudio-in/actions/secrets/public-key` + `GET …/actions/secrets` (checked 2026-08-17 via the same OAuth token the lane uses): **`total_count: 1`** — only `CLOUDFLARE_ACCOUNT_ID` (set 2026-08-12); `CLOUDFLARE_API_TOKEN` is still missing.
 - Latest `Deploy public site` workflow run on `push 84cdd07` (and on the prior 5 main pushes since 2026-08-13): failed at step **"Required Pages secrets not provisioned - fail loudly"** at the first gate. The workflow log records `CLOUDFLARE_API_TOKEN:` empty. The fail-closed behaviour is working as designed (this lane never produces a green deploy run while the secret is missing).
-- The only Cloudflare token on this VPS (`/home/nish/.config/fleet-console/cf.env`, `CLOUDFLARE_API_TOKEN=cfut_…`) is valid but has no Pages permission: `GET /accounts/f670a698e17bf160c8e4679823e68916/pages/projects/…` → HTTP 403 "Authentication error". It cannot deploy.
+- The only Cloudflare token on this VPS (`/home/nish/.config/fleet-console/cf.env`, `CLOUDFLARE_API_TOKEN=cfut_…`) is valid but has no Pages permission: `GET /accounts/<account-id>/pages/projects/…` → HTTP 403 "Authentication error". It cannot deploy.
 - `.github/workflows/deploy-public-site.yml` is fail-closed: missing `CLOUDFLARE_API_TOKEN` or `CLOUDFLARE_ACCOUNT_ID` fails the run loudly, so a skipped publish can never show green.
 - Nightly `Live Site Check` continues to fail every night (the design working, not a regression), independently of this item.
 
@@ -83,7 +83,7 @@ The item's underlying defect — `llms.txt` listing only 7 of the 12 public URLs
 Provision a Cloudflare Pages-scoped API token and re-run the deploy lane — no code change is needed:
 
 1. https://dash.cloudflare.com/profile/api-tokens → Create Token
-2. Use the "Cloudflare Pages: Edit" template, scope to account `f670a698e17bf160c8e4679823e68916`, create, copy the token.
+2. Use the "Cloudflare Pages: Edit" template, scope to account `<account-id>`, create, copy the token.
 3. `gh secret set CLOUDFLARE_API_TOKEN -R nish3451/tinystudio-in`
 4. Trigger the deploy lane (`workflow_dispatch` on `Deploy public site` or next main merge).
 5. Re-fetch `curl -sL https://tinystudio.in/llms.txt` and confirm all 12 URLs (the 5 missing ones will appear after the deploy).
