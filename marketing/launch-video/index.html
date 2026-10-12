@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #f6f1e8; }
+      #root { position: relative; width: 1920px; height: 1080px; background: #f6f1e8; color: #1a2233;
+        font-family: Inter, "Helvetica Neue", Arial, sans-serif; }
+      .scene { position: absolute; inset: 0; padding: 0 200px; display: flex; flex-direction: column; justify-content: center; }
+      .eyebrow { font-family: "DejaVu Sans Mono", monospace; font-size: 28px; letter-spacing: 0.12em; text-transform: uppercase; color: #1f6f5c; margin-bottom: 32px; }
+      h1 { font-size: 92px; line-height: 1.04; font-weight: 800; letter-spacing: -0.03em; max-width: 1500px; }
+      h2 { font-size: 76px; line-height: 1.06; font-weight: 800; letter-spacing: -0.03em; max-width: 1500px; }
+      .sub { font-size: 40px; line-height: 1.4; color: #4a5568; margin-top: 40px; max-width: 1400px; }
+      .list { margin-top: 44px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px 70px; }
+      .item { font-size: 38px; font-weight: 600; padding-left: 36px; border-left: 8px solid #1f6f5c; line-height: 1.25; }
+      .shot { position: absolute; left: 160px; right: 160px; border-radius: 24px; overflow: hidden; box-shadow: 0 30px 80px rgba(26,34,51,.25); background: #fff; }
+      .shot img { display: block; width: 100%; }
+      .cap { position: absolute; left: 160px; right: 160px; bottom: 70px; font-size: 40px; font-weight: 600; }
+      .cap small { display: block; font-size: 26px; font-weight: 400; color: #4a5568; margin-top: 10px; }
+      .big { font-size: 230px; font-weight: 800; letter-spacing: -0.04em; color: #1f6f5c; line-height: 1; }
+      .pill { display: inline-block; background: #1a2233; color: #fff; font-size: 40px; font-weight: 700; padding: 26px 54px; border-radius: 60px; margin-top: 44px; }
+      .credit { position: absolute; left: 200px; bottom: 40px; font-size: 22px; color: #4a5568; }
+      .step { font-size: 44px; font-weight: 600; margin-top: 26px; padding-left: 36px; border-left: 8px solid #1f6f5c; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="80" data-width="1920" data-height="1080">
+
+      <!-- 1. Who it is for and what it does -->
+      <div id="s1" class="scene clip" data-start="0" data-duration="7" data-track-index="0">
+        <div class="eyebrow">Tiny Studio · The Website Correction</div>
+        <h1>A human-reviewed fix for the one page on your site that matters most.</h1>
+        <p class="sub">For founder-led Managed IT, MSP and cybersecurity companies with a live site.</p>
+      </div>
+
+      <!-- 2. Real screen: live site -->
+      <div id="s2" class="scene clip" data-start="7" data-duration="10" data-track-index="0">
+        <div class="shot" style="top:70px; height:760px;"><img id="s2img" data-layout-allow-overflow src="assets/live-home.png" alt="tinystudio.in home page" /></div>
+        <div class="cap">Tiny Studio is an independent product company at tinystudio.in.<small>Live site, captured 2026-10-12. Alongside its products it offers one human-reviewed managed service.</small></div>
+      </div>
+
+      <!-- 3. What is included -->
+      <div id="s3" class="scene clip" data-start="17" data-duration="20" data-track-index="0">
+        <div class="eyebrow">One page. One fixed scope.</div>
+        <h2>What every sprint includes</h2>
+        <div class="list">
+          <div class="item">Fault map</div>
+          <div class="item">Rewrite or redesign of the page</div>
+          <div class="item">Implementation pass or dev-ready handoff</div>
+          <div class="item">Search-trust basics</div>
+          <div class="item">Before/after proof</div>
+          <div class="item">Loom walkthrough</div>
+          <div class="item">Measurement plan</div>
+          <div class="item">One revision</div>
+          <div class="item">14-day implementation tracking</div>
+        </div>
+      </div>
+
+      <!-- 4. Human review -->
+      <div id="s4" class="scene clip" data-start="37" data-duration="10" data-track-index="0">
+        <div class="eyebrow">Human review</div>
+        <h2>A person decides fit, claims, client-facing work, delivery and renewal.</h2>
+        <p class="sub">Automation prepares research, drafts, QA and packages. It cannot send, publish, spend, approve, accept or renew on its own.</p>
+      </div>
+
+      <!-- 5. Day 0 -->
+      <div id="s5" class="scene clip" data-start="47" data-duration="11" data-track-index="0">
+        <div class="eyebrow">When the clock starts</div>
+        <h2>Day 0 starts only when four things are in place.</h2>
+        <div class="step">Payment</div>
+        <div class="step">Required context</div>
+        <div class="step">An approval owner</div>
+        <div class="step">An implementation owner</div>
+        <p class="sub" style="margin-top:32px">Client delay pauses the clock.</p>
+      </div>
+
+      <!-- 6. Price and limits -->
+      <div id="s6" class="scene clip" data-start="58" data-duration="10" data-track-index="0">
+        <div class="eyebrow">Founder pilot</div>
+        <div class="big">$1,000</div>
+        <h2 style="font-size:56px;margin-top:24px">Fixed price for the first 3 clients.</h2>
+        <p class="sub">No guarantee of revenue, rankings, ROAS, conversion, booked calls or sales volume.</p>
+      </div>
+
+      <!-- 7. Next action -->
+      <div id="s7" class="scene clip" data-start="68" data-duration="12" data-track-index="0">
+        <div class="shot" style="top:60px; height:380px;"><img src="assets/repo-service-section.png" alt="Website Correction section" data-layout-allow-overflow style="margin-top:-250px" /></div>
+        <div style="position:absolute; left:200px; right:200px; top:500px;">
+          <h2 style="font-size:64px">Send your site and the page that matters most.</h2>
+          <p class="sub" style="margin-top:20px; font-size:34px">A person reviews fit and scope first. Work starts only after that review.</p>
+          <span class="pill">Apply: support@tinystudio.in</span>
+        </div>
+        <div class="credit">Music: “Inspired” by Kevin MacLeod (incompetech.com), licensed CC BY 4.0.</div>
+      </div>
+
+      <audio id="bgm" src="assets/music-inspired-kevin-macleod.mp3" data-start="0" data-duration="80" data-track-index="5" data-volume="1"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const T = { s1: 0, s2: 7, s3: 17, s4: 37, s5: 47, s6: 58, s7: 68 };
+      const D = { s1: 7, s2: 10, s3: 20, s4: 10, s5: 11, s6: 10, s7: 12 };
+      for (const id of Object.keys(T)) {
+        const t0 = T[id], d = D[id];
+        tl.fromTo(`#${id}`, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, t0);
+        tl.fromTo(`#${id} > *`, { y: 36, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, stagger: 0.18, ease: "power3.out" }, t0 + 0.2);
+        tl.to(`#${id}`, { opacity: 0, duration: 0.4, ease: "power2.in" }, t0 + d - 0.4);
+      }
+      tl.fromTo("#s3 .item", { x: -30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, stagger: 1.2, ease: "power2.out" }, 19.5);
+      tl.fromTo("#s5 .step", { x: -30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, stagger: 1.4, ease: "power2.out" }, 49.5);
+      tl.fromTo("#s2img", { scale: 1.0, transformOrigin: "50% 0%" }, { scale: 1.06, duration: 10, ease: "none" }, 7);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
