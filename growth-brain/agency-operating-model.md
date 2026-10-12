@@ -1,6 +1,6 @@
 # Service operating model
 
-TinyStudio currently operates one human-reviewed managed service: **The Website Correction** for one highest-leverage page.
+TinyStudio is a done-for-you, proof-backed SEO repair desk (`specs/003-done-for-you-repair-desk/spec.md`). It currently operates one human-reviewed managed service under its legacy name, **The Website Correction**, for one highest-leverage page. The desk reuses the SEO Fix Kit proof engine and builds none of its own.
 
 The buyer is a founder-led Managed IT/MSP/cybersecurity company with a live site and high-value offer. The first 3 clients receive exactly the **$1,000 founder pilot**.
 

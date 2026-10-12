@@ -1,6 +1,8 @@
 # Product context
 
-TinyStudio currently sells one human-reviewed managed service: **The Website Correction**.
+TinyStudio is a done-for-you, proof-backed SEO repair desk: a free proof audit is the hook, a human-reviewed fix follows, and the price is anchored to each fault's proven monthly loss. SEO Fix Kit stays the self-serve tool; this brand has no dashboard or self-serve tooling, and it reuses the SEO Fix Kit proof engine instead of building its own. The contract is `specs/003-done-for-you-repair-desk/spec.md`; capacity is six repairs a month.
+
+The active pilot sprint keeps its legacy name, human-reviewed managed service **The Website Correction**, until the rename follow-up lands.
 
 ## Buyer
 
